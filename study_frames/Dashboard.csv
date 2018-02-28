@@ -8,8 +8,8 @@ System_Resol;Projection_homothetic
 study;Projection_evolution
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_MetMin
-// AGG_type;AGG_IndEner
+// AGG_type;AGG_MetMin
+AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
 // AGG_type;AGG_Ener1
 // AGG_type;AGG_Ener2
