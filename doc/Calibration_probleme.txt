@@ -1,0 +1,19 @@
+3 Fonctions qui ne semblent pas pouvoir être compatible entre elles pour la résolution :
+OtherIndirTax_Const_1 + pI_price_Const_1 + pG_price_Const_1  (testé le 15 mai 2015)
+
+PROBLEME SUR L'ARTICULATION DE 3 fonctions ? : test du 13 août 2015
+	GrossOpSurplus_Const_1 + SpeMarg_Const_1 en actif
+	pI_price_Const_1 en commentaire ( Gross_Operating_Surplus en calib, SpeMarg_rates_I en calib, pI en InitVal, SpeMarg_I en InitVal, )
+	--> : solved
+	
+	pI_price_Const_1 + SpeMarg_Const_1 en actif
+	GrossOpSurplus_Const_1 en commentaire ( pI en calib, SpeMarg_rates_I en calib, SpeMarg_I en InitVal, Gross_Operating_Surplus en InitVal)
+	--> : solved (deux fois plus long que d'habitude...mais solved)
+	
+	GrossOpSurplus_Const_1 + pI_price_Const_1 en actif
+	SpeMarg_Const_1 en commentaire ( pI en calib, Gross_Operating_Surplus en calib,  SpeMarg_rates_I en InitVal, et SpeMarg_I en InitVal,)
+	La variable retournée par la fonction Scilab passée en argument n'est pas valide.
+	at line     276 of exec file called by :    
+	exec("Calibration.sce");
+	at line      82 of exec file called by :    
+	exec('SCI/etc/scilab.start',-1);;exec('ImaclimS.sce',-1)

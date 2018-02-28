@@ -1,0 +1,95 @@
+Variables;Functions ;Parameters;;Other variables needed for calculation 
+;;Calibrated;Non calibrated (exogenous);
+NetFinancialDebt;H_NetDebt_Const_1;NetFinancialDebt_ref;time_period;NetLending
+;;NetLending_ref;;
+C;H_demand_Const_1;C (Energy);sigma_pC;C (Non Energy)
+;;Constrained_consumption_share;sigma_consumption_budget;Consumption_budget
+;;pC (Energy);;Consumption_budget_reference
+;;;;pC_reference (Energy)
+;;;;pC (Non Energy)
+;;;;CPI
+;;;;CPI_reference
+;;;;pC_reference (Non energy)
+;;;;Budget_Share_reference
+;;;;
+;;;;
+Corporations_NetLending;Corp_NetLending_Const_1;;;Corporations_savings
+;;;;Corporations_investment
+Corporations_NetDebt;Corp_NetDebt_Const_1;Corporations_NetDebt_ref;time_period;Corporations_NetLending
+;;Corporations_NetLending_ref;;
+Pension_Benefits;Pension_Benefits_Const_1;;;Pension_Benefits_param
+;;;;NetWage_variation
+Other_Social_Benefits;Other_SocioBenef_Const_1;;;Other_SocioBenef_param
+;;;;NetWage_variation
+Unemployment_Benefits;UnemployBenefits_Const_1;;;UnemployBenefits_param
+;;;;NetWage_variation
+H_ClimPolicyCompens;H_ClimCompensat_Const_1;H_ClimPolicyCompens_ref;;
+S_ClimPolicyCompens;S_ClimCompensat_Const_1;S_ClimPolicyCompens_ref;;
+Labour_Tax_rate_reference;RevenueRecycling_Const_1;Labour_Tax;;w
+;;Y (Energy);;lambda
+;;Carbon_Tax_IC;;Y (Non Energy)
+;;Carbon_Tax_C;;Sector_Climate_Policy_Compensation
+;;;;Household_Climate_Policy_Compensation
+w;Wage_Variation_Const_1;w_ref;;NetWage_variation
+pY;Production_price_Const_1;Production_Tax_rate;;alpha
+;;;;pIC
+;;;;pL
+;;;;lambda
+;;;;pK
+;;;;kappa
+;;;;markup_rate
+markup_rate;Markup_Const_1;markup_rate_ref;;
+NetWage_variation;Mean_wage_Const_1;w_ref;sigma_omegaU;u_tot
+;;lambda_ref;;w
+;;Y_ref;;lambda
+;;lambda_ref;;Y
+;;Y_ref;;
+;;u_tot_ref;;
+w;Wage_Variation_Const_1;w_ref;;NetWage_variation
+pY;Production_price_Const_1;;;alpha
+;;;;pIC
+;;;;pL
+;;;;lambda
+;;;;pK
+;;;;kappa
+;;;;Production_Tax_rate
+;;;;markup_rate
+SpeMarg_rates_IC_reference;SpeMarg_rates_Const_1;;;SpeMarg_rates_IC
+SpeMarg_rates_C_reference;;;;SpeMarg_rates_C
+SpeMarg_rates_X_reference;;;;SpeMarg_rates_X
+;;;;
+;;;;
+;;;;
+;;;;
+A faire ce qui suis ;;;;
+;MarketBalance_Const_1;Y (Energy);;Y (Non Energy)
+;;C (Energy);;IC (Non Energy)
+;;X (Energy);;C (Non Energy)
+;;M(Energy);;G
+;;IC (Energy);;I
+;;;;X (Non energy)
+;;;;M (Non energy)
+;;;;
+delta_M_reference;Product_markets_closure_constraint_1;Y (Energy);;Y (Non Energy)
+delta_X_reference;;;;delta_M_parameter
+;;;;
+delta_X_parameter;Exports_constraint_1;X (Energy);sigma_X;X (Non energy)
+;;pX (Energy);;pM (Non Energy)
+;;pM (Energy);;pX (Non Energy)
+;;;;X_reference
+;;;;pX_reference
+;;;;pM_reference
+;;;;
+delta_M_parameter;Imports_constraint_1;Y (Energy);sigma_M;pM (Non Energy)
+;;M (Energy);;Y (Non Energy)
+;;pM (Energy);;M (Non energy)
+;;pY;;M_reference
+;;;;Y_reference
+;;;;pM_reference
+;;;;pY_reference
+delta_interest_rate;MacroClosure_Const_1;;;GFCF_byAgent
+;;;;Corporations_investment
+;;;;GFCF_byAgent
+;;;;pI
+;;;;I
+interest_rate;Interest_rate_Const_1;interest_rate_ref;;delta_interest_rate
