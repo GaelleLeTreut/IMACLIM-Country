@@ -1,0 +1,20 @@
+// name;value;lowerBound;UpperBound;explanation;name in model description
+//;;;;;
+// MODEL PARAMETERS;;;;;
+//;;;;;
+// Carbon tax;;;;;
+Carbon_Tax_rate;0;0;1;;
+delta_LS_H;1;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;
+delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;
+//;;;;;
+//Labor market parameters;;;;;
+NetWage_variation;1;0;5;;
+sigma_omegaU;-1.00E-01;;;;
+//;;;;;
+//Capital;;;;;
+delta_interest_rate;1;0;1;;
+//;;;;;
+//Other params;;;;;
+Mu;0;0;1;labour productivity growth rate;
+time_period;1;0;100;;
+Government_closure;1;0;1;;
