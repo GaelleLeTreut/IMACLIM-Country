@@ -47,7 +47,7 @@ VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
 /////////////////////////////////////////////////////////////////////////
 // LOADING STUDY CHANGES
 /////////////////////////////////////////////////////////////////////////
-exec(STUDY+study+".sce");
+// exec(STUDY+study+".sce");
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1

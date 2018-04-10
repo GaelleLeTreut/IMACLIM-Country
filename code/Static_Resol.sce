@@ -49,7 +49,7 @@ VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 /////////////////////////////////////////////////////////////////////////
 // LOADING STUDY CHANGES
 /////////////////////////////////////////////////////////////////////////
-exec(STUDY+study+".sce");
+// exec(STUDY+study+".sce");
 //  Introduire le changement des valeurs par défaut des parametres selon les différentes simulation
 [Table_parameters] = struct2Variables(parameters,"parameters");
 execstr(Table_parameters);

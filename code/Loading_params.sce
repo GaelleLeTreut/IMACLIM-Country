@@ -41,7 +41,7 @@
 // DEFAULT VALUES OF Parameters//
 
 // All general parameters - not depending on sector aggregation
-table_params_general = csv2struct_params(PARAMS+"params_general.csv",1);
+table_params_general = csv2struct_params(PARAMS_Country+"params_general.csv",1);
 nbFields = size(table_params_general);
 for i = 1:nbFields(1)
     parameters(table_params_general(i,1)) = table_params_general(i,2);
@@ -59,7 +59,7 @@ if H_DISAGG == "HH1"
 end
 // else
 		/////lecture du ficher index, mais juste la premiere colonne
-		// Index_EconData_H_DISAGG = read_csv(DATA+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
+		// Index_EconData_H_DISAGG = read_csv(DATA_Country+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
 		////execstr("Index_EconData_"+H_DISAGG+"=Index_EconData_H_DISAGG"+";");
 		
 		// Row_Column = unique(Index_EconData_H_DISAGG(:,1));
@@ -98,9 +98,9 @@ end
 ///////////////////////////////////////////////////////////////
 
 if AGG_type == ""
-    table_params_sect = csv2struct_params(PARAMS+"params_sect"+".csv",nb_SectorsTEMP);
+    table_params_sect = csv2struct_params(PARAMS_Country+"params_sect"+".csv",nb_SectorsTEMP);
 else
-    table_params_sect = csv2struct_params(PARAMS+string(AGG_type)+sep+"params_sect_"+string(AGG_type)+".csv",nb_SectorsTEMP);
+    table_params_sect = csv2struct_params(PARAMS_Country+string(AGG_type)+sep+"params_sect_"+string(AGG_type)+".csv",nb_SectorsTEMP);
 end
 
 nbFields = size(table_params_sect);
@@ -112,7 +112,7 @@ end
 // All parameters 1x nb_Households dimension - depend on desaggregation HH profil
 ///////////////////////////////////////////////////////////////
 
-table_params_HH = csv2struct_params(PARAMS+"params_"+string(H_DISAGG)+".csv",nb_HouseholdsTEMP);
+table_params_HH = csv2struct_params(PARAMS_Country+"params_"+string(H_DISAGG)+".csv",nb_HouseholdsTEMP);
 
 nbFields = size(table_params_HH);
 for i = 1:nbFields(1)
@@ -125,12 +125,12 @@ end
 ///////////////////////////////////////////////////////////////
 
 if AGG_type == ""
-    parameters.ConstrainedShare_IC=read_csv(PARAMS+"ConstrainedShare_IC"+string(AGG_type)+".csv",";");
-    parameters.CarbonTax_Diff_IC=read_csv(PARAMS+"CarbonTax_Diff_IC"+string(AGG_type)+".csv",";");
+    parameters.ConstrainedShare_IC=read_csv(PARAMS_Country+"ConstrainedShare_IC"+string(AGG_type)+".csv",";");
+    parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+"CarbonTax_Diff_IC"+string(AGG_type)+".csv",";");
 
 else
-    parameters.ConstrainedShare_IC=read_csv(PARAMS+string(AGG_type)+sep+"ConstrainedShare_IC_"+string(AGG_type)+".csv",";");
-    parameters.CarbonTax_Diff_IC=read_csv(PARAMS+string(AGG_type)+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+".csv",";");
+    parameters.ConstrainedShare_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"ConstrainedShare_IC_"+string(AGG_type)+".csv",";");
+    parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+".csv",";");
 end
 
 parameters.ConstrainedShare_IC (1,:) = [];
@@ -146,13 +146,13 @@ parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);
 // All parameters sect x HH dimension ( or HH dimension x sect )
 ///////////////////////////////////////////////////////////////
 if AGG_type == ""
-    parameters.CarbonTax_Diff_C=read_csv(PARAMS+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
-    parameters.sigma_pC=read_csv(PARAMS+"sigma_pC_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
-    parameters.ConstrainedShare_C=read_csv(PARAMS+"ConstrainedShare_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
+    parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
+    parameters.sigma_pC=read_csv(PARAMS_Country+"sigma_pC_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
+    parameters.ConstrainedShare_C=read_csv(PARAMS_Country+"ConstrainedShare_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
 else
-    parameters.CarbonTax_Diff_C=read_csv(PARAMS+string(AGG_type)+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
-    parameters.sigma_pC=read_csv(PARAMS+string(AGG_type)+sep+"sigma_pC_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
-    parameters.ConstrainedShare_C=read_csv(PARAMS+string(AGG_type)+sep+"ConstrainedShare_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+    parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+    parameters.sigma_pC=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_pC_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+    parameters.ConstrainedShare_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"ConstrainedShare_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
 end
 
 parameters.CarbonTax_Diff_C (1,:) = [];

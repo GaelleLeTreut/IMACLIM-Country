@@ -41,7 +41,7 @@
 // READ CSV FILES
 //////////////////////////////////////////////////////////////////
 
-listStudyfiles    = listfiles(STUDY);
+listStudyfiles    = listfiles(STUDY_Country);
 Nb_Studyfiles     = size(listStudyfiles,"r");
 listStudyCSVfiles = list();
 
@@ -54,7 +54,7 @@ for elt=1:Nb_Studyfiles
 end
 
 for elt=1:size(listStudyCSVfiles)
-    matStr = read_csv(STUDY+listStudyCSVfiles(elt),";");
+    matStr = read_csv(STUDY_Country+listStudyCSVfiles(elt),";");
     varname = strsubst(listStudyCSVfiles(elt),".csv","");
     if isdef(varname)
         disp(varname)
@@ -65,13 +65,20 @@ end
 
 /// DASHBOARD FILES
 
-Dashboard_component= Dashboard(2:$,1);
+execstr( "Dashboard_Country = Dashboard_"+Country_ISO ); 
+Dashboard_component = Dashboard_Country(2:$,1);
+
+// execstr("Dashboard_component = Dashboard_"+Country_ISO+"(2:$,1)");
 
 for elt=1:size(Dashboard_component,"r");
-    indtemp= find(Dashboard(:,1)==Dashboard_component(elt));
-    valtemp = Dashboard(indtemp,2);
+    indtemp= find(Dashboard_Country(:,1)==Dashboard_component(elt));
+    valtemp = Dashboard_Country(indtemp,2);
     execstr(Dashboard_component(elt)+"=valtemp;")
+	
+		
 end
+
+
 
 if (size(H_DISAGG,"r")<>[1]| size(H_DISAGG,"r")<>[1])
 error ( "various types of disaggregation profiles of households have been selected in Dashboard.csv");
@@ -87,4 +94,6 @@ end
 if (size(System_Resol,"r")<>[1]| size(System_Resol,"r")<>[1])
 error ( "various types of resolution system have been selected in Dashboard.csv");
 end
+
+
 

@@ -53,15 +53,66 @@ sep = filesep(); // "/" or "\" depending on OS
 
 cd("..");
 PARENT    = pwd()  + sep;
-CODE      = PARENT + "code"         + sep;
-DATA      = PARENT + "data"         + sep;  
-OUTPUT    = PARENT + "outputs"      + sep;
-LIB       = PARENT + "library"      + sep;
-STUDY     = PARENT + "study_frames" + sep;
-PARAMS    = PARENT + "params"       + sep;
-ROBOT     = PARENT + "robot"        + sep;
+CODE      = PARENT + "code"     								 + sep;
 
+LIB       = PARENT + "library" 							     + sep;
+getd(LIB); // Charge toutes les fonctions dans LIB
+
+OUTPUT    = PARENT + "outputs"    							 + sep;
 mkdir(OUTPUT);
 
-getd(LIB); // Charge toutes les fonctions dans LIB
+DATA      = PARENT + "data"         + sep; 
+STUDY     = PARENT + "study_frames"							 + sep;
+PARAMS    = PARENT + "params"    								 + sep;
+ROBOT     = PARENT + "robot"     								 + sep;
+
+
+
 cd(CODE);
+
+/// READING COUNTRY SELECTION FILE (TO LOAD CORRESPONDIND DATA AND PARAMS AFTER)
+
+listStudyfiles    = listfiles(STUDY);
+Nb_Studyfiles     = size(listStudyfiles,"r");
+listStudyCSVfiles = list();
+
+// First: remove non .csv files from the list
+
+for elt=1:Nb_Studyfiles
+    if strstr(listStudyfiles(elt),".csv")<> ""
+        listStudyCSVfiles($+1) = listStudyfiles(elt);
+    end
+end
+
+for elt=1:size(listStudyCSVfiles)
+    matStr = read_csv(STUDY+listStudyCSVfiles(elt),";");
+    varname = strsubst(listStudyCSVfiles(elt),".csv","");
+    if isdef(varname)
+        disp(varname)
+        error(" is already defined. please choose a sufix ")
+    end
+    execstr(varname +"=matStr;");
+end
+
+
+Country_available= Country_Selection(2:$,1);
+
+for elt=1:size(Country_available,"r");
+    indtemp= find(Country_Selection(:,1)==Country_available(elt));
+    valtemp = Country_Selection(indtemp,2);
+    execstr(Country_available(elt)+"=valtemp;")
+	
+	if Country_available(elt) == "Country"
+	Country_ISO = Country_Selection(indtemp,3);
+	end
+		
+end
+
+
+
+// Country specific MODEL FILE STRUCTURE
+DATA_Country      = DATA +"data_"+Country_ISO        + sep;  
+PARAMS_Country    = PARAMS + "params_"+Country_ISO    + sep;  
+STUDY_Country    = STUDY + "study_frames_"+Country_ISO    + sep;
+
+

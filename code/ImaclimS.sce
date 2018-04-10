@@ -36,26 +36,26 @@
 // main executable script
 
 //PREAMBULE
-exec ("preambule.sce");
 
-disp("=====IMACLIM-S========");
+disp("=====IMACLIM-Country Platform========");
  
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
 disp("STEP 0: loading Dashboard ");
+exec ("preambule.sce");
 exec("Dashboard.sce");
 
 runName = study + "_" + mydate();
-SAVEDIR = OUTPUT+ runName + filesep();
+SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
 mkdir(SAVEDIR);
 diary(SAVEDIR+"summary.log");
 
-SAVEDIR_IOA = OUTPUT+ runName + filesep()+ "outputs_IOA"+filesep();
+SAVEDIR_IOA = OUTPUT+Country_ISO+runName + filesep()+ "outputs_IOA"+filesep();
 mkdir(SAVEDIR_IOA);
 
 printf("===============================================\n");
-printf("===== IMACLIM-S is running=============================\n");
+disp(" ======= IMACLIM-"+Country+" is running=============================");
 printf("===============================================\n");
 
 disp(" ======= for resolving the system: "+System_Resol)
@@ -66,7 +66,7 @@ disp("======= with various class of households: "+H_DISAGG)
 printf("===============================================\n");
 disp("======= at aggregated level: "+AGG_type)
 printf("===============================================\n");
-
+ 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,14 @@ exec(CODE+"IOA_BY.sce");
 ////////////////////////////////////////////////////////////
 
 disp("STEP 5: RESOLUTION AND EQUILIBRIUM...");
+
+//// Defining matrix with dimension of each variable for Resolution file
+VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
+// Loading study changes
+exec(STUDY_Country+study+".sce");
+
 exec(System_Resol+".sce");
+
 
 ////////////////////////////////////////////////////////////
 // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY

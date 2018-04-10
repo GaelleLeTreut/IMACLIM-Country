@@ -40,7 +40,7 @@ Err_balance_tol = 10^-2;
 // READ CSV FILES
 //////////////////////////////////////////////////////////////////
 
-listDatafiles = listfiles(DATA);
+listDatafiles = listfiles(DATA_Country);
 Nb_Datafiles = size(listDatafiles,"r");
 listCSVfiles=list();
 
@@ -66,7 +66,7 @@ for elt=1:size(listCSVfiles)
 
         listIndex($+1)= listCSVfiles(elt);
 
-        matStr = read_csv(DATA+listCSVfiles(elt),";");
+        matStr = read_csv(DATA_Country+listCSVfiles(elt),";");
         varname = strsubst(listCSVfiles(elt),".csv","");
         if isdef(varname)
             warning(varname+" is already defined. please choose a sufix ")
@@ -82,7 +82,7 @@ for elt=1:size(listCSVfiles)
 
             listIOTfiles($+1)= listCSVfiles(elt);
 
-            [IndexRow,IndexCol,IOT] = read_table(DATA+listCSVfiles(elt),";");
+            [IndexRow,IndexCol,IOT] = read_table(DATA_Country+listCSVfiles(elt),";");
             varname = strsubst(listCSVfiles(elt),".csv","");
             if isdef(varname)
                 warning(varname+" is already defined. please choose a sufix ")
@@ -97,7 +97,7 @@ for elt=1:size(listCSVfiles)
             //Just read all other CSV file
 
         else
-            matStr = read_csv(DATA+listCSVfiles(elt),";");
+            matStr = read_csv(DATA_Country+listCSVfiles(elt),";");
             varname = strsubst(listCSVfiles(elt),".csv","");
             if isdef(varname)
                 warning(varname+" is already defined. please choose a sufix ")
@@ -212,12 +212,12 @@ end
 
 
 // Definition of intermediary consumption matrix in value
-[initial_value.IC_value] = fill_table( IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_Commodities,Index_Sectors);
+[initial_value.IC_value] = fill_table( eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_Commodities,Index_Sectors);
 initial_value.tot_IC_col_val = sum(initial_value.IC_value , "c");
 initial_value.tot_IC_row_val = sum(initial_value.IC_value , "r");
 
 // Definition of final consumption matrix in value
-[initial_value.FC_value] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_Commodities, Index_FC);
+[initial_value.FC_value] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_Commodities, Index_FC);
 initial_value.tot_FC_value = sum(initial_value.FC_value,"c");
 
 indicEltFC = 1;
@@ -231,15 +231,15 @@ end
 
 // Extraction of the third part of the IOT
 // Definition of the different parts of this third part matrix (value added, specific margins, etc.) in value
-[initial_value.OthPart_IOT] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_OthPart_IOT, Index_Sectors);
+[initial_value.OthPart_IOT] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_OthPart_IOT, Index_Sectors);
 tot_OthPart_IOT = sum (initial_value.OthPart_IOT, "r");
 
-[initial_value.Value_Added] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_Value_Added, Index_Sectors);
-[initial_value.Margins] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_Margins, Index_Sectors);
-[initial_value.SpeMarg] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_SpeMarg, Index_Sectors);
-[initial_value.SpeMarg_FC] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_SpeMarg_FC, Index_Sectors);
-[initial_value.SpeMarg_IC] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_SpeMarg_IC, Index_Sectors);
-[initial_value.Taxes] = fill_table(IOT_FranceVal,IndRow_IOT_FranceVal,IndCol_IOT_FranceVal,Index_Taxes, Index_Sectors);
+[initial_value.Value_Added] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_Value_Added, Index_Sectors);
+[initial_value.Margins] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_Margins, Index_Sectors);
+[initial_value.SpeMarg] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_SpeMarg, Index_Sectors);
+[initial_value.SpeMarg_FC] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_SpeMarg_FC, Index_Sectors);
+[initial_value.SpeMarg_IC] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_SpeMarg_IC, Index_Sectors);
+[initial_value.Taxes] = fill_table(eval("IOT_"+Country_ISO+"_Val"),eval("IndRow_IOT_"+Country_ISO+"_Val"),eval("IndCol_IOT_"+Country_ISO+"_Val"),Index_Taxes, Index_Sectors);
 
 indicEltVA = 1;
 indicEltSpeMarg = 1;
@@ -314,12 +314,12 @@ FC_value_Hybrid = initial_value.IC_value(Indice_HybridCommod,:);
 
 // Definition of intermediary consumption matrix in quantities
 
-[initial_value.IC] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_Commodities,Index_Sectors);
-//[initial_value.IC_Hybrid] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_HybridCommod,Index_Sectors);
+[initial_value.IC] = fill_table(eval("IOT_"+Country_ISO+"_Qtities"),eval("IndRow_IOT_"+Country_ISO+"_Qtities"),eval("IndCol_IOT_"+Country_ISO+"_Qtities"),Index_Commodities,Index_Sectors);
+
 initial_value.tot_IC_col = sum(initial_value.IC , "c");
 
 // Definition of final consumption matrix in quantities
-[initial_value.FC] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_Commodities, Index_FC);
+[initial_value.FC] = fill_table( eval("IOT_"+Country_ISO+"_Qtities"),eval("IndRow_IOT_"+Country_ISO+"_Qtities"),eval("IndCol_IOT_"+Country_ISO+"_Qtities"),Index_Commodities, Index_FC);
 //[initial_value.FC_Hybrid] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_HybridCommod, Index_FC);
 initial_value.tot_FC = sum(initial_value.FC,"c");
 
@@ -331,10 +331,8 @@ for elt=1:nb_FC
 end
 
 // Definition of prod and imports in quantities
-[initial_value.Y] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_Commodities,"Y");
-//[initial_value.Y_Hybrid] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_HybridCommod,"Y");
-[initial_value.M] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_Commodities,"M");
-//[initial_value.M_Hybrid] = fill_table( IOT_FranceQtities,IndRow_IOT_FranceQtities,IndCol_IOT_FranceQtities,Index_HybridCommod,"M");
+[initial_value.Y] = fill_table( eval("IOT_"+Country_ISO+"_Qtities"),eval("IndRow_IOT_"+Country_ISO+"_Qtities"),eval("IndCol_IOT_"+Country_ISO+"_Qtities"),Index_Commodities,"Y");
+[initial_value.M] = fill_table( eval("IOT_"+Country_ISO+"_Qtities"),eval("IndRow_IOT_"+Country_ISO+"_Qtities"),eval("IndCol_IOT_"+Country_ISO+"_Qtities"),Index_Commodities,"M");
 initial_value.tot_supply = sum (initial_value.M+initial_value.Y, "c");
 
 // Checking balance in quantities
@@ -366,21 +364,19 @@ end
 
 // Import of IOT file of prices
 
-[initial_value.pIC] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_Commodities,Index_Sectors);
-//[initial_value.pIC_Hybrid] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_HybridCommod,Index_Sectors);
-//[initial_value.pFC_Hybrid] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_HybridCommod,Index_FC);
-[initial_value.pFC] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_Commodities,Index_FC);
+[initial_value.pIC] = fill_table( eval("IOT_"+Country_ISO+"_Prices"),eval("IndRow_IOT_"+Country_ISO+"_Prices"),eval("IndCol_IOT_"+Country_ISO+"_Prices"),Index_Commodities,Index_Sectors);
+[initial_value.pFC] = fill_table(eval("IOT_"+Country_ISO+"_Prices"),eval("IndRow_IOT_"+Country_ISO+"_Prices"),eval("IndCol_IOT_"+Country_ISO+"_Prices"),Index_Commodities,Index_FC);
 
 indicEltFC = 1;
 for elt=1:nb_FC
     varname = Index_FC(elt);
-    //execstr ('initial_value.'+'p'+varname+'_Hybrid'+'=initial_value.pFC_Hybrid(:,elt);');
+
     execstr ("initial_value."+"p"+varname+"=initial_value.pFC(:,elt);");
     indicEltFC = 1 + indicEltFC;
 end
 
-[initial_value.pM] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_Commodities,"M");
-[initial_value.pY] = fill_table( IOT_FrancePrices,IndRow_IOT_FrancePrices,IndCol_IOT_FrancePrices,Index_Commodities,"Y");
+[initial_value.pM] = fill_table( eval("IOT_"+Country_ISO+"_Prices"),eval("IndRow_IOT_"+Country_ISO+"_Prices"),eval("IndCol_IOT_"+Country_ISO+"_Prices"),Index_Commodities,"M");
+[initial_value.pY] = fill_table( eval("IOT_"+Country_ISO+"_Prices"),eval("IndRow_IOT_"+Country_ISO+"_Prices"),eval("IndCol_IOT_"+Country_ISO+"_Prices"),Index_Commodities,"Y");
 
 
 /////////////////
@@ -388,26 +384,28 @@ end
 /////////////////
 
 // Definition of intermediary consumption matrix in quantities
-[initial_value.CO2Emis_IC] = fill_table(IOT_FranceCO2Emis,IndRow_IOT_FranceCO2Emis,IndCol_IOT_FranceCO2Emis,Index_Commodities,Index_Sectors);
+[initial_value.CO2Emis_IC] = fill_table(eval("IOT_"+Country_ISO+"_CO2Emis"),eval("IndRow_IOT_"+Country_ISO+"_CO2Emis"),eval("IndCol_IOT_"+Country_ISO+"_CO2Emis"),Index_Commodities,Index_Sectors);
 //initial_value.CO2Emis_IC = CO2Emis_IC(Indice_EnerSect,:);
 initial_value.Tot_CO2Emis_IC = sum(initial_value.CO2Emis_IC);
 
 // Definition of households emissions
-[initial_value.CO2Emis_C] = fill_table(IOT_FranceCO2Emis,IndRow_IOT_FranceCO2Emis,IndCol_IOT_FranceCO2Emis,Index_Commodities,"C");
+[initial_value.CO2Emis_C] = fill_table(eval("IOT_"+Country_ISO+"_CO2Emis"),eval("IndRow_IOT_"+Country_ISO+"_CO2Emis"),eval("IndCol_IOT_"+Country_ISO+"_CO2Emis"),Index_Commodities,"C");
 //initial_value.CO2Emis_C = CO2Emis_C(Indice_EnerSect,:);
 initial_value.Tot_CO2Emis_C = sum(initial_value.CO2Emis_C);
 
-[initial_value.CO2Emis_X] = fill_table(IOT_FranceCO2Emis,IndRow_IOT_FranceCO2Emis,IndCol_IOT_FranceCO2Emis,Index_Commodities,"X");
+[initial_value.CO2Emis_X] = fill_table(eval("IOT_"+Country_ISO+"_CO2Emis"),eval("IndRow_IOT_"+Country_ISO+"_CO2Emis"),eval("IndCol_IOT_"+Country_ISO+"_CO2Emis"),Index_Commodities,"X");
 
 
 initial_value.Tot_CO2Emis =initial_value.Tot_CO2Emis_IC + initial_value.Tot_CO2Emis_C;
 
+if Country == "France";
 // emissions in 2030 ( from snbc)
-CO2Emis_IC_2030 = fill_table(IOT_FranceCO2Emis_2030,IndRow_IOT_FranceCO2Emis,IndCol_IOT_FranceCO2Emis,Index_Commodities,Index_Sectors);
+CO2Emis_IC_2030 = fill_table(eval("IOT_"+Country_ISO+"_CO2Emis_2030"),eval("IndRow_IOT_"+Country_ISO+"_CO2Emis_2030"),eval("IndCol_IOT_"+Country_ISO+"_CO2Emis_2030"),Index_Commodities,Index_Sectors);
 Tot_CO2Emis_IC_2030 = sum(CO2Emis_IC_2030);
-CO2Emis_C_2030 = fill_table(IOT_FranceCO2Emis_2030,IndRow_IOT_FranceCO2Emis,IndCol_IOT_FranceCO2Emis,Index_Commodities,"C");
+CO2Emis_C_2030 = fill_table(eval("IOT_"+Country_ISO+"_CO2Emis_2030"),eval("IndRow_IOT_"+Country_ISO+"_CO2Emis_2030"),eval("IndCol_IOT_"+Country_ISO+"_CO2Emis_2030"),Index_Commodities,"C");
 Tot_CO2Emis_C_2030 = sum(CO2Emis_C_2030);
 Tot_CO2Emis_2030 = Tot_CO2Emis_C_2030 + Tot_CO2Emis_IC_2030;
+end
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
@@ -510,7 +508,7 @@ initial_value.Other_Direct_Tax = abs(initial_value.Other_Direct_Tax);
 
 
 // Labour file (Thousand Full time equivalent)
-[IndexRow_Labour,IndexCol_Labour,Labour] = read_table(DATA+"Labour.csv",";");
+[IndexRow_Labour,IndexCol_Labour,Labour] = read_table(DATA_Country+"Labour.csv",";");
 [initial_value.Labour] = fill_table( Labour,IndexRow_Labour,IndexCol_Labour,"Labour",Index_Sectors);
 
 
@@ -558,7 +556,7 @@ initial_value.Carbon_Tax_C = zeros(nb_Commodities,nb_Households);
 // READ CSV FILES FOR RoW approximation of Emissions embodied in imports
 //////////////////////////////////////////////////////////////////
 
-listDataRoWfiles = listfiles(DATA+'Data_RoW' );
+listDataRoWfiles = listfiles(DATA_Country+'Data_RoW' );
 Nb_Datafiles = size(listDataRoWfiles,"r");
 listCSVfiles=list();
 
@@ -578,7 +576,7 @@ for elt=1:size(listCSVfiles)
 		
 		listIndex($+1)= listCSVfiles(elt);
 				
-		matStr = read_csv(DATA+'Data_RoW'+sep+listCSVfiles(elt),';');
+		matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
 		varname = strsubst(listCSVfiles(elt),".csv","");
 		if isdef(varname)
 		disp(varname)
@@ -587,7 +585,7 @@ for elt=1:size(listCSVfiles)
 		execstr(varname +'=matStr;');
 			
 	else 
-			matStr = read_csv(DATA+'Data_RoW'+sep+listCSVfiles(elt),';');
+			matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
 			matStr =evstr(matStr);
 			varname = strsubst(listCSVfiles(elt),".csv","");
 			if isdef(varname)
