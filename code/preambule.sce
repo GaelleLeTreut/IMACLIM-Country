@@ -108,6 +108,10 @@ for elt=1:size(Country_available,"r");
 		
 end
 
+if (size(Country,"r")<>[1]| size(Country,"r")<>[1])
+error ( "various countries have been selected in Country_Selection.csv");
+end
+
 
 
 // Country specific MODEL FILE STRUCTURE

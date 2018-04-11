@@ -482,26 +482,36 @@ end
 
 // Some values are modified into positive values for a better comprehension of the economics equations
 
-initial_value.Unemployment_transfers = abs(initial_value.Unemployment_transfers);
+if Country=="Brasil" then
+ initial_value.Gov_social_transfers = initial_value.Gov_social_transfers(Indice_Households);
+    initial_value.Gov_social_transfers = abs(initial_value.Gov_social_transfers);
+    initial_value.Gov_Direct_Tax = initial_value.Gov_Direct_Tax(Indice_Households);
+    initial_value.Gov_Direct_Tax = abs(initial_value.Gov_Direct_Tax);
+    initial_value.Corp_social_transfers = initial_value.Corp_social_transfers(Indice_Households);
+    initial_value.Corp_social_transfers = abs(initial_value.Corp_social_transfers);
+    initial_value.Corp_Direct_Tax = initial_value.Corp_Direct_Tax(Indice_Households);
+    initial_value.Corp_Direct_Tax = abs(initial_value.Corp_Direct_Tax);
 
-initial_value.Pensions = abs(initial_value.Pensions);
-initial_value.Pensions = initial_value.Pensions(Indice_Households);
-initial_value.Unemployment_transfers = initial_value.Unemployment_transfers(Indice_Households);
-initial_value.Other_social_transfers = initial_value.Other_social_transfers(Indice_Households);
+else	
+
+    initial_value.Other_social_transfers = initial_value.Other_social_transfers(Indice_Households);
+    initial_value.Other_social_transfers = abs(initial_value.Other_social_transfers);
+    initial_value.Other_Direct_Tax = initial_value.Other_Direct_Tax(Indice_Households);
+    initial_value.Other_Direct_Tax = abs(initial_value.Other_Direct_Tax);
+    initial_value.Unemployment_transfers = abs(initial_value.Unemployment_transfers);
+    initial_value.Pensions = abs(initial_value.Pensions);
+    initial_value.Pensions = initial_value.Pensions(Indice_Households);
+    initial_value.Unemployment_transfers = initial_value.Unemployment_transfers(Indice_Households);
+   
+end
+
 initial_value.Income_Tax = initial_value.Income_Tax(Indice_Households);
-initial_value.Other_Direct_Tax = initial_value.Other_Direct_Tax(Indice_Households);
 initial_value.Corporate_Tax = initial_value.Corporate_Tax(Indice_Corporations);
 initial_value.GFCF_byAgent(Indice_RestOfWorld) = [];
-
-initial_value.Other_social_transfers = abs(initial_value.Other_social_transfers);
 
 initial_value.Income_Tax = abs(initial_value.Income_Tax);
 
 initial_value.Corporate_Tax = abs(initial_value.Corporate_Tax);
-
-initial_value.Other_Direct_Tax = abs(initial_value.Other_Direct_Tax);
-
-
 //////////////////////////////////////////////////////////////////
 // READ OTHER CSV FILES
 //////////////////////////////////////////////////////////////////
@@ -555,6 +565,7 @@ initial_value.Carbon_Tax_C = zeros(nb_Commodities,nb_Households);
 //////////////////////////////////////////////////////////////////
 // READ CSV FILES FOR RoW approximation of Emissions embodied in imports
 //////////////////////////////////////////////////////////////////
+if Country=="France" then
 
 listDataRoWfiles = listfiles(DATA_Country+'Data_RoW' );
 Nb_Datafiles = size(listDataRoWfiles,"r");
@@ -603,6 +614,8 @@ end
 
 
 nb_RoW = size(Index_Region,"c");
+
+end
 
 // //Put each IC matrix of different country into a 3D matrix ( sectors, sectors, region) 
 // // IC_RoW = zeros(nb_Commodities,nb_Sectors,nb_RoW);

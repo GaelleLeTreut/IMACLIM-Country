@@ -51,7 +51,7 @@ SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
 mkdir(SAVEDIR);
 diary(SAVEDIR+"summary.log");
 
-SAVEDIR_IOA = OUTPUT+Country_ISO+runName + filesep()+ "outputs_IOA"+filesep();
+SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
 mkdir(SAVEDIR_IOA);
 
 printf("===============================================\n");
