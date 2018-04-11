@@ -1,0 +1,18 @@
+Component;Name
+// SELECT a type of resoultion by uncomment it;
+System_Resol;Projection_homothetic
+// System_Resol;Projection_ECOPA
+// System_Resol;Static_Resol
+// SELECT a type of study (shock in parameters) by uncomment it;
+// study;Static_RunChoices
+study;Projection_evolution
+// SELECT an aggregation sector profil by uncomment it;
+// AGG_type;
+// AGG_type;AGG_6SecBr
+// AGG_type;AGG_7SecBr
+AGG_type;AGG_11SecBr
+// AGG_type;AGG_16SecBr
+// AGG_type;AGG_17SecBr
+// SELECT an households dissagregation profil by uncomment it;
+H_DISAGG;HH1
+// H_DISAGG;H10

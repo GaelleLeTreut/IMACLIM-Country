@@ -1,0 +1,12 @@
+ConstrainedShared_IC;Biomass;Coal;Oil;Natural_gas;Electricity;Buildings_constr;Transportation;Agriculture;Heavy_Industry;OthIndus;Composite
+Biomass;1;1;1;1;1;1;1;1;1;1;1
+Coal;1;1;1;1;1;1;1;1;1;1;1
+Oil;1;1;1;1;1;1;1;1;1;1;1
+Natural_gas;1;1;1;1;1;1;1;1;1;1;1
+Electricity;1;1;1;1;1;1;1;1;1;1;1
+Buildings_constr;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Transportation;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Agriculture;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Heavy_Industry;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+OthIndus;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Composite;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8

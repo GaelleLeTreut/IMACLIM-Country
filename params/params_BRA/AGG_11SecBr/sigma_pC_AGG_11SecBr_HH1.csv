@@ -1,0 +1,12 @@
+sigma_pC;HH1
+Biomass;0.27
+Coal;1
+Oil;0.27
+Natural_gas;0.26
+Electricity;0.26
+Buildings_constr;0.29
+Transportation;0.3
+Agriculture;0.29
+Heavy_Industry;0.29
+OthIndus;0.29
+Composite;%nan

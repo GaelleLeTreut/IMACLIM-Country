@@ -1,0 +1,22 @@
+//Names;;;;Notes;;;;;;;
+//;;;;;;;;;;;
+//Sectors;Biomass;Coal;Oil;Natural_gas;Electricity;Buildings_constr;Transportation;Agriculture;Heavy_Industry;OthIndus;Composite
+sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1
+//;;;;;;;;;;;
+// Production;;;;;;;;;;;
+phi_L_a;0;0;0;0;0;0;0;0;0;0;0
+phi_L_b;0;0;0;0;0;0;0;0;0;0;0
+phi_L;0;0;0;0;0;0;0;0;0;0;0
+phi_K;0;0;0;0;0;0;0;0;0;0;0
+ConstrainedShare_Labour;1;0.8;0.8;0.8;1;0.8;0.8;0.8;0.8;0.8;0.8
+ConstrainedShare_Capital;0.8;0.8;0.8;0.8;1;0.8;0.8;0.8;0.8;0.8;0.8
+//International trade parameters;;;;;;;;;;;
+sigma;0.5;0.1;0.1;0.1;0.1;0.1;0.1;0.5;0.5;0.05;0.1
+sigma_X;1;1;1;1;1;1;1;1;1;1;1
+sigma_M;1.2;1.2;1.2;1.2;1.2;1.2;1.2;1.2;1.2;1.2;1.2
+delta_M_parameter;0;0;0;0;0;0;0;0;0;0;0
+delta_X_parameter;0;0;0;0;0;0;0;0;0;0;0
+//Investments;;;;;;;;;;;
+Gamma;0;0;0;0;0;0;0;0;0;0;0
+pBetta;0;0;0;0;0;0;0;0;0;0;0
+//;-0.01;-0.01;-0.01;-0.01;-0.01;-0.015;-0.025;-0.025;-0.025;-0.025;-0.015
