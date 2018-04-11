@@ -1,0 +1,21 @@
+Variable/Sectoral value;Crude_oil;Natural_gas;Coal;FuelProd;Electricty;HeatGeoSol_Th;Steel_Iron;NonFerrousMetals;Cement;OthMin;OthIndus;Agriculture;Composite
+Households consumption Nominal 0;0;10.4;0.1;41.9;19.7;0.1;0.2;0.3;0.4;3.6;249;32.4;733.3
+Households consumption Nominal 1;0;14.6;0.2;58.7;27.6;0.1;0.2;0.4;0.6;5;348.4;45.3;1026.2
+HPrice Index (Paasche);0;1;1;1;1;1;1;1;1;1;1;1;1
+Households consumption Real 1 (G€);0;14.6;0.2;58.7;27.6;0.1;0.2;0.4;0.6;5;348.4;45.3;1026.2
+Government consumption Nominal 0;0;0;0;0;0;0;0;0;0;0;29.1;0;492.6
+Government consumption Nominal 1;0;0;0;0;0;0;0;0;0;0;40.7;0;689.3
+G Price Index (Paasche);1;1;1;1;1;1;1;1;1;1;1;1;1
+Government consumption Real 1 (G€);0;0;0;0;0;0;0;0;0;0;40.7;0;689.3
+Investment Nominal 0;0;0;0;0;0;0;0.1;0.1;0;0;70.2;1.3;305
+Investment Nominal 1;0;0;0;0;0;0;0.1;0.1;0;0;98.3;1.9;426.8
+I Price Index (Paasche);0;0;0;0;0;0;1;1;0;0;1;1;1
+Investment Real 1 (G€);0;0;0;0;0;0;0.1;0.1;0;0;98.3;1.9;426.8
+Exports Nominal 0;0;0.5;0.1;13.8;2.2;0;12.5;7.8;0.3;4.5;204.4;13.4;200.6
+Exports Nominal 1;0;0.7;0.1;19.4;3.1;0;17.5;10.9;0.4;6.3;286.1;18.7;280.7
+X Price Index (Paasche);1;1;1;1;1;1;1;1;1;1;1;1;1
+Exports Real 1 (G€);0;0.7;0.1;19.4;3.1;0;17.5;10.9;0.4;6.3;286.1;18.7;280.7
+Imports Nominal 0;28.8;9.8;2.2;16.1;1;0;11;12.4;0.3;6.4;170.1;9.6;245.2
+Imports Nominal 1;40.2;13.7;3;22.5;1.4;0;15.4;17.4;0.4;8.9;238;13.4;343.1
+M Price Index (Paasche);1;1;1;1;1;1;1;1;1;1;1;1;1
+Imports Real 1 (G€);40.2;13.7;3;22.5;1.4;0;15.4;17.4;0.4;8.9;238;13.4;343.1
