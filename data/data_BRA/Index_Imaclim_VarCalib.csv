@@ -61,12 +61,12 @@ Transp_margins_rates;1;nb_Commodities;calib
 alpha;nb_Commodities;nb_Sectors;calib
 G;nb_Commodities;nb_Government;calib
 G_ref;nb_Commodities;nb_Government;calib
-I;nb_Commodities;nb_Sectors;calib
+I;nb_Commodities;1;calib
 X;nb_Commodities;1;calib
 IC;nb_Commodities;nb_Sectors;calib
 G_value;nb_Commodities;nb_Government;InitVal
 pG;nb_Commodities;nb_Government;InitVal
-I_value;nb_Commodities;nb_Sectors;InitVal
+I_value;nb_Commodities;1;InitVal
 pI;nb_Commodities;1;InitVal
 Trade_margins;1;nb_Commodities;InitVal
 IC_value;nb_Commodities;nb_Sectors;InitVal
@@ -166,8 +166,8 @@ markup_rate;1;nb_Sectors;calib
 markup_rate_ref;1;nb_Sectors;calib
 Trade_margins_rates_ref;1;nb_Commodities;calib
 Transp_margins_rates_ref;1;nb_Commodities;calib
-Betta;nb_Commodities;nb_Sectors;calib
-Betta_ref;nb_Commodities;nb_Sectors;calib
+Betta;nb_Commodities;1;calib
+Betta_ref;nb_Commodities;1;calib
 Gamma;1;nb_Sectors;Param
 pBetta;1;nb_Sectors;Param
 SpeMarg_rates_X_ref;1;nb_Commodities;calib

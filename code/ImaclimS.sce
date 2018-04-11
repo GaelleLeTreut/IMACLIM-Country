@@ -109,7 +109,11 @@ exec("Calibration.sce");
 // 	STEP 4: INPUT OUTPUT ANALYSIS BY
 ////////////////////////////////////////////////////////////
 disp("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR");
+if Country =="France"
 exec(CODE+"IOA_BY.sce");
+else
+disp("Not executed for the IMACLIM-"+Country+" version")
+end
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM
@@ -118,7 +122,12 @@ exec(CODE+"IOA_BY.sce");
 disp("STEP 5: RESOLUTION AND EQUILIBRIUM...");
 
 //// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
+// if  System_Resol=="Projection_homothetic"
+// VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
+// else
+// VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
+// end
+
 // Loading study changes
 exec(STUDY_Country+study+".sce");
 

@@ -296,22 +296,46 @@ else
     interest_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_interest_rate");
 end
 
-
-function [const_H_DisposableIncome] =fcalib_H_Income_Const_1(x_H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax, Imaclim_VarCalib)
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+if Country=="Brasil" then
+    function [const_H_DisposableIncome] =fcalib_H_Income_Const_2(x_H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax, Imaclim_VarCalib)
+        H_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_H_disposable_income");
+        const_H_DisposableIncome =H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax);
+    endfunction
+    const_H_DisposableIncome = 10^5;
+    
+    while norm(const_H_DisposableIncome) > sensib
+        if  (count>=countMax)
+            error("review calib_H_Disposoble_Income");
+        end
+        count = count + 1;
+        [x_H_disposable_income, const_H_DisposableIncome, info_calib_H_DispoIncome] = fsolve(x_H_disposable_income, list(fcalib_H_Income_Const_2,NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax, Index_Imaclim_VarCalib));
+        H_disposable_income = indiv_x2variable (Index_Imaclim_VarCalib, "x_H_disposable_income");
+    end
+    count=0;
+else	
+	function [const_H_DisposableIncome] =fcalib_H_Income_Const_1(x_H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax, Imaclim_VarCalib)
     H_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_H_disposable_income");
     const_H_DisposableIncome =H_Income_Const_1(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax);
-endfunction
-const_H_DisposableIncome = 10^5;
+	endfunction
+	const_H_DisposableIncome = 10^5;
 
-while norm(const_H_DisposableIncome) > sensib
+	while norm(const_H_DisposableIncome) > sensib
     if  (count>=countMax)
         error("review calib_H_Disposoble_Income");
     end
     count = count + 1;
     [x_H_disposable_income, const_H_DisposableIncome, info_calib_H_DispoIncome] = fsolve(x_H_disposable_income, list(fcalib_H_Income_Const_1,NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax, Index_Imaclim_VarCalib));
     H_disposable_income = indiv_x2variable (Index_Imaclim_VarCalib, "x_H_disposable_income");
+	end
+	count=0;
 end
-count=0;
+
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
 
 function [const_u] =fcalib_HEmploym_Const_1(x_u, Unemployed, Labour_force, Imaclim_VarCalib)
     u= indiv_x2variable(Imaclim_VarCalib, "x_u");
@@ -325,6 +349,11 @@ else
     u = indiv_x2variable (Index_Imaclim_VarCalib, "x_u");
 end
 
+
+///////////////////////////
+// Start - Not applied for Brasil
+///////////////////////////
+if Country<>"Brasil" then
 function [const_Pension_Benefits] =fcalib_Pensions_Const_1(x_Pension_Benefits,Pensions, Retired, Imaclim_VarCalib)
     Pension_Benefits= indiv_x2variable(Imaclim_VarCalib, "x_Pension_Benefits");
     const_Pension_Benefits = Pensions_Const_1(Pensions, Pension_Benefits, Retired);
@@ -339,6 +368,7 @@ else
     Pension_Benefits = indiv_x2variable (Index_Imaclim_VarCalib, "x_Pension_Benefits");
 end
 
+
 function [const_UnemployBenefits] =fcalib_UnemplTr_Const_1(x_UnemployBenefits,Unemployment_transfers, Unemployed, Imaclim_VarCalib)
     UnemployBenefits= indiv_x2variable(Imaclim_VarCalib, "x_UnemployBenefits");
     const_UnemployBenefits = Unemploy_Transf_Const_1(Unemployment_transfers, UnemployBenefits, Unemployed);
@@ -351,6 +381,44 @@ else
     UnemployBenefits = indiv_x2variable (Index_Imaclim_VarCalib, "x_UnemployBenefits");
 end
 
+
+end
+
+///////////////////////////
+// End - Not applied for Brasil
+///////////////////////////
+
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+
+if Country=="Brasil" then
+function [const_Gov_SocioBenef] =fcalib_GovSocioTrConst_1(x_Gov_SocioBenef, Gov_social_transfers, Population, Imaclim_VarCalib)
+        Gov_SocioBenef= indiv_x2variable(Imaclim_VarCalib, "x_Gov_SocioBenef")
+        const_Gov_SocioBenef= OtherSoc_Transf_Const_1(Gov_social_transfers, Gov_SocioBenef, Population)
+    endfunction
+    [x_Gov_SocioBenef, const_Gov_SocioBenef, info_calib_GovSocioBenef] = fsolve(x_Gov_SocioBenef, list(fcalib_GovSocioTrConst_1, Gov_social_transfers, Population, Index_Imaclim_VarCalib));
+
+    if norm(const_Gov_SocioBenef) > sensib
+        error( "review calib_Other_SocioBenef")
+    else
+        Gov_SocioBenef = indiv_x2variable (Index_Imaclim_VarCalib, "x_Gov_SocioBenef");
+    end
+
+    function [const_Corp_SocioBenef] =fcalib_CorSocioTrConst_1(x_Corp_SocioBenef, Corp_social_transfers, Population, Imaclim_VarCalib)
+        Corp_SocioBenef= indiv_x2variable(Imaclim_VarCalib, "x_Corp_SocioBenef")
+        const_Corp_SocioBenef= OtherSoc_Transf_Const_1(Corp_social_transfers, Corp_SocioBenef, Population)
+    endfunction
+    [x_Corp_SocioBenef, const_Corp_SocioBenef, info_calib_CorSocioBenef] = fsolve(x_Corp_SocioBenef, list(fcalib_CorSocioTrConst_1,Corp_social_transfers, Population, Index_Imaclim_VarCalib));
+
+    if norm(const_Corp_SocioBenef) > sensib
+        error( "review calib_Other_SocioBenef")
+    else
+        Corp_SocioBenef = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_SocioBenef");
+    end
+	
+else
+	
 function [const_Other_SocioBenef] =fcalib_OthSocioTrConst_1(x_Other_SocioBenef, Other_social_transfers, Population, Imaclim_VarCalib)
     Other_SocioBenef= indiv_x2variable(Imaclim_VarCalib, "x_Other_SocioBenef");
     const_Other_SocioBenef= OtherSoc_Transf_Const_1(Other_social_transfers, Other_SocioBenef, Population);
@@ -362,6 +430,10 @@ if norm(const_Other_SocioBenef) > sensib
 else
     Other_SocioBenef = indiv_x2variable (Index_Imaclim_VarCalib, "x_Other_SocioBenef");
 end
+end
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
 
 function [const_Household_savings] =fcalib_HNetLend_Const_1(x_Household_savings, NetLending, GFCF_byAgent, Imaclim_VarCalib)
     Household_savings= indiv_x2variable(Imaclim_VarCalib, "x_Household_savings");
@@ -683,6 +755,36 @@ while norm(const_VA_Tax_rate) > sensib
 end
 count=0;
 
+///////////////////////////
+// Start Specific to Brasil
+///////////////////////////
+if Country=="Brasil" then
+    function [const_Cons_Tax_rate] =fcalib_Cons_Tax_Const_1(x_Cons_Tax_rate, Cons_Tax, pIC, IC, pC, C, pG, G, pI, I, Imaclim_VarCalib)
+        Cons_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Cons_Tax_rate");
+    
+        y_1 = (Cons_Tax' ==0).*Cons_Tax_rate';
+        y_2 = (Cons_Tax' <>0).*Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
+        const_Cons_Tax_rate =(Cons_Tax' ==0).*y_1 +  (Cons_Tax' <>0).*y_2;
+    
+    endfunction
+    
+    const_Cons_Tax_rate = 10^5;
+    while norm(const_Cons_Tax_rate) > sensib
+        if  (count>=countMax)
+            error("review calib_Cons_Tax_rate")
+        end
+        count = count + 1;
+        [x_Cons_Tax_rate, const_Cons_Tax_rate, info_calib_Cons_Tax_rate] = fsolve(x_Cons_Tax_rate, list(fcalib_Cons_Tax_Const_1, Cons_Tax, pIC, IC, pC, C, pG, G, pI,I,Index_Imaclim_VarCalib));
+        Cons_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Cons_Tax_rate");
+        Cons_Tax_rate = (abs(Cons_Tax_rate) > %eps).*Cons_Tax_rate;
+    
+    end
+    count=0;
+end
+///////////////////////////
+// End Specific to Brasil
+///////////////////////////
+
 
 /// Calibrage des différentes marges spécifiques à partir des équations de prix pC pX pIC , pIC pG
 // Une fois calibré on peut recalibrer les marges spécifiques (et supprimer le calibrage des taux des marges spé calculé antérieureemnt en ligne 471
@@ -799,6 +901,27 @@ count=0;
 // end
 // count=0;
 
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+
+if Country=="Brasil" then
+    function [const_CorpDispoIncome] =fcalib_CorpIncom_Const_2(x_Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income, Corporate_Tax, Imaclim_VarCalib)
+        Corp_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_Corp_disposable_income");
+        const_CorpDispoIncome = Corp_income_Const_2(Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax)
+    endfunction
+    
+    const_CorpDispoIncome = 10^5;
+    while norm(const_CorpDispoIncome) > sensib
+        if  (count>=countMax)
+            error("review calib_Corporations_savings")
+        end
+        count = count + 1;
+        [x_Corp_disposable_income, const_CorpDispoIncome, info_CorpDispoIncome] = fsolve(x_Corp_disposable_income, list(fcalib_CorpIncom_Const_2,GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers,Property_income, Corporate_Tax, Index_Imaclim_VarCalib));
+        Corp_disposable_income = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_disposable_income");
+    end
+    count=0;
+else	
 
 function [const_CorpDispoIncome] =fcalib_CorpIncom_Const_1(x_Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income, Corporate_Tax, Imaclim_VarCalib)
     Corp_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_Corp_disposable_income");
@@ -815,6 +938,10 @@ while norm(const_CorpDispoIncome) > sensib
     Corp_disposable_income = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_disposable_income");
 end
 count=0;
+end
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
 
 function [const_Corp_savings] =fcalibCorpSaving_Const_1(x_Corporations_savings, Corp_disposable_income, Imaclim_VarCalib)
     Corporations_savings= indiv_x2variable(Imaclim_VarCalib, "x_Corporations_savings");
@@ -845,6 +972,22 @@ else
     Corp_invest_propensity = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_invest_propensity");
 end
 
+///////////////////////////
+// Start Difference between France (1) and Brasil (2)
+///////////////////////////
+if Country=="Brasil" then
+    function [const_Income_Tax_rate] =fcalibIncome_Tax_Const_1(x_Income_Tax_rate, Income_Tax,  H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax, Imaclim_VarCalib)
+        Income_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Income_Tax_rate");
+        const_Income_Tax_rate =  Income_Tax_Const_2(Income_Tax, Income_Tax_rate, H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax)
+    endfunction
+    [x_Income_Tax_rate, const_Income_Tax_rate, info_calibOthIndirTaxRat] = fsolve(x_Income_Tax_rate, list(fcalibIncome_Tax_Const_1, Income_Tax,  H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax ,Index_Imaclim_VarCalib));
+    
+    if norm(const_Income_Tax_rate) > sensib
+        error( "review calib_Income_Tax_rate")
+    else
+        Income_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Income_Tax_rate");
+    end
+else
 
 function [const_Income_Tax_rate] =fcalibIncome_Tax_Const_1(x_Income_Tax_rate, Income_Tax,  H_disposable_income, Other_Direct_Tax, Imaclim_VarCalib)
     Income_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Income_Tax_rate");
@@ -857,6 +1000,12 @@ if norm(const_Income_Tax_rate) > sensib
 else
     Income_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Income_Tax_rate");
 end
+
+end
+
+///////////////////////////
+// End Difference between France (1) and Brasil (2)
+///////////////////////////
 
 function [const_Corporate_Tax_rate] =fcalib_Corp_Tax_Const_1(x_Corporate_Tax_rate, Corporate_Tax, GOS_byAgent, Imaclim_VarCalib)
     Corporate_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Corporate_Tax_rate");
@@ -945,8 +1094,29 @@ while norm(const_G_Consum_budget) > sensib
 end
 count=0;
 
-
-
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+if Country=="Brasil" then
+        function [const_G_dispo_income] =fcal_G_income_Const_2(x_G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Imaclim_VarCalib)
+    
+        G_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_G_disposable_income");
+    
+        const_G_dispo_income = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect);
+    
+    endfunction
+    
+    const_G_dispo_income = 10^5;
+    while norm(const_G_dispo_income) > sensib 
+        if  (count>=countMax)
+            error("review calib_G_disposable_income")
+        end
+        count = count + 1;
+        [x_G_disposable_income, const_G_dispo_income, info_calib_G_dispoIncome] = fsolve(x_G_disposable_income, list(fcal_G_income_Const_2, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Index_Imaclim_VarCalib));
+        G_disposable_income= indiv_x2variable(Index_Imaclim_VarCalib, "x_G_disposable_income");
+    end
+    count=0;
+else
 function [const_G_dispo_income] =fcal_G_income_Const_1(x_G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Imaclim_VarCalib)
 
     G_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_G_disposable_income");
@@ -965,7 +1135,10 @@ while norm(const_G_dispo_income) > sensib
     G_disposable_income= indiv_x2variable(Index_Imaclim_VarCalib, "x_G_disposable_income");
 end
 count=0;
-
+end
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
 
 function [const_Gov_savings] =fcalibGovSaving_Const_1(x_Government_savings, G_disposable_income,G_Consumption_budget , Imaclim_VarCalib)
     Government_savings= indiv_x2variable(Imaclim_VarCalib, "x_Government_savings");
@@ -1053,6 +1226,52 @@ else
     Labour_Tax_rate = (abs(Labour_Tax_rate) > %eps).*Labour_Tax_rate;
 end
 
+///////////////////////////
+// Start Specific to Brasil
+///////////////////////////
+if Country=="Brasil" then
+    function [const_Labor_Cor_Tax_rate] =fcal_Labour_Tax_Const_2(x_Labour_Corp_Tax_rate, Labour_Corp_Tax, w, lambda, Y, Imaclim_VarCalib)
+        Labour_Corp_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Labour_Corp_Tax_rate");
+    
+        y1_1 = (Y==0).*(Labour_Corp_Tax_rate');
+        y1_2 = (Y<>0).*Labour_Tax_Const_1(Labour_Corp_Tax, Labour_Corp_Tax_rate, w, lambda, Y);
+        const_Labor_Cor_Tax_rate	= (Y==0).*y1_1  + (Y<>0).*y1_2;
+    endfunction
+    
+    [x_Labour_Corp_Tax_rate, const_Labor_Cor_Tax_rate, info_cal_LaborCorTaxRate] = fsolve(x_Labour_Corp_Tax_rate, list(fcal_Labour_Tax_Const_2, Labour_Corp_Tax, w, lambda, Y, Index_Imaclim_VarCalib));
+    
+    if norm(const_Labour_Tax_rate) > sensib
+        error( "review calib_Labour_Tax_rate")
+    else
+        Labour_Corp_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Labour_Corp_Tax_rate");
+        Labour_Corp_Tax_rate = (abs(Labour_Corp_Tax_rate) > %eps).*Labour_Corp_Tax_rate;
+    end
+end
+///////////////////////////
+// End Specific to Brasil
+///////////////////////////
+
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+if Country=="Brasil" then
+    function [const_GDP] =fcal_GDP_Const_1(x_GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, Imaclim_VarCalib)
+        GDP= indiv_x2variable(Imaclim_VarCalib, "x_GDP");
+        const_GDP =  GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C);
+    endfunction
+
+    const_GDP = 10^5;
+    while norm(const_GDP) > sensib
+        if  (count>=countMax)
+            error("review calib_GDP")
+        end
+        count = count + 1;
+        [x_GDP, const_GDP, info_cal_GDP] = fsolve(x_GDP, list(fcal_GDP_Const_1, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, Index_Imaclim_VarCalib));
+        GDP = indiv_x2variable (Index_Imaclim_VarCalib, "x_GDP");
+    
+    end
+    count=0;
+else
 
 function [const_GDP] =fcal_GDP_Const_1(x_GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, Imaclim_VarCalib)
     GDP= indiv_x2variable(Imaclim_VarCalib, "x_GDP");
@@ -1071,7 +1290,11 @@ while norm(const_GDP) > sensib
 
 end
 count=0;
+end
 
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
 
 function [const_pK] =fcal_CapitalCost_Const_1(x_pK, pI, I, Imaclim_VarCalib)
     pK= indiv_x2variable(Imaclim_VarCalib, "x_pK");
@@ -1106,7 +1329,20 @@ function [const_pL] =fcal_Labour_Cost_Const_1(x_pL, w, Labour_Tax_rate, Imaclim_
     const_pL =  Labour_Cost_Const_1(pL, w, Labour_Tax_rate)
 endfunction
 
-[x_pL, const_pL, info_cal_pL] = fsolve(x_pL, list(fcal_Labour_Cost_Const_1,  w, Labour_Tax_rate, Index_Imaclim_VarCalib));
+/////////////////////////////////////////////////////
+// Start Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+
+if Country=="Brasil" then
+    Labour_tax_rate_temp=Labour_Tax_rate+Labour_Corp_Tax_rate;
+else
+Labour_tax_rate_temp=Labour_Tax_rate;
+end
+/////////////////////////////////////////////////////
+// End Difference between France (1) and Brasil (2)
+/////////////////////////////////////////////////////
+
+[x_pL, const_pL, info_cal_pL] = fsolve(x_pL, list(fcal_Labour_Cost_Const_1,  w, Labour_tax_rate_temp, Index_Imaclim_VarCalib));
 
 if norm(const_pL) > sensib
     error( "review calib_pL")
@@ -1135,6 +1371,11 @@ else
     markup_rate = (abs(markup_rate) > %eps).*markup_rate;
 end
 
+///////////////////////////
+// Start - Not applied to Brasil
+///////////////////////////
+
+if Country<>"Brasil"
 
 function [const_PensBenef_param] =fcal_PensBenef_Const_1(x_Pension_Benefits_param, Pension_Benefits, NetWage_variation, Imaclim_VarCalib)
     Pension_Benefits_param= indiv_x2variable(Imaclim_VarCalib, "x_Pension_Benefits_param");
@@ -1176,6 +1417,48 @@ else
     Other_SocioBenef_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Other_SocioBenef_param");
 end
 
+end
+
+///////////////////////////
+// End - Not applied to Brasil
+///////////////////////////
+
+///////////////////////////
+// Start Specific to Brasil
+///////////////////////////
+if Country=="Brasil" then
+    GDP_ref=GDP;
+    Population_ref=Population;
+    
+    function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, Imaclim_VarCalib)
+        Gov_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Gov_SocioBenef_param");
+        const_GovSocioBenefParam =  Other_SocioBenef_Const_2(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population)
+    endfunction
+    
+    [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, Index_Imaclim_VarCalib));
+    
+    if norm(const_GovSocioBenefParam) > sensib
+        error( "review calib_Other_SocioBenef_param")
+    else
+        Gov_SocioBenef_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Gov_SocioBenef_param");
+    end
+    
+    function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, Imaclim_VarCalib)
+        Corp_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Corp_SocioBenef_param");
+        const_CorSocioBenefParam =  Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population)
+    endfunction
+    
+    [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, Index_Imaclim_VarCalib));
+    
+    if norm(const_CorSocioBenefParam) > sensib
+        error( "review calib_Other_SocioBenef_param")
+    else
+        Corp_SocioBenef_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_SocioBenef_param");
+    end
+end
+///////////////////////////
+// End Specific to Brasil
+///////////////////////////
 
 function [const_kappa] =fcalCapIncome_Const_1(x_kappa, Capital_income, pK, Y, Imaclim_VarCalib)
     kappa= indiv_x2variable(Imaclim_VarCalib, "x_kappa");
@@ -1227,7 +1510,10 @@ else
     Betta = (abs(Betta) > %eps).*Betta;
 end
 
-
+///////////////////////////
+// Start - Not Applied to Brasil
+///////////////////////////
+if Country<>"Brasil" then
 function [const_Labour_Tax_Cut] =fcalRevRecycling_Const_1(x_Labour_Tax_Cut, Labour_Tax, Labour_Tax_rate, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, Imaclim_VarCalib)
     Labour_Tax_Cut= indiv_x2variable(Imaclim_VarCalib, "x_Labour_Tax_Cut");
     const_Labour_Tax_Cut = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
@@ -1260,6 +1546,10 @@ while norm(const_LabTaxRate_BefCut) > sensib
 end
 count=0;
 
+end
+///////////////////////////
+// End - Not Applied to Brasil
+///////////////////////////
 
 // 	Constraints to execute for variables_ref in calib
 // Rq: vérifier que dans tous les cas, VarRefNames(i) correspond bien à la bonne contrainte dans Const2Exec(i,1)
@@ -1305,6 +1595,11 @@ else
     CPI = indiv_x2variable (Index_Imaclim_VarCalib, "x_CPI");
 end
 
+///////////////////////////
+// Start Not Applied to Brasil
+///////////////////////////
+if Country<>"Brasil" then
+
 function [const_OthDirectTax_param] =fcalOthDirectTax_Const_1(x_Other_Direct_Tax_param, Other_Direct_Tax, CPI, Imaclim_VarCalib)
     Other_Direct_Tax_param= indiv_x2variable(Imaclim_VarCalib, "x_Other_Direct_Tax_param");
     const_OthDirectTax_param = Other_Direct_Tax_Const_1(Other_Direct_Tax, CPI, Other_Direct_Tax_param)
@@ -1318,6 +1613,45 @@ else
     Other_Direct_Tax_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Other_Direct_Tax_param");
 end
 
+end 
+///////////////////////////
+// End Not Applied to Brasil
+///////////////////////////
+
+///////////////////////////
+// Start Specific to Brasil
+///////////////////////////
+if Country=="Brasil" then
+    function [const_GovDirectTax_rate] =fcalGovDirectTax_Const_1(x_Gov_Direct_Tax_rate, Gov_Direct_Tax, Labour_income, Imaclim_VarCalib)
+        Gov_Direct_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Gov_Direct_Tax_rate");
+        const_GovDirectTax_rate = OthDirTax_rate_Const_1(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
+    endfunction
+    
+    [x_Gov_Direct_Tax_rate, const_GovDirectTax_rate, infCalGovDirectTax_rate] = fsolve(x_Gov_Direct_Tax_rate, list(fcalGovDirectTax_Const_1, Gov_Direct_Tax, Labour_income, Index_Imaclim_VarCalib));
+    
+    if norm(const_GovDirectTax_rate) > sensib
+        error( "review calib_Gov_Direct_Tax_rate")
+    else
+        Gov_Direct_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Gov_Direct_Tax_rate");
+    end
+    
+    function [const_CorpDirectTax_rate] =fcalCorDirectTax_Const_1(x_Corp_Direct_Tax_rate, Corp_Direct_Tax, Labour_income, Imaclim_VarCalib)
+        Corp_Direct_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Corp_Direct_Tax_rate");
+        const_CorpDirectTax_rate = OthDirTax_rate_Const_1(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
+    endfunction
+    
+    [x_Corp_Direct_Tax_rate, const_CorpDirectTax_rate, infCalCorpDirectTax_rate] = fsolve(x_Corp_Direct_Tax_rate, list(fcalCorDirectTax_Const_1, Corp_Direct_Tax, Labour_income, Index_Imaclim_VarCalib));
+    
+    if norm(const_CorpDirectTax_rate) > sensib
+        error( "review calib_Corp_Direct_Tax_rate")
+    else
+        Corp_Direct_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Corp_Direct_Tax_rate");
+    end
+end
+
+///////////////////////////
+// End Specific to Brasil
+///////////////////////////
 
 function [const_delta_pM] =fcalImport_price_Const_1(x_delta_pM, pM, pM_ref, Imaclim_VarCalib)
     delta_pM= indiv_x2variable(Imaclim_VarCalib, "x_delta_pM");
@@ -1333,6 +1667,10 @@ else
 end
 
 
+///////////////////////////
+// End Not Applied to Brasil
+///////////////////////////
+if Country<>"Brasil" then
 function [const_Phi] =fcalTechnicProg_Const_1(x_Phi, Capital_consumption, sigma_Phi, Imaclim_VarCalib)
     Phi= indiv_x2variable(Imaclim_VarCalib, "x_Phi");
     const_Phi = TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
@@ -1360,6 +1698,10 @@ else
     Theta = indiv_x2variable (Index_Imaclim_VarCalib, "x_Theta");
 end
 
+end 
+///////////////////////////
+// End Not Applied to Brasil
+///////////////////////////
 
 function [const_Government_closure] =fcalPubFinanc_Const_1(x_Government_closure, Imaclim_VarCalib)
     Government_closure= indiv_x2variable(Imaclim_VarCalib, "x_Government_closure");

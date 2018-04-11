@@ -89,6 +89,23 @@ function y = H_Income_Const_1(H_disposable_income, NetCompWages_byAgent, GOS_byA
 	y=y1';
 endfunction
 
+// for Brasil
+function y = H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax) ;
+
+    // Income by sources, redistribution and tax payments
+    H_Labour_Income     = NetCompWages_byAgent (Indice_Households) ;
+    H_Non_Labour_Income = GOS_byAgent (Indice_Households) ;
+    H_Social_Transfers  = Gov_social_transfers + Corp_social_transfers;
+    H_Other_Income      = Other_Transfers(Indice_Households) + ClimPolicyCompens(Indice_Households);
+    H_Property_income   = Property_income(Indice_Households) ;
+    H_Tax_Payments      = Income_Tax + Gov_Direct_Tax + Corp_Direct_Tax;
+
+    // After tax household classes disposable income constraint (H_disposable_income)
+    y1 = H_disposable_income - (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
+ 
+	y=y1';
+endfunction
+
 /// Pensions by household class
 function y = Pensions_Const_1(Pensions, Pension_Benefits, Retired)
 
@@ -116,6 +133,14 @@ function y = OtherSoc_Transf_Const_1(Other_social_transfers, Other_SocioBenef, P
 	y=y1';		
 endfunction
 
+/// Other social transfers by household class
+function Other_social_transfers = OtherSoc_Transf_Const_2(Other_SocioBenef, Population) ;
+
+    // Other social transfers payments accruing to each household class, function of the level other social benefits and the number of people
+    Other_social_transfers = Other_SocioBenef .* Population ;
+    
+endfunction
+
 /// Property incomes (Financial transfers) by household class
 function y = H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt) ;
 
@@ -129,6 +154,16 @@ function y = H_PropTranf_Const_2(Property_income, GDP) ;
 
     // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
     y = (Property_income(Indice_Households) - (GDP/GDP_ref) * Property_income_ref(Indice_Households))';
+
+endfunction
+
+function Property_income = PropTranf_Const_2(GDP, GDP_ref, Property_income_ref) ;
+
+    // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
+    Property_income(Indice_Households) = (GDP/GDP_ref) * Property_income_ref(Indice_Households);
+    Property_income(Indice_Corporations) = (GDP/GDP_ref) * Property_income_ref(Indice_Corporations);
+    Property_income(Indice_Government) = (GDP/GDP_ref) * Property_income_ref(Indice_Government);
+    Property_income(Indice_RestOfWorld) = - ( Property_income(Indice_Corporations) + sum(Property_income(Indice_Households)) + Property_income(Indice_Government) ) ;
 
 endfunction
 
@@ -330,6 +365,21 @@ function y = Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Tran
 	y=y1';		
 endfunction
 
+// Brasil
+function y = Corp_income_Const_2(Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax) ;
+    
+    // Income by sources, redistribution and tax payments
+    Corp_Non_Labour_Income =  GOS_byAgent (Indice_Corporations) + sum(Labour_Corp_Tax) + sum(Corp_Direct_Tax) - sum(Corp_social_transfers);
+    Corp_Other_Income      =  Other_Transfers(Indice_Corporations) ;
+    Corp_Property_income   =  Property_income(Indice_Corporations);
+    Corp_Tax_Payments      =  Corporate_Tax ;
+
+    // After tax disposable income constraint (H_disposable_income)
+    y1 = Corp_disposable_income - (Corp_Non_Labour_Income + Corp_Other_Income + Corp_Property_income - Corp_Tax_Payments);
+
+	y=y1';		
+endfunction
+
 /// Financial transfers from/to Corporations
 function y = Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt);
 
@@ -437,6 +487,26 @@ function y = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax,
 	y=y1';
 endfunction
 
+/// Government_income_2 :
+
+function y = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect) ;
+
+    // For one government. Distribution among different government must otherwise be specified.
+
+    // Income by sources, redistribution and tax revenue
+    G_Tax_revenue   = sum(Income_Tax + Gov_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) ;
+    G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
+    G_Other_Income      =  Other_Transfers (Indice_Government) ;
+    G_Property_income   =  Property_income(Indice_Government) ;
+    G_Social_Transfers  =  sum(Gov_social_transfers) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+
+    // After tax disposable income constraint (H_disposable_income)
+    y1 = G_disposable_income - (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
+
+	y=y1';
+endfunction
+
 /// Financial transfers from/to Government
 function [y] = G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt);
 
@@ -469,6 +539,14 @@ function y = Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income
 	y=y1';
 endfunction
 
+function y = Income_Tax_Const_2(Income_Tax, Income_Tax_rate, H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax) ;
+
+    // Income Tax Constraint by household classes
+    y1 = Income_Tax - Income_Tax_rate .* (H_disposable_income + Income_Tax + Gov_Direct_Tax + Corp_Direct_Tax) ;
+
+	y=y1';
+endfunction
+		   
 /// Other direct Tax (by household class)
 warning( "abs(CPI)" )
 function y = Other_Direct_Tax_Const_1(Other_Direct_Tax, CPI, Other_Direct_Tax_param) ;
@@ -498,7 +576,37 @@ function Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Othe
 endfunction
 
 
-///	VOIR AJOUTER AUSSI SOUS CETTE FORME PROJ
+// for calib (Brazil)
+function y = OthDirTax_rate_Const_1(Direct_Tax, Labour_income, Direct_Tax_rate) ;
+    
+    y1 = Direct_Tax - Direct_Tax_rate .* sum(Labour_income,"c");
+    
+    y=y1;
+	
+endfunction
+
+function y = OthDirTax_rate_Const_2(Direct_Tax, Labour_income, Direct_Tax_rate) ;
+    
+    y1 = Direct_Tax - Direct_Tax_rate .* sum(Labour_income,"c");
+    
+    y=y1';
+	
+endfunction
+
+function Direct_Tax = OthDirTax_rate_Const_3(Labour_income, Direct_Tax_rate) ;
+    
+    Direct_Tax = Direct_Tax_rate .* sum(Labour_income,"c");
+	
+endfunction
+
+// for resol (Brazil)
+function Direct_Tax = OthDirTax_Const_1(Labour_income, Direct_Tax_rate) ;
+    
+    Direct_Tax = Direct_Tax_rate .* sum(Labour_income,"c");
+	
+endfunction
+
+ ///	VOIR AJOUTER AUSSI SOUS CETTE FORME PROJ
 
 /// Corporate Tax (by Corporations)
 
@@ -589,6 +697,15 @@ function y = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I);
 
 endfunction
 
+/// Consumption Tax (by product-sector)
+
+function y = Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
+
+    // Same rate for all items of domestic final demand
+    y = Cons_Tax' - ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) ;
+
+endfunction
+		   
 /// Carbon Tax on intermediate energy consumptions (by energy product-by sector)
 /// Identical or differentiated rates by consumer type.
 
@@ -1273,6 +1390,55 @@ endfunction
 
 
 
+function [alpha, lambda, kappa] = Technical_Coef_Const_7(alpha_ref, lambda_ref, kappa_ref, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital,time_period) ;
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+    
+    FPI = sum((aIC .^(sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+          (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_period)) .^(1 - sigma)) + ..
+          (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+    
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+
+	alpha =  (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_period).* ..
+             (ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+             (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+	
+	lambda = (ones(1,nb_Sectors)./(1+phi_L).^time_period) .* ..
+             ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL ./ ((1+phi_L).^time_period)) ) .^ sigma) .* ..
+             (FPI .^(sigma./(1 - sigma)))) ;
+    
+    //lambda(test_pL|test_FPI) = 0;
+    
+    kappa = (ones(1,nb_Sectors)./(1+phi_K).^time_period) .* ..
+            ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* ..
+            (FPI .^(sigma./(1 - sigma)))) ;
+
+endfunction
+
+//Labour productivity semi-endogenous (power sector)
+function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, lambda_ref, Mu_b, time_period,Indice)
+//    A = phi_L_a;
+
+//    B = (phi_L_b==1).*phi_L_b + (phi_L_b<>1).*phi_L_b./pI';
+    
+//    phi_L= (((A./lambda_ref') + ((1+Mu_b)^(-time_period))*(1-B./pI)).^(-1/time_period) - 1)';
+    phi_L= ((phi_L_a./lambda_ref) + ((1+Mu_b).^(-time_period)).*(1-phi_L_b)).^(-1/time_period) - 1;
+
+endfunction
+
+//function [y]=Mu_b_const_2(Mu_b, Mu, Y, phi_L_a, phi_L_b, lambda_ref, pI, time_period)
+function [y]=Mu_b_const_1(Mu_b, Mu, Y, phi_L_a, phi_L_b, lambda_ref, time_period, Indice)
+    
+    phi_L = Phi_L_const_1(phi_L_a, phi_L_b, lambda_ref, Mu_b, time_period, Indice)';
+    y = Mu - sum(phi_L.*Y)./sum(Y);
+    
+endfunction 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   C.2  Pricing rules
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1441,6 +1607,35 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y) ;
 endfunction
 
 
+// for investment matrix
+function [y] = Invest_demand_Const_2(Betta, I, kappa, Y) ;
+
+    y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+    
+    y = matrix(y1, -1 , 1)
+    
+endfunction
+
+// Betta calculation function of K cost & pI
+// Index_Sectors : indice des colonnes de betta != betta_ref
+// dimension de Betta cohérente
+// to use for investment matrix
+function [Betta_proj]=Betta_Const_1(Betta_ref, pI, pBetta, Indice, Adjustment)
+    Indice_bis = Indice_Sectors;
+    Indice_bis(Indice)=[];
+    y1=zeros(nb_Sectors,nb_Sectors);
+    for k=Indice_bis
+        y1(:,k) = Betta_ref(:,k);
+    end
+
+    y1(:,Indice) = (pBetta'./pI)*((Adjustment == 0) + (Adjustment == 1)*sum(Betta_ref(:,Indice))/sum(pBetta'./pI)) + (Adjustment == 2)*Betta_ref(:,Indice);
+    
+    
+    //Betta_proj = matrix(y1, -1 , 1)
+    Betta_proj = y1;
+
+endfunction
+
 // PAS POUR CALIBRAGE //
 // Capital cost (pK)
 function [y] = Capital_Cost_Const_1(pK, pI, I) ;
@@ -1450,6 +1645,13 @@ function [y] = Capital_Cost_Const_1(pK, pI, I) ;
 
 endfunction
 
+// for investement matrix
+function [y] = Capital_Cost_Const_2(pK, pI, I) ;
+	pK=abs(pK);
+    // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
+    y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
+
+endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   D)  Market Functioning
@@ -1515,7 +1717,12 @@ function M = Imports_Const_3 (pM, pY, Y, sigma_M, delta_M_parameter);
 	M = (( (1 + delta_M_parameter) .* (pY.*Y)' .* ( (pM_ref.*M_ref)' ./ (pY.*Y_ref)') .* ( (pM_ref' ./ pY_ref') .* (pY' ./ pM') ) .^ sigma_M )./pM')';
 endfunction
 
+function M = Imports_Const_4 (pM, pM_ref, M_ref, pY, pY_ref, Y, Y_ref, sigma_M, delta_M_parameter,time_period);
+    
+	pY=abs(pY);
+	M = ( (1 + delta_M_parameter).^(time_period) .* Y' .* (M_ref' ./ Y_ref') .* ( (pM_ref' ./ pY_ref') .* (pY' ./ pM') ) .^ sigma_M )';
 
+endfunction
 
 warning( "ruben : Exports_Const_1")
 // Exports function
@@ -1563,6 +1770,17 @@ function X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
     pM = abs(pM);
 
     X = (ones(nb_Sectors, 1) + delta_X_parameter') .* X_ref * (GDP/GDP_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X'
+
+endfunction
+
+function X = Exports_Const_4(pM, pM_ref, pX, pX_ref, X_ref, sigma_X, delta_X_parameter,time_period);
+
+    delta_X_parameter = abs(delta_X_parameter);
+    pX = abs(pX);
+    pM = abs(pM);
+
+//    X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^(time_period) .* (pX_ref.*X_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )./pX
+    X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^(time_period) .* X_ref .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )
 
 endfunction
 
@@ -1646,6 +1864,17 @@ function [y] = Import_price_Const_1(pM, delta_pM, pM_ref) ;
 endfunction
 
 
+// import price evolving at the same rate than domestic prices
+// a faire évoluer éventuellement en (1+delta_pM)^t
+function [pM] = pM_price_Const_1(pY, pY_ref, pM_ref);
+    
+    Index_Services = size(pM,1);
+    pM(1:Index_Services-1) = pM_ref(1:Index_Services-1).*(pY(1:Index_Services-1)./pY_ref(1:Index_Services-1));
+    pM(Index_Services) = pM_ref(Index_Services);
+//    pM = pM_ref;
+
+endfunction 
+			
 // Mean resource price, before indirect taxation
 // NOT A VARIABLE FOR THE SOLVER
 function [p] = Mean_price_Const_1(pY, pM, Y, M ,p) ;
@@ -1693,6 +1922,22 @@ function pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, Spe
 
 endfunction
 
+// Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
+function pIC = pIC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
+
+    //  Trade, transport and specific margins for energy
+    // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Sectors) + SpeMarg_rates_IC' ;
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+    // Indirect tax
+    // Indirect_tax_rates = repmat (Energy_Tax_rate_IC' + OtherIndirTax_rate', 1, nb_Sectors) + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
+    // Intermediate consumption price: pIC (Sm_index, Sm_index)
+    pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') );
+    
+endfunction
+
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
 function [y] = pC_price_Const_1(pC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
@@ -1733,6 +1978,25 @@ function pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMa
     pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates) .* (1 + (ones( 1, nb_Households).*.VA_Tax_rate') ) ;
 endfunction
 
+// Purchase price (Households Final consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
+function pC = pC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate) ;
+
+    // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
+
+    //  Trade, transport and specific margins for energy
+    // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Households) + SpeMarg_rates_C' ;
+    margins_rates = (ones(nb_Households,1) .*. ( Transp_margins_rates + Trade_margins_rates ) + SpeMarg_rates_C )' ;
+
+    // Indirect tax
+    // Indirect_tax_rates = repmat (Energy_Tax_rate_FC' + OtherIndirTax_rate', 1, nb_Households) + Carbon_Tax_rate_C .* Emission_Coef_C ;
+    Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* (Emission_Coef_C*ones(1,nb_Households))  ;
+
+
+    // Household consumption price: pC (nb_Commodities, nb_Households)
+    pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') ) + Indirect_tax_rates)  ;
+    
+endfunction
+
 // Purchase price (Government Final consumptions) after trade, transport and indirect tax (no final energy consumption by the government)
 function [y] = pG_price_Const_1(pG, Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
 
@@ -1769,6 +2033,23 @@ function pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energ
 endfunction
 
 
+// Purchase price (Government Final consumptions) after trade, transport, indirect tax and tax on consumption (Brasil + no final energy consumption by the government)
+function pG = pG_price_Const_3(Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, Cons_Tax_rate) ;
+
+    //  Trade and transport
+    // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Government) ;
+    margins_rates = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) + SpeMarg_rates_G';
+
+    // Indirect tax
+    // Indirect_tax_rates = repmat(Energy_Tax_rate_FC' + OtherIndirTax_rate', 1, nb_Government) ;
+    Indirect_tax_rates = (Energy_Tax_rate_FC' + OtherIndirTax_rate').*. ones(1, nb_Government) ;
+
+    // Government price: pG (Sm_index)
+    pG = ( (p'.*.ones(1, nb_Government)) .* ( 1 + margins_rates ) + Indirect_tax_rates) .* (1 + (Cons_Tax_rate'.*.ones(1, nb_Government)) );
+
+endfunction
+
+		   
 // Purchase price (Investment) after trade, transport and indirect tax (no investment of energy)
 function [y] = pI_price_Const_1(pI, Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
 
@@ -1795,6 +2076,21 @@ function pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMar
     pI = ( p' .* ( ones(nb_Commodities, 1) + margins_rates) + Indirect_tax_rates) .* (ones(nb_Commodities, 1) + VA_Tax_rate') ;
 endfunction
 
+
+
+// Purchase price (Investment) after trade, transport and indirect tax (no investment of energy)
+function pI = pI_price_Const_3( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, Cons_Tax_rate) ;
+
+    //  Trade and transport and specific margins
+    margins_rates = Transp_margins_rates' + Trade_margins_rates' + SpeMarg_rates_I'
+
+    // Indirect tax
+    Indirect_tax_rates = OtherIndirTax_rate'+Energy_Tax_rate_FC' ;
+
+    // Investment price: pI (nb_Sectors)
+    pI = ( p' .* ( ones(nb_Commodities, 1) + margins_rates) + Indirect_tax_rates) .* (ones(nb_Commodities, 1) + Cons_Tax_rate') ;
+    
+endfunction
 
 // Consumer price index (CPI) - Fisher Index
 function y = CPI_Const_1(CPI, pC, C)
@@ -1888,6 +2184,19 @@ endfunction
 function [y] = I_value_Const_1(I_value, I, pI) ;
 
     y = I_value - ( I .* pI ) ;
+endfunction
+
+// for an investment matrix
+function [y] = I_value_Const_2(I_value, I, pI) ;
+//    I_value_temp=zeros(nb_Commodities,nb_Sectors);
+    
+//    for line=1:nb_Sectors
+//        I_value_temp(line,:)=I(line,:)*pI(line);
+//    end
+
+    y1 = I_value - ( I.*( pI*ones(1,nb_Sectors)) ) ;
+    y = matrix(y1, -1 , 1);
+    
 endfunction
 
 //  For Calibration
@@ -1997,6 +2306,16 @@ function y = Wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage);
 
 endfunction
 
+function y = Wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage, phi_L);
+    w=abs(w);
+    lambda = abs(lambda);
+    u_tot = abs(u_tot);
+	
+    // Wage curve on nominal  wage
+	y = w  - ( w_ref .* ( ones(1,nb_Sectors).*.(u_tot ./ u_tot_ref) ).^ sigma_omegaU .*(Coef_real_wage*CPI + (1-Coef_real_wage)).*(1+phi_L) ) ; 
+	y = y';
+
+endfunction
 
 // Wage setting (implicitly determines the overall variation of net wages : NetWage_variation )
 //	Wage curve on the level of the economy-wide mean nominal wage
@@ -2093,6 +2412,25 @@ function y = Mean_wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU)
 
 endfunction
 
+function y = Mean_wage_Const_5(u_tot, u_tot_ref, w, w_ref, lambda, lambda_ref, Y, Y_ref, sigma_omegaU, CPI, CPI_ref, Coef_real_wage, Mu, time_period);
+    w=abs(w);
+    lambda = abs(lambda);
+    u_tot = abs(u_tot);
+    
+    // Mean wage (omega).
+    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
+
+    // Mean wage reference (omega_ref).
+    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
+    
+    // Wage curve on nominal  wage
+//    y = omega  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
+    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ;
+//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
+//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))) ; 
+
+endfunction
+
 // PAS POUR CALIBRAGE !
 // Net wage by productive sector (w)
 function [y] = Wage_Variation_Const_1(w, NetWage_variation) ;
@@ -2130,6 +2468,13 @@ function [y] = Labour_Cost_Const_1(pL, w, Labour_Tax_rate) ;
     y=y1';
 endfunction
 
+function [y] = Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate) ;
+
+    y1 = pL -  w .* ( ones(1, nb_Sectors) + Labour_Tax_rate + Labour_Corp_Tax_rate);
+
+    y=y1';
+endfunction
+							  
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   D.3  Loanable funds and financial markets
@@ -2145,6 +2490,16 @@ function [y] = MacroClosure_Const_1(GFCF_byAgent, pI, I) ;
     y1 = ( sum(GFCF_byAgent(Indice_Households)) + sum(GFCF_byAgent(Indice_Corporations)) + sum(GFCF_byAgent(Indice_Government)) ) - sum (pI .* I) ;
 
     y=y1';
+endfunction
+
+// new equation Antoine pour passer GFCF_byAgent en variable intermédiaire
+function [GFCF_byAgent] = GFCF_Const_1(H_disposable_income, H_Invest_propensity, Corp_disposable_income, Corp_invest_propensity, pI, I);
+    y1 = Corp_disposable_income .* Corp_invest_propensity;
+    y2 = sum (pI .* sum(I,"c")) - (sum(GFCF_byAgent(Indice_Households)) + sum(GFCF_byAgent(Indice_Corporations)) + sum(GFCF_byAgent(Indice_Government)));
+    y3 = H_disposable_income .* H_Invest_propensity;
+ 
+    GFCF_byAgent = [y1 y2 y3];
+
 endfunction
 
 //  PAS POUR CALIBRAGE !
@@ -2185,6 +2540,11 @@ function [y] = GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, L
 
 endfunction
 
+function [y] = GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C) ;
+
+    y = GDP - (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) + sum(Labour_Tax)+sum(Labour_Corp_Tax) + sum(OtherIndirTax) + sum(Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)) ;
+
+endfunction
 // Gross operating surplus
 function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X) ;
 
