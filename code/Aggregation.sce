@@ -33,6 +33,8 @@
 /////////// Agregation file : aggregation of sectors (only)
 //////////////////////////////////////////////////////////////////////
 
+// Juste un test d'Antoine
+
 disp("Substep 2: AGGREGATION of DATA...")
 // disp("IMACLIM-S is running at aggregated level: "+AGG_type)
 
