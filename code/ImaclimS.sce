@@ -66,6 +66,12 @@ disp("======= with various class of households: "+H_DISAGG)
 printf("===============================================\n");
 disp("======= at aggregated level: "+AGG_type)
 printf("===============================================\n");
+disp("======= with the resolution mode: "+Resol_Mode)
+printf("===============================================\n")
+disp("======= using various iterations:"+Nb_Iter)
+printf("===============================================\n");
+disp("======= under the scenario nammed:"+Scenario)
+printf("===============================================\n");
  
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA

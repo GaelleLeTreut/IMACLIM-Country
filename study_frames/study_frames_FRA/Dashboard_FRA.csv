@@ -19,3 +19,12 @@ AGG_type;AGG_IndEner
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
+// SELECT the resolution mode;
+Resol_Mode;Static_comparative
+// Resol_Mode;Dynamic_projection
+// SELECT the number of iteration (Default=1);
+Nb_Iter;1
+// SELECT the scenario to run;
+Scenario;
+//Scenario;S1
+// Scenario;S2
