@@ -16,5 +16,6 @@ delta_interest_rate;1;0;1;;
 //;;;;;
 //Other params;;;;;
 Mu;0;0;1;labour productivity growth rate;
-time_period;1;0;100;;
+time_since_BY;5;0;100;has to be equal to time_period in a Static mode;
+time_since_ini;5;0;100;has to be equal to time_step in a Static mode;
 Government_closure;1;0;1;;

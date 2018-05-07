@@ -5,14 +5,15 @@ System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_Static
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
-study;Projection_evolution
+// study;Projection_evolution
+study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 // AGG_type;AGG_MetMin
-AGG_type;AGG_IndEner
+// AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
 // AGG_type;AGG_Ener1
-// AGG_type;AGG_Ener2
+AGG_type;AGG_Ener2
 // AGG_type;AGG_4Sec
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
@@ -23,8 +24,13 @@ H_DISAGG;HH1
 Resol_Mode;Static_comparative
 // Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
-// SELECT the scenario to run;
-Scenario;
-//Scenario;S1
+Nb_Iter;2
+// SELECT the scenario to run (soft_linking);
+// Scenario;
+Scenario;S1
 // Scenario;S2
+// TELL if you want output file;
+// Output_files;True
+Output_files;False
+
+

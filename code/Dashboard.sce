@@ -107,3 +107,7 @@ if (size(Scenario,"r")<>[1]| size(Scenario,"r")<>[1])
 	error ( "various types of resolution system have been selected in Dashboard.csv. The model isn't ready yet to run several sceanrios successively.");
 end
 
+if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])
+	error ( "You have to choose whether or not you want to print outputs in external files.");
+end
+

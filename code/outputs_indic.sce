@@ -839,11 +839,13 @@ OutputTable.EnerNonEnTable($,2)=  [parameters.Carbon_Tax_rate / 10^3 + " euro/tC
 OutputTable.EnerNonEnTable($+1,1)=  "Revenue-reclycling option";
 OutputTable.EnerNonEnTable($,2)=  [DispLabTabl] ;
 
+if (d.pX ./ ini.pX ) <> 1 
 OutputTable.Elasticities = [ ["Elasticities" , Index_Sectors'];["Exports Price" , (((d.X ./ ini.X ) - 1) ./ ((d.pX ./ ini.pX ) - 1))' ]; ["Exports - pX/pM ration" , (((d.X ./ ini.X ) - 1) ./ (((d.pX./d.pM) ./ (ini.pX./ini.pM) ) - 1))' ];["Import/Output ratio" ,(((d.M./d.Y) ./ (ini.M./ini.Y) - 1) ./ ((d.pM./d.pY) ./ (ini.pM./ini.pY) - 1))']];
 OutputTable.Elasticities($+1,1)=  "Carbon Taxe rate";
 OutputTable.Elasticities($,2)=  [parameters.Carbon_Tax_rate / 10^3 + " euro/tCO2"];
 OutputTable.Elasticities($+1,1)=  "Revenue-reclycling option";
 OutputTable.Elasticities($,2)=  [DispLabTabl] ;
+end
 
 
 disp "===== MAIN MACRO OUTPUT =============================="

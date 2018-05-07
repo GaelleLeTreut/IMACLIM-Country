@@ -89,9 +89,12 @@ param_table_sec($,4:4+nb_Sectors-1) = string(sigma_omegaU_sect);
 param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(Coef_real_wage);
+param_table_sec($+1,1) = ["$t_{period}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(time_since_ini);
 param_table_sec($+1,1) = ["$t_{REF}$"];
 param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(time_period);
+param_table_sec($,4) = string(time_since_BY);
 
 
 

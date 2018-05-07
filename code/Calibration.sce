@@ -83,15 +83,18 @@ end
 [initial_value,common_list]=CompStructDelete(initial_value,calib);
 // Create X vector column for solver from all parameters to calibrate
 //x_calib= variables2X (Index_Imaclim_VarCalib, list_calib, calib);
+
 //List of calibrated parameters without "reference" paramaters
-[list_calib_WithRef] = RemoveRefVarFromList (list_calib);
+//[list_calib_WithRef] = RemoveRefVarFromList (list_calib);
+///////////////////////////
+// Comment Antoine : suppression des REF
 
 // créaction des vecteurs x_ pour tous les paramètres à calibrer sauf les ref
-[Table_indiv_x2Exec] = variables2indiv_x (Index_Imaclim_VarCalib, list_calib_WithRef, "calib" );
+//[Table_indiv_x2Exec] = variables2indiv_x (Index_Imaclim_VarCalib, list_calib_WithRef, "calib" );
+[Table_indiv_x2Exec] = variables2indiv_x (Index_Imaclim_VarCalib, list_calib, "calib" );
 for i= Table_indiv_x2Exec
     execstr(Table_indiv_x2Exec);
 end
-
 
 //////// Structure to simple variables in order to excecute intermediate calibration
 // Initial Values
@@ -1427,12 +1430,10 @@ end
 // Start Specific to Brasil
 ///////////////////////////
 if Country=="Brasil" then
-    GDP_ref=GDP;
-    Population_ref=Population;
-    
+   
     function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, Imaclim_VarCalib)
         Gov_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Gov_SocioBenef_param");
-        const_GovSocioBenefParam =  Other_SocioBenef_Const_2(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population)
+        const_GovSocioBenefParam =  Other_SocioBenef_Const_1(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population)
     endfunction
     
     [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, Index_Imaclim_VarCalib));
@@ -1445,7 +1446,7 @@ if Country=="Brasil" then
     
     function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, Imaclim_VarCalib)
         Corp_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Corp_SocioBenef_param");
-        const_CorSocioBenefParam =  Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population)
+        const_CorSocioBenefParam =  Other_SocioBenef_Const_1(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population)
     endfunction
     
     [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, Index_Imaclim_VarCalib));
@@ -1553,15 +1554,21 @@ end
 
 // 	Constraints to execute for variables_ref in calib
 // Rq: vérifier que dans tous les cas, VarRefNames(i) correspond bien à la bonne contrainte dans Const2Exec(i,1)
-[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
-for i= Const2Exec
-    execstr(Const2Exec)
-end
+//[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
+//for i= Const2Exec
+//    execstr(Const2Exec)
+//end
+///////////////////////////
+// Comment Antoine : suppression des REF
+
+Other_Transfers_ref = initial_value.Other_Transfers;
+///////////////////////////
+// Comment Antoine : du temporaire, à régler
 
 
 function [const_Distrib_Shares] =fcal_IncomDistri_Const_1(x_Distribution_Shares, NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Labour_income, GrossOpSurplus, Imaclim_VarCalib)
     Distribution_Shares= indiv_x2variable(Imaclim_VarCalib, "x_Distribution_Shares");
-    const_Distrib_Shares =  IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+    const_Distrib_Shares =  IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
 endfunction
 
 const_Distrib_Shares = 10^5;
@@ -1577,14 +1584,21 @@ while norm(const_Distrib_Shares) > sensib
 end
 count=0;
 
-[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
-for i= Const2Exec
-    execstr(Const2Exec)
-end
+clear Other_Transfers_ref ;
+///////////////////////////
+// Comment Antoine : du temporaire, à régler
+
+
+//[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
+//for i= Const2Exec
+//    execstr(Const2Exec)
+//end
+///////////////////////////
+// Comment Antoine : suppression des REF
 
 function [const_CPI] =fcal_CPI_Const_1(x_CPI, pC, C, Imaclim_VarCalib)
     CPI= indiv_x2variable(Imaclim_VarCalib, "x_CPI");
-    const_CPI = CPI_Const_1(CPI, pC, C)
+    const_CPI = CPI_Const_4(CPI, pC, C)
 endfunction
 
 [x_CPI, const_CPI, infCal_CPI] = fsolve(x_CPI, list(fcal_CPI_Const_1, pC, C, Index_Imaclim_VarCalib));
@@ -1653,19 +1667,19 @@ end
 // End Specific to Brasil
 ///////////////////////////
 
-function [const_delta_pM] =fcalImport_price_Const_1(x_delta_pM, pM, pM_ref, Imaclim_VarCalib)
-    delta_pM= indiv_x2variable(Imaclim_VarCalib, "x_delta_pM");
-    const_delta_pM = Import_price_Const_1(pM, delta_pM,pM_ref)
-endfunction
-
-[x_delta_pM, const_delta_pM, infCaldelta_pM] = fsolve(x_delta_pM, list(fcalImport_price_Const_1, pM, pM_ref, Index_Imaclim_VarCalib));
-
-if norm(const_delta_pM) > sensib
-    error( "review calib_Ddelta_pM")
-else
-    delta_pM = indiv_x2variable (Index_Imaclim_VarCalib, "x_delta_pM");
-end
-
+// Comment Antoine : suppression de cette variable pour avoir delta_pM en paramètre et faire un forçage
+//function [const_delta_pM] =fcalImport_price_Const_1(x_delta_pM, pM, pM, Imaclim_VarCalib)
+//    delta_pM= indiv_x2variable(Imaclim_VarCalib, "x_delta_pM");
+//    const_delta_pM = Import_price_Const_1(pM, delta_pM,pM)
+//endfunction
+//
+//[x_delta_pM, const_delta_pM, infCaldelta_pM] = fsolve(x_delta_pM, list(fcalImport_price_Const_1, pM, pM, Index_Imaclim_VarCalib));
+//
+//if norm(const_delta_pM) > sensib
+//    error( "review calib_Ddelta_pM")
+//else
+//    delta_pM = indiv_x2variable (Index_Imaclim_VarCalib, "x_delta_pM");
+//end
 
 ///////////////////////////
 // End Not Applied to Brasil
@@ -1699,6 +1713,8 @@ else
 end
 
 end 
+// Antoine : il faudra réintégrer cela au Brésil finalement pour permettre d'avoir du changement technique endogène et exogène 
+
 ///////////////////////////
 // End Not Applied to Brasil
 ///////////////////////////
@@ -1766,9 +1782,13 @@ end
 
 initial_value.FC = null();
 
-//Struture ini. created to reunite all values before introducing a choc
-execstr("ini."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
-execstr("ini."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_value)+";");
-execstr("ini."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
+//Struture BY. created to reunite all BY values before introducing a choc
+execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
+execstr("BY."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_value)+";");
+execstr("BY."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 
+//Structure ini. = structure of initial value on one iteration
+// iter = 1 ==> BY = ini
+// iter = 2 ==> BY <> ini
+ini = BY;
 

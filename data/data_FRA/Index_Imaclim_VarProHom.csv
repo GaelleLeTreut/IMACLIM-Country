@@ -54,8 +54,6 @@ Y;nb_Sectors;1;Var;0;%inf
 IC;nb_Commodities;nb_Sectors;Var;0;%inf
 M;nb_Sectors;1;Var_interm;0;%inf
 X;nb_Commodities;1;Var_interm;0;%inf
-delta_M_parameter;1;nb_Sectors;Var;-%inf;%inf
-delta_X_parameter;1;nb_Commodities;Var;-%inf;%inf
 Capital_consumption;1;nb_Sectors;Var;0;%inf
 p;1;nb_Commodities;Var_interm;0;%inf
 pIC;nb_Commodities;nb_Sectors;Var_interm;0;%inf
@@ -79,3 +77,4 @@ Distribution_Shares;nb_IncomeSources;nb_InstitAgents;Var;-1;1
 NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf
 GOS_byAgent;1;nb_InstitAgents;Var;0;%inf
 Other_Transfers;1;nb_InstitAgents;Var;-%inf;%inf
+pM;nb_Sectors;1;Var_interm;0;%inf
