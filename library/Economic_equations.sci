@@ -1479,6 +1479,15 @@ function [y] =  Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins) ;
     y=y1';
 endfunction
 
+function [y] =  Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate) ;
+
+    y1 = (BY.Transp_margins_rates >= 0).*(Transp_margins_rates - BY.Transp_margins_rates)..
+	+(BY.Transp_margins_rates < 0).*(Transp_margins_rates - delta_TranspMargins_rate * BY.Transp_margins_rates) ;
+    y1($+1) =  sum(Transp_margins);
+
+    y=y1';
+endfunction
+
 
 // Transport margins
 function [y] =  Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) ;
@@ -1500,6 +1509,17 @@ function [y] =  Trade_MargRates_Const_1(Trade_margins, Trade_margins_rates)
 
     y=y1';
 endfunction
+
+function [y] =  Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
+
+    y1 = (BY.Trade_margins_rates >= 0).*(Trade_margins_rates - BY.Trade_margins_rates)..
+	+(BY.Trade_margins_rates < 0).*(Trade_margins_rates - delta_TradeMargins_rate*BY.Trade_margins_rates) ;
+    y1($+1) =  sum(Trade_margins);
+
+    y=y1';
+
+endfunction
+
 
 
 // Trade margins

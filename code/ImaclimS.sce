@@ -100,6 +100,8 @@ end
 if AGG_type <> ""
     exec("Aggregation.sce");
     exec("Hybridisation.sce" );
+else
+    exec("Hybridisation.sce" );
 end
 
 exec("Loading_params.sce");
@@ -197,8 +199,3 @@ end
 if Output_files=='True'
 diary(0)
 end
-
-// Test à supprimer une fois terminé
-[BY.CPI data_1.CPI data_2.CPI]
-[data_1.GDP data_2.GDP]
-GDP_index.*BY.GDP

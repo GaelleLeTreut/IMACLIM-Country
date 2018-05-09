@@ -9,7 +9,6 @@ Corporations_savings;1;nb_Corporations;Var;0;%inf
 Government_savings;1;nb_Government;Var;-%inf;%inf
 GFCF_byAgent;1;nb_DomesticAgents;Var;0;%inf
 NetLending;1;nb_InstitAgents;Var;-%inf;%inf
-NetFinancialDebt;1;nb_InstitAgents;Var;-%inf;%inf
 Consumption_budget;1;nb_Households;Var;0;%inf
 C;nb_Commodities;nb_Households;Var;0;%inf
 Corp_disposable_income;1;nb_Corporations;Var;0;%inf
@@ -41,12 +40,12 @@ alpha;nb_Commodities;nb_Sectors;Var_interm;0;%inf
 lambda;1;nb_Sectors;Var_interm;0;%inf
 kappa;1;nb_Sectors;Var_interm;0;%inf
 pY;nb_Sectors;1;Var;0;%inf
-delta_TranspMargins_rate;1;1;Var;-%inf;%inf
 Transp_margins_rates;1;nb_Commodities;Var;-1;1
 Transp_margins;1;nb_Commodities;Var;-%inf;%inf
-delta_TradeMargins_rate;1;1;Var;-%inf;%inf
+delta_TranspMargins_rate;1;1;Var;0;10
 Trade_margins_rates;1;nb_Commodities;Var;-1;1
 Trade_margins;1;nb_Commodities;Var;-%inf;%inf
+delta_TradeMargins_rate;1;1;Var;0;10
 SpeMarg_IC;nb_Sectors;nb_Commodities;Var;-%inf;%inf
 SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
@@ -66,14 +65,11 @@ pI;nb_Commodities;1;Var_interm;0;%inf
 CPI;1;1;Var_interm;0;%inf
 pX;nb_Commodities;1;Var;0;%inf
 Labour;1;nb_Sectors;Var;0;%inf
-u_tot;1;1;Var;0;1
 NetWage_variation;1;1;Var;0;1
 w;1;nb_Sectors;Var;0;%inf
 u;1;nb_Households;Var;0;1
 Unemployed;1;nb_Households;Var;0;%inf
 pL;1;nb_Sectors;Var;0;%inf
-delta_interest_rate;1;1;Var;0;10
-interest_rate;1;nb_InstitAgents;Var;-1;1
 GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf

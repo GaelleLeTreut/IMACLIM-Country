@@ -96,23 +96,23 @@ end
 // load all data
 if time_step==1 & Scenario<>"" then
 	if Alpha_BU <> [] | Trade_BU <> [] | C_BU <> [] 
-		exec(STUDY+"External_Module"+sep+"Import_Proj_Volume.sce");
+		exec(STUDY_Country+"External_Module"+sep+"Import_Proj_Volume.sce");
 	end
 end
 
 // traitement des données et forçage relatifs à alpha (phi_IC)
 if Alpha_BU <> []
-	exec(STUDY+"External_Module"+sep+"Alpha_module.sce");
+	exec(STUDY_Country+"External_Module"+sep+"Alpha_module.sce");
 end
 
 // traitement des données et forçage relatifs à commerce (delta_X_parameter & delta_M_parameter)
 if Trade_BU <> []
-	exec(STUDY+"External_Module"+sep+"Trade_module.sce");
+	exec(STUDY_Country+"External_Module"+sep+"Trade_module.sce");
 end
 
 // traitement des données et forçage relatifs à la consommation des ménages (delta_C_parameter)
 if C_BU <> []
-	exec(STUDY+"External_Module"+sep+"C_module.sce");
+	exec(STUDY_Country+"External_Module"+sep+"C_module.sce");
 end
 
 // clear des variables lors du load data du 1er pas de temps

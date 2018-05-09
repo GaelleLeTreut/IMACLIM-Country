@@ -41,12 +41,12 @@ alpha;nb_Commodities;nb_Sectors;Var_interm;0;%inf
 lambda;1;nb_Sectors;Var_interm;0;%inf
 kappa;1;nb_Sectors;Var_interm;0;%inf
 pY;nb_Sectors;1;Var;0;%inf
-delta_TranspMargins_rate;1;1;Var;-%inf;%inf
 Transp_margins_rates;1;nb_Commodities;Var;-1;1
 Transp_margins;1;nb_Commodities;Var;-%inf;%inf
-delta_TradeMargins_rate;1;1;Var;-%inf;%inf
+delta_TranspMargins_rate;1;1;Var;0;10
 Trade_margins_rates;1;nb_Commodities;Var;-1;1
 Trade_margins;1;nb_Commodities;Var;-%inf;%inf
+delta_TradeMargins_rate;1;1;Var;0;10
 SpeMarg_IC;nb_Sectors;nb_Commodities;Var;-%inf;%inf
 SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf

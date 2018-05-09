@@ -5,24 +5,17 @@ Component;Name
 System_Resol;Systeme_Static
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
-// study;Projection_evolution
-study;Recursive_RunChoices
+study;Projection_evolution
+// study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-// AGG_type;AGG_MetMin
-// AGG_type;AGG_IndEner
-// AGG_type;AGG_MetMinEn
-// AGG_type;AGG_Ener1
-// AGG_type;AGG_Ener2
-// AGG_type;AGG_4Sec
-AGG_type;AGG_3Sec
-// AGG_type;AGG_EnComp
+AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
 // SELECT the resolution mode;
-// Resol_Mode;Static_comparative
-Resol_Mode;Dynamic_projection
+Resol_Mode;Static_comparative
+// Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;1
 // SELECT the scenario to run (soft_linking);
