@@ -1,14 +1,15 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomothetic
+System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_ProjEcopa
-System_Resol;Systeme_Static
+// System_Resol;Systeme_Static
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
 study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-AGG_type;
+// AGG_type;
+AGG_type;AGG_SNBC2
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
@@ -32,5 +33,3 @@ Scenario;
 // TELL if you want output file;
 // Output_files;True
 Output_files;False
-
-
