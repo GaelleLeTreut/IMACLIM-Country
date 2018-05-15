@@ -90,14 +90,16 @@ end
 
 // BudgetShare for non final energy product
 // Dimension (nb_NonFinalEnergy , nb_HH)
-NonFinEn_BudgShare_ref = (pC_ref(Indice_NonEnerSect, :) .* C_ref(Indice_NonEnerSect, :))./( (Consumption_budget_ref - sum( pC_ref(Indice_EnerSect,:) .* C_ref(Indice_EnerSect,:),"r" ) ).*.ones(nb_NonEnerSect,1) ) ;
+NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerSect, :))./( (ini.Consumption_budget - sum( ini.pC(Indice_EnerSect,:) .* ini.C(Indice_EnerSect,:),"r" ) ).*.ones(nb_NonEnerSect,1) ) ;
 
 /////////////////////////////////////////////////////////////////////////
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
-    M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+	// Ajout d'une variable pour forçage
+	pM = pM_price_Const_2();
+    	M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
 	p = Mean_price_Const_1(pY, pM, Y, M );
     // 	Specific to the homothetic projection: 
 	X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
@@ -105,9 +107,10 @@ function [M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direc
 	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
 	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
 	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
+	// CPI defined in relation to BY	
 	CPI = CPI_Const_2( pC, C);
-	// 	Specific to any projection with labour augmenting technical progress : 
-	[alpha, lambda, kappa] = Technical_Coef_Const_5( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Labour_Product );
+	// 	Specific to any projection in relation to BY
+	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 	// 	Specific to the homothetic projection:  
 	Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
@@ -127,7 +130,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	
     // Calcul des variables qui ne sont pas des variables d'états
 	/// Trois fois plus long avec appel de la fonction 
-	[M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+	[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
 	 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -181,7 +184,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// 	Specific to the homothetic projection: 
 	UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param)
 	// 	Specific to the homothetic projection: 
-	 Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+	Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
 	CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) 
     // ClimCompensat_Const_1(ClimPolicyCompens)
@@ -197,11 +200,15 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity)
     TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
     DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
+	// Comment Antoine : les fonctions de Theta et Phi les imposent à 1. Créer une fonction généraliser qui permette d'activer le changement technique endogène en prenant un sigma_Theta et un sigma_Phi != 0. Ici en cas désactiver, on ne peut pas faire car la fonction prendre faire une division par sigma_Theta et sigma_Phi
+ 
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
     // Markup_Const_1(markup_rate)
-    Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins)
-    Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X)
-    Trade_MargRates_Const_1(Trade_margins, Trade_margins_rates)
+//    Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins)
+    Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate)
+    Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
+//    Trade_MargRates_Const_1(Trade_margins, Trade_margins_rates)
+    Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     // SpeMarg_rates_Const_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I)
     // //	SpeMarg_rates_Const_1 nécessaire ?
@@ -212,7 +219,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     IC_Const_1(IC, Y, alpha)//4981:5764
     // //	Voir si nécessaire de garder IC dans les équations
     // Imports_Const_1(M, pM, pY, Y, sigma_M, delta_M_parameter)
-    MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
+
+    // Antoine : J'ai retiré la marketclosure sinon je ne peux pas forcer le commerce    
+    // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
+
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
     // //	Voir si nécessaire de garder Capital_consumption dans les équations
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
@@ -222,8 +232,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
 	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect)
 	// Wage_Variation_Const_1 : for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-    Wage_Variation_Const_1(w, NetWage_variation)
+
+    // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
+    Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
 	// MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+
     HH_Unemployment_Const_1(u, u_tot)
     HH_Employment_Const_1(Unemployed, u, Labour_force)
     Labour_Cost_Const_1(pL, w, Labour_Tax_rate)
@@ -343,6 +356,9 @@ while (count<countMax)&(vBest>sensib)
     result(count).info  = info;
 
     printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
+//    printf("Transp_margins_rates	Transp_margins	delta_TradeMargins_rate\n");
+
+//    printf(norm(Transp_margins_rates)+"	"+sum(Transp_margins)+"	"+delta_TradeMargins_rate+"\n");
 end
 
 exec(CODE+"terminateResolution.sce");
@@ -362,7 +378,7 @@ execstr(Table_Deriv_Exogenous)
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-[M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax ]= f_resol_interm(Deriv_variables);
+[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax ]= f_resol_interm(Deriv_variables);
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 

@@ -140,10 +140,15 @@ d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+
 
 ioa_run.IOA_DECOMP = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_run.Emis_Sect;"Emis_HH",ioa_run.Emis_HH;"Emiss_IOA",ioa_run.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_run.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_run.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_C",ioa_run.Dom_Emis_IOA_C;"Dom_Emis_IOA_G",ioa_run.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_run.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_run.Dom_Emis_IOA_X;"Imp_Emis_IOA_C",ioa_run.Imp_Emis_IOA_C;"Imp_Emis_IOA_G",ioa_run.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_run.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_run.Imp_Emis_IOA_X;"Imp_Emis_IOA_int",ioa_run.Imp_Emis_IOA_int;];
 
-csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP'+"_"+AGGprofil+'.csv', ';');
-
 if	H_DISAGG <> "HH1"
 ioa_run.IOA_DECOMP_HH = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_run.Emis_Sect;"Emis_"+Index_Households,CO2Emis_C';"Emiss_IOA",ioa_run.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_run.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_run.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_"+Index_Households,ioa_run.Dom_Emis_IOA_HH;"Dom_Emis_IOA_G",ioa_run.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_run.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_run.Dom_Emis_IOA_X;"Imp_Emis_IOA_"+Index_Households,ioa_run.Imp_Emis_IOA_HH;"Imp_Emis_IOA_G",ioa_run.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_run.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_run.Imp_Emis_IOA_X;"Imp_Emis_IOA_int_"+Index_Households,ioa_run.Imp_Emis_IOA_int_HH;];
+end
+
+// Print external files IOA_DECOMP
+if Output_files=='True'
+csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
+
+if	H_DISAGG <> "HH1"
 csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
 end
 
@@ -178,5 +183,6 @@ end
 // csvWrite(Output./sum(Output), SAVEDIR + 'Output_Ratio'+AGG_type+'.csv', ';');
 // csvWrite(tot_ress_valIMP, SAVEDIR + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
 // csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
+end
 
 

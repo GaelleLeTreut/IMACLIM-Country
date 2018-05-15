@@ -46,6 +46,7 @@ disp("STEP 0: loading Dashboard ");
 exec ("preambule.sce");
 exec("Dashboard.sce");
 
+if Output_files=='True'
 runName = study + "_" + mydate();
 SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
 mkdir(SAVEDIR);
@@ -53,6 +54,10 @@ diary(SAVEDIR+"summary.log");
 
 SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
 mkdir(SAVEDIR_IOA);
+
+// Save Dashbord.csv in output
+copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+end
 
 printf("===============================================\n");
 disp(" ======= IMACLIM-"+Country+" is running=============================");
@@ -66,14 +71,23 @@ disp("======= with various class of households: "+H_DISAGG)
 printf("===============================================\n");
 disp("======= at aggregated level: "+AGG_type)
 printf("===============================================\n");
- 
+disp("======= with the resolution mode: "+Resol_Mode)
+printf("===============================================\n")
+disp("======= using various iterations:"+Nb_Iter)
+printf("===============================================\n");
+disp("======= under the scenario nammed:"+Scenario)
+printf("===============================================\n");
+if Output_files=='False'
+disp("=======You choose not to print outputs in external files")
+printf("===============================================\n");
+end
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 disp("STEP 1: DATA...");
 exec("Loading_data.sce");
-// exec("Loading_params.sce");
 
 exec("IOT_DecompImpDom.sce");
  
@@ -82,10 +96,11 @@ if	H_DISAGG <> "HH1"
 	exec("Households_Desag.sce");
 end
 
-
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
     exec("Aggregation.sce");
+    exec("Hybridisation.sce" );
+else
     exec("Hybridisation.sce" );
 end
 
@@ -121,6 +136,17 @@ end
 
 disp("STEP 5: RESOLUTION AND EQUILIBRIUM...");
 
+// Loop initialisation for various time step calculation
+for time_step=1:Nb_Iter
+
+// Creation of a new output subdirectory for each time step in case of several time steps calculation
+if Nb_Iter<>1
+if Output_files=='True'
+SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+mkdir(SAVEDIR);
+end
+end
+
 //// Defining matrix with dimension of each variable for Resolution file
 // if  System_Resol=="Projection_homothetic"
 // VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
@@ -133,21 +159,43 @@ exec(STUDY_Country+study+".sce");
 
 exec(System_Resol+".sce");
 
-
 ////////////////////////////////////////////////////////////
 // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
 ////////////////////////////////////////////////////////////
-
+if Output_files=='True'
 disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
+warning("Antoine : il faudra bien penser à actualiser les outputs (table_param)");
 exec(CODE+"outputs.sce");
 exec(CODE+"outputs_indic.sce");
-
-if	System_Resol == "Projection_ECOPA"
+	if System_Resol == "Projection_ECOPA"
 	exec(CODE+"outputs_indic_ECOPA.sce");
+	end
 end
 
 ////////////////////////////////////////////////////////////
 // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
 ////////////////////////////////////////////////////////////
 disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
-// exec(CODE+"IOA_Run.sce");
+warning('IOA_Run to generalize for several time steps')
+if [Country =="France"] & [time_step==1]
+exec(CODE+"IOA_Run.sce");
+else
+disp("Not executed for the IMACLIM-"+Country+" version and/or because time_step = "+ time_step +" > 1")
+end
+
+////////////////////////////////////////////////////////////
+// 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
+////////////////////////////////////////////////////////////
+if Nb_Iter <> 1
+exec(CODE+"Variable_Storage.sce");
+else
+disp("Not executed for the Nb_Iter = "+Nb_Iter)
+end
+
+// Loop ending for for various time step calculation
+end
+
+//shut down the diary
+if Output_files=='True'
+diary(0)
+end

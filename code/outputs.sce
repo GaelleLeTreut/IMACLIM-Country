@@ -89,9 +89,12 @@ param_table_sec($,4:4+nb_Sectors-1) = string(sigma_omegaU_sect);
 param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(Coef_real_wage);
+param_table_sec($+1,1) = ["$t_{period}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(time_since_ini);
 param_table_sec($+1,1) = ["$t_{REF}$"];
 param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(time_period);
+param_table_sec($,4) = string(time_since_BY);
 
 
 
@@ -200,8 +203,9 @@ ini.OthPart_IOT = [ini.Value_Added;ini.M_value;ini.Margins;ini.SpeMarg_IC;ini.Sp
 
 d.tot_IC_col_val = sum(d.IC_value , "c");
 d.tot_IC_row_val = sum(d.IC_value , "r");
+d.tot_FC_value =sum(d.FC_value,"c");
 d.tot_uses_val = d.tot_IC_col_val + d.tot_FC_value ;
-d.tot_ressources_val = d.tot_IC_row_val + sum (d.OthPart_IOT, "r"); ;
+d.tot_ressources_val = d.tot_IC_row_val + sum (d.OthPart_IOT, "r");
 d.ERE_balance_val = d.tot_ressources_val - d.tot_uses_val';
 
 d.tot_FC = sum(d.FC,"c");

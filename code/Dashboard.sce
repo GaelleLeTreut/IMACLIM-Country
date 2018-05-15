@@ -73,12 +73,8 @@ Dashboard_component = Dashboard_Country(2:$,1);
 for elt=1:size(Dashboard_component,"r");
     indtemp= find(Dashboard_Country(:,1)==Dashboard_component(elt));
     valtemp = Dashboard_Country(indtemp,2);
-    execstr(Dashboard_component(elt)+"=valtemp;")
-	
-		
+    execstr(Dashboard_component(elt)+"=valtemp;")		
 end
-
-
 
 if (size(H_DISAGG,"r")<>[1]| size(H_DISAGG,"r")<>[1])
 error ( "various types of disaggregation profiles of households have been selected in Dashboard.csv");
@@ -95,5 +91,23 @@ if (size(System_Resol,"r")<>[1]| size(System_Resol,"r")<>[1])
 error ( "various types of resolution system have been selected in Dashboard.csv");
 end
 
+// Ci-dessous les ajouts suites au passage en mode itératif
 
+if (size(Resol_Mode,"r")<>[1]| size(Resol_Mode,"r")<>[1])
+error ( "various types of simulation mode have been selected in Dashboard.csv");
+end
+
+Nb_Iter = eval(Nb_Iter);
+
+if Nb_Iter<1
+	error("the number of iteration should be positive");
+end
+
+if (size(Scenario,"r")<>[1]| size(Scenario,"r")<>[1])
+	error ( "various types of resolution system have been selected in Dashboard.csv. The model isn't ready yet to run several sceanrios successively.");
+end
+
+if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])
+	error ( "You have to choose whether or not you want to print outputs in external files.");
+end
 

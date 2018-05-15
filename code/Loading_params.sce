@@ -127,10 +127,11 @@ end
 if AGG_type == ""
     parameters.ConstrainedShare_IC=read_csv(PARAMS_Country+"ConstrainedShare_IC"+string(AGG_type)+".csv",";");
     parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+"CarbonTax_Diff_IC"+string(AGG_type)+".csv",";");
-
+    parameters.phi_IC=read_csv(PARAMS_Country+"phi_IC"+string(AGG_type)+".csv",";");
 else
     parameters.ConstrainedShare_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"ConstrainedShare_IC_"+string(AGG_type)+".csv",";");
     parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+".csv",";");
+    parameters.phi_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"phi_IC_"+string(AGG_type)+".csv",";");
 end
 
 parameters.ConstrainedShare_IC (1,:) = [];
@@ -140,6 +141,10 @@ parameters.ConstrainedShare_IC=evstr(parameters.ConstrainedShare_IC);
 parameters.CarbonTax_Diff_IC (1,:) = [];
 parameters.CarbonTax_Diff_IC (:,1) = [];
 parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);
+
+parameters.phi_IC (1,:) = [];
+parameters.phi_IC (:,1) = [];
+parameters.phi_IC=evstr(parameters.phi_IC);
 
 
 ///////////////////////////////////////////////////////////////
@@ -166,7 +171,4 @@ parameters.sigma_pC=evstr(parameters.sigma_pC);
 parameters.ConstrainedShare_C (1,:) = [];
 parameters.ConstrainedShare_C (:,1) = [];
 parameters.ConstrainedShare_C=evstr(parameters.ConstrainedShare_C);
-
-/// Changing some defautl value of parameters
-
 

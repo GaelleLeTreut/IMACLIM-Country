@@ -1,6 +1,6 @@
 Component;Name;-
 // SELECT the country for study by uncomment it (Name, 3 letters Name);-;
 // Country;France;FRA
-Country;Brasil;BRA
-// Country;India;IND
+// Country;Brasil;BRA
+sCountry;India;IND
 // Country;SaudiArabia;SAU
