@@ -2,9 +2,11 @@ ConstrainedShare_C;HH1
 Crude_oil;0.5
 Natural_gas;0.5
 Coal;0.5
-FuelProd;0.5
-Elec_Heat;0.5
-Heavy_Industry;0.5
+Fuels;0.5
+OthFuelProd;0.5
+Electricty;0.5
+HeatGeoSol_Th;0.5
+Heavy_Industry;%nan
 Buildings_constr;%nan
 Work_constr;%nan
 Automobile;%nan

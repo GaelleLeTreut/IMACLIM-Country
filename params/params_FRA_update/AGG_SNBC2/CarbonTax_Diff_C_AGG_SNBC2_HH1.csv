@@ -2,8 +2,10 @@ CarbonTax_Diff_C;HH1
 Crude_oil;1
 Natural_gas;1
 Coal;1
-FuelProd;1
-Elec_Heat;1
+Fuels;1
+OthFuelProd;1
+Electricty;1
+HeatGeoSol_Th;1
 Heavy_Industry;1
 Buildings_constr;1
 Work_constr;1

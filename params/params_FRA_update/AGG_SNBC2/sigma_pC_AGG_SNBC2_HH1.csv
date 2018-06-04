@@ -2,9 +2,11 @@ CarbonTax_Diff_C;HH1
 Crude_oil;-0.03
 Natural_gas;-0.03
 Coal;-0.03
-FuelProd;-0.39
-Elec_Heat;-0.03
-Heavy_Industry;-0.03
+Fuels;-0.39
+OthFuelProd;-0.03
+Electricty;-0.03
+HeatGeoSol_Th;-0.03
+Heavy_Industry;%nan
 Buildings_constr;%nan
 Work_constr;%nan
 Automobile;%nan

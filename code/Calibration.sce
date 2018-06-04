@@ -734,6 +734,10 @@ else
     OtherIndirTax_rate = (abs(OtherIndirTax_rate) > %eps).*OtherIndirTax_rate;
 end
 
+if Country=="France" & AGG_type=="AGG_SNBC2"
+// if Country=="France" & AGG_type=="AGG_MetMin" // test
+	VA_Tax_rate = VA_Tax./(sum( pC .* C, "c")' + sum(pG .* G, "c")' + (pI .* I)'-VA_Tax);	warning("Antoine : le calcul de VA_Tax ne fonctionne pas avec AGG_SNBC2... Utilisation du calcul direct au lieu d''une résolution")
+else
 
 function [const_VA_Tax_rate] =fcalib_VA_Tax_Const_1(x_VA_Tax_rate, VA_Tax, pC, C, pG, G, pI, I, Imaclim_VarCalib)
     VA_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_VA_Tax_rate");
@@ -757,6 +761,7 @@ while norm(const_VA_Tax_rate) > sensib
 
 end
 count=0;
+end
 
 ///////////////////////////
 // Start Specific to Brasil
