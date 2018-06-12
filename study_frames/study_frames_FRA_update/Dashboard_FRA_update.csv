@@ -8,8 +8,8 @@ System_Resol;Systeme_ProjHomothetic
 // study;Projection_evolution
 study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_SNBC2
+AGG_type;
+// AGG_type;AGG_SNBC2
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn

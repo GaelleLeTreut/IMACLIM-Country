@@ -165,19 +165,28 @@ initial_value.pFC =[initial_value.pC,initial_value.pG,initial_value.pI,initial_v
  
   initial_value.SpeMarg_IC = SpeMarg_IC_p .* initial_value.IC';
 
+// SpeMarg_FC euro/toe en final consumption 
+// SpeMarg_FC_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+ VA_Tax_rate(Indice_HybridCommod))); 
+// SpeMarg_FC_p(1:nb_Households,Indice_NonHybridCommod) =0; 
 
- // SpeMarg_FC euro/toe en final consumption
- SpeMarg_FC_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+VA_Tax_rate(Indice_HybridCommod)));
- SpeMarg_FC_p(1:nb_Households,Indice_NonHybridCommod) =0;
+ // SpeMarg_C euro/toe en final consumption
+ SpeMarg_C_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+VA_Tax_rate(Indice_HybridCommod)));
+ SpeMarg_C_p(1:nb_Households,Indice_NonHybridCommod) =0;
  
- initial_value.SpeMarg_C =  SpeMarg_FC_p.* initial_value.C';
+ initial_value.SpeMarg_C =  SpeMarg_C_p.* initial_value.C';
+
+ // SpeMarg_I euro/toe en final consumption
+ SpeMarg_I_p (1 , Indice_HybridCommod)= (initial_value.pI(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(1+VA_Tax_rate(Indice_HybridCommod));
+ SpeMarg_I_p(1 ,Indice_NonHybridCommod) =0;
+ 
+ initial_value.SpeMarg_I =  SpeMarg_I_p.* initial_value.I';
   
-if	H_DISAGG <> "HH1"
- warning("GLT : initial_value.SpeMarg_I n est pas calcule : probleme sur le calcul de sa marge spe I, mise a zero pour l instant")
- initial_value.SpeMarg_I =  zeros(1,nb_Sectors).* initial_value.I';
-else
- initial_value.SpeMarg_I =  SpeMarg_FC_p.* initial_value.I';
-end
+//if	H_DISAGG <> "HH1"
+// warning("GLT : initial_value.SpeMarg_I n est pas calcule : probleme sur le calcul de sa marge spe I, mise a zero pour l instant")
+// initial_value.SpeMarg_I =  zeros(1,nb_Sectors).* initial_value.I';
+//else
+// initial_value.SpeMarg_I =  SpeMarg_FC_p.* initial_value.I';
+//end
 
  // SpeMarg_X euro/toe en final consumption
  SpeMarg_X_p(1, Indice_HybridCommod) = initial_value.pX(Indice_HybridCommod,:)' - p_BeforeTaxes(Indice_HybridCommod); 
