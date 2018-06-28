@@ -858,9 +858,9 @@ endfunction
 function [y] = ClimCompensat_Const_2(ClimPolicyCompens) ;
     // /// No new direct compensations to households
    y1 = zeros(1,nb_InstitAgents)
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - ClimPolicyCompens_ref(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - ClimPolicyCompens_ref(Indice_Government)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - ClimPolicyCompens_ref(Indice_Corporations)
+   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
+   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
+   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
    
    y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - delta_LS_H .* ones(1, nb_Households).*((sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)) / nb_Households) ;
 
@@ -1807,7 +1807,7 @@ endfunction
 /// Trade balance constant to GDP growth
 function y = Trade_Balance_Const_1( pM, pX, X, M, GDP);
 
-  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))/GDP_ref
+  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
 // y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
 endfunction
 
