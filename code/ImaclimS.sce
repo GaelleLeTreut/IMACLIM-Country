@@ -166,7 +166,7 @@ if Output_files=='True'
 disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
 warning("Antoine : il faudra bien penser à actualiser les outputs (table_param)");
 exec(CODE+"outputs.sce");
-exec(CODE+"outputs_indic.sce");
+//exec(CODE+"outputs_indic.sce");
 	if System_Resol == "Projection_ECOPA"
 	exec(CODE+"outputs_indic_ECOPA.sce");
 	end
@@ -199,3 +199,17 @@ end
 if Output_files=='True'
 diary(0)
 end
+
+//quelques tests 
+GDP_cible = GDP_index'.*BY.GDP
+GDP_found = [data_1.GDP data_2.GDP]
+GDP_ratio = GDP_found./GDP_cible
+CPI_found = [data_1.CPI data_2.CPI]
+u_cible = [BY.u_tot BY.u_tot]
+u_found = [data_1.u_tot data_2.u_tot]
+(w./(1+phi_L).^40)./BY.w
+X./((BY.X==0)+(BY.X<>0).*BY.X)
+M./((BY.M==0)+(BY.M<>0).*BY.M)
+alpha./((BY.alpha==0)+(BY.alpha<>0).*BY.alpha)
+[Trade_Balance(4)./GDP BY.Trade_Balance(4)./BY.GDP]	
+IC(Indice_EnerSect,:).*(abs(IC(Indice_EnerSect,:))>%eps) - Projection.IC(Indice_EnerSect,:)

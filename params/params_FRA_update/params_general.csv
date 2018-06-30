@@ -4,7 +4,7 @@
 //;;;;;
 // Carbon tax;;;;;
 Carbon_Tax_rate;0;0;1;;
-delta_LS_H;1;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;
+delta_LS_H;0;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;
 delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;
 //;;;;;
 //Labor market parameters;;;;;

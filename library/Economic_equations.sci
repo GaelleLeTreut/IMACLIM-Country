@@ -326,16 +326,16 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
-	
-	Indice_Composite = find(Index_Sectors=="Composite");
 
 	y1 = zeros(nb_Commodities, nb_Households) ;
+
+    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY .* .. 
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
+
 	
-	y1(Indice_SecExcepComp, :) = C(Indice_SecExcepComp, :) - C_ref(Indice_SecExcepComp, :) .* ( (pC(Indice_SecExcepComp, :)/CPI) ./ (pC_ref(Indice_SecExcepComp, :)/CPI_ref) ).^ (sigma_pC_ECOPA(Indice_SecExcepComp).*. ones(1,nb_Households)) .* (( (Consumption_budget/CPI) ./ (Consumption_budget_ref/CPI_ref) ).*. ones(nb_Commodities-1,1)) .^ (sigma_ConsoBudget_ECOPA(Indice_SecExcepComp).*. ones(1,nb_Households)) ;
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
 	
-    Composite_budget =  Consumption_budget - sum(pC(Indice_SecExcepComp, :) .* C(Indice_SecExcepComp, :),"r");
-	
-	y1 (Indice_Composite,:) = pC(Indice_Composite,:) .* C(Indice_Composite,:) - Composite_budget ;
+	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
@@ -1811,6 +1811,13 @@ function y = Trade_Balance_Const_1( pM, pX, X, M, GDP);
 // y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
 endfunction
 
+/// Trade balance constant to GDP growth
+function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
+
+  y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
+// y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
+endfunction
+
 
 // Market closure (adjustment of supply or demand in quantities)
 
@@ -2351,13 +2358,13 @@ endfunction
 
 //////////////////
 // Antoine: Wage curve by sector for dynamic projection... a confirmer
-function y = Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage, phi_L);
+function y = Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect, Coef_real_wage, phi_L);
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
 	
     // Wage curve on nominal  wage
-	y = w.*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( ini.w .* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU .*(Coef_real_wage*CPI + (1-Coef_real_wage))).*(ones(1,nb_Sectors)+phi_L).^(time_since_ini) ; 
+	y = w.*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( ini.w .* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU_sect .*(Coef_real_wage*CPI + (1-Coef_real_wage))).*(ones(1,nb_Sectors)+phi_L).^(time_since_ini) ; 
 	y = y';
 
 endfunction
@@ -2457,7 +2464,7 @@ function y = Mean_wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU)
 
 endfunction
 
-function y = Mean_wage_Const_5(u_tot, u_tot_ref, w, w_ref, lambda, lambda_ref, Y, Y_ref, sigma_omegaU, CPI, CPI_ref, Coef_real_wage, Mu, time_period);
+function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage);
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
@@ -2466,13 +2473,10 @@ function y = Mean_wage_Const_5(u_tot, u_tot_ref, w, w_ref, lambda, lambda_ref, Y
     omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
 
     // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-    
+    omega_ref = sum (ini.w .* ini.lambda .* ini.Y') / sum(ini.lambda .* ini.Y') ;
+  
     // Wage curve on nominal  wage
-//    y = omega  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
-    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ;
-//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
-//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))) ; 
+    y = omega*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_ini)) ;
 
 endfunction
 

@@ -212,7 +212,7 @@ if norm(const_X) > sensib
     error( "review calib_X")
 else
     X = indiv_x2variable (Index_Imaclim_VarCalib, "x_X");
-    // X = (abs(X) > %eps).*X;
+    X = (abs(X) > %eps).*X;
 end
 
 
@@ -226,7 +226,7 @@ if norm(const_G) > sensib
     error( "review calib_G")
 else
     G = indiv_x2variable (Index_Imaclim_VarCalib, "x_G");
-    // G = (abs(G) > %eps).*G;
+    G = (abs(G) > %eps).*G;
 end
 
 function [const_I] =fcalib_I_value_Const_1(x_I, I_value, pI, Imaclim_VarCalib)
@@ -239,7 +239,7 @@ if norm(const_I) > sensib
     error( "review calib_I")
 else
     I = indiv_x2variable (Index_Imaclim_VarCalib, "x_I");
-    // I = (abs(I) > %eps).*I;
+    I = (abs(I) > %eps).*I;
 end
 
 function [const_alpha] =fcalib_IC_Const_1(x_alpha, IC, Y, Imaclim_VarCalib)

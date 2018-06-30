@@ -4,17 +4,30 @@
 
 // macro context
 Labour_product = "True"; //"True"
-World_energy_prices = []; //["Crude_oil" "Natural_gas" "Coal"]
+World_energy_prices = ["Crude_oil" "Natural_gas" "Coal"]; // 
 Demographic_shift = "True"; //True
-Alpha_BU = [] ; // Indice_EnerSect
-Trade_BU = [] ; // Indice_EnerSect
-C_BU = [] ; // Indice_EnerSect
+
+Trade_BU = Indice_EnerSect ; //
+//Alpha_BU = Indice_EnerSect ; //
+//C_BU = Indice_EnerSect ; // 
+
+Alpha_BU = [Indice_EnerSect 14 16] ;
+C_BU = [Indice_EnerSect 11 13 14 15]  ; 
+ToAggregate = "False";
+
+
+X_nonEnerg = "True"; //"";
 warning("Antoine : Dans la wage curve on garde u_tot_ref ou on passe sur un u_param comme au Brésil ?")
+
+// wage_curve
+parameters.Coef_real_wage = 1.0;
+parameters.sigma_omegaU = -0.3;
+parameters.u_param = BY.u_tot ;//0.06   ;
 
 ////////////////////////////////////
 // Specific to homothetic projection
 ////////////////////////////////////
-if System_Resol=="Systeme_ProjHomothetic"
+if [System_Resol=="Systeme_ProjHomothetic"]|[System_Resol=="Systeme_ProjHomothetic_bis"]
 	parameters.sigma_pC = ones(parameters.sigma_pC);
 	parameters.sigma_ConsoBudget = ones(parameters.sigma_ConsoBudget);
 	parameters.ConstrainedShare_C = zeros(parameters.ConstrainedShare_C);
@@ -58,17 +71,25 @@ parameters.time_since_BY = Projection.current_year(time_step) - Projection.refer
 end
 
 // Set up demographic context
+if Demographic_shift == "True"
 Deriv_Exogenous.Labour_force =  ((1+Projection.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
 Deriv_Exogenous.Population =  ((1+Projection.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
-//Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.step))*ini.Retired;
-//Deriv_Exogenous.Unemployed --> no : unemployement rate endogenous in this version
+Deriv_Exogenous.Retired =  ((1+Projection.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Retired;
+// trop compliqué ce que je faisais... Retired évolue comme Labour_force
+end
 
 // Set up macroeconomic context
 if Labour_product == "True"
 	GDP_index(time_step) = prod((1 + Projection.GDP(1:time_step)).^(Projection.current_year(1:time_step) - Projection.reference_year(1:time_step)));
 	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
+	parameters.Mu = parameters.Mu*1.3;
 	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
 	warning("Antoine: nécessite de pouvoir implémenter Mu et phi_L à la main à l extérieur (study frame)")
+end
+
+// attention pour wage curve, différence entre Mu (/ini) et phi_L (/BY)
+if time_step>1
+	parameters.Mu = ((GDP_index(time_step)/GDP_index(time_step-1))/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_ini)-1;
 end
 
 //Set imported prices of energy
@@ -122,7 +143,42 @@ if time_step==Nb_Iter & Scenario<>"" then
 	end
 end
 
+if X_nonEnerg == "True"
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Projection.GDP_world(time_step);
+end
 
+//TestX = ((1 + parameters.delta_X_parameter').^20).*BY.X;
+//TestM = ((1 + parameters.delta_M_parameter').^20).*BY.M;
+//TestC = ((1 + parameters.delta_C_parameter').^20).*BY.C;
+//Testalpha = BY.alpha ./ ((1 + parameters.phi_IC).^20);
 
+// implémentation de la taxe carbone et de l'incorporation de la biomasse
+if Scenario == "AME"
+	parameters.Carbon_Tax_rate = 100*1e3;
+//	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+//	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+end
 
+if Scenario == "AMS"
+	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+	if time_step == 1
+		parameters.Carbon_Tax_rate == 225*1e3;
+		// gaz
+		Emission_Coef_C(2,:) = (1-0.18)*Emission_Coef_C(2,:);
+		Emission_Coef_IC(2,:) = (1-0.18)*Emission_Coef_IC(2,:);
+		// fuels
+		Emission_Coef_C(4:5,:) = (1-0.12)*Emission_Coef_C(4:5,:);
+		Emission_Coef_IC(4:5,:) = (1-0.12)*Emission_Coef_IC(4:5,:);
+	end
+	if time_step == 2
+		parameters.Carbon_Tax_rate == 600*1e3;
+		// gaz
+		Emission_Coef_C(2,:) = (1-1.0)*Emission_Coef_C(2,:);
+		Emission_Coef_IC(2,:) = (1-1.0)*Emission_Coef_IC(2,:);
+		// fuels
+		Emission_Coef_C(4:5,:) = (1-1.0)*Emission_Coef_C(4:5,:);
+		Emission_Coef_IC(4:5,:) = (1-1.0)*Emission_Coef_IC(4:5,:);
+	end
+end
 
