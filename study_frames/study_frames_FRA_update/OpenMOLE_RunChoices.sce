@@ -81,10 +81,11 @@ end
 // Set up macroeconomic context
 if Labour_product == "True"
 	GDP_index(time_step) = prod((1 + Projection.GDP(1:time_step)).^(Projection.current_year(1:time_step) - Projection.reference_year(1:time_step)));
-	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
-	parameters.Mu = 0.04;
+//	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
+	parameters.Mu = MU;
 	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
-	warning("Antoine: nécessite de pouvoir implémenter Mu et phi_L à la main à l extérieur (study frame)")
+//	parameters.phi_L = OM_phi_L;
+//	parametres.Mu = sum(parameters.phi_L.*Projection.Y')/sum(Projection.Y);
 end
 
 // attention pour wage curve, différence entre Mu (/ini) et phi_L (/BY)
@@ -199,4 +200,8 @@ if Scenario == "AMS"
 	end
 end
 
-parameters.phi_IC =zeros(parameters.phi_IC);
+// work on specific margins of Automobile sectors for price evolution calibration
+//calib.SpeMarg_rates_C(11) =SMC;
+//SpeMarg_rates_C =calib.SpeMarg_rates_C;
+//calib.SpeMarg_rates_I(11) =SMI;
+//SpeMarg_rates_I =calib.SpeMarg_rates_I;

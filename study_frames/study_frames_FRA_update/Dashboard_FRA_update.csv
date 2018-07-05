@@ -9,6 +9,7 @@ System_Resol;Systeme_Static
 // study;Static_RunChoices
 // study;Projection_evolution
 study;Recursive_RunChoices
+// study;OpenMOLE_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_SNBC2
@@ -33,5 +34,5 @@ Nb_Iter;2
 Scenario;AME
 // Scenario;AMS
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False

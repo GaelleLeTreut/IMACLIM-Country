@@ -61,6 +61,7 @@ if exists('Deriv_Exogenous')==1
 execstr(Table_Deriv_Exogenous);
 end
 
+Indice_Immo = find(Index_Sectors == "Property_business") ;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -107,7 +108,10 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
 	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
 	CPI = CPI_Const_2( pC, C);
 	// 	Specific to any projection in relation to BY
-	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+//	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+
+	[alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+
 	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 	Other_Direct_Tax = Other_Direct_Tax_Const_2( CPI, Other_Direct_Tax_param);
 endfunction
@@ -145,7 +149,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
     // Rq : voir si le calcul de Property_income et de Savings est vraiment nécessaire, il semble que ça allonge le temps (faire le test)
     // Traitement différent de savings, une variable par type d'agent
-    H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
+//    H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
+
+H_Investment_Const_2(GFCF_byAgent,pC,C)
+
     Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
 	//G_investment_Const_1 : indexation de la FBCF des gouv sur les revenus /// G_investment_Const_2 : indexation de la FBCF des gouv sur le pib
     G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) 
@@ -251,7 +258,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
-    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+    IncomeDistrib_Const_1bis(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
     ];
     //7076:7087
     if ~isreal(Constraints_Deriv)

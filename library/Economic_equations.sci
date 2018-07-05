@@ -197,6 +197,13 @@ function y = H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_pr
 	y=y1';		
 endfunction
 
+function y = H_Investment_Const_2(GFCF_byAgent, pC, C) ;
+
+    // Household gross fixed capital formation constraint (GFCF_byAgent(Indice_Households))
+    y1 = GFCF_byAgent(Indice_Households) - BY.GFCF_byAgent(Indice_Households)*sum(C(Indice_Immo,:).*pC(Indice_Immo,:))/sum(BY.C(Indice_Immo,:).*BY.pC(Indice_Immo,:)) ;
+
+	y=y1';		
+endfunction
 
 // Household net lending (+) / net borrowing (-) (by household class)
 // Difference between disposable income and expenditures (consumption and gross fixed capital formation)
@@ -1408,6 +1415,40 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma,
 	alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
              (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
              (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+	
+	lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+             ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+             (FPI .^(sigma./(1 - sigma)))) ;
+    
+    //lambda(test_pL|test_FPI) = 0;
+    
+    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+            ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+            (FPI .^(sigma./(1 - sigma)))) ;
+
+endfunction
+
+function [alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+    
+    FPI = sum((aIC .^(sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+          (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+          (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+    
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+
+	alpha = zeros(nb_Sectors,nb_Sectors);
+
+	alpha(Indice_EnerSect,:) = Projection.IC(Indice_EnerSect,:)./(ones(Indice_EnerSect)'*((Y==0)+(Y<>0).*Y)');
+
+	alpha(Indice_NonEnerSect,:) = (ones(size(Indice_NonEnerSect,2), 1).*.(Theta ./ Phi)) .* (ones(size(Indice_NonEnerSect,2),nb_Sectors)./(1+phi_IC(Indice_NonEnerSect,:)).^time_since_BY).* ..
+             (ConstrainedShare_IC(Indice_NonEnerSect,:) .* BY.alpha(Indice_NonEnerSect,:) + ((aIC(Indice_NonEnerSect,:) ./ pIC(Indice_NonEnerSect,:)) .^ (sigma.*.ones(size(Indice_NonEnerSect,2),1))) .* ..
+             (ones(size(Indice_NonEnerSect,2), 1).*.(FPI.^(sigma./(1 - sigma))))) ;
 	
 	lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
              ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
@@ -2733,6 +2774,33 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
 
 endfunction
+
+// For SNBC
+function [y] = IncomeDistrib_Const_1bis(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    y1 = NetCompWages_byAgent - Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income) ;
+    y1 = matrix ( y1, -1, 1);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    y2 = GOS_byAgent - Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus) ;
+    y2 = matrix ( y2, -1, 1);
+
+    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
+    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*ini.Other_Transfers) * (GDP/ini.GDP) - LowCarb_Transfers ;
+    y3 = matrix ( y3, -1, 1);
+
+    y = [y1;y2;y3];
+
+    // y  = zeros(length(Distribution_Shares), 1) ;
+    // y (1: length(NetCompWages_byAgent), 1) =  matrix(y1, length(NetCompWages_byAgent), 1) ;
+    // y (length(NetCompWages_byAgent)+1 : length(NetCompWages_byAgent)+length(GOS_byAgent)) = matrix(y2, length(GOS_byAgent), 1) ;
+    // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
+
+endfunction
+
+
+
 
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)
