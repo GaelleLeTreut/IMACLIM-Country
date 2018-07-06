@@ -227,7 +227,7 @@ end
 ioa_ini.IOA_OUTPUT_APP = [AGGprofil,Index_Sectors';"Fact Emiss",ioa_ini.Emis_fact_DOM;"Output",initial_value.Output;"M_tot", initial_value.tot_ress_valIMP];
 
 // Recap emissions 
-ioa_ini.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check";AGGprofil,ioa_ini.Emiss_IOA_tot,ioa_ini.Prod_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_APROX_tot,ioa_ini.ImpNet_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_tot, ioa_ini.Imp_Emis_IOA_APROX_tot - ( ioa_ini.Emiss_IOA_tot-ioa_ini.Prod_Emis_IOA_tot)];
+ioa_ini.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2","Emis_Sec","Consist check 3";AGGprofil,ioa_ini.Emiss_IOA_tot,ioa_ini.Prod_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_APROX_tot,ioa_ini.ImpNet_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_tot, ioa_ini.Imp_Emis_IOA_APROX_tot - ( ioa_ini.Emiss_IOA_tot-ioa_ini.Prod_Emis_IOA_tot),ioa_ini.Imp_Emis_IOA_APROX_tot, ioa_ini.Imp_Emis_IOA_bis_tot,ioa_ini.Imp_Emis_IOA_APROX_tot- ioa_ini.Imp_Emis_IOA_bis_tot,sum(ioa_ini.Emis_Sect), sum(ioa_ini.Emis_Sect)-ioa_ini.Prod_Emis_IOA_tot];
 
 // Print external files IOA_DECOMP
 if Output_files=='True'
@@ -245,7 +245,7 @@ csvWrite([["AGG profil";AGGprofil],ioa_ini.A_anal], SAVEDIR_IOA + 'A_anal'+"_"+A
 
 csvWrite(ioa_ini.IOA_OUTPUT_APP, SAVEDIR_IOA + 'IOA_OUTPUT_APP'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(ioa_ini.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis_BY'+"_"+AGGprofil+'.csv', ';');
 
 // csvWrite(["A",Index_Sectors';[Index_Sectors,ioa_ini.A_DOM]], SAVEDIR_IOA + 'Matrix_A'+"_"+AGGprofil+'.csv', ';');
 // csvWrite(["A2",Index_Sectors';[Index_Sectors,ioa_ini.A2]], SAVEDIR_IOA + 'Matrix_A2'+"_"+AGGprofil+'.csv', ';');

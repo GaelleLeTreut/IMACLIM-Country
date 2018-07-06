@@ -152,6 +152,13 @@ if	H_DISAGG <> "HH1"
 csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
 end
 
+
+// Recap emissions 
+ioa_run.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2 ","Emis_Sec","Consist check 3";AGGprofil,ioa_run.Emiss_IOA_tot,ioa_run.Prod_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_APROX_tot,ioa_run.ImpNet_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_tot, ioa_run.Imp_Emis_IOA_APROX_tot - ( ioa_run.Emiss_IOA_tot-ioa_run.Prod_Emis_IOA_tot),ioa_run.Imp_Emis_IOA_APROX_tot, ioa_run.Imp_Emis_IOA_bis_tot,ioa_run.Imp_Emis_IOA_APROX_tot- ioa_run.Imp_Emis_IOA_bis_tot,sum(ioa_run.Emis_Sect), sum(ioa_run.Emis_Sect)-ioa_run.Prod_Emis_IOA_tot ];
+
+csvWrite(ioa_run.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis_Run'+"_"+AGGprofil+'.csv', ';');
+
+
 // csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv");
 
 // Sauvegarde des fichiers pour Input dans IMACLIM
