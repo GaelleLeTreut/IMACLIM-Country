@@ -100,8 +100,43 @@ ini.ERE_M = ERE_Import ( AdjutERE_M, ini.IC_Import_rate, ini.FC_Import_rate, ini
 /// Non équilibré sans ajustement 
 d.ERE_M = ERE_Import ( AdjutERE_M, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP);
 
-// ajustement de l'équibre des imports 
-[AdjutERE_M_best, d.ERE_M_best, info] = fsolve(AdjutERE_M, list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+ 
+/////////////////////////////////////////////////
+//////SOLVEUR  // ajustement de l'équibre des imports
+/////////////////////////////////////////////////
+count        = 0;
+countMax     = 30;
+vMax         = 10000000;
+vBest        = 10000000;
+sensib       = 1e-5;
+sensibFsolve = 1e-15;
+Xbest        = AdjutERE_M;
+a            = 0.1;
+
+
+while (count<countMax)&(vBest>sensib)
+    count = count + 1;
+
+    try
+        [AdjutERE_M_best, ERE_M_best, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+        vMax = norm(ERE_M_best);		
+		
+// [AdjutERE_M_best, d.ERE_M_best, info] = fsolve(AdjutERE_M, list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+
+        if vMax<vBest
+            vBest    = vMax;
+            infoBest = info;
+            Xbest    = AdjutERE_M_best;
+        end
+
+    catch
+        [str,n,line,func]=lasterror(%f);
+        disp("Error "+n+" with fsolve: "+str);
+        pause
+    end
+
+end
+
 
 // Recalcul des taux après ajustement qui permet l'équibre des importations, trouvé par le solveur
 d.IC_Import_rate = min (d.IC_Import_rate.*( ones (1,nb_Sectors).*. AdjutERE_M_best ),1);
@@ -134,7 +169,13 @@ d.ERE_M_value =d.tot_ress_valIMP - d.tot_uses_valIMP' ;
     end	
 
 d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") ;
-	
+
+
+// d.TEST=[AGGprofil,Index_Sectors';["Emis_Sect_"+Index_Sectors,d.CO2Emis_IC];"Emis_Fact_DOM",divide( sum(d.CO2Emis_IC,"r"), d.Output, 0);["Leon_DOM_"+Index_Sectors,inv(eye (nb_Sectors,nb_Sectors)-divide( d.IC_valueDOM, ones(nb_Sectors,1).*.d.Output, 0))];["FC_valueDOM_"+Index_Sectors,diag(sum(d.FC_valueDOM,"c"))'];["Output",d.Output]];
+
+// csvWrite(d.TEST, SAVEDIR_IOA + 'TEST_run_'+"_"+AGGprofil+'.csv', ';');
+
+
  ioa_run  = IOA(  d.CO2Emis_IC,  d.CO2Emis_C, d.IC_value,  d.IC_valueIMP, d.IC_valueDOM, d.FC_valueDOM, d.FC_valueIMP, d.FC_value,  d.Output, CoefCO2_reg);
  
 
