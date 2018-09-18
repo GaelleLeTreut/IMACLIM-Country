@@ -177,11 +177,12 @@ end
 ////////////////////////////////////////////////////////////
 disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
 warning('IOA_Run to generalize for several time steps')
-if [Country =="France"] & [time_step==1]
+
+// if [Country =="France"] & [time_step==1]
 exec(CODE+"IOA_Run.sce");
-else
-disp("Not executed for the IMACLIM-"+Country+" version and/or because time_step = "+ time_step +" > 1")
-end
+// else
+// disp("Not executed for the IMACLIM-"+Country+" version and/or because time_step = "+ time_step +" > 1")
+// end
 
 ////////////////////////////////////////////////////////////
 // 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
