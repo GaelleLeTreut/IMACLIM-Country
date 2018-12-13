@@ -2,9 +2,8 @@ sigma_pC;HH1
 Crude_oil;-0.03
 Natural_gas;-0.03
 Coal;-0.03
-Fuels;-0.39
-OthFuelProd;-0.03
-Electricty;-0.03
+AllFuels;-0.39
+Electricity;-0.03
 HeatGeoSol_Th;-0.03
 Heavy_Industry;-0.03
 Buildings_constr;-0.03

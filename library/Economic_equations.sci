@@ -429,7 +429,7 @@ endfunction
 function y = Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
 
     // Corporations gross fixed capital formation constraint (GFCF_byAgent(Indice_Corporations))
-    y1 = GFCF_byAgent(Indice_Corporations) - ( Corp_disposable_income .* Corp_invest_propensity ) ;
+    y1 = GFCF_byAgent(Indice_Corporations) - (Corp_disposable_income .* Corp_invest_propensity ) ;
 
 	y=y1';		
 endfunction
@@ -1489,13 +1489,13 @@ endfunction
 // PAS POUR CALIBRAGE //
 // Production Price
 warning("ruben: pIC = abs(pIC);");
-function y =  Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
+function y =  Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
     pY=abs(pY);
 	pIC = abs(pIC);
 	pK = abs(pK);
     pL = abs(pL);
 	// Mark-up pricing rule ( pY(nb_Sectors) ). The formula enables the use of different types of labour and capital inputs
-    y1 = pY' - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./Y' + Production_Tax_rate .* pY' + markup_rate .* pY')  ;
+    y1 = pY' - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY' + markup_rate .* pY')  ;
 
     y=y1';
 endfunction

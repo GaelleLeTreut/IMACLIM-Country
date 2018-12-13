@@ -12,7 +12,7 @@ Row;Fuel;Commodities;EnerSect;HybridCommod;FinEnerSect;Fuel;FuelProd;FuelProd;Fu
 Row;Fuel_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;Fuel_oil;FuelProd;FuelProd;OthFuelProd;FuelProd;FinEnergy;AllEnergy
 Row;Heavy_fuel_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;Heavy_fuel_oil;FuelProd;FuelProd;OthFuelProd;FuelProd;FinEnergy;AllEnergy
 Row;Other_fuel_prod;Commodities;EnerSect;HybridCommod;FinEnerSect;Other_fuel_prod;FuelProd;FuelProd;OthFuelProd;FuelProd;FinEnergy;AllEnergy
-Row;Electricty;Commodities;EnerSect;HybridCommod;FinEnerSect;Electricty;Electricty;Electricty;Electricty;Electricty;FinEnergy;AllEnergy
+Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;Electricity;Electricity;Electricity;Electricity;Electricity;FinEnergy;AllEnergy
 Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;HeatGeoSol_Th;HeatGeoSol_Th;HeatGeoSol_Th;HeatGeoSol_Th;HeatGeoSol_Th;FinEnergy;AllEnergy
 Row;Steel_Iron;Commodities;NonEnerSect;HybridCommod;-;Metals;Steel_Iron;Metals;Steel_Iron;Steel_Iron;AllIndus;AllComp
 Row;NonFerrousMetals;Commodities;NonEnerSect;NonHybridCommod;-;Metals;NonFerrousMetals;Metals;NonFerrousMetals;NonFerrousMetals;AllIndus;AllComp
@@ -49,7 +49,7 @@ Row;SpeMarg_Fuel;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_Fuel_oil;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_Heavy_fuel_oil;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_Other_fuel_prod;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
-Row;SpeMarg_Electricty;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
+Row;SpeMarg_Electricity;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_HeatGeoSol_Th;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_Steel_Iron;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
 Row;SpeMarg_NonFerrousMetals;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-;-;-;-
@@ -96,7 +96,7 @@ Column;Fuel;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;Fuel_oil;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;Heavy_fuel_oil;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;Other_fuel_prod;Sectors;-;-;-;-;-;-;-;-;-;-
-Column;Electricty;Sectors;-;-;-;-;-;-;-;-;-;-
+Column;Electricity;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;HeatGeoSol_Th;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;Steel_Iron;Sectors;-;-;-;-;-;-;-;-;-;-
 Column;NonFerrousMetals;Sectors;-;-;-;-;-;-;-;-;-;-

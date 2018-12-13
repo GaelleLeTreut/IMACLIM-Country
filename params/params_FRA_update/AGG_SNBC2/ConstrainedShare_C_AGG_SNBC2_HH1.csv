@@ -2,9 +2,8 @@ ConstrainedShare_C;HH1
 Crude_oil;1
 Natural_gas;1
 Coal;1
-Fuels;1
-OthFuelProd;1
-Electricty;1
+AllFuels;1
+Electricity;1
 HeatGeoSol_Th;1
 Heavy_Industry;0.5
 Buildings_constr;0.5

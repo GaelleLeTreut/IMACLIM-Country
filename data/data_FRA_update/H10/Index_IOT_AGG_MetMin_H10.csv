@@ -11,7 +11,7 @@ Row;Fuel;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Fuel_oil;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Heavy_fuel_oil;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Other_fuel_prod;Commodities;EnerSect;FinEnerSect;HybridCommod
-Row;Electricty;Commodities;EnerSect;FinEnerSect;HybridCommod
+Row;Electricity;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;HeatGeoSol_Th;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Metals;Commodities;NonEnerSect;-;NonHybridCommod
 Row;Minerals;Commodities;NonEnerSect;-;NonHybridCommod
@@ -46,7 +46,7 @@ Row;SpeMarg_Fuel;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Fuel_oil;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Heavy_fuel_oil;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Other_fuel_prod;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
-Row;SpeMarg_Electricty;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
+Row;SpeMarg_Electricity;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_HeatGeoSol_Th;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Metals;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Minerals;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
@@ -91,7 +91,7 @@ Column;Fuel;Sectors;-;-;-
 Column;Fuel_oil;Sectors;-;-;-
 Column;Heavy_fuel_oil;Sectors;-;-;-
 Column;Other_fuel_prod;Sectors;-;-;-
-Column;Electricty;Sectors;-;-;-
+Column;Electricity;Sectors;-;-;-
 Column;HeatGeoSol_Th;Sectors;-;-;-
 Column;Metals;Sectors;-;-;-
 Column;Minerals;Sectors;-;-;-
