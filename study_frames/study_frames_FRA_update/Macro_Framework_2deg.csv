@@ -19,5 +19,5 @@ pM_Load_PipeTransp;0.0015;0.0015
 pM_PassTransp;0.0015;0.0015
 pM_Agri_Food_industry ;0.0015;0.0015
 pM_Property_business;0.0015;0.0015
-pM_OthSectors;0.0015;0.0015
+pM_OthSectors;0.0;0.0
 units;mean_yearly_growth_rate;

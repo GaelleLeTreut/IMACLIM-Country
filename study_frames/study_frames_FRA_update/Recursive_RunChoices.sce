@@ -1,20 +1,3 @@
-//////////////////////////
-// Select a set of forcing
-//////////////////////////
-// macro context
-Labour_product = "True"; //"True"
-World_energy_prices = [];//Index_Sectors'; // ["Crude_oil" "Natural_gas" "Coal"]; 
-Demographic_shift = "True"; //True
-
-Trade_BU = Indice_EnerSect ; 
-Alpha_BU = [Indice_EnerSect];
-C_BU = [Indice_EnerSect find(Index_Sectors=="Automobile") find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp") find(Index_Sectors=="Agri_Food_industry") find(Index_Sectors=="Property_business")]; 
-warning("généraliser les forçages en volume et en intensité... utilisation de cache ?")
-
-ToAggregate = "False"; // feature whether forcing data are not aggregated... check if it's working... to improve 
-
-X_nonEnerg = "False"; // pour forcer la croissance des exportations (biens non-énergétiques) comme l'évolution du PIB mondial
-
 ////////////////////////////////////
 // Specific to homothetic projection
 ////////////////////////////////////
@@ -29,6 +12,18 @@ if [System_Resol=="Systeme_ProjHomothetic"]
 	parameters.Carbon_Tax_rate = 0.0;
 	parameters.u_param = BY.u_tot;
 end
+
+//////////////////////////
+// Select a set of forcing
+//////////////////////////
+	// to integrate within the Dashboard thereafter : à généraliser pour forcer certains secteurs... où choisir si on indique True ou False dans le Dashboard
+Trade_BU = Indice_EnerSect; 
+Alpha_BU = Indice_EnerSect; // à généraliser pour avoir des forçages en volume et en intensité  
+C_BU = Indice_EnerSect;
+// faire des forçages sous-entend un certain de jeu de paramètres en entrée... implémenter le changement dans le code au cas où ce n'est pas bien renseigné ? Par forcément car parfois que je fais un forçage en indiquant une cible mais je veux me laisser une liberté de me promener autour de cette cible par jeux d'arbitrage économique   
+// find(Index_Sectors=="Automobile") find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp") find(Index_Sectors=="Agri_Food_industry") find(Index_Sectors=="Property_business")]; 
+
+ToAggregate = "False"; // feature whether forcing data are not aggregated... check if it's working... to improve ?
 
 ////////////////////////////////////////////////////////////////////////
 // load of macroeconomic and demographic context for the first step only
@@ -62,8 +57,8 @@ end
 if Resol_Mode == "Dynamic_projection"
 parameters.time_since_ini = Projection.current_year(time_step) - Projection.reference_year(time_step);
 parameters.time_since_BY = Projection.current_year(time_step) - Projection.reference_year(1);
-// nettoyage possible après avoir différencier param et calib
 end
+warning("Macro-framework dans cette situation est indispensable pour informer time_since_ini et time_since_BY")
 
 // Set up demographic context
 if Demographic_shift == "True"
@@ -81,16 +76,24 @@ if Labour_product == "True"
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
-//Set imported prices of energy
-if World_energy_prices <> []
-	for k=1:size(World_energy_prices,2)
-		name = World_energy_prices(k);
+//Set imported prices as Macro_framework
+//if World_energy_prices <> []
+if World_prices == "True"
+//	for k=1:size(World_energy_prices,2)
+	for k=1:size(Index_Sectors,1)
+//		name = World_energy_prices(k);
+		name = Index_Sectors(k);
 		if sum(Index_Sectors == name)==1
 			execstr("parameters.delta_pM_parameter("+k+") = Projection.pM_"+name+"(time_step);");
 		else
 			warning("the energy quantity "+ name +" does not fit with the agregation level used: the related prices won't be informed.");  
 		end
 	end
+end
+
+// Export growth of non-energy sectors as GDP_world
+if X_nonEnerg == "True"
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Projection.GDP_world(time_step);
 end
 
 // clear programming trick for Static_comparative
@@ -102,7 +105,6 @@ end
 ////////////////////////////////////////////////////////////////////////
 // Soft-coupling from BU (volumes)
 ////////////////////////////////////////////////////////////////////////
-
 // load all data
 if time_step==1 & Scenario<>"" then
 	if Alpha_BU <> [] | Trade_BU <> [] | C_BU <> [] 
@@ -138,8 +140,4 @@ if time_step==Nb_Iter & Scenario<>"" then
 	if Alpha_BU <> [] | Trade_BU <> [] | C_BU <> [] 
 		clear nb_SectorsTEMP Index_CommoditiesTEMP  
 	end
-end
-
-if X_nonEnerg == "True"
-	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Projection.GDP_world(time_step);
 end
