@@ -137,7 +137,6 @@ while (count<countMax)&(vBest>sensib)
 
 end
 
-
 // Recalcul des taux après ajustement qui permet l'équibre des importations, trouvé par le solveur
 d.IC_Import_rate = min (d.IC_Import_rate.*( ones (1,nb_Sectors).*. AdjutERE_M_best ),1);
 d.FC_Import_rate = min (d.FC_Import_rate.*( ones (1,nb_FC).*. AdjutERE_M_best ),1);
@@ -164,15 +163,26 @@ d.tot_ress_valIMP = d.M_value + sum(d.MarginsIMP,"r") + sum(d.TaxesIMP,"r");
 d.tot_uses_valIMP = sum(d.IC_valueIMP,"c")+sum(d.FC_valueIMP,"c");
 
 d.ERE_M_value =d.tot_ress_valIMP - d.tot_uses_valIMP' ;
-    if abs(d.ERE_M_value)>= Err_balance_tol then
-        disp("Warning : unbalanced IOT of IMPORTS")
-    end	
+    if norm(d.ERE_M_value)>= Err_balance_tol then
+        disp("Warning : unbalanced IOT of IMPORTS for sectors")
+	for elt=1:nb_Sectors
+		if abs(d.ERE_M_value(elt))>= Err_balance_tol then		
+			disp(Index_Sectors(elt)+": "+string(d.ERE_M_value(elt)))
+		end
+	end
+    end
+if Output_files == "True"
+	d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
+end 
+if Output_files == "False"
+	d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r") - d.ClimPolCompensbySect ;
+end 
 
-d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r") - d.ClimPolCompensbySect ;
+
 
 // d.TEST=[AGGprofil,Index_Sectors';["Emis_Sect_"+Index_Sectors,d.CO2Emis_IC];"Emis_Fact_DOM",divide( sum(d.CO2Emis_IC,"r"), d.Output, 0);["Leon_DOM_"+Index_Sectors,inv(eye (nb_Sectors,nb_Sectors)-divide( d.IC_valueDOM, ones(nb_Sectors,1).*.d.Output, 0))];["FC_valueDOM_"+Index_Sectors,diag(sum(d.FC_valueDOM,"c"))'];["Output",d.Output]];
 
-// csvWrite(d.TEST, SAVEDIR_IOA + 'TEST_run_'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(d.TEST, SAVEDIR  + 'TEST_run_'+"_"+AGGprofil+'.csv', ';');
 
 
  ioa_run  = IOA(  d.CO2Emis_IC,  d.CO2Emis_C, d.IC_value,  d.IC_valueIMP, d.IC_valueDOM, d.FC_valueDOM, d.FC_valueIMP, d.FC_value,  d.Output, CoefCO2_reg);
@@ -186,17 +196,17 @@ end
 
 // Print external files IOA_DECOMP
 if Output_files=='True'
-csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_run.IOA_DECOMP, SAVEDIR  + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
 
 if	H_DISAGG <> "HH1"
-csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR  + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
 end
 
 
 // Recap emissions 
 ioa_run.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2 ","Emis_Sec","Consist check 3";AGGprofil,ioa_run.Emiss_IOA_tot,ioa_run.Prod_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_APROX_tot,ioa_run.ImpNet_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_tot, ioa_run.Imp_Emis_IOA_APROX_tot - ( ioa_run.Emiss_IOA_tot-ioa_run.Prod_Emis_IOA_tot),ioa_run.Imp_Emis_IOA_APROX_tot, ioa_run.Imp_Emis_IOA_bis_tot,ioa_run.Imp_Emis_IOA_APROX_tot- ioa_run.Imp_Emis_IOA_bis_tot,sum(ioa_run.Emis_Sect), sum(ioa_run.Emis_Sect)-ioa_run.Prod_Emis_IOA_tot ];
 
-csvWrite(ioa_run.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis_Run'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_run.Recap_Emiss, SAVEDIR  + 'Recap_Emis_Run'+"_"+AGGprofil+'.csv', ';');
 
 
 // csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv");

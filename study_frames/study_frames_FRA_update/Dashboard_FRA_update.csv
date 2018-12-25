@@ -1,15 +1,14 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomothetic
-// System_Resol;Systeme_ProjHomothetic_bis
+System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_ProjEcopa
-System_Resol;Systeme_Static
+// System_Resol;Systeme_Static
 // System_Resol;Systeme_Static_bis
+// System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
 study;Recursive_RunChoices
-// study;OpenMOLE_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_SNBC2
@@ -30,9 +29,16 @@ Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;2
 // SELECT the scenario to run (soft_linking);
-// Scenario;
-Scenario;AME
+Scenario;
+// Scenario;AME
 // Scenario;AMS
+// SELECT a Macro framework to run;
+// Macro_nb;NDC
+// Macro_nb;2deg
+Macro_nb;2deg_bis
+// TELL if you wantto realise a carbon footprint analysis;
+CO2_footprint;True
+// CO2_footprint;False
 // TELL if you want output file;
-// Output_files;True
-Output_files;False
+Output_files;True
+// Output_files;False

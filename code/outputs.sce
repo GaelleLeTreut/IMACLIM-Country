@@ -48,35 +48,93 @@ disp("==========================================")
 
 param_table_sec= [ "setting", "", "", Index_Sectors'];
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$t_{CARB_{IC}}$"];
-param_table_sec(2:2+nb_Sectors-1,2) = [" $\euro/tCO_2$"];
+param_table_sec(2:2+nb_Sectors-1,2) = ["$\euro/tCO_2$"];
 param_table_sec(2:2+nb_Sectors-1,3) = Index_Sectors;
 param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC/ 10^3);
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$t_{CARB_{C}}$"];
 param_table_sec($-(nb_Households-1):$,2) = ["$\euro/tCO_2$ "];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'/ 10^3);
+
+param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$EF_{CARB_{IC}}$"];
+param_table_sec($-nb_Sectors+1:$,2) = ["$tCO_2/toe$"];///////////////////////////////////
+param_table_sec($-nb_Sectors+1:$,3) = Index_Sectors;
+param_table_sec($-nb_Sectors+1:$,4:4+nb_Sectors-1) = string(Emission_Coef_IC * 10^3);//////////////////////////////////////
+param_table_sec($+1:$+1+ nb_Households-1,1) = ["$EF_{CARB_{C}}$"];
+param_table_sec($-(nb_Households-1):$,2) = ["$tCO_2/toe$"];//////////////////////////////////////
+param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
+param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Emission_Coef_C' * 10^3);//////////////////////////////////////
+
+param_table_sec($+1,1) = ["$delta_{LS_{H}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(delta_LS_H);
+
+
+param_table_sec($+1,1) = ["$delta_{LS_{S}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(delta_LS_S);
+
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$\beta_{IC_{ji}}$"];
 param_table_sec($-nb_Sectors+1:$,2) = [" "];
 param_table_sec($-nb_Sectors+1:$,3) = Index_Sectors;
 param_table_sec($-nb_Sectors+1:$,4:4+nb_Sectors-1) = string(ConstrainedShare_IC);
+
+param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$\phi{IC_{ji}}$"];
+param_table_sec($-nb_Sectors+1:$,2) = [" "];
+param_table_sec($-nb_Sectors+1:$,3) = Index_Sectors;
+param_table_sec($-nb_Sectors+1:$,4:4+nb_Sectors-1) = string(phi_IC);
+
 param_table_sec($+1,1) = ["$\beta_{K_{i}}$"];
 param_table_sec($,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(round(ConstrainedShare_Capital*10)/10);
+
+param_table_sec($+1,1) = ["$\phi_{K_{i}}$"];
+param_table_sec($,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(phi_K);
+
 param_table_sec($+1,1) = ["$\beta_{L_{i}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(round(ConstrainedShare_Labour*10)/10);
+
+param_table_sec($+1,1) = ["$\phi_{L_{i}}$"];
+param_table_sec($,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(phi_L);
+
+param_table_sec($+1,1) = ["$Mu$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(Mu);
+
 param_table_sec($+1,1) = ["$\beta_{i_h}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(ConstrainedShare_C');
+
+param_table_sec($+1,1) = ["$\delta_{C_{i_h}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(delta_C_parameter);
+
 param_table_sec($+1,1) = ["$\sigma$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(sigma);
 param_table_sec($+1,1) = ["$\sigma_{M_{p_{i}}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(sigma_M);
+
+param_table_sec($+1,1) = ["$\delta_{M_{i}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(delta_M_parameter);
+
+param_table_sec($+1,1) = ["$\delta_{p_{M_{i}}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(delta_pM_parameter);
+
 param_table_sec($+1,1) = ["$\sigma_{X_{p_{i}}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(sigma_X);
+
+param_table_sec($+1,1) = ["$\delta_{X_{i}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4:4+nb_Sectors-1) = string(delta_X_parameter);
+
 param_table_sec($+1,1) = ["$\sigma_{CP_i}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(sigma_pC');
@@ -85,20 +143,40 @@ param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(round(sigma_ConsoBudget*10)/10);
 param_table_sec($+1,1) = ["$\sigma_{w_u}$"];
 param_table_sec($:$,2:3) = [" "];
+if size(Coef_real_wage,2)==1
+param_table_sec($,4) = string(sigma_omegaU);
+param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(Coef_real_wage);
+param_table_sec($+1,1) = ["$\u_{param}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(u_param);
+else
 param_table_sec($,4:4+nb_Sectors-1) = string(sigma_omegaU_sect);
 param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(Coef_real_wage);
-param_table_sec($+1,1) = ["$t_{period}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(time_since_ini);
-param_table_sec($+1,1) = ["$t_{REF}$"];
+end
+param_table_sec($+1,1) = ["$t_{BY}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4) = string(time_since_BY);
+param_table_sec($+1,1) = ["$t_{ini}$"];
+param_table_sec($:$,2:3) = [" "];
+param_table_sec($,4) = string(time_since_ini);
+
+param_table_sec($+1,1) = ["$Population$"];
+param_table_sec($:$,2:3) = ["Thousands of people"];
+param_table_sec($,4) = string(Population);
+param_table_sec($+1,1) = ["$Labour_force$"];
+param_table_sec($:$,2:3) = ["Thousands of people"];
+param_table_sec($,4) = string(Labour_force);
+param_table_sec($+1,1) = ["$Retired$"];
+param_table_sec($:$,2:3) = ["Thousands of people"];
+param_table_sec($,4) = string(Retired);
 
 
 
-csvWrite(param_table_sec,SAVEDIR+"param_table_sec.csv");
+csvWrite(param_table_sec,SAVEDIR+"param_table_sec.csv", ';');
 
 disp "== Households consumption variation ==========="
 disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum(C,"c") sum(round(100*(divide(C,ini.C,%nan)-1)),"c")]]);
@@ -195,7 +273,11 @@ end
 //Taxes
 for elt=1:nb_Taxes
 varname = Index_Taxes(elt);
-execstr ("d.Taxes(elt,:)"+"="+"d."+varname+";");
+if varname == "ClimPolCompensbySect"
+	execstr ("d.Taxes(elt,:)"+"="+"-d."+varname+";");
+else
+	execstr ("d.Taxes(elt,:)"+"="+"d."+varname+";");
+end
 end
 
 d.OthPart_IOT = [d.Value_Added;d.M_value;d.Margins;d.SpeMarg_IC;d.SpeMarg_FC;d.Taxes];
@@ -284,9 +366,9 @@ disp " * Evolution table - Unitary prices"
 Prices.evo = buildPriceT( evol.pIC , evol.pFC, evol.w, evol.pL, evol.pK, evol.pY, evol.pM, evol.p, 100 , 1);
 disp(Prices.evo);
 
-csvWrite(Prices.ini,SAVEDIR+"Prices-ini.csv");
-csvWrite(Prices.run,SAVEDIR+"Prices-run.csv");
-csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv");
+csvWrite(Prices.ini,SAVEDIR+"Prices-ini.csv", ';');
+csvWrite(Prices.run,SAVEDIR+"Prices-run.csv", ';');
+csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -337,9 +419,9 @@ disp " * Evolution table - Technical Coefficient"
 TechCOef.evo = buildTechCoefT( evol.alpha, evol.lambda, evol.kappa, 100 , 1);
 disp(TechCOef.evo);
 
-csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini.csv");
-csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run.csv");
-csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo.csv");
+csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini.csv", ';');
+csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run.csv", ';');
+csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo.csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -430,9 +512,9 @@ disp " * Evolution table - CO2 Emissions"
 CO2Emis.evo = buildEmisT( evol.CO2Emis_IC , evol.CO2Emis_C, evol.CO2Emis_X , evol.CO2Emis_Sec,evol.Tot_CO2Emis_IC,evol.Tot_CO2Emis_C,evol.DOM_CO2,100 , 1);
 disp(CO2Emis.evo);
 
-csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini.csv");
-csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run.csv");
-csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo.csv");
+csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini.csv", ';');
+csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run.csv", ';');
+csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo.csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -512,9 +594,9 @@ disp " * Evolution table"
 io.evo = buildIot(   evol.IC_value ,   evol.FC_value ,   evol.OthPart_IOT ,evol.Carbon_Tax,evol.Supply, evol.Uses, 100 , 1);
 disp(io.evo);
 
-csvWrite(io.ini,SAVEDIR+"io-ini.csv");
-csvWrite(io.run,SAVEDIR+"io-run.csv");
-csvWrite(io.evo,SAVEDIR+"io-evo.csv");
+csvWrite(io.ini,SAVEDIR+"io-ini.csv", ';');
+csvWrite(io.run,SAVEDIR+"io-run.csv", ';');
+csvWrite(io.evo,SAVEDIR+"io-evo.csv", ';');
 
 /////////////////////////////////////////////////
 // IO in quantities table
@@ -581,9 +663,9 @@ disp " * Evolution table - QUANTITIES"
 ioQ.evo = buildIotQ(   evol.IC ,   evol.FC ,   evol.OthQ , 100 , 1);
 disp(ioQ.evo);
 
-csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini.csv");
-csvWrite(ioQ.run,SAVEDIR+"ioQ-run.csv");
-csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo.csv");
+csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini.csv", ';');
+csvWrite(ioQ.run,SAVEDIR+"ioQ-run.csv", ';');
+csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo.csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -725,9 +807,9 @@ disp " * Evolution table - Economic Account table"
 ecoT.evo = buildEcoTabl(evol.Ecotable ,100 , 1);
 disp(ecoT.evo);
 
-csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini.csv");
-csvWrite(ecoT.run,SAVEDIR+"ecoT-run.csv");
-csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo.csv");
+csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini.csv", ';');
+csvWrite(ecoT.run,SAVEDIR+"ecoT-run.csv", ';');
+csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo.csv", ';');
 
 // Revert some data format for economic account table
 

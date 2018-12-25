@@ -147,8 +147,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
     Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
     G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
-    // Rq : voir si le calcul de Property_income et de Savings est vraiment nécessaire, il semble que ça allonge le temps (faire le test)
-    // Traitement différent de savings, une variable par type d'agent
+
+// Traitement différent de savings, une variable par type d'agent
 //    H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
 
 H_Investment_Const_2(GFCF_byAgent,pC,C)
@@ -161,6 +161,8 @@ H_Investment_Const_2(GFCF_byAgent,pC,C)
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
+
+
     H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
     Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
     G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)

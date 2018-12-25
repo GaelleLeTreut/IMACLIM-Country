@@ -16,24 +16,14 @@ for elt=1:Nb_Datafiles
 	       	listCSVfiles($+1) = listDatafiles(elt);
 	end
 end
+
 // Create a list with INDEX csv files and with IOT csv files
 listIndex = list();
 listIOTfiles = list();
 
 for elt=1:size(listCSVfiles)
     // Read all Index csv files and gives them the name of the file itself
-    if strstr(listCSVfiles(elt),"Index_") <> ""
-
-        listIndex($+1)= listCSVfiles(elt);
-
-        matStr = read_csv(STUDY_Country+Scenario+sep+listCSVfiles(elt),";");
-        varname = strsubst(listCSVfiles(elt),".csv","");
-        if isdef(varname)
-            warning(varname+" is already defined. please choose a sufix ")
-        end
-        execstr(varname +"=matStr;");
-
-    else if strstr(listCSVfiles(elt),"IOT_") <> ""
+	if strstr(listCSVfiles(elt),"IOT_") <> ""
 
             listIOTfiles($+1)= listCSVfiles(elt);
 
@@ -53,9 +43,8 @@ for elt=1:size(listCSVfiles)
             if isdef(varname)
                 warning(varname+" is already defined. please choose a sufix ")
             end
-            execstr(varname +"=matStr;");
+            execstr(varname +"=strtod(matStr);");
         end
-    end
 end
 
 // Feature to fill and aggregate IOT in projected quantities (which will be delaited later)

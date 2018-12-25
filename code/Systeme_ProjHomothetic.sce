@@ -176,7 +176,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y)
     Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C)
     OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
-    VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I) 
+    VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
     // 	Specific to the homothetic projection: 
@@ -233,9 +233,15 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect)
 	// Wage_Variation_Const_1 : for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
 
+	//Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage)
+	// If sectorial wage curve... To adapt
+	Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+	// mean wage curve
+
+
     // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
     Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-	// MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+	//MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
     HH_Unemployment_Const_1(u, u_tot)
     HH_Employment_Const_1(Unemployed, u, Labour_force)

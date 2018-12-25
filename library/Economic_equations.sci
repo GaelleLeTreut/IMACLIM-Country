@@ -2514,10 +2514,10 @@ function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
     omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
 
     // Mean wage reference (omega_ref).
-    omega_ref = sum (ini.w .* ini.lambda .* ini.Y') / sum(ini.lambda .* ini.Y') ;
+    omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
   
     // Wage curve on nominal  wage
-    y = omega*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_ini)) ;
+    y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
 
 endfunction
 

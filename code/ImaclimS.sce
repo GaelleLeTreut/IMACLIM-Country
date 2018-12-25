@@ -52,11 +52,9 @@ SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
 mkdir(SAVEDIR);
 diary(SAVEDIR+"summary.log");
 
-SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
-mkdir(SAVEDIR_IOA);
-
-// Save Dashbord.csv in output
+// Save Dashbord.csv & System_Resol.csv in output
 copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+copyfile(CODE + System_Resol + ".sce", SAVEDIR);
 end
 
 printf("===============================================\n");
@@ -77,8 +75,16 @@ disp("======= using various iterations:"+Nb_Iter)
 printf("===============================================\n");
 disp("======= under the scenario nammed:"+Scenario)
 printf("===============================================\n");
+disp("======= under the macro framework number:"+Macro_nb)
+printf("===============================================\n");
+//disp("======= Recycling option of carbon tax:"+Recycling_Option)
+//printf("===============================================\n");
 if Output_files=='False'
 disp("=======You choose not to print outputs in external files")
+printf("===============================================\n");
+end
+if CO2_footprint=='False'
+disp("=======You choose not to realise a Carbon footprint analysis")
 printf("===============================================\n");
 end
 
@@ -124,10 +130,8 @@ exec("Calibration.sce");
 // 	STEP 4: INPUT OUTPUT ANALYSIS BY
 ////////////////////////////////////////////////////////////
 disp("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR");
-if Country =="France"
-exec(CODE+"IOA_BY.sce");
-else
-disp("Not executed for the IMACLIM-"+Country+" version")
+if CO2_footprint =="True"
+	exec(CODE+"IOA_BY.sce");
 end
 
 ////////////////////////////////////////////////////////////
@@ -158,15 +162,23 @@ end
 exec(STUDY_Country+study+".sce");
 
 exec(System_Resol+".sce");
+warning("sign of ClimPolCompensbySect")
 
 ////////////////////////////////////////////////////////////
 // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
 ////////////////////////////////////////////////////////////
 if Output_files=='True'
 disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
-warning("Antoine : il faudra bien penser à actualiser les outputs (table_param)");
 exec(CODE+"outputs.sce");
-//exec(CODE+"outputs_indic.sce");
+
+// ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite
+if time_step == 1
+	BY = ini;
+end
+// Je l'ai fait à cause de BY.Carbon_Tax : régler le problème quand je réintègrerai la calibration de la taxe carbone : 
+
+exec(CODE+"outputs_indic.sce");
+
 	if System_Resol == "Projection_ECOPA"
 	exec(CODE+"outputs_indic_ECOPA.sce");
 	end
@@ -175,12 +187,9 @@ end
 ////////////////////////////////////////////////////////////
 // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
 ////////////////////////////////////////////////////////////
-disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
-warning('IOA_Run to generalize for several time steps')
-if [Country =="France"] & [time_step==1]
-exec(CODE+"IOA_Run.sce");
-else
-disp("Not executed for the IMACLIM-"+Country+" version and/or because time_step = "+ time_step +" > 1")
+//disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
+if CO2_footprint == 'True'
+	exec(CODE+"IOA_Run.sce");
 end
 
 ////////////////////////////////////////////////////////////
@@ -199,21 +208,3 @@ end
 if Output_files=='True'
 diary(0)
 end
-
-GDP_index.*BY.GDP
-real_GDP = d.GDP/d.CPI
-real_GDP - GDP_index.*BY.GDP
-//quelques tests 
-//GDP_cible = GDP_index'.*BY.GDP
-//GDP_found = [data_1.GDP/data_1.CPI data_2.GDP/data_2.CPI]
-//GDP_ratio = GDP_found./GDP_cible
-//CPI_found = [data_1.CPI data_2.CPI]
-//u_cible = [BY.u_tot BY.u_tot]
-//u_found = [data_1.u_tot data_2.u_tot]
-//(w./(1+phi_L).^40)./BY.w
-//X./((BY.X==0)+(BY.X<>0).*BY.X)
-//M./((BY.M==0)+(BY.M<>0).*BY.M)
-//alpha./((BY.alpha==0)+(BY.alpha<>0).*BY.alpha)
-//[Trade_Balance(4)./GDP BY.Trade_Balance(4)./BY.GDP]	
-//IC(Indice_EnerSect,:).*(abs(IC(Indice_EnerSect,:))>%eps) - Projection.IC(Indice_EnerSect,:)
-//data_1.GFCF_byAgent(Indice_Households)/data_1.H_disposable_income

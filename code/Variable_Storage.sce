@@ -36,3 +36,12 @@ end
 if Resol_Mode == "Dynamic_projection"
 execstr("ini = data_"+time_step+";")
 end
+
+// SAVE Data in a .sav file
+if Output_files=='True'
+	execstr("data = data_"+time_step+";")
+	data.Indice_EnerSect=Indice_EnerSect;
+	data.Indice_NonEnerSect=Indice_NonEnerSect;
+	save(SAVEDIR+"output.sav",BY, data);
+	clear data
+end

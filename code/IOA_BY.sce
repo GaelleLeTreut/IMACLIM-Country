@@ -231,35 +231,35 @@ ioa_ini.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided"
 
 // Print external files IOA_DECOMP
 if Output_files=='True'
-csvWrite(ioa_ini.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_ini_'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_DECOMP, SAVEDIR + 'IOA_DECOMP_ini_'+"_"+AGGprofil+'.csv', ';');
 
 if	H_DISAGG <> "HH1"
-csvWrite(ioa_ini.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_ini'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_DECOMP_HH, SAVEDIR + 'IOA_DECOMP_HH_ini'+"_"+AGGprofil+'.csv', ';');
 end
 
-csvWrite([AGGprofil,Index_Sectors';[Index_FC'+"_value";FC_value]'], SAVEDIR_IOA + 'FC_value'+"_"+AGGprofil+'.csv', ';');
+csvWrite([AGGprofil,Index_Sectors';[Index_FC'+"_value";FC_value]'], SAVEDIR + 'FC_value'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(sum(FC_value,"c")', SAVEDIR_IOA + 'FC_value'+"_TEST"+AGGprofil+'.csv', ';');
+csvWrite(sum(FC_value,"c")', SAVEDIR + 'FC_value'+"_TEST"+AGGprofil+'.csv', ';');
 
-csvWrite([["AGG profil";AGGprofil],ioa_ini.A_anal], SAVEDIR_IOA + 'A_anal'+"_"+AGGprofil+'.csv', ';');
+csvWrite([["AGG profil";AGGprofil],ioa_ini.A_anal], SAVEDIR + 'A_anal'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(ioa_ini.IOA_OUTPUT_APP, SAVEDIR_IOA + 'IOA_OUTPUT_APP'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_OUTPUT_APP, SAVEDIR + 'IOA_OUTPUT_APP'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(ioa_ini.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis_BY'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.Recap_Emiss, SAVEDIR + 'Recap_Emis_BY'+"_"+AGGprofil+'.csv', ';');
 
-// csvWrite(["A",Index_Sectors';[Index_Sectors,ioa_ini.A_DOM]], SAVEDIR_IOA + 'Matrix_A'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A2",Index_Sectors';[Index_Sectors,ioa_ini.A2]], SAVEDIR_IOA + 'Matrix_A2'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A3",Index_Sectors';[Index_Sectors,ioa_ini.A3]], SAVEDIR_IOA + 'Matrix_A3'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A4",Index_Sectors';[Index_Sectors,ioa_ini.A4]], SAVEDIR_IOA + 'Matrix_A4'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A5",Index_Sectors';[Index_Sectors,ioa_ini.A5]], SAVEDIR_IOA + 'Matrix_A5'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A",Index_Sectors';[Index_Sectors,ioa_ini.A_DOM]], SAVEDIR + 'Matrix_A'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A2",Index_Sectors';[Index_Sectors,ioa_ini.A2]], SAVEDIR + 'Matrix_A2'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A3",Index_Sectors';[Index_Sectors,ioa_ini.A3]], SAVEDIR + 'Matrix_A3'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A4",Index_Sectors';[Index_Sectors,ioa_ini.A4]], SAVEDIR + 'Matrix_A4'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A5",Index_Sectors';[Index_Sectors,ioa_ini.A5]], SAVEDIR + 'Matrix_A5'+"_"+AGGprofil+'.csv', ';');
 
-// csvWrite([["Emis_fact by Sect",Index_Sectors'];["Emis fact",ioa_ini.Emis_fact_DOM]], SAVEDIR_IOA + 'Emis_fact_DOM'+"_"+AGGprofil+'.csv', ';');
+// csvWrite([["Emis_fact by Sect",Index_Sectors'];["Emis fact",ioa_ini.Emis_fact_DOM]], SAVEDIR + 'Emis_fact_DOM'+"_"+AGGprofil+'.csv', ';');
  
-// csvWrite(["diag FC value",Index_Sectors';[Index_Sectors,diag(sum(FC_valueDOM,"c"))]], SAVEDIR_IOA + 'Diag_FC'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["diag FC value",Index_Sectors';[Index_Sectors,diag(sum(FC_valueDOM,"c"))]], SAVEDIR + 'Diag_FC'+"_"+AGGprofil+'.csv', ';');
  
- // csvWrite([["Trade decomp",Index_Sectors'];["X_DOM value",initial_value.X_valueDOM'];["X_IMP value",initial_value.X_valueIMP'];["X_value ",initial_value.X_value'];["M_value",initial_value.M_value];["M_value hors reX",initial_value.M_value - initial_value.X_valueIMP' ]], SAVEDIR_IOA + 'TRADE'+"_"+AGGprofil+'.csv', ';');
+ // csvWrite([["Trade decomp",Index_Sectors'];["X_DOM value",initial_value.X_valueDOM'];["X_IMP value",initial_value.X_valueIMP'];["X_value ",initial_value.X_value'];["M_value",initial_value.M_value];["M_value hors reX",initial_value.M_value - initial_value.X_valueIMP' ]], SAVEDIR + 'TRADE'+"_"+AGGprofil+'.csv', ';');
 
-  // csvWrite(initial_value.X_valueDOM', SAVEDIR_IOA + 'X_DOM'+"_"+AGGprofil+'.csv', ';')
+  // csvWrite(initial_value.X_valueDOM', SAVEDIR + 'X_DOM'+"_"+AGGprofil+'.csv', ';')
 end
  
 
