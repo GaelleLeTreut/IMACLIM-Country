@@ -138,7 +138,16 @@ Column;WaterSewage;Sectors;-;-;-;-
 Column;Education;Sectors;-;-;-;-
 Column;Health;Sectors;-;-;-;-
 Column;Composite;Sectors;-;-;-;-
-Column;C;FC;-;-;-;-
+Column;H1;FC;C;-;-;-
+Column;H2;FC;C;-;-;-
+Column;H3;FC;C;-;-;-
+Column;H4;FC;C;-;-;-
+Column;H5;FC;C;-;-;-
+Column;H6;FC;C;-;-;-
+Column;H7;FC;C;-;-;-
+Column;H8;FC;C;-;-;-
+Column;H9;FC;C;-;-;-
+Column;H10;FC;C;-;-;-
 Column;G;FC;-;-;-;-
 Column;I;FC;-;-;-;-
 Column;X;FC;-;-;-;-
