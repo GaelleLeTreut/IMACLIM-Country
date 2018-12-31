@@ -175,6 +175,9 @@ ioa.Imp_Emis_IOA_fin = ioa.Imp_Emis_IOA - ioa.Imp_Emis_IOA_int;
 	end
 	end			
 	
+	ioa.Imp_Emis_IOA_int_G =CoefCO2_RoW *(A_IMP *ioa.Leon_DOM*diag(sum(G_valueDOM,"c")));
+	ioa.Imp_Emis_IOA_int_I =CoefCO2_RoW *(A_IMP *ioa.Leon_DOM*diag(sum(I_valueDOM,"c")));
+	ioa.Imp_Emis_IOA_int_X =CoefCO2_RoW *(A_IMP *ioa.Leon_DOM*diag(sum(X_valueDOM,"c")));
 //Decomposition of imports for final demand
 // emissions importées réexportées
 ioa.Imp_Emis_IOA_X = CoefCO2_RoW *diag(X_valueIMP);
@@ -218,10 +221,13 @@ else
 AGGprofil = AGG_type;
 end
 
-ioa_ini.IOA_DECOMP = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_ini.Emis_Sect;"Emis_HH",ioa_ini.Emis_HH;"Emiss_IOA",ioa_ini.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_ini.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_ini.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_C",ioa_ini.Dom_Emis_IOA_C;"Dom_Emis_IOA_G",ioa_ini.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_ini.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_ini.Dom_Emis_IOA_X;"Imp_Emis_IOA_C",ioa_ini.Imp_Emis_IOA_C;"Imp_Emis_IOA_G",ioa_ini.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_ini.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_ini.Imp_Emis_IOA_X;"Imp_Emis_IOA_int",ioa_ini.Imp_Emis_IOA_int;];
+ioa_ini.IOA_DECOMP = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_ini.Emis_Sect;"Emis_HH",ioa_ini.Emis_HH;"Emiss_IOA",ioa_ini.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_ini.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_ini.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_C",ioa_ini.Dom_Emis_IOA_C;"Dom_Emis_IOA_G",ioa_ini.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_ini.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_ini.Dom_Emis_IOA_X;"Imp_Emis_IOA_C",ioa_ini.Imp_Emis_IOA_C;"Imp_Emis_IOA_G",ioa_ini.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_ini.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_ini.Imp_Emis_IOA_X;"Imp_Emis_IOA_int",ioa_ini.Imp_Emis_IOA_int;"Imp_Emis_IOA_int_C",ioa_ini.Imp_Emis_IOA_int_C;"Imp_Emis_IOA_int_G",ioa_ini.Imp_Emis_IOA_int_G;"Imp_Emis_IOA_int_I",ioa_ini.Imp_Emis_IOA_int_I;"Imp_Emis_IOA_int_X",ioa_ini.Imp_Emis_IOA_int_X];
+
 
 if	H_DISAGG <> "HH1"
-ioa_ini.IOA_DECOMP_HH = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_ini.Emis_Sect;"Emis_"+Index_Households,CO2Emis_C';"Emiss_IOA",ioa_ini.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_ini.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_ini.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_"+Index_Households,ioa_ini.Dom_Emis_IOA_HH;"Dom_Emis_IOA_G",ioa_ini.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_ini.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_ini.Dom_Emis_IOA_X;"Imp_Emis_IOA_"+Index_Households,ioa_ini.Imp_Emis_IOA_HH;"Imp_Emis_IOA_G",ioa_ini.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_ini.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_ini.Imp_Emis_IOA_X;"Imp_Emis_IOA_int_"+Index_Households,ioa_ini.Imp_Emis_IOA_int_HH;];
+ioa_ini.IOA_DECOMP_HH = [AGGprofil,Index_Sectors';"Emis_Sect",ioa_ini.Emis_Sect;"Emis_"+Index_Households,CO2Emis_C';"Emiss_IOA",ioa_ini.Emiss_IOA;"Prod_Emis_IOA_DIR",ioa_ini.Prod_Emis_IOA_DIR;"Prod_Emis_IOA_INDIR",ioa_ini.Prod_Emis_IOA_INDIR;"Dom_Emis_IOA_"+Index_Households,ioa_ini.Dom_Emis_IOA_HH;"Dom_Emis_IOA_G",ioa_ini.Dom_Emis_IOA_G;"Dom_Emis_IOA_I",ioa_ini.Dom_Emis_IOA_I;"Dom_Emis_IOA_X",ioa_ini.Dom_Emis_IOA_X;"Imp_Emis_IOA_"+Index_Households,ioa_ini.Imp_Emis_IOA_HH;"Imp_Emis_IOA_G",ioa_ini.Imp_Emis_IOA_G;"Imp_Emis_IOA_I",ioa_ini.Imp_Emis_IOA_I;"Imp_Emis_IOA_X",ioa_ini.Imp_Emis_IOA_X;"Imp_Emis_IOA_int_"+Index_Households,ioa_ini.Imp_Emis_IOA_int_HH;"Imp_Emis_IOA_int_G",ioa_ini.Imp_Emis_IOA_int_G;"Imp_Emis_IOA_int_I",ioa_ini.Imp_Emis_IOA_int_I;"Imp_Emis_IOA_int_X",ioa_ini.Imp_Emis_IOA_int_X];
+
+
 end
 
 ioa_ini.IOA_OUTPUT_APP = [AGGprofil,Index_Sectors';"Fact Emiss",ioa_ini.Emis_fact_DOM;"Output",initial_value.Output;"M_tot", initial_value.tot_ress_valIMP];
@@ -231,35 +237,35 @@ ioa_ini.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided"
 
 // Print external files IOA_DECOMP
 if Output_files=='True'
-csvWrite(ioa_ini.IOA_DECOMP, SAVEDIR + 'IOA_DECOMP_ini_'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_ini_'+"_"+AGGprofil+'.csv', ';');
 
 if	H_DISAGG <> "HH1"
-csvWrite(ioa_ini.IOA_DECOMP_HH, SAVEDIR + 'IOA_DECOMP_HH_ini'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_ini'+"_"+AGGprofil+'.csv', ';');
 end
 
-csvWrite([AGGprofil,Index_Sectors';[Index_FC'+"_value";FC_value]'], SAVEDIR + 'FC_value'+"_"+AGGprofil+'.csv', ';');
+csvWrite([AGGprofil,Index_Sectors';[Index_FC'+"_value";FC_value]'], SAVEDIR_IOA + 'FC_value'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(sum(FC_value,"c")', SAVEDIR + 'FC_value'+"_TEST"+AGGprofil+'.csv', ';');
+csvWrite(sum(FC_value,"c")', SAVEDIR_IOA + 'FC_value'+"_TEST"+AGGprofil+'.csv', ';');
 
-csvWrite([["AGG profil";AGGprofil],ioa_ini.A_anal], SAVEDIR + 'A_anal'+"_"+AGGprofil+'.csv', ';');
+csvWrite([["AGG profil";AGGprofil],ioa_ini.A_anal], SAVEDIR_IOA + 'A_anal'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(ioa_ini.IOA_OUTPUT_APP, SAVEDIR + 'IOA_OUTPUT_APP'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.IOA_OUTPUT_APP, SAVEDIR_IOA + 'IOA_OUTPUT_APP'+"_"+AGGprofil+'.csv', ';');
 
-csvWrite(ioa_ini.Recap_Emiss, SAVEDIR + 'Recap_Emis_BY'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_ini.Recap_Emiss, SAVEDIR_IOA + 'Recap_Emis_BY'+"_"+AGGprofil+'.csv', ';');
 
-// csvWrite(["A",Index_Sectors';[Index_Sectors,ioa_ini.A_DOM]], SAVEDIR + 'Matrix_A'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A2",Index_Sectors';[Index_Sectors,ioa_ini.A2]], SAVEDIR + 'Matrix_A2'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A3",Index_Sectors';[Index_Sectors,ioa_ini.A3]], SAVEDIR + 'Matrix_A3'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A4",Index_Sectors';[Index_Sectors,ioa_ini.A4]], SAVEDIR + 'Matrix_A4'+"_"+AGGprofil+'.csv', ';');
-// csvWrite(["A5",Index_Sectors';[Index_Sectors,ioa_ini.A5]], SAVEDIR + 'Matrix_A5'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A",Index_Sectors';[Index_Sectors,ioa_ini.A_DOM]], SAVEDIR_IOA + 'Matrix_A'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A2",Index_Sectors';[Index_Sectors,ioa_ini.A2]], SAVEDIR_IOA + 'Matrix_A2'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A3",Index_Sectors';[Index_Sectors,ioa_ini.A3]], SAVEDIR_IOA + 'Matrix_A3'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A4",Index_Sectors';[Index_Sectors,ioa_ini.A4]], SAVEDIR_IOA + 'Matrix_A4'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["A5",Index_Sectors';[Index_Sectors,ioa_ini.A5]], SAVEDIR_IOA + 'Matrix_A5'+"_"+AGGprofil+'.csv', ';');
 
-// csvWrite([["Emis_fact by Sect",Index_Sectors'];["Emis fact",ioa_ini.Emis_fact_DOM]], SAVEDIR + 'Emis_fact_DOM'+"_"+AGGprofil+'.csv', ';');
+// csvWrite([["Emis_fact by Sect",Index_Sectors'];["Emis fact",ioa_ini.Emis_fact_DOM]], SAVEDIR_IOA + 'Emis_fact_DOM'+"_"+AGGprofil+'.csv', ';');
  
-// csvWrite(["diag FC value",Index_Sectors';[Index_Sectors,diag(sum(FC_valueDOM,"c"))]], SAVEDIR + 'Diag_FC'+"_"+AGGprofil+'.csv', ';');
+// csvWrite(["diag FC value",Index_Sectors';[Index_Sectors,diag(sum(FC_valueDOM,"c"))]], SAVEDIR_IOA + 'Diag_FC'+"_"+AGGprofil+'.csv', ';');
  
- // csvWrite([["Trade decomp",Index_Sectors'];["X_DOM value",initial_value.X_valueDOM'];["X_IMP value",initial_value.X_valueIMP'];["X_value ",initial_value.X_value'];["M_value",initial_value.M_value];["M_value hors reX",initial_value.M_value - initial_value.X_valueIMP' ]], SAVEDIR + 'TRADE'+"_"+AGGprofil+'.csv', ';');
+ // csvWrite([["Trade decomp",Index_Sectors'];["X_DOM value",initial_value.X_valueDOM'];["X_IMP value",initial_value.X_valueIMP'];["X_value ",initial_value.X_value'];["M_value",initial_value.M_value];["M_value hors reX",initial_value.M_value - initial_value.X_valueIMP' ]], SAVEDIR_IOA + 'TRADE'+"_"+AGGprofil+'.csv', ';');
 
-  // csvWrite(initial_value.X_valueDOM', SAVEDIR + 'X_DOM'+"_"+AGGprofil+'.csv', ';')
+  // csvWrite(initial_value.X_valueDOM', SAVEDIR_IOA + 'X_DOM'+"_"+AGGprofil+'.csv', ';')
 end
  
 

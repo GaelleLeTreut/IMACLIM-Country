@@ -80,25 +80,51 @@
 	initial_value.OtherIndirTax_DOM = initial_value.OtherIndirTax - initial_value.OtherIndirTax_IMP;
 	
 	// for final consumption taxes :  Hypothesis: prorata the weight of FC_valueIMP in FC_value
-if Country <> "India"
+if Country =="France"
 	initial_value.VA_Tax_IMP = initial_value.VA_Tax .* (sum(initial_value.FC_valueIMP,"c")./sum(initial_value.FC_value,"c"))' ;
 	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
 	
 	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC .* (sum(initial_value.FC_valueIMP,"c")./sum(initial_value.FC_value,"c"))' ;
 	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
-else
+	
+elseif Country == "India"
 	initial_value.VA_Tax_IMP = initial_value.VA_Tax * 0 ;
 	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
 	
 	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC * 0 ;
 	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
-end
-
+   
 	
+elseif Country == "Brasil"	
+	
+	initial_value.VA_Tax_IMP = initial_value.VA_Tax * 0 ;
+	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
+	
+	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC * 0 ;
+	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
+	
+	initial_value.Cons_Tax_IMP = initial_value.Cons_Tax.* (initial_value.M_value ./ (initial_value.M_value + initial_value.Y_value));
+	initial_value.Cons_Tax_DOM = initial_value.Cons_Tax - initial_value.Cons_Tax_IMP;
+end
 	
 	initial_value.TaxesIMP = zeros(nb_Taxes, nb_Sectors);
 	initial_value.TaxesDOM = zeros(nb_Taxes, nb_Sectors);
+
+
+if Country=="Brasil"	
+	initial_value.TaxesIMP(1,:) = initial_value.VA_Tax_IMP;
+	initial_value.TaxesIMP(2,:) = initial_value.Cons_Tax_IMP;
+	initial_value.TaxesIMP(3,:)= initial_value.Energy_Tax_IC_IMP ;
+	initial_value.TaxesIMP(4,:)= initial_value.Energy_Tax_FC_IMP ; 
+	initial_value.TaxesIMP(6,:) = initial_value.OtherIndirTax_IMP ;
 	
+	initial_value.TaxesDOM(1,:) = initial_value.VA_Tax_DOM;
+	initial_value.TaxesDOM(2,:) = initial_value.Cons_Tax_DOM;
+	initial_value.TaxesDOM(3,:)= initial_value.Energy_Tax_IC_DOM ;
+	initial_value.TaxesDOM(4,:)= initial_value.Energy_Tax_FC_DOM ; 
+	initial_value.TaxesDOM(5,:) = initial_value.OtherIndirTax_DOM ;
+
+else
 	initial_value.TaxesIMP(1,:) = initial_value.VA_Tax_IMP;
 	initial_value.TaxesIMP(2,:)= initial_value.Energy_Tax_IC_IMP ;
 	initial_value.TaxesIMP(3,:)= initial_value.Energy_Tax_FC_IMP ; 
@@ -108,8 +134,8 @@ end
 	initial_value.TaxesDOM(2,:)= initial_value.Energy_Tax_IC_DOM ;
 	initial_value.TaxesDOM(3,:)= initial_value.Energy_Tax_FC_DOM ; 
 	initial_value.TaxesDOM(5,:) = initial_value.OtherIndirTax_DOM ;
-
-	
+end
+ 
 	// Output for IOA -  output net of imports,tax on imports, and imports margins 
 	 // initial_value.Output = sum(initial_value.IC_value,"r") + sum(initial_value.Value_Added,"r") + sum(initial_value.MarginsDOM,"r")+sum(initial_value.SpeMarg_IC_DOM,"r")+ sum(initial_value.SpeMarg_FC_DOM,"r")+sum(initial_value.TaxesDOM,"r") ;
 	
