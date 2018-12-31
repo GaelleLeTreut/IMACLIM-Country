@@ -52,6 +52,9 @@ if Output_files=='True'
 	mkdir(SAVEDIR);
 	diary(SAVEDIR+"summary.log");
 
+	SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
+    mkdir(SAVEDIR_IOA);	
+	
 	// Save Dashbord.csv & System_Resol.csv in output
 	copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
 	copyfile(CODE + System_Resol + ".sce", SAVEDIR);
@@ -133,6 +136,7 @@ disp("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR");
 if CO2_footprint =="True"
 	exec(CODE+"IOA_BY.sce");
 end
+
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM

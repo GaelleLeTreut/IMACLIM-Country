@@ -1689,7 +1689,7 @@ end
 ///////////////////////////
 // End Not Applied to Brasil
 ///////////////////////////
-if Country<>"Brasil" then
+// if Country<>"Brasil" then
 function [const_Phi] =fcalTechnicProg_Const_1(x_Phi, Capital_consumption, sigma_Phi, Imaclim_VarCalib)
     Phi= indiv_x2variable(Imaclim_VarCalib, "x_Phi");
     const_Phi = TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
@@ -1717,7 +1717,7 @@ else
     Theta = indiv_x2variable (Index_Imaclim_VarCalib, "x_Theta");
 end
 
-end 
+// end 
 // Antoine : il faudra réintégrer cela au Brésil finalement pour permettre d'avoir du changement technique endogène et exogène 
 
 ///////////////////////////

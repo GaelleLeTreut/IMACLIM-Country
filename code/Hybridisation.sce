@@ -104,11 +104,23 @@ Energy_Tax_rate_FC(1,Indice_EnerSect) = (initial_value.Energy_Tax_FC(Indice_Ener
   
   
   // Price all taxes included without specific margin
-FC_netX_value = (sum(initial_value.C_value,"c")+sum(initial_value.G_value,"c")+sum(initial_value.I_value,"c"))'; 
-FC_netX_VAT_value = FC_netX_value - initial_value.VA_Tax;
-VA_Tax_rate = (initial_value.VA_Tax ./ (FC_netX_VAT_value.*(FC_netX_VAT_value<>0)+1.*(FC_netX_VAT_value==0))) - (initial_value.VA_Tax.*(FC_netX_VAT_value==0));
+if Country=="Brasil" then
+    
+	C_netX_value = (sum(initial_value.IC_value,"c")+sum(initial_value.C_value,"c")+sum(initial_value.G_value,"c")+sum(initial_value.I_value,"c"))'; 
+    C_netX_ConsT_value = C_netX_value - initial_value.Cons_Tax;
+    Tax_rate = (initial_value.Cons_Tax ./ (C_netX_ConsT_value.*(C_netX_ConsT_value<>0)+1.*(C_netX_ConsT_value==0))) - (initial_value.Cons_Tax.*(C_netX_ConsT_value==0));
 
-p_AllTax_WithoutSpeMarg =  p_BeforeVAT_SpeMarg_FC .* ( 1 + VA_Tax_rate);   
+    p_AllTax_WithoutSpeM =  p_BeforeVAT_SpeMarg_FC .* ( 1 + Tax_rate); // implicitement FC pour simplifier le code ensuite
+    p_AllTax_WithoutSpeM_IC =  p_BeforeVAT_SpeMarg_IC .* ( 1 + Tax_rate);
+       
+else						 
+	FC_netX_value = (sum(initial_value.C_value,"c")+sum(initial_value.G_value,"c")+sum(initial_value.I_value,"c"))'; 
+	FC_netX_VAT_value = FC_netX_value - initial_value.VA_Tax;
+	Tax_rate = (initial_value.VA_Tax ./ (FC_netX_VAT_value.*(FC_netX_VAT_value<>0)+1.*(FC_netX_VAT_value==0))) - (initial_value.VA_Tax.*(FC_netX_VAT_value==0));
+
+	p_AllTax_WithoutSpeM =  p_BeforeVAT_SpeMarg_FC .* ( 1 + Tax_rate); 
+
+end
 
 ///////////////////////////////////////////////////////////
 // Calculation of unitary price 
@@ -117,37 +129,44 @@ p_AllTax_WithoutSpeMarg =  p_BeforeVAT_SpeMarg_FC .* ( 1 + VA_Tax_rate);
  // pIC = Value/ Quantites, if quantities=0 then pIC = p_BeforeVAT_SpeMarg_IC for hybrid commodities
 initial_value.pIC= zeros( nb_Sectors,nb_Sectors);
  
+if Country=="Brasil" then
+
+	initial_value.pIC(Indice_HybridCommod,1:nb_Sectors) = ((initial_value.IC_value(Indice_HybridCommod,:).*(initial_value.IC(Indice_HybridCommod,:)<>0)) ./ ( initial_value.IC(Indice_HybridCommod,:).*(initial_value.IC(Indice_HybridCommod,:)<>0) + (initial_value.IC(Indice_HybridCommod,:)==0))) + repmat(p_AllTax_WithoutSpeM_IC(1,Indice_HybridCommod)',1,nb_Sectors).*(initial_value.IC(Indice_HybridCommod,:)==0) ;
+    
+    //pIC = p_AllTax_WithoutSpeM_IC for non hybrid commodities
+    initial_value.pIC(Indice_NonHybridCommod,1:nb_Sectors) = repmat(p_AllTax_WithoutSpeM_IC(1,Indice_NonHybridCommod)',1,nb_Sectors);
+
+else 
 initial_value.pIC(Indice_HybridCommod,1:nb_Sectors) = ((initial_value.IC_value(Indice_HybridCommod,:).*(initial_value.IC(Indice_HybridCommod,:)<>0)) ./ ( initial_value.IC(Indice_HybridCommod,:).*(initial_value.IC(Indice_HybridCommod,:)<>0) + (initial_value.IC(Indice_HybridCommod,:)==0))) + repmat(p_BeforeVAT_SpeMarg_IC(1,Indice_HybridCommod)',1,nb_Sectors).*(initial_value.IC(Indice_HybridCommod,:)==0) ;
  
 //pIC = p_BeforeVAT_SpeMarg_IC for non hybrid commodities
 initial_value.pIC(Indice_NonHybridCommod,1:nb_Sectors) = repmat(p_BeforeVAT_SpeMarg_IC(1,Indice_NonHybridCommod)',1,nb_Sectors);
+end
  
-// pC/pI/pG = Value/ Quantites, if quantities=0 then pC/G/I = p_AllTax_WithoutSpeMarg for hybrid commodities
+// pC/pI/pG = Value/ Quantites, if quantities=0 then pC/G/I = p_AllTax_WithoutSpeM for hybrid commodities
 initial_value.pC= zeros( nb_Sectors,nb_Households);
-
-initial_value.pC(Indice_HybridCommod,1:nb_Households) = ((initial_value.C_value(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0)) ./ ( initial_value.C(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0) + (initial_value.C(Indice_HybridCommod,:)==0))) + repmat(p_AllTax_WithoutSpeMarg(1,Indice_HybridCommod)',1,nb_Households).*(initial_value.C(Indice_HybridCommod,:)==0) ;
-
-initial_value.pI= zeros( nb_Sectors,1);
-initial_value.pI(Indice_HybridCommod,1) = ((initial_value.I_value(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0)) ./ ( initial_value.I(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0) + (initial_value.I(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeMarg(1,Indice_HybridCommod)'.*(initial_value.I(Indice_HybridCommod,:)==0) ;
-
 initial_value.pG= zeros( nb_Sectors,1);
-initial_value.pG(Indice_HybridCommod,1) = ((initial_value.G_value(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0)) ./ ( initial_value.G(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0) + (initial_value.G(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeMarg(1,Indice_HybridCommod)'.*(initial_value.G(Indice_HybridCommod,:)==0) ;
+initial_value.pI= zeros( nb_Sectors,1);
+initial_value.pX= zeros( nb_Sectors,1);																			
+initial_value.pC(Indice_HybridCommod,1:nb_Households) = ((initial_value.C_value(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0)) ./ ( initial_value.C(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0) + (initial_value.C(Indice_HybridCommod,:)==0))) + repmat(p_AllTax_WithoutSpeM(1,Indice_HybridCommod)',1,nb_Households).*(initial_value.C(Indice_HybridCommod,:)==0) ;
+
+initial_value.pI(Indice_HybridCommod,1) = ((initial_value.I_value(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0)) ./ ( initial_value.I(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0) + (initial_value.I(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(initial_value.I(Indice_HybridCommod,:)==0) ;
+
+initial_value.pG(Indice_HybridCommod,1) = ((initial_value.G_value(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0)) ./ ( initial_value.G(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0) + (initial_value.G(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(initial_value.G(Indice_HybridCommod,:)==0) ;
  
-//pC/pI/pG = p_AllTax_WithoutSpeMarg for non hybrid commodities
-initial_value.pC(Indice_NonHybridCommod,1:nb_Households) = repmat(p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)',1,nb_Households);
+//pC/pI/pG = p_AllTax_WithoutSpeM for non hybrid commodities
+initial_value.pC(Indice_NonHybridCommod,1:nb_Households) = repmat(p_AllTax_WithoutSpeM(1,Indice_NonHybridCommod)',1,nb_Households);
 
-initial_value.pI(Indice_NonHybridCommod,1) = p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)';
+initial_value.pI(Indice_NonHybridCommod,1) = p_AllTax_WithoutSpeM(1,Indice_NonHybridCommod)';
 
-initial_value.pG(Indice_NonHybridCommod,1) = p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)';
+initial_value.pG(Indice_NonHybridCommod,1) = p_AllTax_WithoutSpeM(1,Indice_NonHybridCommod)';
 
 //Export price
-initial_value.pX= zeros( nb_Sectors,1);
 // pX = Value/ Quantites, if quantities=0 then pX = p_BeforeTaxes for hybrid commodities
 initial_value.pX(Indice_HybridCommod,1) = ((initial_value.X_value(Indice_HybridCommod,:).*(initial_value.X(Indice_HybridCommod,:)<>0)) ./ ( initial_value.X(Indice_HybridCommod,:).*(initial_value.X(Indice_HybridCommod,:)<>0) + (initial_value.X(Indice_HybridCommod,:)==0))) + p_BeforeTaxes(1,Indice_HybridCommod)'.*(initial_value.X(Indice_HybridCommod,:)==0) ;
 
 //pX =  for non hybrid commodities
 initial_value.pX(Indice_NonHybridCommod,1) = p_BeforeTaxes(1,Indice_NonHybridCommod)';
-
 
 
 //pM/pY= Value/Quantites, if quantities=O then price= p
@@ -160,81 +179,73 @@ initial_value.pFC =[initial_value.pC,initial_value.pG,initial_value.pI,initial_v
 //Calculation of specific margis rate 
 ///////////////////////////////////////////////////////////
   // SpeMarg_IC euro/toe en intermediate consumption
- SpeMarg_IC_p(1:nb_Sectors,Indice_HybridCommod) = initial_value.pIC(Indice_HybridCommod,:)' - repmat(p_BeforeVAT_SpeMarg_IC(Indice_HybridCommod),nb_Sectors,1);
- SpeMarg_IC_p(1:nb_Sectors,Indice_NonHybridCommod) =0;
+if Country=="Brasil" then
+
+	SpeMarg_IC_p(1:nb_Sectors,Indice_HybridCommod) = (initial_value.pIC(Indice_HybridCommod,:)' - repmat(p_AllTax_WithoutSpeM_IC(Indice_HybridCommod),nb_Sectors,1))./repmat(1+Tax_rate(Indice_HybridCommod),nb_Sectors,1);;
+	SpeMarg_IC_p(1:nb_Sectors,Indice_NonHybridCommod) =0;
+ else
+	SpeMarg_IC_p(1:nb_Sectors,Indice_HybridCommod) = initial_value.pIC(Indice_HybridCommod,:)' - repmat(p_BeforeVAT_SpeMarg_IC(Indice_HybridCommod),nb_Sectors,1);
+	SpeMarg_IC_p(1:nb_Sectors,Indice_NonHybridCommod) =0;
+end   
  
   initial_value.SpeMarg_IC = SpeMarg_IC_p .* initial_value.IC';
 
-// SpeMarg_FC euro/toe en final consumption 
-// SpeMarg_FC_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+ VA_Tax_rate(Indice_HybridCommod))); 
-// SpeMarg_FC_p(1:nb_Households,Indice_NonHybridCommod) =0; 
 
  // SpeMarg_C euro/toe en final consumption
- SpeMarg_C_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+VA_Tax_rate(Indice_HybridCommod)));
+ SpeMarg_C_p (1:nb_Households, Indice_HybridCommod)= (initial_value.pC(Indice_HybridCommod,:)' - ones(nb_Households,1) .*.p_AllTax_WithoutSpeM(Indice_HybridCommod))./(ones(nb_Households,1) .*.(1+Tax_rate(Indice_HybridCommod)));
  SpeMarg_C_p(1:nb_Households,Indice_NonHybridCommod) =0;
  
  initial_value.SpeMarg_C =  SpeMarg_C_p.* initial_value.C';
-
- // SpeMarg_I euro/toe en final consumption
- SpeMarg_I_p (1 , Indice_HybridCommod)= (initial_value.pI(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeMarg(Indice_HybridCommod))./(1+VA_Tax_rate(Indice_HybridCommod));
- SpeMarg_I_p(1 ,Indice_NonHybridCommod) =0;
  
- initial_value.SpeMarg_I =  SpeMarg_I_p.* initial_value.I';
   
-//if	H_DISAGG <> "HH1"
-// warning("GLT : initial_value.SpeMarg_I n est pas calcule : probleme sur le calcul de sa marge spe I, mise a zero pour l instant")
-// initial_value.SpeMarg_I =  zeros(1,nb_Sectors).* initial_value.I';
-//else
-// initial_value.SpeMarg_I =  SpeMarg_FC_p.* initial_value.I';
-//end
+ // SpeMarg_I euro/toe en final consumption & SpeMarg_G
+ 
+if Country=="Brasil" then
+
+	SpeMarg_I_p (1, Indice_HybridCommod)= (initial_value.pI(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeM(Indice_HybridCommod))./((1+Tax_rate(Indice_HybridCommod)));
+    SpeMarg_I_p(1,Indice_NonHybridCommod) =0;
+
+	SpeMarg_G_p (1, Indice_HybridCommod)= (initial_value.pG(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeM(Indice_HybridCommod))./((1+Tax_rate(Indice_HybridCommod)));
+    SpeMarg_G_p(1,Indice_NonHybridCommod) =0;
+	
+	initial_value.SpeMarg_I =  SpeMarg_I_p.* sum(initial_value.I,"c")';
+	  
+    initial_value.SpeMarg_G =  SpeMarg_G_p.* initial_value.G';
+
+else
+
+	SpeMarg_I_p (1 , Indice_HybridCommod)= (initial_value.pI(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeM(Indice_HybridCommod))./(1+Tax_rate(Indice_HybridCommod));
+	SpeMarg_I_p(1 ,Indice_NonHybridCommod) =0;
+ 
+	initial_value.SpeMarg_I =  SpeMarg_I_p.* initial_value.I';
+		
+	//No specific margins for government
+	initial_value.SpeMarg_G= zeros(1, nb_Sectors);
+
+end 
+
 
  // SpeMarg_X euro/toe en final consumption
  SpeMarg_X_p(1, Indice_HybridCommod) = initial_value.pX(Indice_HybridCommod,:)' - p_BeforeTaxes(Indice_HybridCommod); 
  SpeMarg_X_p(1,Indice_NonHybridCommod) =0;
  initial_value.SpeMarg_X =SpeMarg_X_p .* initial_value.X';
    
- Total_SpeMarg =   sum(initial_value.SpeMarg_IC,"r")  + sum(initial_value.SpeMarg_C,"r") + initial_value.SpeMarg_I + initial_value.SpeMarg_X ;
- 
- //No specific margins for government
-initial_value.SpeMarg_G= zeros(1, nb_Sectors);
+ //// Total margins  
+Total_SpeMarg = sum(initial_value.SpeMarg_IC,"r")  + sum(initial_value.SpeMarg_C,"r") +initial_value.SpeMarg_G +initial_value.SpeMarg_I + initial_value.SpeMarg_X ;
 
- initial_value.SpeMarg = [initial_value.SpeMarg_IC; initial_value.SpeMarg_C; initial_value.SpeMarg_G; initial_value.SpeMarg_I; initial_value.SpeMarg_X];
+initial_value.SpeMarg = [initial_value.SpeMarg_IC; initial_value.SpeMarg_C; initial_value.SpeMarg_G; initial_value.SpeMarg_I; initial_value.SpeMarg_X];
  
-  initial_value.SpeMarg_FC = [initial_value.SpeMarg_C; initial_value.SpeMarg_G; initial_value.SpeMarg_I; initial_value.SpeMarg_X];
+initial_value.SpeMarg_FC = [initial_value.SpeMarg_C; initial_value.SpeMarg_G; initial_value.SpeMarg_I; initial_value.SpeMarg_X];
  
-   initial_value.OthPart_IOT = [initial_value.Value_Added;initial_value.M_value;initial_value.Margins;initial_value.SpeMarg;initial_value.Taxes];
+initial_value.OthPart_IOT = [initial_value.Value_Added;initial_value.M_value;initial_value.Margins;initial_value.SpeMarg;initial_value.Taxes];
    tot_OthPart_IOT = sum (initial_value.OthPart_IOT, "r");
 
- ////////////////////////////////////////////////////////////
- //// Calculation of pseudo quantities of non hybrid sectors - DONE IN CALIBRATION FILE
- ///////////////////////////////////////////////////////////
- 
- // initial_value.Y = initial_value.Y;
-// initial_value.Y(Indice_NonHybridCommod,1) = (sum(initial_value.IC_value(:,Indice_NonHybridCommod),"r") + sum(initial_value.Value_Added(:,Indice_NonHybridCommod), "r") )'./ p(1,Indice_NonHybridCommod)';
-
-
-// initial_value.M =initial_value.M;
-// initial_value.M(Indice_NonHybridCommod,1) = initial_value.M_value(Indice_NonHybridCommod)'./ p(1,Indice_NonHybridCommod)';
-
-// initial_value.IC = initial_value.IC;
-
- // initial_value.IC(Indice_NonHybridCommod,1:nb_Sectors) = initial_value.IC_value(Indice_NonHybridCommod,:)./ repmat(p_BeforeVAT_SpeMarg_IC(1,Indice_NonHybridCommod)',1,nb_Sectors);
- 
- 
-  // initial_value.C = initial_value.C;
- // initial_value.C(Indice_NonHybridCommod) = initial_value.C_value(Indice_NonHybridCommod)./ p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)';
- 
- 
-  // initial_value.I = initial_value.I;
- // initial_value.I(Indice_NonHybridCommod) = initial_value.I_value(Indice_NonHybridCommod)./ p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)';
-  
-    // initial_value.G = initial_value.G;
-    // initial_value.G(Indice_NonHybridCommod) = initial_value.G_value(Indice_NonHybridCommod)./ p_AllTax_WithoutSpeMarg(1,Indice_NonHybridCommod)';
-	
-    // initial_value.X = initial_value.X;
-    // initial_value.X(Indice_NonHybridCommod) = initial_value.X_value(Indice_NonHybridCommod)./ p_BeforeTaxes(1,Indice_NonHybridCommod)';
-	
-// TEST_equilibre = 	initial_value.Y - ( sum( initial_value.IC,"c") + sum(initial_value.C, "c") + initial_value.G + initial_value.I + initial_value.X - initial_value.M );
-
-
-	
+printf("===============================================\n");											
+printf("test equilibrium on specific margins after hybridization\n")
+printf("===============================================\n");
+for column  = 1:nb_Commodities
+    if abs(sum(initial_value.SpeMarg(:,column)))>=Err_balance_tol then
+        printf(Index_Commodities(column)+" to balance: "+sum(initial_value.SpeMarg(:,column))+"\n")
+        printf("===============================================\n");
+    end
+end

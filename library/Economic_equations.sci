@@ -1651,6 +1651,59 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
 
 endfunction
 
+// Glt: revoir pour généralisation pays + classe de ménage (diff de const 2 : gov à l'intérieur)
+
+function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X) ;
+
+    // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
+
+    // if IC is equal to zero
+    y1_1 = (IC'==0).*(SpeMarg_rates_IC) ;
+    // if IC is equal to zero
+    // y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1) )');
+    y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
+
+    y1 = y1_1 + y1_2 ;
+    y1 =matrix (y1, -1, 1);
+
+
+    // if C is equal to zero
+    y2_1 = (C'==0).*(SpeMarg_rates_C) ;
+    // if C is equal to zero
+    // y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( repmat(p', 1, nb_Households) .* C)');
+    y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)');
+
+    y2 = y2_1 + y2_2 ;
+    y2 =matrix (y2, -1, 1);
+
+    y3_1 = (G'==0).*(SpeMarg_rates_G) ;
+    y3_2 = (G'<>0).*(SpeMarg_G - SpeMarg_rates_G .* (p' .* G)');
+
+    y3 = y3_1 + y3_2 ;
+    y3 =matrix (y3, -1, 1);
+    
+    y4_1 = (sum(I,"c")'==0).*(SpeMarg_rates_I) ;
+    y4_2 = (sum(I,"c")'<>0).*(SpeMarg_I - SpeMarg_rates_I .* (p' .* sum(I,"c"))');
+
+    y4 = y4_1 + y4_2 ;
+    y4 =matrix (y4, -1, 1);
+
+
+    y5_1 = (X'==0).*(SpeMarg_rates_X) ;
+    y5_2 = (X'<>0).*(SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
+
+    y5 = y5_1 + y5_2 ;
+    y5 =matrix (y5, -1, 1);
+
+    y =[y1;y2;y3;y4;y5];
+
+    // y =  zeros(length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X)++ length(SpeMarg_rates_I), 1) ;
+    // y (1: length(SpeMarg_rates_IC), 1) =  matrix(y1, length(SpeMarg_rates_IC), 1) ;
+    // y (length(SpeMarg_rates_IC)+1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C), 1) =  matrix(y2, length(SpeMarg_rates_C), 1) ;
+    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
+    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
+
+endfunction															 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   C.3  Investment decision
