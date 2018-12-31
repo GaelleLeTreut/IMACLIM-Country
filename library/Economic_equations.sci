@@ -197,6 +197,13 @@ function y = H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_pr
 	y=y1';		
 endfunction
 
+function y = H_Investment_Const_2(GFCF_byAgent, pC, C) ;
+
+    // Household gross fixed capital formation constraint (GFCF_byAgent(Indice_Households))
+    y1 = GFCF_byAgent(Indice_Households) - BY.GFCF_byAgent(Indice_Households)*sum(C(Indice_Immo,:).*pC(Indice_Immo,:))/sum(BY.C(Indice_Immo,:).*BY.pC(Indice_Immo,:)) ;
+
+	y=y1';		
+endfunction
 
 // Household net lending (+) / net borrowing (-) (by household class)
 // Difference between disposable income and expenditures (consumption and gross fixed capital formation)
@@ -326,16 +333,16 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
-	
-	Indice_Composite = find(Index_Sectors=="Composite");
 
 	y1 = zeros(nb_Commodities, nb_Households) ;
+
+    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY .* .. 
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
+
 	
-	y1(Indice_SecExcepComp, :) = C(Indice_SecExcepComp, :) - C_ref(Indice_SecExcepComp, :) .* ( (pC(Indice_SecExcepComp, :)/CPI) ./ (pC_ref(Indice_SecExcepComp, :)/CPI_ref) ).^ (sigma_pC_ECOPA(Indice_SecExcepComp).*. ones(1,nb_Households)) .* (( (Consumption_budget/CPI) ./ (Consumption_budget_ref/CPI_ref) ).*. ones(nb_Commodities-1,1)) .^ (sigma_ConsoBudget_ECOPA(Indice_SecExcepComp).*. ones(1,nb_Households)) ;
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
 	
-    Composite_budget =  Consumption_budget - sum(pC(Indice_SecExcepComp, :) .* C(Indice_SecExcepComp, :),"r");
-	
-	y1 (Indice_Composite,:) = pC(Indice_Composite,:) .* C(Indice_Composite,:) - Composite_budget ;
+	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
@@ -422,7 +429,7 @@ endfunction
 function y = Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
 
     // Corporations gross fixed capital formation constraint (GFCF_byAgent(Indice_Corporations))
-    y1 = GFCF_byAgent(Indice_Corporations) - ( Corp_disposable_income .* Corp_invest_propensity ) ;
+    y1 = GFCF_byAgent(Indice_Corporations) - (Corp_disposable_income .* Corp_invest_propensity ) ;
 
 	y=y1';		
 endfunction
@@ -858,9 +865,9 @@ endfunction
 function [y] = ClimCompensat_Const_2(ClimPolicyCompens) ;
     // /// No new direct compensations to households
    y1 = zeros(1,nb_InstitAgents)
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - ClimPolicyCompens_ref(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - ClimPolicyCompens_ref(Indice_Government)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - ClimPolicyCompens_ref(Indice_Corporations)
+   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
+   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
+   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
    
    y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - delta_LS_H .* ones(1, nb_Households).*((sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)) / nb_Households) ;
 
@@ -1421,6 +1428,40 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma,
 
 endfunction
 
+function [alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+    
+    FPI = sum((aIC .^(sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+          (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+          (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+    
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+
+	alpha = zeros(nb_Sectors,nb_Sectors);
+
+	alpha(Indice_EnerSect,:) = Projection.IC(Indice_EnerSect,:)./(ones(Indice_EnerSect)'*((Y==0)+(Y<>0).*Y)');
+
+	alpha(Indice_NonEnerSect,:) = (ones(size(Indice_NonEnerSect,2), 1).*.(Theta ./ Phi)) .* (ones(size(Indice_NonEnerSect,2),nb_Sectors)./(1+phi_IC(Indice_NonEnerSect,:)).^time_since_BY).* ..
+             (ConstrainedShare_IC(Indice_NonEnerSect,:) .* BY.alpha(Indice_NonEnerSect,:) + ((aIC(Indice_NonEnerSect,:) ./ pIC(Indice_NonEnerSect,:)) .^ (sigma.*.ones(size(Indice_NonEnerSect,2),1))) .* ..
+             (ones(size(Indice_NonEnerSect,2), 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+	
+	lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+             ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+             (FPI .^(sigma./(1 - sigma)))) ;
+    
+    //lambda(test_pL|test_FPI) = 0;
+    
+    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+            ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+            (FPI .^(sigma./(1 - sigma)))) ;
+
+endfunction
+
 //Labour productivity semi-endogenous (power sector)
 function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, lambda_ref, Mu_b, time_period,Indice)
 //    A = phi_L_a;
@@ -1448,13 +1489,13 @@ endfunction
 // PAS POUR CALIBRAGE //
 // Production Price
 warning("ruben: pIC = abs(pIC);");
-function y =  Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
+function y =  Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
     pY=abs(pY);
 	pIC = abs(pIC);
 	pK = abs(pK);
     pL = abs(pL);
 	// Mark-up pricing rule ( pY(nb_Sectors) ). The formula enables the use of different types of labour and capital inputs
-    y1 = pY' - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./Y' + Production_Tax_rate .* pY' + markup_rate .* pY')  ;
+    y1 = pY' - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY' + markup_rate .* pY')  ;
 
     y=y1';
 endfunction
@@ -1610,6 +1651,59 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
 
 endfunction
 
+// Glt: revoir pour généralisation pays + classe de ménage (diff de const 2 : gov à l'intérieur)
+
+function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X) ;
+
+    // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
+
+    // if IC is equal to zero
+    y1_1 = (IC'==0).*(SpeMarg_rates_IC) ;
+    // if IC is equal to zero
+    // y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1) )');
+    y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
+
+    y1 = y1_1 + y1_2 ;
+    y1 =matrix (y1, -1, 1);
+
+
+    // if C is equal to zero
+    y2_1 = (C'==0).*(SpeMarg_rates_C) ;
+    // if C is equal to zero
+    // y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( repmat(p', 1, nb_Households) .* C)');
+    y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)');
+
+    y2 = y2_1 + y2_2 ;
+    y2 =matrix (y2, -1, 1);
+
+    y3_1 = (G'==0).*(SpeMarg_rates_G) ;
+    y3_2 = (G'<>0).*(SpeMarg_G - SpeMarg_rates_G .* (p' .* G)');
+
+    y3 = y3_1 + y3_2 ;
+    y3 =matrix (y3, -1, 1);
+    
+    y4_1 = (sum(I,"c")'==0).*(SpeMarg_rates_I) ;
+    y4_2 = (sum(I,"c")'<>0).*(SpeMarg_I - SpeMarg_rates_I .* (p' .* sum(I,"c"))');
+
+    y4 = y4_1 + y4_2 ;
+    y4 =matrix (y4, -1, 1);
+
+
+    y5_1 = (X'==0).*(SpeMarg_rates_X) ;
+    y5_2 = (X'<>0).*(SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
+
+    y5 = y5_1 + y5_2 ;
+    y5 =matrix (y5, -1, 1);
+
+    y =[y1;y2;y3;y4;y5];
+
+    // y =  zeros(length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X)++ length(SpeMarg_rates_I), 1) ;
+    // y (1: length(SpeMarg_rates_IC), 1) =  matrix(y1, length(SpeMarg_rates_IC), 1) ;
+    // y (length(SpeMarg_rates_IC)+1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C), 1) =  matrix(y2, length(SpeMarg_rates_C), 1) ;
+    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
+    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
+
+endfunction															 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   C.3  Investment decision
@@ -1807,7 +1901,14 @@ endfunction
 /// Trade balance constant to GDP growth
 function y = Trade_Balance_Const_1( pM, pX, X, M, GDP);
 
-  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))/GDP_ref
+  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
+// y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
+endfunction
+
+/// Trade balance constant to GDP growth
+function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
+
+  y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
 // y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
 endfunction
 
@@ -2351,13 +2452,13 @@ endfunction
 
 //////////////////
 // Antoine: Wage curve by sector for dynamic projection... a confirmer
-function y = Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage, phi_L);
+function y = Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect, Coef_real_wage, phi_L);
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
 	
     // Wage curve on nominal  wage
-	y = w.*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( ini.w .* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU .*(Coef_real_wage*CPI + (1-Coef_real_wage))).*(ones(1,nb_Sectors)+phi_L).^(time_since_ini) ; 
+	y = w.*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( ini.w .* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU_sect .*(Coef_real_wage*CPI + (1-Coef_real_wage))).*(ones(1,nb_Sectors)+phi_L).^(time_since_ini) ; 
 	y = y';
 
 endfunction
@@ -2457,7 +2558,7 @@ function y = Mean_wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU)
 
 endfunction
 
-function y = Mean_wage_Const_5(u_tot, u_tot_ref, w, w_ref, lambda, lambda_ref, Y, Y_ref, sigma_omegaU, CPI, CPI_ref, Coef_real_wage, Mu, time_period);
+function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage);
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
@@ -2466,13 +2567,10 @@ function y = Mean_wage_Const_5(u_tot, u_tot_ref, w, w_ref, lambda, lambda_ref, Y
     omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
 
     // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-    
+    omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
+  
     // Wage curve on nominal  wage
-//    y = omega  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
-    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ;
-//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_period)) ; 
-//    y = omega*(Coef_real_wage*CPI_ref + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_tot_ref)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))) ; 
+    y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
 
 endfunction
 
@@ -2729,6 +2827,33 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
 
 endfunction
+
+// For SNBC
+function [y] = IncomeDistrib_Const_1bis(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    y1 = NetCompWages_byAgent - Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income) ;
+    y1 = matrix ( y1, -1, 1);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    y2 = GOS_byAgent - Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus) ;
+    y2 = matrix ( y2, -1, 1);
+
+    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
+    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*ini.Other_Transfers) * (GDP/ini.GDP) - LowCarb_Transfers ;
+    y3 = matrix ( y3, -1, 1);
+
+    y = [y1;y2;y3];
+
+    // y  = zeros(length(Distribution_Shares), 1) ;
+    // y (1: length(NetCompWages_byAgent), 1) =  matrix(y1, length(NetCompWages_byAgent), 1) ;
+    // y (length(NetCompWages_byAgent)+1 : length(NetCompWages_byAgent)+length(GOS_byAgent)) = matrix(y2, length(GOS_byAgent), 1) ;
+    // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
+
+endfunction
+
+
+
 
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)

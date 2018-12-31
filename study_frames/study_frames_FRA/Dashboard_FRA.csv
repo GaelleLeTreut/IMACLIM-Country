@@ -8,14 +8,14 @@ System_Resol;Systeme_Static
 // study;Projection_evolution
 study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
+AGG_type;
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
 // AGG_type;AGG_Ener1
 // AGG_type;AGG_Ener2
 // AGG_type;AGG_4Sec
-AGG_type;AGG_3Sec
+// AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1

@@ -154,10 +154,16 @@ if AGG_type == ""
     parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
     parameters.sigma_pC=read_csv(PARAMS_Country+"sigma_pC_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
     parameters.ConstrainedShare_C=read_csv(PARAMS_Country+"ConstrainedShare_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
+    if Country=="Brasil"
+        parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+"sigma_ConsoBudget_"+string(H_DISAGG)+".csv",";");
+    end	
 else
     parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
     parameters.sigma_pC=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_pC_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
     parameters.ConstrainedShare_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"ConstrainedShare_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+	if Country=="Brasil"
+        parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_ConsoBudget_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+    end	 
 end
 
 parameters.CarbonTax_Diff_C (1,:) = [];
@@ -172,3 +178,8 @@ parameters.ConstrainedShare_C (1,:) = [];
 parameters.ConstrainedShare_C (:,1) = [];
 parameters.ConstrainedShare_C=evstr(parameters.ConstrainedShare_C);
 
+if Country=="Brasil" then
+    parameters.sigma_ConsoBudget (1,:) = [];
+    parameters.sigma_ConsoBudget (:,1) = [];
+    parameters.sigma_ConsoBudget=evstr(parameters.sigma_ConsoBudget);
+end						 

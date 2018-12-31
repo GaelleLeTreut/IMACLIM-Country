@@ -49,7 +49,7 @@ disp("Substep 1: DISAGGREGATION of HOUSEHOLDS...")
     // nb_HouseholdsTEMP = nb_Households;
 // else
 		// lecture du ficher index, mais juste la premiere colonne
-		Index_EconData_H_DISAGG = read_csv(DATA+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
+		Index_EconData_H_DISAGG = read_csv(DATA_Country+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
 		// execstr("Index_EconData_"+H_DISAGG+"=Index_EconData_H_DISAGG"+";");
 		
 		Row_Column = unique(Index_EconData_H_DISAGG(:,1));
@@ -82,7 +82,7 @@ disp("Substep 1: DISAGGREGATION of HOUSEHOLDS...")
 
 // end
 
-listDatafiles = listfiles(DATA+H_DISAGG);
+listDatafiles = listfiles(DATA_Country+H_DISAGG);
 Nb_Datafiles = size(listDatafiles,"r");
 listCSVfiles=list();
 
@@ -94,7 +94,7 @@ for elt=1:Nb_Datafiles
 end
 
 for elt=1:size(listCSVfiles)
-  matStr = read_csv(DATA+H_DISAGG+sep+listCSVfiles(elt),";");
+  matStr = read_csv(DATA_Country+H_DISAGG+sep+listCSVfiles(elt),";");
     varname = strsubst(listCSVfiles(elt),".csv","");
     if isdef(varname)
         warning(varname+" is already defined. please choose a sufix ")
@@ -181,7 +181,9 @@ Index_InstitAgents_DISAG( Indice_Households+size(Indice_HouseholdsTEMP,2):nb_Ins
 
 DataAccountTable_DISAG = [["", Index_InstitAgents_DISAG'];[Index_DataAccount; "Thousand of euros"], value_DISAG.DataAccountTable];
 
+if Output_files=='True'
 csvWrite(DataAccountTable_DISAG,SAVEDIR+"DataAccountTable_DISAG.csv");
+end 
 
 	//	Create a new structure (value_DISAG) with all the disaggregated variables
 for elt = 1:size(Index_DataAccount,1)
@@ -190,28 +192,40 @@ end
  
 // Some values are modified into positive values for a better comprehension of the economics equations
 // Il faut remettre certain vecteurs du TEE dans la bonne dimension?
-value_DISAG.Unemployment_transfers = abs(value_DISAG.Unemployment_transfers);
 
-value_DISAG.Pensions = abs(value_DISAG.Pensions);
-value_DISAG.Pensions = value_DISAG.Pensions(Indice_HouseholdsTEMP);
-value_DISAG.Unemployment_transfers = value_DISAG.Unemployment_transfers(Indice_HouseholdsTEMP);
-value_DISAG.Other_social_transfers = value_DISAG.Other_social_transfers(Indice_HouseholdsTEMP);
+if	Country <> "Brasil" then
+
+	value_DISAG.Other_Direct_Tax = abs(value_DISAG.Other_Direct_Tax);
+	value_DISAG.Pensions = abs(value_DISAG.Pensions);
+	value_DISAG.Pensions = value_DISAG.Pensions(Indice_HouseholdsTEMP);
+	value_DISAG.Unemployment_transfers = abs(value_DISAG.Unemployment_transfers);
+	value_DISAG.Unemployment_transfers = value_DISAG.Unemployment_transfers(Indice_HouseholdsTEMP);
+	value_DISAG.Other_social_transfers = value_DISAG.Other_social_transfers(Indice_HouseholdsTEMP);
+	value_DISAG.Other_social_transfers = abs(value_DISAG.Other_social_transfers);
+	value_DISAG.Other_Direct_Tax = value_DISAG.Other_Direct_Tax(Indice_HouseholdsTEMP);
+
+else
+																		
+    value_DISAG.Gov_social_transfers = abs(value_DISAG.Gov_social_transfers);
+    value_DISAG.Gov_social_transfers = value_DISAG.Gov_social_transfers(Indice_HouseholdsTEMP);
+    value_DISAG.Corp_social_transfers = abs(value_DISAG.Corp_social_transfers);
+    value_DISAG.Corp_social_transfers = value_DISAG.Corp_social_transfers(Indice_HouseholdsTEMP);
+    value_DISAG.Gov_Direct_Tax = abs(value_DISAG.Gov_Direct_Tax);
+    value_DISAG.Gov_Direct_Tax = value_DISAG.Gov_Direct_Tax(Indice_HouseholdsTEMP);
+    value_DISAG.Corp_Direct_Tax = abs(value_DISAG.Corp_Direct_Tax);
+    value_DISAG.Corp_Direct_Tax = value_DISAG.Corp_Direct_Tax(Indice_HouseholdsTEMP);
+
+
+end
+
 value_DISAG.Income_Tax = value_DISAG.Income_Tax(Indice_HouseholdsTEMP);
-value_DISAG.Other_Direct_Tax = value_DISAG.Other_Direct_Tax(Indice_HouseholdsTEMP);
+value_DISAG.Income_Tax = abs(value_DISAG.Income_Tax);
 
 Indice_CorporationsTEMP = find("Corporations" == Index_InstitAgents_DISAG);
 value_DISAG.Corporate_Tax = value_DISAG.Corporate_Tax(Indice_CorporationsTEMP);
-
+value_DISAG.Corporate_Tax = abs(value_DISAG.Corporate_Tax);
 Indice_RestOfWorldTEMP = find("RestOfWorld" == Index_InstitAgents_DISAG);
 value_DISAG.GFCF_byAgent(Indice_RestOfWorldTEMP) = [];
-
-value_DISAG.Other_social_transfers = abs(value_DISAG.Other_social_transfers);
-
-value_DISAG.Income_Tax = abs(value_DISAG.Income_Tax);
-
-value_DISAG.Corporate_Tax = abs(value_DISAG.Corporate_Tax);
-
-value_DISAG.Other_Direct_Tax = abs(value_DISAG.Other_Direct_Tax);
 
 
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLES
@@ -258,12 +272,13 @@ end
 // DEMANDER A GAELLE COMMENT ELLE CREER LA MATRICE EN PRIX 
 
 	//	Build the disaggregated IOT
-value_DISAG.IOT_FrancePrices = zeros( size(IOT_FrancePrices, 1), size(IOT_FrancePrices, 2) + size(Indice_HouseholdsTEMP,2) - 1 );
+value_DISAG.IOT_Prices = zeros( size(IOT_Prices, 1), size(IOT_Prices, 2) + size(Indice_HouseholdsTEMP,2) - 1 );
 
-value_DISAG.IOT_FrancePrices( : , 1:Location2-1 ) = IOT_FrancePrices( : , 1:Location2-1 ) ;
-value_DISAG.IOT_FrancePrices( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_FrancePrices( : , Location2+1:$ ) ;
+value_DISAG.IOT_Prices( : , 1:Location2-1 ) = IOT_Prices( : , 1:Location2-1 ) ;
+value_DISAG.IOT_Prices( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_Prices( : , Location2+1:$ ) ;
 
-value_DISAG.IOT_FrancePrices( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = ones( 1, nb_HouseholdsTEMP) .*. IOT_FrancePrices(1:$-1,Location2) ;
+value_DISAG.IOT_Prices( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = ones( 1, nb_HouseholdsTEMP) .*. IOT_Prices(1:$-1,Location2) ;
+
 
 
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLE in QUANTITIES
@@ -271,31 +286,31 @@ value_DISAG.IOT_FrancePrices( LocationIndex , Location2:Location2+nb_HouseholdsT
 	//	Disaggregate the values with the distribution keys
 Distrib_keys = evstr( IOT_rate_H10(2:$,2:$) );
 Disagg_Values = [];
-Disagg_Values = ones( 1, size(Distrib_keys,2 )) .*. IOT_FranceQtities(LocationIndex,Location2) .* Distrib_keys ;
+Disagg_Values = ones( 1, size(Distrib_keys,2 )) .*. IOT_Qtities(LocationIndex,Location2) .* Distrib_keys ;
 	//	Eliminating rounded figures to get exact aggregation
-Disagg_Values(:,$) = IOT_FranceQtities(LocationIndex,Location2) - sum(Disagg_Values(:,1:$-1), "c") ;
+Disagg_Values(:,$) = IOT_Qtities(LocationIndex,Location2) - sum(Disagg_Values(:,1:$-1), "c") ;
 
 	//	Build the disaggregated IOT
-value_DISAG.IOT_FranceQtities = zeros( size(IOT_FranceQtities, 1), size(IOT_FranceQtities, 2) + nb_HouseholdsTEMP - 1 );
+value_DISAG.IOT_Qtities = zeros( size(IOT_Qtities, 1), size(IOT_Qtities, 2) + nb_HouseholdsTEMP - 1 );
 
-value_DISAG.IOT_FranceQtities( : , 1:Location2-1 ) = IOT_FranceQtities( : , 1:Location2-1 ) ;
-value_DISAG.IOT_FranceQtities( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_FranceQtities( : , Location2+1:$ ) ;
+value_DISAG.IOT_Qtities( : , 1:Location2-1 ) = IOT_Qtities( : , 1:Location2-1 ) ;
+value_DISAG.IOT_Qtities( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_Qtities( : , Location2+1:$ ) ;
 
-value_DISAG.IOT_FranceQtities( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = Disagg_Values ;
+value_DISAG.IOT_Qtities( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = Disagg_Values ;
 
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLE in VALUES
 
 	//	Build the disaggregated IOT (Price times quantities)
-value_DISAG.IOT_FranceVal = zeros( size(IOT_FranceVal, 1) + nb_HouseholdsTEMP - 1, size(IOT_FranceVal, 2) + nb_HouseholdsTEMP - 1 ) ;
+value_DISAG.IOT_Val = zeros( size(IOT_Val, 1) + nb_HouseholdsTEMP - 1, size(IOT_Val, 2) + nb_HouseholdsTEMP - 1 ) ;
 
 Location3 = find( "SpeMarg_C" == Index_IOTvalue(:,2) ) - 1 ;
 
-value_DISAG.IOT_FranceVal( 1:Location3-1 , 1:Location2-1 ) = IOT_FranceVal( 1:Location3-1 , 1:Location2-1 ) ;
-value_DISAG.IOT_FranceVal( 1:Location3-1 , Location2+nb_HouseholdsTEMP:$ ) = IOT_FranceVal( 1:Location3-1 , Location2+1:$ ) ;
+value_DISAG.IOT_Val( 1:Location3-1 , 1:Location2-1 ) = IOT_Val( 1:Location3-1 , 1:Location2-1 ) ;
+value_DISAG.IOT_Val( 1:Location3-1 , Location2+nb_HouseholdsTEMP:$ ) = IOT_Val( 1:Location3-1 , Location2+1:$ ) ;
 
-value_DISAG.IOT_FranceVal( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 )  = value_DISAG.IOT_FranceQtities(1:$-1,Location2:Location2+nb_HouseholdsTEMP-1).*value_DISAG.IOT_FrancePrices(1:$-1,Location2:Location2+nb_HouseholdsTEMP-1) ;
+value_DISAG.IOT_Val( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 )  = value_DISAG.IOT_Qtities(1:$-1,Location2:Location2+nb_HouseholdsTEMP-1).*value_DISAG.IOT_Prices(1:$-1,Location2:Location2+nb_HouseholdsTEMP-1) ;
 
-value_DISAG.IOT_FranceVal(Location3+nb_HouseholdsTEMP:$,1:nb_Commodities) = IOT_FranceVal(Location3+1:$,1:nb_Commodities) ;
+value_DISAG.IOT_Val(Location3+nb_HouseholdsTEMP:$,1:nb_Commodities) = IOT_Val(Location3+1:$,1:nb_Commodities) ;
 
 	//	Energy specific margins (Same energy price, same rate of specific margins: same disaggregation of the specific margin as the energy quantities consumed)
 
@@ -322,27 +337,27 @@ value_DISAG.SpeMarg_C ( 1:nb_HouseholdsTEMP , LocationIndex2 ) = ones( nb_Househ
 value_DISAG.SpeMarg_C($,:) = initial_value.SpeMarg_C - sum(value_DISAG.SpeMarg_C(1:$-1, :), "r") ;
 
 		//	Insert energy specific margins in the IOT 
-value_DISAG.IOT_FranceVal( Location3:Location3+nb_HouseholdsTEMP-1 , 1:size(initial_value.SpeMarg_C,2) ) = value_DISAG.SpeMarg_C ;
+value_DISAG.IOT_Val( Location3:Location3+nb_HouseholdsTEMP-1 , 1:size(initial_value.SpeMarg_C,2) ) = value_DISAG.SpeMarg_C ;
 
 //////////////	Consumption accounts Closure (the composite expenditures balance the consumption budget)
 
 		// in value
 Location3 = find( "Row" == Index_IOTvalue(:,1) & "Composite" == Index_IOTvalue(:,2) ) - 1 ;
 	
-value_DISAG.IOT_FranceVal( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) = value_DISAG.FC_byAgent(Indice_HouseholdsTEMP) - ( sum(value_DISAG.IOT_FranceVal(:, Location2:Location2+nb_HouseholdsTEMP-1 ),"r") - value_DISAG.IOT_FranceVal(Location3, Location2:Location2+nb_HouseholdsTEMP-1 ) ) ;
+value_DISAG.IOT_Val( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) = value_DISAG.FC_byAgent(Indice_HouseholdsTEMP) - ( sum(value_DISAG.IOT_Val(:, Location2:Location2+nb_HouseholdsTEMP-1 ),"r") - value_DISAG.IOT_Val(Location3, Location2:Location2+nb_HouseholdsTEMP-1 ) ) ;
 		
 		// in quantities
-value_DISAG.IOT_FranceQtities( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) = value_DISAG.IOT_FranceVal( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) ./ value_DISAG.IOT_FrancePrices( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) ;
+value_DISAG.IOT_Qtities( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) = value_DISAG.IOT_Val( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) ./ value_DISAG.IOT_Prices( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) ;
 
 //////////////	DISAGGREGATION - CO2 EMISSIONS
 
 	//	Build the disaggregated IOT
-value_DISAG.IOT_FranceCO2Emis = zeros( size(IOT_FranceCO2Emis, 1), size(IOT_FranceCO2Emis, 2) + nb_HouseholdsTEMP - 1 );
-value_DISAG.IOT_FranceCO2Emis( : , 1:Location2-1 ) = IOT_FranceCO2Emis( : , 1:Location2-1 ) ;
-value_DISAG.IOT_FranceCO2Emis( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_FranceCO2Emis( : , Location2+1:$ ) ;
-value_DISAG.IOT_FranceCO2Emis( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = ones( 1, nb_HouseholdsTEMP) .*. IOT_FranceCO2Emis(1:$-1,Location2) .* Distrib_keys ;
+value_DISAG.IOT_CO2Emis = zeros( size(IOT_CO2Emis, 1), size(IOT_CO2Emis, 2) + nb_HouseholdsTEMP - 1 );
+value_DISAG.IOT_CO2Emis( : , 1:Location2-1 ) = IOT_CO2Emis( : , 1:Location2-1 ) ;
+value_DISAG.IOT_CO2Emis( : , Location2+nb_HouseholdsTEMP:$ ) = IOT_CO2Emis( : , Location2+1:$ ) ;
+value_DISAG.IOT_CO2Emis( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 ) = ones( 1, nb_HouseholdsTEMP) .*. IOT_CO2Emis(1:$-1,Location2) .* Distrib_keys ;
 
-CO2Emis_C_2030 = ones( 1, nb_HouseholdsTEMP) .*. CO2Emis_C_2030.* Distrib_keys ;
+// CO2Emis_C_2030 = ones( 1, nb_HouseholdsTEMP) .*. CO2Emis_C_2030.* Distrib_keys ;
 
 
 //////////////	DISAGGREGATION - DEMOGRAPHIC TABLES
@@ -404,50 +419,60 @@ end
 	///	Create the final disaggregated IOT (with headings) and export them to .csv files
 	
 		//	IOT in prices
-IOT_FrancePrices_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "euro_per_tep_euro_per_tons"], value_DISAG.IOT_FrancePrices] ;
+IOT_Prices_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "euro_per_tep_euro_per_tons"], value_DISAG.IOT_Prices] ;
 
-csvWrite(IOT_FrancePrices_DISAG,SAVEDIR+"IOT_FrancePrices_DISAG.csv") ;
 
+if Output_files=='True'
+csvWrite(IOT_Prices_DISAG,SAVEDIR+"IOT_Prices_DISAG.csv") ;
+end
 		//	IOT in quantities
-IOT_FranceQtities_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "ktoe_ktons"], value_DISAG.IOT_FranceQtities] ;
+IOT_Qtities_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "ktoe_ktons"], value_DISAG.IOT_Qtities] ;
 
-csvWrite(IOT_FranceQtities_DISAG,SAVEDIR+"IOT_FranceQtities_DISAG.csv") ;
+if Output_files=='True'
+csvWrite(IOT_Qtities_DISAG,SAVEDIR+"IOT_Qtities_DISAG.csv") ;
+end
 
 		//	IOT in values
 Location3 	= find( "SpeMarg_C" == Index_IOTvalue(:,2) ) ;
 
 Index_Row_IOT_DISAG = [Index_IOTvalue(2:Location3-1 , 2); Index_IOTvalue(Location3, 2)+"_"++Index_HouseholdsTEMP; Index_IOTvalue(Location3+1:members("Row", Index_IOTvalue)+1 , 2) ] ;
 		
-IOT_FranceVal_DISAG = [ ["", Index_Sectors', Index_FC_DISAG', "Tot_uses"]; [Index_Row_IOT_DISAG; "Tot_ressources"; "Thousand_of_euros"], value_DISAG.IOT_FranceVal ] ;
+IOT_Val_DISAG = [ ["", Index_Sectors', Index_FC_DISAG', "Tot_uses"]; [Index_Row_IOT_DISAG; "Tot_ressources"; "Thousand_of_euros"], value_DISAG.IOT_Val ] ;
 
-csvWrite(IOT_FranceVal_DISAG,SAVEDIR+"IOT_FranceVal_DISAG.csv") ;
+if Output_files=='True'
+csvWrite(IOT_Val_DISAG,SAVEDIR+"IOT_Val_DISAG.csv") ;
+end
 
 		//	IOT in CO2 Emissions
-IOT_FranceCO2Emis_DISAG = [ ["", Index_Sectors', "C_"+Index_HouseholdsTEMP', "X"] ; [Index_Sectors; "MtCO2"], value_DISAG.IOT_FranceCO2Emis ] ;
+IOT_CO2Emis_DISAG = [ ["", Index_Sectors', "C_"+Index_HouseholdsTEMP', "X"] ; [Index_Sectors; "MtCO2"], value_DISAG.IOT_CO2Emis ] ;
 
-csvWrite(IOT_FranceCO2Emis_DISAG,SAVEDIR+"IOT_FranceCO2Emis_DISAG.csv") ;
+if Output_files=='True'
+csvWrite(IOT_CO2Emis_DISAG,SAVEDIR+"IOT_CO2Emis_DISAG.csv") ;
+end
 
 		//	IOT - Imported proportions
 IOT_Import_rate_DISAG = [ ["", Index_Sectors', Index_FC_DISAG'] ; [Index_Sectors; "Proportion (Without unit)"], [value_DISAG.IOT_Import_rate; zeros(1, size(value_DISAG.IOT_Import_rate, 2)) ] ] ;
 
+if Output_files=='True'
 csvWrite(IOT_Import_rate_DISAG,SAVEDIR+"IOT_Import_rate_DISAG.csv") ;
-
+end
 		//	Demographic Table
 Demography_DISAG = [ ["Socio demograhic variables", Index_HouseholdsTEMP', "units"] ; [ValueNamesDISAG, Disagg_Values, ["Thousands of people"; "Thousands of people"; "Thousands of people"; "Thousands of people"; "Consumption units per household"; "Thousands of people"] ] ] ;
 
+if Output_files=='True'
 csvWrite(Demography_DISAG,SAVEDIR+"Demography_DISAG.csv") ;
-
+end
 
 //////////////	NEW STRUCTURE WITH DISAGGREGATED VARIABLES
 
 	//	Consumption prices
-execstr( "value_DISAG.pC = value_DISAG.IOT_FrancePrices(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
+execstr( "value_DISAG.pC = value_DISAG.IOT_Prices(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
 
 	//	Consumption quantities
-execstr( "value_DISAG.C = value_DISAG.IOT_FranceQtities(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
+execstr( "value_DISAG.C = value_DISAG.IOT_Qtities(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
 
 	//	Consumption values
-execstr( "value_DISAG.C_value = value_DISAG.IOT_FranceVal(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
+execstr( "value_DISAG.C_value = value_DISAG.IOT_Val(Indice_Sectors, "+Location2+":"+Location2+"+nb_HouseholdsTEMP-1);" )
 
 	//	Demographic variables
 for elt = 2:size(Demography,1)
@@ -593,7 +618,7 @@ end
 //////////////////////////////////////////////////////////////////
 //////////////// Defining various bloc matrix 
 
-value_DISAG.CO2Emis_C		=  value_DISAG.IOT_FranceCO2Emis( 1:$-1 , Location2:Location2+nb_HouseholdsTEMP-1 );
+value_DISAG.CO2Emis_C		=  value_DISAG.IOT_CO2Emis( 1:$-1 , Location2:Location2+nb_HouseholdsTEMP-1 );
 value_DISAG.FC_value 		= [value_DISAG.C_value,initial_value.G_value, initial_value.I_value, initial_value.X_value ];
 value_DISAG.pFC 				= [value_DISAG.pC,initial_value.pG, initial_value.pI, initial_value.pX ];
 value_DISAG.FC 				= [value_DISAG.C,initial_value.G, initial_value.I, initial_value.X ];

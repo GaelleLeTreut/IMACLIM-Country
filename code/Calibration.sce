@@ -212,7 +212,7 @@ if norm(const_X) > sensib
     error( "review calib_X")
 else
     X = indiv_x2variable (Index_Imaclim_VarCalib, "x_X");
-    // X = (abs(X) > %eps).*X;
+    X = (abs(X) > %eps).*X;
 end
 
 
@@ -226,7 +226,7 @@ if norm(const_G) > sensib
     error( "review calib_G")
 else
     G = indiv_x2variable (Index_Imaclim_VarCalib, "x_G");
-    // G = (abs(G) > %eps).*G;
+    G = (abs(G) > %eps).*G;
 end
 
 function [const_I] =fcalib_I_value_Const_1(x_I, I_value, pI, Imaclim_VarCalib)
@@ -239,7 +239,7 @@ if norm(const_I) > sensib
     error( "review calib_I")
 else
     I = indiv_x2variable (Index_Imaclim_VarCalib, "x_I");
-    // I = (abs(I) > %eps).*I;
+    I = (abs(I) > %eps).*I;
 end
 
 function [const_alpha] =fcalib_IC_Const_1(x_alpha, IC, Y, Imaclim_VarCalib)
@@ -734,13 +734,17 @@ else
     OtherIndirTax_rate = (abs(OtherIndirTax_rate) > %eps).*OtherIndirTax_rate;
 end
 
+// if Country=="France" & AGG_type=="AGG_SNBC2"
+
+	// VA_Tax_rate = VA_Tax./(sum( pC .* C, "c")' + sum(pG .* G, "c")' + (pI .* I)'-VA_Tax);	warning("Antoine : le calcul de VA_Tax ne fonctionne pas avec AGG_SNBC2... Utilisation du calcul direct au lieu d''une résolution")
+// else
 
 function [const_VA_Tax_rate] =fcalib_VA_Tax_Const_1(x_VA_Tax_rate, VA_Tax, pC, C, pG, G, pI, I, Imaclim_VarCalib)
     VA_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_VA_Tax_rate");
     // const_VA_Tax_rate = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
 
     y_1 = (VA_Tax' ==0).*VA_Tax_rate';
-    y_2 = (VA_Tax' <>0).*VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I);
+    y_2 = (VA_Tax' <>0).*VA_Tax_Const_1(VA_Tax, abs(VA_Tax_rate), pC, C, pG, G, pI, I);
     const_VA_Tax_rate =(VA_Tax' ==0).*y_1 +  (VA_Tax' <>0).*y_2;
 
 endfunction
@@ -752,11 +756,12 @@ while norm(const_VA_Tax_rate) > sensib
     end
     count = count + 1;
     [x_VA_Tax_rate, const_VA_Tax_rate, info_calib_VA_Tax_rate] = fsolve(x_VA_Tax_rate, list(fcalib_VA_Tax_Const_1,VA_Tax, pC, C, pG, G, pI,I,Index_Imaclim_VarCalib));
-    VA_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_VA_Tax_rate");
+    VA_Tax_rate = abs(indiv_x2variable (Index_Imaclim_VarCalib, "x_VA_Tax_rate"));
     VA_Tax_rate = (abs(VA_Tax_rate) > %eps).*VA_Tax_rate;
 
 end
 count=0;
+// end
 
 ///////////////////////////
 // Start Specific to Brasil
@@ -1684,7 +1689,7 @@ end
 ///////////////////////////
 // End Not Applied to Brasil
 ///////////////////////////
-if Country<>"Brasil" then
+// if Country<>"Brasil" then
 function [const_Phi] =fcalTechnicProg_Const_1(x_Phi, Capital_consumption, sigma_Phi, Imaclim_VarCalib)
     Phi= indiv_x2variable(Imaclim_VarCalib, "x_Phi");
     const_Phi = TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
@@ -1712,7 +1717,7 @@ else
     Theta = indiv_x2variable (Index_Imaclim_VarCalib, "x_Theta");
 end
 
-end 
+// end 
 // Antoine : il faudra réintégrer cela au Brésil finalement pour permettre d'avoir du changement technique endogène et exogène 
 
 ///////////////////////////

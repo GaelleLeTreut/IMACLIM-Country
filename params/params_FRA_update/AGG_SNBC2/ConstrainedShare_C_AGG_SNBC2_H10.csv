@@ -1,0 +1,16 @@
+ConstrainedShare_C;H1;H2;H3;H4;H5;H6;H7;H8;H9;H10
+Crude_oil;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+Natural_gas;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+Coal;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+AllFuels;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+Electricity;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+HeatGeoSol_Th;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5;0.5
+Heavy_Industry;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Buildings_constr;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Work_constr;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Automobile;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Load_PipeTransp;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+PassTransp;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Agri_Food_industry;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Property_business;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+OthSectors;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan

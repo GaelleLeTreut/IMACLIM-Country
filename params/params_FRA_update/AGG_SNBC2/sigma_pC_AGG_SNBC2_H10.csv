@@ -1,0 +1,16 @@
+sigma_pC;H1;H2;H3;H4;H5;H6;H7;H8;H9;H10
+Crude_oil;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+Natural_gas;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+Coal;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+AllFuels;-0.39;-0.39;-0.39;-0.39;-0.39;-0.39;-0.39;-0.39;-0.39;-0.39
+Electricity;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+HeatGeoSol_Th;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+Heavy_Industry;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Buildings_constr;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Work_constr;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Automobile;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Load_PipeTransp;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+PassTransp;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Agri_Food_industry;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+Property_business;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan
+OthSectors;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan;%nan

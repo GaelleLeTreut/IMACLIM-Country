@@ -1,0 +1,16 @@
+phi_IC;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;Agri_Food_industry;Property_business;OthSectors
+Crude_oil;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Natural_gas;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Coal;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+AllFuels;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Electricity;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+HeatGeoSol_Th;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Heavy_Industry;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Buildings_constr;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Work_constr;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Automobile;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Load_PipeTransp;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+PassTransp;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Agri_Food_industry;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Property_business;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+OthSectors;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0

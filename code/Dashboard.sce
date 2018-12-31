@@ -104,7 +104,15 @@ if Nb_Iter<1
 end
 
 if (size(Scenario,"r")<>[1]| size(Scenario,"r")<>[1])
-	error ( "various types of resolution system have been selected in Dashboard.csv. The model isn't ready yet to run several sceanrios successively.");
+	error ( "various types of scenario have been selected in Dashboard.csv. The model isn't ready yet to run several Scenarios successively.");
+end
+
+if (size(Macro_nb,"r")<>[1]| size(Macro_nb,"r")<>[1])
+	error ( "various types of macroeconomic framework been selected in Dashboard.csv.");
+end
+
+if (size(CO2_footprint,"r")<>[1]| size(CO2_footprint,"r")<>[1])
+	error ( "You have to choose whether or not you want to realise an Input-Output Analysis about carbon footprint.");
 end
 
 if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])

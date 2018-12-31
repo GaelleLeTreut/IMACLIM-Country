@@ -100,8 +100,42 @@ ini.ERE_M = ERE_Import ( AdjutERE_M, ini.IC_Import_rate, ini.FC_Import_rate, ini
 /// Non équilibré sans ajustement 
 d.ERE_M = ERE_Import ( AdjutERE_M, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP);
 
-// ajustement de l'équibre des imports 
-[AdjutERE_M_best, d.ERE_M_best, info] = fsolve(AdjutERE_M, list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+ 
+/////////////////////////////////////////////////
+//////SOLVEUR  // ajustement de l'équibre des imports
+/////////////////////////////////////////////////
+count        = 0;
+countMax     = 30;
+vMax         = 10000000;
+vBest        = 10000000;
+sensib       = 1e-5;
+sensibFsolve = 1e-15;
+Xbest        = AdjutERE_M;
+a            = 0.1;
+
+
+while (count<countMax)&(vBest>sensib)
+    count = count + 1;
+
+    try
+        [AdjutERE_M_best, ERE_M_best, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+        vMax = norm(ERE_M_best);		
+		
+// [AdjutERE_M_best, d.ERE_M_best, info] = fsolve(AdjutERE_M, list(ERE_Import, d.IC_Import_rate, d.FC_Import_rate, d.IC_value, d.FC_value, d.VA_Tax, d.Energy_Tax_FC,  d.M_value,d.Y_value, d.MarginsIMP , d.TaxesIMP),sensibFsolve);
+
+        if vMax<vBest
+            vBest    = vMax;
+            infoBest = info;
+            Xbest    = AdjutERE_M_best;
+        end
+
+    catch
+        [str,n,line,func]=lasterror(%f);
+        disp("Error "+n+" with fsolve: "+str);
+        pause
+    end
+
+end
 
 // Recalcul des taux après ajustement qui permet l'équibre des importations, trouvé par le solveur
 d.IC_Import_rate = min (d.IC_Import_rate.*( ones (1,nb_Sectors).*. AdjutERE_M_best ),1);
@@ -129,12 +163,29 @@ d.tot_ress_valIMP = d.M_value + sum(d.MarginsIMP,"r") + sum(d.TaxesIMP,"r");
 d.tot_uses_valIMP = sum(d.IC_valueIMP,"c")+sum(d.FC_valueIMP,"c");
 
 d.ERE_M_value =d.tot_ress_valIMP - d.tot_uses_valIMP' ;
-    if abs(d.ERE_M_value)>= Err_balance_tol then
-        disp("Warning : unbalanced IOT of IMPORTS")
-    end	
-
-d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") ;
+    if norm(d.ERE_M_value)>= Err_balance_tol then
+        disp("Warning : unbalanced IOT of IMPORTS for sectors")
+	for elt=1:nb_Sectors
+		if abs(d.ERE_M_value(elt))>= Err_balance_tol then		
+			disp(Index_Sectors(elt)+": "+string(d.ERE_M_value(elt)))
+		end
+	end
+    end
 	
+if Output_files == "True"
+	d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
+end 
+if Output_files == "False"
+	d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r") - d.ClimPolCompensbySect ;
+end 
+
+
+
+// d.TEST=[AGGprofil,Index_Sectors';["Emis_Sect_"+Index_Sectors,d.CO2Emis_IC];"Emis_Fact_DOM",divide( sum(d.CO2Emis_IC,"r"), d.Output, 0);["Leon_DOM_"+Index_Sectors,inv(eye (nb_Sectors,nb_Sectors)-divide( d.IC_valueDOM, ones(nb_Sectors,1).*.d.Output, 0))];["FC_valueDOM_"+Index_Sectors,diag(sum(d.FC_valueDOM,"c"))'];["Output",d.Output]];
+
+// csvWrite(d.TEST, SAVEDIR_IOA  + 'TEST_run_'+"_"+AGGprofil+'.csv', ';');
+
+
  ioa_run  = IOA(  d.CO2Emis_IC,  d.CO2Emis_C, d.IC_value,  d.IC_valueIMP, d.IC_valueDOM, d.FC_valueDOM, d.FC_valueIMP, d.FC_value,  d.Output, CoefCO2_reg);
  
 
@@ -146,43 +197,50 @@ end
 
 // Print external files IOA_DECOMP
 if Output_files=='True'
-csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA  + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
 
 if	H_DISAGG <> "HH1"
-csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
+csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA  + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
 end
 
-// csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv");
+
+// Recap emissions 
+ioa_run.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2 ","Emis_Sec","Consist check 3";AGGprofil,ioa_run.Emiss_IOA_tot,ioa_run.Prod_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_APROX_tot,ioa_run.ImpNet_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_tot, ioa_run.Imp_Emis_IOA_APROX_tot - ( ioa_run.Emiss_IOA_tot-ioa_run.Prod_Emis_IOA_tot),ioa_run.Imp_Emis_IOA_APROX_tot, ioa_run.Imp_Emis_IOA_bis_tot,ioa_run.Imp_Emis_IOA_APROX_tot- ioa_run.Imp_Emis_IOA_bis_tot,sum(ioa_run.Emis_Sect), sum(ioa_run.Emis_Sect)-ioa_run.Prod_Emis_IOA_tot ];
+
+csvWrite(ioa_run.Recap_Emiss, SAVEDIR_IOA  + 'Recap_Emis_Run'+"_"+AGGprofil+'.csv', ';');
+
+
+// csvWrite(Prices.evo,SAVEDIR_IOA+"Prices-evo.csv");
 
 // Sauvegarde des fichiers pour Input dans IMACLIM
 // AJOUTER AGG_TYPE En FIN DU NOM CSV
-// csvWrite(ioa.Emis_fact_DOM, SAVEDIR + 'Emis_fact'+AGG_type+'.csv', ';');
-// csvWrite(Output, SAVEDIR + 'Output'+AGG_type+'.csv', ';');
-// csvWrite(Output./sum(Output), SAVEDIR + 'Output_Ratio'+AGG_type+'.csv', ';');
-// csvWrite(tot_ress_valIMP, SAVEDIR + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
-// csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Emis_fact_DOM, SAVEDIR_IOA + 'Emis_fact'+AGG_type+'.csv', ';');
+// csvWrite(Output, SAVEDIR_IOA + 'Output'+AGG_type+'.csv', ';');
+// csvWrite(Output./sum(Output), SAVEDIR_IOA + 'Output_Ratio'+AGG_type+'.csv', ';');
+// csvWrite(tot_ress_valIMP, SAVEDIR_IOA + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
+// csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR_IOA + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
 
 // Compare= [sum(FC(16:17,:),"c") Output(16:17)' sum(FC(16:17,:),"c")-Output(16:17)']
 
 
-// csvWrite(ioa.Emiss_IOA, SAVEDIR + 'Emiss_IOA_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Emis_Sect, SAVEDIR + 'Emis_Sect_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Emis_HH, SAVEDIR + 'Emis_HH_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Prod_Emis_IOA_DIR, SAVEDIR + 'Prod_Emis_IOA_DIR_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Prod_Emis_IOA_INDIR, SAVEDIR + 'Prod_Emis_IOA_INDIR_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Dom_Emis_IOA_C, SAVEDIR + 'Dom_Emis_IOA_C_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Dom_Emis_IOA_I, SAVEDIR + 'Dom_Emis_IOA_I_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Dom_Emis_IOA_G, SAVEDIR + 'Dom_Emis_IOA_G_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Dom_Emis_IOA_X, SAVEDIR + 'Dom_Emis_IOA_X_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Imp_Emis_IOA_fin, SAVEDIR + 'Imp_Emis_IOA_fin_'+AGG_type+'.csv', ';');
-// csvWrite(ioa.Imp_Emis_IOA_int, SAVEDIR + 'Imp_Emis_IOA_int_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Emiss_IOA, SAVEDIR_IOA + 'Emiss_IOA_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Emis_Sect, SAVEDIR_IOA + 'Emis_Sect_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Emis_HH, SAVEDIR_IOA + 'Emis_HH_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Prod_Emis_IOA_DIR, SAVEDIR_IOA + 'Prod_Emis_IOA_DIR_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Prod_Emis_IOA_INDIR, SAVEDIR_IOA + 'Prod_Emis_IOA_INDIR_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Dom_Emis_IOA_C, SAVEDIR_IOA + 'Dom_Emis_IOA_C_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Dom_Emis_IOA_I, SAVEDIR_IOA + 'Dom_Emis_IOA_I_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Dom_Emis_IOA_G, SAVEDIR_IOA + 'Dom_Emis_IOA_G_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Dom_Emis_IOA_X, SAVEDIR_IOA + 'Dom_Emis_IOA_X_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Imp_Emis_IOA_fin, SAVEDIR_IOA + 'Imp_Emis_IOA_fin_'+AGG_type+'.csv', ';');
+// csvWrite(ioa.Imp_Emis_IOA_int, SAVEDIR_IOA + 'Imp_Emis_IOA_int_'+AGG_type+'.csv', ';');
 
-// csvWrite(FC_value, SAVEDIR + 'FC_value'+AGG_type+'.csv', ';');
+// csvWrite(FC_value, SAVEDIR_IOA + 'FC_value'+AGG_type+'.csv', ';');
 
-// csvWrite(Output, SAVEDIR + 'Output'+AGG_type+'.csv', ';');
-// csvWrite(Output./sum(Output), SAVEDIR + 'Output_Ratio'+AGG_type+'.csv', ';');
-// csvWrite(tot_ress_valIMP, SAVEDIR + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
-// csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
+// csvWrite(Output, SAVEDIR_IOA + 'Output'+AGG_type+'.csv', ';');
+// csvWrite(Output./sum(Output), SAVEDIR_IOA + 'Output_Ratio'+AGG_type+'.csv', ';');
+// csvWrite(tot_ress_valIMP, SAVEDIR_IOA + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
+// csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR_IOA + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
 end
 
 

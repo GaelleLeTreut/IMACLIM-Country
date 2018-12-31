@@ -3,14 +3,14 @@
  // Approximation of quantity variation (Value / Price_index) - Fisher
  function Q_Fish_app = QInd_Fish_app( p0,q0, pf, qf, ind1, ind2) 
  
-PInd_Lasp = sum(pf(ind1, ind2) .* q0(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1, ind2)); 
-PInd_Paas = sum(pf(ind1, ind2).*qf(ind1, ind2))./ sum(p0(ind1, ind2).*qf(ind1, ind2));
+PInd_Lasp = divide(sum(pf(ind1, ind2) .* q0(ind1, ind2)) , sum(p0(ind1, ind2).*q0(ind1, ind2)),%nan); 
+PInd_Paas = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)) , sum(p0(ind1, ind2).*qf(ind1, ind2)),%nan);
 PInd_Fish= sqrt(PInd_Lasp.*PInd_Paas);
 
  // real_consumption
-Q_Fish_app = sum(pf(ind1, ind2).*qf(ind1, ind2)) ./ PInd_Fish;  
- endfunction 
- 
+Q_Fish_app = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)) , PInd_Fish,%nan);  
+endfunction 
+
   
  // Price Index - Fisher
  function PInd_Fish = PInd_Fish( p0,q0, pf, qf, ind1, ind2) 
@@ -25,8 +25,8 @@ PInd_Fish= sqrt(PInd_Lasp.*PInd_Paas);
   // Quantity Index - Fisher
  function QInd_Fish = QInd_Fish( p0,q0, pf, qf, ind1, ind2) 
  
-QInd_Lasp = sum(p0(ind1, ind2) .* qf(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1, ind2)); 
-QInd_Paas = sum(pf(ind1, ind2).*qf(ind1, ind2))./ sum(pf(ind1, ind2).*q0(ind1, ind2));
+QInd_Lasp = divide(sum(p0(ind1, ind2) .* qf(ind1, ind2)) , sum(p0(ind1, ind2).*q0(ind1, ind2)),%nan); 
+QInd_Paas = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)) , sum(pf(ind1, ind2).*q0(ind1, ind2)),%nan);
 QInd_Fish= sqrt(QInd_Lasp.*QInd_Paas);
 
  endfunction  
@@ -35,7 +35,7 @@ QInd_Fish= sqrt(QInd_Lasp.*QInd_Paas);
   // Price Index - Laspeyres
  function PInd_Lasp = PInd_Lasp( p0,q0, pf, qf, ind1, ind2) 
  
-PInd_Lasp = sum(pf(ind1, ind2) .* q0(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1, ind2)); 
+PInd_Lasp = divide(sum(pf(ind1, ind2) .* q0(ind1, ind2)) , sum(p0(ind1, ind2).*q0(ind1, ind2)),%nan); 
  
  endfunction 
  
@@ -43,7 +43,7 @@ PInd_Lasp = sum(pf(ind1, ind2) .* q0(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1
   // Quantity Index - Laspeyres
  function QInd_Lasp = QInd_Lasp( p0,q0, pf, qf, ind1, ind2) 
  
-QInd_Lasp = sum(p0(ind1, ind2) .* qf(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1, ind2)); 
+QInd_Lasp = divide(sum(p0(ind1, ind2) .* qf(ind1, ind2)) , sum(p0(ind1, ind2).*q0(ind1, ind2)),%nan); 
 
  endfunction  
  
@@ -51,7 +51,7 @@ QInd_Lasp = sum(p0(ind1, ind2) .* qf(ind1, ind2)) ./ sum(p0(ind1, ind2).*q0(ind1
   // Price Index - Paasche
  function PInd_Paas = PInd_Paas( p0,q0, pf, qf, ind1, ind2) 
  
-PInd_Paas = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)), sum(p0(ind1, ind2).*qf(ind1, ind2)),%nan);
+PInd_Paas = divide(sum(pf (ind1, ind2).*qf(ind1, ind2)), sum(p0(ind1, ind2).*qf(ind1, ind2)),%nan);
  
  endfunction 
  
@@ -59,7 +59,7 @@ PInd_Paas = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)), sum(p0(ind1, ind2).*qf(i
   // Quantity Index - Paasche
  function QInd_Paas = QInd_Paas( p0,q0, pf, qf, ind1, ind2) 
  
-QInd_Paas = sum(pf(ind1, ind2).*qf(ind1, ind2))./ sum(pf(ind1, ind2).*q0(ind1, ind2));
+QInd_Paas = divide(sum(pf(ind1, ind2).*qf(ind1, ind2)) , sum(pf(ind1, ind2).*q0(ind1, ind2)),%nan);
 
  endfunction 
 
