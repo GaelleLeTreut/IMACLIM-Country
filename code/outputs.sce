@@ -100,13 +100,10 @@ param_table_sec($+1,1) = ["$\phi_{L_{i}}$"];
 param_table_sec($,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(phi_L);
 
-param_table_sec($+1,1) = ["$Mu$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(Mu);
-
-param_table_sec($+1,1) = ["$\beta_{i_h}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4+nb_Sectors-1) = string(ConstrainedShare_C');
+param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\beta_{i_h}$"];
+param_table_sec($-(nb_Households-1):$,2) = [""]
+param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
+param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(ConstrainedShare_C');
 
 param_table_sec($+1,1) = ["$\delta_{C_{i_h}}$"];
 param_table_sec($:$,2:3) = [" "];
@@ -135,12 +132,24 @@ param_table_sec($+1,1) = ["$\delta_{X_{i}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(delta_X_parameter);
 
-param_table_sec($+1,1) = ["$\sigma_{CP_i}$"];
+param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\sigma_{CP_i}$"];
+param_table_sec($-(nb_Households-1):$,2) = [""]
+param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
+param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(sigma_pC');
+
+param_table_sec($+1,1) = ["-----"];
+param_table_sec($+1,1) = ["Not applied to sectoral decomposition"];
+
+param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\sigma_{CR_i}$"];
+param_table_sec($-(nb_Households-1):$,2) = [""];
+param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
+param_table_sec($-(nb_Households-1):$,4)= string(round(sigma_ConsoBudget*10)'/10);
+
+
+param_table_sec($+1,1) = ["$Mu$"];
 param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4+nb_Sectors-1) = string(sigma_pC');
-param_table_sec($+1,1) = ["$\sigma_{CR_i}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4+nb_Sectors-1) = string(round(sigma_ConsoBudget*10)/10);
+param_table_sec($,4) = string(Mu);
+
 param_table_sec($+1,1) = ["$\sigma_{w_u}$"];
 param_table_sec($:$,2:3) = [" "];
 if size(Coef_real_wage,2)==1
@@ -166,13 +175,13 @@ param_table_sec($,4) = string(time_since_ini);
 
 param_table_sec($+1,1) = ["$Population$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(Population);
+param_table_sec($,4) = string(sum(Population));
 param_table_sec($+1,1) = ["$Labour_force$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(Labour_force);
+param_table_sec($,4) = string(sum(Labour_force));
 param_table_sec($+1,1) = ["$Retired$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(Retired);
+param_table_sec($,4) = string(sum(Retired));
 
 
 
@@ -181,12 +190,21 @@ csvWrite(param_table_sec,SAVEDIR+"param_table_sec.csv", ';');
 disp "== Households consumption variation ==========="
 disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum(C,"c") sum(round(100*(divide(C,ini.C,%nan)-1)),"c")]]);
 
+
+if  Country<>"Brasil" then
 disp "===== Households =============================="
 disp([
 "Items"                "Initial Value"                 "Run";
 "H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
 "Other_Direct_Tax"      sum(ini.Other_Direct_Tax,"c")  sum(d.Other_Direct_Tax,"c")
 ]);
+else
+disp "===== Households =============================="
+disp([
+"Items"                "Initial Value"                 "Run";
+"H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
+]);
+end
 
 
 disp "===== Firms ==================================="
@@ -672,37 +690,61 @@ csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo.csv", ';');
 // Economic account table
 
 //Initial value
-
-
-ini.Pensions(Indice_Households)= ini.Pensions;
-ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-ini.Pensions(Indice_Government) = -ini.Pensions(Indice_Households);
-ini.Pensions= matrix(ini.Pensions,1,-1);
-
-ini.Unemployment_transfers(Indice_Households)= ini.Unemployment_transfers;
-ini.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-ini.Unemployment_transfers(Indice_Government) = -ini.Unemployment_transfers(Indice_Households);
-ini.Unemployment_transfers= matrix(ini.Unemployment_transfers,1,-1);
-
-ini.Other_social_transfers(Indice_Households)= ini.Other_social_transfers;
-ini.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-ini.Other_social_transfers(Indice_Government) = -ini.Other_social_transfers(Indice_Households);
-ini.Other_social_transfers= matrix(ini.Other_social_transfers,1,-1);
-
 ini.Income_Tax(Indice_Households)= - ini.Income_Tax;
 ini.Income_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-ini.Income_Tax(Indice_Government) = -ini.Income_Tax(Indice_Households);
+ini.Income_Tax(Indice_Government) = -sum(ini.Income_Tax(Indice_Households));
 ini.Income_Tax= matrix(ini.Income_Tax,1,-1);
 
-ini.Other_Direct_Tax(Indice_Households)= -ini.Other_Direct_Tax;
-ini.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-ini.Other_Direct_Tax(Indice_Government) = -ini.Other_Direct_Tax(Indice_Households);
-ini.Other_Direct_Tax= matrix(ini.Other_Direct_Tax,1,-1);
 
 ini.Corporate_Tax(Indice_Corporations) = -ini.Corporate_Tax;
 ini.Corporate_Tax(1,[Indice_Households,Indice_RestOfWorld]) = 0;
 ini.Corporate_Tax(1,Indice_Government) = -ini.Corporate_Tax(Indice_Corporations);
 ini.GFCF_byAgent (Indice_RestOfWorld) = 0;
+
+if  Country<>"Brasil" then
+	ini.Pensions(Indice_Households)= ini.Pensions;
+	ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Pensions(Indice_Government) = -sum(ini.Pensions(Indice_Households));
+	ini.Pensions= matrix(ini.Pensions,1,-1);
+	
+	ini.Unemployment_transfers(Indice_Households)= ini.Unemployment_transfers;
+	ini.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Unemployment_transfers(Indice_Government) = -sum(ini.Unemployment_transfers(Indice_Households));
+	ini.Unemployment_transfers= matrix(ini.Unemployment_transfers,1,-1);
+	
+	ini.Other_social_transfers(Indice_Households)= ini.Other_social_transfers;
+	ini.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Other_social_transfers(Indice_Government) = -sum(ini.Other_social_transfers(Indice_Households));
+	ini.Other_social_transfers= matrix(ini.Other_social_transfers,1,-1);
+	
+	
+	ini.Other_Direct_Tax(Indice_Households)= -ini.Other_Direct_Tax;
+	ini.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Other_Direct_Tax(Indice_Government) = -sum(ini.Other_Direct_Tax(Indice_Households));
+	ini.Other_Direct_Tax= matrix(ini.Other_Direct_Tax,1,-1);
+else
+
+	ini.Gov_social_transfers(Indice_Households) = ini.Gov_social_transfers;
+	ini.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Gov_social_transfers(Indice_Government) = -sum(ini.Gov_social_transfers(Indice_Households));
+	ini.Gov_social_transfers= matrix(ini.Gov_social_transfers,1,-1);
+
+	ini.Corp_social_transfers(Indice_Households) = ini.Corp_social_transfers;
+	ini.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Corp_social_transfers(Indice_Corporations) = -sum(ini.Corp_social_transfers(Indice_Households));
+	ini.Corp_social_transfers= matrix(ini.Corp_social_transfers,1,-1);
+	
+	ini.Gov_Direct_Tax(Indice_Households)= -ini.Gov_Direct_Tax;
+	ini.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Gov_Direct_Tax(Indice_Government) = -sum(ini.Gov_Direct_Tax(Indice_Households));
+	ini.Gov_Direct_Tax= matrix(ini.Gov_Direct_Tax,1,-1);
+
+	ini.Corp_Direct_Tax(Indice_Households)= -ini.Corp_Direct_Tax;
+	ini.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	ini.Corp_Direct_Tax(Indice_Corporations) = -sum(ini.Corp_Direct_Tax(Indice_Households));
+	ini.Corp_Direct_Tax= matrix(ini.Corp_Direct_Tax,1,-1);
+
+end
 
 
 for elt=1:nb_DataAccount
@@ -729,36 +771,62 @@ d.FC_byAgent (1,Indice_Households) = sum(d.C_value, "r");
 d.FC_byAgent (1,Indice_RestOfWorld) = 0;
 d.FC_byAgent (1,Indice_Corporations) = 0;
 
-d.Pensions(Indice_Households)= d.Pensions;
-d.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-d.Pensions(Indice_Government) = -d.Pensions(Indice_Households);
-d.Pensions= matrix(d.Pensions,1,-1);
+if  Country<>"Brasil" then
 
-d.Unemployment_transfers(Indice_Households)= d.Unemployment_transfers;
-d.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-d.Unemployment_transfers(Indice_Government) = -d.Unemployment_transfers(Indice_Households);
-d.Unemployment_transfers= matrix(d.Unemployment_transfers,1,-1);
+	d.Pensions(Indice_Households)= d.Pensions;
+	d.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Pensions(Indice_Government) = -sum(d.Pensions(Indice_Households));
+	d.Pensions= matrix(d.Pensions,1,-1);
+	
+	d.Unemployment_transfers(Indice_Households)= d.Unemployment_transfers;
+	d.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Unemployment_transfers(Indice_Government) = -sum(d.Unemployment_transfers(Indice_Households));
+	d.Unemployment_transfers= matrix(d.Unemployment_transfers,1,-1);
+	
+	d.Other_social_transfers(Indice_Households)= d.Other_social_transfers;
+	d.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Other_social_transfers(Indice_Government) = -sum(d.Other_social_transfers(Indice_Households));
+	d.Other_social_transfers= matrix(d.Other_social_transfers,1,-1);
+	
+	
+	d.Other_Direct_Tax(Indice_Households)= -d.Other_Direct_Tax;
+	d.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Other_Direct_Tax(Indice_Government) = -sum(d.Other_Direct_Tax(Indice_Households));
+	d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
+else
 
-d.Other_social_transfers(Indice_Households)= d.Other_social_transfers;
-d.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-d.Other_social_transfers(Indice_Government) = -d.Other_social_transfers(Indice_Households);
-d.Other_social_transfers= matrix(d.Other_social_transfers,1,-1);
+	d.Gov_social_transfers(Indice_Households) = d.Gov_social_transfers;
+	d.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Gov_social_transfers(Indice_Government) = -sum(d.Gov_social_transfers(Indice_Households));
+	d.Gov_social_transfers= matrix(d.Gov_social_transfers,1,-1);
 
-d.Income_Tax(Indice_Households)= - d.Income_Tax;
-d.Income_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-d.Income_Tax(Indice_Government) = -d.Income_Tax(Indice_Households);
-d.Income_Tax= matrix(d.Income_Tax,1,-1);
+	d.Corp_social_transfers(Indice_Households) = d.Corp_social_transfers;
+	d.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Corp_social_transfers(Indice_Corporations) = -sum(d.Corp_social_transfers(Indice_Households));
+	d.Corp_social_transfers= matrix(d.Corp_social_transfers,1,-1);
+	
+	d.Gov_Direct_Tax(Indice_Households)= -d.Gov_Direct_Tax;
+	d.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Gov_Direct_Tax(Indice_Government) = -sum(d.Gov_Direct_Tax(Indice_Households));
+	d.Gov_Direct_Tax= matrix(d.Gov_Direct_Tax,1,-1);
 
+	d.Corp_Direct_Tax(Indice_Households)= -d.Corp_Direct_Tax;
+	d.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+	d.Corp_Direct_Tax(Indice_Corporations) = -sum(d.Corp_Direct_Tax(Indice_Households));
+	d.Corp_Direct_Tax= matrix(d.Corp_Direct_Tax,1,-1);
+
+end
+	
+	
 d.Carbon_Tax_byAgent(Indice_Government)= sum(d.Carbon_Tax);
 d.Carbon_Tax_byAgent([Indice_Corporations,Indice_Households,Indice_RestOfWorld]) = 0;
 d.Carbon_Tax_byAgent= matrix(d.Carbon_Tax_byAgent,1,-1);
-
-
-d.Other_Direct_Tax(Indice_Households)= -d.Other_Direct_Tax;
-d.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-d.Other_Direct_Tax(Indice_Government) = -d.Other_Direct_Tax(Indice_Households);
-d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
-
+	
+d.Income_Tax(Indice_Households)= - d.Income_Tax;
+d.Income_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+d.Income_Tax(Indice_Government) = -sum(d.Income_Tax(Indice_Households));
+d.Income_Tax= matrix(d.Income_Tax,1,-1);
+			
 d.Corporate_Tax(Indice_Corporations) = -d.Corporate_Tax;
 d.Corporate_Tax(1,[Indice_Households,Indice_RestOfWorld]) = 0;
 d.Corporate_Tax(1,Indice_Government) = -d.Corporate_Tax(Indice_Corporations);
