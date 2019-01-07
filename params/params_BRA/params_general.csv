@@ -1,30 +1,25 @@
-// name;value;lowerBound;UpperBound;explanation;name in model description;;
-//;;;;;;;
-// MODEL PARAMETERS;;;;;;;
-//;;;;;;;
-// Carbon tax;;;;;;;
-Carbon_Tax_rate;0;0;1;;;;
-delta_LS_H;0;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;;;
-delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;;;
-//;;;;;;;
-//Labor market parameters;;;;;;;
-NetWage_variation;1;0;5;;;;
-sigma_omegaU;-0.3;;;-0.1;;;
-Coef_real_wage;1;0;1;1;;;
-u_param;0.08;0;1;0.06;0.07;;
-//;;;;;;;
-//Capital;;;;;;;
-delta_interest_rate;1;0;1;;;;
-//;;;;;;;
-//Other params;;;;;;;
-Mu;0.01;-1;1;;;;
-Mu_b;0.01;-1;1;;;;
-time_period;10;0;100;;;;
-Government_closure;1;0;1;;;;
-//Investments;;;;;;;
-TD_invest;0.4916;;;0.4916;0,287234043;0,468235294;0,412587413
-//Scalar for power sector;;;;PDE-2026;PDE-2024;WEO-2013;PNE-2030
-CAPEX_2005;93157.5694785714;;;;;;
-ktoe_To_GWh;11.63;;;;;;
-kto_To_PJ;0.0418680000;;;;;;
-IPC2015;1.77208595;;;;;;
+// name;value;lowerBound;UpperBound;explanation;name in model description
+//;;;;;
+// MODEL PARAMETERS;;;;;
+//;;;;;
+// Carbon tax;;;;;
+Carbon_Tax_rate;0;0;1;;
+delta_LS_H;0;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;
+delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;
+//;;;;;
+//Labor market parameters;;;;;
+NetWage_variation;1;0;5;;
+sigma_omegaU;-0.3;;;-0.1;
+Coef_real_wage;0;0;1;1;
+u_param;0.08;0;1;0.06;0.07
+//;;;;;
+//Capital;;;;;
+delta_interest_rate;1;0;1;;
+//;;;;;
+//Other params;;;;;
+Mu;0;0;1;labour productivity growth rate;
+time_since_BY;5;0;100;has to be equal to time_period in a Static mode;
+time_since_ini;5;0;100;has to be equal to time_step in a Static mode;
+Government_closure;1;0;1;;
+delta_TranspMargins_rate;1;0;1;;
+delta_TradeMargins_rate;1;0;1;;
