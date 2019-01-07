@@ -1,7 +1,7 @@
-Socio demograhic variables 2015;value;units
-Population;204450.649;hundred of people
-Retired;0;hundred of people
-Unemployed;8685;hundred of people
-Labour_force;100683;hundred of people
-Consumption_Units;0;0
-Nb_Households;58241.093;Thousands of households
+Socio demograhic variables 2015;value;units;;
+Population;204880;thousand of people;;
+Retired;23275.486;thousand of people;;
+Unemployed;10100;thousand of people;;
+Labour_force;104167;thousand of people;;
+Consumption_Units;124851.765;0;;
+Nb_Households;68177;Thousands of households;;
