@@ -43,7 +43,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_Imaclim_VarResolBis(2:$,2:3));
+VarDimMat_resol = eval(Index_Imaclim_VarResolBR(2:$,2:3));
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -67,17 +67,17 @@ end
 // Endogenous variable (set of variables for the system below - fsolve)
 /////////////////////////////////////////////////////////////////////////
 // list
-[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResolBis, "Var");
+[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResolBR, "Var");
 // Initial values for variables
 Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
-X_Deriv_Var_init = variables2X (Index_Imaclim_VarResolBis, listDeriv_Var, Deriv_variables);
-bounds = createBounds( Index_Imaclim_VarResolBis , listDeriv_Var );
+X_Deriv_Var_init = variables2X (Index_Imaclim_VarResolBR, listDeriv_Var, Deriv_variables);
+bounds = createBounds( Index_Imaclim_VarResolBR , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 // list // SOLVE Endogenous variable (set of variables for independant fsolve)
-listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResolBis, "Var_interm");
+listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResolBR, "Var_interm");
 Deriv_Var_interm     = Variables2struct(listDeriv_Var_interm);
 [Table_Deriv_Var_interm] = struct2Variables(Deriv_Var_interm,"Deriv_Var_interm");
 execstr(Table_Deriv_Var_interm);
@@ -95,7 +95,7 @@ end
 // Dimension (nb_NonFinalEnergy , nb_HH)
 NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerSect, :))./( (ini.Consumption_budget - sum( ini.pC(Indice_EnerSect,:) .* ini.C(Indice_EnerSect,:),"r" ) ).*.ones(nb_NonEnerSect,1) ) ;
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_resol_interm(Deriv_variables)
 	// Ajout d'une variable pour forçage
 	pM = pM_price_Const_2();
     M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
@@ -109,7 +109,8 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
 	// 	Specific to any projection in relation to BY
 	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
-	Other_Direct_Tax = Other_Direct_Tax_Const_2( CPI, Other_Direct_Tax_param);
+	// Other_Direct_Tax - Not in Brasil
+	// Other_Direct_Tax = Other_Direct_Tax_Const_2( CPI, Other_Direct_Tax_param);
 endfunction
 
 	// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
@@ -125,19 +126,19 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	
     // Calcul des variables qui ne sont pas des variables d'états
 	/// Trois fois plus long avec appel de la fonction 
-	[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+	[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_resol_interm(Deriv_variables)
 	 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
-   	 
-    // Création du vecteur colonne Constraints
-    [Constraints_Deriv] = [
-  
-     H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax)
+	H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax)
 	
     //equation identique déboublée pour Gov et Corp 2
     OtherSoc_Transf_Const_1(Gov_social_transfers, Gov_SocioBenef, Population)
     OtherSoc_Transf_Const_1(Corp_social_transfers, Corp_SocioBenef, Population)
+	
+	// équations sorties des variables intermédiaires
+    OthDirTax_rate_Const_2(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
+    OthDirTax_rate_Const_2(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
 	
 	H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
     Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
@@ -156,9 +157,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // RoW_investment_Const_1(GFCF_byAgent) // Equation supprimee, pas d'investissement direct etranger
     
 	H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
+	
+	//01/2019: marche pas
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
+	//01/2019: marche pas
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
-    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
+	//01/2019: marche pas
+    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers) 
 	
     H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
     Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
@@ -166,7 +171,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 	
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
-    //Glt:  _const4 revoir
+    // 01/2019: marche pas // Glt:  _const4 revoir 
 	H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
 	
   
@@ -193,6 +198,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
 	
 	// Brasil: specific tax on sales
+	//01/2019: marche bof
 	Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I)
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
@@ -207,12 +213,12 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	
 	//LUMP SUM
 	//ClimCompensat_Const_2(ClimPolicyCompens) // to HH : Const_1 for NO Transfert Const_2 for Transfert
-	S_ClimCompensat_Const_1(ClimPolCompensbySect, Carbon_Tax_IC, Carbon_Tax_C) //to Sect : Const_1 for NO Transfert Const_2 for Transfert
+	S_ClimCompensat_Const_1(ClimPolCompensbySect) //to Sect : Const_1 for NO Transfert Const_2 for Transfert
 	// Recycling options // RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
 	RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) 
+	
+	//01/2019: marche pas - pas le bon nombre de sect!
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
-	// 	Specific to the homothetic projection: 
-    // S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP)
 	
 	//  G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures //// G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP
     G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
@@ -228,11 +234,15 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
 	// Glt: d'ou vient le delta_TranspMargins_rate
+	//01/2019: marche pas - pas le bon nombre de sect!
 	Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate)
     Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
+	
+	//01/2019: marche pas - pas le bon nombre de sect!
     Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
 	// glt : revoir comment est ecrit le I sur SpeMarg_Const_2
+	//01/2019: marche pas
     SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 	
 	// Glt; à revoir pour PMR
@@ -246,7 +256,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Employment_Const_1(Labour, lambda, Y)
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 	 // Antoine : Market closure à retirer pour forcer le commerce   
-    MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
+    // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
   
 	// Mean_wage_Const_1 for wage curve on nominal wage //  Mean_wage_Const_2 for wage curve on real wage //  Wage_Const_1 for wage curve nominal wages by sectors
     // Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
@@ -254,6 +264,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// Antoine : wage curve en dynamique sans les références (5)
 	//Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage)
 	// Glt: revoir la library, car elle integre les ref....
+	
+	//01/2019: marche pas
 	Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
     // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
     Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
@@ -264,7 +276,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	
 	// Brasil; specific  formulation to take into account both taxes types 
 	// Il pourrait exister une formalation généraliser....
+	//01/2019: marche pas
     Labour_Cost_Const_1(pL, w, Labour_Tax_rate)
+	//01/2019: marche pas
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
 
     // Antoine : delta_interest_rate défini par rapport à BY pour des questions d'harmonisation avec CPI et NetWage_variation
@@ -276,9 +290,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Labour_income_Const_1(Labour_income, Labour, w) 
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
+	
+	//01/2019: marche bof
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
-    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
-    ];
+    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)];
     //7076:7087
     if ~isreal(Constraints_Deriv)
         warning("~isreal(Constraints_Deriv)");
@@ -299,9 +314,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	
 
 endfunction
-pause
+
 //////////////////////////////////////////////////////////////////////////
-//	Number of Index and Indice from Index_Imaclim_VarResolBis used by f_resolution
+//	Number of Index and Indice from Index_Imaclim_VarResolBR used by f_resolution
 /////////////////////////////////////////////////////////////////////////
 
 nVarDeriv = size(listDeriv_Var);
@@ -309,7 +324,7 @@ RowNumCsVDerivVarList = list();
 structNumDerivVar = zeros(nVarDeriv,1);
 EltStructDerivVar = getfield(1 , Deriv_variablesStart);
 for ind = 1:nVarDeriv
-    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResolBis==listDeriv_Var(ind)) ;
+    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResolBR==listDeriv_Var(ind)) ;
     structNumDerivVar(ind) = find(EltStructDerivVar == listDeriv_Var(ind));
 end
 
@@ -319,7 +334,7 @@ Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDe
 [maxos,lieu]=max(abs(Constraints_Init));
 SizeCst = size(Constraints_Init);
 [contrainte_tri , coord] =gsort(Constraints_Init);
-
+pause
 if %f
     exec(CODE+"testingSystem.sce");
     return
@@ -327,14 +342,14 @@ end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
     disp("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
-    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResolBis.csv")
+    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResolBR.csv")
 end
 
 /////////////////////////////////////////////////
 //////SOLVEUR
 /////////////////////////////////////////////////
 count        = 0;
-countMax     = 30;
+countMax     = 1;
 vMax         = 10000000;
 vBest        = 10000000;
 sensib       = 1e-5;
@@ -392,7 +407,7 @@ exec(CODE+"terminateResolution.sce");
 // Reafectation des valeurs aux variables et à la structure après résolution
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-Deriv_variables = X2variables (Index_Imaclim_VarResolBis, listDeriv_Var, Xbest);
+Deriv_variables = X2variables (Index_Imaclim_VarResolBR, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
@@ -401,7 +416,7 @@ execstr(Table_Deriv_Exogenous)
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax ]= f_resol_interm(Deriv_variables);
+[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus ]= f_resol_interm(Deriv_variables);
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 /////////////////////////////////////////////////////////////////
