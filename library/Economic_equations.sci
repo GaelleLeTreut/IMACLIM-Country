@@ -1935,7 +1935,7 @@ function [y] = MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter) ;
     //  y(i) = ( Y(i) - Y_ref(i) ) ;
     // end
 
-    ybis = (delta_M_parameter - delta_M_parameter_ref)';
+    ybis = (delta_M_parameter - ini.delta_M_parameter)';
     // ybis(Indice_NonSupplierSect) = Y(Indice_NonSupplierSect) - Y_ref(Indice_NonSupplierSect);
 
 
@@ -1954,7 +1954,7 @@ function [y] = MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter) ;
     // y(nb_Sectors + 1 : 2*nb_Sectors) =  delta_X_parameter' - delta_X_parameter_ref' ;
     // yter = [ ybis ; (delta_X_parameter - delta_X_parameter_ref)' ];
 
-    y = [ ybis ; (delta_X_parameter - delta_X_parameter_ref)' ];
+    y = [ ybis ; (delta_X_parameter - ini.delta_X_parameter)' ];
 
     // if or(yter~=y)
     //     pause
