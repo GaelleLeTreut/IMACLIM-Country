@@ -101,10 +101,10 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
     M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
 	p = Mean_price_Const_1(pY, pM, Y, M );
     X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
-	pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
-	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
-	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
+	pIC = pIC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
+	pC = pC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate);
+	pG = pG_price_Const_3(Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, Cons_Tax_rate) ;
+	pI = pI_price_Const_3( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, Cons_Tax_rate) ;
 	CPI = CPI_Const_2( pC, C);
 	// 	Specific to any projection in relation to BY
 	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
@@ -158,11 +158,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     
 	H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
 	
-	//01/2019: marche pas
+	//01/2019: marche pas bien
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
-	//01/2019: marche pas
+	//01/2019: marche pas bien 
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
-	//01/2019: marche pas
+	//01/2019: marche pas bien
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers) 
 	
     H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
@@ -171,7 +171,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 	
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
-    // 01/2019: marche pas // Glt:  _const4 revoir 
+    // Glt:  _const4 revoir 
 	H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
 	
   
@@ -217,7 +217,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// Recycling options // RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
 	RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) 
 	
-	//01/2019: marche pas - pas le bon nombre de sect!
+	//01/2019: marche pas bien
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 	
 	//  G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures //// G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP
@@ -234,11 +234,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
 	// Glt: d'ou vient le delta_TranspMargins_rate
-	//01/2019: marche pas - pas le bon nombre de sect!
+	
 	Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate)
     Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
-	
-	//01/2019: marche pas - pas le bon nombre de sect!
+
     Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
 	// glt : revoir comment est ecrit le I sur SpeMarg_Const_2
@@ -277,7 +276,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// Brasil; specific  formulation to take into account both taxes types 
 	// Il pourrait exister une formalation généraliser....
 	//01/2019: marche pas
-    Labour_Cost_Const_1(pL, w, Labour_Tax_rate)
+    Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
 	//01/2019: marche pas
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
 

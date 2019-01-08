@@ -7,3 +7,6 @@ Carbon_Tax_rate3 = 5e5;
 
 // parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 
+
+// u_param a clarifier
+parameters.u_param = BY.u_tot;
