@@ -2117,7 +2117,7 @@ function pC = pC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMa
 
     // Indirect tax
     // Indirect_tax_rates = repmat (Energy_Tax_rate_FC' + OtherIndirTax_rate', 1, nb_Households) + Carbon_Tax_rate_C .* Emission_Coef_C ;
-    Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* (Emission_Coef_C*ones(1,nb_Households))  ;
+    Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* Emission_Coef_C  ;
 
 
     // Household consumption price: pC (nb_Commodities, nb_Households)
