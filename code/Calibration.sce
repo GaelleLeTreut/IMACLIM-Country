@@ -594,42 +594,51 @@ else
 end
 
 
-x_SpeMarg_rate = [x_SpeMarg_rates_IC;x_SpeMarg_rates_C;x_SpeMarg_rates_X;x_SpeMarg_rates_I];
-function [const_SpeMarg_rate] =fcalib_SpeMarg_Const_1(x_SpeMarg_rate, SpeMarg_IC, SpeMarg_C, SpeMarg_X, SpeMarg_I, p, alpha, Y, C, X, Imaclim_VarCalib)
+// x_SpeMarg_rate = [x_SpeMarg_rates_IC;x_SpeMarg_rates_C;x_SpeMarg_rates_X;x_SpeMarg_rates_I];
+ x_SpeMarg_rate = [x_SpeMarg_rates_IC;x_SpeMarg_rates_C;x_SpeMarg_rates_G; x_SpeMarg_rates_X;x_SpeMarg_rates_I];
+function [const_SpeMarg_rate] =fcalib_SpeMarg_Const_1(x_SpeMarg_rate, SpeMarg_IC, SpeMarg_C, SpeMarg_G, SpeMarg_I, SpeMarg_X, p, alpha, Y, C, G, I, X, Imaclim_VarCalib)
 
     x_SpeMarg_rates_IC = x_SpeMarg_rate (1: nb_Sectors*nb_Commodities);
     x_SpeMarg_rates_C = x_SpeMarg_rate (nb_Sectors*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities);
-    x_SpeMarg_rates_X = x_SpeMarg_rate (nb_Sectors*nb_Commodities + nb_Households*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities + nb_Commodities);
-    x_SpeMarg_rates_I = x_SpeMarg_rate(nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities + nb_Commodities+1 : nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities);
+	x_SpeMarg_rates_G = x_SpeMarg_rate (nb_Sectors*nb_Commodities + nb_Households*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities + nb_Commodities);
+    x_SpeMarg_rates_I = x_SpeMarg_rate (nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities + nb_Commodities+1 : nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities);
+    x_SpeMarg_rates_X = x_SpeMarg_rate (nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities+1:nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities+nb_Commodities);
 
     SpeMarg_rates_IC= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_IC");
     SpeMarg_rates_C= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_C");
-    SpeMarg_rates_X= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_X");
+    SpeMarg_rates_G= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_G");
     SpeMarg_rates_I= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_I");
+    SpeMarg_rates_X= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_X");
 
 
-    const_SpeMarg_rate=SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X);
+    // const_SpeMarg_rate=SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X);
+	
+	const_SpeMarg_rate= SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I,SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X);
+	
 endfunction
 
-[x_SpeMarg_rate, const_SpeMarg_rate, info_calib_SpeMarg_rate] = fsolve(x_SpeMarg_rate, list(fcalib_SpeMarg_Const_1,initial_value.SpeMarg_IC, initial_value.SpeMarg_C, initial_value.SpeMarg_X, initial_value.SpeMarg_I, p, alpha, Y, C, X, Index_Imaclim_VarCalib));
+[x_SpeMarg_rate, const_SpeMarg_rate, info_calib_SpeMarg_rate] = fsolve(x_SpeMarg_rate, list(fcalib_SpeMarg_Const_1,initial_value.SpeMarg_IC, initial_value.SpeMarg_C, initial_value.SpeMarg_G, initial_value.SpeMarg_I, initial_value.SpeMarg_X, p, alpha, Y, C, G, I, X, Index_Imaclim_VarCalib));
 
 if norm(const_SpeMarg_rate) > sensib
     error( "review calib_SpeMarg_rate")
 else
     x_SpeMarg_rates_IC = x_SpeMarg_rate (1: nb_Sectors*nb_Commodities);
     x_SpeMarg_rates_C = x_SpeMarg_rate (nb_Sectors*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities);
-    x_SpeMarg_rates_X = x_SpeMarg_rate (nb_Sectors*nb_Commodities + nb_Households*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities + nb_Commodities);
-    x_SpeMarg_rates_I = x_SpeMarg_rate(nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities + nb_Commodities+1 : nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities);
+    x_SpeMarg_rates_G = x_SpeMarg_rate (nb_Sectors*nb_Commodities + nb_Households*nb_Commodities+1 : nb_Sectors*nb_Commodities + nb_Households*nb_Commodities + nb_Commodities);
+    x_SpeMarg_rates_I = x_SpeMarg_rate (nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities + nb_Commodities+1 : nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities);
+    x_SpeMarg_rates_X = x_SpeMarg_rate (nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities+1:nb_Sectors*nb_Commodities+ nb_Households*nb_Commodities+ nb_Commodities+nb_Commodities+nb_Commodities);
 
     SpeMarg_rates_IC= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_IC");
     SpeMarg_rates_C= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_C");
-    SpeMarg_rates_X= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_X");
+    SpeMarg_rates_G= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_G");
     SpeMarg_rates_I= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_I");
+    SpeMarg_rates_X= indiv_x2variable(Index_Imaclim_VarCalib, "x_SpeMarg_rates_X");
 
     SpeMarg_rates_IC = (abs(SpeMarg_rates_IC) > %eps).*SpeMarg_rates_IC;
     SpeMarg_rates_C = (abs(SpeMarg_rates_C) > %eps).*SpeMarg_rates_C;
-    SpeMarg_rates_X = (abs(SpeMarg_rates_X) > %eps).*SpeMarg_rates_X;
+    SpeMarg_rates_G = (abs(SpeMarg_rates_G) > %eps).*SpeMarg_rates_G;
     SpeMarg_rates_I = (abs(SpeMarg_rates_I) > %eps).*SpeMarg_rates_I;
+    SpeMarg_rates_X = (abs(SpeMarg_rates_X) > %eps).*SpeMarg_rates_X;
 
 
 end
@@ -1519,7 +1528,7 @@ end
 ///////////////////////////
 // Start - Not Applied to Brasil
 ///////////////////////////
-if Country<>"Brasil" then
+// if Country<>"Brasil" then
 function [const_Labour_Tax_Cut] =fcalRevRecycling_Const_1(x_Labour_Tax_Cut, Labour_Tax, Labour_Tax_rate, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, Imaclim_VarCalib)
     Labour_Tax_Cut= indiv_x2variable(Imaclim_VarCalib, "x_Labour_Tax_Cut");
     const_Labour_Tax_Cut = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
@@ -1552,7 +1561,7 @@ while norm(const_LabTaxRate_BefCut) > sensib
 end
 count=0;
 
-end
+// end
 ///////////////////////////
 // End - Not Applied to Brasil
 ///////////////////////////
