@@ -6,8 +6,8 @@ System_Resol;Systeme_ProjHomot_BRA
 // System_Resol;Systeme_Static_BRA
 // System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
-// study;Projection_evolution
+// study;Static_RunChoices
+study;Projection_evolution
 // study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;

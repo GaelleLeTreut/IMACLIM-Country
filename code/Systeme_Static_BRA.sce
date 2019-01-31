@@ -109,8 +109,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
 	// 	Specific to any projection in relation to BY
 	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
-	// Other_Direct_Tax - Not in Brasil
-	// Other_Direct_Tax = Other_Direct_Tax_Const_2( CPI, Other_Direct_Tax_param);
+
 endfunction
 
 	// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
@@ -137,8 +136,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     OtherSoc_Transf_Const_1(Corp_social_transfers, Corp_SocioBenef, Population)
 	
 	// équations sorties des variables intermédiaires
-    OthDirTax_rate_Const_2(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
-    OthDirTax_rate_Const_2(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
+    OthDirTax_rate_Const_1(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
+    OthDirTax_rate_Const_1(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
 	
 	H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
     Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)

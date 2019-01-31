@@ -584,7 +584,7 @@ function Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Othe
 endfunction
 
 
-// for calib (Brazil)
+// Brazil
 function y = OthDirTax_rate_Const_1(Direct_Tax, Labour_income, Direct_Tax_rate) ;
     
     y1 = Direct_Tax - Direct_Tax_rate .* sum(Labour_income,"c");
@@ -593,21 +593,14 @@ function y = OthDirTax_rate_Const_1(Direct_Tax, Labour_income, Direct_Tax_rate) 
 	
 endfunction
 
-function y = OthDirTax_rate_Const_2(Direct_Tax, Labour_income, Direct_Tax_rate) ;
-    
-    y1 = Direct_Tax - Direct_Tax_rate .* sum(Labour_income,"c");
-    
-    y=y1';
-	
-endfunction
 
-function Direct_Tax = OthDirTax_rate_Const_3(Labour_income, Direct_Tax_rate) ;
+function Direct_Tax = OthDirTax_rate_Const_2(Labour_income, Direct_Tax_rate) ;
     
     Direct_Tax = Direct_Tax_rate .* sum(Labour_income,"c");
 	
 endfunction
 
-// for resol (Brazil)
+
 function Direct_Tax = OthDirTax_Const_1(Labour_income, Direct_Tax_rate) ;
     
     Direct_Tax = Direct_Tax_rate .* sum(Labour_income,"c");
