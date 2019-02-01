@@ -9,7 +9,7 @@ sigma_Phi;1;1;
 sigma_Theta;1;1; 
 phi_L;0;0;
 phi_K;0;0;
-ConstrainedShare_Labour;1;0.8;
+ConstrainedShare_Labour;0.8;0.8;
 ConstrainedShare_Capital;0.8;0.8;
 // Consumption;;;
 delta_C_parameter;0;0;

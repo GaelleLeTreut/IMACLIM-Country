@@ -11,15 +11,15 @@ delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;
 NetWage_variation;1;0;5;;
 sigma_omegaU;-0.3;;;-0.1;
 Coef_real_wage;0;0;1;1;
-u_param;0.08;0;1;0.06;0.07
+u_param;0.0969597;0;1;value ofBY;
 //;;;;;
 //Capital;;;;;
 delta_interest_rate;1;0;1;;
 //;;;;;
 //Other params;;;;;
 Mu;0;0;1;labour productivity growth rate;
-time_since_BY;5;0;100;has to be equal to time_period in a Static mode;
-time_since_ini;5;0;100;has to be equal to time_step in a Static mode;
+time_since_BY;15;0;100;has to be equal to time_period in a Static mode;
+time_since_ini;15;0;100;has to be equal to time_step in a Static mode;
 Government_closure;1;0;1;;
 delta_TranspMargins_rate;1;0;1;;
 delta_TradeMargins_rate;1;0;1;;
