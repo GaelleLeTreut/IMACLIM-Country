@@ -98,6 +98,7 @@ end
 disp("STEP 1: DATA...");
 exec("Loading_data.sce");
 
+
 exec("IOT_DecompImpDom.sce");
  
 //Execute Households_Disagg.sce file if Index_HouseholdsDISAGG is defined
@@ -128,6 +129,8 @@ exec("Checks_loads.sce");
 disp("STEP 3: CODE CALIBRATION...");
 exec("Check_CalibSyst.sce");
 exec("Calibration.sce");
+
+pause
 
 ////////////////////////////////////////////////////////////
 // 	STEP 4: INPUT OUTPUT ANALYSIS BY
