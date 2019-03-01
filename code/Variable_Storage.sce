@@ -4,21 +4,42 @@
 
 // Put back some variables to "equation" from EcoT formats due to "outputs.sce"
 if Output_files=="True"
-	d.Pensions=Pensions(Indice_Households);
-	d.Unemployment_transfers=Unemployment_transfers(Indice_Households);
+
 	d.GFCF_byAgent(Indice_RestOfWorld)=[];
 	d.Income_Tax = -Income_Tax(Indice_Households);
+	d.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+		
+	GFCF_byAgent(Indice_RestOfWorld)=[];
+	Income_Tax = -Income_Tax(Indice_Households);	
+	Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+		
+ if  Country<>"Brasil" then 
+	d.Pensions=Pensions(Indice_Households);
+	d.Unemployment_transfers=Unemployment_transfers(Indice_Households);
 	d.Other_Direct_Tax = -Other_Direct_Tax(Indice_Households);
 	d.Other_social_transfers = Other_social_transfers(Indice_Households);
-	d.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+
 
 	Pensions=Pensions(Indice_Households);
 	Unemployment_transfers=Unemployment_transfers(Indice_Households);
-	GFCF_byAgent(Indice_RestOfWorld)=[];
-	Income_Tax = -Income_Tax(Indice_Households);
 	Other_Direct_Tax = -Other_Direct_Tax(Indice_Households);
 	Other_social_transfers = Other_social_transfers(Indice_Households);
-	Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+
+
+	else
+	
+	d.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
+	d.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);
+	d.Gov_Direct_Tax= -d.Gov_Direct_Tax(Indice_Households);
+	d.Corp_Direct_Tax= -d.Corp_Direct_Tax(Indice_Households);
+	
+	Gov_social_transfers = Gov_social_transfers(Indice_Households);
+	Corp_social_transfers = Corp_social_transfers(Indice_Households);
+	Gov_Direct_Tax= - Gov_Direct_Tax(Indice_Households);
+	Corp_Direct_Tax= - Corp_Direct_Tax(Indice_Households);
+	
+	end
+	
 end
 
 // stockage des outputs dans data_"time_step"

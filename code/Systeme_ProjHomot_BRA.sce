@@ -191,8 +191,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I)
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
-    // 	Specific to the homothetic projection: 
-	// GLT adapter celle du dessous pour proj homothetic  
+    
+	// 	Specific to the homothetic projection: 
 	Other_SocioBenef_Const_2(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population )
 	Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population )
 	
@@ -224,7 +224,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     // SpeMarg_rates_Const_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I)
-    // //	GLT : -1 ou 2 ?? 
+   
 	SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 	
     Invest_demand_Const_1(Betta, I, kappa, Y) 
@@ -252,7 +252,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	// If sectorial wage curve... To adapt
 	Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
 	// mean wage curve
-
 
     // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
     Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve

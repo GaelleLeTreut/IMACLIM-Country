@@ -36,7 +36,7 @@ end
 if Demographic_shift == "True"
 	Deriv_Exogenous.Labour_force =  ((1+Projection.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
 	Deriv_Exogenous.Population =  ((1+Projection.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
-	if [System_Resol<>"Systeme_ProjHomothetic"] then
+	if [System_Resol<>"Systeme_ProjHomothetic"]&[System_Resol<>"Systeme_ProjHomot_BRA"] then
 		Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
 	end
 end
@@ -44,6 +44,7 @@ end
 // Set up macroeconomic context
 if Labour_product == "True"
 	GDP_index(time_step) = prod((1 + Projection.GDP(1:time_step)).^(Projection.current_year(1:time_step) - Projection.reference_year(1:time_step)));
+	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end

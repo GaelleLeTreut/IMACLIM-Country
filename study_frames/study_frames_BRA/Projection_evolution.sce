@@ -22,11 +22,14 @@ parameters.sigma_ConsoBudget = 1 ;
 // - mettre les ConstrainedShare_C = 0
 parameters.ConstrainedShare_C(Indice_EnerSect, :) = 0;
 
+parameters.sigma_M = ones(parameters.sigma_M);
+parameters.sigma_X = ones(parameters.sigma_X);
+parameters.sigma_pC = ones(parameters.sigma_pC);
 
 //////////////////////////////////////// SETTING FOR PROJECTION////////////////////////////////////////////////////////////////
 
 // - calculer la Labour_Product (productivité du travail)
-parameters.time_period = 20 ;
+parameters.time_period = 15 ;
 // parameters.Mu = 1;
 // Labour_Product = (1 + parameters.Mu)^time_period ; 
 
@@ -40,7 +43,7 @@ GDP_2030 = GDP_2015*(  GDP_rate1/100 + 1)^(2030-2015) ;
 
 
 // Labour force  2030 -  units : thousand of people - Source : random value for tests
-Labour_force_2030  = 30143;
+Labour_force_2030  = 108954.24 ;
 
 Labour_force_proj =  Labour_force_2030 ;
 GDP_proj = GDP_2030 ; 
@@ -54,14 +57,15 @@ Labour_Product = ( GDP_proj / BY.GDP )  / ( ( Labour_force_proj * ( 1 - BY.u_tot
 Deriv_Exogenous.Labour_force =  (Labour_force_proj / sum(BY.Labour_force)) * BY.Labour_force ;
 
 parameters.Mu =  Labour_Product^(1/parameters.time_period) - 1 ;
-
+parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+parameters.u_param = BY.u_tot;
 
 ///////////////////////////////////////////////
 //// Demography 
 ///////////////////////////////////////////////
 // Deriv_calib.Population_ref = Population;
 /// Population 2030 - in thousand of people - Source: random value for tests
-Population_2030 = 228663; 
+Population_2030 = 217523.04; 
 
 
 Population_proj = Population_2030;
