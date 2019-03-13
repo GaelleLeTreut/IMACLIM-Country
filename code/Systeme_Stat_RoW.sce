@@ -94,24 +94,21 @@ end
 NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerSect, :))./( (ini.Consumption_budget - sum( ini.pC(Indice_EnerSect,:) .* ini.C(Indice_EnerSect,:),"r" ) ).*.ones(nb_NonEnerSect,1) ) ;
 
 function [M,p,X,pIC,pC,pG,pI,pM,CPI,GDP_pFish, alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax, delta_LS_S, delta_LS_H]= f_resol_interm(Deriv_variables)
-
-	pM = pM_price_Const_2();	
-	M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
+	
+	pM = pM_price_Const_2();
+    M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
 	p = Mean_price_Const_1(pY, pM, Y, M );
-	X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
-
+    X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
 	pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
 	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
 	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
 	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
-
 	CPI = CPI_Const_2( pC, C);
-	GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
-
-	[alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+//	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 	GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 	Other_Direct_Tax = Other_Direct_Tax_Const_2( CPI, Other_Direct_Tax_param);
 
+	GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
 	[delta_LS_S, delta_LS_H] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C, Energy_Tax_rate_sup_IC, Energy_Tax_rate_sup_FC, IC, C);
 
 endfunction
@@ -246,8 +243,6 @@ H_Investment_Const_2(GFCF_byAgent,pC,C)
     // Wage_Variation_Const_1 // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
 //	MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
-
-	
 	Mean_wage_Const_6(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
 	Wage_Variation_Const_1(w, NetWage_variation)
 

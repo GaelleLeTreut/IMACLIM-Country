@@ -153,16 +153,16 @@ endfunction
 function y = H_PropTranf_Const_2(Property_income, GDP) ;
 
     // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
-    y = (Property_income(Indice_Households) - (GDP/ini.GDP) * ini.Property_income(Indice_Households))';
+    y = (Property_income(Indice_Households) - (GDP/BY.GDP) * BY.Property_income(Indice_Households))';
 
 endfunction
 
-function Property_income = PropTranf_Const_2(GDP, GDP_ref, Property_income_ref) ;
+function Property_income = PropTranf_Const_2(GDP) ;
 
     // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
-    Property_income(Indice_Households) = (GDP/GDP_ref) * Property_income_ref(Indice_Households);
-    Property_income(Indice_Corporations) = (GDP/GDP_ref) * Property_income_ref(Indice_Corporations);
-    Property_income(Indice_Government) = (GDP/GDP_ref) * Property_income_ref(Indice_Government);
+    Property_income(Indice_Households) = (GDP/BY.GDP) * BY.Property_income(Indice_Households);
+    Property_income(Indice_Corporations) = (GDP/BY.GDP) * BY.Property_income(Indice_Corporations);
+    Property_income(Indice_Government) = (GDP/BY.GDP) * BY.Property_income(Indice_Government);
     Property_income(Indice_RestOfWorld) = - ( Property_income(Indice_Corporations) + sum(Property_income(Indice_Households)) + Property_income(Indice_Government) ) ;
 
 endfunction
@@ -235,6 +235,14 @@ function y = H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
 
     /// Household net Debt constraint (NetFinancialDebt)
     y1 = NetFinancialDebt(Indice_Households) - ( ini.NetFinancialDebt(Indice_Households) + (time_since_ini / 2) * (ini.NetLending(Indice_Households) - NetLending(Indice_Households) ) ) ;
+
+	y=y1';		
+endfunction
+
+function y = H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+
+    /// Household net Debt constraint (NetFinancialDebt)
+    y1 = NetFinancialDebt(Indice_Households) - BY.NetFinancialDebt(Indice_Households);
 
 	y=y1';		
 endfunction
@@ -400,7 +408,7 @@ endfunction
 ///	proj: il faut que ça varie comme le PIB pour homothétie
 function y = Corp_PropTranf_Const_2(Property_income, GDP) ;
 
-    y = Property_income(Indice_Corporations) - (GDP/ini.GDP) * ini.Property_income(Indice_Corporations)';
+    y = Property_income(Indice_Corporations) - (GDP/BY.GDP) * BY.Property_income(Indice_Corporations)';
 
 endfunction
 
@@ -467,6 +475,14 @@ function y = Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) 
 	y=y1';		
 endfunction
 
+function y = Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+
+    /// Household net lending constraint (NetLending(Indice_Households))
+    y1 = NetFinancialDebt(Indice_Corporations) - BY.NetFinancialDebt(Indice_Corporations) ; 
+
+	y=y1';		
+endfunction
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////    B.3 Public administrations
@@ -528,7 +544,7 @@ endfunction
 function y = G_PropTranf_Const_2(Property_income, GDP) ;
 
     // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
-    y = (Property_income(Indice_Government) - (GDP/ini.GDP) * ini.Property_income(Indice_Government))';
+    y = (Property_income(Indice_Government) - (GDP/BY.GDP) * BY.Property_income(Indice_Government))';
 
 endfunction
 
@@ -846,20 +862,21 @@ endfunction
 function [y] = ClimCompensat_Const_1(ClimPolicyCompens) ;
     // /// No new direct compensations to households
    y1 = zeros(1,nb_InstitAgents)  
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - ClimPolicyCompens_ref(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - ClimPolicyCompens_ref(Indice_Government)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - ClimPolicyCompens_ref(Indice_Corporations)
+   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
+   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
+   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
    
-   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - ClimPolicyCompens_ref(Indice_Households) ;
+   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - BY.ClimPolicyCompens(Indice_Households) ;
 
     y=y1';
 endfunction
 
-function [y] = ClimCompensat_Const_2(ClimPolicyCompens) ;
+function [y] = ClimCompensat_Const_2(ClimPolicyCompens, ClimPolCompensbySect) ;
     // /// No new direct compensations to households
    y1 = zeros(1,nb_InstitAgents)
    y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
+//   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
+   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) + ClimPolicyCompens(Indice_Households) + sum(ClimPolCompensbySect)
    y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
    
    y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - delta_LS_H .* ones(1, nb_Households).*((sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)) / nb_Households) ;
@@ -867,12 +884,11 @@ function [y] = ClimCompensat_Const_2(ClimPolicyCompens) ;
     y=y1';
 endfunction
 
-
 ///	proj: il faut que ça varie comme le PIB pour homothétie
 function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
-    y1 = ClimPolicyCompens - (GDP/GDP_ref) * ClimPolicyCompens_ref ;
+    y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
 
     y=y1';
 endfunction
@@ -881,7 +897,7 @@ endfunction
 
 function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect) ;
     /// No new direct compensations to sectors
-    y1 = ClimPolCompensbySect - ini.ClimPolCompensbySect ;
+    y1 = ClimPolCompensbySect - BY.ClimPolCompensbySect ;
 
     y=y1';
 endfunction
@@ -899,7 +915,7 @@ endfunction
 function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP) ;
 
     // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - (GDP/ini.GDP) * ini.ClimPolCompensbySect ;
+    y1 = ClimPolCompensbySect - (BY.GDP/BY.GDP) * BY.ClimPolCompensbySect ;
 
     y=y1';
 endfunction
@@ -931,7 +947,7 @@ endfunction
 function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) ;
 
 
-     y1 = NetLending(Indice_Government) - ini.NetLending(Indice_Government)*(GDP/ini.GDP) ;
+     y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
     
 	y  = y1' ;
 endfunction
@@ -978,7 +994,7 @@ endfunction
 function [y] = G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP ) ;
 
     /// Public consumption budget - Proportion of GDP
-    y1 = G_Consumption_budget - (GDP/ini.GDP) *  ini.G_Consumption_budget ;
+    y1 = G_Consumption_budget - (GDP/BY.GDP) *  BY.G_Consumption_budget ;
     y = y1' ;
 endfunction
 
@@ -996,7 +1012,7 @@ endfunction
 
 	// Constant real public consumption
 function [y] = G_demand_Const_1(G, pG, G_Consumption_budget, BudgetShare_GConsump) ;
-    y1 = G - G_ref ;	
+    y1 = G - BY.G ;	
     y = matrix(y1, -1 , 1) ;	
 endfunction
 
@@ -1070,6 +1086,13 @@ function y = G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending);
 	y  = y1' ;
 endfunction
 
+function y = G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending);
+
+    /// Government net lending constraint (NetLending(Indice_Government))
+    y1 = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government);
+	
+	y  = y1' ;
+endfunction
 
 // Public finance "closure"
 // Set of variables and exogenous constraints that balances the government account
@@ -1102,52 +1125,52 @@ function [y] = G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pensio
     //  Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC
     //  Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity
 
-    dimension = length(Income_Tax_rate)+length(Other_Direct_Tax_ref)+length(Pension_Benefits_ref)+length(UnemployBenefits_ref)+length(Other_SocioBenef_ref)+length(Production_Tax_rate)+length(Labour_Tax_rate)+length(Corporate_Tax_rate)+length(BudgetShare_GConsump)+length(Energy_Tax_rate_IC)+length(Energy_Tax_rate_FC)+length(Carbon_Tax_rate)+length(G_Consumption_budget)+length(G_invest_propensity) ;
+    dimension = length(Income_Tax_rate)+length(Other_Direct_Tax)+length(Pension_Benefits)+length(UnemployBenefits)+length(Other_SocioBenef)+length(Production_Tax)+length(Labour_Tax_rate)+length(Corporate_Tax_rate)+length(BudgetShare_GConsump)+length(Energy_Tax_rate_IC)+length(Energy_Tax_rate_FC)+length(Carbon_Tax_rate)+length(G_Consumption_budget)+length(G_invest_propensity) ;
 
     y = zeros(dimension , 1);
 
     // Parameters = values of fixed variables
     i = 0;
-    y(i + 1 : i + length(Income_Tax_rate) )  = matrix(Income_Tax_rate - Income_Tax_rate_ref, length(Income_Tax_rate), 1) ;
+    y(i + 1 : i + length(Income_Tax_rate) )  = matrix(Income_Tax_rate - BY.Income_Tax_rate, length(Income_Tax_rate), 1) ;
     i = i + length(Income_Tax_rate);
 
-    y(i + 1 : i + length(Other_Direct_Tax) ) = matrix(Other_Direct_Tax_param - Other_Direct_Tax_ref, length(Other_Direct_Tax), 1) ;
+    y(i + 1 : i + length(Other_Direct_Tax) ) = matrix(Other_Direct_Tax_param - BY.Other_Direct_Tax, length(Other_Direct_Tax), 1) ;
     i = i + length(Other_Direct_Tax);
 
-    y(i + 1 : i + length(Pension_Benefits) ) = matrix(Pension_Benefits_param - Pension_Benefits_ref, length(Pension_Benefits), 1) ;
+    y(i + 1 : i + length(Pension_Benefits) ) = matrix(Pension_Benefits_param - BY.Pension_Benefits, length(Pension_Benefits), 1) ;
     i = i + length(Pension_Benefits);
 
-    y(i + 1 : i + length(UnemployBenefits) ) = matrix(UnemployBenefits_param - UnemployBenefits_ref, length(UnemployBenefits), 1) ;
+    y(i + 1 : i + length(UnemployBenefits) ) = matrix(UnemployBenefits_param - BY.UnemployBenefits, length(UnemployBenefits), 1) ;
     i = i + length(UnemployBenefits);
 
-    y(i + 1 : i + length(Other_SocioBenef) ) = matrix(Other_SocioBenef_param - Other_SocioBenef_ref, length(Other_SocioBenef), 1) ;
+    y(i + 1 : i + length(Other_SocioBenef) ) = matrix(Other_SocioBenef_param - BY.Other_SocioBenef, length(Other_SocioBenef), 1) ;
     i = i + length(Other_SocioBenef);
 
-    y(i + 1 : i + length(Corporate_Tax_rate) ) = matrix(Corporate_Tax_rate - Corporate_Tax_rate_ref, length(Corporate_Tax_rate), 1) ;
+    y(i + 1 : i + length(Corporate_Tax_rate) ) = matrix(Corporate_Tax_rate - BY.Corporate_Tax_rate, length(Corporate_Tax_rate), 1) ;
     i = i + length(Corporate_Tax_rate);
 
-    y(i + 1 : i + length(Production_Tax_rate) ) = matrix(Production_Tax_rate - Production_Tax_rate_ref, length(Production_Tax_rate), 1) ;
+    y(i + 1 : i + length(Production_Tax_rate) ) = matrix(Production_Tax_rate - BY.Production_Tax_rate, length(Production_Tax_rate), 1) ;
     i = i + length(Production_Tax_rate);
 
-    y(i + 1 : i + length(LabTaxRate_BeforeCut) )= matrix(LabTaxRate_BeforeCut - LabTaxRate_BeforeCut_ref, length(LabTaxRate_BeforeCut), 1) ;
+    y(i + 1 : i + length(LabTaxRate_BeforeCut) )= matrix(LabTaxRate_BeforeCut - BY.LabTaxRate_BeforeCut, length(LabTaxRate_BeforeCut), 1) ;
     i = i + length(LabTaxRate_BeforeCut);
 
-    y(i + 1 : i + length(BudgetShare_GConsump) )= matrix(BudgetShare_GConsump - BudgetShare_GConsump_ref, length(BudgetShare_GConsump), 1) ;
+    y(i + 1 : i + length(BudgetShare_GConsump) )= matrix(BudgetShare_GConsump - BY.BudgetShare_GConsump, length(BudgetShare_GConsump), 1) ;
     i = i + length(BudgetShare_GConsump);
 
-    y(i + 1 : i + length(Energy_Tax_rate_IC) ) = matrix(Energy_Tax_rate_IC - Energy_Tax_rate_IC_ref, length(Energy_Tax_rate_IC), 1) ;
+    y(i + 1 : i + length(Energy_Tax_rate_IC) ) = matrix(Energy_Tax_rate_IC - BY.Energy_Tax_rate_IC, length(Energy_Tax_rate_IC), 1) ;
     i = i + length(Energy_Tax_rate_IC);
 
-    y(i + 1 : i + length(Energy_Tax_rate_FC) ) = matrix(Energy_Tax_rate_FC - Energy_Tax_rate_FC_ref, length(Energy_Tax_rate_FC), 1) ;
+    y(i + 1 : i + length(Energy_Tax_rate_FC) ) = matrix(Energy_Tax_rate_FC - BY.Energy_Tax_rate_FC, length(Energy_Tax_rate_FC), 1) ;
     i = i + length(Energy_Tax_rate_FC);
 
-    y(i + 1 : i + length(Carbon_Tax_rate) )  = matrix(Carbon_Tax_rate - Carbon_Tax_rate_ref, length(Carbon_Tax_rate), 1) ;
+    y(i + 1 : i + length(Carbon_Tax_rate) )  = matrix(Carbon_Tax_rate - BY.Carbon_Tax_rate, length(Carbon_Tax_rate), 1) ;
     i = i + length(Carbon_Tax_rate);
 
-    y(i + 1 : i + length(G_Consumption_budget) )= matrix(G_Consumption_budget - G_Consumption_budget_ref, length(G_Consumption_budget), 1) ;
+    y(i + 1 : i + length(G_Consumption_budget) )= matrix(G_Consumption_budget - BY.G_Consumption_budget, length(G_Consumption_budget), 1) ;
     i = i + length(G_Consumption_budget);
 
-    y(i + 1 : i + length(G_invest_propensity) ) = matrix(G_invest_propensity - G_invest_propensity_ref, length(G_invest_propensity), 1) ;
+    y(i + 1 : i + length(G_invest_propensity) ) = matrix(G_invest_propensity - BY.G_invest_propensity, length(G_invest_propensity), 1) ;
     i = i + length(G_invest_propensity);
 
 endfunction
@@ -1205,6 +1228,14 @@ function y = RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
 
     /// Government net lending constraint (NetLending(Indice_Government))
     y1 = NetFinancialDebt(Indice_RestOfWorld) - (ini.NetFinancialDebt(Indice_RestOfWorld) + (time_since_ini / 2) * (ini.NetLending(Indice_RestOfWorld) - NetLending(Indice_RestOfWorld)));
+
+	y=y1';
+endfunction
+
+function y = RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+
+    /// Government net lending constraint (NetLending(Indice_Government))
+    y1 = NetFinancialDebt(Indice_RestOfWorld) - BY.NetFinancialDebt(Indice_RestOfWorld);
 
 	y=y1';
 endfunction
@@ -1415,7 +1446,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma,
     
     //lambda(test_pL|test_FPI) = 0;
     
-    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+	kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
             ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
             (FPI .^(sigma./(1 - sigma)))) ;
 
@@ -1499,7 +1530,7 @@ endfunction
 function [y] =  Markup_Const_1(markup_rate) ;
 
     //  Fixed Markup ( markup_rate(nb_Sectors) )
-    y1 = markup_rate - markup_rate_ref ;
+    y1 = markup_rate - BY.markup_rate ;
 
     y=y1';
 endfunction
@@ -1572,10 +1603,10 @@ function [y] = SpeMarg_rates_Const_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_
 
     // Different rates, by products, for intermediate consumptions (nb_Commodities*nb_Sectors), household classes (nb_Commodities*nb_Households), and exports (nb_Commodities)
 
-    y1 = SpeMarg_rates_IC - SpeMarg_rates_IC_ref ;
-    y2 = SpeMarg_rates_C - SpeMarg_rates_C_ref ;
-    y3 = SpeMarg_rates_X - SpeMarg_rates_X_ref ;
-    y4 = SpeMarg_rates_I - SpeMarg_rates_I_ref ;
+    y1 = SpeMarg_rates_IC - BY.SpeMarg_rates_IC ;
+    y2 = SpeMarg_rates_C - BY.SpeMarg_rates_C ;
+    y3 = SpeMarg_rates_X - BY.SpeMarg_rates_X ;
+    y4 = SpeMarg_rates_I - BY.SpeMarg_rates_I ;
 
     y1 = matrix(y1, -1 , 1);
     y2 = matrix(y2, -1 , 1);
@@ -1859,16 +1890,6 @@ function X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
 
 endfunction
 
-function X = Exports_Const_4( pM, pX, sigma_X, delta_X_parameter);
-
-    delta_X_parameter = abs(delta_X_parameter);
-    pX = abs(pX);
-    pM = abs(pM);
-
-    X = ( (ones(nb_Sectors, 1) + delta_X_parameter') .* (pX_ref.*X_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )./pX
-
-endfunction
-
 //	proj: les exports croient comme la croissance naturelle dans le pays à termes de l'échanges inchangés 
 function X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
 
@@ -1877,6 +1898,16 @@ function X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
     pM = abs(pM);
 
     X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
+
+endfunction
+
+function X = Exports_Const_4( pM, pX, sigma_X, delta_X_parameter);
+
+    delta_X_parameter = abs(delta_X_parameter);
+    pX = abs(pX);
+    pM = abs(pM);
+
+    X = ( (ones(nb_Sectors, 1) + delta_X_parameter') .* (pX_ref.*X_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )./pX
 
 endfunction
 
@@ -1903,6 +1934,7 @@ function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
   y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
 // y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
+
 endfunction
 
 
@@ -1980,12 +2012,11 @@ endfunction
 
 // import price evolving at the same rate than domestic prices
 // a faire évoluer éventuellement en (1+delta_pM)^t
-function [pM] = pM_price_Const_1(pY, pY_ref, pM_ref);
+function [pM] = pM_price_Const_1(pY);
     
     Index_Services = size(pM,1);
-    pM(1:Index_Services-1) = pM_ref(1:Index_Services-1).*(pY(1:Index_Services-1)./pY_ref(1:Index_Services-1));
-    pM(Index_Services) = pM_ref(Index_Services);
-//    pM = pM_ref;
+    pM(1:Index_Services-1) = BY.pM(1:Index_Services-1).*(pY(1:Index_Services-1)./BY.pY(1:Index_Services-1));
+    pM(Index_Services) = BY.pM(Index_Services);
 
 endfunction 
 
@@ -2670,9 +2701,9 @@ endfunction
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Gross domestic product (GDP) -
-function [y] = GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect) ;
 
-    y = GDP - (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) + sum(Labour_Tax) + sum(OtherIndirTax) + sum(VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)) ;
+    y = GDP - (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) - sum(ClimPolCompensbySect) + sum(Labour_Tax) + sum(OtherIndirTax) + sum(VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)) ;
 
 endfunction
 
@@ -2775,7 +2806,7 @@ function [y] = DistributShares_Const_1(Distribution_Shares, Labour_force, Unempl
 
     // Distribution of labour income (endogenous)
     // Change in labour force by household class
-    Labour_change = ( Labour_force - Unemployed ) ./ ( ini.Labour_force - ini.Unemployed ) ;
+    Labour_change = ( Labour_force - Unemployed ) ./ ( BY.Labour_force - BY.Unemployed ) ;
 
     // Share of Labour income accruing to each household class
     y1(Indice_Labour_Income, Indice_Households) = Distribution_Shares(Indice_Labour_Income, Indice_Households) - ( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) ) ./ sum( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) ) ;
@@ -2783,14 +2814,14 @@ function [y] = DistributShares_Const_1(Distribution_Shares, Labour_force, Unempl
     // Share of Labour income accruing to other institutional agents
     j=[Indice_Corporations, Indice_Government, Indice_RestOfWorld]
 
-    y1(Indice_Labour_Income, j) = Distribution_Shares(Indice_Labour_Income, j) - ini.Distribution_Shares(Indice_Labour_Income, j) ;
+    y1(Indice_Labour_Income, j) = Distribution_Shares(Indice_Labour_Income, j) - BY.Distribution_Shares(Indice_Labour_Income, j) ;
 
 
     // Distribution of non-Labour incomes: Gross operating surplus (exogenous)
-    y1(Indice_Non_Labour_Income, :) = Distribution_Shares(Indice_Non_Labour_Income, :) - ini.Distribution_Shares(Indice_Non_Labour_Income, :) ;
+    y1(Indice_Non_Labour_Income, :) = Distribution_Shares(Indice_Non_Labour_Income, :) - BY.Distribution_Shares(Indice_Non_Labour_Income, :) ;
 
     // Distribution of other transfers incomes
-    y1(Indice_Other_Transfers, :) = Distribution_Shares(Indice_Other_Transfers, :) - ini.Distribution_Shares(Indice_Other_Transfers, :) ;
+    y1(Indice_Other_Transfers, :) = Distribution_Shares(Indice_Other_Transfers, :) - BY.Distribution_Shares(Indice_Other_Transfers, :) ;
 
     y = matrix(y1, -1 , 1) ;
 endfunction
@@ -2809,7 +2840,7 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y2 = matrix ( y2, -1, 1);
 
     // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
-    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*ini.Other_Transfers) * (GDP/ini.GDP) ;
+    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) ;
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
@@ -2820,33 +2851,6 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
 
 endfunction
-
-// For SNBC
-function [y] = IncomeDistrib_Const_1bis(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
-
-    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
-    y1 = NetCompWages_byAgent - Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income) ;
-    y1 = matrix ( y1, -1, 1);
-
-    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
-    y2 = GOS_byAgent - Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus) ;
-    y2 = matrix ( y2, -1, 1);
-
-    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
-    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*ini.Other_Transfers) * (GDP/ini.GDP) - LowCarb_Transfers ;
-    y3 = matrix ( y3, -1, 1);
-
-    y = [y1;y2;y3];
-
-    // y  = zeros(length(Distribution_Shares), 1) ;
-    // y (1: length(NetCompWages_byAgent), 1) =  matrix(y1, length(NetCompWages_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+1 : length(NetCompWages_byAgent)+length(GOS_byAgent)) = matrix(y2, length(GOS_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
-
-endfunction
-
-
-
 
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)
