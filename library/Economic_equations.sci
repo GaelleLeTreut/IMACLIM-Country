@@ -859,7 +859,7 @@ endfunction
 
 /// Transfert to households 
 
-function [y] = ClimCompensat_Const_1(ClimPolicyCompens) ;
+function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP) ;
     // /// No new direct compensations to households
    y1 = zeros(1,nb_InstitAgents)  
    y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)

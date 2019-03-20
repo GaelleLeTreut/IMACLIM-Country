@@ -1623,6 +1623,10 @@ else
     CPI = indiv_x2variable (Index_Imaclim_VarCalib, "x_CPI");
 end
 
+GDP_pFish = CPI;
+G_pFish = CPI;
+I_pFish = CPI;
+
 ///////////////////////////
 // Start Not Applied to Brasil
 ///////////////////////////

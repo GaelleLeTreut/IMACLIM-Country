@@ -16,10 +16,18 @@ end
 //////////////////////////
 // Select a set of forcing
 //////////////////////////
-	// to integrate within the Dashboard thereafter : à généraliser pour forcer certains secteurs... où choisir si on indique True ou False dans le Dashboard
-Trade_BU = Indice_EnerSect; 
-Alpha_BU = Indice_EnerSect; // à généraliser pour avoir des forçages en volume et en intensité  
-C_BU = Indice_EnerSect;
+if Energy_Balance == "True"
+	Trade_BU = Indice_EnerSect; 
+	Alpha_BU = Indice_EnerSect;
+	C_BU = Indice_EnerSect;
+else if Energy_Balance == "False"
+	Trade_BU = []; 
+	Alpha_BU = [];
+	C_BU = [];
+end end
+
+// to integrate within the Dashboard thereafter : à généraliser pour forcer certains secteurs... où choisir si on indique True ou False dans le Dashboard
+// à généraliser pour avoir des forçages en volume et en intensité
 // faire des forçages sous-entend un certain de jeu de paramètres en entrée... implémenter le changement dans le code au cas où ce n'est pas bien renseigné ? Par forcément car parfois que je fais un forçage en indiquant une cible mais je veux me laisser une liberté de me promener autour de cette cible par jeux d'arbitrage économique   
 // find(Index_Sectors=="Automobile") find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp") find(Index_Sectors=="Agri_Food_industry") find(Index_Sectors=="Property_business")]; 
 
