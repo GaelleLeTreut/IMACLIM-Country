@@ -20,36 +20,40 @@ endfunction
 //////////////////////////
 
 function [y] = GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares)
-//	y = (GFCF_byAgent - sum(GFCF_byAgent)*GFCF_Distribution_Shares)';
 	y = (GFCF_byAgent - sum(pI.*I)*GFCF_Distribution_Shares)';
 endfunction
 
 
+function y = Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
+
+	y = Exo_VA_Tax - sum(VA_Tax)
+
+endfunction
+
+function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
+
+    y1 = VA_Tax_rate - tau_VA_Tax_rate*BY.VA_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = Exo_Production_Tax_Const_1(Exo_Production_Tax, Production_Tax)
+
+	y = Exo_Production_Tax - sum(Production_Tax)
+
+endfunction
+
+function y = Production_Tax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
+
+    y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
+    y = y1';
+
+endfunction
+
+
 //////////////////////////
-// Composente du PIB 
+// Totaux du TEE
 //////////////////////////
-function [y] = Invest_demand_Const_3(I, pI, GDP);
-	y = I.*pI - I_share.*GDP.*ones(pI);
-endfunction
-
-function [y] = ConsumBudget_Const_2(Consumption_budget, GDP) ;
-	y1 = Consumption_budget - C_share * GDP ;
-	y=y1';		
-endfunction
-
-function [y] = G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP ) ;
-
-    /// Public consumption budget - Proportion of GDP
-    y1 = G_Consumption_budget - G_share * GDP ;
-    y = y1' ;
-endfunction
-
-/// Trade balance constant to GDP growth
-function y = Trade_Balance_Const_3( pM, pX, X, M, GDP);
-
-  y = (sum(pX.*X) - sum(pM.*M)) - TradeBalance_share*GDP;
-
-endfunction
 
 
 // maintien contant de l'investissement réel + Revevenu de la tax carbon

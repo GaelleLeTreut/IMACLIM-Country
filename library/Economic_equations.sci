@@ -2840,7 +2840,7 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y2 = matrix ( y2, -1, 1);
 
     // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
-    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) ;
+    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) ;
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
