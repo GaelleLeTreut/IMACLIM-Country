@@ -170,8 +170,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 	
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
-    // Glt:  _const4 revoir 
-	H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
+   
+	H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
 	
   
 	 // Brasil Const_2; income need to take into account Labour tax and direct tax for and social transfer from Corp
