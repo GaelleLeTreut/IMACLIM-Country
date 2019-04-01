@@ -80,23 +80,14 @@
 	initial_value.OtherIndirTax_DOM = initial_value.OtherIndirTax - initial_value.OtherIndirTax_IMP;
 	
 	// for final consumption taxes :  Hypothesis: prorata the weight of FC_valueIMP in FC_value
-if Country =="France"
-	initial_value.VA_Tax_IMP = initial_value.VA_Tax .* (sum(initial_value.FC_valueIMP,"c")./sum(initial_value.FC_value,"c"))' ;
-	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
-	
-	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC .* (sum(initial_value.FC_valueIMP,"c")./sum(initial_value.FC_value,"c"))' ;
-	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
-	
-elseif Country == "India"
-	initial_value.VA_Tax_IMP = initial_value.VA_Tax * 0 ;
-	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
-	
-	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC * 0 ;
-	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
+					 
+																															
+																												  
    
+if Country=="Brasil"		
+																								 
 	
-elseif Country == "Brasil"	
-	
+						 
 	initial_value.VA_Tax_IMP = initial_value.VA_Tax * 0 ;
 	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
 	
@@ -105,6 +96,18 @@ elseif Country == "Brasil"
 	
 	initial_value.Cons_Tax_IMP = initial_value.Cons_Tax.* (initial_value.M_value ./ (initial_value.M_value + initial_value.Y_value));
 	initial_value.Cons_Tax_DOM = initial_value.Cons_Tax - initial_value.Cons_Tax_IMP;
+	
+else
+
+	initial_value.VA_Tax_IMP = initial_value.VA_Tax .* (divide(sum(initial_value.FC_valueIMP,"c"),sum(initial_value.FC_value,"c"),0))' ;
+	initial_value.VA_Tax_DOM = initial_value.VA_Tax - initial_value.VA_Tax_IMP;
+	
+	initial_value.Energy_Tax_FC_IMP = initial_value.Energy_Tax_FC .* (divide(sum(initial_value.FC_valueIMP,"c"),sum(initial_value.FC_value,"c"),0))' ;
+	initial_value.Energy_Tax_FC_DOM = initial_value.Energy_Tax_FC - initial_value.Energy_Tax_FC_IMP;
+
+
+																																											 
+																				  
 end
 	
 	initial_value.TaxesIMP = zeros(nb_Taxes, nb_Sectors);
