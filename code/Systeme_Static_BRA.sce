@@ -43,7 +43,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_Imaclim_VarResolBR(2:$,2:3));
+VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -67,17 +67,17 @@ end
 // Endogenous variable (set of variables for the system below - fsolve)
 /////////////////////////////////////////////////////////////////////////
 // list
-[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResolBR, "Var");
+[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResol, "Var");
 // Initial values for variables
 Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
-X_Deriv_Var_init = variables2X (Index_Imaclim_VarResolBR, listDeriv_Var, Deriv_variables);
-bounds = createBounds( Index_Imaclim_VarResolBR , listDeriv_Var );
+X_Deriv_Var_init = variables2X (Index_Imaclim_VarResol, listDeriv_Var, Deriv_variables);
+bounds = createBounds( Index_Imaclim_VarResol , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 // list // SOLVE Endogenous variable (set of variables for independant fsolve)
-listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResolBR, "Var_interm");
+listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResol, "Var_interm");
 Deriv_Var_interm     = Variables2struct(listDeriv_Var_interm);
 [Table_Deriv_Var_interm] = struct2Variables(Deriv_Var_interm,"Deriv_Var_interm");
 execstr(Table_Deriv_Var_interm);
@@ -308,7 +308,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 endfunction
 
 //////////////////////////////////////////////////////////////////////////
-//	Number of Index and Indice from Index_Imaclim_VarResolBR used by f_resolution
+//	Number of Index and Indice from Index_Imaclim_VarResol used by f_resolution
 /////////////////////////////////////////////////////////////////////////
 
 nVarDeriv = size(listDeriv_Var);
@@ -316,7 +316,7 @@ RowNumCsVDerivVarList = list();
 structNumDerivVar = zeros(nVarDeriv,1);
 EltStructDerivVar = getfield(1 , Deriv_variablesStart);
 for ind = 1:nVarDeriv
-    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResolBR==listDeriv_Var(ind)) ;
+    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResol==listDeriv_Var(ind)) ;
     structNumDerivVar(ind) = find(EltStructDerivVar == listDeriv_Var(ind));
 end
 
@@ -326,7 +326,7 @@ Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDe
 [maxos,lieu]=max(abs(Constraints_Init));
 SizeCst = size(Constraints_Init);
 [contrainte_tri , coord] =gsort(Constraints_Init);
-pause
+
 if %f
     exec(CODE+"testingSystem.sce");
     return
@@ -334,7 +334,7 @@ end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
     disp("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
-    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResolBR.csv")
+    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResol.csv")
 end
 
 /////////////////////////////////////////////////
@@ -399,7 +399,7 @@ exec(CODE+"terminateResolution.sce");
 // Reafectation des valeurs aux variables et à la structure après résolution
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-Deriv_variables = X2variables (Index_Imaclim_VarResolBR, listDeriv_Var, Xbest);
+Deriv_variables = X2variables (Index_Imaclim_VarResol, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
