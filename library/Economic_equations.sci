@@ -318,7 +318,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     ///. Variation with relative prices (price-elasticities sigma_pC)
     ///. Variation with consumption budget (income-elasticities : sigma_ConsoBudget)
 
-    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - (1+delta_C_parameter(Indice_EnerSect)').^time_since_BY .* .. 
+    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_EnerSect, 1)) );
 
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )

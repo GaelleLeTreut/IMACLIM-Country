@@ -49,6 +49,8 @@ SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_I;1;nb_Commodities;Var;-%inf;%inf
 I;nb_Commodities;1;Var;0;%inf
+Betta;nb_Commodities;1;Var;-%inf;%inf
+tau_Betta;1;1;Var;-%inf;%inf
 pK;1;nb_Sectors;Var;0;%inf
 Y;nb_Sectors;1;Var;0;%inf
 IC;nb_Commodities;nb_Sectors;Var;0;%inf
@@ -76,6 +78,8 @@ GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf
 Profit_margin;1;nb_Sectors;Var;-%inf;%inf
+markup_rate;1;nb_Sectors;Var;-%inf;%inf
+tau_markup_rate;1;1;Var;-%inf;%inf
 Capital_income;1;nb_Sectors;Var;0;%inf
 NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf
 GOS_byAgent;1;nb_InstitAgents;Var;0;%inf

@@ -40,10 +40,10 @@ end
 if count==countMax&vBest>sensib
     disp("fsolve did NOT converge");
 else
-    disp("equilibrium FOUND with vBest = "+vBest);
+//    disp("equilibrium FOUND with vBest = "+vBest);
 end
 
-disp("Time for solving="+toc()+"seconds");
+//disp("Time for solving="+toc()+"seconds");
 
 if Output_files=='True'
 driver("PDF");

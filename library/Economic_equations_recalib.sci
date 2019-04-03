@@ -50,6 +50,34 @@ function y = Production_Tax_rate_Const_1(Production_Tax_rate, tau_Production_Tax
 
 endfunction
 
+function y = Exo_GrossOpSurplus_Const_1(Exo_GrossOpSurplus, GrossOpSurplus)
+
+	y = Exo_GrossOpSurplus - sum(GrossOpSurplus)
+
+endfunction
+
+function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
+
+    //  Fixed Markup ( markup_rate(nb_Sectors) )
+    y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
+
+    y=y1';
+endfunction
+
+function [y] = I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+
+    y = I_Consumption_budget - sum(I .* pI) ;
+
+endfunction
+
+function [y] = Betta_Const_2(Betta, tau_Betta) ;
+
+    y = Betta  - tau_Betta*BY.Betta;
+
+endfunction
+
+
+
 
 //////////////////////////
 // Totaux du TEE

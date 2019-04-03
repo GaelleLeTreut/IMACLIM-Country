@@ -87,8 +87,78 @@ end
 
 // Loading other study changes (specific feature)
 exec(STUDY_Country+study+".sce");
-exec(STUDY_Country+"Recalib_RunChoices_1.sce");
-exec(System_Resol+".sce");
+
+
+// Recherche d'optimum ou simple résolution
+//scal = [Mu    		u_param  	sigma_omegaU	CoefRealWage	phi_K		phi_Gaz		phi_AllFuels	phi_Elec];
+//scal = [0.0080503		0.0934638	-0.1043347		0.6054980		-0.0054703	-0.3790052 -0.1719113 -0.0754572];
+
+//scal = [Mu    	u_param  	sigma_omegaU	CoefRealWage	phi_K		delta_sigma_X	delta_sigma_X];
+scal = [0.0063590   0.1239476   -0.1018518      0.7180815		-0.0054703	0.1				0.1];
+scal = [0.0081679   0.1313348   -1.8020404   	-4.663783    	0.0363876  	-0.1893047  	-0.0567423];
+
+Optimum = "False";
+	if Optimum == "True"
+
+		function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal) ;
+
+			exec(STUDY_Country+"Recalib_RunChoices_1.sce");
+			exec(System_Resol+".sce");
+
+		endfunction 
+
+//		function [y] = System_optimisation(scal)
+//
+//			[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
+//			y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
+//				100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
+//				100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
+//				100*abs(((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6 - 44.676)/44.676) ..		//4
+//				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//5
+//				100*(d.pC(2)/BY.pC(2) - 1.0280235988)/1.0280235988 .. 						//6	
+//				100*(d.pC(4)/BY.pC(4) - 0.9678596039)/0.9678596039 ..						//7
+//				100*(d.pC(5)/BY.pC(5) - 1.3837111671)/1.3837111671 ..						//8	
+//				100*((sum(d.pIC(2,Indice_NonEnerSect).*d.IC(2,Indice_NonEnerSect)) + sum(d.pC(2,:).*d.C(2,:)))*1E-3 - 17525.0)/17525.0 ..
+//				100*((sum(d.pIC(4,:).*d.IC(4,:)) + sum(d.pC(4,:).*d.C(4,:)))*1E-3 - 64546.0)/64546.0];
+//			y = norm(y1');
+//		endfunction
+
+		function [y] = System_optimisation(scal)
+			[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
+			y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
+				100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
+				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//3
+				100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
+				100*abs(((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6 - 44.676)/44.676) ..		//4
+				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//5
+				];
+			y = norm(y1');
+		endfunction
+
+
+//		options = optimset ( "fminsearch" );
+
+		opt = optimset ("Display","iter", ..
+		               "FunValCheck","on", ..
+		               "MaxFunEvals",1000, ..
+		               "MaxIter",500, ..
+		               "TolFun",5.e-1, ..
+		               "TolX",1.e-5);
+
+		[scal_opt, fval, exitflag, output] = fminsearch(System_optimisation, scal, opt);
+		// https://wiki.scilab.org/Non%20linear%20optimization%20for%20parameter%20fitting%20example
+		// https://help.scilab.org/doc/5.5.2/en_US/section_e75956809590b9cc1bb1d9aec86b31b8.html
+		// essayer d'autres fonctions
+
+//		stop = [1.d+1,1.d-8,1.d-5,100,0,100];//[ftol,xtol,gtol,maxfev,epsfcn,factor]
+//		scal_opt = lsqrsolve(scal, System_optimisation, size(scal,2));
+		disp("abort because of you choose to run an optimisation")
+		abort
+	end
+	if Optimum == "False"
+		exec(STUDY_Country+"Recalib_RunChoices_1.sce");
+		exec(System_Resol+".sce");
+	end	
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016

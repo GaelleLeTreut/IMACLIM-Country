@@ -38,11 +38,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// defined in "loading data" : Index_Imaclim_VarResol_Recalib
+// defined in "loading data" : Index_Imaclim_Recalib
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_Imaclim_VarResol_Recalib(2:$,2:3));
+VarDimMat_resol = eval(Index_Imaclim_Recalib(2:$,2:3));
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -67,17 +67,17 @@ execstr(Table_parameters);
 // Endogenous variable (set of variables for the system below - fsolve)
 /////////////////////////////////////////////////////////////////////////
 // list
-[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResol_Recalib, "Var");
+[listDeriv_Var] = varTyp2list (Index_Imaclim_Recalib, "Var");
 // Initial values for variables
 Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
-X_Deriv_Var_init = variables2X (Index_Imaclim_VarResol_Recalib, listDeriv_Var, Deriv_variables);
-bounds = createBounds( Index_Imaclim_VarResol_Recalib , listDeriv_Var );
+X_Deriv_Var_init = variables2X (Index_Imaclim_Recalib, listDeriv_Var, Deriv_variables);
+bounds = createBounds( Index_Imaclim_Recalib , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 // list // SOLVE Endogenous variable (set of variables for independant fsolve)
-listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResol_Recalib, "Var_interm");
+listDeriv_Var_interm = varTyp2list (Index_Imaclim_Recalib, "Var_interm");
 Deriv_Var_interm     = Variables2struct(listDeriv_Var_interm);
 [Table_Deriv_Var_interm] = struct2Variables(Deriv_Var_interm,"Deriv_Var_interm");
 execstr(Table_Deriv_Var_interm);
@@ -242,7 +242,9 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
 
-    Invest_demand_Const_1(Betta, I, kappa, Y) 
+    Invest_demand_Const_1(Betta, I, kappa, Y)
+Betta_Const_2(Betta, tau_Betta)
+I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI)
     Capital_Cost_Const_1(pK, pI, I)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
@@ -269,6 +271,8 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
     Labour_income_Const_1(Labour_income, Labour, w) 
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
+Markup_Const_2(markup_rate, tau_markup_rate)
+Exo_GrossOpSurplus_Const_1(Exo_GrossOpSurplus, GrossOpSurplus)
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
 //    DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
@@ -282,7 +286,7 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
             // Constraints_Deriv = abs(Constraints_Deriv) * 1e5;
             disp(find(imag(Constraints_Deriv)~=0))
             disp(bounds.name(find(imag(Constraints_Deriv)~=0))')
-            pause
+            Constraints_Deriv = real(Constraints_Deriv);
         else
             Constraints_Deriv = real(Constraints_Deriv);
         end
@@ -296,7 +300,7 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
 endfunction
 
 //////////////////////////////////////////////////////////////////////////
-//	Number of Index and Indice from Index_Imaclim_VarResol_Recalib used by f_resolution
+//	Number of Index and Indice from Index_Imaclim_Recalib used by f_resolution
 /////////////////////////////////////////////////////////////////////////
 
 nVarDeriv = size(listDeriv_Var);
@@ -304,7 +308,7 @@ RowNumCsVDerivVarList = list();
 structNumDerivVar = zeros(nVarDeriv,1);
 EltStructDerivVar = getfield(1 , Deriv_variablesStart);
 for ind = 1:nVarDeriv
-    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResol_Recalib==listDeriv_Var(ind)) ;
+    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_Recalib==listDeriv_Var(ind)) ;
     structNumDerivVar(ind) = find(EltStructDerivVar == listDeriv_Var(ind));
 end
 
@@ -322,14 +326,14 @@ end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
     disp("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
-    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResol_Recalib.csv")
+    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_Recalib.csv")
 end
 
 /////////////////////////////////////////////////
 //////SOLVEUR
 /////////////////////////////////////////////////
 count        = 0;
-countMax     = 30;
+countMax     = 3;
 vMax         = 10000000;
 vBest        = 10000000;
 sensib       = 1e-5;
@@ -387,7 +391,7 @@ exec(CODE+"terminateResolution.sce");
 // Reafectation des valeurs aux variables et à la structure après résolution
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-Deriv_variables = X2variables (Index_Imaclim_VarResol_Recalib, listDeriv_Var, Xbest);
+Deriv_variables = X2variables (Index_Imaclim_Recalib, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
