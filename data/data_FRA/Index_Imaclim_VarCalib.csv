@@ -126,3 +126,5 @@ CO2Emis_IC;nb_Commodities;nb_Sectors;InitVal
 CO2Emis_C;nb_Commodities;nb_Households;InitVal
 SpeMarg_I;1;nb_Commodities;InitVal
 SpeMarg_rates_I;1;nb_Commodities;calib
+SpeMarg_G;1;nb_Commodities;InitVal
+SpeMarg_rates_G;1;nb_Commodities;calib
