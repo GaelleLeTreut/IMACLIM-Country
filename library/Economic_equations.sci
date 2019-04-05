@@ -2418,7 +2418,7 @@ endfunction
 // Unemployment by households class
 function [y] = HH_Unemployment_Const_1(u, u_tot) ;
 	u_tot = abs(u_tot);
-    y1 = u - ini.u * ( u_tot / ini.u ) ;
+    y1 = u - BY.u * ( u_tot / BY.u_tot ) ;
 
     y=y1';
 endfunction
