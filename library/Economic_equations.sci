@@ -2418,7 +2418,7 @@ endfunction
 // Unemployment by households class
 function [y] = HH_Unemployment_Const_1(u, u_tot) ;
 	u_tot = abs(u_tot);
-    y1 = u - ini.u * ( u_tot / ini.u ) ;
+    y1 = u - ini.u * ( u_tot / ini.u_tot ) ;
 
     y=y1';
 endfunction
@@ -2898,6 +2898,63 @@ endfunction
 
 
 ///// Exogenous emissions
+
+// Emissions fixed by a reduction objective- Intermediate Consumption Emissions 
+function [y] = CapCO2_IC( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_IC )
+    y1 = CO2Emis_IC - (1-CarbonCap_IC).*BY.CO2Emis_IC;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+// Emissions fixed by a reduction objective  - Intermediate Consumption Emissions  \\ [1, sect dimension] 
+function [y] = CapCO2_IC_tot( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_sect )
+
+	CO2Emis_IC_tot = sum(CO2Emis_IC,"r"); 
+	BY.CO2Emis_IC_tot = sum(BY.CO2Emis_IC,"r"); 
+	
+    y1 = CO2Emis_IC_tot - (1-CarbonCap_sect).*BY.CO2Emis_IC_tot;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+// DImensions (nb_Commodities*1)
+function y = CarbonCap_sect_Const_1(CarbonCap_sect, CarbonCap, CarbonCap_Diff_sect) ;
+    y1 = CarbonCap_sect - CarbonCap * CarbonCap_Diff_sect ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+// DImensions (nb_Commodities*nb_Sectors)
+function y = CarbonCap_IC_Const_1(CarbonCap_IC, CarbonCap, CarbonCap_Diff_IC) ;
+    y1 = CarbonCap_IC - CarbonCap * CarbonCap_Diff_IC ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+// Emissions fixed by a reduction objective - Final Consumption Emissions
+function [y] = CapCO2_C( CO2Emis_C, BY.CO2Emis_C, CarbonCap_C )
+    y1 = CO2Emis_C - (1-CarbonCap_C).*BY.CO2Emis_C;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+/// Dimension (1*nb_Households)
+function [y] = CapCO2_C_tot( CO2Emis_C, BY.CO2Emis_C, CarbonCap_HH )
+
+		CO2Emis_C_tot = sum(CO2Emis_C,"r"); 
+	BY.CO2Emis_C_tot = sum(BY.CO2Emis_C,"r"); 
+
+    y1 = CO2Emis_C - (1-CarbonCap_C).*BY.CO2Emis_C;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+/// Dimension (1*nb_Households)
+function y = CarbonCap_sect_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) ;
+    y1 = CarbonCap_HH - CarbonCap * CarbonCap_Diff_HH ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+/// Dimension (nb_Commodities*nb_Households)
+function y = CarbonCap_C_Const_1(CarbonCap_C, CarbonCap, CarbonCap_Diff_C) ;
+    y1 = CarbonCap_C - CarbonCap * CarbonCap_Diff_C ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+
 // Emissions at the level of the energy transition law
 function [y] = ExogCO2_IC_2030( CO2Emis_IC, CO2Emis_IC_2030)
     y1 = CO2Emis_IC - CO2Emis_IC_2030;
