@@ -285,7 +285,18 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
 
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
-    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)];
+    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+	
+	///Carbon cap test
+	CO2_intensity_IC( CO2Emis_IC, Emission_Coef_IC , IC)
+	 CapCO2_IC_tot( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_sect )
+	 CarbonCap_sect_Const_1(CarbonCap_sect, CarbonCap, CarbonCap_Diff_sect)
+	
+	CO2_intensity_C( CO2Emis_C, Emission_Coef_C , C)
+	CapCO2_C_tot( CO2Emis_C, BY.CO2Emis_C, CarbonCap_HH )
+	CarbonCap_sect_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) 
+	];
+	
     //7076:7087
     if ~isreal(Constraints_Deriv)
         warning("~isreal(Constraints_Deriv)");
