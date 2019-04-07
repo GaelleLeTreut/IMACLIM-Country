@@ -128,3 +128,4 @@ SpeMarg_I;1;nb_Commodities;InitVal
 SpeMarg_rates_I;1;nb_Commodities;calib
 SpeMarg_G;1;nb_Commodities;InitVal
 SpeMarg_rates_G;1;nb_Commodities;calib
+GFCF_Distribution_Shares;1;nb_DomesticAgents;calib

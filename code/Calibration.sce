@@ -91,7 +91,7 @@ end
 
 // créaction des vecteurs x_ pour tous les paramètres à calibrer sauf les ref
 //[Table_indiv_x2Exec] = variables2indiv_x (Index_Imaclim_VarCalib, list_calib_WithRef, "calib" );
-[Table_indiv_x2Exec] = variables2indiv_x (Index_Imaclim_VarCalib, list_calib, "calib" );
+[Table_indiv_x2Exec] = variables2indiv_x(Index_Imaclim_VarCalib, list_calib, "calib" );
 for i= Table_indiv_x2Exec
     execstr(Table_indiv_x2Exec);
 end
@@ -113,7 +113,6 @@ end
 for i= Table_calib
     execstr(Table_calib);
 end
-
 
 //	Etape 1 du calibrage
 //	Calcule des paramètres calibrés à partir de certaines équations de la librairy Imaclim
@@ -743,11 +742,6 @@ else
     OtherIndirTax_rate = (abs(OtherIndirTax_rate) > %eps).*OtherIndirTax_rate;
 end
 
-// if Country=="France" & AGG_type=="AGG_SNBC2"
-
-	// VA_Tax_rate = VA_Tax./(sum( pC .* C, "c")' + sum(pG .* G, "c")' + (pI .* I)'-VA_Tax);	warning("Antoine : le calcul de VA_Tax ne fonctionne pas avec AGG_SNBC2... Utilisation du calcul direct au lieu d''une résolution")
-// else
-
 function [const_VA_Tax_rate] =fcalib_VA_Tax_Const_1(x_VA_Tax_rate, VA_Tax, pC, C, pG, G, pI, I, Imaclim_VarCalib)
     VA_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_VA_Tax_rate");
     // const_VA_Tax_rate = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
@@ -762,6 +756,10 @@ const_VA_Tax_rate = 10^5;
 while norm(const_VA_Tax_rate) > sensib
     if  (count>=countMax)
         error("review calib_VA_Tax_rate")
+        // pause
+        // VA_Tax_rate = VA_Tax./(sum( pC .* C, "c")' + sum(pG .* G, "c")' + (pI .* I)'-VA_Tax);   
+        // warning("Antoine : le calcul de VA_Tax beug : calcul direct réalisé qui fonctionne pas pour le moment")
+        // pause
     end
     count = count + 1;
     [x_VA_Tax_rate, const_VA_Tax_rate, info_calib_VA_Tax_rate] = fsolve(x_VA_Tax_rate, list(fcalib_VA_Tax_Const_1,VA_Tax, pC, C, pG, G, pI,I,Index_Imaclim_VarCalib));
@@ -770,7 +768,6 @@ while norm(const_VA_Tax_rate) > sensib
 
 end
 count=0;
-// end
 
 ///////////////////////////
 // Start Specific to Brasil
@@ -1751,6 +1748,18 @@ else
 end
 
 
+function [const_GFCFbyAgentshare] =fcalib_GFCFShare_Const_1(x_GFCF_Distribution_Shares, GFCF_byAgent,pI,I, Imaclim_VarCalib)
+    GFCF_Distribution_Shares= indiv_x2variable(Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
+    const_GFCFbyAgentshare=GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares);
+endfunction
+[x_GFCF_Distribution_Shares, const_GFCFbyAgentshare, info_calib_GFCFbyAgentshare] = fsolve(x_GFCF_Distribution_Shares, list(fcalib_GFCFShare_Const_1,GFCF_byAgent,pI,I, Index_Imaclim_VarCalib));
+
+if norm(const_GFCFbyAgentshare) > sensib
+    error( "review calib_GFCF_byAgentShare")
+else
+    GFCF_Distribution_Shares = indiv_x2variable (Index_Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
+end
+
 //////////////////////////////////////////////////////////////////
 //// Cas particulier  -Calibration CES COEFFICIENT
 //////////////////////////////////////////////////////////////////
@@ -1798,7 +1807,7 @@ for elt=1:nb_FC
     indicEltFC = 1 + indicEltFC;
 end
 
-initial_value.FC = null();
+// initial_value.FC = null();
 
 //Struture BY. created to reunite all BY values before introducing a choc
 execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");

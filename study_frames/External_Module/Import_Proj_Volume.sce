@@ -49,8 +49,8 @@ end
 
 // Feature to fill and aggregate IOT in projected quantities (which will be delaited later)
 // Antoine : à améliorer en créant une fonction générique / en intégrant cela à loading_data, etc.. 
-nb_SectorsTEMP = size(IndRow_IOT_Qtities,1)-1;
-Index_CommoditiesTEMP = IndRow_IOT_Qtities(1:nb_SectorsTEMP);
-Index_SectorsTEMP = Index_CommoditiesTEMP;
+//nb_SectorsTEMP = size(IndRow_IOT_Qtities,1)-1;
+//Index_CommoditiesTEMP = IndRow_IOT_Qtities(1:nb_SectorsTEMP);
+//Index_SectorsTEMP = Index_CommoditiesTEMP;
 // to clear at the end
 

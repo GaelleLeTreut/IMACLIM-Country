@@ -10,7 +10,7 @@ disp("=====IMACLIM-Country Platform========");
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
 disp("STEP 0: loading Dashboard ");
-exec ("preambule.sce");
+exec("preambule.sce");
 exec("Dashboard.sce");
 
 if Output_files=='True'
@@ -90,75 +90,53 @@ exec(STUDY_Country+study+".sce");
 
 
 // Recherche d'optimum ou simple résolution
-//scal = [Mu    		u_param  	sigma_omegaU	CoefRealWage	phi_K		phi_Gaz		phi_AllFuels	phi_Elec];
-//scal = [0.0080503		0.0934638	-0.1043347		0.6054980		-0.0054703	-0.3790052 -0.1719113 -0.0754572];
+//		[Mu    			u_param  		sigma_omegaU	CoefRealWage	phi_K..		
+scal = 	[0.008495622	0.1111902577	-0.1099821202	0.8675985697	-0.0050207911 ..
+		0.016129401		0.0182074202	-0.4076266513	-0.1715604065	-0.0754717964];
+//		delta_M			delta_X			pGaz 			pFuels 			pElec];
 
-//scal = [Mu    	u_param  	sigma_omegaU	CoefRealWage	phi_K		delta_sigma_X	delta_sigma_X];
-scal = [0.0063590   0.1239476   -0.1018518      0.7180815		-0.0054703	0.1				0.1];
-scal = [0.0081679   0.1313348   -1.8020404   	-4.663783    	0.0363876  	-0.1893047  	-0.0567423];
-
-Optimum = "False";
-	if Optimum == "True"
-
-		function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal) ;
-
-			exec(STUDY_Country+"Recalib_RunChoices_1.sce");
-			exec(System_Resol+".sce");
-
-		endfunction 
-
-//		function [y] = System_optimisation(scal)
-//
-//			[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
-//			y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
-//				100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
-//				100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
-//				100*abs(((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6 - 44.676)/44.676) ..		//4
-//				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//5
-//				100*(d.pC(2)/BY.pC(2) - 1.0280235988)/1.0280235988 .. 						//6	
-//				100*(d.pC(4)/BY.pC(4) - 0.9678596039)/0.9678596039 ..						//7
-//				100*(d.pC(5)/BY.pC(5) - 1.3837111671)/1.3837111671 ..						//8	
-//				100*((sum(d.pIC(2,Indice_NonEnerSect).*d.IC(2,Indice_NonEnerSect)) + sum(d.pC(2,:).*d.C(2,:)))*1E-3 - 17525.0)/17525.0 ..
-//				100*((sum(d.pIC(4,:).*d.IC(4,:)) + sum(d.pC(4,:).*d.C(4,:)))*1E-3 - 64546.0)/64546.0];
-//			y = norm(y1');
-//		endfunction
-
-		function [y] = System_optimisation(scal)
-			[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
-			y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
-				100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
-				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//3
-				100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
-				100*abs(((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6 - 44.676)/44.676) ..		//4
-				100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//5
-				];
-			y = norm(y1');
-		endfunction
-
-
-//		options = optimset ( "fminsearch" );
-
-		opt = optimset ("Display","iter", ..
-		               "FunValCheck","on", ..
-		               "MaxFunEvals",1000, ..
-		               "MaxIter",500, ..
-		               "TolFun",5.e-1, ..
-		               "TolX",1.e-5);
-
-		[scal_opt, fval, exitflag, output] = fminsearch(System_optimisation, scal, opt);
-		// https://wiki.scilab.org/Non%20linear%20optimization%20for%20parameter%20fitting%20example
-		// https://help.scilab.org/doc/5.5.2/en_US/section_e75956809590b9cc1bb1d9aec86b31b8.html
-		// essayer d'autres fonctions
-
-//		stop = [1.d+1,1.d-8,1.d-5,100,0,100];//[ftol,xtol,gtol,maxfev,epsfcn,factor]
-//		scal_opt = lsqrsolve(scal, System_optimisation, size(scal,2));
-		disp("abort because of you choose to run an optimisation")
-		abort
-	end
-	if Optimum == "False"
+Optimum_1 = "False";
+if Optimum_1 == "True"
+	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal) ;
 		exec(STUDY_Country+"Recalib_RunChoices_1.sce");
 		exec(System_Resol+".sce");
-	end	
+	endfunction 
+
+	function [y] = System_optimisation(scal)
+		[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
+		y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
+			100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
+			100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//3
+			100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
+			100*abs(((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6 - 44.676)/44.676) ..		//4
+			100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//5
+			100*(d.pC(2)/BY.pC(2) - 1.0280235988)/1.0280235988 .. 						//6	
+			100*(d.pC(4)/BY.pC(4) - 0.9678596039)/0.9678596039 ..						//7
+			100*(d.pC(5)/BY.pC(5) - 1.3837111671)/1.3837111671 ..						//8	
+			];
+		y = norm(y1);
+	endfunction
+
+	opt = optimset ("Display","iter", ..
+	               "FunValCheck","on", ..
+	               "MaxFunEvals",10, ..
+	               "MaxIter",50, ..
+	               "TolFun",5.e-1, ..
+	               "TolX",1.e-5);
+	
+	[scal_opt, fval, exitflag, output] = fminsearch(System_optimisation, scal, opt);
+	
+	SAVEDIR = OUTPUT+mydate()+filesep();
+	mkdir(SAVEDIR);
+	csvWrite(scal_opt,SAVEDIR+"scal_opt.csv", ';');
+
+	disp("abort because of you choose to run an optimisation")
+	abort
+end
+if Optimum_1 == "False"
+	exec(STUDY_Country+"Recalib_RunChoices_1.sce");
+	exec(System_Resol+".sce");
+end	
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016
@@ -173,6 +151,11 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
+Test_1 = "False"
+if Test_1 == "True"
+	exec("test_1.sce");
+end
+
 ////////////////////////////////////////////////////////////
 // 	STEP 7: VARIABLE STORAGE FOR RECURSIVE VERSION
 ////////////////////////////////////////////////////////////
@@ -182,7 +165,194 @@ else
 	disp("Variable Storage not executed for the Nb_Iter = "+Nb_Iter)
 end
 
-exec("test_1.sce");
+////////////////////////////////////////////////////////////
+// 	STEP 8: Data actualisation for 2018 (reference)
+////////////////////////////////////////////////////////////
+disp("STEP 8: Data actualisation for 2018");
+time_step = 2;
+
+// Dashboard elements
+System_Resol = "Systeme_ProjHomothetic";
+Energy_Balance = "False";
+
+// BY & initial_value actualisation (data de 2010 stockée dans data_1)
+data_0 = BY;
+BY = ini;
+clear initial_value
+initial_value = Variables2struct(list_InitVal); // prend les valeurs courantes dans la liste 
+Projection.IC = [];
+Projection.Y = [];
+Projection.M = [];
+Projection.X = [];
+Projection.X = [];
+
+// parameters actualisations and re-calibration
+exec("Loading_params.sce");
+parameters.u_param = BY.u_param;
+parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);//*0.8;
+parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);//*0.8;
+parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);//*0.8;
+parameters.ConstrainedShare_C(Indice_EnerSect) = 0.5*zeros(parameters.ConstrainedShare_C(Indice_EnerSect));
+parameters.sigma_omegaU = BY.sigma_omegaU;
+parameters.Coef_real_wage = BY.Coef_real_wage;
+
+clear calib
+exec("Calibration.sce");
+warning("la recalibration ne fonctionne que si output_files = True")
+
+Test_recalib = "False";
+if Test_recalib == "True"
+	for elt=1:size(list_calib)
+		disp(list_calib(elt))
+		execstr("test_BY = calib."+ list_calib(elt) + "- BY."+ list_calib(elt)+";");
+		test_BY
+		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
+		test_current
+	end
+end
+
+////////////////////////////////////////////////////////////
+// 	STEP 9: RESOLUTION - EQUILIBRIUM 2018
+////////////////////////////////////////////////////////////
+disp("STEP 9: RESOLUTION AND EQUILIBRIUM 2018");
+// Creation of a new output subdirectory for each time step in case of several time steps calculation
+if Nb_Iter<>1
+	if Output_files=='True'
+		SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+		mkdir(SAVEDIR);
+	end
+end
+
+// Loading macro framework (common feature for each country) 
+if Macro_nb <> ""
+	exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
+end
+
+// Loading other study changes (specific feature)
+exec(STUDY_Country+study+".sce");
+parameters.time_since_ini = 2;
+parameters.time_since_BY = 2;
+
+// Recherche d'optimum ou simple résolution
+scal_bis = [0.005, 0.10];
+
+Optimum_2 = "True";
+if Optimum_2 == "True"
+	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal_bis) ;
+		parameters.Mu = scal_bis(1);
+		parameters.phi_L = ones(parameters.phi_L)*Mu;
+		parameters.u_param = scal_bis(2);		
+		exec(System_Resol+".sce");
+	endfunction 
+
+	function [y] = System_optimisation(scal_bis);
+		[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal_bis)
+		y1 = [100*(d.u_tot - 0.096657603)/0.096657603 .. 					
+			100*(d.GDP/(BY.GDP_pFish * d.GDP_pFish*data_0.GDP) - GDP_index(2))/GDP_index(2)];
+		y = norm(y1);
+	endfunction
+
+	opt = optimset ("Display","iter", ..
+	               "FunValCheck","on", ..
+	               "MaxFunEvals",10, ..
+	               "MaxIter",50, ..
+	               "TolFun",5.e-1, ..
+	               "TolX",1.e-5);
+
+	[scal_bis_opt, fval, exitflag, output] = fminsearch(System_optimisation, scal_bis, opt);
+	
+	SAVEDIR = OUTPUT+mydate()+filesep();
+	mkdir(SAVEDIR);
+	csvWrite(scal_bis_opt,SAVEDIR+"scal_bis_opt.csv", ';');
+
+	disp("abort because of you choose to run an optimisation")
+	abort
+end
+if Optimum_2 == "False"
+	exec(STUDY_Country+"Recalib_RunChoices_1.sce");
+	exec(System_Resol+".sce");
+end	
+
+pause
+
+
+////////////////////////////////////////////////////////////
+// 	STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2018
+////////////////////////////////////////////////////////////
+disp("STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2019");
+if Output_files=='True'
+	exec(CODE+"outputs.sce");
+	exec(CODE+"outputs_indic.sce");
+end
+
+////////////////////////////////////////////////////////////
+// 	STEP 11: Static comparative based on 2018 reference
+////////////////////////////////////////////////////////////
+// Dashboard elements
+System_Resol = "Systeme_Static_LeMonde";
+clear Projection
+Demographic_shift = "False";
+Labour_product = "False";
+World_prices = "False";
+Energy_Balance = "False";
+
+// BY & initial_value actualisation (data de 2010 stockée dans data_1)
+data_0 = BY;
+BY = ini;
+clear initial_value
+initial_value = Variables2struct(list_InitVal); // prend les valeurs courantes dans la liste 
+
+// // // // // // 
+// début de la boucle : paramètre
+// // // // // // 
+// reload all parameters wich will be unchanged
+
+// Taxe Carbone
+Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3;
+// Wage Curve
+Loop_elements.sigma_omegaU = [0.0 -0.1]; 
+Loop_elements.Coef_real_wage = [0.0 1.0];
+// Élasticité du commerce 
+Loop_elements.sigma_Trade_coef = [1.0 0.1 0.0];
+
+
+time_step = 3; // avant la boucle 
+for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,1)
+	for sigW_elt=1:size(Loop_elements.sigma_omegaU,1)
+		for CoefW_elt=1:size(Loop_elements.Coef_real_wage,1)
+			for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,1)
+				parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
+				parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
+				parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
+				parameters.sigma_X = parameters.sigma_X * Loop_elements.sigma_Trade_coef(CoefW_elt);
+				parameters.sigma_M = parameters.sigma_M *Loop_elements.sigma_Trade_coef(CoefW_elt);
+
+				time_step = time_step + 1;
+			end
+		end
+	end
+end
+lancer la boucle
+
+
+// attention : bien vérifier que j'informe quelque chose d'homogène 
+
+
+
+
+// 
+
+// besoin de refaire chaque étape 
+// notamment la recalibration à cause des fonctions de production 
+
+
+// penser à la fin de chaque résolution à remettre l'ensemble des variables de BY en courant... 
+// revoir les fonctions de Gaëlle pour se faire
+//[Table_initial_value] = struct2Variables(BY,"BY");
+//for i= Table_initial_value
+//    execstr(Table_initial_value);
+//end
+
 
 
 
