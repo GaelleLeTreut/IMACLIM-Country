@@ -837,12 +837,34 @@ function y = CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax
     y = matrix(y1, -1 , 1) ;
 endfunction
 
+/// for [1,sectors] dimensions used for Carbon Cap by sectors - CarbonTax_Diff_IC[1
+function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
+
+    // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
+	CarbonTax_Diff_IC= repmat(Adj_Tax_IC,nb_Commodities, 1);	
+	
+    y1 = Carbon_Tax_rate_IC - Carbon_Tax_rate * CarbonTax_Diff_IC ;
+
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+
 /// Carbon tax on households (final energy consumptions)
 
 function [y] = CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) ;
 
     // Matrix of carbon tax rates (final consumption of energy, household classes)
     // Unique carbon tax
+    y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
+
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+function [y] =  CTax_rate_C_Const_2(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C, Adj_Tax_C) ;
+
+    // Matrix of carbon tax rates (final consumption of energy, household classes)
+
+	CarbonTax_Diff_C= repmat(Adj_Tax_C,nb_Sectors,1);	
     y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
 
     y = matrix(y1, -1 , 1) ;
@@ -2900,18 +2922,18 @@ endfunction
 ///// Exogenous emissions
 
 // Emissions fixed by a reduction objective- Intermediate Consumption Emissions 
-function [y] = CapCO2_IC( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_IC )
-    y1 = CO2Emis_IC - (1-CarbonCap_IC).*BY.CO2Emis_IC;
+function [y] = CapCO2_IC( CO2Emis_IC, CO2Emis_IC_ref, CarbonCap_IC )
+    y1 = CO2Emis_IC - (1-CarbonCap_IC).*CO2Emis_IC_ref;
     y = matrix(y1,-1 , 1) ;
 endfunction
 
 // Emissions fixed by a reduction objective  - Intermediate Consumption Emissions  \\ [1, sect dimension] 
-function [y] = CapCO2_IC_tot( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_sect )
+function [y] = CapCO2_IC_tot( CO2Emis_IC, CO2Emis_IC_ref, CarbonCap_sect )
 
 	CO2Emis_IC_tot = sum(CO2Emis_IC,"r"); 
-	BY.CO2Emis_IC_tot = sum(BY.CO2Emis_IC,"r"); 
+	CO2Emis_IC_tot_ref = sum(CO2Emis_IC_ref,"r"); 
 	
-    y1 = CO2Emis_IC_tot - (1-CarbonCap_sect).*BY.CO2Emis_IC_tot;
+    y1 = CO2Emis_IC_tot - (1-CarbonCap_sect).*CO2Emis_IC_tot_ref;
     y = matrix(y1,-1 , 1) ;
 endfunction
 
@@ -2928,23 +2950,23 @@ function y = CarbonCap_IC_Const_1(CarbonCap_IC, CarbonCap, CarbonCap_Diff_IC) ;
 endfunction
 
 // Emissions fixed by a reduction objective - Final Consumption Emissions
-function [y] = CapCO2_C( CO2Emis_C, BY.CO2Emis_C, CarbonCap_C )
-    y1 = CO2Emis_C - (1-CarbonCap_C).*BY.CO2Emis_C;
+function [y] = CapCO2_C( CO2Emis_C, CO2Emis_C_ref, CarbonCap_C )
+    y1 = CO2Emis_C - (1-CarbonCap_C).*CO2Emis_C_ref;
     y = matrix(y1,-1 , 1) ;
 endfunction
 
 /// Dimension (1*nb_Households)
-function [y] = CapCO2_C_tot( CO2Emis_C, BY.CO2Emis_C, CarbonCap_HH )
+function [y] = CapCO2_C_tot( CO2Emis_C, CO2Emis_C_ref, CarbonCap_HH )
 
-		CO2Emis_C_tot = sum(CO2Emis_C,"r"); 
-	BY.CO2Emis_C_tot = sum(BY.CO2Emis_C,"r"); 
+	CO2Emis_C_tot = sum(CO2Emis_C,"r"); 
+	CO2Emis_C_tot_ref = sum(CO2Emis_C_ref,"r"); 
 
-    y1 = CO2Emis_C - (1-CarbonCap_C).*BY.CO2Emis_C;
+    y1 = CO2Emis_C_tot - (1-CarbonCap_HH).*CO2Emis_C_tot_ref;
     y = matrix(y1,-1 , 1) ;
 endfunction
 
 /// Dimension (1*nb_Households)
-function y = CarbonCap_sect_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) ;
+function y = CarbonCap_HH_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) ;
     y1 = CarbonCap_HH - CarbonCap * CarbonCap_Diff_HH ;
     y = matrix(y1, -1 , 1) ;
 endfunction
