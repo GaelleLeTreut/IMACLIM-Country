@@ -5,6 +5,14 @@
 // Put back some variables to "equation" from EcoT formats due to "outputs.sce"
 if Output_files=="True"
 
+	BY.GFCF_byAgent(Indice_RestOfWorld)=[];
+	BY.Income_Tax = -Income_Tax(Indice_Households);
+	BY.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+
+	ini.GFCF_byAgent(Indice_RestOfWorld)=[];
+	ini.Income_Tax = -Income_Tax(Indice_Households);
+	ini.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+
 	d.GFCF_byAgent(Indice_RestOfWorld)=[];
 	d.Income_Tax = -Income_Tax(Indice_Households);
 	d.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
@@ -12,13 +20,23 @@ if Output_files=="True"
 	GFCF_byAgent(Indice_RestOfWorld)=[];
 	Income_Tax = -Income_Tax(Indice_Households);	
 	Corporate_Tax = - Corporate_Tax(Indice_Corporations);
-		
+	
  if  Country<>"Brasil" then 
+
+	BY.Pensions=Pensions(Indice_Households);
+	BY.Unemployment_transfers=Unemployment_transfers(Indice_Households);
+	BY.Other_Direct_Tax = -Other_Direct_Tax(Indice_Households);
+	BY.Other_social_transfers = Other_social_transfers(Indice_Households);
+
+	ini.Pensions=Pensions(Indice_Households);
+	ini.Unemployment_transfers=Unemployment_transfers(Indice_Households);
+	ini.Other_Direct_Tax = -Other_Direct_Tax(Indice_Households);
+	ini.Other_social_transfers = Other_social_transfers(Indice_Households);
+
 	d.Pensions=Pensions(Indice_Households);
 	d.Unemployment_transfers=Unemployment_transfers(Indice_Households);
 	d.Other_Direct_Tax = -Other_Direct_Tax(Indice_Households);
 	d.Other_social_transfers = Other_social_transfers(Indice_Households);
-
 
 	Pensions=Pensions(Indice_Households);
 	Unemployment_transfers=Unemployment_transfers(Indice_Households);
@@ -27,6 +45,16 @@ if Output_files=="True"
 
 
 	else
+
+	BY.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
+	BY.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);
+	BY.Gov_Direct_Tax= -d.Gov_Direct_Tax(Indice_Households);
+	BY.Corp_Direct_Tax= -d.Corp_Direct_Tax(Indice_Households);
+
+	ini.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
+	ini.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);
+	ini.Gov_Direct_Tax= -d.Gov_Direct_Tax(Indice_Households);
+	ini.Corp_Direct_Tax= -d.Corp_Direct_Tax(Indice_Households);
 	
 	d.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
 	d.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);

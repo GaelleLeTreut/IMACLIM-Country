@@ -4,7 +4,7 @@ Row;Coal;Commodities;EnerSect;PrimEnerSect;HybridCommod;SecExcepComp
 Row;Gasoline;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
 Row;Fuel;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
 Row;OthFuelProd;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
-Row;Electricty;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
+Row;Electricity;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
 Row;HeatGeoSol_Th;Commodities;EnerSect;FinEnerSect;HybridCommod;SecExcepComp
 Row;Steel_Iron;Commodities;NonEnerSect;-;HybridCommod;SecExcepComp
 Row;NonFerrousMetals;Commodities;NonEnerSect;-;NonHybridCommod;SecExcepComp
@@ -33,7 +33,7 @@ Row;SpeMarg_Coal;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_Gasoline;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_Fuel;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_OthFuelProd;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
-Row;SpeMarg_Electricty;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
+Row;SpeMarg_Electricity;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_HeatGeoSol_Th;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_Steel_Iron;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
 Row;SpeMarg_NonFerrousMetals;OthPart_IOT_AGG;SpeMarg;-;SpeMarg_IC;-
@@ -63,7 +63,7 @@ Column;Coal;Sectors;-;-;-;-
 Column;Gasoline;Sectors;-;-;-;-
 Column;Fuel;Sectors;-;-;-;-
 Column;OthFuelProd;Sectors;-;-;-;-
-Column;Electricty;Sectors;-;-;-;-
+Column;Electricity;Sectors;-;-;-;-
 Column;HeatGeoSol_Th;Sectors;-;-;-;-
 Column;Steel_Iron;Sectors;-;-;-;-
 Column;NonFerrousMetals;Sectors;-;-;-;-

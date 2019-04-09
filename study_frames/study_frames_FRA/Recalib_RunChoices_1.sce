@@ -62,21 +62,17 @@ end
 Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);
 Deriv_Exogenous.G_Consumption_budget = 576.37*1E6;
 Deriv_Exogenous.I_Consumption_budget = 488.008*1E6;
-tau_Betta = 0; // initialisation
 
 // TEE update
-Deriv_Exogenous.Exo_VA_Tax = 154.43*1E6; 
-tau_VA_Tax_rate = 0; // initialisation
+Exo_VA_Tax = 154.43*1E6; 
 Deriv_Exogenous.Labour_Tax_rate = ones(Labour_Tax_rate) * 0.4509447164;
 Deriv_Exogenous.Unemployment_transfers = 44500000.0*BY.Unemployment_transfers/sum(BY.Unemployment_transfers);
 Deriv_Exogenous.Pensions = 325300000.0*BY.Pensions/sum(BY.Pensions);
 Deriv_Exogenous.Other_social_transfers = 116492000.0*BY.Other_social_transfers/sum(Other_social_transfers);
 Deriv_Exogenous.Corporate_Tax = 51.6121588305*1E6;
 Deriv_Exogenous.Income_Tax = 200.6828411695*1E6*BY.Income_Tax/sum(BY.Income_Tax);
-Deriv_Exogenous.Exo_Production_Tax = 57.171*1E6; 
-tau_Production_Tax_rate = 0; // initialisation
-Deriv_Exogenous.Exo_GrossOpSurplus = 716.3928748305*1E6; 
-tau_markup_rate = 0; // initialisation
+Exo_Production_Tax = 57.171*1E6; 
+Exo_GrossOpSurplus = 716.3928748305*1E6; 
 
 //////////////////////////
 // Paramètres centraux à caller 

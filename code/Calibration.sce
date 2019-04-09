@@ -746,9 +746,9 @@ function [const_VA_Tax_rate] =fcalib_VA_Tax_Const_1(x_VA_Tax_rate, VA_Tax, pC, C
     VA_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_VA_Tax_rate");
     // const_VA_Tax_rate = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
 
-    y_1 = (VA_Tax' ==0).*VA_Tax_rate';
-    y_2 = (VA_Tax' <>0).*VA_Tax_Const_1(VA_Tax, abs(VA_Tax_rate), pC, C, pG, G, pI, I);
-    const_VA_Tax_rate =(VA_Tax' ==0).*y_1 +  (VA_Tax' <>0).*y_2;
+    y_1 = (abs(VA_Tax)'<%eps).*VA_Tax_rate';
+    y_2 = (abs(VA_Tax)'>%eps).*VA_Tax_Const_1(VA_Tax, abs(VA_Tax_rate), pC, C, pG, G, pI, I);
+    const_VA_Tax_rate =(abs(VA_Tax)'<%eps).*y_1 +  (abs(VA_Tax)'>%eps).*y_2;
 
 endfunction
 
@@ -756,10 +756,6 @@ const_VA_Tax_rate = 10^5;
 while norm(const_VA_Tax_rate) > sensib
     if  (count>=countMax)
         error("review calib_VA_Tax_rate")
-        // pause
-        // VA_Tax_rate = VA_Tax./(sum( pC .* C, "c")' + sum(pG .* G, "c")' + (pI .* I)'-VA_Tax);   
-        // warning("Antoine : le calcul de VA_Tax beug : calcul direct réalisé qui fonctionne pas pour le moment")
-        // pause
     end
     count = count + 1;
     [x_VA_Tax_rate, const_VA_Tax_rate, info_calib_VA_Tax_rate] = fsolve(x_VA_Tax_rate, list(fcalib_VA_Tax_Const_1,VA_Tax, pC, C, pG, G, pI,I,Index_Imaclim_VarCalib));
@@ -1105,6 +1101,22 @@ while norm(const_G_Consum_budget) > sensib
     count = count + 1;
     [x_G_Consumption_budget, const_G_Consum_budget, info_calib_G_ConsBudget] = fsolve(x_G_Consumption_budget, list(fcal_G_BudgBal_Const_1,  G, pG, Index_Imaclim_VarCalib));
     G_Consumption_budget = indiv_x2variable (Index_Imaclim_VarCalib, "x_G_Consumption_budget");
+end
+count=0;
+
+function [const_I_Consum_budget] =fcal_I_BudgBal_Const_1(x_I_Consumption_budget,  I, pI, Imaclim_VarCalib)
+    I_Consumption_budget = indiv_x2variable(Imaclim_VarCalib, "x_I_Consumption_budget");
+    const_I_Consum_budget =  I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+endfunction
+
+const_I_Consum_budget = 10^5;
+while norm(const_I_Consum_budget) > sensib
+    if  (count>=countMax)
+        error("review calib_I_Consumption_budget")
+    end
+    count = count + 1;
+    [x_I_Consumption_budget, const_I_Consum_budget, info_calib_I_ConsBudget] = fsolve(x_I_Consumption_budget, list(fcal_I_BudgBal_Const_1,  I, pI, Index_Imaclim_VarCalib));
+    I_Consumption_budget = indiv_x2variable (Index_Imaclim_VarCalib, "x_I_Consumption_budget");
 end
 count=0;
 
