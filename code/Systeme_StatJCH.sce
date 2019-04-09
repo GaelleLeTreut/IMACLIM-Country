@@ -164,8 +164,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity) // H_Investment_Const_2(GFCF_byAgent,pC,C)
     // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
     // Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
-    // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB 
-    G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
+    // Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB / 3-constant en réel
+    G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish)
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
 	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
@@ -180,7 +180,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 
-    ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
+    // 1 : share o disposable income / 2 : constant in real term
+    ConsumBudget_Const_2(Consumption_budget, H_disposable_income, Household_saving_rate, CPI)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
     Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
@@ -197,10 +198,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
 
-    // Retraite/chômage indexé sur les salaires Const_1 ou sur le PIB Const_2 
-    Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
-    UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param)
-    Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+    // Retraite/chômage indexé sur les salaires Const_1, sur le PIB Const_2, contant Const_3
+    Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
+    UnemployBenefits_Const_3(UnemployBenefits, NetWage_variation, UnemployBenefits_param)
+    Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population)
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
@@ -214,8 +215,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 
-    //  G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures //// G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP
-    G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
+    //  G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures // G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP // G_ConsumpBudget_Const_3 constant in real terms
+    G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP, G_pFish)
     G_demand_Const_2(G, pG, G_Consumption_budget, BudgetShare_GConsump) // check const_1
 
 	// Contrainte sur l'évolution de la Balance Commerciale : 1-évolution proportionnelle au PIB "réel" (GDP/CPI) / 2-... au PIB nominal
@@ -237,7 +238,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
 
-    Invest_demand_Const_1(Betta, I, kappa, Y) 
+    // Invest_demand_Const_1 standard link between CCF and investment demand vector / ?_2 idem for investment demande matrix / ?_3  investment demande vector constant in real term
+    Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish) 
     Capital_Cost_Const_1(pK, pI, I)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)

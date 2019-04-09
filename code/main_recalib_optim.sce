@@ -95,8 +95,8 @@ scal = 	[0.0082227339	0.1127758064	-0.1192021581	0.8242216354	-0.004913253 ..
 		0.0161172695	0.0179282157	-0.4074066869	-0.1707256015	-0.0729734596];
 //		delta_M			delta_X			pGaz 			pFuels 			pElec];
 
-Optimum_1 = "False";
-if Optimum_1 == "True"
+//Optimum_1 = "True";
+//if Optimum_1 == "True"
 	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal) ;
 		exec(STUDY_Country+"Recalib_RunChoices_1.sce");
 		exec(System_Resol+".sce");
@@ -130,15 +130,15 @@ if Optimum_1 == "True"
 	mkdir(SAVEDIR_OPT);
 	csvWrite(scal_opt_1,SAVEDIR_OPT+"scal_opt_1.csv", ';');
 
-	disp("abort because of you choose to run an optimisation")
-	abort
+//	disp("abort because of you choose to run an optimisation")
+//	abort
+//end
+//if Optimum_1 == "False"
 	scal = scal_opt_1;
-end
-if Optimum_1 == "False"
 	exec(STUDY_Country+"Recalib_RunChoices_1.sce");
 	exec(System_Resol+".sce");
 	clear scal
-end	
+//end	
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016
@@ -153,21 +153,24 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_1 = "True";
+Test_1 = "False"
 if Test_1 == "True"
 	exec("test_1.sce");
-	pause
 end
 
 ////////////////////////////////////////////////////////////
 // 	STEP 7: VARIABLE STORAGE FOR RECURSIVE VERSION
 ////////////////////////////////////////////////////////////
-exec(CODE+"Variable_Storage.sce");
+if Nb_Iter <> 1
+	exec(CODE+"Variable_Storage.sce");
+else
+	disp("Variable Storage not executed for the Nb_Iter = "+Nb_Iter)
+end
 
 ////////////////////////////////////////////////////////////
 // 	STEP 8: Data actualisation for 2018 (reference)
 ////////////////////////////////////////////////////////////
-disp("STEP 8: Data actualisation for 2018 (reference)");
+disp("STEP 8: Data actualisation for 2018");
 time_step = 2;
 
 // Dashboard elements
@@ -176,15 +179,13 @@ Energy_Balance = "False";
 
 // BY & initial_value actualisation (data de 2010 stockée dans data_1)
 data_0 = BY;
-//execstr("test_data."+ fieldnames(data_0) + " = data_1." + fieldnames(data_0) + " - data_0." + fieldnames(data_0) + ";");
 BY = ini;
 clear initial_value
-clear Deriv_Exogenous
 initial_value = Variables2struct(list_InitVal); // prend les valeurs courantes dans la liste 
 Projection.IC = [];
 Projection.Y = [];
 Projection.M = [];
-Projection.C = [];
+Projection.X = [];
 Projection.X = [];
 
 // parameters actualisations and re-calibration
@@ -193,6 +194,7 @@ parameters.u_param = BY.u_param;
 parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);//*0.8;
 parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);//*0.8;
 parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);//*0.8;
+parameters.ConstrainedShare_C(Indice_EnerSect) = 0.5*ones(parameters.ConstrainedShare_C(Indice_EnerSect));
 parameters.sigma_omegaU = BY.sigma_omegaU;
 parameters.Coef_real_wage = BY.Coef_real_wage;
 
@@ -200,21 +202,16 @@ clear calib
 exec("Calibration.sce");
 warning("la recalibration ne fonctionne que si output_files = True")
 
-Test_recalib_1 = "False";
-if Test_recalib_1 == "True"
+Test_recalib = "False";
+if Test_recalib == "True"
 	for elt=1:size(list_calib)
-		execstr("test_BY = calib."+ list_calib(elt) + "- data_1."+ list_calib(elt)+";");
-		if norm(test_BY)>%eps
-			disp(list_calib(elt))
-			norm(test_BY)
-			pause	
-			// les différences sont normales : tout n'est pas recalculé dans le système.. d'où le besoin de recalibrer
-		end
-		
+		disp(list_calib(elt))
+		execstr("test_BY = calib."+ list_calib(elt) + "- BY."+ list_calib(elt)+";");
+		test_BY
+		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
+		test_current
 	end
 end
-// Est-ce que je dois réactualiser data_1 avec le contenu de BY à ce niveau pour avoir quelque chose de propre en sortie ?
-// Il faudra aussi le refaire au niveau des outputs où des choses sont calculées uniquement à la fin pour le début ? 
 
 ////////////////////////////////////////////////////////////
 // 	STEP 9: RESOLUTION - EQUILIBRIUM 2018
@@ -241,9 +238,8 @@ parameters.time_since_BY = 2;
 // Recherche d'optimum ou simple résolution
 scal = [0.0054862432	0.1129423369];
 
-
-Optimum_2 = "False";
-if Optimum_2 == "True"
+//Optimum_2 = "True";
+//if Optimum_2 == "True"
 	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal) ;
 		parameters.Mu = scal(1);
 		parameters.phi_L = ones(parameters.phi_L)*Mu;
@@ -269,17 +265,17 @@ if Optimum_2 == "True"
 	
 	csvWrite(scal_opt_2,SAVEDIR_OPT+"scal_opt_2.csv", ';');
 
-	disp("abort because of you choose to run an optimisation")
-	abort
+//	disp("abort because of you choose to run an optimisation")
+//	abort
+//end
+//if Optimum_2 == "False"
 	scal = scal_opt_2;
-end
-if Optimum_2 == "False"
+	clear scal_opt_2
 	parameters.Mu = scal(1);
 	parameters.phi_L = ones(parameters.phi_L)*Mu;
 	parameters.u_param = scal(2);
 	exec(System_Resol+".sce");
-	clear scal
-end	
+//end	
 
 ////////////////////////////////////////////////////////////
 // 	STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2018
@@ -290,25 +286,18 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_2 = "False";
-if Test_2 == "True"
-	exec("test_2.sce");
-	pause
-end
+// attention : oubli du variable_storage... cela ne marchera pas sinon au delà
 
-exec(CODE+"Variable_Storage.sce");
+abort
 
 ////////////////////////////////////////////////////////////
 // 	STEP 11: Static comparative based on 2018 reference
 ////////////////////////////////////////////////////////////
-disp("STEP 11: Static comparative based on 2018 reference");
 time_step = 3; // avant la boucle 
 
 // Dashboard elements
-System_Resol = "Systeme_StatJCH";
-Resol_Mode = "Static_comparative";
+System_Resol = "Systeme_Static_LeMonde";
 clear Projection
-clear Deriv_Exogenous
 Demographic_shift = "False";
 Labour_product = "False";
 World_prices = "False";
@@ -321,81 +310,64 @@ initial_value = Variables2struct(list_InitVal); // prend les valeurs courantes d
 
 // parameters actualisations and loops
 exec("Loading_params.sce");
-parameters.u_param = BY.u_tot;
+parameters.u_param = BY.u_param;
 parameters.time_since_BY = 0;
 parameters.time_since_ini = 0;
-parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
-parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
-parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);
-parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);
-parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);
-parameters.ConstrainedShare_C(Indice_EnerSect) = ones(parameters.ConstrainedShare_C(Indice_EnerSect));
-parameters.ConstrainedShare_C(Indice_NonEnerSect) = ones(parameters.ConstrainedShare_C(Indice_NonEnerSect))*%nan;
-BY.sigma_X = parameters.sigma_X;
-BY.sigma_M = parameters.sigma_M;
-
-clear calib
-exec("Calibration.sce");
-warning("la recalibration ne fonctionne que si output_files = True")
-
-Test_recalib_2 = "False";
-if Test_recalib_2 == "True"
-	for elt=1:size(list_calib)
-		disp(list_calib(elt))
-		execstr("test_BY = calib."+ list_calib(elt) + "- data_2."+ list_calib(elt)+";");
-		test_BY
-		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
-		test_current
-	end
-	pause
-end
-
+parameters.ConstrainedShare_Labour(Indice_EnerSect) = ones(parameters.ConstrainedShare_Labour(Indice_EnerSect));//*0.8;
+parameters.ConstrainedShare_Labour(Indice_EnerSect) = ones(parameters.ConstrainedShare_Labour(Indice_EnerSect));//*0.8;
+parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);//*0.8;
+parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);//*0.8;
+parameters.ConstrainedShare_C(Indice_EnerSect) = 0.5*zeros(parameters.ConstrainedShare_C(Indice_EnerSect));
 Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
 Loop_elements.sigma_Trade_coef = [1.0 0.1 0.0]; // Élasticité du commerce 
 
-for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
-	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
-		for CoefW_elt=1:size(Loop_elements.Coef_real_wage,2)
-			for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,2)
-
-				getd(LIB);
-					
-				Current_Simu = 	"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
-								"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
-								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
-								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt));
-
-				disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
-
+for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,1)
+	for sigW_elt=1:size(Loop_elements.sigma_omegaU,1)
+		for CoefW_elt=1:size(Loop_elements.Coef_real_wage,1)
+			for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,1)
 				parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
 				parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
 				parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
-				parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
-				parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
+				parameters.sigma_X = parameters.sigma_X * Loop_elements.sigma_Trade_coef(CoefW_elt);
+				parameters.sigma_M = parameters.sigma_M *Loop_elements.sigma_Trade_coef(CoefW_elt);
 
-				if Output_files=='True'
-					SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + Current_Simu + filesep();
-					mkdir(SAVEDIR);
+				// recalibration 
+
+				// resolution 
+
+				// sortie / output
+				// definir un nom de dossier en contion des paramètres (et non du pas de temps)
+				// Carbon_Tax-
+
+				// current = BY, acttualisation des listes, data storage, etc... 
+
+				// repassage en courant des valeurs de l'année de base 
+				[Table_initial_value] = struct2Variables(BY,"BY");
+				for i= Table_initial_value
+				    execstr(Table_initial_value);
 				end
 
-				exec(System_Resol+".sce");
-
-				if Output_files=='True'
-					exec(CODE+"outputs.sce");
-					exec(CODE+"outputs_indic.sce");
-				end
-			
-				exec(CODE+"Variable_Storage.sce");
-
-				pause
 
 				time_step = time_step + 1;
 			end
 		end
 	end
 end
+
+// besoin de refaire chaque étape 
+// notamment la recalibration à cause des fonctions de production 
+
+
+// penser à la fin de chaque résolution à remettre l'ensemble des variables de BY en courant... 
+// revoir les fonctions de Gaëlle pour se faire
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////
 // 	STEP Final: SHUT DOWN THE DIARY

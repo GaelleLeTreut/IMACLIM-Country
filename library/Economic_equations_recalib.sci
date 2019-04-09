@@ -32,7 +32,7 @@ endfunction
 
 function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
 
-    y1 = VA_Tax_rate - tau_VA_Tax_rate*BY.VA_Tax_rate;
+    y1 = VA_Tax_rate - tau_VA_Tax_rate*(BY.VA_Tax_rate<>0).*BY.VA_Tax_rate;
     y = y1';
 
 endfunction
@@ -76,19 +76,37 @@ function [y] = Betta_Const_2(Betta, tau_Betta) ;
 
 endfunction
 
+function [y] = G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish) ;
 
+    // Government gross fixed capital formation constraint (GFCF_byAgent(Indice_Government))
+    y1 = GFCF_byAgent(Indice_Government) - I_pFish * BY.GFCF_byAgent(Indice_Government);
 
+//    y1 = GFCF_byAgent(Indice_Government) - (I_pFish * BY.GFCF_byAgent(Indice_Government)+sum(Carbon_Tax_IC) + sum(Carbon_Tax_C));
 
-//////////////////////////
-// Totaux du TEE
-//////////////////////////
+    y  = y1' ;
+endfunction
 
+function [y] = ConsumBudget_Const_2(Consumption_budget, H_disposable_income, Household_saving_rate, CPI) ;
 
-// maintien contant de l'investissement réel + Revevenu de la tax carbon
-	//    y = (I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0)));
-// maintien contant de l'investissement réel
-	//    y = (I.*pI- BY.I.*BY.pI.*I_pFish); 
+    /// Source of consumption budget - Constant in real terms
+    y1 = Consumption_budget - CPI*BY.Consumption_budget ;
+	y=y1';	
 
+endfunction
 
+function [y] = G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP, G_pFish) ;
 
+    /// Public consumption budget - constant in real terms
+    y1 = G_Consumption_budget - (G_pFish *  BY.G_Consumption_budget);
+    y = y1' ;
+
+endfunction
+
+function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish) ;
+
+    y = I.*pI- BY.I.*BY.pI.*I_pFish;
+
+    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+
+endfunction
 

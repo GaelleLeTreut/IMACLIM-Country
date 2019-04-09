@@ -782,6 +782,15 @@ function [y] = Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pen
     y=y1';
 endfunction
 
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP) ;
+
+    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
+    y1 = Pension_Benefits - BY.Pension_Benefits ;
+
+    y=y1';
+endfunction
+
 /// Unemployment benefits (by household class)
 function [y] = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param) ;
 
@@ -797,6 +806,14 @@ function [y] = UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, Unemp
 
     // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
     y1 = UnemployBenefits - (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
+
+    y=y1';
+endfunction
+
+function [y] = UnemployBenefits_Const_3(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param) ;
+
+    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
+    y1 = UnemployBenefits - BY.UnemployBenefits;
 
     y=y1';
 endfunction
@@ -818,6 +835,13 @@ function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Oth
     // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
     y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param ;
 
+    y=y1';
+endfunction
+
+function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+
+    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
+    y1 = Other_SocioBenef - BY.Other_SocioBenef;
     y=y1';
 endfunction
 

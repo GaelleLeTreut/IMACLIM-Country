@@ -36,9 +36,9 @@ end
 if Demographic_shift == "True"
 	Deriv_Exogenous.Labour_force =  ((1+Projection.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
 	Deriv_Exogenous.Population =  ((1+Projection.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
-	if [System_Resol<>"Systeme_ProjHomothetic"]&[System_Resol<>"Systeme_ProjHomot_BRA"] then
-		Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
-	end
+//	if [System_Resol<>"Systeme_ProjHomothetic"]&[System_Resol<>"Systeme_ProjHomot_BRA"] then
+	Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
+//	end
 end
 
 // Set up macroeconomic context

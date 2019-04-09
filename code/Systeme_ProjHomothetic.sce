@@ -342,7 +342,7 @@ if %f
     );
 end
 
-//printf("\n\n   count      vBest   info       toc\n");
+printf("\n\n   count      vBest   info       toc\n");
 while (count<countMax)&(vBest>sensib)
     count = count + 1;
 
@@ -368,10 +368,10 @@ while (count<countMax)&(vBest>sensib)
     result(count).count = count;
     result(count).info  = info;
 
-//    printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
+    printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
 end
 
-exec(CODE+"terminateResolution.sce");
+//exec(CODE+"terminateResolution.sce");
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
