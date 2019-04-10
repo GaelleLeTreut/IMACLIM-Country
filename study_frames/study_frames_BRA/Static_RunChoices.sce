@@ -5,7 +5,7 @@ Carbon_Tax_rate1 = 2e5;
 Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
+//parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 
 
 // u_param a clarifier

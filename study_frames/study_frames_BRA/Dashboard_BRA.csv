@@ -5,11 +5,12 @@ System_Resol;Systeme_ProjHomot_BRA
 // System_Resol;Systeme_StaCap_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
-// study;Projection_evolution
-study;Recursive_RunChoices
+study;Projection_evolution
+// study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_EnComp
+AGG_type;AGG_PMR19
+// AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
