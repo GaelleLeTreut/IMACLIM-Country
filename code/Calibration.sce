@@ -1205,9 +1205,9 @@ else
     G_invest_propensity = indiv_x2variable (Index_Imaclim_VarCalib, "x_G_invest_propensity");
 end
 
-function [const_GOS] =fcalib_GOS_Const_1(x_GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins, SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, Imaclim_VarCalib)
+function [const_GOS] =fcalib_GOS_Const_1(x_GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins, SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I,SpeMarg_rates_G, p, alpha, Y, C, X, Imaclim_VarCalib)
     GrossOpSurplus= indiv_x2variable(Imaclim_VarCalib, "x_GrossOpSurplus");
-    const_GOS = GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X);
+    const_GOS = GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X);
 endfunction
 
 const_GOS = 10^5;
@@ -1216,7 +1216,7 @@ while norm(const_GOS) > sensib
         error("review calib_Gross_Operating_Surplus")
     end
     count = count + 1;
-    [x_GrossOpSurplus, const_GOS, info_cal_GOS] = fsolve(x_GrossOpSurplus, list(fcalib_GOS_Const_1,  Capital_income, Profit_margin, Trade_margins, Transp_margins,SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, Index_Imaclim_VarCalib));
+    [x_GrossOpSurplus, const_GOS, info_cal_GOS] = fsolve(x_GrossOpSurplus, list(fcalib_GOS_Const_1,  Capital_income, Profit_margin, Trade_margins, Transp_margins,SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I,SpeMarg_rates_G, p, alpha, Y, C, X, Index_Imaclim_VarCalib));
 
     GrossOpSurplus = indiv_x2variable (Index_Imaclim_VarCalib, "x_GrossOpSurplus");
     GrossOpSurplus = (abs(GrossOpSurplus) > %eps).*GrossOpSurplus;
