@@ -108,7 +108,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
 	CPI = CPI_Const_2( pC, C);
 	// 	Specific to any projection in relation to BY
 	[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
-	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
+	GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
 
 endfunction
 
@@ -286,15 +286,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
-	
-	///Carbon cap test
-	CO2_intensity_IC( CO2Emis_IC, Emission_Coef_IC , IC)
-	 CapCO2_IC_tot( CO2Emis_IC, BY.CO2Emis_IC, CarbonCap_sect )
-	 CarbonCap_sect_Const_1(CarbonCap_sect, CarbonCap, CarbonCap_Diff_sect)
-	
-	CO2_intensity_C( CO2Emis_C, Emission_Coef_C , C)
-	CapCO2_C_tot( CO2Emis_C, BY.CO2Emis_C, CarbonCap_HH )
-	CarbonCap_sect_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) 
 	];
 	
     //7076:7087
