@@ -43,7 +43,7 @@ printf("===============================================\n");
 
 if  Country=="Brasil" then
 money ="reais";
-moneyTex="R\dollar"
+moneyTex="R\dollar";
 elseif Country=="France" then
 money="euro";
 moneyTex="\euro";
@@ -246,7 +246,7 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 
 disp "===== Decomposition pY Ratio ========================"
 disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
-[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; (d.markup_rate .* d.pY')./(ini.markup_rate .* ini.pY') ]]']);
+[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
 
 /// Calcul keuros/kreais/etc.
 d.IC_value = value(d.pIC,d.IC);
