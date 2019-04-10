@@ -318,7 +318,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     ///. Variation with relative prices (price-elasticities sigma_pC)
     ///. Variation with consumption budget (income-elasticities : sigma_ConsoBudget)
 
-    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - (1+delta_C_parameter(Indice_EnerSect)').^time_since_BY .* .. 
+    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_EnerSect, 1)) );
 
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )
@@ -717,7 +717,7 @@ endfunction
 /// Consumption Tax (by product-sector)
 
 function y = Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
-
+	pIC = abs(pIC);
     // Same rate for all items of domestic final demand
     y = Cons_Tax' - ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) ;
 
@@ -2063,7 +2063,8 @@ endfunction
 
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, and indirect tax
 function y = pIC_price_Const_1(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p)
-
+	
+	pIC=abs(pIC);
     //  Trade, transport and specific margins for energy
     // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Sectors) + SpeMarg_rates_IC' ;
     margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
@@ -2759,6 +2760,33 @@ function GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin
     SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
 
     GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I ;
+
+endfunction
+
+
+// SpeMarg_G 
+function [y] =  GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+
+    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
+    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+	SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
+
+    y1 = GrossOpSurplus - ( Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G) ;
+
+    y  = y1';
+endfunction
+
+function GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+
+    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
+    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+	 SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
+
+    GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G;
 
 endfunction
 
