@@ -1,2 +1,5 @@
 # ignore the directory outputs and all its content
 outputs
+
+# ignore file "country selection"
+study_frames/Country_Selection
