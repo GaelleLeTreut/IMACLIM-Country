@@ -1,7 +1,7 @@
-ConstrainedShared_IC;Coal;CrudeOil;NaturalGaz;FosFuelExclDies;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;MeatFoodBev;RestIndus;RoadTrans;RailAirWatTrans;RestComp
+ConstrainedShared_IC;Coal;CrudeOil;NaturalGas;FosFuelExclDies;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;MeatFoodBev;RestIndus;RoadTrans;RailAirWatTrans;RestComp
 Coal;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 CrudeOil;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-NaturalGaz;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+NaturalGas;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 FosFuelExclDies;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 Allbiofuel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 Diesel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
