@@ -120,14 +120,14 @@ for elt=1:size(listCSVfiles)
 
 	//	Check if the file is consistent with the definition of the disaggregation 
 if	Index_HouseholdsTEMP' <> DataAccount_rate_H10(1,2:$)
-	error("DataAccount_rate_H10.csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");	
+	error("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");	
 end
 	//	Locate in DataAccountTable the values to Disaggregate with the distribution keys (from households' incomes and expenditures surveys)
 for elt = 2:size(DataAccount_rate_H10,1)
 	ValueName 	= DataAccount_rate_H10(elt, 1) ;
 	Location 	= find( ValueName == Index_EconData(:, 2) ) ;
 	if	isempty(Location)
-		disp("DataAccount_rate_H10.csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
+		disp("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
 	else
 		LocationIndex(elt-1)	= Location ;
 		ValueNamesDISAG(elt-1) = ValueName ; 
@@ -243,7 +243,7 @@ value_DISAG.GFCF_byAgent(Indice_RestOfWorldTEMP) = [];
 	//	Check if the file is consistent with the definition of the disaggregation
 
 if	Index_HouseholdsTEMP' <> IOT_rate_H10(1,2:$)
-	error("IOT_rate_H10.csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)"); 
+	error("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)"); 
 end
 
 	//	Column containing the Aggregate values of Household Consumption C in IOT
@@ -260,7 +260,7 @@ for elt = 2:size(IOT_rate_H10,1)
 		Location 	= find( "Row" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - 1 ;
 		
 		if	isempty(Location)
-			disp("IOT_rate_H10.csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
+			disp("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
 		else		
 			LocationIndex(elt-1)	= Location ;
 			ValueNamesDISAG(elt-1) 	= ValueName ; 
@@ -321,7 +321,7 @@ for elt = 2:size(IOT_rate_H10,1)
 		Location 	= find( "Column" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - members("Row", Index_IOTvalue) - 1 ;
 		
 		if	isempty(Location)
-			disp("IOT_rate_H10.csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
+			disp("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
 		else		
 			LocationIndex2(elt-1)	= Location ;
 			ValueNamesDISAG(elt-1) 	= ValueName ; 
@@ -364,7 +364,7 @@ value_DISAG.IOT_CO2Emis( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1
 
 	//	Check if the file is consistent with the definition of the disaggregation 
 if	Index_HouseholdsTEMP' <> Demography_rate_H10(1,2:$)
-	error("Demography_rate_H10.csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");
+	error("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");
 end
 
 LocationIndex = [];
@@ -375,7 +375,7 @@ for elt = 2:size(Demography_rate_H10,1)
 	ValueName 	= Demography_rate_H10(elt, 1) ;
 	Location 	= find( ValueName == Demography(:, 1) ) ;
 	if	isempty(Location)
-		disp("Demography_rate_H10.csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
+		disp("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
 	else
 		LocationIndex(elt-1)	= Location ;
 		ValueNamesDISAG(elt-1) = ValueName ; 
