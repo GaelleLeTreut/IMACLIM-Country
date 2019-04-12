@@ -1,0 +1,68 @@
+===============================================
+ 
+  ======= IMACLIM-Brasil is running=============================   
+===============================================
+ 
+  ======= for resolving the system: Systeme_ProjHomot_BRA   
+===============================================
+ 
+  ======= using the study file: Projection_evolution   
+===============================================
+ 
+ ======= with various class of households: H10   
+===============================================
+ 
+ ======= at aggregated level: AGG_PMR19   
+===============================================
+ 
+ ======= with the resolution mode: Dynamic_projection   
+===============================================
+ 
+ ======= using various iterations:1   
+===============================================
+ 
+ ======= under the scenario nammed:   
+===============================================
+ 
+ ======= under the macro framework number:   
+===============================================
+ 
+ =======You choose not to realise a Carbon footprint analysis   
+===============================================
+ 
+ STEP 1: DATA...   
+ 
+ Substep 1: DISAGGREGATION of HOUSEHOLDS...   
+ 
+ Substep 2: AGGREGATION of DATA...   
+ 
+ Warning : unbalanced IOT of IMPORTS AGG   
+===============================================
+test equilibrium on specific margins after hybridization
+===============================================
+Allbiofuel to balance: -0.0141678
+===============================================
+Electricity to balance: 0.0207242
+===============================================
+ 
+ STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA...   
+AVERTISSEMENT : Checks_loads is empty... check consistency of param list regarding the resolution features choosen in the Dashboad?
+ 
+ STEP 3: CODE CALIBRATION...   
+ 
+ The system is well defined   
+AVERTISSEMENT :  Manu : modification of calibration.sce when we substitute some equations - G_demand_Const_2 and calibration of BudgetShare_GConsump
+ 
+ STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR   
+ 
+ STEP 5: RESOLUTION AND EQUILIBRIUM...   
+AVERTISSEMENT : ruben: created sigmaM here, instead of Technical_Coef_Const_1, maybe change?
+
+
+   count      vBest   info       toc
+ 
+ Error 999 with fsolve: exit : Type erroné de l'argument d'entrée n°1 : Un sca 
+      laire attendu.                                                              
+ 
+Saisissez 'resume' ou 'abort' pour revenir au niveau de prompt standard.
+
