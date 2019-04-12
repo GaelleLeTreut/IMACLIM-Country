@@ -119,12 +119,12 @@ for elt=1:size(listCSVfiles)
 //	(CHANGE NOM CAR PLUSIEURS FILES)
 
 	//	Check if the file is consistent with the definition of the disaggregation 
-if	Index_HouseholdsTEMP' <> DataAccount_rate_H10(1,2:$)
+if	Index_HouseholdsTEMP' <> evstr("DataAccount_rate_"+H_DISAGG+"(1,2:$)")
 	error("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");	
 end
 	//	Locate in DataAccountTable the values to Disaggregate with the distribution keys (from households' incomes and expenditures surveys)
-for elt = 2:size(DataAccount_rate_H10,1)
-	ValueName 	= DataAccount_rate_H10(elt, 1) ;
+for elt = 2:evstr("size(DataAccount_rate_"+H_DISAGG+",1)")
+	ValueName 	= evstr("DataAccount_rate_"+H_DISAGG+"(elt, 1)") ;
 	Location 	= find( ValueName == Index_EconData(:, 2) ) ;
 	if	isempty(Location)
 		disp("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
@@ -135,7 +135,7 @@ for elt = 2:size(DataAccount_rate_H10,1)
 end
 
 	//	Disaggregate the values with the distribution keys
-Distrib_keys = evstr( DataAccount_rate_H10(2:$,2:$) );
+Distrib_keys = eval(eval(("DataAccount_rate_"+H_DISAGG+"(2:$,2:$)"))); 
 Disagg_Values = ones(1, size(Distrib_keys,2)) .*. DataAccountTable(LocationIndex,Indice_Households) .* Distrib_keys ;
 
 	//	Eliminating rounded figures to get exact aggregation
@@ -242,7 +242,7 @@ value_DISAG.GFCF_byAgent(Indice_RestOfWorldTEMP) = [];
 
 	//	Check if the file is consistent with the definition of the disaggregation
 
-if	Index_HouseholdsTEMP' <> IOT_rate_H10(1,2:$)
+if	Index_HouseholdsTEMP' <> evstr("IOT_rate_"+H_DISAGG+"(1,2:$)")
 	error("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)"); 
 end
 
@@ -254,8 +254,8 @@ end
 	LocationIndex = [];
 	ValueNamesDISAG = [];
 	
-for elt = 2:size(IOT_rate_H10,1)
-		ValueName 	= IOT_rate_H10(elt, 1);
+for elt = 2:evstr("size(IOT_rate_"+H_DISAGG+",1)")
+		ValueName 	= evstr("IOT_rate_"+H_DISAGG+"("+elt+",1)");
 		
 		Location 	= find( "Row" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - 1 ;
 		
@@ -284,7 +284,7 @@ value_DISAG.IOT_Prices( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1 
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLE in QUANTITIES
 
 	//	Disaggregate the values with the distribution keys
-Distrib_keys = evstr( IOT_rate_H10(2:$,2:$) );
+Distrib_keys =  eval(eval("IOT_rate_"+H_DISAGG+"(2:$,2:$)" ));
 Disagg_Values = [];
 Disagg_Values = ones( 1, size(Distrib_keys,2 )) .*. IOT_Qtities(LocationIndex,Location2) .* Distrib_keys ;
 	//	Eliminating rounded figures to get exact aggregation
@@ -315,9 +315,8 @@ value_DISAG.IOT_Val(Location3+nb_HouseholdsTEMP:$,1:nb_Commodities) = IOT_Val(Lo
 	//	Energy specific margins (Same energy price, same rate of specific margins: same disaggregation of the specific margin as the energy quantities consumed)
 
 		// 	Location index 2 : sectors in column
-for elt = 2:size(IOT_rate_H10,1)
-		ValueName 	= IOT_rate_H10(elt, 1);
-		
+for elt = 2:evstr("size(IOT_rate_"+H_DISAGG+",1)")
+		ValueName 	= evstr("IOT_rate_"+H_DISAGG+"(elt, 1)");
 		Location 	= find( "Column" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - members("Row", Index_IOTvalue) - 1 ;
 		
 		if	isempty(Location)
@@ -363,7 +362,7 @@ value_DISAG.IOT_CO2Emis( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1
 //////////////	DISAGGREGATION - DEMOGRAPHIC TABLES
 
 	//	Check if the file is consistent with the definition of the disaggregation 
-if	Index_HouseholdsTEMP' <> Demography_rate_H10(1,2:$)
+if	Index_HouseholdsTEMP' <> evstr("Demography_rate_"+H_DISAGG+"(1,2:$)")
 	error("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");
 end
 
@@ -371,8 +370,8 @@ LocationIndex = [];
 ValueNamesDISAG = [];
 
 	//	Locate in DataAccountTable the values to Disaggregate with the distribution keys (from households' incomes and expenditures surveys)
-for elt = 2:size(Demography_rate_H10,1)
-	ValueName 	= Demography_rate_H10(elt, 1) ;
+for elt = 2:evstr("size(Demography_rate_"+H_DISAGG+",1)")
+	ValueName 	= evstr("Demography_rate_"+H_DISAGG+"(elt, 1)") ;
 	Location 	= find( ValueName == Demography(:, 1) ) ;
 	if	isempty(Location)
 		disp("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
@@ -383,7 +382,7 @@ for elt = 2:size(Demography_rate_H10,1)
 end
 
 	//	Disaggregate the values with the distribution keys
-Distrib_keys = evstr( Demography_rate_H10(2:$,2:$) );
+Distrib_keys = eval(eval("Demography_rate_"+H_DISAGG+"(2:$,2:$)"));
 Disagg_Values = []; 
 Disagg_Values = ones( 1, size(Distrib_keys,2 )) .*. evstr(Demography(LocationIndex, 2)) .* Distrib_keys ;
 
