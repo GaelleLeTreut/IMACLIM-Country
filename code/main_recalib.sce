@@ -271,6 +271,8 @@ if Optimum_2 == "True"
 
 	[scal_opt_2, fval, exitflag, output] = fminsearch(System_optimisation, scal, opt);
 	
+	SAVEDIR_OPT = OUTPUT+"Optimum"+filesep();
+	mkdir(SAVEDIR_OPT);
 	csvWrite(scal_opt_2,SAVEDIR_OPT+"scal_opt_2.csv", ';');
 
 	disp("abort because of you choose to run an optimisation")

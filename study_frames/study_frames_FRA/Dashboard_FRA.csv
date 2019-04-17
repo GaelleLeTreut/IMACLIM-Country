@@ -49,7 +49,7 @@ CO2_footprint;False
 Output_files;True
 // Output_files;False
 // TELL if you want to call "terminate_resolution";
-Term_Resol;True
-//Term_Resol;False
+//Term_Resol;True
+Term_Resol;False
 
 
