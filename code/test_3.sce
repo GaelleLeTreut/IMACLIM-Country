@@ -23,4 +23,7 @@ strcat(strsplit(TEST_STR))
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> France_recalib
