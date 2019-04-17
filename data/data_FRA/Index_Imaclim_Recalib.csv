@@ -85,3 +85,7 @@ NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf
 GOS_byAgent;1;nb_InstitAgents;Var;0;%inf
 Other_Transfers;1;nb_InstitAgents;Var;-%inf;%inf
 pM;nb_Sectors;1;Var_interm;0;%inf
+delta_LS_H;1;nb_Households;Var_interm;0;1
+delta_LS_S;1;nb_Sectors;Var_interm;0;1
+delta_LS_I;1;1;Var_interm;0;1
+delta_LS_LT;1;1;Var_interm;0;1

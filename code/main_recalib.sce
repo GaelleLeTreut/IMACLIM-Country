@@ -14,12 +14,15 @@ exec("preambule.sce");
 exec("Dashboard.sce");
 
 if Output_files=='True'
-	runName = study + "_" + mydate();
-	SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
+
+//	runName = study + "_" + mydate();
+//	SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
+	runName = Recycling_Option;
+	SAVEDIR = OUTPUT+runName + filesep();
 	mkdir(SAVEDIR);
 	diary(SAVEDIR+"summary.log");
 
-	SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
+	SAVEDIR_IOA = OUTPUT+runName + filesep()+ "outputs_IOA"+filesep();
 	mkdir(SAVEDIR_IOA);	
 	
 	// Save Dashbord.csv & System_Resol.csv in output
@@ -75,7 +78,7 @@ time_step=1;
 // Creation of a new output subdirectory for each time step in case of several time steps calculation
 if Nb_Iter<>1
 	if Output_files=='True'
-		SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+		SAVEDIR = OUTPUT+runName + filesep() + time_step + filesep();
 		mkdir(SAVEDIR);
 	end
 end
@@ -155,7 +158,7 @@ end
 
 Test_1 = "False";
 if Test_1 == "True"
-	exec("test_1.sce");
+	exec("test"+filesep()+"test_1.sce");
 	pause
 end
 
@@ -223,7 +226,7 @@ disp("STEP 9: RESOLUTION AND EQUILIBRIUM 2018");
 // Creation of a new output subdirectory for each time step in case of several time steps calculation
 if Nb_Iter<>1
 	if Output_files=='True'
-		SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+		SAVEDIR = OUTPUT+runName + filesep() + time_step + filesep();
 		mkdir(SAVEDIR);
 	end
 end
@@ -232,8 +235,7 @@ end
 if Macro_nb <> ""
 	exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
 end
-Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired
-pause
+Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
 
 // Loading other study changes (specific feature)
 exec(STUDY_Country+study+".sce");
@@ -299,9 +301,9 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_2 = "True";
+Test_2 = "False";
 if Test_2 == "True"
-	exec("test_2.sce");
+	exec("test"+filesep()+"test_2.sce");
 	pause
 end
 
@@ -386,7 +388,7 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 				parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
 
 				if Output_files=='True'
-					SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + Current_Simu + filesep();
+					SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
 					mkdir(SAVEDIR);
 				end
 
@@ -398,8 +400,6 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 				end
 			
 				exec(CODE+"Variable_Storage.sce");
-
-				pause
 
 				time_step = time_step + 1;
 			end
