@@ -244,9 +244,9 @@ parameters.sigma_ConsoBudget = zeros(parameters.sigma_ConsoBudget);
 parameters.delta_C_parameter = [0 -0.0285576926 -0.0685883993 -0.0044717719 -0.012146912 -0.0036466613 zeros(Indice_NonEnerSect)] ;
 
 // Recherche d'optimum ou simple résolution
-scal = [0.0054862432	0.1129423369];
+scal = [-0.0220481209	0.0843904014];
 
-Optimum_2 = "True";
+Optimum_2 = "False";
 if Optimum_2 == "True"
 	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal) ;
 		parameters.Mu = scal(1);
@@ -297,7 +297,7 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_2 = "False";
+Test_2 = "True";
 if Test_2 == "True"
 	exec("test_2.sce");
 	pause

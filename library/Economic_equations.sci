@@ -976,7 +976,6 @@ function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 	y  = y1' ;
 endfunction
 
-
 // Ex-post labour tax rate
 function [y] = Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut) ;
 
