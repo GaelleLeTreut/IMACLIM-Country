@@ -137,8 +137,10 @@ SpeMarg_rates_G;1;nb_Commodities;calib
 delta_interest_rate;1;1;calib
 delta_TranspMargins_rate;1;1;calib
 delta_TradeMargins_rate;1;1;calib
-delta_LS_H;1;1;InitVal
-delta_LS_S;1;1;InitVal
+delta_LS_H;1;nb_Households;calib
+delta_LS_S;1;nb_Sectors;calib
+delta_LS_I;1;1;calib
+delta_LS_LT;1;1;calib
 GFCF_Distribution_Shares;1;nb_DomesticAgents;calib
 tau_Betta;1;1;calib
 tau_VA_Tax_rate;1;1;calib

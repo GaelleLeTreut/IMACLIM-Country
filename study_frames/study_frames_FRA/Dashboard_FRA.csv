@@ -1,10 +1,9 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomothetic
+System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_ProjEcopa
 // System_Resol;Systeme_Static
-System_Resol;Systeme_Static_recalib
-// System_Resol;Systeme_Stat_RoW
+// System_Resol;Systeme_Static_recalib
 // SELECT a type of study (shock in parameters) by uncomment it;
 study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
@@ -25,7 +24,7 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;29
+Nb_Iter;1
 // SELECT a Macro framework to run;
 // Macro_nb;
 Macro_nb;Recalib
@@ -34,14 +33,23 @@ Macro_nb;Recalib
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
-World_prices;True
+World_prices;False
 X_nonEnerg;False
-Energy_Balance;True
+Energy_Balance;False
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
+// SELECT a carbon tax recycling option (standard = PublicDeficit); 
+Recycling_Option;PublicDeficit
+// Recycling_Option;GreenInvest
+// Recycling_Option;LumpSumHH
+// Recycling_Option;LabTax
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_PublicDeficit
+// Recycling_Option;LabTax_GreenInvest
+// Recycling_Option;LabTax_LumpSumHH
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

@@ -885,31 +885,17 @@ endfunction
 
 function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP) ;
     // /// No new direct compensations to households
-   y1 = zeros(1,nb_InstitAgents)  
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
-   
-   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - BY.ClimPolicyCompens(Indice_Households) ;
+   y1 = zeros(1,nb_InstitAgents); 
+   y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
+   y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   - BY.ClimPolicyCompens(Indice_Government);
+   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
+   y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - BY.ClimPolicyCompens(Indice_Households) ;
 
     y=y1';
 endfunction
 
-function [y] = ClimCompensat_Const_2(ClimPolicyCompens, ClimPolCompensbySect) ;
-    // /// No new direct compensations to households
-   y1 = zeros(1,nb_InstitAgents)
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
-//   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) + ClimPolicyCompens(Indice_Households) + sum(ClimPolCompensbySect)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
-   
-   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - delta_LS_H .* ones(1, nb_Households).*((sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)) / nb_Households) ;
-
-    y=y1';
-endfunction
-
-///	proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP) ;
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
     y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
@@ -926,17 +912,8 @@ function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect) ;
     y=y1';
 endfunction
 
-	/// Uniform lump sum compensation of Sectors
-function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect, Carbon_Tax_IC, Carbon_Tax_C) ;
-
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - delta_LS_S.* ones(1, nb_Sectors).*( sum(Carbon_Tax_IC) + sum(Carbon_Tax_C) )/nb_Sectors ;
-
-    y=y1';
-endfunction
-
-///	proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP) ;
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect, GDP) ;
 
     // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
     y1 = ClimPolCompensbySect - (BY.GDP/BY.GDP) * BY.ClimPolCompensbySect ;
@@ -1760,14 +1737,13 @@ endfunction
 // Entrepreneurs' investment demand equals to an exogenous proportion of fixed capital depreciation
 // Constant composition in goods of capital
 
-function [y] = Invest_demand_Const_1(Betta, I, kappa, Y) ;
-
+function [y] = Invest_demand_Const_1(Betta, I, kappa, Y)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 
     y = I - Betta * sum( kappa .* Y' ) ;
-endfunction
 
+endfunction
 
 // for investment matrix
 function [y] = Invest_demand_Const_2(Betta, I, kappa, Y) ;
