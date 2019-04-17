@@ -153,7 +153,7 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_1 = "True";
+Test_1 = "False";
 if Test_1 == "True"
 	exec("test_1.sce");
 	pause
@@ -173,26 +173,26 @@ time_step = 2;
 // Dashboard elements
 System_Resol = "Systeme_ProjHomothetic";
 Energy_Balance = "False";
+X_nonEnerg = "True";
 
 // BY & initial_value actualisation (data de 2010 stockée dans data_1)
 data_0 = BY;
-//execstr("test_data."+ fieldnames(data_0) + " = data_1." + fieldnames(data_0) + " - data_0." + fieldnames(data_0) + ";");
 BY = ini;
 clear initial_value
 clear Deriv_Exogenous
 initial_value = Variables2struct(list_InitVal); // prend les valeurs courantes dans la liste 
-Projection.IC = [];
-Projection.Y = [];
-Projection.M = [];
-Projection.C = [];
-Projection.X = [];
+Projection.IC = null();
+Projection.Y = null();
+Projection.M = null();
+Projection.C = null();
+Projection.X = null();
 
 // parameters actualisations and re-calibration
 exec("Loading_params.sce");
 parameters.u_param = BY.u_param;
-parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);//*0.8;
-parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);//*0.8;
-parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);//*0.8;
+parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);
+parameters.ConstrainedShare_Capital = ones(parameters.ConstrainedShare_Capital);
+parameters.ConstrainedShare_IC = ones(parameters.ConstrainedShare_IC);
 parameters.sigma_omegaU = BY.sigma_omegaU;
 parameters.Coef_real_wage = BY.Coef_real_wage;
 
@@ -237,16 +237,20 @@ end
 exec(STUDY_Country+study+".sce");
 parameters.time_since_ini = 2;
 parameters.time_since_BY = 2;
+parameters.sigma_X = zeros(parameters.sigma_X);
+parameters.sigma_M = zeros(parameters.sigma_M);
+parameters.sigma_pC = zeros(parameters.sigma_pC);
+parameters.sigma_ConsoBudget = zeros(parameters.sigma_ConsoBudget);
+parameters.delta_C_parameter = [0 -0.0285576926 -0.0685883993 -0.0044717719 -0.012146912 -0.0036466613 zeros(Indice_NonEnerSect)] ;
 
 // Recherche d'optimum ou simple résolution
 scal = [0.0054862432	0.1129423369];
 
-
-Optimum_2 = "False";
+Optimum_2 = "True";
 if Optimum_2 == "True"
 	function [d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal) ;
 		parameters.Mu = scal(1);
-		parameters.phi_L = ones(parameters.phi_L)*Mu;
+		parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
 		parameters.u_param = scal(2);		
 		exec(System_Resol+".sce");
 	endfunction 
@@ -275,8 +279,9 @@ if Optimum_2 == "True"
 end
 if Optimum_2 == "False"
 	parameters.Mu = scal(1);
-	parameters.phi_L = ones(parameters.phi_L)*Mu;
+	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
 	parameters.u_param = scal(2);
+
 	exec(System_Resol+".sce");
 	clear scal
 end	
@@ -313,6 +318,7 @@ Demographic_shift = "False";
 Labour_product = "False";
 World_prices = "False";
 Energy_Balance = "False";
+X_nonEnerg = "False";
 
 // BY & initial_value actualisation (data de 2010 stockée dans data_1)
 BY = ini;
@@ -353,7 +359,7 @@ end
 Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [1.0 0.1 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)

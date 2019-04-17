@@ -383,7 +383,7 @@ while (count<countMax)&(vBest>sensib)
    printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
 end
 
-//exec(CODE+"terminateResolution.sce");
+exec(CODE+"terminateResolution.sce");
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
