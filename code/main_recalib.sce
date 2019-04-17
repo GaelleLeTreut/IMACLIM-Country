@@ -232,6 +232,8 @@ end
 if Macro_nb <> ""
 	exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
 end
+Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired
+pause
 
 // Loading other study changes (specific feature)
 exec(STUDY_Country+study+".sce");
