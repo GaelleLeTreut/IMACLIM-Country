@@ -8,13 +8,14 @@ System_Resol;Systeme_ProjHomot_BRA
 study;Projection_evolution
 // study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_PMR19
+AGG_type;
+// AGG_type;AGG_PMR19
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
 // H_DISAGG;H3
-H_DISAGG;H10
+H_DISAGG;H4
+// H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection

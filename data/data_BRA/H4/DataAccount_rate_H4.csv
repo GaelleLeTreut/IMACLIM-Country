@@ -1,0 +1,14 @@
+Households_Gourps;H1;H2;H3;H4
+GOS_byAgent;0.25;0.25;0.25;0.25
+NetCompWages_byAgent;0.25;0.25;0.25;0.25
+Property_income;0.25;0.25;0.25;0.25
+Gov_social_transfers;0.25;0.25;0.25;0.25
+Corp_social_transfers;0.25;0.25;0.25;0.25
+ClimPolicyCompens;0;0;0;0
+Other_Transfers;0.25;0.25;0.25;0.25
+Income_Tax;0.25;0.25;0.25;0.25
+Gov_Direct_Tax;0.25;0.25;0.25;0.25
+Corp_Direct_Tax;0.25;0.25;0.25;0.25
+FC_byAgent;0.25;0.25;0.25;0.25
+GFCF_byAgent;0.25;0.25;0.25;0.25
+NetFinancialDebt;0.25;0.25;0.25;0.25
