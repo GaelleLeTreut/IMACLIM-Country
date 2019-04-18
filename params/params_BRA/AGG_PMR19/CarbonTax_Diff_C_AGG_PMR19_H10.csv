@@ -1,8 +1,7 @@
 CarbonTax_Diff_C;H1;H2;H3;H4;H5;H6;H7;H8;H9;H10
 Coal;1;1;1;1;1;1;1;1;1;1
-CrudeOil;1;1;1;1;1;1;1;1;1;1
+COilFFuelExDies;1;1;1;1;1;1;1;1;1;1
 NaturalGas;1;1;1;1;1;1;1;1;1;1
-FosFuelExclDies;1;1;1;1;1;1;1;1;1;1
 Allbiofuel;1;1;1;1;1;1;1;1;1;1
 Diesel;1;1;1;1;1;1;1;1;1;1
 Electricity;1;1;1;1;1;1;1;1;1;1
@@ -13,8 +12,9 @@ Cement;1;1;1;1;1;1;1;1;1;1
 IronSteel;1;1;1;1;1;1;1;1;1;1
 NonFerrousMetals;1;1;1;1;1;1;1;1;1;1
 Chemical;1;1;1;1;1;1;1;1;1;1
-MeatFoodBev;1;1;1;1;1;1;1;1;1;1
+BovineMeat;1;1;1;1;1;1;1;1;1;1
+RestFoodBeve;1;1;1;1;1;1;1;1;1;1
 RestIndus;1;1;1;1;1;1;1;1;1;1
-RoadTrans;1;1;1;1;1;1;1;1;1;1
-RailAirWatTrans;1;1;1;1;1;1;1;1;1;1
+FreightTrans;1;1;1;1;1;1;1;1;1;1
+PassTrans;1;1;1;1;1;1;1;1;1;1
 RestComp;1;1;1;1;1;1;1;1;1;1
