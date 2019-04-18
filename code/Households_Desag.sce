@@ -122,6 +122,14 @@ for elt=1:size(listCSVfiles)
 if	Index_HouseholdsTEMP' <> evstr("DataAccount_rate_"+H_DISAGG+"(1,2:$)")
 	error("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");	
 end
+
+for elt=1:size(evstr("DataAccount_rate_"+H_DISAGG+"(2:$,2:$)"),"r")
+if round(sum(eval(evstr("DataAccount_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>1&round(sum(eval(evstr("DataAccount_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>0
+error("DataAccount_rate_"+H_DISAGG+".csv does not sum 1: error in shares for disaggregation at line"+elt)
+end
+end
+
+
 	//	Locate in DataAccountTable the values to Disaggregate with the distribution keys (from households' incomes and expenditures surveys)
 for elt = 2:evstr("size(DataAccount_rate_"+H_DISAGG+",1)")
 	ValueName 	= evstr("DataAccount_rate_"+H_DISAGG+"(elt, 1)") ;
@@ -246,6 +254,13 @@ if	Index_HouseholdsTEMP' <> evstr("IOT_rate_"+H_DISAGG+"(1,2:$)")
 	error("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)"); 
 end
 
+for elt=1:size(evstr("IOT_rate_"+H_DISAGG+"(2:$,2:$)"),"r")
+if	round(sum(eval(evstr("IOT_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>1&round(sum(eval(evstr("IOT_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>0
+error("IOT_rate_"+H_DISAGG+".csv does not sum 1: error in shares for disaggregation at line"+elt)
+end
+end
+
+
 	//	Column containing the Aggregate values of Household Consumption C in IOT
 	Location2 	= find( "Column" == Index_IOTvalue(:,1) & "C" == Index_IOTvalue(:,2) ) - members("Row", Index_IOTvalue) - 1;
 
@@ -365,6 +380,14 @@ value_DISAG.IOT_CO2Emis( LocationIndex , Location2:Location2+nb_HouseholdsTEMP-1
 if	Index_HouseholdsTEMP' <> evstr("Demography_rate_"+H_DISAGG+"(1,2:$)")
 	error("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: wrong number or labels for the households groups (columns)");
 end
+
+
+for elt=1:size(evstr("Demography_rate_"+H_DISAGG+"(2:$,2:$)"),"r")
+if	round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>1&round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>0
+error("Demography_rate_"+H_DISAGG+".csv does not sum 1: error in shares for disaggregation at line"+elt)
+end
+end
+
 
 LocationIndex = [];
 ValueNamesDISAG = [];
