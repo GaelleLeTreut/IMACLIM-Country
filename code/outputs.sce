@@ -235,7 +235,7 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 
 disp "===== Decomposition pY Ratio ========================"
 disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
-[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;(d.Production_Tax_rate .* d.pY')./(ini.Production_Tax_rate .* ini.pY') ; (d.markup_rate .* d.pY')./(ini.markup_rate .* ini.pY') ]]']);
+[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; (d.markup_rate .* d.pY')./(ini.markup_rate .* ini.pY') ]]']);
 
 /// Calcul keuros
 d.IC_value = value(d.pIC,d.IC);
@@ -755,7 +755,6 @@ end
 
 // Run
 d.Trade_Balance =(sum(d.M_value) - sum(d.X_value))*(Index_InstitAgents' == "RestOfWorld");
-d.InsuranceContrib_byAgent = sum(d.Labour_Tax) *(Index_InstitAgents' == "Government");
 d.Production_Tax_byAgent = sum(d.Production_Tax) *(Index_InstitAgents' == "Government");
 d.Energ_Tax_byAgent = (sum(d.Energy_Tax_IC) + sum(d.Energy_Tax_FC))*(Index_InstitAgents' == "Government");
 d.OtherIndirTax_byAgent = (sum(d.OtherIndirTax))*(Index_InstitAgents' == "Government");
@@ -773,6 +772,8 @@ d.FC_byAgent (1,Indice_Corporations) = 0;
 
 if  Country<>"Brasil" then
 
+	d.InsuranceContrib_byAgent = sum(d.Labour_Tax) *(Index_InstitAgents' == "Government");
+	
 	d.Pensions(Indice_Households)= d.Pensions;
 	d.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
 	d.Pensions(Indice_Government) = -sum(d.Pensions(Indice_Households));
@@ -794,7 +795,11 @@ if  Country<>"Brasil" then
 	d.Other_Direct_Tax(Indice_Government) = -sum(d.Other_Direct_Tax(Indice_Households));
 	d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
 else
-
+	
+	d.InsuranceContrib_byAgent = zeros(1,nb_InstitAgents);
+	d.InsuranceContrib_byAgent(Indice_Government) = sum(d.Labour_Tax) ;
+	d.InsuranceContrib_byAgent(Indice_Corporations) = sum(d.Labour_Corp_Tax);
+	
 	d.Gov_social_transfers(Indice_Households) = d.Gov_social_transfers;
 	d.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
 	d.Gov_social_transfers(Indice_Government) = -sum(d.Gov_social_transfers(Indice_Households));

@@ -1,0 +1,26 @@
+;Corporations;Government;Households;RestOfWorld
+Trade_Balance;0;0;0;-184546
+GOS_byAgent;962548.9607;0;0;0
+NetCompWages_byAgent;0;0;767765.9035;0
+InsuranceContrib_byAgent;0;227438.8288;0;0
+Production_Tax_byAgent;0;0;0;0
+Energ_Tax_byAgent;0;0;0;0
+Carbon_Tax_byAgent;0;0;0;0
+OtherIndirTax_byAgent;0;164988.2119;0;0
+VA_Tax_byAgent;0;189934.2102;0;0
+Property_income;-68823000;-31360000;123122000;-22939000
+Unemployment_transfers;0;-146526.75;146526.75;0
+Pensions;0;-146526.75;146526.75;0
+Other_social_transfers;0;-32561.5;32561.5;0
+ClimPolicyCompens;0;0;0;0
+Other_Transfers;68455744.94;31156179.82;-122725236.8;23113312
+Income_Tax;0;54660;-54660;0
+Corporate_Tax;-415023;415023;0;0
+Other_Direct_Tax;0;0;0;0
+Disposable_Income;180270.8973;522609.0746;1435484.143;-10234
+FC_byAgent;0;455185.5943;1333597.449;0
+GFCF_byAgent;180270.8973;57906.48025;101169.694;0
+Tot_FC_byAgent;180270.8973;513092.0746;1434767.143;0
+NetLending;0;9517;717;-10234
+NetFinancialDebt;1911288;1067584;-2624160;-354712
+Thousand of euros;0;0;0;0

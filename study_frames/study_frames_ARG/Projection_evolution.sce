@@ -64,7 +64,7 @@ GDP_proj = GDP_2030 ;
 // Estimation du nombre d'équivalent temps plein : Labour_force_2035 * ( 1 - u_tot_ref ) * LabourByWorker_coef;
 
 // Labour producitivy level compared to base year - as used in equations
-Labour_Product = ( GDP_proj / ini.GDP )  / ( ( Labour_force_proj * ( 1 - BY.u_tot ) * ini.LabourByWorker_coef ) / sum(ini.Labour) ) ;
+Labour_Product = ( GDP_proj / ini.GDP )  / ( ( Labour_force_proj * ( 1 - ini.u_tot ) * ini.LabourByWorker_coef ) / sum(ini.Labour) ) ;
 
 Deriv_Exogenous.Labour_force =  (Labour_force_proj / sum(ini.Labour_force)) * ini.Labour_force ;
 

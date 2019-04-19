@@ -605,7 +605,7 @@ function y = OthDirTax_rate_Const_1(Direct_Tax, Labour_income, Direct_Tax_rate) 
     
     y1 = Direct_Tax - Direct_Tax_rate .* sum(Labour_income,"c");
     
-    y=y1;
+    y=y1';
 	
 endfunction
 

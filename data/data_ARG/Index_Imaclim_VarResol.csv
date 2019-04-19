@@ -1,7 +1,8 @@
 Variable Name;Row Size;Column Size;Type;Min;Max
 H_disposable_income;1;nb_Households;Var;0;%inf
-Gov_social_transfers;1;nb_Households;Var;0;%inf
-Corp_social_transfers;1;nb_Households;Var;0;%inf
+Pensions;1;nb_Households;Var;0;%inf
+Unemployment_transfers;1;nb_Households;Var;0;%inf
+Other_social_transfers;1;nb_Households;Var;0;%inf
 Property_income;1;nb_InstitAgents;Var;-%inf;%inf
 Household_savings;1;nb_Households;Var;-%inf;%inf
 Corporations_savings;1;nb_Corporations;Var;0;%inf
@@ -14,23 +15,22 @@ C;nb_Commodities;nb_Households;Var;0;%inf
 Corp_disposable_income;1;nb_Corporations;Var;0;%inf
 G_disposable_income;1;nb_Government;Var;0;%inf
 Income_Tax;1;nb_Households;Var;0;%inf
-Gov_Direct_Tax;1;nb_Households;Var;0;%inf
-Corp_Direct_Tax;1;nb_Households;Var;0;%inf  
+Other_Direct_Tax;1;nb_Households;Var_interm;0;%inf
 Corporate_Tax;1;nb_Corporations;Var;0;%inf
 Production_Tax;1;nb_Sectors;Var;-%inf;%inf
 Labour_Tax;1;nb_Sectors;Var;0;%inf
-Labour_Corp_Tax;1;nb_Sectors;Var;0;%inf
 Energy_Tax_IC;1;nb_Commodities;Var;0;%inf
 Energy_Tax_FC;1;nb_Commodities;Var;0;%inf
 OtherIndirTax;1;nb_Commodities;Var;-%inf;%inf
 VA_Tax;1;nb_Commodities;Var;0;%inf
-Cons_Tax;1;nb_Commodities;Var;0;"%inf							"
 Carbon_Tax_IC;nb_Commodities;nb_Sectors;Var;-%inf;%inf
 Carbon_Tax_C;nb_Commodities;nb_Households;Var;-%inf;%inf
-Gov_SocioBenef;1;nb_Households;Var;0;"%inf						   "
-Corp_SocioBenef;1;nb_Households;Var;0;%inf
+Pension_Benefits;1;nb_Households;Var;0;%inf
+UnemployBenefits;1;nb_Households;Var;0;%inf
+Other_SocioBenef;1;nb_Households;Var;0;%inf
 Carbon_Tax_rate_IC;nb_Commodities;nb_Sectors;Var;0;%inf
 Carbon_Tax_rate_C;nb_Commodities;nb_Households;Var;0;%inf
+ClimPolicyCompens;1;nb_InstitAgents;Var;0;%inf
 ClimPolCompensbySect;1;nb_Sectors;Var;0;%inf
 Labour_Tax_Cut;1;1;Var;0;1
 Labour_Tax_rate;1;nb_Sectors;Var;0;1
@@ -52,7 +52,6 @@ SpeMarg_IC;nb_Sectors;nb_Commodities;Var;-%inf;%inf
 SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_I;1;nb_Commodities;Var;-%inf;%inf
-SpeMarg_G;1;nb_Commodities;Var;-%inf;%inf 
 I;nb_Commodities;1;Var;0;%inf
 pK;1;nb_Sectors;Var;0;%inf
 Y;nb_Sectors;1;Var;0;%inf
@@ -74,8 +73,6 @@ w;1;nb_Sectors;Var;0;%inf
 u;1;nb_Households;Var;0;1
 Unemployed;1;nb_Households;Var;0;%inf
 pL;1;nb_Sectors;Var;0;%inf
-delta_interest_rate;1;1;Var;0;10
-interest_rate;1;nb_InstitAgents;Var;-1;1
 GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf

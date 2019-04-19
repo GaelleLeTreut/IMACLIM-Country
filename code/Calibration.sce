@@ -178,14 +178,16 @@ function [const_Y] =fcalib_Y_value_Const_1(x_Y, Y_value, pY, Imaclim_VarCalib)
     Y= indiv_x2variable(Imaclim_VarCalib, "x_Y");
     const_Y = Y_value_Const_1(Y_value, Y, pY);
 endfunction
-[x_Y, const_Y, info_calib_Y] = fsolve(x_Y, list(fcalib_Y_value_Const_1, Y_value, pY, Index_Imaclim_VarCalib));
-
-if norm(const_Y) > sensib
-    error( "review calib_Y")
-else
+const_Y = 10^5;
+while norm(const_Y) > sensib
+    if  (count>=countMax)
+        error("review calib Household_savings");
+    end
+    count = count + 1;
+    [x_Y, const_Y, info_calib_Y] = fsolve(x_Y, list(fcalib_Y_value_Const_1, Y_value, pY, Index_Imaclim_VarCalib));
     Y = indiv_x2variable (Index_Imaclim_VarCalib, "x_Y");
-    // Y = (Y_value'<>0&pY<>0).*Y;
 end
+count=0;
 
 
 function [const_M] =fcalib_M_value_Const_1(x_M, M_value, pM, Imaclim_VarCalib)

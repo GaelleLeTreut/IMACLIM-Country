@@ -44,8 +44,8 @@ end
 // Set up macroeconomic context
 if Labour_product == "True"
 	GDP_index(time_step) = prod((1 + Projection.GDP(1:time_step)).^(Projection.current_year(1:time_step) - Projection.reference_year(1:time_step)));
-	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
-	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
+	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
+	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
