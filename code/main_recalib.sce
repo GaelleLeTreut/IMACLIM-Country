@@ -139,7 +139,11 @@ if Optimum_1 == "True"
 end
 if Optimum_1 == "False"
 	exec(STUDY_Country+"Recalib_RunChoices_1.sce");
+
+	exec("test/test_equilibrium.sce");
 	exec(System_Resol+".sce");
+	exec("test/test_equilibrium.sce");
+
 	clear scal
 end	
 
@@ -287,8 +291,9 @@ if Optimum_2 == "False"
 	parameters.Mu = scal(1);
 	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
 	parameters.u_param = scal(2);
-
+	exec("test/test_equilibrium.sce");
 	exec(System_Resol+".sce");
+	exec("test/test_equilibrium.sce");
 	clear scal
 end	
 
@@ -350,6 +355,8 @@ clear calib
 exec("Calibration.sce");
 warning("la recalibration ne fonctionne que si output_files = True")
 
+pause
+
 Test_recalib_2 = "False";
 if Test_recalib_2 == "True"
 	for elt=1:size(list_calib)
@@ -363,9 +370,9 @@ if Test_recalib_2 == "True"
 end
 
 Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
-Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
-Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_omegaU = [0.0];// -0.1]; // Wage Curve : elasticity
+Loop_elements.Coef_real_wage = [0.0];// 1.0]; // wage Curve : wage indexation
+Loop_elements.sigma_Trade_coef = [2.0];// 1.0 0.5 0.0]; // Élasticité du commerce 
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)

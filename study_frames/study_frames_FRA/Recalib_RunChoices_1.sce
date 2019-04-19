@@ -59,7 +59,7 @@ if H_DISAGG == "H10"
 end
 
 // Composanste du GDP
-Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);
+//Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);
 Deriv_Exogenous.G_Consumption_budget = 576.37*1E6;
 Deriv_Exogenous.I_Consumption_budget = 488.008*1E6;
 

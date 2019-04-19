@@ -182,7 +182,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 
     // 1 : share o disposable income / 2 : constant in real term
-    ConsumBudget_Const_2(Consumption_budget, H_disposable_income, Household_saving_rate, CPI)
+    ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
     Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 

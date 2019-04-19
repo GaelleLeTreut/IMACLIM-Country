@@ -42,7 +42,7 @@ Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-Recycling_Option;LabTax_LumpSumHH
+Recycling_Option;PublicDeficit
 // Recycling_Option;PublicDeficit
 // Recycling_Option;GreenInvest
 // Recycling_Option;LumpSumHH
