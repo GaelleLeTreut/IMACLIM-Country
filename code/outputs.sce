@@ -41,6 +41,18 @@ printf("===============================================\n");
 // exec(STUDY+study+".sce")
 
 
+if  Country=="Brasil" then
+money ="reais";
+moneyTex="R\dollar";
+elseif Country=="France" then
+money="euro";
+moneyTex="\euro";
+else
+money="current money";
+end
+
+
+
 disp(" ");
 disp("==========================================")
 disp("============ PARAMETERS ================")
@@ -48,11 +60,11 @@ disp("==========================================")
 
 param_table_sec= [ "setting", "", "", Index_Sectors'];
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$t_{CARB_{IC}}$"];
-param_table_sec(2:2+nb_Sectors-1,2) = ["$\euro/tCO_2$"];
+param_table_sec(2:2+nb_Sectors-1,2) = ["$"+moneyTex+"/tCO_2$"];
 param_table_sec(2:2+nb_Sectors-1,3) = Index_Sectors;
 param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC/ 10^3);
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$t_{CARB_{C}}$"];
-param_table_sec($-(nb_Households-1):$,2) = ["$\euro/tCO_2$ "];
+param_table_sec($-(nb_Households-1):$,2) = ["$"+moneyTex+"/tCO_2$ "];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'/ 10^3);
 
@@ -183,9 +195,8 @@ param_table_sec($+1,1) = ["$Retired$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
 param_table_sec($,4) = string(sum(Retired));
 
-
-
 csvWrite(param_table_sec,SAVEDIR+"param_table_sec.csv", ';');
+
 
 disp "== Households consumption variation ==========="
 disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum(C,"c") sum(round(100*(divide(C,ini.C,%nan)-1)),"c")]]);
@@ -235,9 +246,9 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 
 disp "===== Decomposition pY Ratio ========================"
 disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
-[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; (d.markup_rate .* d.pY')./(ini.markup_rate .* ini.pY') ]]']);
+[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
 
-/// Calcul keuros
+/// Calcul keuros/kreais/etc.
 d.IC_value = value(d.pIC,d.IC);
 d.C_value =value( d.pC, d.C);
 d.G_value = value(d.pG,d.G);
@@ -367,7 +378,7 @@ function Prices = buildPriceT( pIC , pFC, w, pL, pK, pY, pM, p, fact , decimals 
  	 
 	Prices( nCommo+3: nCommo+8,   1:nCommo+1) =  [["w";"pL";"pK";"pY";"pM";"p" ],[ w;pL;pK;pY';pM';p ]];
 	
-	Prices(nCommo+10,1:2) = [ "Units",1/fact+" €/tep, €/tons" ];
+	Prices(nCommo+10,1:2) = [ "Units",1/fact+money+"/tep,"+money+"/tons" ];
 
 endfunction
 
@@ -595,7 +606,7 @@ function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, U
 	iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
 	iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
 	
-	iot($+2,1:2) = ["Units",1/fact+"k€" ]
+	iot($+2,1:2) = ["Units",1/fact+"k"+money ]
 
 endfunction
 
@@ -863,7 +874,7 @@ function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
     EcoAccountT = emptystr(nb_DataAccount+1,nb_InstitAgents + 1);
 	EcoAccountT (1:nb_DataAccount+1,1:nb_InstitAgents + 1) = [["Economic Table";Index_DataAccount],[Index_InstitAgents';Ecotable]];
 	
-	EcoAccountT($+2,1:2) = [ "Units",1/fact+" k€" ];
+	EcoAccountT($+2,1:2) = [ "Units",1/fact+" k"+money ];
 
 endfunction
 

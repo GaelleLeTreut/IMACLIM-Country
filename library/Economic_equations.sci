@@ -318,7 +318,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     ///. Variation with relative prices (price-elasticities sigma_pC)
     ///. Variation with consumption budget (income-elasticities : sigma_ConsoBudget)
 
-    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - (1+delta_C_parameter(Indice_EnerSect)').^time_since_BY .* .. 
+    y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_EnerSect, 1)) );
 
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )
@@ -344,7 +344,7 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
 	y1 = zeros(nb_Commodities, nb_Households) ;
 
-    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY .* .. 
+    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
 
 	
@@ -717,7 +717,7 @@ endfunction
 /// Consumption Tax (by product-sector)
 
 function y = Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
-
+	pIC = abs(pIC);
     // Same rate for all items of domestic final demand
     y = Cons_Tax' - ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) ;
 
@@ -837,12 +837,34 @@ function y = CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax
     y = matrix(y1, -1 , 1) ;
 endfunction
 
+/// for [1,sectors] dimensions used for Carbon Cap by sectors - CarbonTax_Diff_IC[1
+function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
+
+    // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
+	CarbonTax_Diff_IC= repmat(Adj_Tax_IC,nb_Commodities, 1);	
+	
+    y1 = Carbon_Tax_rate_IC - Carbon_Tax_rate * CarbonTax_Diff_IC ;
+
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+
 /// Carbon tax on households (final energy consumptions)
 
 function [y] = CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) ;
 
     // Matrix of carbon tax rates (final consumption of energy, household classes)
     // Unique carbon tax
+    y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
+
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+function [y] =  CTax_rate_C_Const_2(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C, Adj_Tax_C) ;
+
+    // Matrix of carbon tax rates (final consumption of energy, household classes)
+
+	CarbonTax_Diff_C= repmat(Adj_Tax_C,nb_Sectors,1);	
     y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
 
     y = matrix(y1, -1 , 1) ;
@@ -2041,7 +2063,8 @@ endfunction
 
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, and indirect tax
 function y = pIC_price_Const_1(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p)
-
+	
+	pIC=abs(pIC);
     //  Trade, transport and specific margins for energy
     // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Sectors) + SpeMarg_rates_IC' ;
     margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
@@ -2418,7 +2441,7 @@ endfunction
 // Unemployment by households class
 function [y] = HH_Unemployment_Const_1(u, u_tot) ;
 	u_tot = abs(u_tot);
-    y1 = u - ini.u * ( u_tot / ini.u ) ;
+    y1 = u - ini.u * ( u_tot / ini.u_tot ) ;
 
     y=y1';
 endfunction
@@ -2740,6 +2763,33 @@ function GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin
 
 endfunction
 
+
+// SpeMarg_G 
+function [y] =  GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+
+    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
+    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+	SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
+
+    y1 = GrossOpSurplus - ( Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G) ;
+
+    y  = y1';
+endfunction
+
+function GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+
+    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
+    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+	 SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
+
+    GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G;
+
+endfunction
+
 // Value-added sharing (Between labour incomes, non labour incomes, taxes)
 
 // For calibration
@@ -2898,6 +2948,63 @@ endfunction
 
 
 ///// Exogenous emissions
+
+// Emissions fixed by a reduction objective- Intermediate Consumption Emissions 
+function [y] = CapCO2_IC( CO2Emis_IC, CO2Emis_IC_ref, CarbonCap_IC )
+    y1 = CO2Emis_IC - (1-CarbonCap_IC).*CO2Emis_IC_ref;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+// Emissions fixed by a reduction objective  - Intermediate Consumption Emissions  \\ [1, sect dimension] 
+function [y] = CapCO2_IC_tot( CO2Emis_IC, CO2Emis_IC_ref, CarbonCap_sect )
+
+	CO2Emis_IC_tot = sum(CO2Emis_IC,"r"); 
+	CO2Emis_IC_tot_ref = sum(CO2Emis_IC_ref,"r"); 
+	
+    y1 = CO2Emis_IC_tot - (1-CarbonCap_sect).*CO2Emis_IC_tot_ref;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+// DImensions (nb_Commodities*1)
+function y = CarbonCap_sect_Const_1(CarbonCap_sect, CarbonCap, CarbonCap_Diff_sect) ;
+    y1 = CarbonCap_sect - CarbonCap * CarbonCap_Diff_sect ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+// DImensions (nb_Commodities*nb_Sectors)
+function y = CarbonCap_IC_Const_1(CarbonCap_IC, CarbonCap, CarbonCap_Diff_IC) ;
+    y1 = CarbonCap_IC - CarbonCap * CarbonCap_Diff_IC ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+// Emissions fixed by a reduction objective - Final Consumption Emissions
+function [y] = CapCO2_C( CO2Emis_C, CO2Emis_C_ref, CarbonCap_C )
+    y1 = CO2Emis_C - (1-CarbonCap_C).*CO2Emis_C_ref;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+/// Dimension (1*nb_Households)
+function [y] = CapCO2_C_tot( CO2Emis_C, CO2Emis_C_ref, CarbonCap_HH )
+
+	CO2Emis_C_tot = sum(CO2Emis_C,"r"); 
+	CO2Emis_C_tot_ref = sum(CO2Emis_C_ref,"r"); 
+
+    y1 = CO2Emis_C_tot - (1-CarbonCap_HH).*CO2Emis_C_tot_ref;
+    y = matrix(y1,-1 , 1) ;
+endfunction
+
+/// Dimension (1*nb_Households)
+function y = CarbonCap_HH_Const_1(CarbonCap_HH, CarbonCap, CarbonCap_Diff_HH) ;
+    y1 = CarbonCap_HH - CarbonCap * CarbonCap_Diff_HH ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+/// Dimension (nb_Commodities*nb_Households)
+function y = CarbonCap_C_Const_1(CarbonCap_C, CarbonCap, CarbonCap_Diff_C) ;
+    y1 = CarbonCap_C - CarbonCap * CarbonCap_Diff_C ;
+    y = matrix(y1, -1 , 1) ;
+endfunction
+
+
 // Emissions at the level of the energy transition law
 function [y] = ExogCO2_IC_2030( CO2Emis_IC, CO2Emis_IC_2030)
     y1 = CO2Emis_IC - CO2Emis_IC_2030;

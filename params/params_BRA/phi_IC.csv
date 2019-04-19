@@ -1,7 +1,7 @@
-Phi_IC;Coal;CrudeOil;NaturalGaz;OthFossFuel;OthBiofuel;Diesel;Biodiesel;Gasoline;Ethanol;Electricity;PlantedForest;SugarCane;Soy;RestAgri;Cattle;RestLivestoock;Cement;IronSteel;MiningPellet;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;Textiles;PaperPulp;Ceramics;Construction;OthIndustry;FreightRoad;FreightRail;FreightAir;FreightWater;PassRoad;PassRail;PassAir;PassWater;WaterSewage;Education;Health;Composite
+Phi_IC;Coal;CrudeOil;NaturalGas;OthFossFuel;OthBiofuel;Diesel;Biodiesel;Gasoline;Ethanol;Electricity;PlantedForest;SugarCane;Soy;RestAgri;Cattle;RestLivestoock;Cement;IronSteel;MiningPellet;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;Textiles;PaperPulp;Ceramics;Construction;OthIndustry;FreightRoad;FreightRail;FreightAir;FreightWater;PassRoad;PassRail;PassAir;PassWater;WaterSewage;Education;Health;Composite
 Coal;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 CrudeOil;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-NaturalGaz;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+NaturalGas;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 OthFossFuel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 OthBiofuel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 Diesel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0

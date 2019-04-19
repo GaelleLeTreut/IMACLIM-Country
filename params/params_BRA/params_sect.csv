@@ -1,6 +1,6 @@
 //Names;Notes;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-//Sectors;Coal;CrudeOil;NaturalGaz;OthFossFuel;OthBiofuel;Diesel;Biodiesel;Gasoline;Ethanol;Electricity;PlantedForest;SugarCane;Soy;RestAgri;Cattle;RestLivestoock;Cement;IronSteel;MiningPellet;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;Textiles;PaperPulp;Ceramics;Construction;OthIndustry;FreightRoad;FreightRail;FreightAir;FreightWater;PassRoad;PassRail;PassAir;PassWater;WaterSewage;Education;Health;Composite
+//Sectors;Coal;CrudeOil;NaturalGas;OthFossFuel;OthBiofuel;Diesel;Biodiesel;Gasoline;Ethanol;Electricity;PlantedForest;SugarCane;Soy;RestAgri;Cattle;RestLivestoock;Cement;IronSteel;MiningPellet;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;Textiles;PaperPulp;Ceramics;Construction;OthIndustry;FreightRoad;FreightRail;FreightAir;FreightWater;PassRoad;PassRail;PassAir;PassWater;WaterSewage;Education;Health;Composite
 sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1
 Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
