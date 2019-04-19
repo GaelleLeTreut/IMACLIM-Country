@@ -327,9 +327,8 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
     NonFinEn_budget =  Consumption_budget - sum(pC(Indice_EnerSect,:) .* C(Indice_EnerSect,:),"r");
 
-    y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - NonFinEn_BudgShare_ref/sum(NonFinEn_BudgShare_ref)  .* ( NonFinEn_budget .*. ones(nb_NonEnerSect, 1) ) ;
-
-
+    y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - NonFinEn_BudgShare_ref .* ( NonFinEn_budget .*. ones(nb_NonEnerSect, 1) ) ; 
+ 
     y = matrix(y1 .* signRuben, -1 , 1) ;
 
 endfunction

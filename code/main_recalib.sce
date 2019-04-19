@@ -211,7 +211,7 @@ Test_recalib_1 = "False";
 if Test_recalib_1 == "True"
 	for elt=1:size(list_calib)
 		execstr("test_BY = calib."+ list_calib(elt) + "- data_1."+ list_calib(elt)+";");
-		if norm(test_BY)>%eps
+		if norm(test_BY)>1E-5
 			disp(list_calib(elt))
 			norm(test_BY)
 			pause	
@@ -355,24 +355,34 @@ clear calib
 exec("Calibration.sce");
 warning("la recalibration ne fonctionne que si output_files = True")
 
-pause
-
 Test_recalib_2 = "False";
+// if Test_recalib_2 == "True"
+// 	for elt=1:size(list_calib)
+// 		disp(list_calib(elt))
+// 		execstr("test_BY = calib."+ list_calib(elt) + "- data_2."+ list_calib(elt)+";");
+// 		test_BY
+// 		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
+// 		test_current
+// 	end
+// 	pause
+// end
 if Test_recalib_2 == "True"
 	for elt=1:size(list_calib)
-		disp(list_calib(elt))
 		execstr("test_BY = calib."+ list_calib(elt) + "- data_2."+ list_calib(elt)+";");
-		test_BY
-		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
-		test_current
+		if norm(test_BY)>1E-5
+			disp(list_calib(elt))
+			norm(test_BY)
+			pause	
+			// les différences sont normales : tout n'est pas recalculé dans le système.. d'où le besoin de recalibrer
+		end
+		
 	end
-	pause
 end
 
 Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
-Loop_elements.sigma_omegaU = [0.0];// -0.1]; // Wage Curve : elasticity
-Loop_elements.Coef_real_wage = [0.0];// 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [2.0];// 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
+Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
+Loop_elements.sigma_Trade_coef = [1.0 0.0];//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
@@ -399,7 +409,9 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 					mkdir(SAVEDIR);
 				end
 
+				exec("test/test_equilibrium.sce");
 				exec(System_Resol+".sce");
+				exec("test/test_equilibrium.sce");
 
 				if Output_files=='True'
 					exec(CODE+"outputs.sce");

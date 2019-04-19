@@ -102,7 +102,8 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
 	M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
 	p = Mean_price_Const_1(pY, pM, Y, M );
 	// const 3 : homothetic projection et const_2 static projection
-	X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);// check const_1 et const_4
+	//X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);// check const_1 et const_4
+    X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
 	pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
 	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
 	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
@@ -162,10 +163,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier 
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity) // H_Investment_Const_2(GFCF_byAgent,pC,C)
     // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
-    Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
+	// Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
     // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB / 3-constant en réel + Carbon Tax Revenu (option dashboard)
     G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
-	//MacroClosure_Const_1(GFCF_byAgent, pI, I)
+    MacroClosure_Const_1(GFCF_byAgent, pI, I)
 	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
@@ -174,11 +175,12 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 
+    // 1 : share o disposable income / 2 : constant in real term
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
