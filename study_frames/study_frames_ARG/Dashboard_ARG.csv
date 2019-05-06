@@ -1,15 +1,15 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-System_Resol;Systeme_ProjHomothetic
-// System_Resol;Systeme_Static
+// System_Resol;Systeme_ProjHomothetic
+System_Resol;Systeme_Static
 // System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
-study;Projection_evolution
+study;Static_RunChoices
+// study;Projection_evolution
 // study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-AGG_type;
-// AGG_type;AGG_EnComp
+// AGG_type;
+AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // SELECT the resolution mode;
@@ -30,7 +30,7 @@ X_nonEnerg;False
 Scenario;
 // Scenario;NDC
 // Scenario;DDP
-// TELL if you wantto realise a carbon footprint analysis;
+// TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
