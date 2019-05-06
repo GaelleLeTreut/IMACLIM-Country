@@ -47,8 +47,12 @@ moneyTex="R\dollar";
 elseif Country=="France" then
 money="euro";
 moneyTex="\euro";
+elseif Country=="Argentina" then
+money="million pesos";
+moneyTex="million pesos";
 else
 money="current money";
+moneyTex="Current money"
 end
 
 

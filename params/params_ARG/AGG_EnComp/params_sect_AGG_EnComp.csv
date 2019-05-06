@@ -2,7 +2,7 @@
 //;;;
 //Sectors;AllEnergy;AllComp;
 sigma_omegaU_sect;-0.1;-0.1;
-Coef_real_wage;0;0;
+Coef_real_wage_sect;0;0;
 //;;;
 // Production;;;
 sigma_Phi;1;1; 

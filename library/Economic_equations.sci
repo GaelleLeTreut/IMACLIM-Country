@@ -2605,7 +2605,7 @@ function y = Mean_wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU)
 
 endfunction
 
-function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage);
+function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
@@ -2617,8 +2617,8 @@ function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
     omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
   
     // Wage curve on nominal  wage
-    y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
-
+      y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+      
 endfunction
 
 // PAS POUR CALIBRAGE !

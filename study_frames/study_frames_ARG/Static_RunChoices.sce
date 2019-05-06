@@ -1,6 +1,6 @@
 // Shocking some parameters default values
-
-Carbon_Tax_rate0 = 1e2;
+// pesos per tCO2
+Carbon_Tax_rate0 = 3e2;
 Carbon_Tax_rate1 = 1e5;
 Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
