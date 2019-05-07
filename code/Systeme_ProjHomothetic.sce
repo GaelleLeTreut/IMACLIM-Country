@@ -344,9 +344,9 @@ while (count<countMax)&(vBest>sensib)
     count = count + 1;
 
     try
-        [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_r00tart , listDeriv_Var),sensibFsolve);
+        [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
         vMax = norm(Constraints_Deriv);
-
+    
         if vMax<vBest
             vBest    = vMax;
             infoBest = info;
@@ -392,6 +392,8 @@ execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Va
 // test f_resolution à zéro ?? Mais pour quel jeu de valeur ?? LA CA FAIT PAS ZERO
 Constraints_Deriv_test =  f_resolution (X_Deriv_Var, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variables , listDeriv_Var);
 [maxos,lieu]=max(abs(Constraints_Deriv_test));
+
+disp(maxos,lieu);
 
 //Struture d. created to reunite Deriv_variables and Deriv_Var_temp");
 // All d. at initial value first
