@@ -344,7 +344,7 @@ while (count<countMax)&(vBest>sensib)
     count = count + 1;
 
     try
-        [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
+        [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_r00tart , listDeriv_Var),sensibFsolve);
         vMax = norm(Constraints_Deriv);
 
         if vMax<vBest

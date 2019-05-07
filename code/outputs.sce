@@ -226,8 +226,9 @@ disp "===== Firms ==================================="
 disp([
 "Items"                     "Initial Value"                 "Run";
 "Corp_disposable_income"    ini.Corp_disposable_income    d.Corp_disposable_income;
-"Corporate_Tax"             ini.Corporate_Tax     d.Corporate_Tax;
 ]);
+disp(["Corporate_Tax"             ini.Corporate_Tax     d.Corporate_Tax;])
+
 
 disp "===== pY    ==================================="
 disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors round(ini.pY) round(d.pY) round((d.pY./ini.pY-1)*100)]]);
