@@ -226,9 +226,8 @@ disp "===== Firms ==================================="
 disp([
 "Items"                     "Initial Value"                 "Run";
 "Corp_disposable_income"    ini.Corp_disposable_income    d.Corp_disposable_income;
+"Corporate_Tax"             ini.Corporate_Tax     d.Corporate_Tax;
 ]);
-disp(["Corporate_Tax"             ini.Corporate_Tax     d.Corporate_Tax;])
-
 
 disp "===== pY    ==================================="
 disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors round(ini.pY) round(d.pY) round((d.pY./ini.pY-1)*100)]]);
@@ -251,7 +250,7 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 
 disp "===== Decomposition pY Ratio ========================"
 disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
-[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; sum(d.pK .* d.kappa, "r")./sum(ini.pK .* ini.kappa, "r") ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
+[Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; divide(sum(d.pK .* d.kappa, "r"),sum(ini.pK .* ini.kappa, "r"),%nan) ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
 
 /// Calcul keuros/kreais/etc.
 d.IC_value = value(d.pIC,d.IC);
