@@ -188,3 +188,19 @@ function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 
     y=y1';
 endfunction
+
+
+function y = H_SavingsTot_Const_1(Household_savings, H_disposable_income, Household_saving_ratetot) ;
+
+    /// Household savings constraint (Household_savings)
+    y1 = sum(Household_savings) - (sum(H_disposable_income) .* Household_saving_ratetot) ;
+
+    y=y1';      
+endfunction
+
+function [y] = H_Savings_rate_Const_1(Household_saving_rate, delta_HH_saving_rate) ;
+
+    y1 = Household_saving_rate - (delta_HH_saving_rate + BY.Household_saving_rate) ;
+
+    y=y1';
+endfunction
