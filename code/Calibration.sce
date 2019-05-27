@@ -466,6 +466,22 @@ else
     Household_saving_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Household_saving_rate");
 end
 
+count=0;
+
+function [const_HH_saving_ratetot] =fcalib_H_SavingsTot_Const_1(x_Household_saving_ratetot, Household_savings, H_disposable_income, Imaclim_VarCalib)
+    Household_saving_ratetot= indiv_x2variable(Imaclim_VarCalib, "x_Household_saving_ratetot");
+    const_HH_saving_ratetot= H_SavingsTot_Const_1(Household_savings, H_disposable_income, Household_saving_ratetot);
+endfunction
+[x_Household_saving_ratetot, const_HH_saving_ratetot, info_calib_HHsaving_rate] = fsolve(x_Household_saving_ratetot, list(fcalib_H_SavingsTot_Const_1,Household_savings, H_disposable_income, Index_Imaclim_VarCalib));
+
+if norm(const_HH_saving_ratetot) > sensib
+    error( "review calib_Household_saving_ratetot")
+else
+    Household_saving_ratetot = indiv_x2variable (Index_Imaclim_VarCalib, "x_Household_saving_ratetot");
+end
+
+delta_HH_saving_rate = 0;
+
 function [const_HInvest_propensity] =fcalib_H_Invest_Const_1(x_H_Invest_propensity, GFCF_byAgent, H_disposable_income, Imaclim_VarCalib)
     H_Invest_propensity= indiv_x2variable(Imaclim_VarCalib, "x_H_Invest_propensity");
     const_HInvest_propensity=H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity);

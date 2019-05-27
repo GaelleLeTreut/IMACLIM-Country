@@ -33,7 +33,7 @@ if H_DISAGG == "HH1"
 	Deriv_Exogenous.GFCF_Distribution_Shares = [0.5864207144 0.1635198603 0.2500594253];
 end
 if H_DISAGG == "H10"
-	Deriv_Exogenous.GFCF_Distribution_Shares = BY.GFCF_Distribution_Shares; // ajouter une calibration de ça... ça sera plus simple
+	Deriv_Exogenous.GFCF_Distribution_Shares = BY.GFCF_Distribution_Shares;
 	Deriv_Exogenous.GFCF_Distribution_Shares(1:2) = [0.5864207144 0.1635198603];
 	Deriv_Exogenous.GFCF_Distribution_Shares(Indice_Households) = 0.2500594253 * BY.GFCF_Distribution_Shares(Indice_Households)/sum(BY.GFCF_Distribution_Shares(Indice_Households)) ;
 end
@@ -50,13 +50,8 @@ if H_DISAGG == "H10"
 	Deriv_Exogenous.Distribution_Shares(Indice_Non_Labour_Income,Indice_RestOfWorld) =  0.0;
 end
 
-// HH saving rate
-if H_DISAGG == "HH1"
-	Deriv_Exogenous.Household_saving_rate = 0.13925654620247;
-end
-if H_DISAGG == "H10"
-	Deriv_Exogenous.Household_saving_rate = 0.13925654620247 * Household_saving_rate*sum(BY.Household_savings)./sum(BY.H_disposable_income);
-end
+//HH saving rate
+Deriv_Exogenous.Household_saving_ratetot = 0.13925654620247;
 
 // Composanste du GDP
 //Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);

@@ -160,7 +160,7 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_1 = "False";
+Test_1 = "True";
 if Test_1 == "True"
 	exec("test"+filesep()+"test_1.sce");
 	pause
