@@ -245,14 +245,17 @@ Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_
 exec(STUDY_Country+study+".sce");
 parameters.time_since_ini = 2;
 parameters.time_since_BY = 2;
-parameters.sigma_X = zeros(parameters.sigma_X);
-parameters.sigma_M = zeros(parameters.sigma_M);
+//parameters.sigma_X = zeros(parameters.sigma_X);
+//parameters.sigma_M = zeros(parameters.sigma_M);
+parameters.sigma_X(Indice_EnerSect) = zeros(Indice_EnerSect);
+parameters.sigma_M(Indice_EnerSect) = zeros(Indice_EnerSect);
 parameters.sigma_pC = zeros(parameters.sigma_pC);
 parameters.sigma_ConsoBudget = zeros(parameters.sigma_ConsoBudget);
-parameters.delta_C_parameter = [0 -0.0285576926 -0.0685883993 -0.0044717719 -0.012146912 -0.0036466613 zeros(Indice_NonEnerSect)] ;
+//parameters.delta_C_parameter = [0 -0.0285576926 -0.0685883993 -0.0044717719 -0.012146912 -0.0036466613 zeros(Indice_NonEnerSect)] ;
 
 // Recherche d'optimum ou simple résolution
-scal = [-0.0220481209	0.0843904014];
+//scal = [-0.0220481209	0.0843904014];
+scal = [-0.0260257354 0.150612785];
 
 Optimum_2 = "False";
 if Optimum_2 == "True"
@@ -266,7 +269,8 @@ if Optimum_2 == "True"
 	function [y] = System_optimisation(scal);
 		[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, data_0, BY, calib, initial_value, scal)
 		y1 = [100*(d.u_tot - 0.096657603)/0.096657603 .. 					
-			100*(d.GDP/(BY.GDP_pFish * d.GDP_pFish*data_0.GDP) - GDP_index(2))/GDP_index(2)];
+			100*(d.GDP/(BY.GDP_pFish * d.GDP_pFish*data_0.GDP) - GDP_index(2))/GDP_index(2) ..
+			100*(d.GDP*1E-6 - 2350.0)/2350.0];
 		y = norm(y1);
 	endfunction
 
@@ -288,9 +292,9 @@ if Optimum_2 == "True"
 	scal = scal_opt_2;
 end
 if Optimum_2 == "False"
-	parameters.Mu = scal(1);
-	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
-	parameters.u_param = scal(2);
+//	parameters.Mu = scal(1);
+//	parameters.phi_L = ones(parameters.phi_L)*parameters.Mu;
+//	parameters.u_param = scal(2);
 	exec("test/test_equilibrium.sce");
 	exec(System_Resol+".sce");
 	exec("test/test_equilibrium.sce");
@@ -379,10 +383,10 @@ if Test_recalib_2 == "True"
 	end
 end
 
-Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
+Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [1.0 0.0];//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)

@@ -18,8 +18,8 @@ AGG_type;AGG_SNBC2
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-// H_DISAGG;HH1
-H_DISAGG;H10
+H_DISAGG;HH1
+// H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
