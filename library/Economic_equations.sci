@@ -696,7 +696,7 @@ function y = OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, 
     // Same rates for all sectors
 
     // y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha.*repmat(Y', nb_Commodities, 1),"c")+sum( C,"c")+sum(G,"c")+I) ;
-    y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha .*(ones(nb_Commodities, 1).*.Y'),"c")+sum( C,"c")+sum(G,"c")+I) ;
+    y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha .*(ones(nb_Commodities, 1).*.Y'),"c")+sum( C,"c")+sum(G,"c")+sum(I, "c")) ;
 
 endfunction
 
@@ -705,7 +705,7 @@ endfunction
 function y = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I);
 
     // Same rate for all items of domestic final demand
-    y = VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* I) ) ;
+    y = VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) ) ;
 
     //if VA_Tax =0 => VA_Tax_rate=0
     // y_1 = (VA_Tax' ==0).*VA_Tax_rate';
@@ -1581,7 +1581,7 @@ function [y] =  Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, 
 
     // y1 = Transp_margins - Transp_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
 
-    y1 = Transp_margins - Transp_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + I + X )' ;
+    y1 = Transp_margins - Transp_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )' ;
 
     y=y1';
 endfunction
@@ -1614,7 +1614,7 @@ function [y] =  Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alp
 
     // y1 = Trade_margins - Trade_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
 
-    y1 = Trade_margins - Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + I + X )' ;
+    y1 = Trade_margins - Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )' ;
 
     y=y1';
 endfunction
@@ -1680,9 +1680,9 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
     y3 =matrix (y3, -1, 1);
 
     // y4 = SpeMarg_I - SpeMarg_rates_I .* ( p' .* I)' ;
-    y4_1 = (I'==0).*(SpeMarg_rates_I) ;
+    y4_1 = (sum(I,"c")'==0).*(SpeMarg_rates_I) ;
     // if C is equal to zero
-    y4_2 = (I'<>0).*( SpeMarg_I - SpeMarg_rates_I .* ( p' .* I)' );
+    y4_2 = (sum(I,"c")'<>0).*( SpeMarg_I - SpeMarg_rates_I .* ( p' .* sum(I,"c"))' );
 
     y4 = y4_1 + y4_2 ;
     y4 =matrix (y4, -1, 1);
@@ -1763,18 +1763,13 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y) ;
 
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
-
-    y = I - Betta * sum( kappa .* Y' ) ;
-endfunction
-
-
-// for investment matrix
-function [y] = Invest_demand_Const_2(Betta, I, kappa, Y) ;
-
-    y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-    
-    y = matrix(y1, -1 , 1)
-    
+    if Invest_matrix then
+        y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+        y = matrix(y1, -1 , 1)
+        
+    else
+        y = I - Betta * sum( kappa .* Y' ) ;
+    end
 endfunction
 
 // Betta calculation function of K cost & pI
@@ -1802,15 +1797,12 @@ endfunction
 function [y] = Capital_Cost_Const_1(pK, pI, I) ;
 	pK=abs(pK);
     // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
-    y = pK' - sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) ;
-
-endfunction
-
-// for investement matrix
-function [y] = Capital_Cost_Const_2(pK, pI, I) ;
-	pK=abs(pK);
-    // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
-    y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
+    if Invest_matrix then
+        y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
+    else 
+        y = pK' - sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) ;
+    end
+    
 
 endfunction
 
@@ -1831,7 +1823,7 @@ endfunction
 // Market balance
 function [y] = MarketBalance_Const_1(Y, IC, C, G, I, X, M) ;
 
-    y = Y - ( sum( IC,"c") + sum(C, "c") + G + I + X - M ) ;
+    y = Y - ( sum( IC,"c") + sum(C, "c") + G + sum(I, "c") + X - M ) ;
 
 endfunction
 
@@ -2363,20 +2355,8 @@ endfunction
 // Values of Investment expenditures
 function [y] = I_value_Const_1(I_value, I, pI) ;
 
-    y = I_value - ( I .* pI ) ;
-endfunction
-
-// for an investment matrix
-function [y] = I_value_Const_2(I_value, I, pI) ;
-//    I_value_temp=zeros(nb_Commodities,nb_Sectors);
-    
-//    for line=1:nb_Sectors
-//        I_value_temp(line,:)=I(line,:)*pI(line);
-//    end
-
-    y1 = I_value - ( I.*( pI*ones(1,nb_Sectors)) ) ;
-    y = matrix(y1, -1 , 1);
-    
+    y1 = I_value - ( I .* (pI*ones(1,nb_size_I)) ) ;
+    y = matrix(y1, -1, 1);
 endfunction
 
 //  For Calibration
@@ -2677,7 +2657,7 @@ endfunction
 // The adjustment variable is: interest_rate
 function [y] = MacroClosure_Const_1(GFCF_byAgent, pI, I) ;
 
-    y1 = ( sum(GFCF_byAgent(Indice_Households)) + sum(GFCF_byAgent(Indice_Corporations)) + sum(GFCF_byAgent(Indice_Government)) ) - sum (pI .* I) ;
+    y1 = ( sum(GFCF_byAgent(Indice_Households)) + sum(GFCF_byAgent(Indice_Corporations)) + sum(GFCF_byAgent(Indice_Government)) ) - sum (pI .* sum(I,"c")) ;
 
     y=y1';
 endfunction
@@ -2743,7 +2723,7 @@ function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_ma
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 
 
     y1 = GrossOpSurplus - ( Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I ) ;
@@ -2757,7 +2737,7 @@ function GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 
     GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I ;
 
@@ -2770,7 +2750,7 @@ function [y] =  GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_ma
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 	SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
 
     y1 = GrossOpSurplus - ( Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G) ;
@@ -2783,7 +2763,7 @@ function GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* I)';
+    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 	 SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
 
     GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G;
