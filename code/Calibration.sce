@@ -668,7 +668,8 @@ if norm(const_Energy_Tax_rate_IC) > sensib
     error( "review calib_Energy_Tax_rate_IC")
 else
     Energy_Tax_rate_IC = indiv_x2variable (Index_Imaclim_VarCalib, "x_Energy_Tax_rate_IC");
-    Energy_Tax_rate_IC = (abs(Energy_Tax_rate_IC) > %eps).*Energy_Tax_rate_IC;
+//    Energy_Tax_rate_IC = (abs(Energy_Tax_rate_IC) > %eps).*Energy_Tax_rate_IC;
+    Energy_Tax_rate_IC = (abs(Energy_Tax_rate_IC) > %eps).*(abs(Energy_Tax_IC) > %eps).*Energy_Tax_rate_IC;
 
 end
 
