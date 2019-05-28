@@ -1,13 +1,19 @@
 // Scenarios options
-Loop_elements.Recycling_option = ["PublicDeficit" "GreenInvest" "LumpSumHH" "LabTax" "ExactRestitution" "LabTax_PublicDeficit" "LabTax_GreenInvest" "LabTax_LumpSumHH"];
+//Loop_elements.Recycling_option = ["PublicDeficit" "GreenInvest" "LumpSumHH" "LabTax" "ExactRestitution" "LabTax_PublicDeficit" "LabTax_GreenInvest" "LabTax_LumpSumHH"];
 //Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
 //Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
 //Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
 //Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
-Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
-Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
-Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
+// Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
+// Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
+// Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
+// Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+
+Loop_elements.Recycling_option = ["PublicDeficit"];
+Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
+Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
+Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
 Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
 // MODEL FILE STRUCTURE
@@ -37,7 +43,7 @@ cd(CODE);
 CSV_list = ["param_table_sec" "ioQ-run" "io-run" "TechCOef-run" "Prices-run" "ecoT-run" "Prices_Index_Labour"];
 Nb_Iter = 1;
 
-Scenarios(1,1:2) = [Loop_elements.Recycling_option(2)+sep+"1" Loop_elements.Recycling_option(2)+sep+"2"];
+Scenarios(1,1:2) = [Loop_elements.Recycling_option(1)+sep+"1" Loop_elements.Recycling_option(1)+sep+"2"];
 
 for Ropt_eld=1:size(Loop_elements.Recycling_option,2)
 	for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
