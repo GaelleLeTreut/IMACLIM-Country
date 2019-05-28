@@ -1792,7 +1792,11 @@ end
 indicEltFC = 1;
 for elt=1:nb_FC
     varname = Index_FC(elt);
-    execstr ("calib.FC(:,elt)"+"="+"calib."+varname+";");
+    if varname <> "I"
+        execstr ("calib.FC(:,elt)"+"="+"calib."+varname+";");
+    else
+        calib.FC(:,elt)=sum(calib.I,"c");
+    end
     indicEltFC = 1 + indicEltFC;
 end
 

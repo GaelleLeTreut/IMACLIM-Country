@@ -106,6 +106,12 @@ if H_DISAGG <> "HH1"
 	exec("Households_Desag.sce");
 end
 
+nb_size_I = 1;
+if Invest_matrix then
+    nb_size_I = nb_Sectors;
+    exec("Invest_Desag.sce");
+end
+
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
 	exec("Aggregation.sce");

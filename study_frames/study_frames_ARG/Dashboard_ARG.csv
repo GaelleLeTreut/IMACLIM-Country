@@ -8,8 +8,8 @@ study;Static_RunChoices
 // study;Projection_evolution
 // study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_EnComp
+AGG_type;
+// AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // SELECT the resolution mode;
@@ -26,6 +26,9 @@ Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
+// SELECT an Capital Flow representation by uncomment it;
+Invest_matrix;%T
+// Invest_matrix;%F
 // SELECT the scenario to run (soft_linking);
 Scenario;
 // Scenario;NDC

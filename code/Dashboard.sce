@@ -119,3 +119,9 @@ if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])
 	error ( "You have to choose whether or not you want to print outputs in external files.");
 end
 
+if isdef("Invest_matrix") then
+    Invest_matrix = eval(Invest_matrix);
+else
+    warning("No information about investment disaggregation : by default, investment is kept aggregated")
+    Invest_matrix = %F;
+end

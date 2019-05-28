@@ -150,7 +150,8 @@ initial_value.pI= zeros( nb_Sectors,1);
 initial_value.pX= zeros( nb_Sectors,1);																			
 initial_value.pC(Indice_HybridCommod,1:nb_Households) = ((initial_value.C_value(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0)) ./ ( initial_value.C(Indice_HybridCommod,:).*(initial_value.C(Indice_HybridCommod,:)<>0) + (initial_value.C(Indice_HybridCommod,:)==0))) + repmat(p_AllTax_WithoutSpeM(1,Indice_HybridCommod)',1,nb_Households).*(initial_value.C(Indice_HybridCommod,:)==0) ;
 
-initial_value.pI(Indice_HybridCommod,1) = ((initial_value.I_value(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0)) ./ ( initial_value.I(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0) + (initial_value.I(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(initial_value.I(Indice_HybridCommod,:)==0) ;
+// initial_value.pI(Indice_HybridCommod,1) = ((initial_value.I_value(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0)) ./ ( initial_value.I(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0) + (initial_value.I(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(initial_value.I(Indice_HybridCommod,:)==0) ;
+initial_value.pI(Indice_HybridCommod,1) = sum(initial_value.I_value(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0),"c") ./ (sum(initial_value.I(Indice_HybridCommod,:).*(initial_value.I(Indice_HybridCommod,:)<>0),"c") + (sum(initial_value.I(Indice_HybridCommod,:),"c")==0)) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(sum(initial_value.I(Indice_HybridCommod,:),"c")==0) ;
 
 initial_value.pG(Indice_HybridCommod,1) = ((initial_value.G_value(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0)) ./ ( initial_value.G(Indice_HybridCommod,:).*(initial_value.G(Indice_HybridCommod,:)<>0) + (initial_value.G(Indice_HybridCommod,:)==0))) + p_AllTax_WithoutSpeM(1,Indice_HybridCommod)'.*(initial_value.G(Indice_HybridCommod,:)==0) ;
  
@@ -217,7 +218,7 @@ else
 	SpeMarg_I_p (1 , Indice_HybridCommod)= (initial_value.pI(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeM(Indice_HybridCommod))./(1+Tax_rate(Indice_HybridCommod));
 	SpeMarg_I_p(1 ,Indice_NonHybridCommod) =0;
  
-	initial_value.SpeMarg_I =  SpeMarg_I_p.* initial_value.I';
+	initial_value.SpeMarg_I =  SpeMarg_I_p.* sum(initial_value.I,"c")';
 		
 	//No specific margins for government
 	initial_value.SpeMarg_G= zeros(1, nb_Sectors);
