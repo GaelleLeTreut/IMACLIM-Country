@@ -199,7 +199,7 @@ param_table_sec($+1,1) = ["$Retired$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
 param_table_sec($,4) = string(sum(Retired));
 
-csvWrite(param_table_sec,SAVEDIR+"param_table_sec.csv", ';');
+csvWrite(param_table_sec,SAVEDIR+"param_table_sec_"+time_step+".csv", ';');
 
 
 disp "== Households consumption variation ==========="
@@ -399,9 +399,9 @@ disp " * Evolution table - Unitary prices"
 Prices.evo = buildPriceT( evol.pIC , evol.pFC, evol.w, evol.pL, evol.pK, evol.pY, evol.pM, evol.p, 100 , 1);
 disp(Prices.evo);
 
-csvWrite(Prices.ini,SAVEDIR+"Prices-ini.csv", ';');
-csvWrite(Prices.run,SAVEDIR+"Prices-run.csv", ';');
-csvWrite(Prices.evo,SAVEDIR+"Prices-evo.csv", ';');
+csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+time_step+".csv", ';');
+csvWrite(Prices.run,SAVEDIR+"Prices-run_"+time_step+".csv", ';');
+csvWrite(Prices.evo,SAVEDIR+"Prices-evo_"+time_step+".csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -452,9 +452,9 @@ disp " * Evolution table - Technical Coefficient"
 TechCOef.evo = buildTechCoefT( evol.alpha, evol.lambda, evol.kappa, 100 , 1);
 disp(TechCOef.evo);
 
-csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini.csv", ';');
-csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run.csv", ';');
-csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo.csv", ';');
+csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini_"+time_step+".csv", ';');
+csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run_"+time_step+".csv", ';');
+csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo_"+time_step+".csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -545,9 +545,9 @@ disp " * Evolution table - CO2 Emissions"
 CO2Emis.evo = buildEmisT( evol.CO2Emis_IC , evol.CO2Emis_C, evol.CO2Emis_X , evol.CO2Emis_Sec,evol.Tot_CO2Emis_IC,evol.Tot_CO2Emis_C,evol.DOM_CO2,100 , 1);
 disp(CO2Emis.evo);
 
-csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini.csv", ';');
-csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run.csv", ';');
-csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo.csv", ';');
+csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini_"+time_step+".csv", ';');
+csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run_"+time_step+".csv", ';');
+csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo_"+time_step+".csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -627,9 +627,9 @@ disp " * Evolution table"
 io.evo = buildIot(   evol.IC_value ,   evol.FC_value ,   evol.OthPart_IOT ,evol.Carbon_Tax,evol.Supply, evol.Uses, 100 , 1);
 disp(io.evo);
 
-csvWrite(io.ini,SAVEDIR+"io-ini.csv", ';');
-csvWrite(io.run,SAVEDIR+"io-run.csv", ';');
-csvWrite(io.evo,SAVEDIR+"io-evo.csv", ';');
+csvWrite(io.ini,SAVEDIR+"io-ini_"+time_step+".csv", ';');
+csvWrite(io.run,SAVEDIR+"io-run_"+time_step+".csv", ';');
+csvWrite(io.evo,SAVEDIR+"io-evo_"+time_step+".csv", ';');
 
 /////////////////////////////////////////////////
 // IO in quantities table
@@ -696,9 +696,9 @@ disp " * Evolution table - QUANTITIES"
 ioQ.evo = buildIotQ(   evol.IC ,   evol.FC ,   evol.OthQ , 100 , 1);
 disp(ioQ.evo);
 
-csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini.csv", ';');
-csvWrite(ioQ.run,SAVEDIR+"ioQ-run.csv", ';');
-csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo.csv", ';');
+csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini_"+time_step+".csv", ';');
+csvWrite(ioQ.run,SAVEDIR+"ioQ-run_"+time_step+".csv", ';');
+csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo_"+time_step+".csv", ';');
 
 
 /////////////////////////////////////////////////
@@ -895,9 +895,9 @@ disp " * Evolution table - Economic Account table"
 ecoT.evo = buildEcoTabl(evol.Ecotable ,100 , 1);
 disp(ecoT.evo);
 
-csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini.csv", ';');
-csvWrite(ecoT.run,SAVEDIR+"ecoT-run.csv", ';');
-csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo.csv", ';');
+csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini_"+time_step+".csv", ';');
+csvWrite(ecoT.run,SAVEDIR+"ecoT-run_"+time_step+".csv", ';');
+csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+time_step+".csv", ';');
 
 // Revert some data format for economic account table
 

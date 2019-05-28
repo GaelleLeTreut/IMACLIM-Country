@@ -151,7 +151,7 @@ for time_step=1:Nb_Iter
 	// Creation of a new output subdirectory for each time step in case of several time steps calculation
 	if Nb_Iter<>1
 		if Output_files=='True'
-			SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+			SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + "Time_" + time_step + filesep();
 			mkdir(SAVEDIR);
 		end
 	end
