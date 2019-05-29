@@ -256,7 +256,7 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 d.IC_value = value(d.pIC,d.IC);
 d.C_value =value( d.pC, d.C);
 d.G_value = value(d.pG,d.G);
-d.I_value = value(d.pI,d.I);
+d.I_value = value(d.pI*ones(1,nb_Sectors),d.I);
 d.X_value = value(d.pX,d.X);
 d.M_value = value(d.pM',d.M');
 d.Y_value = value(d.pY,d.Y)';
@@ -283,8 +283,13 @@ end
 // FC  matrix
 for elt=1:nb_FC
     varname = Index_FC(elt);
-	execstr ("d.FC_value(:,elt)"+"="+"d."+varname+"_value"+";");
-    execstr ("d.FC(:,elt)"+"="+"d."+varname+";");
+    if varname <> "I" then
+        execstr ("d.FC_value(:,elt)"+"="+"d."+varname+"_value"+";");
+        execstr ("d.FC(:,elt)"+"="+"d."+varname+";");
+    else
+        execstr ("d.FC_value(:,elt)"+"="+"sum(d.I_value, ''c'')"+";");
+        execstr ("d.FC(:,elt)"+"="+"sum(d.I, ''c'')"+";");
+    end
 	execstr ("d.pFC(:,elt)"+"="+"d.p"+varname+";");
 	execstr ("ini.pFC(:,elt)"+"="+"ini.p"+varname+";");
 end
