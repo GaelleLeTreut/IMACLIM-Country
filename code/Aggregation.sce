@@ -266,10 +266,19 @@ indicEltSpeMarg=1;
 
 for elt=1:nb_FC
     varname = Index_FC(elt);
-    execstr ("initial_valueAGG."+varname+"_value"+"=initial_valueAGG.FC_value(:,elt);");
+    if varname <> "I" then // I_value aggregated below
+        execstr ("initial_valueAGG."+varname+"_value"+"=initial_valueAGG.FC_value(:,elt);");
+    end
 	execstr ('initial_valueAGG.'+varname+'_valueDOM'+'=initial_valueAGG.FC_valueDOM(:,elt);');
 	execstr ('initial_valueAGG.'+varname+'_valueIMP'+'=initial_valueAGG.FC_valueIMP(:,elt);');
     indicEltFC = 1 + indicEltFC;
+end
+
+// I_value aggregation :
+for line  = 1:nb_SectorsAGG
+    for column = 1:nb_SectorsAGG
+        initial_valueAGG.I_value(line,column) = sum(initial_value.I_value(all_IND(line),all_IND(column)));
+    end
 end
 
 
@@ -350,11 +359,20 @@ initial_valueAGG.tot_IC_col = sum(initial_valueAGG.IC , "c");
 initial_valueAGG.tot_FC = sum(initial_valueAGG.FC,"c");
 initial_valueAGG.tot_supply = sum (initial_valueAGG.M+initial_valueAGG.Y, "c");
 
-indicEltFC = 1;
+//indicEltFC = 1;
 for elt=1:nb_FC
     varname = Index_FC(elt);
-    execstr ("initial_valueAGG."+varname+"=initial_valueAGG.FC(:,elt);");
-    indicEltFC = 1 + indicEltFC;
+    if varname <> "I" then // I aggregated below
+        execstr ("initial_valueAGG."+varname+"=initial_valueAGG.FC(:,elt);");
+    end;
+//    indicEltFC = 1 + indicEltFC;
+end
+
+// I aggregation :
+for line  = 1:nb_SectorsAGG
+    for column = 1:nb_SectorsAGG
+        initial_valueAGG.I(line,column) = sum(initial_value.I(all_IND(line),all_IND(column)));
+    end
 end
 
 

@@ -8,8 +8,8 @@ study;Static_RunChoices
 // study;Projection_evolution
 // study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-AGG_type;
-// AGG_type;AGG_EnComp
+// AGG_type;
+AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // SELECT the resolution mode;
@@ -37,5 +37,5 @@ Scenario;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False
