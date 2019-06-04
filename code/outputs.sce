@@ -256,7 +256,7 @@ disp([ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 d.IC_value = value(d.pIC,d.IC);
 d.C_value =value( d.pC, d.C);
 d.G_value = value(d.pG,d.G);
-d.I_value = value(d.pI*ones(1,nb_Sectors),d.I);
+d.I_value = value(d.pI*ones(1,nb_size_I),d.I);
 d.X_value = value(d.pX,d.X);
 d.M_value = value(d.pM',d.M');
 d.Y_value = value(d.pY,d.Y)';
