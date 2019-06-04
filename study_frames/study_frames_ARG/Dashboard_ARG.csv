@@ -26,6 +26,9 @@ Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
+// SELECT an Capital Flow representation by uncomment it;
+Invest_matrix;%T
+// Invest_matrix;%F
 // SELECT the scenario to run (soft_linking);
 Scenario;
 // Scenario;NDC
@@ -34,5 +37,5 @@ Scenario;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False

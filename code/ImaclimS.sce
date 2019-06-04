@@ -106,13 +106,21 @@ if H_DISAGG <> "HH1"
 	exec("Households_Desag.sce");
 end
 
+nb_size_I = 1;
+if Invest_matrix then
+    nb_size_I = nb_Sectors;
+    exec("Invest_Desag.sce");
+end
+
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
 	exec("Aggregation.sce");
-	exec("Hybridisation.sce" );
-else
-	exec("Hybridisation.sce" );
+    if Invest_matrix then
+        nb_size_I = nb_SectorsAGG;
+    end
 end
+
+exec("Hybridisation.sce" );
 
 exec("Loading_params.sce");
 
@@ -151,7 +159,7 @@ for time_step=1:Nb_Iter
 	// Creation of a new output subdirectory for each time step in case of several time steps calculation
 	if Nb_Iter<>1
 		if Output_files=='True'
-			SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + time_step + filesep();
+			SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + "Time_" + time_step + filesep();
 			mkdir(SAVEDIR);
 		end
 	end

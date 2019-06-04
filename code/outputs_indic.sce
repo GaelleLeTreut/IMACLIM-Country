@@ -685,9 +685,9 @@ CompT.run = [["CompT_run",  "pY", "Y vol", "pM", "M vol",Index_FC' + " vol", "En
 CompT.evol = [["CompT%",  "pY", "Y vol","pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors,(divide(d.pY , BY.pY , %nan )-1).*100,  (divide(d.Y , BY.Y , %nan )-1).*100,(divide(d.pM , BY.pM , %nan )-1).*100,  (divide(d.M , BY.M , %nan )-1).*100, (divide((abs(d.FC) > %eps).*d.FC, (abs(BY.FC) > %eps).*BY.FC , %nan )-1).*100, d.ENshare'.*100-BY.ENshare'.*100,(evol.TradeInt' - 1).*100,(evol.M_penetRat'-1).*100]];
 
 
-csvWrite(CompT.BY,SAVEDIR+"CompT-BY.csv", ';');
-csvWrite(CompT.run,SAVEDIR+"CompT-run.csv", ';');
-csvWrite(CompT.evol,SAVEDIR+"CompT-evol.csv", ';');
+csvWrite(CompT.BY,SAVEDIR+"CompT-BY_"+time_step+".csv", ';');
+csvWrite(CompT.run,SAVEDIR+"CompT-run_"+time_step+".csv", ';');
+csvWrite(CompT.evol,SAVEDIR+"CompT-evol_"+time_step+".csv", ';');
 
 // Tables for Aggregate Macroeconomic Indicators
 
@@ -865,15 +865,15 @@ disp(OutputTable.MacroT);
 
 
 
- csvWrite(OutputTable.MacroT,SAVEDIR+"TableMacroOutput.csv", ';');
- csvWrite(OutputTable.MacroTExtended,SAVEDIR+"TableMacroOutputExtended.csv", ';');
- csvWrite(OutputTable.CompSectTable,SAVEDIR+"TableSectOutput.csv", ';');
- csvWrite(OutputTable.EnerNonEnTable,SAVEDIR+"TableENnonEnOutput.csv", ';');
- // csvWrite(OutputTable.Elasticities,SAVEDIR+"TableElasticities.csv", ';');
- // csvWrite(OutputTable.GDP_decom,SAVEDIR+"GDP_decom.csv", ';');
- csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS.csv", ';');
- csvWrite(OutputTable.Trade_Sect,SAVEDIR+"Trade_Sect.csv", ';');
- csvWrite(OutputTable.Trade_Sect_Share,SAVEDIR+"Trade_Sect_Share.csv", ';');
+ csvWrite(OutputTable.MacroT,SAVEDIR+"TableMacroOutput_"+time_step+".csv", ';');
+ csvWrite(OutputTable.MacroTExtended,SAVEDIR+"TableMacroOutputExtended_"+time_step+".csv", ';');
+ csvWrite(OutputTable.CompSectTable,SAVEDIR+"TableSectOutput_"+time_step+".csv", ';');
+ csvWrite(OutputTable.EnerNonEnTable,SAVEDIR+"TableENnonEnOutput_"+time_step+".csv", ';');
+ // csvWrite(OutputTable.Elasticities,SAVEDIR+"TableElasticities_"+time_step+".csv", ';');
+ // csvWrite(OutputTable.GDP_decom,SAVEDIR+"GDP_decom_"+time_step+".csv", ';');
+ csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+time_step+".csv", ';');
+ csvWrite(OutputTable.Trade_Sect,SAVEDIR+"Trade_Sect_"+time_step+".csv", ';');
+ csvWrite(OutputTable.Trade_Sect_Share,SAVEDIR+"Trade_Sect_Share_"+time_step+".csv", ';');
   
   
  
@@ -887,13 +887,13 @@ disp(OutputTable.MacroT);
 	/// Aggregation of Metals  (Steel_Iron + NonFerrousMetals)
 	  /////////////////////////
 ini.Synthese_CO2_EN_Tax = [["2010","Energy sectors","Industries","Rest of the Economy","Households"]; ["Energy consumption (ktoe) without fuels",sum(ini.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),sum(ini.C(Indice_EnerSect_WithoutF,:))];["Energy consumption (ktoe) of fuels",sum(ini.IC(Indice_FuelProd,Indice_EnerSect)),sum(ini.IC(Indice_FuelProd,Indice_IndustHeavy)),sum(ini.IC(Indice_FuelProd,Indice_RestOfEconomy)),sum(ini.C(Indice_FuelProd,:))];["CO2 Emissions (MtCO2)",sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.CO2Emis_C(Indice_EnerSect,:))];["Carbon tax (k"+money+")",sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.Carbon_Tax_C(Indice_EnerSect,:))];["Energy tax (k"+money+")", sum(ini.Energy_Tax_IC(Indice_EnerSect))+sum(ini.Energy_Tax_FC(Indice_EnerSect)),sum(ini.Energy_Tax_IC(Indice_IndustHeavy))+sum(ini.Energy_Tax_FC(Indice_IndustHeavy)),sum(ini.Energy_Tax_IC(Indice_RestOfEconomy))+sum(ini.Energy_Tax_FC(Indice_RestOfEconomy)),"-"]];
-	csvWrite(ini.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-ini.csv", ';');
+	csvWrite(ini.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-ini_"+time_step+".csv", ';');
 	
 d.Synthese_CO2_EN_Tax = [["run","Energy sectors","Industries","Rest of the Economy","Households"]; ["Energy consumption (ktoe) without fuels",sum(d.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),sum(d.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),sum(d.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),sum(d.C(Indice_EnerSect_WithoutF,:))];["Energy consumption (ktoe) of fuels",sum(d.IC(Indice_FuelProd,Indice_EnerSect)),sum(d.IC(Indice_FuelProd,Indice_IndustHeavy)),sum(d.IC(Indice_FuelProd,Indice_RestOfEconomy)),sum(d.C(Indice_FuelProd,:))];["CO2 Emissions (MtCO2)",sum(d.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),sum(d.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(d.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(d.CO2Emis_C(Indice_EnerSect,:))];["Carbon tax (k"+money+")",sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(d.Carbon_Tax_C(Indice_EnerSect,:))];["Energy tax (k"+money+")", sum(d.Energy_Tax_IC(Indice_EnerSect))+sum(d.Energy_Tax_FC(Indice_EnerSect)),sum(d.Energy_Tax_IC(Indice_IndustHeavy))+sum(d.Energy_Tax_FC(Indice_IndustHeavy)),sum(d.Energy_Tax_IC(Indice_RestOfEconomy))+sum(d.Energy_Tax_FC(Indice_RestOfEconomy)),"-"]];
-	csvWrite(d.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-run.csv", ';');
+	csvWrite(d.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-run_"+time_step+".csv", ';');
 	
 evol.Synthese_CO2_EN_Tax = [["evol in %","Energy sectors","Industries","Rest of the Economy","Households"]; ["Energy consumption (ktoe) without fuels",(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.C(Indice_EnerSect_WithoutF,:)),sum(ini.C(Indice_EnerSect_WithoutF,:)),%nan)-1)*100];["Energy consumption (ktoe) of fuels",(divide(sum(d.IC(Indice_FuelProd,Indice_EnerSect)),sum(ini.IC(Indice_FuelProd,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.IC(Indice_FuelProd,Indice_IndustHeavy)),sum(ini.IC(Indice_FuelProd,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.IC(Indice_FuelProd,Indice_RestOfEconomy)),sum(ini.IC(Indice_FuelProd,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.C(Indice_FuelProd,:)),sum(ini.C(Indice_FuelProd,:)),%nan)-1)*100];["CO2 Emissions (MtCO2)",(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.CO2Emis_C(Indice_EnerSect,:)),sum(ini.CO2Emis_C(Indice_EnerSect,:)),%nan)-1)*100];["Carbon tax (k"+money+")",(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_C(Indice_EnerSect,:)),sum(ini.Carbon_Tax_C(Indice_EnerSect,:)),%nan)-1)*100];["Energy tax (k"+money+")", (divide(sum(d.Energy_Tax_IC(Indice_EnerSect))+sum(d.Energy_Tax_FC(Indice_EnerSect)),sum(ini.Energy_Tax_IC(Indice_EnerSect))+sum(ini.Energy_Tax_FC(Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.Energy_Tax_IC(Indice_IndustHeavy))+sum(d.Energy_Tax_FC(Indice_IndustHeavy)),sum(ini.Energy_Tax_IC(Indice_IndustHeavy))+sum(ini.Energy_Tax_FC(Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.Energy_Tax_IC(Indice_RestOfEconomy))+sum(d.Energy_Tax_FC(Indice_RestOfEconomy)),sum(ini.Energy_Tax_IC(Indice_RestOfEconomy))+sum(ini.Energy_Tax_FC(Indice_RestOfEconomy)),%nan)-1)*100,"-"]];
-	csvWrite(evol.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-evol.csv", ';');
+	csvWrite(evol.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-evol_"+time_step+".csv", ';');
 	 	  
 	Met  = [ find( Index_Sectors== "Steel_Iron" ), find( Index_Sectors== "NonFerrousMetals" ) ];
 	C_Met_qFish = QInd_Fish( BY.pC,BY.C, d.pC, d.C, Met, :);
@@ -1016,9 +1016,9 @@ evol.Synthese_CO2_EN_Tax = [["evol in %","Energy sectors","Industries","Rest of 
 	CompAGG.run = [["CompT_run", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"], [d.ENshareMET;d.ENshareMINER] ,d.TradeIntMETMIN',d.M_penetRatMETMIN']];
 	CompAGG.evol = [["CompT%", "pY - p Fisher", "Y - qFisher","pM - p Fisher", "M - qFisher","pX - p Fisher","X - qFisher", "C- qFisher", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"],[ (pY_Met_pFish-1)*100;(pY_Miner_pFish-1)*100],  [ (Y_Met_qFish-1)*100;(Y_Miner_qFish-1)*100], [ (pM_Met_pFish-1)*100;(pM_Miner_pFish-1)*100],  [(M_Met_qFish-1)*100;(M_Miner_qFish-1)*100], [ (pX_Met_pFish-1)*100;(pX_Miner_pFish-1)*100],  [(X_Met_qFish-1)*100;(X_Miner_qFish-1)*100],[(C_Met_qFish-1)*100;(C_Miner_qFish-1)*100], [evol.ENshareMET;evol.ENshareMINER],evol.TradeIntMETMIN',evol.M_penetRatMETMIN']];
 			
-	csvWrite(CompAGG.BY,SAVEDIR+"CompAGG-BY.csv", ';');
-	csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run.csv", ';');
-	csvWrite(CompAGG.evol,SAVEDIR+"CompAGG-evol.csv", ';');
+	csvWrite(CompAGG.BY,SAVEDIR+"CompAGG-BY_"+time_step+".csv", ';');
+	csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run_"+time_step+".csv", ';');
+	csvWrite(CompAGG.evol,SAVEDIR+"CompAGG-evol_"+time_step+".csv", ';');
 	
 	
    end
