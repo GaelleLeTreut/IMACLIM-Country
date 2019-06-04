@@ -8,13 +8,8 @@ I_ratio_str = I_ratio_str(2:$,2:$);
 // record file
 I_ratio = evstr(I_ratio_str);
 
-// check data
-if size(I_ratio)<>[nb_Sectors nb_Sectors] then
-    error("Investment ratios matrix is not of size nb_Sectors x nb_Sectors : "+ DATA_Country + "Invest_Desag.csv");
-end
-
+// Check data
 sensib = 1D-4;
-
 for line = 1:nb_Sectors
     if ( abs( sum(I_ratio(line,:)) - 1 ) > sensib ) then
         error("Line " + (line+1) + " of Investment ratios matrix is not balanced to 1 : " + DATA_Country + "Invest_Desag.csv");
@@ -31,8 +26,7 @@ end
 // replace I_value and I by its disaggregations
 initial_value.I_value = I_value_DESAG;
 initial_value.I = I_value_DESAG ./ (initial_value.pI*ones(1,nb_Sectors));
-
-
+    
 
 // clear the intermediate variables
 clear("I_ratio_str", "I_ratio", "sensib", "line", "I_value_DESAG");
