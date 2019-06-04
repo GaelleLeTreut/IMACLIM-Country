@@ -275,11 +275,16 @@ for elt=1:nb_FC
 end
 
 // I_value aggregation :
-for line  = 1:nb_SectorsAGG
-    for column = 1:nb_SectorsAGG
-        initial_valueAGG.I_value(line,column) = sum(initial_value.I_value(all_IND(line),all_IND(column)));
+if Invest_matrix then
+    for line  = 1:nb_SectorsAGG
+        for column = 1:nb_SectorsAGG
+            initial_valueAGG.I_value(line,column) = sum(initial_value.I_value(all_IND(line),all_IND(column)));
+        end
     end
-end
+else
+    ind = find(Index_FC=="I");
+    initial_valueAGG.I_value = initial_valueAGG.FC_value(:,ind);
+end 
 
 
 for elt=1:nb_OthPart_IOT_AGG
@@ -369,10 +374,15 @@ for elt=1:nb_FC
 end
 
 // I aggregation :
-for line  = 1:nb_SectorsAGG
-    for column = 1:nb_SectorsAGG
-        initial_valueAGG.I(line,column) = sum(initial_value.I(all_IND(line),all_IND(column)));
+if Invest_matrix then
+    for line  = 1:nb_SectorsAGG
+        for column = 1:nb_SectorsAGG
+            initial_valueAGG.I(line,column) = sum(initial_value.I(all_IND(line),all_IND(column)));
+        end
     end
+else
+   ind = find(Index_FC=="I");
+   initial_valueAGG.I = initial_valueAGG.FC(:,ind); 
 end
 
 
