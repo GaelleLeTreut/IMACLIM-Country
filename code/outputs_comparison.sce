@@ -10,11 +10,12 @@
 // Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
 // Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
 
-Loop_elements.Recycling_option = ["PublicDeficit"];
+Loop_elements.Recycling_option = ["LabTaxHH1"];
 Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sobriety = [1.0 0.0];
 
 // MODEL FILE STRUCTURE
 sep = filesep(); // "/" or "\" depending on OS
@@ -50,12 +51,15 @@ for Ropt_eld=1:size(Loop_elements.Recycling_option,2)
 		for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
 			for CoefW_elt=1:size(Loop_elements.Coef_real_wage,2)
 				for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,2)
+					for Sob_elt=1:size(Loop_elements.sobriety,2)
 
-					Scenarios(1,$+1) = string(Loop_elements.Recycling_option(Ropt_eld)) + sep + ..
-							"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
-							"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
-							"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
-							"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt));
+						Scenarios(1,$+1) = string(Loop_elements.Recycling_option(Ropt_eld)) + sep + ..
+								"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
+								"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
+								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
+								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + .. 
+								"sobriety"+string(Loop_elements.sobriety(Sob_elt));
+					end
 				end
 			end
 		end
@@ -165,8 +169,9 @@ for time_step = 1:Nb_Iter
 
 	for elt = 1:size(Scenarios,2)
 		load(OUTPUT + Scenarios(elt) + sep + "output.sav")
-// verif
-verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
+// verif --> warning HH
+//verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
+verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10]; 
 
 // Indexes
 		data.X_pFish = PInd_Fish( BY.pX, BY.X, data.pX, data.X, :, :);
@@ -237,13 +242,13 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 		volume = [round((sum(data.Household_savings)/sum(data.H_disposable_income))*10^4)/10^2, round(data.u_tot*10^4)/10^2, M_Y_Ratio_qFish, Y_qFish, X_qFish];
 		clear M_Y_Ratio_qFish Y_qFish X_qFish
 
-// funding
-//		Funding = [round(data.GFCF_byAgent/(data.I_pFish*10^5))/10, round(sum(data.GFCF_byAgent)/(data.I_pFish*10^5))/10, round(data.GFCF_byAgent/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
-		Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
-					 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
-					 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
-					 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
- 					 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
+// funding --> warning HH
+		Funding = [round(data.GFCF_byAgent/(data.I_pFish*10^5))/10, round(sum(data.GFCF_byAgent)/(data.I_pFish*10^5))/10, round(data.GFCF_byAgent/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
+		// Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
+		// 			 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
+		// 			 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
+		// 			 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
+ 		//			 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC + data.Carbon_Tax;
@@ -259,8 +264,9 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 elt = elt + 1;
 data = BY;
 top_BY = "REF";
-// verif
-verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
+// verif --> warning HH
+verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10]; 
+//verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
 
 // indexes 
 	indexes = ones(1,size(var_index,2));
@@ -290,13 +296,13 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 		// M/Y ratio quantity index
 		volume = [round((sum(data.Household_savings)/sum(data.H_disposable_income))*10^4)/10^2, round(data.u_tot*10^4)/10^2, 1.0, 1.0, 1.0];
 
-// funding
-//		Funding = [round(data.GFCF_byAgent(1:3)/10^5)/10, round(sum(data.GFCF_byAgent(1:3))/10^5)/10, round(data.GFCF_byAgent(1:3)/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
-		Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
-					 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
-					 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
-					 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
- 					 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
+// funding --> warning HH
+		Funding = [round(data.GFCF_byAgent(1:3)/10^5)/10, round(sum(data.GFCF_byAgent(1:3))/10^5)/10, round(data.GFCF_byAgent(1:3)/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
+		// Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
+		// 			 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
+		// 			 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
+		// 			 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
+ 		// 			 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + sum(data.Carbon_Tax_IC,"r") + data.Energy_Tax_FC + sum(data.Carbon_Tax_C,"c")' ;
@@ -312,8 +318,10 @@ elt = elt + 1;
 load(OUTPUT + Scenarios(1) + sep + "output.sav")
 data = BY;
 top_BY = "2010";
-// verif
-verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
+// verif --> warning HH
+//verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3:12))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10];
+verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), round(sum(data.Carbon_Tax)/10^5)/10, round(sum(data.Energy_Tax_IC + data.Energy_Tax_FC)/10^5)/10, round((sum(data.Carbon_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC))/10^5)/10, round(sum(data.ClimPolicyCompens(3))/10^5)/10, round((sum(data.ClimPolCompensbySect))/10^5)/10]; 
+
 
 // indexes 
 	indexes = ones(1,size(var_index,2));
@@ -339,17 +347,17 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 		// final 
 		Mean_Eco = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
 
-// volume
+// volume 
 		// M/Y ratio quantity index
 		volume = [round((sum(data.Household_savings)/sum(data.H_disposable_income))*10^4)/10^2, round(data.u_tot*10^4)/10^2, 1.0, 1.0, 1.0];
 
-// funding
-//		Funding = [round(data.GFCF_byAgent(1:3)/10^5)/10, round(sum(data.GFCF_byAgent(1:3))/10^5)/10, round(data.GFCF_byAgent(1:3)/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
-		Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
-					 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
-					 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
-					 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
- 					 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
+// funding --> warning HH
+		Funding = [round(data.GFCF_byAgent(1:3)/10^5)/10, round(sum(data.GFCF_byAgent(1:3))/10^5)/10, round(data.GFCF_byAgent(1:3)/10^5)/10, round(data.Disposable_Income/10^5)/10, round(data.NetLending/10^5)/10, round(data.NetFinancialDebt/10^5)/10];
+		// Funding = 	[round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12)) sum(data.GFCF_byAgent)]/(data.I_pFish*10^5))/10,..
+		// 			 round([data.GFCF_byAgent(1:2) sum(data.GFCF_byAgent(3:12))]/10^5)/10,..
+		// 			 round([data.Disposable_Income(1:2) sum(data.Disposable_Income(3:12)) data.Disposable_Income(13)]/10^5)/10,..
+		// 			 round([data.NetLending(1:2) sum(data.NetLending(3:12)) data.NetLending(13)]/10^5)/10,..
+ 		// 			 round([data.NetFinancialDebt(1:2) sum(data.NetFinancialDebt(3:12)) data.NetFinancialDebt(13)]/10^5)/10];
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + sum(data.Carbon_Tax_IC,"r") + data.Energy_Tax_FC + sum(data.Carbon_Tax_C,"c")' ;

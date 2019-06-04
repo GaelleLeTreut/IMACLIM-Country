@@ -160,7 +160,7 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_1 = "True";
+Test_1 = "False";
 if Test_1 == "True"
 	exec("test"+filesep()+"test_1.sce");
 	pause
@@ -310,7 +310,7 @@ if Output_files=='True'
 	exec(CODE+"outputs_indic.sce");
 end
 
-Test_2 = "True";
+Test_2 = "False";
 if Test_2 == "True"
 	exec("test"+filesep()+"test_2.sce");
 	pause
@@ -345,6 +345,7 @@ exec("Loading_params.sce");
 parameters.u_param = BY.u_tot;
 parameters.time_since_BY = 0;
 parameters.time_since_ini = 0;
+parameters.time_period = 0;
 parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
 parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
 parameters.ConstrainedShare_Labour = ones(parameters.ConstrainedShare_Labour);
@@ -386,45 +387,61 @@ end
 Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sobriety = [1.0 0.0];
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
 		for CoefW_elt=1:size(Loop_elements.Coef_real_wage,2)
 			for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,2)
+				for Sob_elt=1:size(Loop_elements.sobriety,2)
 
-				getd(LIB);
+					getd(LIB);
 					
-				Current_Simu = 	"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
+					Current_Simu = 	"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
 								"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
 								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
-								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt));
+								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + ..
+								"sobriety"+string(Loop_elements.sobriety(Sob_elt));
 
-				disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
+					disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
 
-				parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
-				parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
-				parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
-				parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
-				parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
+					parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
+					parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
+					parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
+					parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
+					parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
 
-				if Output_files=='True'
-					SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
-					mkdir(SAVEDIR);
-				end
+					if Loop_elements.sobriety(Sob_elt) == 1.0
+						parameters.time_period = 2;
+						parameters.phi_IC(Indice_EnerSect,:) = 2.59 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
+						parameters.delta_C_parameter(Indice_EnerSect) = -2.53* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
 
-				exec("test/test_equilibrium.sce");
-				exec(System_Resol+".sce");
-				exec("test/test_equilibrium.sce");
+					end
+					if Loop_elements.sobriety(Sob_elt) == 0.0
+						parameters.time_period = 0;
+						parameters.phi_IC(Indice_EnerSect,:) = 0.0 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
+						parameters.delta_C_parameter(Indice_EnerSect) = 0.0* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
+					end
 
-				if Output_files=='True'
-					exec(CODE+"outputs.sce");
-					exec(CODE+"outputs_indic.sce");
-				end
+					if Output_files=='True'
+						SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
+						mkdir(SAVEDIR);
+					end
+
+					exec("test/test_equilibrium.sce");
+					exec(System_Resol+".sce");
+					exec("test/test_equilibrium.sce");
+
+					if Output_files=='True'
+						exec(CODE+"outputs.sce");
+						exec(CODE+"outputs_indic.sce");
+					end
 			
-				exec(CODE+"Variable_Storage.sce");
+					exec(CODE+"Variable_Storage.sce");
 
-				time_step = time_step + 1;
+					time_step = time_step + 1;
+				end
 			end
 		end
 	end

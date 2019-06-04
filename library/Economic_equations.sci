@@ -301,7 +301,7 @@ endfunction
 ///         Same demand functions for all household classes
 warning("ruben again : H_demand_Const_1: abs(pC)")
 
-function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget, time_since_BY) ;
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
@@ -1423,7 +1423,7 @@ endfunction
 
 
 
-function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
+function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, time_since_BY) ;
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
