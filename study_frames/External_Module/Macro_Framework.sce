@@ -64,10 +64,13 @@ if World_prices == "True"
 	end
 end
 
+
+//////// Exportation in volume 
 // Export growth of non-energy sectors as GDP_world
 if X_nonEnerg == "True"
 	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Projection.GDP_world(time_step);
 end
+
 
 // clear programming trick for Static_comparative
 if Resol_Mode == "Static_comparative"
