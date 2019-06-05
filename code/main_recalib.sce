@@ -388,65 +388,100 @@ Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
 Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-Loop_elements.sobriety = [1.0 0.0];
+Loop_elements.sobriety = 1.0;//[1.0 0.0];
+Loop_elements.OverInvest = [30.0 0.0]*1E6;
+Loop_elements.MarginAdapt = [0.0 1.0 2.0 3.0];
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
 		for CoefW_elt=1:size(Loop_elements.Coef_real_wage,2)
 			for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,2)
 				for Sob_elt=1:size(Loop_elements.sobriety,2)
+					for OvIn_elt = 1:size(Loop_elements.OverInvest,2)
+						for MarAdap_elt = 1:size(Loop_elements.MarginAdapt,2)
 
-					getd(LIB);
-					
-					Current_Simu = 	"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
-								"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
-								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
-								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + ..
-								"sobriety"+string(Loop_elements.sobriety(Sob_elt));
+							getd(LIB);
+						
+							Current_Simu = 	"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
+										"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
+										"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
+										"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + ..
+										"sobriety"+string(Loop_elements.sobriety(Sob_elt)) + "_" + ..
+										"OverInvest"+string(Loop_elements.OverInvest(OvIn_elt)*1E-6) + "_" + ..
+										"MarginAdapt"+string(Loop_elements.MarginAdapt(MarAdap_elt));
 
-					disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
+							disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
 
-					parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
-					parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
-					parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
-					parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
-					parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
+							parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
+							parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);
+							parameters.Coef_real_wage = Loop_elements.Coef_real_wage(CoefW_elt);
+							parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
+							parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
 
-					if Loop_elements.sobriety(Sob_elt) == 1.0
-						parameters.time_period = 2;
-						parameters.phi_IC(Indice_EnerSect,:) = 2.59 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
-						parameters.delta_C_parameter(Indice_EnerSect) = -2.53* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
+							if Loop_elements.sobriety(Sob_elt) == 1.0
+								parameters.time_period = 2;
+								parameters.phi_IC(Indice_EnerSect,:) = 2.59 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
+								parameters.delta_C_parameter(Indice_EnerSect) = -2.53* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
 
+							end
+							if Loop_elements.sobriety(Sob_elt) == 0.0
+								parameters.time_period = 0;
+								parameters.phi_IC(Indice_EnerSect,:) = 0.0 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
+								parameters.delta_C_parameter(Indice_EnerSect) = 0.0* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
+							end
+
+							parameters.OverInvest = Loop_elements.OverInvest(OvIn_elt);
+
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 0.0
+								// pY as a variable / Profit_margin_rate as a variable / markup_rate as a calibrated parameter
+								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
+								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
+							end
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 1.0
+								// markup_rate increased ex-ante to meet higher invest. needs
+								Deriv_Exogenous.markup_rate = BY.markup_rate*(sum(data_2.Profit_margin) + parameters.OverInvest)/sum(data_2.Profit_margin);
+								// pY as a variable / Profit_margin_rate as a variable / markup_rate as a calibrated parameter
+								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
+								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
+							end
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 2.0
+								// pY as a calibrated parameter / Profit_margin_rate as a variable / markup_rate as a variable 
+								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(129,1:3) "Var" "-1" "1"];
+								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
+							end	
+
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 3.0
+								// pY as a variable / Profit_margin_rate as a calibrated parameter / markup_rate as a variable
+								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
+								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(129,1:3) "Var" "-%inf" "%inf"];
+							end							
+
+							if Output_files=='True'
+								SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
+								mkdir(SAVEDIR);
+							end
+
+							exec("test/test_equilibrium.sce");
+							exec(System_Resol+".sce");
+							exec("test/test_equilibrium.sce");
+
+							if Output_files=='True'
+								exec(CODE+"outputs.sce");
+								exec(CODE+"outputs_indic.sce");
+							end
+	
+							exec(CODE+"Variable_Storage.sce");
+							clear Deriv_Exogenous
+
+							time_step = time_step + 1;
+
+						end
 					end
-					if Loop_elements.sobriety(Sob_elt) == 0.0
-						parameters.time_period = 0;
-						parameters.phi_IC(Indice_EnerSect,:) = 0.0 * ones(parameters.phi_IC(Indice_EnerSect,:))/100;
-						parameters.delta_C_parameter(Indice_EnerSect) = 0.0* ones(parameters.delta_C_parameter(Indice_EnerSect))/100;
-					end
-
-					if Output_files=='True'
-						SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
-						mkdir(SAVEDIR);
-					end
-
-					exec("test/test_equilibrium.sce");
-					exec(System_Resol+".sce");
-					exec("test/test_equilibrium.sce");
-
-					if Output_files=='True'
-						exec(CODE+"outputs.sce");
-						exec(CODE+"outputs_indic.sce");
-					end
-			
-					exec(CODE+"Variable_Storage.sce");
-
-					time_step = time_step + 1;
 				end
 			end
 		end
 	end
 end
-
 ////////////////////////////////////////////////////////////
 // 	STEP Final: SHUT DOWN THE DIARY
 ////////////////////////////////////////////////////////////

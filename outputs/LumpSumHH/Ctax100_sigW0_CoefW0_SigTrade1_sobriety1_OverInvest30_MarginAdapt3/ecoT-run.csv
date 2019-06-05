@@ -1,0 +1,27 @@
+Economic Table;Corporations;Government;Households;RestOfWorld
+Trade_Balance;0;0;0;63.8
+GOS_byAgent;483.5;84.8;189.5;0
+NetCompWages_byAgent;0;0;899.9;0
+InsuranceContrib_byAgent;0;405.8;0;0
+Production_Tax_byAgent;0;60.9;0;0
+Energ_Tax_byAgent;0;20.4;0;0
+Carbon_Tax_byAgent;0;29.8;0;0
+OtherIndirTax_byAgent;0;41.7;0;0
+VA_Tax_byAgent;0;167.8;0;0
+Property_income;-28.8;-27.5;80.2;-23.9
+Unemployment_transfers;0;-42.3;42.3;0
+Pensions;0;-351;351;0
+Other_social_transfers;0;-122.2;122.2;0
+ClimPolicyCompens;0;-29.8;29.8;0
+Other_Transfers;-111.4;71.5;30.6;9.3
+Income_Tax;0;216.4;-216.4;0
+Corporate_Tax;-54.6;54.6;0;0
+Other_Direct_Tax;0;24.3;-24.3;0
+Disposable_Income;288.7;605;1504.8;49.1
+FC_byAgent;0;608.6;1295.3;0
+GFCF_byAgent;329.4;82.9;131.6;0
+Tot_FC_byAgent;329.4;691.4;1426.9;0
+NetLending;-40.7;-86.4;78;49.1
+NetFinancialDebt;2133.1;1720.4;-3588;-265.6
+;;;;
+Units;1000000 k€;;;

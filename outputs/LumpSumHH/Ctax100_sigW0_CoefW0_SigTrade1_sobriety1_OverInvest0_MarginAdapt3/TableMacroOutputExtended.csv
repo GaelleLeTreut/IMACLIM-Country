@@ -1,0 +1,39 @@
+Macro results;in %
+Carbon Tax rate;100 euro/tCO2
+Labour Tax cut;No recycling revenues
+Real GDP (Laspeyres);-0.4340711
+Households consumption in GDP;-0.1116601
+Public consumption in GDP;0.0006439
+Investment in GDP;0.0000076
+Exports in GDP;-0.2769879
+Imports in GDP;0.0460746
+Imports/Domestic production ratio;0.0708769
+Imports of Non Energy goods in volume;0.6954583
+Exports of Non Energy goods in volume;-1.0848272
+Total Employment;-0.4601864
+Unemployment rate (% points);0.0041552
+Net-of-tax wages;0.0773277
+Labour Intensity (Laspeyres);0
+Labour tax rate (% points);1.209e-18
+Energy Input Price (Laspeyres);29.212216
+Energy Intensity (Laspeyres);-3.1828544
+Energy cost share for non-energetic sector;19.464197
+Production Price (Laspeyres);0.9146259
+Production Price Energy goods (Laspeyres);7.039867
+Production Price Non Energy goods (Laspeyres);0.7814645
+Consumption Price for HH of Non Energy goods (Laspeyres);0.6169647
+Real Households consumption (Laspeyres);-0.2050658
+ Energy in Households consumption;-0.329921
+ Non Energy goods in Households consumption;0.1248552
+Public Deficits; 1.775305
+Country Deficits /GDP;5.943339
+Total Emissions;-6.928994
+Total Taxes;13.795051
+Households Energy Bills;13.616519
+Firms Energy Bills;19.640555
+Households Energy Conso;-4.995991
+Firms Energy Conso;-8.009662
+;
+Most sensitif import Elasticity for NonEner;1.990099
+ Most sensitif export Elasticity for NonEner ;3.4158416
+ Global mean wage/Unemployment Elasticity;0

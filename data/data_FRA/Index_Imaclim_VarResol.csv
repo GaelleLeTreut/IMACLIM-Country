@@ -80,6 +80,7 @@ GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf
 Profit_margin;1;nb_Sectors;Var;-%inf;%inf
+Profit_margin_rate;1;nb_Sectors;Var;-%inf;%inf
 Capital_income;1;nb_Sectors;Var;0;%inf
 Distribution_Shares;nb_IncomeSources;nb_InstitAgents;Var;-1;1
 NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf

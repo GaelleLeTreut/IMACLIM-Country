@@ -127,6 +127,7 @@ pL;1;nb_Sectors;calib
 aK;1;nb_Sectors;calib
 pK;1;nb_Sectors;calib
 markup_rate;1;nb_Sectors;calib
+Profit_margin_rate;1;nb_Sectors;calib
 Betta;nb_Commodities;1;calib
 Distribution_Shares;nb_IncomeSources;nb_InstitAgents;calib
 LabourByWorker_coef;1;1;calib

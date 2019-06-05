@@ -1,21 +1,13 @@
 // Scenarios options
 //Loop_elements.Recycling_option = ["PublicDeficit" "GreenInvest" "LumpSumHH" "LabTax" "ExactRestitution" "LabTax_PublicDeficit" "LabTax_GreenInvest" "LabTax_LumpSumHH"];
-//Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
-//Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
-//Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
-//Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-
-// Loop_elements.Carbon_Tax_rate = [50 100 250]*1E3; // Taxe Carbone
-// Loop_elements.sigma_omegaU = [0.0 -0.1]; // Wage Curve : elasticity
-// Loop_elements.Coef_real_wage = [0.0 1.0]; // wage Curve : wage indexation
-// Loop_elements.sigma_Trade_coef = [2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-
-Loop_elements.Recycling_option = ["LabTaxHH1"];
+Loop_elements.Recycling_option = ["LabTax" "LumpSumHH"];
 Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
 Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-Loop_elements.sobriety = [1.0 0.0];
+Loop_elements.sobriety = 1.0;//[1.0 0.0];
+Loop_elements.OverInvest = [30.0 0.0]*1E6;
+Loop_elements.MarginAdapt = [0.0 1.0 2.0 3.0];
 
 // MODEL FILE STRUCTURE
 sep = filesep(); // "/" or "\" depending on OS
@@ -52,19 +44,27 @@ for Ropt_eld=1:size(Loop_elements.Recycling_option,2)
 			for CoefW_elt=1:size(Loop_elements.Coef_real_wage,2)
 				for SigTrade_elt=1:size(Loop_elements.sigma_Trade_coef,2)
 					for Sob_elt=1:size(Loop_elements.sobriety,2)
+						for OvIn_elt = 1:size(Loop_elements.OverInvest,2)
+							for MarAdap_elt = 1:size(Loop_elements.MarginAdapt,2)
 
-						Scenarios(1,$+1) = string(Loop_elements.Recycling_option(Ropt_eld)) + sep + ..
-								"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
-								"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
-								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
-								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + .. 
-								"sobriety"+string(Loop_elements.sobriety(Sob_elt));
+								Scenarios(1,$+1) = string(Loop_elements.Recycling_option(Ropt_eld)) + sep + ..
+										"Ctax"+string(Loop_elements.Carbon_Tax_rate(CTax_elt)*1E-3) + "_" + .. 
+										"sigW"+string(Loop_elements.sigma_omegaU(sigW_elt)) + "_" + .. 
+										"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
+										"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt)) + "_" + ..
+										"sobriety"+string(Loop_elements.sobriety(Sob_elt)) + "_" + ..
+										"OverInvest"+string(Loop_elements.OverInvest(OvIn_elt)*1E-6) + "_" + ..
+										"MarginAdapt"+string(Loop_elements.MarginAdapt(MarAdap_elt));
+							end
+						end
 					end
 				end
 			end
 		end
 	end
 end
+
+pause
 
 // définition de l'en tête
 top = 	["type", "Variables", "unit", "Agents/Sectors", Scenarios];
@@ -139,9 +139,9 @@ unit_fund = ["G€","G€","G€","G€", "G€","G€","G€","G€","G€","G�
 AgSec_fund = ["1.  Corporations", "2.  Government", "3.  Households", "4.  Domestic", "1.  Corporations", "2.  Government", "3.  Households", "1.  Corporations", "2.  Government", "3.  Households","4.  Rest of the World", "1.  Corporations", "2.  Government", "3.  Households","4.  Rest of the World", "1.  Corporations", "2.  Government", "3.  Households","4.  Rest of the World",];
 
 // changement structurel 
-type_struc_temp = ["nominal" "-" "-" "-" "-" "-" "-" "-" "nominal"];
-var_struc_temp = ["GDP sect" "Y" "M" "M/Y" "X" "Jobs" "pM/pY" "C" "C"];
-unit_struc_temp = ["G€" "volume" "ratio" "volume" "volume" "thousands" "ratio" "volume" "G€"];
+type_struc_temp = ["nominal" "-" "-" "-" "-" "-" "-" "nominal" "-" "nominal"];
+var_struc_temp = ["GDP sect" "Y" "M" "M/Y" "X" "Jobs" "pM/pY" "Profit_margins" "C" "C"];
+unit_struc_temp = ["G€" "volume" "ratio" "volume" "volume" "thousands" "ratio" "G€" "volume" "G€"];
 AgSec_fund_temp = ["1.  Crude_oil" "2.  Natural_gas" "3.  Coal" "4.  AllFuels" "5.  Electricity" "6.  HeatGeoSol_Th" "7.  Heavy_Industry" "8.  Buildings_constr" "9.  Work_constr" "10. Automobile" "11. Load_PipeTransp" "12. PassTransp" "13. Agri_Food_industry" "14. Property_business" "15. OthSectors"];
 
 type_struc = [];
@@ -252,7 +252,7 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + data.Energy_Tax_FC + data.Carbon_Tax;
-		Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
+		Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' data.Profit_margin sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
 		clear GDP_sect 
 // final 
 		tabular(:,4+elt) = [top(4+elt), verif, indexes, nom_tot, real_tot, Mean_Eco, volume, Funding, Structural_Change]';
@@ -306,7 +306,7 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + sum(data.Carbon_Tax_IC,"r") + data.Energy_Tax_FC + sum(data.Carbon_Tax_C,"c")' ;
-Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
+Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' data.Profit_margin sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
 		clear GDP_sect
 
 		tabular(:,4+elt) = [top_BY, verif, indexes, nom_tot, real_tot, Mean_Eco, volume, Funding, Structural_Change]';
@@ -361,7 +361,7 @@ verif = [data.Labour_Tax_Cut, (sum(data.CO2Emis_C) + sum(data.CO2Emis_IC)), roun
 
 // changement structurel structure de coût / Travail / Production / Commerce
 		GDP_sect = data.Labour_income + data.Labour_Tax +  data.Production_Tax - data.ClimPolCompensbySect + data.GrossOpSurplus + data.OtherIndirTax + data.VA_Tax + data.Energy_Tax_IC + sum(data.Carbon_Tax_IC,"r") + data.Energy_Tax_FC + sum(data.Carbon_Tax_C,"c")' ;
-Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
+Structural_Change = [round(GDP_sect/10^3)/10^3 data.Y' data.M' divide(data.M, data.Y, %nan)' data.X' data.Labour divide(data.pM, data.pY, %nan)' data.Profit_margin sum(data.C,"c")' round(sum(data.C_value,"c")'/10^5)/10];
 		clear GDP_sect
 
 		tabular(:,4+elt) = [top_BY, verif, indexes, nom_tot, real_tot, Mean_Eco, volume, Funding, Structural_Change]';

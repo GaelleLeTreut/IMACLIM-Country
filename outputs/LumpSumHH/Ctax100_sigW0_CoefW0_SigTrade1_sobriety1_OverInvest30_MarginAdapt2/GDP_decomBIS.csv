@@ -1,0 +1,19 @@
+Variable;Nominal 0 (G€);Nominal 1 (G€);Price Index (Paasche);Real 1 (G€);Real term ratio
+GDP;2328.6;2381.9;1.0057967;2368.2;1.0169779
+Households consumption;1296.3;1296.3;1.0104972;1282.8;1.0116989
+Households consumption - Non-energy goods;1203.4;1203.4;1.0001161;1203.2;1.0160585
+Households consumption - Energy goods;92.9;92.9;1.1675188;79.5;0.9500401
+Government consumption;604.5;604.5;1.000218;604.4;1
+Government consumption - Non-energy goods;604.5;604.5;1.000218;604.4;1
+Government consumption - Energy goods;0;0;-1.654e-08;0;Nan
+Investment;540.7;540.7;1.0001035;540.6;1.0587509
+Investment - Non-energy goods;540.7;540.7;1.0001035;540.6;1.0587509
+Investment - Energy goods;0;0;-1.008e-08;0;Nan
+Exports;553.9;553.9;1.0001337;553.8;0.9998252
+Exports - Non-energy goods;539.2;539.2;1.0001373;539.1;0.9998205
+Exports - Energy goods;14.7;14.7;1;14.7;1
+Imports;613.4;613.4;1;613.4;1.0085518
+Imports - Non-energy goods;571.3;571.3;1;571.3;1.0136158
+Imports - Energy goods;42.1;42.1;1;42.1;0.9445432
+Net-of-tax wages;-;-;-;for nominal ratio:;1.0015253
+Total Employment;-;-;-;Abs ratio:;1.0184188

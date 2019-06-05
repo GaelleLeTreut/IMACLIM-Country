@@ -271,6 +271,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
     Labour_income_Const_1(Labour_income, Labour, w) 
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
+    Profit_income_rate_Const_1(Profit_margin_rate, markup_rate, pY)
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)

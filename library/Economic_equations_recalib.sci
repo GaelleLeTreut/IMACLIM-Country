@@ -104,9 +104,11 @@ function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I
 
     y = I.*pI- BY.I.*BY.pI.*I_pFish;
 
-    y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+    y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0) ..
+                                         + divide(OverInvest, sum(BY.I.*BY.pI),1.0));
 
 endfunction
+
 warning( "Invest_demand_Const_3 avec recyclage de la taxe à généraliser")
 
 function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C); 
@@ -203,4 +205,11 @@ function [y] = H_Savings_rate_Const_1(Household_saving_rate, delta_HH_saving_rat
     y1 = Household_saving_rate - (delta_HH_saving_rate + BY.Household_saving_rate) ;
 
     y=y1';
+endfunction
+
+function [y] = Profit_income_rate_Const_1(Profit_margin_rate, markup_rate, pY) ;
+
+    y1 = Profit_margin_rate - ( markup_rate .* pY' ) ;
+
+    y  = y1';
 endfunction

@@ -1414,6 +1414,26 @@ else
     markup_rate = (abs(markup_rate) > %eps).*markup_rate;
 end
 
+
+function [const_Profit_margin_rate] =fcal_ProfitMargRate_Const_1(x_Profit_margin_rate, Profit_margin, markup_rate, pY, Imaclim_VarCalib)
+    Profit_margin_rate= indiv_x2variable(Imaclim_VarCalib, "x_Profit_margin_rate");
+
+    // if Profit_margin = 0 => Profit_margin_rate = 0
+    y1_1 = (Profit_margin'==0).*Profit_margin_rate';
+    y1_2 = (Profit_margin'<>0).* Profit_income_rate_Const_1(Profit_margin_rate, markup_rate, pY) ;
+    const_Profit_margin_rate = (Profit_margin'==0).*y1_1 + (Profit_margin'<>0).*y1_2 ;
+
+endfunction
+
+[x_Profit_margin_rate, const_Profit_margin_rate, info_cal_Profit_margin_rate] = fsolve(x_Profit_margin_rate, list(fcal_ProfitMargRate_Const_1, Profit_margin, markup_rate, pY, Index_Imaclim_VarCalib));
+
+if norm(const_Profit_margin_rate) > sensib
+    error( "review calib_Profit_margin_rate")
+else
+    Profit_margin_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Profit_margin_rate");
+    Profit_margin_rate = (abs(Profit_margin_rate) > %eps).*Profit_margin_rate;
+end
+
 ///////////////////////////
 // Start - Not applied to Brasil
 ///////////////////////////
