@@ -20,9 +20,25 @@ end
 // Indice of sectors to force volume of imports and exports
 // Trade_BU =[] ;
 Trade_BU =Indice_EnerSect ;
+
+// Indice of sectors to force all intermediate consumption in volume
 // Alpha_BU =[] ; 
-// Indice of sectors to force intermediate consumption in volume
 Alpha_BU = Indice_EnerSect;
+
+// Partial BU forcing (only few element of the intermediate consumption) 
+  // Alpha_Part_BU matrix with in line the Index of the Sector partially informed, and in column for which input sector. 
+Alpha_Part_BU =[];                                                                                              
+// Example  : consumption of chemical from planted forest and cattle are forced, consumption of bovineMeat from planted forest is forced (zero put a the end of the BovineMeat line to keep 3 column)
+Alpha_Part_BU = [find(Index_Sectors=="Chemical"), find(Index_Sectors=="PlantedForest"),  find(Index_Sectors=="Cattle") ; 
+		find(Index_Sectors=="BovineMeat"), find(Index_Sectors=="PlantedForest"), 0 ];
+
+if Alpha_Part_BU <>[]& Alpha_BU <>[]
+AllSet = [Alpha_BU, Alpha_Part_BU(:,1)'];
+ToSet = setdiff(Indice_Sectors, AllSet);
+elseif Alpha_Part_BU ==[]& Alpha_BU <>[]
+ToSet = setdiff(Indice_Sectors, Alpha_BU);
+end
+
 // Indice of sectors to force households consumption in volume
 // C_BU = [] ; 
 C_BU =  Indice_EnerSect;
