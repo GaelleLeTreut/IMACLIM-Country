@@ -1,38 +1,57 @@
 if Scenario<>"" then
 
+if ScenAgg_IOT==%F 
 // data treatment
-if ToAggregate=="True"
-IC_proj = zeros(nb_SectorsTEMP,nb_SectorsTEMP);
-Y_proj = zeros(nb_SectorsTEMP);
-execstr("IC_proj = fill_table(IOT_Qtities_"+time_step+ ",IndRow_IOT_Qtities,IndCol_IOT_Qtities,Index_CommoditiesTEMP,Index_SectorsTEMP);");
-execstr("Y_proj = fill_table(IOT_Qtities_"+time_step+ ",IndRow_IOT_Qtities,IndCol_IOT_Qtities,Index_CommoditiesTEMP,""Y"");");
-end
+	if ToAggregate=="True"
+	IC_proj = zeros(nb_SectorsTEMP,nb_SectorsTEMP);
+	Y_proj = zeros(nb_SectorsTEMP);
+	execstr("IC_proj = fill_table(IOT_Qtities_"+time_step+ ",IndRow_IOT_Qtities,IndCol_IOT_Qtities,Index_CommoditiesTEMP,Index_SectorsTEMP);");
+	execstr("Y_proj = fill_table(IOT_Qtities_"+time_step+ ",IndRow_IOT_Qtities,IndCol_IOT_Qtities,Index_CommoditiesTEMP,""Y"");");
+	end
+	
+	if ToAggregate=="False"
+	IC_proj = zeros(nb_Sectors,nb_Sectors);
+	Y_proj = zeros(nb_Sectors);
+	execstr("IC_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndexCol,Index_Commodities,Index_Sectors);");
+	execstr("Y_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndexCol,Index_Commodities,""Y"");");
+	end
+	
+	Projection.IC = zeros(nb_SectorsAGG,nb_SectorsAGG);
+	Projection.Y = zeros(nb_SectorsAGG);
+	
+	if ToAggregate=="True"
+	for line  = 1:nb_SectorsAGG
+		for column = 1:nb_SectorsAGG
+			Projection.IC(line,column)=sum(IC_proj(all_IND(line), all_IND(column)));
+		end
+		Projection.Y(line)=sum(Y_proj(all_IND(line)));
+	end
+	end
+	
+	if ToAggregate=="False"
+		Projection.IC = IC_proj;
+		Projection.Y = Y_proj;
+	end
+	
+	clear IC_proj Y_proj
+	
+elseif ScenAgg_IOT==%T 
 
-if ToAggregate=="False"
-IC_proj = zeros(nb_Sectors,nb_Sectors);
-Y_proj = zeros(nb_Sectors);
-execstr("IC_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndexCol,Index_Commodities,Index_Sectors);");
-execstr("Y_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndexCol,Index_Commodities,""Y"");");
-end
-
-Projection.IC = zeros(nb_SectorsAGG,nb_SectorsAGG);
-Projection.Y = zeros(nb_SectorsAGG);
-
-if ToAggregate=="True"
-for line  = 1:nb_SectorsAGG
+execstr("Y_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndCol_IOT_Qtities,Index_CommoInit,""Y"");");
+execstr("IC_proj = fill_table(IOT_Qtities_"+time_step+ ",IndexRow,IndCol_IOT_Qtities,Index_CommoInit,Index_SectInit);");
+	//aggregation here by line..
+	for column = 1:nb_SectorsAGG
+		Projection.Y(column,:) = sum(Y_proj(all_IND(column)),:);
+	end
+   //for sector*sector aggregation
+	for line  = 1:nb_SectorsAGG
     for column = 1:nb_SectorsAGG
-        Projection.IC(line,column)=sum(IC_proj(all_IND(line), all_IND(column)));
+        Projection.IC(line,column) = sum(IC_proj(all_IND(line),all_IND(column)));
+	end	
     end
-    Projection.Y(line)=sum(Y_proj(all_IND(line)));
-end
+
 end
 
-if ToAggregate=="False"
-	Projection.IC = IC_proj;
-	Projection.Y = Y_proj;
-end
-
-clear IC_proj Y_proj
 
 // parameter forcing
 alpha_current = BY.alpha;

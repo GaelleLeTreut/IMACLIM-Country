@@ -31,7 +31,10 @@ World_prices;False
 X_nonEnerg;False
 // SELECT the scenario to run (soft_linking);
 // Scenario;
+// Scenario;PMR_Ref_Disag
 Scenario;PMR_Ref
+// TELL if IOT_Quantities from scenario require aggregation as aggregation sectors; 
+// ScenAgg_IOT;%T
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

@@ -125,3 +125,12 @@ else
     warning("No information about investment disaggregation : by default, investment is kept aggregated")
     Invest_matrix = %F;
 end
+
+if isdef("ScenAgg_IOT") then
+    ScenAgg_IOT = eval(ScenAgg_IOT);
+else
+    warning("No information about aggregating volumes of scenarios : by default, not aggregation")
+    ScenAgg_IOT = %F;
+end
+
+

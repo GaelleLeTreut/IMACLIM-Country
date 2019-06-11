@@ -617,13 +617,16 @@ nb_RoW = size(Index_Region,"c");
 
 end
 
+
+Index_CommoInit = Index_Commodities ; 
+Index_SectInit = Index_Sectors ; 
+
 // //Put each IC matrix of different country into a 3D matrix ( sectors, sectors, region) 
 // // IC_RoW = zeros(nb_Commodities,nb_Sectors,nb_RoW);
 
 // // for cur_reg = 1:nb_RoW 
 // // IC_RoW(:,:,cur_reg) = evstr('IC_'+Index_Region(cur_reg)+';');
 // // end
-
 
 
 // If AGGREGATION - execution of aggregation file	

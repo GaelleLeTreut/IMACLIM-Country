@@ -54,3 +54,7 @@ Index_CommoditiesTEMP = IndRow_IOT_Qtities(1:nb_SectorsTEMP);
 Index_SectorsTEMP = Index_CommoditiesTEMP;
 // to clear at the end
 
+if nb_Sectors == size(IndexRow,"r")-1 & ScenAgg_IOT==%T
+warning("It seems that the "+Scenario+" has the same size of the aggregation profil AGG:"+AGG_type+". The ScenAgg_IOT is turned into false, no need to aggregate scenario")
+ ScenAgg_IOT=%F;
+end
