@@ -1,9 +1,9 @@
-reference_year;2015;2020
-current_year;2020;2030
-GDP;0.016;0.017
-Population;0.004;0.004
-Labour_force;0.003;0.003
-Retired;0.01;0.01
+reference_year;2015;2025
+current_year;2025;2030
+GDP;0.0201906;0.032
+Population;0.007393;0.00527608
+Labour_force;0.006200807;0.002362951
+Retired;0.04007988;0.037337452
 GDP_world;0.02111861;0.020106955
 pM_Coal;0.005443236;0.010886472
 pM_COilFFuelExDies;0.002;0.005847445
