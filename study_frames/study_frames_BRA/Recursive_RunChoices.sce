@@ -29,8 +29,8 @@ Alpha_BU = Indice_EnerSect;
   // Alpha_Part_BU matrix with in line the Index of the Sector partially informed, and in column for which input sector. 
 Alpha_Part_BU =[];                                                                                              
 // Example  : consumption of chemical from planted forest and cattle are forced, consumption of bovineMeat from planted forest is forced (zero put a the end of the BovineMeat line to keep 3 column)
-Alpha_Part_BU = [find(Index_Sectors=="Chemical"), find(Index_Sectors=="PlantedForest"),  find(Index_Sectors=="Cattle") ; 
-		find(Index_Sectors=="BovineMeat"), find(Index_Sectors=="PlantedForest"), 0 ];
+// Alpha_Part_BU = [find(Index_Sectors=="Chemical"), find(Index_Sectors=="PlantedForest"),  find(Index_Sectors=="Cattle") ; 
+		// find(Index_Sectors=="BovineMeat"), find(Index_Sectors=="PlantedForest"), 0 ];
 
 if Alpha_Part_BU <>[]& Alpha_BU <>[]
 AllSet = [Alpha_BU, Alpha_Part_BU(:,1)'];
