@@ -50,9 +50,33 @@ ToAggregate = "False"; // feature whether forcing data are not aggregated... che
 ////////////////////////////////////////////////////////////////////////
 // load all data
 if time_step==1 & Scenario<>"" then
+
+	if Alpha_BU <> []
+	parameters.ConstrainedShare_IC(Alpha_BU,:)=1;
+	ConstrainedShare_IC(Alpha_BU,:)=1;
+	/// Need to recalibrate aIC
+	Coeff_forCES = (sum(pIC.* (1 - ConstrainedShare_IC) .* alpha,"r") + sum(pL .* (1-ConstrainedShare_Labour) .* lambda, "r") + pK .* (1-ConstrainedShare_Capital) .* kappa );
+	aIC = (ones(nb_Sectors,1)*Coeff_forCES<>0).*pIC.* ((1 - ConstrainedShare_IC) .* alpha) .^ (1 -(ones(nb_Sectors,1)*((sigma-1)./sigma))) .* (ones(nb_Sectors,1)*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0))).^(-1);
+	aL	=  (Coeff_forCES<>0).*pL.* ((1 - ConstrainedShare_Labour) .* lambda) .^ (1 -((sigma-1)./sigma)) .*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0)) .^(-1);
+	aK= (Coeff_forCES<>0) .* (pK.* ((1 - ConstrainedShare_Capital) .* kappa) .^ (1 -((sigma-1)./sigma)) .*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0)) .^(-1));
+	
+	end
+	
+	///////// ConstrainedShare_C set up to 1 to reproduce forced volumes of C
+	if C_BU <> []
+	parameters.ConstrainedShare_C(C_BU)=1;
+	end
+	
+	/////// Elasticity set up to 0 to reproduce forced volumes of X and M
+	if Trade_BU <> []
+	parameters.sigma_M(Trade_BU) = 0;
+	parameters.sigma_X (Trade_BU) = 0;
+	end
+
 	if Alpha_BU <> [] | Trade_BU <> [] | C_BU <> [] 
 		exec(STUDY+"External_Module"+sep+"Import_Proj_Volume.sce");
 	end
+	
 end
 
 // traitement des données et forçage relatifs à alpha (phi_IC)
