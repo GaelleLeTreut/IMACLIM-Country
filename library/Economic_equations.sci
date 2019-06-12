@@ -1562,6 +1562,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
 		ToSet = Indice_Sectors;
 	end
 	
+	if  isdef('ToSet')==%F
+	ToSet = Indice_Sectors;
+	end
+	
+	
 	// The rest of the sectors 
 	alpha(ToSet,:) = (ones(size(ToSet,2), 1).*.(Theta ./ Phi)) .* (ones(size(ToSet,2),nb_Sectors)./(1+phi_IC(ToSet,:)).^time_since_BY).* ..
              (ConstrainedShare_IC(ToSet,:) .* BY.alpha(ToSet,:) + ((aIC(ToSet,:) ./ pIC(ToSet,:)) .^ (sigma.*.ones(size(ToSet,2),1))) .* ..
