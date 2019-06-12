@@ -71,6 +71,10 @@ end
 
 parameters.phi_IC = (abs(parameters.phi_IC)>1E-6).*parameters.phi_IC;
 
+if Alpha_BU_Intens==%T & Alpha_Part_BU<>[]
+error("parameters.phi_IC for Alpha_Part_BU are not calculated yet in Alpha_module.sce - Need to be done before selecting this options")
+end
+
 clear alpha_reference r_alpha
 
 else

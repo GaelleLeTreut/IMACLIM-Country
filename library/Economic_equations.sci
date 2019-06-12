@@ -1521,35 +1521,48 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
     
     test_FPI = FPI == 0;
     FPI(test_pL|test_FPI) = 1;
-
+	
+	// Defaut setting: forcing volume
+	if isdef('Alpha_BU_Intens')==%F
+	Alpha_BU_Intens =%F;
+	end 
+	
 	alpha = zeros(nb_Sectors,nb_Sectors);
-
-	// All sector forced
-	if isdef('Alpha_BU')==%T & Alpha_BU<>[]
-	alpha(Alpha_BU,:) = Projection.IC(Alpha_BU,:)./(ones(Alpha_BU)'*((Y==0)+(Y<>0).*Y)');
+	
+	if Scenario<>"" & Alpha_BU_Intens==%F
+		
+		
+		// All sector forced
+		if isdef('Alpha_BU')==%T & Alpha_BU<>[]
+		alpha(Alpha_BU,:) = Projection.IC(Alpha_BU,:)./(ones(Alpha_BU)'*((Y==0)+(Y<>0).*Y)');
+		end
+		
+		// Partial sector forced
+		if isdef('Alpha_Part_BU')==%T & Alpha_Part_BU<>[]	
+		for elt=1:size(Alpha_Part_BU,"r")
+		Ind_line = Alpha_Part_BU(elt,1);
+		Ind_col = setdiff(Alpha_Part_BU(elt,2:$),0);
+		Rest_col = setdiff(Indice_Sectors,Ind_col);
+		//forced
+		alpha(Ind_line,Ind_col) = Projection.IC(Ind_line,Ind_col)./(((Y(Ind_col)==0)+(Y(Ind_col)<>0).*Y(Ind_col))');
+		//calculating the rest of the line with ces
+		alpha(Ind_line,Rest_col) = (Theta(Rest_col) ./ Phi(Rest_col)) .* (ones(1,size(Rest_col,"c"))./(1+phi_IC(Ind_line,Rest_col)).^time_since_BY).* ..
+			(ConstrainedShare_IC(Ind_line,Rest_col) .* BY.alpha(Ind_line,Rest_col) + ((aIC(Ind_line,Rest_col) ./ pIC(Ind_line,Rest_col)) .^ (sigma(Rest_col))) .* ..
+			(FPI(Rest_col).^(sigma(Rest_col)/(1 - sigma(Rest_col))))) ;	
+		end
+		end
+		
+	elseif Scenario<>"" & Alpha_BU_Intens==%T
+		// alpha = zeros(nb_Sectors,nb_Sectors);
+		ToSet = Indice_Sectors;	
+	end	
+	
+		/// Defining the indice of the sectors whose alpha is calculating through CES :all sectors if nothing selected
+	if isdef('Alpha_BU')==%F & isdef('Alpha_Part_BU')==%F & isdef('ToSet')==%F
+		ToSet = Indice_Sectors;
 	end
 	
-	// Partial sector forced
-	if isdef('Alpha_Part_BU')==%T & Alpha_Part_BU<>[]	
-	for elt=1:size(Alpha_Part_BU,"r")
-	Ind_line = Alpha_Part_BU(elt,1);
-	Ind_col = setdiff(Alpha_Part_BU(elt,2:$),0);
-	Rest_col = setdiff(Indice_Sectors,Ind_col);
-	//forced
-	alpha(Ind_line,Ind_col) = Projection.IC(Ind_line,Ind_col)./(((Y(Ind_col)==0)+(Y(Ind_col)<>0).*Y(Ind_col))');
-	//calculating the rest of the line with ces
-	alpha(Ind_line,Rest_col) = (Theta(Rest_col) ./ Phi(Rest_col)) .* (ones(1,size(Rest_col,"c"))./(1+phi_IC(Ind_line,Rest_col)).^time_since_BY).* ..
-             (ConstrainedShare_IC(Ind_line,Rest_col) .* BY.alpha(Ind_line,Rest_col) + ((aIC(Ind_line,Rest_col) ./ pIC(Ind_line,Rest_col)) .^ (sigma(Rest_col))) .* ..
-             (FPI(Rest_col).^(sigma(Rest_col)/(1 - sigma(Rest_col))))) ;	
-	end
-	end
-	
-	/// Defining the indice of the sectors whose alpha is calculating through CES
-	if isdef('Alpha_Part_BU')==%F & isdef('Alpha_Part_BU')==%F & isdef('ToSet')==%F
-	ToSet = Indice_Sectors;
-	end
-
-	// The rest of the sectors
+	// The rest of the sectors 
 	alpha(ToSet,:) = (ones(size(ToSet,2), 1).*.(Theta ./ Phi)) .* (ones(size(ToSet,2),nb_Sectors)./(1+phi_IC(ToSet,:)).^time_since_BY).* ..
              (ConstrainedShare_IC(ToSet,:) .* BY.alpha(ToSet,:) + ((aIC(ToSet,:) ./ pIC(ToSet,:)) .^ (sigma.*.ones(size(ToSet,2),1))) .* ..
              (ones(size(ToSet,2), 1).*.(FPI.^(sigma./(1 - sigma))))) ;
@@ -1565,7 +1578,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
             (FPI .^(sigma./(1 - sigma)))) ;
 
 endfunction
-
 
 //Labour productivity semi-endogenous (power sector)
 function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, lambda_ref, Mu_b, time_period,Indice)
