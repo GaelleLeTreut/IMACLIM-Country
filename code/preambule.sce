@@ -77,6 +77,8 @@ Path_default_CS = PARENT+"Default_CS.csv";
 if (find(listfiles(STUDY)=="Country_Selection.csv") == []) then
     default_CS = read_csv(Path_default_CS,";");
     csvWrite(default_CS,STUDY+"Country_Selection.csv",";");
+    printf("Please select a Country in this file : " + STUDY + "Country_Selection.csv");    
+    error("");
 end
 
 /// READING COUNTRY SELECTION FILE (TO LOAD CORRESPONDIND DATA AND PARAMS AFTER)
@@ -115,6 +117,11 @@ for elt=1:size(Country_available,"r");
 	Country_ISO = Country_Selection(indtemp,3);
 	end
 		
+end
+
+if ~(isdef("Country")) then
+    printf("Please select a Country in this file : " + STUDY + "Country_Selection.csv");    
+    error("");
 end
 
 if (size(Country,"r")<>[1]| size(Country,"r")<>[1])

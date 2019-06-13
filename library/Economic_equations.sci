@@ -1530,6 +1530,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
 	alpha = zeros(nb_Sectors,nb_Sectors);
 	
 	if Scenario<>"" & Alpha_BU_Intens==%F
+    // Force les volumes
 		
 		
 		// All sector forced
@@ -1553,6 +1554,8 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
 		end
 		
 	elseif Scenario<>"" & Alpha_BU_Intens==%T
+    // Force les intensités, les alpha
+    
 		// alpha = zeros(nb_Sectors,nb_Sectors);
 		ToSet = Indice_Sectors;	
 	end	
