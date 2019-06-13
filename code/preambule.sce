@@ -72,10 +72,10 @@ cd(CODE);
 
 /// LOAD THE DEFAULT COUNTRY SELECTION IF COUNTRY SELECTION IS NOT DEFINED
 
-default_CS_name = "Default_CS.csv";
+Path_default_CS = PARENT+"Default_CS.csv";
 
 if (find(listfiles(STUDY)=="Country_Selection.csv") == []) then
-    default_CS = read_csv(PARENT+default_CS_name,";");
+    default_CS = read_csv(Path_default_CS,";");
     csvWrite(default_CS,STUDY+"Country_Selection.csv",";");
 end
 

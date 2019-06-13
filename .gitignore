@@ -1,3 +1,3 @@
 # ignore the directory outputs and all its content
 outputs
-study/frame/Country_Selection.csv
+study_frames/Country_Selection.csv
