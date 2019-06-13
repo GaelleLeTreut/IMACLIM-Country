@@ -53,22 +53,31 @@ sep = filesep(); // "/" or "\" depending on OS
 
 cd("..");
 PARENT    = pwd()  + sep;
-CODE      = PARENT + "code"     								 + sep;
+CODE      = PARENT + "code" + sep;
 
-LIB       = PARENT + "library" 							     + sep;
+LIB       = PARENT + "library" + sep;
 getd(LIB); // Charge toutes les fonctions dans LIB
 
-OUTPUT    = PARENT + "outputs"    							 + sep;
+OUTPUT    = PARENT + "outputs" + sep;
 mkdir(OUTPUT);
 
 DATA      = PARENT + "data"         + sep; 
-STUDY     = PARENT + "study_frames"							 + sep;
-PARAMS    = PARENT + "params"    								 + sep;
-ROBOT     = PARENT + "robot"     								 + sep;
+STUDY     = PARENT + "study_frames" + sep;
+PARAMS    = PARENT + "params" + sep;
+ROBOT     = PARENT + "robot" + sep;
 
 
 
 cd(CODE);
+
+/// LOAD THE DEFAULT COUNTRY SELECTION IF COUNTRY SELECTION IS NOT DEFINED
+
+default_CS_name = "Default_CS.csv";
+
+if (find(listfiles(STUDY)=="Country_Selection.csv") == []) then
+    default_CS = read_csv(PARENT+default_CS_name,";");
+    csvWrite(default_CS,STUDY+"Country_Selection.csv",";");
+end
 
 /// READING COUNTRY SELECTION FILE (TO LOAD CORRESPONDIND DATA AND PARAMS AFTER)
 
