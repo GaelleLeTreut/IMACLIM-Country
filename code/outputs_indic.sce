@@ -33,8 +33,14 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
-// Creer une structure output avec tous les indicateurs qu'on regarde ? 
+ // For if there is desaggregation of investment
+ d.pI = d.pI * ones(1,nb_size_I);
+ BY.pI = BY.pI * ones(1,nb_size_I);
+ // Put back to normal before the end of the file, with :
+// d.pI = d.pI(:,1);
+// BY.pI = BY.pI(:,1);
 
+// Creer une structure output avec tous les indicateurs qu'on regarde ? 
 
 if (isdef("Indice_PrimEnerSect") == %f)
 	Indice_PrimEnerSect = []
@@ -770,6 +776,10 @@ evol.MacroT27 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Emissions"
 	// Other 
 	
 evol.MacroT28 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Real Households consumption", "1", C_qLasp, (C_qLasp-1)*100]; ["Energy in real Households consumption", BY.Ener_C_ValueShare, BY.Ener_C_ValueShare*C_En_qLasp, BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["Non energy goods in real Households consumption", BY.NonEner_C_ValueShare, BY.NonEner_C_ValueShare*C_NonEn_qLasp, BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100]; ["Real Imports/Domestic production ratio","1", M_Y_Ratio_qLasp, (M_Y_Ratio_qLasp-1)*100];["Unemployment rate (indice, % points)", "1", d.u_tot/BY.u_tot, d.u_tot - BY.u_tot]; ["Total Employment", "1", d.Labour_tot/BY.Labour_tot, (evol.Labour_tot-1)*100]; ["Production contribution to labour variation (Laspeyres)", "1", Y_Labour_qLasp, (Y_Labour_qLasp-1)*100]; ["Labour Intensity (Paashes)","1", lambda_pPaas, (lambda_pPaas-1)*100]; ["Production Price (Laspeyres)", "1", Y_pLasp, (Y_pLasp-1)*100]; ["Production Price (Paashes)", "1", Y_pPaas, (Y_pPaas-1)*100]; ["Energy Intensity (Paashes)", "1", alpha_Ener_qPaas, (alpha_Ener_qPaas-1)*100]; ["Energy cost share", "1", d.ENshareMacro/BY.ENshareMacro, (evol.ENshareMacro - 1)*100]; ["Labour cost share", "1", d.LabourShareMacro/BY.LabourShareMacro, (evol.LabourShareMacro - 1)*100]; ["Energy Input Price (Laspeyres)", "1", IC_Ener_pLasp, (IC_Ener_pLasp-1)*100]; ["Energy Input Price (Paashes)", "1", IC_Ener_pPaas, (IC_Ener_pPaas-1)*100]; ["Mean Labour Cost", "1", d.omega/BY.omega, (evol.omega - 1)*100]; ["Net-of-tax wages", "1", d.NetWage_variation, (d.NetWage_variation-1)*100]; ["Labour tax rate (% points)", "0", "nan",- d.Labour_Tax_Cut]; ["Total Emissions", "1", d.DOM_CO2/BY.DOM_CO2, evol.DOM_CO2*100]; ["Households Consumption Price (Laspeyres)", "1", C_pLasp, (C_pLasp-1)*100]; ["Households Consumption Price (Paashes)", "1", C_pPaas, (C_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_En_pLasp, (C_En_pLasp-1)*100]; ["Households Energy Consumption Price (Paashes)", "1", C_En_pPaas, (C_En_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_NonEn_pLasp, (C_NonEn_pLasp-1)*100]; ["Households Non Energy Consumption Price (Paashes)", "1", C_NonEn_pPaas, (C_NonEn_pPaas-1)*100]; ["Public Deficits", "1", d.Ecotable(Indice_NetLending, Indice_Government)/BY.Ecotable(Indice_NetLending, Indice_Government), evol.Ecotable(Indice_NetLending, Indice_Government)*100]];
+
+// Put pI back to normal (cf change at the beginning of the file)
+d.pI = d.pI(:,1);
+BY.pI = BY.pI(:,1);
  
 //// GLT TABLE - JANUARY 2017
  if abs(d.Labour_Tax_Cut)> %eps
@@ -835,13 +845,13 @@ OutputTable.CompSectTable($,2)=  [DispLabTabl] ;
 
  OutputTable.Trade_Sect =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0", round(sum(BY.C_value,"c")'/10^5)/10 ]; ["Households consumption Nominal 1", round(sum(d.C_value,"c")'/10^5)/10 ]; ["HPrice Index (Paasche)", divide(sum(d.C_value,"c")',sum(BY.pC.*d.C,"c")',%nan)]; [ "Households consumption Real 1 (G€)",round(sum(BY.pC.*d.C,"c")'/10^5)./10];
  ["Government consumption Nominal 0", round(BY.G_value'/10^5)/10 ]; ["Government consumption Nominal 1", round(d.G_value'/10^5)/10 ];  ["G Price Index (Paasche)", (d.G_value'./(BY.pG'.*d.G'))]; [ "Government consumption Real 1 (G€)",round((BY.pG'.*d.G')/10^5)./10];
-["Investment Nominal 0", round(BY.I_value'/10^5)/10 ]; ["Investment Nominal 1", round(d.I_value'/10^5)/10 ];  ["I Price Index (Paasche)", divide(d.I_value',(BY.pI'.*d.I'),%nan)]; [ "Investment Real 1 (G€)",round((BY.pI'.*d.I')/10^5)./10];
+["Investment Nominal 0", round(sum(BY.I_value,"c")'/10^5)/10 ]; ["Investment Nominal 1", round(sum(d.I_value,"c")'/10^5)/10 ];  ["I Price Index (Paasche)", divide(sum(d.I_value,"c")',(BY.pI)'.*(sum(d.I,"c")'),%nan)]; [ "Investment Real 1 (G€)",round((BY.pI'.*sum(d.I,"c")')/10^5)./10];
 ["Exports Nominal 0", round(BY.X_value'/10^5)/10 ]; ["Exports Nominal 1", round(d.X_value'/10^5)/10 ];  ["X Price Index (Paasche)", (d.X_value'./(((BY.pX'.*d.X')>%eps).*(BY.pX'.*d.X') + ((BY.pX'.*d.X')<%eps)))]; [ "Exports Real 1 (G€)",round((BY.pX'.*d.X')/10^5)./10];
 ["Imports Nominal 0", round(BY.M_value/10^5)/10 ]; ["Imports Nominal 1", round(d.M_value/10^5)/10 ];  ["M Price Index (Paasche)", (d.M_value./(((BY.pM'.*d.M')>%eps).*(BY.pM'.*d.M') + ((BY.pM'.*d.M')<%eps)))]; [ "Imports Real 1 (G€)",round((BY.pM'.*d.M')/10^5)./10]] ; 
 
 
  
-  OutputTable.Trade_Sect_Share  =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0 %share", (round(sum(BY.C_value,"c")'/sum(BY.C_value')*10000)/100) ];["Government consumption Nominal 0 %share", (round(BY.G_value'/sum(BY.G_value')*10000)/100) ];["Investment Nominal 0 %share", (round(BY.I_value'/sum(BY.I_value')*10000)/100) ];["Exports Nominal 0 share(%)", (round(BY.X_value'/sum(BY.X_value')*10000)/100) ]; ["Imports Nominal 0 share(%)", (round(BY.M_value/sum(BY.M_value)*10000)/100) ];] ; 
+  OutputTable.Trade_Sect_Share  =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0 %share", (round(sum(BY.C_value,"c")'/sum(BY.C_value')*10000)/100) ];["Government consumption Nominal 0 %share", (round(BY.G_value'/sum(BY.G_value')*10000)/100) ];["Investment Nominal 0 %share", (round(sum(BY.I_value,"c")'/sum(BY.I_value')*10000)/100) ];["Exports Nominal 0 share(%)", (round(BY.X_value'/sum(BY.X_value')*10000)/100) ]; ["Imports Nominal 0 share(%)", (round(BY.M_value/sum(BY.M_value)*10000)/100) ];] ; 
  
  
  OutputTable.EnerNonEnTable = [["Ratio", "Primary Energy", "Final Energy", "Non-energy goods"];["Production Price (Laspeyres)", (Y_PrimEn_pLasp-1)*100, (Y_FinEn_pLasp-1)*100, (Y_NonEn_pLasp-1)*100 ]; ["Real Households consumption (Laspeyres)", (C_PrimEn_qLasp-1)*100, (C_FinEn_qLasp-1)*100, (C_NonEn_qLasp-1)*100 ]; ["Exports in volume", (divide(sum(d.X(Indice_PrimEnerSect,:)), sum(BY.X(Indice_PrimEnerSect,:)),%nan )-1)*100, (divide(sum(d.X(Indice_FinEnerSect,:)), sum(BY.X(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Imports in volume", (divide(sum(d.M(Indice_PrimEnerSect,:)), sum(BY.M(Indice_PrimEnerSect,:)),%nan)-1)*100, (divide(sum(d.M(Indice_FinEnerSect,:)), sum(BY.M(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan )-1)*100 ]];
