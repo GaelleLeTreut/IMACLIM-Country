@@ -1,5 +1,5 @@
 // error max
-err = 1E-5;
+err = 1E-3;
 
 function test_proj(var_name , proj_ind)
     d_indexes = getfield(1,d);
