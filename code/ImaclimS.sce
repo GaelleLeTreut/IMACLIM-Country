@@ -185,6 +185,9 @@ for time_step=1:Nb_Iter
 	exec(System_Resol+".sce");
 	warning("sign of ClimPolCompensbySect")
 
+    // Check if the projections are made correctly
+    exec("Check_Projections.sce");
+
 	////////////////////////////////////////////////////////////
 	// 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
 	////////////////////////////////////////////////////////////
