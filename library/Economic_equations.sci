@@ -1540,7 +1540,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
     // Force some indices for alpha
     
     // Defaut setting: forcing volume
-    if isdef('Alpha_BU_Intens')==%F
+    if ~ isdef('Alpha_BU_Intens')
         Alpha_BU_Intens = %F;
     end 
 

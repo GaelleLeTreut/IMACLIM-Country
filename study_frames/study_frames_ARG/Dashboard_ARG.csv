@@ -4,12 +4,12 @@ Component;Name
 System_Resol;Systeme_Static
 // System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
+// study;Static_RunChoices
 // study;Projection_evolution
-// study;Recursive_RunChoices
+study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_EnComp
+AGG_type;
+// AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // SELECT the resolution mode;
@@ -27,15 +27,15 @@ Labour_product;True
 World_prices;False
 X_nonEnerg;False
 // SELECT an Capital Flow representation by uncomment it;
-Invest_matrix;%T
-// Invest_matrix;%F
+// Invest_matrix;%T
+Invest_matrix;%F
 // SELECT the scenario to run (soft_linking);
-Scenario;
-// Scenario;NDC
-// Scenario;DDP
+// Scenario;
+Scenario;NDC
+// Scenario;CCS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False
