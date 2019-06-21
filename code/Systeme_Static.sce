@@ -172,10 +172,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-    H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
 
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
@@ -343,8 +343,12 @@ if %f
 end
 
 printf("\n\n   count      vBest   info       toc\n");
-while (count<countMax)&(vBest>sensib)
+while (count<countMax)& (vBest>sensib) //((vBest>sensib)|(count<3))
     count = count + 1;
+
+//    if (count < 4) then
+//        Projection.X = val_proj_X * count/3;
+//    end
 
     try
         [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
