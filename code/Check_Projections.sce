@@ -14,7 +14,7 @@ function test_proj(var_name , proj_ind)
     zero = var_value(proj_ind) - var_proj(proj_ind);
 
     for z = zero'
-        if z > err then
+        if abs(z) > err then
             error("The projection of " + var_name + " did not go well");
         end
     end
