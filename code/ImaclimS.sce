@@ -175,9 +175,6 @@ for time_step=1:Nb_Iter
 	if Macro_nb <> ""
 		exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
 	end
-    
-    // load function to import variable projections
-    exec(STUDY + "External_Module" + sep + "Proj_of.sce");
 
 	// Loading other study changes (specific feature)
 	exec(STUDY_Country+study+".sce");
