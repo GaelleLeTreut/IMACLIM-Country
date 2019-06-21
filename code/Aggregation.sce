@@ -64,9 +64,9 @@ nb_SectorsAGG = size(Index_SectorsAGG,"r");
 // Index_IOT_AGG_type = evstr ( "Index_IOT"+"_"+AGG_type);
 
 if	H_DISAGG == "HH1"
-Index_IOT_AGG_type = evstr ( "Index_IOT"+"_"+AGG_type);
+    Index_IOT_AGG_type = evstr ( "Index_IOT"+"_"+AGG_type);
 else
-Index_IOT_AGG_type = evstr ( "Index_IOT"+"_"+AGG_type+"_"+H_DISAGG);
+    Index_IOT_AGG_type = evstr ( "Index_IOT"+"_"+AGG_type+"_"+H_DISAGG);
 end
 
 Row_Column = unique(Index_IOT_AGG_type(:,1));
@@ -153,7 +153,7 @@ IC_AGG_value = zeros( nb_SectorsAGG,nb_SectorsAGG );
 IC_AGG= zeros( nb_SectorsAGG,nb_SectorsAGG );
 initial_valueAGG.SpeMarg_IC = zeros( nb_SectorsAGG,nb_SectorsAGG );
 if Country=="France"
-CO2Emis_IC_2030_AGG = zeros( nb_SectorsAGG,nb_SectorsAGG );
+    CO2Emis_IC_2030_AGG = zeros( nb_SectorsAGG,nb_SectorsAGG );
 end
 
 // Element with nb_SectorsAGG on line
@@ -162,7 +162,7 @@ for line  = 1:nb_SectorsAGG
     //for sector*sector aggregation
     for column = 1:nb_SectorsAGG
         initial_valueAGG.IC_value(line,column) = sum(initial_value.IC_value(all_IND(line),all_IND(column)));
-		initial_valueAGG.IC_valueDOM(line,column) = sum(initial_value.IC_valueDOM(all_IND(line),all_IND(column)));
+        initial_valueAGG.IC_valueDOM(line,column) = sum(initial_value.IC_valueDOM(all_IND(line),all_IND(column)));
         initial_valueAGG.IC_valueIMP(line,column) = sum(initial_value.IC_valueIMP(all_IND(line),all_IND(column)));
         initial_valueAGG.IC(line,column) = sum(initial_value.IC(all_IND(line),all_IND(column)));
         initial_valueAGG.SpeMarg_IC(line,column)=sum(initial_value.SpeMarg_IC(all_IND(line),all_IND(column)));
@@ -170,9 +170,9 @@ for line  = 1:nb_SectorsAGG
         // initial_valueAGG.SpeMarg_IC_IMP(line,column)=sum(initial_value.SpeMarg_IC_IMP(all_IND(line),all_IND(column)));
         initial_valueAGG.Carbon_Tax_IC(line,column)=sum(initial_value.Carbon_Tax_IC(all_IND(line),all_IND(column)));
         initial_valueAGG.CO2Emis_IC(line,column)=sum(initial_value.CO2Emis_IC(all_IND(line),all_IND(column)));
-		if Country=="France"
-		CO2Emis_IC_2030_AGG(line,column)=sum(CO2Emis_IC_2030(all_IND(line),all_IND(column)));
-		end
+        if Country=="France"
+            CO2Emis_IC_2030_AGG(line,column)=sum(CO2Emis_IC_2030(all_IND(line),all_IND(column)));
+        end
         // Aggregation des matrices IC du RoW
         // IC_RoW  = sum(IC_RoW(all_IND(line),all_IND(column),:));
 
@@ -181,7 +181,7 @@ for line  = 1:nb_SectorsAGG
     //for sector*nb_FC matrix aggregation
     for column=1:nb_FC
         initial_valueAGG.FC_value(line,column)= sum(initial_value.FC_value(all_IND(line),column));
-		initial_valueAGG.FC_valueDOM(line,column)= sum(initial_value.FC_valueDOM(all_IND(line),column));
+        initial_valueAGG.FC_valueDOM(line,column)= sum(initial_value.FC_valueDOM(all_IND(line),column));
         initial_valueAGG.FC_valueIMP(line,column)= sum(initial_value.FC_valueIMP(all_IND(line),column));
         initial_valueAGG.FC(line,column)= sum(initial_value.FC(all_IND(line),column));
     end
@@ -189,12 +189,12 @@ for line  = 1:nb_SectorsAGG
     //for sector*nb_Households matrix aggregation
     for column=1:nb_Households
         initial_valueAGG.Carbon_Tax_C(line,column)= sum(initial_value.Carbon_Tax_C(all_IND(line),column));
-		if H_DISAGG <> "HH1"
-		initial_valueAGG.C(line,column)= sum(initial_value.C(all_IND(line),column));
-		initial_valueAGG.C_value(line,column)= sum(initial_value.C_value(all_IND(line),column));
-		initial_valueAGG.C_valueDOM(line,column)= sum(initial_value.C_valueDOM(all_IND(line),column));
-		initial_valueAGG.C_valueIMP(line,column)= sum(initial_value.C_valueIMP(all_IND(line),column));
-		end
+        if H_DISAGG <> "HH1"
+            initial_valueAGG.C(line,column)= sum(initial_value.C(all_IND(line),column));
+            initial_valueAGG.C_value(line,column)= sum(initial_value.C_value(all_IND(line),column));
+            initial_valueAGG.C_valueDOM(line,column)= sum(initial_value.C_valueDOM(all_IND(line),column));
+            initial_valueAGG.C_valueIMP(line,column)= sum(initial_value.C_valueIMP(all_IND(line),column));
+        end
     end
 
 
@@ -206,19 +206,19 @@ for column = 1:nb_SectorsAGG
 
     initial_valueAGG.M_value(:,column) = sum(initial_value.M_value(:,all_IND(column)));
     initial_valueAGG.Y_value(:,column) = sum(initial_value.Y_value(:,all_IND(column)));
-initial_valueAGG.Output(:,column) = sum(initial_value.Output(:,all_IND(column)));
+    initial_valueAGG.Output(:,column) = sum(initial_value.Output(:,all_IND(column)));
     initial_valueAGG.Labour(:,column) = sum(initial_value.Labour(:,all_IND(column)));
 
     initial_valueAGG.Value_Added(:,column) = sum(initial_value.Value_Added(:,all_IND(column)),"c");
     initial_valueAGG.Margins(:,column) = sum(initial_value.Margins(:,all_IND(column)),"c");
-initial_valueAGG.MarginsDOM(:,column) = sum(initial_value.MarginsDOM(:,all_IND(column)),"c");
-initial_valueAGG.MarginsIMP(:,column) = sum(initial_value.MarginsIMP(:,all_IND(column)),"c");
+    initial_valueAGG.MarginsDOM(:,column) = sum(initial_value.MarginsDOM(:,all_IND(column)),"c");
+    initial_valueAGG.MarginsIMP(:,column) = sum(initial_value.MarginsIMP(:,all_IND(column)),"c");
     initial_valueAGG.SpeMarg_FC(:,column) = sum(initial_value.SpeMarg_FC(:,all_IND(column)),"c");
     // initial_valueAGG.SpeMarg_FC_IMP(:,column) = sum(initial_value.SpeMarg_FC_IMP(:,all_IND(column)),"c");
     // initial_valueAGG.SpeMarg_FC_DOM(:,column) = sum(initial_value.SpeMarg_FC_DOM(:,all_IND(column)),"c");
     initial_valueAGG.Taxes(:,column) = sum(initial_value.Taxes(:,all_IND(column)),"c");
-initial_valueAGG.TaxesDOM(:,column) = sum(initial_value.TaxesDOM(:,all_IND(column)),"c");
-initial_valueAGG.TaxesIMP(:,column) = sum(initial_value.TaxesIMP(:,all_IND(column)),"c");
+    initial_valueAGG.TaxesDOM(:,column) = sum(initial_value.TaxesDOM(:,all_IND(column)),"c");
+    initial_valueAGG.TaxesIMP(:,column) = sum(initial_value.TaxesIMP(:,all_IND(column)),"c");
 
     // Ouput_RoW = sum(Ouput_RoW(:,all_IND(column)),"c");
     // Emis_Row = sum(Emis_Row(:,all_IND(column)),"c");
@@ -228,10 +228,10 @@ initial_valueAGG.TaxesIMP(:,column) = sum(initial_value.TaxesIMP(:,all_IND(colum
     initial_valueAGG.Y(column,:) = sum(initial_value.Y(all_IND(column)),:);
     initial_valueAGG.M(column,:) = sum(initial_value.M(all_IND(column)),:);
     initial_valueAGG.CO2Emis_C(column,:) = sum(initial_value.CO2Emis_C(all_IND(column),:),:);
-	if Country=="France"
-	CO2Emis_C_2030_AGG(column,:) = sum(CO2Emis_C_2030(all_IND(column),:),:);
-	end
-	initial_valueAGG.CO2Emis_X(column,:) = sum(initial_value.CO2Emis_X(all_IND(column)),:);
+    if Country=="France"
+        CO2Emis_C_2030_AGG(column,:) = sum(CO2Emis_C_2030(all_IND(column),:),:);
+    end
+    initial_valueAGG.CO2Emis_X(column,:) = sum(initial_value.CO2Emis_X(all_IND(column)),:);
 
     // M_RoW_bySectReg = sum(M_RoW_bySectReg(all_IND(column)),:);
 
@@ -239,8 +239,8 @@ initial_valueAGG.TaxesIMP(:,column) = sum(initial_value.TaxesIMP(:,all_IND(colum
 end
 
 if Country=="France"
-CO2Emis_IC_2030 = CO2Emis_IC_2030_AGG;
-CO2Emis_C_2030 = CO2Emis_C_2030_AGG;
+    CO2Emis_IC_2030 = CO2Emis_IC_2030_AGG;
+    CO2Emis_C_2030 = CO2Emis_C_2030_AGG;
 end
 
 // Pas les specific margins car il faut les recalculer
@@ -269,8 +269,8 @@ for elt=1:nb_FC
     if varname <> "I" then // I_value aggregated below
         execstr ("initial_valueAGG."+varname+"_value"+"=initial_valueAGG.FC_value(:,elt);");
     end
-	execstr ('initial_valueAGG.'+varname+'_valueDOM'+'=initial_valueAGG.FC_valueDOM(:,elt);');
-	execstr ('initial_valueAGG.'+varname+'_valueIMP'+'=initial_valueAGG.FC_valueIMP(:,elt);');
+    execstr ('initial_valueAGG.'+varname+'_valueDOM'+'=initial_valueAGG.FC_valueDOM(:,elt);');
+    execstr ('initial_valueAGG.'+varname+'_valueIMP'+'=initial_valueAGG.FC_valueIMP(:,elt);');
     indicEltFC = 1 + indicEltFC;
 end
 
@@ -338,18 +338,18 @@ end
 
 // CHECKING BALANCE OF IMPORTS
 // initial_valueAGG.tot_ress_valIMP  = initial_valueAGG.M_value + sum(initial_valueAGG.MarginsIMP,"r")  + sum(initial_valueAGG.SpeMarg_IC_IMP,"r")+ sum(initial_valueAGG.SpeMarg_FC_IMP,"r")  + sum(initial_valueAGG.TaxesIMP,"r");
-	// initial_valueAGG.tot_uses_valIMP = sum(initial_valueAGG.IC_valueIMP,"c")+sum(initial_valueAGG.FC_valueIMP,"c");
+// initial_valueAGG.tot_uses_valIMP = sum(initial_valueAGG.IC_valueIMP,"c")+sum(initial_valueAGG.FC_valueIMP,"c");
 
-	initial_valueAGG.tot_ress_valIMP = initial_valueAGG.M_value + sum(initial_valueAGG.MarginsIMP,"r") + sum(initial_valueAGG.TaxesIMP,"r");
-	initial_valueAGG.tot_uses_valIMP = sum(initial_valueAGG.IC_valueIMP,"c")+sum(initial_valueAGG.FC_valueIMP,"c");
+initial_valueAGG.tot_ress_valIMP = initial_valueAGG.M_value + sum(initial_valueAGG.MarginsIMP,"r") + sum(initial_valueAGG.TaxesIMP,"r");
+initial_valueAGG.tot_uses_valIMP = sum(initial_valueAGG.IC_valueIMP,"c")+sum(initial_valueAGG.FC_valueIMP,"c");
 
 
-	initial_valueAGG.ERE_balance_valIMP =initial_valueAGG.tot_ress_valIMP  - initial_valueAGG.tot_uses_valIMP' ;
-    if abs(initial_valueAGG.ERE_balance_valIMP)>= Err_balance_tol then
-        disp('Warning : unbalanced IOT of IMPORTS AGG')
-    end	
+initial_valueAGG.ERE_balance_valIMP =initial_valueAGG.tot_ress_valIMP  - initial_valueAGG.tot_uses_valIMP' ;
+if abs(initial_valueAGG.ERE_balance_valIMP)>= Err_balance_tol then
+    disp('Warning : unbalanced IOT of IMPORTS AGG')
+end	
 
-	
+
 ///////////////////////////////////////////////////////////////////////////////////
 // 2. IOT AGG IN QUANTITIES (Ktep)
 // Extraction of other variable in quantities
@@ -370,7 +370,7 @@ for elt=1:nb_FC
     if varname <> "I" then // I aggregated below
         execstr ("initial_valueAGG."+varname+"=initial_valueAGG.FC(:,elt);");
     end;
-//    indicEltFC = 1 + indicEltFC;
+    //    indicEltFC = 1 + indicEltFC;
 end
 
 // I aggregation :
@@ -381,8 +381,8 @@ if Invest_matrix then
         end
     end
 else
-   ind = find(Index_FC=="I");
-   initial_valueAGG.I = initial_valueAGG.FC(:,ind); 
+    ind = find(Index_FC=="I");
+    initial_valueAGG.I = initial_valueAGG.FC(:,ind); 
 end
 
 
@@ -451,10 +451,10 @@ end
 
 indicEltFC = 1;
 for elt=1:nb_FC
-varname = Index_FC(elt);
-// execstr ('initial_valueAGG.'+'p'+varname+'=initial_valueAGG.pFC(:,elt);');
-execstr ('initial_valueAGG.'+varname+'_Import_rate'+'=initial_valueAGG.FC_Import_rate(:,elt);');
-indicEltFC = 1 + indicEltFC;
+    varname = Index_FC(elt);
+    // execstr ('initial_valueAGG.'+'p'+varname+'=initial_valueAGG.pFC(:,elt);');
+    execstr ('initial_valueAGG.'+varname+'_Import_rate'+'=initial_valueAGG.FC_Import_rate(:,elt);');
+    indicEltFC = 1 + indicEltFC;
 end
 
 // for line= 1:nb_Commodities

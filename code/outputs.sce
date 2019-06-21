@@ -42,17 +42,17 @@ printf("===============================================\n");
 
 
 if  Country=="Brasil" then
-money ="reais";
-moneyTex="R\dollar";
+    money ="reais";
+    moneyTex="R\dollar";
 elseif Country=="France" then
-money="euro";
-moneyTex="\euro";
+    money="euro";
+    moneyTex="\euro";
 elseif Country=="Argentina" then
-money="million pesos";
-moneyTex="million pesos";
+    money="million pesos";
+    moneyTex="million pesos";
 else
-money="current money";
-moneyTex="Current money"
+    money="current money";
+    moneyTex="Current money"
 end
 
 
@@ -169,18 +169,18 @@ param_table_sec($,4) = string(Mu);
 param_table_sec($+1,1) = ["$\sigma_{w_u}$"];
 param_table_sec($:$,2:3) = [" "];
 if size(Coef_real_wage,2)==1
-param_table_sec($,4) = string(sigma_omegaU);
-param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(Coef_real_wage);
-param_table_sec($+1,1) = ["$\u_{param}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4) = string(u_param);
+    param_table_sec($,4) = string(sigma_omegaU);
+    param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
+    param_table_sec($:$,2:3) = [" "];
+    param_table_sec($,4) = string(Coef_real_wage);
+    param_table_sec($+1,1) = ["$\u_{param}$"];
+    param_table_sec($:$,2:3) = [" "];
+    param_table_sec($,4) = string(u_param);
 else
-param_table_sec($,4:4+nb_Sectors-1) = string(sigma_omegaU_sect);
-param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4+nb_Sectors-1) = string(Coef_real_wage);
+    param_table_sec($,4:4+nb_Sectors-1) = string(sigma_omegaU_sect);
+    param_table_sec($+1,1) = ["$\beta_{w_{CPI}}$"];
+    param_table_sec($:$,2:3) = [" "];
+    param_table_sec($,4:4+nb_Sectors-1) = string(Coef_real_wage);
 end
 param_table_sec($+1,1) = ["$t_{BY}$"];
 param_table_sec($:$,2:3) = [" "];
@@ -207,18 +207,18 @@ disp([ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum
 
 
 if  Country<>"Brasil" then
-disp "===== Households =============================="
-disp([
-"Items"                "Initial Value"                 "Run";
-"H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
-"Other_Direct_Tax"      sum(ini.Other_Direct_Tax,"c")  sum(d.Other_Direct_Tax,"c")
-]);
+    disp "===== Households =============================="
+    disp([
+    "Items"                "Initial Value"                 "Run";
+    "H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
+    "Other_Direct_Tax"      sum(ini.Other_Direct_Tax,"c")  sum(d.Other_Direct_Tax,"c")
+    ]);
 else
-disp "===== Households =============================="
-disp([
-"Items"                "Initial Value"                 "Run";
-"H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
-]);
+    disp "===== Households =============================="
+    disp([
+    "Items"                "Initial Value"                 "Run";
+    "H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
+    ]);
 end
 
 
@@ -270,14 +270,14 @@ d.CO2Emis_IC = d.Emission_Coef_IC .*d.IC;
 
 // Households
 if	H_DISAGG <> "HH1"
-	for elt=1:nb_Households
-	varname = Index_C(elt);
-	execstr ("d."+varname+"_value"+"="+"d.C_value(:,elt)"+";");
-	execstr ("d."+varname+"="+"d.C(:,elt)"+";");
-	execstr ("d.p"+varname+"="+"d.pC(:,elt)"+";");
-	execstr ("ini.p"+varname+"="+"ini.pC(:,elt)"+";");
-	execstr ("d.SpeMarg_"+varname+"="+"d.SpeMarg_C(elt,:)"+";");
-	end
+    for elt=1:nb_Households
+        varname = Index_C(elt);
+        execstr ("d."+varname+"_value"+"="+"d.C_value(:,elt)"+";");
+        execstr ("d."+varname+"="+"d.C(:,elt)"+";");
+        execstr ("d.p"+varname+"="+"d.pC(:,elt)"+";");
+        execstr ("ini.p"+varname+"="+"ini.pC(:,elt)"+";");
+        execstr ("d.SpeMarg_"+varname+"="+"d.SpeMarg_C(elt,:)"+";");
+    end
 end
 
 // FC  matrix
@@ -290,32 +290,32 @@ for elt=1:nb_FC
         execstr ("d.FC_value(:,elt)"+"="+"sum(d.I_value, ''c'')"+";");
         execstr ("d.FC(:,elt)"+"="+"sum(d.I, ''c'')"+";");
     end
-	execstr ("d.pFC(:,elt)"+"="+"d.p"+varname+";");
-	execstr ("ini.pFC(:,elt)"+"="+"ini.p"+varname+";");
+    execstr ("d.pFC(:,elt)"+"="+"d.p"+varname+";");
+    execstr ("ini.pFC(:,elt)"+"="+"ini.p"+varname+";");
 end
 // OthPart_IOT
 // Value_Added
 for elt=1:nb_Value_Added
-varname = Index_Value_Added(elt);
-execstr ("d.Value_Added(elt,:)"+"="+"d."+varname+";");
+    varname = Index_Value_Added(elt);
+    execstr ("d.Value_Added(elt,:)"+"="+"d."+varname+";");
 end
 //Margins
 for elt=1:nb_Margins
-varname = Index_Margins(elt);
-execstr ("d.Margins(elt,:)"+"="+"d."+varname+";");
+    varname = Index_Margins(elt);
+    execstr ("d.Margins(elt,:)"+"="+"d."+varname+";");
 end
 for elt=1:nb_SpeMarg_FC
-varname = Index_SpeMarg_FC(elt);
-execstr ("d.SpeMarg_FC(elt,:)"+"="+"d."+varname+";");
+    varname = Index_SpeMarg_FC(elt);
+    execstr ("d.SpeMarg_FC(elt,:)"+"="+"d."+varname+";");
 end
 //Taxes
 for elt=1:nb_Taxes
-varname = Index_Taxes(elt);
-if varname == "ClimPolCompensbySect"
-	execstr ("d.Taxes(elt,:)"+"="+"-d."+varname+";");
-else
-	execstr ("d.Taxes(elt,:)"+"="+"d."+varname+";");
-end
+    varname = Index_Taxes(elt);
+    if varname == "ClimPolCompensbySect"
+        execstr ("d.Taxes(elt,:)"+"="+"-d."+varname+";");
+    else
+        execstr ("d.Taxes(elt,:)"+"="+"d."+varname+";");
+    end
 end
 
 d.OthPart_IOT = [d.Value_Added;d.M_value;d.Margins;d.SpeMarg_IC;d.SpeMarg_FC;d.Taxes];
@@ -369,25 +369,25 @@ disp("==========================================")
 function Prices = buildPriceT( pIC , pFC, w, pL, pK, pY, pM, p, fact , decimals )
 
     indexCommo = part(Index_Commodities,1:5);
-	
+
     pIC = round( pIC * fact * 10^decimals ) / 10^decimals;
     pFC = round( pFC * fact * 10^decimals ) / 10^decimals;
-	w = round( w * fact * 10^decimals ) / 10^decimals;
-	pL = round( pL * fact * 10^decimals ) / 10^decimals;
-	pK = round( pK * fact * 10^decimals ) / 10^decimals;
-	pY = round( pY * fact * 10^decimals ) / 10^decimals;
-	pM = round( pM * fact * 10^decimals ) / 10^decimals;
-	p = round( p * fact * 10^decimals ) / 10^decimals;
+    w = round( w * fact * 10^decimals ) / 10^decimals;
+    pL = round( pL * fact * 10^decimals ) / 10^decimals;
+    pK = round( pK * fact * 10^decimals ) / 10^decimals;
+    pY = round( pY * fact * 10^decimals ) / 10^decimals;
+    pM = round( pM * fact * 10^decimals ) / 10^decimals;
+    p = round( p * fact * 10^decimals ) / 10^decimals;
 
 
     nCommo = size(indexCommo,1);
     Prices = emptystr(nCommo+10,nCommo+1+nb_FC+1);
     Prices( 1:nCommo+1 , 1:nCommo+1) = [ ["IC prices CO2"; indexCommo ] , [indexCommo'; pIC ] ] ; 
-	Prices( 1:nCommo+1 , nCommo+2:nCommo+1+nb_FC ) =  [Index_FC';pFC]  ;
- 	 
-	Prices( nCommo+3: nCommo+8,   1:nCommo+1) =  [["w";"pL";"pK";"pY";"pM";"p" ],[ w;pL;pK;pY';pM';p ]];
-	
-	Prices(nCommo+10,1:2) = [ "Units",1/fact+money+"/tep,"+money+"/tons" ];
+    Prices( 1:nCommo+1 , nCommo+2:nCommo+1+nb_FC ) =  [Index_FC';pFC]  ;
+
+    Prices( nCommo+3: nCommo+8,   1:nCommo+1) =  [["w";"pL";"pK";"pY";"pM";"p" ],[ w;pL;pK;pY';pM';p ]];
+
+    Prices(nCommo+10,1:2) = [ "Units",1/fact+money+"/tep,"+money+"/tons" ];
 
 endfunction
 
@@ -429,18 +429,18 @@ disp("==========================================")
 function TechCOef = buildTechCoefT( alpha, lambda, kappa, fact , decimals )
 
     indexCommo = part(Index_Commodities,1:5);
-	
+
     alpha = round( alpha * fact * 10^decimals ) / 10^decimals;
-	lambda = round( lambda * fact * 10^decimals ) / 10^decimals;
-	kappa = round( kappa * fact * 10^decimals ) / 10^decimals;
+    lambda = round( lambda * fact * 10^decimals ) / 10^decimals;
+    kappa = round( kappa * fact * 10^decimals ) / 10^decimals;
 
 
     nCommo = size(indexCommo,1);
     TechCOef = emptystr(nCommo+4,nCommo+1);
     TechCOef( 1:nCommo+1 , 1:nCommo+1) = [ ["alpha"; indexCommo ] , [indexCommo'; alpha ] ] ; 
 
-	TechCOef( nCommo+3: nCommo+4,   1:nCommo+1) =  [["lambda";"kappa" ],[ lambda;kappa ]];	
-	TechCOef(nCommo+6,1:2) = [ "Units","nan" ];
+    TechCOef( nCommo+3: nCommo+4,   1:nCommo+1) =  [["lambda";"kappa" ],[ lambda;kappa ]];	
+    TechCOef(nCommo+6,1:2) = [ "Units","nan" ];
 
 endfunction
 
@@ -513,28 +513,28 @@ disp("==========================================")
 function CO2Emis = buildEmisT( CO2Emis_IC , CO2Emis_C , CO2Emis_X, CO2Emis_Sec,Tot_CO2Emis_IC,Tot_CO2Emis_C,DOM_CO2, fact , decimals )
 
     indexCommo = part(Index_Commodities,1:5);
-	
+
     CO2Emis_IC = round( CO2Emis_IC * fact * 10^decimals ) / 10^decimals;
     CO2Emis_C = round( CO2Emis_C * fact * 10^decimals ) / 10^decimals;
-	CO2Emis_X = round( CO2Emis_X * fact * 10^decimals ) / 10^decimals;
-		
-	CO2Emis_Sec = round( CO2Emis_Sec * fact * 10^decimals ) / 10^decimals;
-	Tot_CO2Emis_IC = round( Tot_CO2Emis_IC * fact * 10^decimals ) / 10^decimals;
-	Tot_CO2Emis_C = round( Tot_CO2Emis_C * fact * 10^decimals ) / 10^decimals;
-	DOM_CO2 = round( DOM_CO2 * fact * 10^decimals ) / 10^decimals;
+    CO2Emis_X = round( CO2Emis_X * fact * 10^decimals ) / 10^decimals;
+
+    CO2Emis_Sec = round( CO2Emis_Sec * fact * 10^decimals ) / 10^decimals;
+    Tot_CO2Emis_IC = round( Tot_CO2Emis_IC * fact * 10^decimals ) / 10^decimals;
+    Tot_CO2Emis_C = round( Tot_CO2Emis_C * fact * 10^decimals ) / 10^decimals;
+    DOM_CO2 = round( DOM_CO2 * fact * 10^decimals ) / 10^decimals;
 
     nCommo = size(indexCommo,1);
     CO2Emis = emptystr(nCommo+5,nCommo+1+size(CO2Emis_C,2)+1);
     CO2Emis( 1:nCommo+1 , 1:nCommo+1) = [ ["Emission CO2"; indexCommo ] , [indexCommo'; CO2Emis_IC ] ] ;
     if H_DISAGG <> "HH1"
-	CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_"+Index_Households';CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
- 	else
-	CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_C";CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
-	end
-	CO2Emis( nCommo+2,  1:nCommo+1) =  ["CO2Emis_Sec", CO2Emis_Sec ];
-	 
-	CO2Emis( nCommo+3: nCommo+5,  1:2) =  [["Tot_CO2Emis_IC";"Tot_CO2Emis_C";"DOM_CO2" ],[ Tot_CO2Emis_IC;Tot_CO2Emis_C;DOM_CO2 ]];
-	CO2Emis($+1,1:2) = [ "Units",1/fact+" MtCO2" ];
+        CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_"+Index_Households';CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
+    else
+        CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_C";CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
+    end
+    CO2Emis( nCommo+2,  1:nCommo+1) =  ["CO2Emis_Sec", CO2Emis_Sec ];
+
+    CO2Emis( nCommo+3: nCommo+5,  1:2) =  [["Tot_CO2Emis_IC";"Tot_CO2Emis_C";"DOM_CO2" ],[ Tot_CO2Emis_IC;Tot_CO2Emis_C;DOM_CO2 ]];
+    CO2Emis($+1,1:2) = [ "Units",1/fact+" MtCO2" ];
 
 endfunction
 
@@ -597,25 +597,25 @@ disp("==========================================")
 function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, Uses, fact , decimals )
 
     indexCommo = part(Index_Commodities,1:5);
-   
-	IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
+
+    IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
     FC_value = round( FC_value * fact * 10^decimals ) / 10^decimals;
     OthPart_IOT = round( OthPart_IOT * fact * 10^decimals ) / 10^decimals;
-	Carbon_Tax = round( Carbon_Tax * fact * 10^decimals ) / 10^decimals;
-	Supply = round( Supply * fact * 10^decimals ) / 10^decimals
-	Uses = round( Uses * fact * 10^decimals ) / 10^decimals;
-		
+    Carbon_Tax = round( Carbon_Tax * fact * 10^decimals ) / 10^decimals;
+    Supply = round( Supply * fact * 10^decimals ) / 10^decimals
+    Uses = round( Uses * fact * 10^decimals ) / 10^decimals;
+
     nCommo = size(indexCommo,1);
     iot = emptystr(nCommo+2+size(OthPart_IOT,1)+2, nCommo+2+nb_FC+1);
     iot( 1:nCommo+1 , 1:nCommo+1) = [ ["IC_value"; indexCommo ] , [indexCommo'; IC_value ] ] ;
     iot( 1:nCommo+1 , nCommo+2:nCommo+1+nb_FC ) =  [Index_FC';FC_value]  ;
     iot( 1:nCommo+1 , nCommo+2+nb_FC ) =  ["Uses";Uses];
-	
-	iot( nCommo+2:nCommo+1+size(OthPart_IOT,1),1:nCommo+1) = [Index_OthPart_IOT,OthPart_IOT ];
-	iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
-	iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
-	
-	iot($+2,1:2) = ["Units",1/fact+"k"+money ]
+
+    iot( nCommo+2:nCommo+1+size(OthPart_IOT,1),1:nCommo+1) = [Index_OthPart_IOT,OthPart_IOT ];
+    iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
+    iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
+
+    iot($+2,1:2) = ["Units",1/fact+"k"+money ]
 
 endfunction
 
@@ -684,8 +684,8 @@ function iot = buildIotQ( ic , fc , oth_io, fact , decimals )
     iot( 1:nCommo+1 , 1:nCommo+1) = [ ["IC_Q"; indexCommo ] , [indexCommo'; IC ] ] ;
     iot( 1:nCommo+1 , nCommo+1+1:nCommo+1+1+nb_FC  ) = [ ["FC_Q"; indexCommo ] , [Index_FC';FC] ] ;
     iot( nCommo+2:nCommo+2+ size(oth_io,1), 1:nCommo+1 ) = [ ["OthQ";OthQ] , [indexCommo';oth_io ] ];
-	
-	iot($+2,1:2) = [ "Units",1/fact+" ktoe / ktons" ];
+
+    iot($+2,1:2) = [ "Units",1/fact+" ktoe / ktons" ];
 
 endfunction
 
@@ -722,54 +722,54 @@ ini.Corporate_Tax(1,Indice_Government) = -ini.Corporate_Tax(Indice_Corporations)
 ini.GFCF_byAgent (Indice_RestOfWorld) = 0;
 
 if  Country<>"Brasil" then
-	ini.Pensions(Indice_Households)= ini.Pensions;
-	ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Pensions(Indice_Government) = -sum(ini.Pensions(Indice_Households));
-	ini.Pensions= matrix(ini.Pensions,1,-1);
-	
-	ini.Unemployment_transfers(Indice_Households)= ini.Unemployment_transfers;
-	ini.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Unemployment_transfers(Indice_Government) = -sum(ini.Unemployment_transfers(Indice_Households));
-	ini.Unemployment_transfers= matrix(ini.Unemployment_transfers,1,-1);
-	
-	ini.Other_social_transfers(Indice_Households)= ini.Other_social_transfers;
-	ini.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Other_social_transfers(Indice_Government) = -sum(ini.Other_social_transfers(Indice_Households));
-	ini.Other_social_transfers= matrix(ini.Other_social_transfers,1,-1);
-	
-	
-	ini.Other_Direct_Tax(Indice_Households)= -ini.Other_Direct_Tax;
-	ini.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Other_Direct_Tax(Indice_Government) = -sum(ini.Other_Direct_Tax(Indice_Households));
-	ini.Other_Direct_Tax= matrix(ini.Other_Direct_Tax,1,-1);
+    ini.Pensions(Indice_Households)= ini.Pensions;
+    ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Pensions(Indice_Government) = -sum(ini.Pensions(Indice_Households));
+    ini.Pensions= matrix(ini.Pensions,1,-1);
+
+    ini.Unemployment_transfers(Indice_Households)= ini.Unemployment_transfers;
+    ini.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Unemployment_transfers(Indice_Government) = -sum(ini.Unemployment_transfers(Indice_Households));
+    ini.Unemployment_transfers= matrix(ini.Unemployment_transfers,1,-1);
+
+    ini.Other_social_transfers(Indice_Households)= ini.Other_social_transfers;
+    ini.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Other_social_transfers(Indice_Government) = -sum(ini.Other_social_transfers(Indice_Households));
+    ini.Other_social_transfers= matrix(ini.Other_social_transfers,1,-1);
+
+
+    ini.Other_Direct_Tax(Indice_Households)= -ini.Other_Direct_Tax;
+    ini.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Other_Direct_Tax(Indice_Government) = -sum(ini.Other_Direct_Tax(Indice_Households));
+    ini.Other_Direct_Tax= matrix(ini.Other_Direct_Tax,1,-1);
 else
 
-	ini.Gov_social_transfers(Indice_Households) = ini.Gov_social_transfers;
-	ini.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Gov_social_transfers(Indice_Government) = -sum(ini.Gov_social_transfers(Indice_Households));
-	ini.Gov_social_transfers= matrix(ini.Gov_social_transfers,1,-1);
+    ini.Gov_social_transfers(Indice_Households) = ini.Gov_social_transfers;
+    ini.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Gov_social_transfers(Indice_Government) = -sum(ini.Gov_social_transfers(Indice_Households));
+    ini.Gov_social_transfers= matrix(ini.Gov_social_transfers,1,-1);
 
-	ini.Corp_social_transfers(Indice_Households) = ini.Corp_social_transfers;
-	ini.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Corp_social_transfers(Indice_Corporations) = -sum(ini.Corp_social_transfers(Indice_Households));
-	ini.Corp_social_transfers= matrix(ini.Corp_social_transfers,1,-1);
-	
-	ini.Gov_Direct_Tax(Indice_Households)= -ini.Gov_Direct_Tax;
-	ini.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Gov_Direct_Tax(Indice_Government) = -sum(ini.Gov_Direct_Tax(Indice_Households));
-	ini.Gov_Direct_Tax= matrix(ini.Gov_Direct_Tax,1,-1);
+    ini.Corp_social_transfers(Indice_Households) = ini.Corp_social_transfers;
+    ini.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Corp_social_transfers(Indice_Corporations) = -sum(ini.Corp_social_transfers(Indice_Households));
+    ini.Corp_social_transfers= matrix(ini.Corp_social_transfers,1,-1);
 
-	ini.Corp_Direct_Tax(Indice_Households)= -ini.Corp_Direct_Tax;
-	ini.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	ini.Corp_Direct_Tax(Indice_Corporations) = -sum(ini.Corp_Direct_Tax(Indice_Households));
-	ini.Corp_Direct_Tax= matrix(ini.Corp_Direct_Tax,1,-1);
+    ini.Gov_Direct_Tax(Indice_Households)= -ini.Gov_Direct_Tax;
+    ini.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Gov_Direct_Tax(Indice_Government) = -sum(ini.Gov_Direct_Tax(Indice_Households));
+    ini.Gov_Direct_Tax= matrix(ini.Gov_Direct_Tax,1,-1);
+
+    ini.Corp_Direct_Tax(Indice_Households)= -ini.Corp_Direct_Tax;
+    ini.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    ini.Corp_Direct_Tax(Indice_Corporations) = -sum(ini.Corp_Direct_Tax(Indice_Households));
+    ini.Corp_Direct_Tax= matrix(ini.Corp_Direct_Tax,1,-1);
 
 end
 
 
 for elt=1:nb_DataAccount
-varname = Index_DataAccount(elt);
- execstr ("ini.Ecotable(elt,:)"+"="+"ini."+varname+";");
+    varname = Index_DataAccount(elt);
+    execstr ("ini.Ecotable(elt,:)"+"="+"ini."+varname+";");
 end
 
 
@@ -792,66 +792,66 @@ d.FC_byAgent (1,Indice_Corporations) = 0;
 
 if  Country<>"Brasil" then
 
-	d.InsuranceContrib_byAgent = sum(d.Labour_Tax) *(Index_InstitAgents' == "Government");
-	
-	d.Pensions(Indice_Households)= d.Pensions;
-	d.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Pensions(Indice_Government) = -sum(d.Pensions(Indice_Households));
-	d.Pensions= matrix(d.Pensions,1,-1);
-	
-	d.Unemployment_transfers(Indice_Households)= d.Unemployment_transfers;
-	d.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Unemployment_transfers(Indice_Government) = -sum(d.Unemployment_transfers(Indice_Households));
-	d.Unemployment_transfers= matrix(d.Unemployment_transfers,1,-1);
-	
-	d.Other_social_transfers(Indice_Households)= d.Other_social_transfers;
-	d.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Other_social_transfers(Indice_Government) = -sum(d.Other_social_transfers(Indice_Households));
-	d.Other_social_transfers= matrix(d.Other_social_transfers,1,-1);
-	
-	
-	d.Other_Direct_Tax(Indice_Households)= -d.Other_Direct_Tax;
-	d.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Other_Direct_Tax(Indice_Government) = -sum(d.Other_Direct_Tax(Indice_Households));
-	d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
+    d.InsuranceContrib_byAgent = sum(d.Labour_Tax) *(Index_InstitAgents' == "Government");
+
+    d.Pensions(Indice_Households)= d.Pensions;
+    d.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Pensions(Indice_Government) = -sum(d.Pensions(Indice_Households));
+    d.Pensions= matrix(d.Pensions,1,-1);
+
+    d.Unemployment_transfers(Indice_Households)= d.Unemployment_transfers;
+    d.Unemployment_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Unemployment_transfers(Indice_Government) = -sum(d.Unemployment_transfers(Indice_Households));
+    d.Unemployment_transfers= matrix(d.Unemployment_transfers,1,-1);
+
+    d.Other_social_transfers(Indice_Households)= d.Other_social_transfers;
+    d.Other_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Other_social_transfers(Indice_Government) = -sum(d.Other_social_transfers(Indice_Households));
+    d.Other_social_transfers= matrix(d.Other_social_transfers,1,-1);
+
+
+    d.Other_Direct_Tax(Indice_Households)= -d.Other_Direct_Tax;
+    d.Other_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Other_Direct_Tax(Indice_Government) = -sum(d.Other_Direct_Tax(Indice_Households));
+    d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
 else
-	
-	d.InsuranceContrib_byAgent = zeros(1,nb_InstitAgents);
-	d.InsuranceContrib_byAgent(Indice_Government) = sum(d.Labour_Tax) ;
-	d.InsuranceContrib_byAgent(Indice_Corporations) = sum(d.Labour_Corp_Tax);
-	
-	d.Gov_social_transfers(Indice_Households) = d.Gov_social_transfers;
-	d.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Gov_social_transfers(Indice_Government) = -sum(d.Gov_social_transfers(Indice_Households));
-	d.Gov_social_transfers= matrix(d.Gov_social_transfers,1,-1);
 
-	d.Corp_social_transfers(Indice_Households) = d.Corp_social_transfers;
-	d.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Corp_social_transfers(Indice_Corporations) = -sum(d.Corp_social_transfers(Indice_Households));
-	d.Corp_social_transfers= matrix(d.Corp_social_transfers,1,-1);
-	
-	d.Gov_Direct_Tax(Indice_Households)= -d.Gov_Direct_Tax;
-	d.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Gov_Direct_Tax(Indice_Government) = -sum(d.Gov_Direct_Tax(Indice_Households));
-	d.Gov_Direct_Tax= matrix(d.Gov_Direct_Tax,1,-1);
+    d.InsuranceContrib_byAgent = zeros(1,nb_InstitAgents);
+    d.InsuranceContrib_byAgent(Indice_Government) = sum(d.Labour_Tax) ;
+    d.InsuranceContrib_byAgent(Indice_Corporations) = sum(d.Labour_Corp_Tax);
 
-	d.Corp_Direct_Tax(Indice_Households)= -d.Corp_Direct_Tax;
-	d.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
-	d.Corp_Direct_Tax(Indice_Corporations) = -sum(d.Corp_Direct_Tax(Indice_Households));
-	d.Corp_Direct_Tax= matrix(d.Corp_Direct_Tax,1,-1);
+    d.Gov_social_transfers(Indice_Households) = d.Gov_social_transfers;
+    d.Gov_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Gov_social_transfers(Indice_Government) = -sum(d.Gov_social_transfers(Indice_Households));
+    d.Gov_social_transfers= matrix(d.Gov_social_transfers,1,-1);
+
+    d.Corp_social_transfers(Indice_Households) = d.Corp_social_transfers;
+    d.Corp_social_transfers([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Corp_social_transfers(Indice_Corporations) = -sum(d.Corp_social_transfers(Indice_Households));
+    d.Corp_social_transfers= matrix(d.Corp_social_transfers,1,-1);
+
+    d.Gov_Direct_Tax(Indice_Households)= -d.Gov_Direct_Tax;
+    d.Gov_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Gov_Direct_Tax(Indice_Government) = -sum(d.Gov_Direct_Tax(Indice_Households));
+    d.Gov_Direct_Tax= matrix(d.Gov_Direct_Tax,1,-1);
+
+    d.Corp_Direct_Tax(Indice_Households)= -d.Corp_Direct_Tax;
+    d.Corp_Direct_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
+    d.Corp_Direct_Tax(Indice_Corporations) = -sum(d.Corp_Direct_Tax(Indice_Households));
+    d.Corp_Direct_Tax= matrix(d.Corp_Direct_Tax,1,-1);
 
 end
-	
-	
+
+
 d.Carbon_Tax_byAgent(Indice_Government)= sum(d.Carbon_Tax);
 d.Carbon_Tax_byAgent([Indice_Corporations,Indice_Households,Indice_RestOfWorld]) = 0;
 d.Carbon_Tax_byAgent= matrix(d.Carbon_Tax_byAgent,1,-1);
-	
+
 d.Income_Tax(Indice_Households)= - d.Income_Tax;
 d.Income_Tax([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
 d.Income_Tax(Indice_Government) = -sum(d.Income_Tax(Indice_Households));
 d.Income_Tax= matrix(d.Income_Tax,1,-1);
-			
+
 d.Corporate_Tax(Indice_Corporations) = -d.Corporate_Tax;
 d.Corporate_Tax(1,[Indice_Households,Indice_RestOfWorld]) = 0;
 d.Corporate_Tax(1,Indice_Government) = -d.Corporate_Tax(Indice_Corporations);
@@ -861,8 +861,8 @@ d.GFCF_byAgent (Indice_RestOfWorld) = 0;
 d.Tot_FC_byAgent = d.GFCF_byAgent + d.FC_byAgent ;
 
 for elt=1:nb_DataAccount
-varname = Index_DataAccount(elt);
- execstr ("d.Ecotable(elt,:)"+"="+"d."+varname+";");
+    varname = Index_DataAccount(elt);
+    execstr ("d.Ecotable(elt,:)"+"="+"d."+varname+";");
 end
 
 
@@ -878,12 +878,12 @@ disp("============ ECONOMIC ACCOUNT TABLE================")
 disp("==========================================")
 
 function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
-	Ecotable = round( Ecotable * fact * 10^decimals ) / 10^decimals;
+    Ecotable = round( Ecotable * fact * 10^decimals ) / 10^decimals;
 
     EcoAccountT = emptystr(nb_DataAccount+1,nb_InstitAgents + 1);
-	EcoAccountT (1:nb_DataAccount+1,1:nb_InstitAgents + 1) = [["Economic Table";Index_DataAccount],[Index_InstitAgents';Ecotable]];
-	
-	EcoAccountT($+2,1:2) = [ "Units",1/fact+" k"+money ];
+    EcoAccountT (1:nb_DataAccount+1,1:nb_InstitAgents + 1) = [["Economic Table";Index_DataAccount],[Index_InstitAgents';Ecotable]];
+
+    EcoAccountT($+2,1:2) = [ "Units",1/fact+" k"+money ];
 
 endfunction
 
@@ -936,7 +936,7 @@ csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+time_step+".csv", ';');
 
 
 // Affectation de toutes les valeurs finales aux noms de variables contenu dans la structure d. ( eviter des confusions entre une variable hors structure ; ini ou final)
-    execstr(fieldnames(d)+"= d." + fieldnames(d));
+execstr(fieldnames(d)+"= d." + fieldnames(d));
 
 
 

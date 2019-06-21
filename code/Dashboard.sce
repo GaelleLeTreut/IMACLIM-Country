@@ -77,46 +77,46 @@ for elt=1:size(Dashboard_component,"r");
 end
 
 if (size(H_DISAGG,"r")<>[1]| size(H_DISAGG,"r")<>[1])
-error ( "various types of disaggregation profiles of households have been selected in Dashboard.csv");
+    error ( "various types of disaggregation profiles of households have been selected in Dashboard.csv");
 end
 
 if (size(AGG_type,"r")<>[1]| size(AGG_type,"r")<>[1])
-error ( "various types of aggregation profiles of sectors have been selected in Dashboard.csv");
+    error ( "various types of aggregation profiles of sectors have been selected in Dashboard.csv");
 end
 
 // définir pour l'instant dans le dashboard le niveau d'agregation retenu
 // puis écrire ici si Agg pas défini, on le met à "null" par défaut ( faire afficher : niveau d'aggregation choisi par défaut car non défini)
 
 if (size(System_Resol,"r")<>[1]| size(System_Resol,"r")<>[1])
-error ( "various types of resolution system have been selected in Dashboard.csv");
+    error ( "various types of resolution system have been selected in Dashboard.csv");
 end
 
 // Ci-dessous les ajouts suites au passage en mode itératif
 
 if (size(Resol_Mode,"r")<>[1]| size(Resol_Mode,"r")<>[1])
-error ( "various types of simulation mode have been selected in Dashboard.csv");
+    error ( "various types of simulation mode have been selected in Dashboard.csv");
 end
 
 Nb_Iter = eval(Nb_Iter);
 
 if Nb_Iter<1
-	error("the number of iteration should be positive");
+    error("the number of iteration should be positive");
 end
 
 if (size(Scenario,"r")<>[1]| size(Scenario,"r")<>[1])
-	error ( "various types of scenario have been selected in Dashboard.csv. The model isn't ready yet to run several Scenarios successively.");
+    error ( "various types of scenario have been selected in Dashboard.csv. The model isn't ready yet to run several Scenarios successively.");
 end
 
 if (size(Macro_nb,"r")<>[1]| size(Macro_nb,"r")<>[1])
-	error ( "various types of macroeconomic framework been selected in Dashboard.csv.");
+    error ( "various types of macroeconomic framework been selected in Dashboard.csv.");
 end
 
 if (size(CO2_footprint,"r")<>[1]| size(CO2_footprint,"r")<>[1])
-	error ( "You have to choose whether or not you want to realise an Input-Output Analysis about carbon footprint.");
+    error ( "You have to choose whether or not you want to realise an Input-Output Analysis about carbon footprint.");
 end
 
 if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])
-	error ( "You have to choose whether or not you want to print outputs in external files.");
+    error ( "You have to choose whether or not you want to print outputs in external files.");
 end
 
 if isdef("Invest_matrix") then

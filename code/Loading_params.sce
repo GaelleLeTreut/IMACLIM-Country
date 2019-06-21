@@ -35,7 +35,7 @@
 
 ////////////////////////-----------------------------------------------////////////////
 ////////////////////////          Parameters of projection     ////////////////
-								
+
 ////////////////////////-----------------------------------------------////////////////
 
 // DEFAULT VALUES OF Parameters//
@@ -58,37 +58,37 @@ if H_DISAGG == "HH1"
     nb_HouseholdsTEMP = nb_Households;
 end
 // else
-		/////lecture du ficher index, mais juste la premiere colonne
-		// Index_EconData_H_DISAGG = read_csv(DATA_Country+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
-		////execstr("Index_EconData_"+H_DISAGG+"=Index_EconData_H_DISAGG"+";");
-		
-		// Row_Column = unique(Index_EconData_H_DISAGG(:,1));
-		////Create two tables for further indexation: one with all row headers and one with all column headers
-	
-		// elt=find("Column" ==Row_Column);
-		
-		// NameTemp = Row_Column(elt);
-		// TempIndicElt = find( NameTemp ==Index_EconData_H_DISAGG(:,1));
-		
-		// TableTemp = Index_EconData_H_DISAGG(TempIndicElt,:);
-		
-		// TableTemp(:,1)=[];
-		// TableTemp(:,3:$)=[];
-		
-		// sizeC_TableTemp = size( TableTemp,"c");
-		// i=0;
+/////lecture du ficher index, mais juste la premiere colonne
+// Index_EconData_H_DISAGG = read_csv(DATA_Country+H_DISAGG+sep+"Index_EconData_"+H_DISAGG+".csv",";");
+////execstr("Index_EconData_"+H_DISAGG+"=Index_EconData_H_DISAGG"+";");
 
-		// list_varname= unique(TableTemp(:,sizeC_TableTemp-i));
-		// SizeR_list_varname = size(list_varname,"r");
-		
-				//// for each category of column, creating the corresponding index
-				// for elt=1:SizeR_list_varname;
-					// Ind_Temp= find(TableTemp(:,sizeC_TableTemp-i)==list_varname(elt));
-					// execstr("Indice_"+list_varname(elt)+"TEMP"+"=Ind_Temp;")
-					// Index_Temp = TableTemp(Ind_Temp,1);
-					// execstr("Index_"+list_varname(elt)+"TEMP"+"=Index_Temp;")
-					// execstr("nb_"+list_varname(elt)+"TEMP"+"=size(Index_Temp,1);")
-				// end
+// Row_Column = unique(Index_EconData_H_DISAGG(:,1));
+////Create two tables for further indexation: one with all row headers and one with all column headers
+
+// elt=find("Column" ==Row_Column);
+
+// NameTemp = Row_Column(elt);
+// TempIndicElt = find( NameTemp ==Index_EconData_H_DISAGG(:,1));
+
+// TableTemp = Index_EconData_H_DISAGG(TempIndicElt,:);
+
+// TableTemp(:,1)=[];
+// TableTemp(:,3:$)=[];
+
+// sizeC_TableTemp = size( TableTemp,"c");
+// i=0;
+
+// list_varname= unique(TableTemp(:,sizeC_TableTemp-i));
+// SizeR_list_varname = size(list_varname,"r");
+
+//// for each category of column, creating the corresponding index
+// for elt=1:SizeR_list_varname;
+// Ind_Temp= find(TableTemp(:,sizeC_TableTemp-i)==list_varname(elt));
+// execstr("Indice_"+list_varname(elt)+"TEMP"+"=Ind_Temp;")
+// Index_Temp = TableTemp(Ind_Temp,1);
+// execstr("Index_"+list_varname(elt)+"TEMP"+"=Index_Temp;")
+// execstr("nb_"+list_varname(elt)+"TEMP"+"=size(Index_Temp,1);")
+// end
 
 // end
 
@@ -155,20 +155,21 @@ if AGG_type == ""
     parameters.sigma_pC=read_csv(PARAMS_Country+"sigma_pC_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
     parameters.ConstrainedShare_C=read_csv(PARAMS_Country+"ConstrainedShare_C_"+string(AGG_type)+string(H_DISAGG)+".csv",";");
     // if Country=="Brasil"
-        // parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+"sigma_ConsoBudget_"+string(H_DISAGG)+".csv",";");
+    // parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+"sigma_ConsoBudget_"+string(H_DISAGG)+".csv",";");
     // end	
 else
     parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
     parameters.sigma_pC=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_pC_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
     parameters.ConstrainedShare_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"ConstrainedShare_C_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
-	// if Country=="Brasil"
-        // parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_ConsoBudget_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
+    // if Country=="Brasil"
+    // parameters.sigma_ConsoBudget=read_csv(PARAMS_Country+string(AGG_type)+sep+"sigma_ConsoBudget_"+string(AGG_type)+"_"+string(H_DISAGG)+".csv",";");
     // end	 
 end
 
 parameters.CarbonTax_Diff_C (1,:) = [];
 parameters.CarbonTax_Diff_C (:,1) = [];
 parameters.CarbonTax_Diff_C=evstr(parameters.CarbonTax_Diff_C);
+
 
 parameters.sigma_pC (1,:) = [];
 parameters.sigma_pC (:,1) = [];
@@ -179,7 +180,7 @@ parameters.ConstrainedShare_C (:,1) = [];
 parameters.ConstrainedShare_C=evstr(parameters.ConstrainedShare_C);
 
 // if Country=="Brasil" then
-    // parameters.sigma_ConsoBudget (1,:) = [];
-    // parameters.sigma_ConsoBudget (:,1) = [];
-    // parameters.sigma_ConsoBudget=evstr(parameters.sigma_ConsoBudget);
+// parameters.sigma_ConsoBudget (1,:) = [];
+// parameters.sigma_ConsoBudget (:,1) = [];
+// parameters.sigma_ConsoBudget=evstr(parameters.sigma_ConsoBudget);
 // end						 

@@ -52,8 +52,8 @@ VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1
-[Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
-execstr(Table_Deriv_Exogenous);
+    [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
+    execstr(Table_Deriv_Exogenous);
 end
 
 Indice_Immo = find(Index_Sectors == "Property_business") ;
@@ -100,28 +100,28 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 /////////////////////////////////////////////////////////////////////////
 
 function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
-	pM = pM_price_Const_2(); // check const_1
-	M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
-	p = Mean_price_Const_1(pY, pM, Y, M );
-	// const 3 : homothetic projection et const_2 static projection
-	X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);// check const_1 et const_4
-	pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
-	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
-	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
+    pM = pM_price_Const_2(); // check const_1
+    M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
+    p = Mean_price_Const_1(pY, pM, Y, M );
+    // const 3 : homothetic projection et const_2 static projection
+    X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);// check const_1 et const_4
+    pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
+    pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
+    pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
+    pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
 
-	CPI = CPI_Const_2( pC, C); // defined in relation to BY
+    CPI = CPI_Const_2( pC, C); // defined in relation to BY
 
-	//[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+    //[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
     [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
-	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
+    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 
-	// const_1 : calib / const_2 : CPI / const_3 : GDP
-	Other_Direct_Tax = Other_Direct_Tax_Const_2(CPI, Other_Direct_Tax_param);
+    // const_1 : calib / const_2 : CPI / const_3 : GDP
+    Other_Direct_Tax = Other_Direct_Tax_Const_2(CPI, Other_Direct_Tax_param);
 endfunction
 
-	// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
+// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
 
 function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var)
 
@@ -130,10 +130,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Affectation des valeurs aux noms de variables,  pour les variables du solveur, les valeurs calibrées, et les parametres
     execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables));
-	
+
     // Calcul des variables qui ne sont pas des variables d'états
-	/// Trois fois plus long avec appel de la fonction 
-	[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+    /// Trois fois plus long avec appel de la fonction 
+    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -164,7 +164,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB 
     G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
-	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
+    // Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
@@ -215,18 +215,18 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
     G_demand_Const_2(G, pG, G_Consumption_budget, BudgetShare_GConsump) // check const_1
 
-	// Contrainte sur l'évolution de la Balance Commerciale : 1-évolution proportionnelle au PIB "réel" (GDP/CPI) / 2-... au PIB nominal
-	// Trade_Balance_Const_1( pM, pX, X, M, GDP)
+    // Contrainte sur l'évolution de la Balance Commerciale : 1-évolution proportionnelle au PIB "réel" (GDP/CPI) / 2-... au PIB nominal
+    // Trade_Balance_Const_1( pM, pX, X, M, GDP)
 
-	// Public_finance_Const_1(Government_closure) 
-	// G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity)
+    // Public_finance_Const_1(Government_closure) 
+    // G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity)
 
     TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
     DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
- 
+
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
 
-	// Markup_Const_1(markup_rate)
+    // Markup_Const_1(markup_rate)
 
     Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate) // check Const_1 (old)
     Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
@@ -240,7 +240,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     IC_Const_1(IC, Y, alpha)
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
 
-	// MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
+    // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
 
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
     Employment_Const_1(Labour, lambda, Y)
@@ -279,11 +279,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
             Constraints_Deriv = real(Constraints_Deriv);
         end
     end
-	
-	// if max(abs(Constraints_Deriv))<10^-5
-	// pause
-	// end
-	
+
+    // if max(abs(Constraints_Deriv))<10^-5
+    // pause
+    // end
+
 
 endfunction
 
@@ -346,9 +346,9 @@ printf("\n\n   count      vBest   info       toc\n");
 while (count<countMax)& (vBest>sensib) //((vBest>sensib)|(count<3))
     count = count + 1;
 
-//    if (count < 4) then
-//        Projection.X = val_proj_X * count/3;
-//    end
+    //    if (count < 4) then
+    //        Projection.X = val_proj_X * count/3;
+    //    end
 
     try
         [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
@@ -387,8 +387,8 @@ Deriv_variables = X2variables (Index_Imaclim_VarResol, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
-Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
-execstr(Table_Deriv_Exogenous)
+    Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
+    execstr(Table_Deriv_Exogenous)
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
@@ -409,5 +409,5 @@ execstr("d."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 execstr("d."+fieldnames(Deriv_variables)+"= Deriv_variables."+fieldnames(Deriv_variables)+";");
 execstr("d."+fieldnames(Deriv_Var_interm)+"= Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+";");
 if exists('Deriv_Exogenous')==1
-execstr("d."+fieldnames(Deriv_Exogenous)+"= Deriv_Exogenous."+fieldnames(Deriv_Exogenous)+";");
+    execstr("d."+fieldnames(Deriv_Exogenous)+"= Deriv_Exogenous."+fieldnames(Deriv_Exogenous)+";");
 end

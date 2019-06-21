@@ -112,11 +112,11 @@ for elt=1:size(Country_available,"r");
     indtemp= find(Country_Selection(:,1)==Country_available(elt));
     valtemp = Country_Selection(indtemp,2);
     execstr(Country_available(elt)+"=valtemp;")
-	
-	if Country_available(elt) == "Country"
-	Country_ISO = Country_Selection(indtemp,3);
-	end
-		
+
+    if Country_available(elt) == "Country"
+        Country_ISO = Country_Selection(indtemp,3);
+    end
+
 end
 
 if ~(isdef("Country")) then
@@ -125,7 +125,7 @@ if ~(isdef("Country")) then
 end
 
 if (size(Country,"r")<>[1]| size(Country,"r")<>[1])
-error ( "various countries have been selected in Country_Selection.csv");
+    error ( "various countries have been selected in Country_Selection.csv");
 end
 
 

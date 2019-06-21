@@ -34,7 +34,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 if Output_files=='True'
-save(SAVEDIR+"result_"+time_step+".sav","result");
+    save(SAVEDIR+"result_"+time_step+".sav","result");
 end
 
 if count==countMax&vBest>sensib
@@ -46,16 +46,16 @@ end
 disp("Time for solving="+toc()+"seconds");
 
 if Output_files=='True'
-driver("PDF");
-xinit(SAVEDIR+"resolution_"+time_step+".pdf");
-subplot(2,1,1);
-plot(list2vec(result.count),[log10(%eps+list2vec(result.vbest)),log10(%eps+list2vec(result.vmax))],"-*","Linewidth",2);
-ylabel("log10");
-legend("vbest","vmax");
-subplot(2,1,2);
-plot(list2vec(result.count),list2vec(result.info),"-*","Linewidth",2);
-legend("info");
-xlabel("count");
-xend();
+    driver("PDF");
+    xinit(SAVEDIR+"resolution_"+time_step+".pdf");
+    subplot(2,1,1);
+    plot(list2vec(result.count),[log10(%eps+list2vec(result.vbest)),log10(%eps+list2vec(result.vmax))],"-*","Linewidth",2);
+    ylabel("log10");
+    legend("vbest","vmax");
+    subplot(2,1,2);
+    plot(list2vec(result.count),list2vec(result.info),"-*","Linewidth",2);
+    legend("info");
+    xlabel("count");
+    xend();
 end
 

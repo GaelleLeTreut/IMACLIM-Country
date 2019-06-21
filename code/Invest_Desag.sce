@@ -26,7 +26,7 @@ end
 // replace I_value and I by its disaggregations
 initial_value.I_value = I_value_DESAG;
 initial_value.I = I_value_DESAG ./ (initial_value.pI*ones(1,nb_Sectors));
-    
+
 
 // clear the intermediate variables
 clear("I_ratio_str", "I_ratio", "sensib", "line", "I_value_DESAG");

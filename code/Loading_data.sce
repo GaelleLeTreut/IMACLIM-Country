@@ -120,15 +120,15 @@ end
 
 // If H_DISAGG == "HH1" , on peut définir maintenant le type d'agrégation, si non il faut attendre la fin de la désagrégation des ménages
 if H_DISAGG == "HH1"
-	if AGG_type <> ""
-		Index_AGG_type = find(AGG_type == Index_IOTvalue(1,:));
-	elseif AGG_type == ""
-		Index_AGG_type ="";
-	end
-	
-	if  AGG_type <> "" & Index_AGG_type==[]
-		error("Aggregation type "+AGG_type+" is not defined into Index_IOT.csv")
-	end
+    if AGG_type <> ""
+        Index_AGG_type = find(AGG_type == Index_IOTvalue(1,:));
+    elseif AGG_type == ""
+        Index_AGG_type ="";
+    end
+
+    if  AGG_type <> "" & Index_AGG_type==[]
+        error("Aggregation type "+AGG_type+" is not defined into Index_IOT.csv")
+    end
 end
 
 Row_Column = unique(Index_IOTvalue(2:$,1));
@@ -399,12 +399,12 @@ initial_value.Tot_CO2Emis_C = sum(initial_value.CO2Emis_C);
 initial_value.Tot_CO2Emis =initial_value.Tot_CO2Emis_IC + initial_value.Tot_CO2Emis_C;
 
 if Country == "France";
-// emissions in 2030 ( from snbc)
-CO2Emis_IC_2030 = fill_table(IOT_CO2Emis_2030,IndRow_IOT_CO2Emis_2030,IndCol_IOT_CO2Emis_2030,Index_Commodities,Index_Sectors);
-Tot_CO2Emis_IC_2030 = sum(CO2Emis_IC_2030);
-CO2Emis_C_2030 = fill_table(IOT_CO2Emis_2030,IndRow_IOT_CO2Emis_2030,IndCol_IOT_CO2Emis_2030,Index_Commodities,"C");
-Tot_CO2Emis_C_2030 = sum(CO2Emis_C_2030);
-Tot_CO2Emis_2030 = Tot_CO2Emis_C_2030 + Tot_CO2Emis_IC_2030;
+    // emissions in 2030 ( from snbc)
+    CO2Emis_IC_2030 = fill_table(IOT_CO2Emis_2030,IndRow_IOT_CO2Emis_2030,IndCol_IOT_CO2Emis_2030,Index_Commodities,Index_Sectors);
+    Tot_CO2Emis_IC_2030 = sum(CO2Emis_IC_2030);
+    CO2Emis_C_2030 = fill_table(IOT_CO2Emis_2030,IndRow_IOT_CO2Emis_2030,IndCol_IOT_CO2Emis_2030,Index_Commodities,"C");
+    Tot_CO2Emis_C_2030 = sum(CO2Emis_C_2030);
+    Tot_CO2Emis_2030 = Tot_CO2Emis_C_2030 + Tot_CO2Emis_IC_2030;
 end
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -483,7 +483,7 @@ end
 // Some values are modified into positive values for a better comprehension of the economics equations
 
 if Country=="Brasil" then
- initial_value.Gov_social_transfers = initial_value.Gov_social_transfers(Indice_Households);
+    initial_value.Gov_social_transfers = initial_value.Gov_social_transfers(Indice_Households);
     initial_value.Gov_social_transfers = abs(initial_value.Gov_social_transfers);
     initial_value.Gov_Direct_Tax = initial_value.Gov_Direct_Tax(Indice_Households);
     initial_value.Gov_Direct_Tax = abs(initial_value.Gov_Direct_Tax);
@@ -502,7 +502,7 @@ else
     initial_value.Pensions = abs(initial_value.Pensions);
     initial_value.Pensions = initial_value.Pensions(Indice_Households);
     initial_value.Unemployment_transfers = initial_value.Unemployment_transfers(Indice_Households);
-   
+
 end
 
 initial_value.Income_Tax = initial_value.Income_Tax(Indice_Households);
@@ -567,53 +567,53 @@ initial_value.Carbon_Tax_C = zeros(nb_Commodities,nb_Households);
 //////////////////////////////////////////////////////////////////
 if Country=="France" then
 
-listDataRoWfiles = listfiles(DATA_Country+'Data_RoW' );
-Nb_Datafiles = size(listDataRoWfiles,"r");
-listCSVfiles=list();
+    listDataRoWfiles = listfiles(DATA_Country+'Data_RoW' );
+    Nb_Datafiles = size(listDataRoWfiles,"r");
+    listCSVfiles=list();
 
-  // First: remove non .csv files from the list
-	indicElt = 1;
-for elt=1:Nb_Datafiles	
-    if strstr(listDataRoWfiles(elt),'.csv')<> ''
-        listCSVfiles($+1) = listDataRoWfiles(elt);
-    else indicElt = indicElt + 1;
+    // First: remove non .csv files from the list
+    indicElt = 1;
+    for elt=1:Nb_Datafiles	
+        if strstr(listDataRoWfiles(elt),'.csv')<> ''
+            listCSVfiles($+1) = listDataRoWfiles(elt);
+        else indicElt = indicElt + 1;
+        end
     end
-end
 
-indicElt = 1;
-for elt=1:size(listCSVfiles)
-	// Read all Index csv files and gives them the name of the file itself
-	if strstr(listCSVfiles(elt),'Index_') <> ''
-		
-		listIndex($+1)= listCSVfiles(elt);
-				
-		matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
-		varname = strsubst(listCSVfiles(elt),".csv","");
-		if isdef(varname)
-		disp(varname)
-		error(' is already define. please choose a sufix ')
-		end
-		execstr(varname +'=matStr;');
-			
-	else 
-			matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
-			matStr =evstr(matStr);
-			varname = strsubst(listCSVfiles(elt),".csv","");
-			if isdef(varname)
-			disp(varname)
-			error(' is already define. please choose a sufix ')
-			end
-			execstr(varname +'=matStr;');
-			indicElt = indicElt + 1;
-	end
-end
+    indicElt = 1;
+    for elt=1:size(listCSVfiles)
+        // Read all Index csv files and gives them the name of the file itself
+        if strstr(listCSVfiles(elt),'Index_') <> ''
 
-if AGG_type <> ""
-CoefCO2_reg = eval('CoefCO2_reg_'+string(AGG_type));
-end
+            listIndex($+1)= listCSVfiles(elt);
+
+            matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
+            varname = strsubst(listCSVfiles(elt),".csv","");
+            if isdef(varname)
+                disp(varname)
+                error(' is already define. please choose a sufix ')
+            end
+            execstr(varname +'=matStr;');
+
+        else 
+            matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
+            matStr =evstr(matStr);
+            varname = strsubst(listCSVfiles(elt),".csv","");
+            if isdef(varname)
+                disp(varname)
+                error(' is already define. please choose a sufix ')
+            end
+            execstr(varname +'=matStr;');
+            indicElt = indicElt + 1;
+        end
+    end
+
+    if AGG_type <> ""
+        CoefCO2_reg = eval('CoefCO2_reg_'+string(AGG_type));
+    end
 
 
-nb_RoW = size(Index_Region,"c");
+    nb_RoW = size(Index_Region,"c");
 
 end
 
@@ -635,7 +635,7 @@ Index_SectInit = Index_Sectors ;
 //////////////////////////////////////////////////////////////////	
 
 // ADD IC_RoW  ,Emis_Row , Ouput_RoW, M_RoW_bySectReg
-	
+
 //////////////////////////////////////////////////////////////////
 // EXEC DecompImpDom_value.SCE  Execute decomposition IOT_table value into domestics and importations elements 
 //////////////////////////////////////////////////////////////////	

@@ -51,8 +51,8 @@ VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1
-[Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
-execstr(Table_Deriv_Exogenous);
+    [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
+    execstr(Table_Deriv_Exogenous);
 end
 //  Introduire le changement des valeurs par défaut des parametres selon les différentes simulation
 [Table_parameters] = struct2Variables(parameters,"parameters");
@@ -94,24 +94,24 @@ NonFinEn_BudgShare_ref = (pC_ref(Indice_NonEnerSect, :) .* C_ref(Indice_NonEnerS
 
 function [M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
     M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
-	p = Mean_price_Const_1(pY, pM, Y, M );
+    p = Mean_price_Const_1(pY, pM, Y, M );
     // 	Specific to the homothetic projection: 
-	X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
-	pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
-	pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-	pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
-	pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
-	//	ECOPA
-	CPI = CPI_Const_2( pC, C);
-	// 	Specific to any projection with labour augmenting technical progress : 
-	// ECOPA
-	[alpha, lambda, kappa] = Technical_Coef_Const_6( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Labour_Product );
-	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
-	// 	Specific to the homothetic projection:  
-	Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
+    X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
+    pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
+    pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
+    pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
+    pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
+    //	ECOPA
+    CPI = CPI_Const_2( pC, C);
+    // 	Specific to any projection with labour augmenting technical progress : 
+    // ECOPA
+    [alpha, lambda, kappa] = Technical_Coef_Const_6( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Labour_Product );
+    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
+    // 	Specific to the homothetic projection:  
+    Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
 endfunction
 
-	// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
+// execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
 
 
 function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var)
@@ -121,11 +121,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Affectation des valeurs aux noms de variables,  pour les variables du solveur, les valeurs calibrées, et les parametres
     execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables));
-	
+
     // Calcul des variables qui ne sont pas des variables d'états
-	/// Trois fois plus long avec appel de la fonction 
-	[M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
-	 
+    /// Trois fois plus long avec appel de la fonction 
+    [M,p,X,pIC,pC,pG,pI,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
     // Consump_Units_const_1(Consumption_Units, Consumption_Units_ref)
@@ -135,13 +135,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Pensions_Const_1(Pensions, Pension_Benefits, Retired)
     Unemploy_Transf_Const_1(Unemployment_transfers, UnemployBenefits, Unemployed)
     OtherSoc_Transf_Const_1(Other_social_transfers, Other_SocioBenef, Population)
-	// 	Specific to the homothetic projection: 
+    // 	Specific to the homothetic projection: 
     H_PropTranf_Const_2(Property_income, GDP)
-	// 	Specific to the homothetic projection: 
-	Corp_PropTranf_Const_2(Property_income, GDP)
-	// 	Specific to the homothetic projection: 
+    // 	Specific to the homothetic projection: 
+    Corp_PropTranf_Const_2(Property_income, GDP)
+    // 	Specific to the homothetic projection: 
     G_PropTranf_Const_2(Property_income, GDP)
-	RoW_PropTranf_Const_2(Property_income) //12
+    RoW_PropTranf_Const_2(Property_income) //12
     H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
     Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
     G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
@@ -155,13 +155,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
-	// H_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
+    // H_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
     // Corp_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
     // G_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
     // RoW_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     //	ECOPA
-	H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)//29
+    H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)//29
     Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
     G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
@@ -175,20 +175,20 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)//230:1013
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) //1014:1041
     // 	Specific to the homothetic projection: 
-	Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
-	// 	Specific to the homothetic projection: 
-	UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param)
-	// 	Specific to the homothetic projection: 
-	Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
-	CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) //1045:1828
+    Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
+    // 	Specific to the homothetic projection: 
+    UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param)
+    // 	Specific to the homothetic projection: 
+    Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+    CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) //1045:1828
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) //1829:1856
     // ClimCompensat_Const_1(ClimPolicyCompens) //1857:1860
-	// 	Specific to the homothetic projection: 
+    // 	Specific to the homothetic projection: 
     S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP) //1861:1888
     RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)//1890:1917
     // 	Specific to the homothetic projection: 
-	G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
+    G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
     // 	Specific to the homothetic projection: 
     G_demand_Const_2(G, pG, G_Consumption_budget, BudgetShare_GConsump) //1919:1946
     // Public_finance_Const_1(Government_closure) //1947
@@ -216,22 +216,22 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)//6830:6857
     Employment_Const_1(Labour, lambda, Y)//6858:6885
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)//6886
-	// Mean_wage_Const_1 for wage curve on nominal wage //  Mean_wage_Const_2 for wage curve on real wage //  Wage_Const_1 for wage curve nominal wages by sectors
+    // Mean_wage_Const_1 for wage curve on nominal wage //  Mean_wage_Const_2 for wage curve on real wage //  Wage_Const_1 for wage curve nominal wages by sectors
     // Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
-	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect)
-	// Wage_Variation_Const_1 : for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
+    // Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect)
+    // Wage_Variation_Const_1 : for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
     Wage_Variation_Const_1(w, NetWage_variation)
-	// MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+    // MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
     HH_Unemployment_Const_1(u, u_tot)//6916
     HH_Employment_Const_1(Unemployed, u, Labour_force)//6917
     Labour_Cost_Const_1(pL, w, Labour_Tax_rate)//6918:6945
-	// MacroClosure_Const_1(GFCF_byAgent, pI, I)//6946
+    // MacroClosure_Const_1(GFCF_byAgent, pI, I)//6946
     // Interest_rate_Const_1(interest_rate, delta_interest_rate)//6947:6951
     GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)//6952
     Labour_income_Const_1(Labour_income, Labour, w) //6980:7007
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)//7008:7035
     Capital_income_Const_1(Capital_income, pK, kappa, Y)//7036:7063
-	// 	Specific to the homothetic projection: voir s'il faut changer cette équation aussi
+    // 	Specific to the homothetic projection: voir s'il faut changer cette équation aussi
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)//7064:7075
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
     ];
@@ -248,11 +248,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
             Constraints_Deriv = real(Constraints_Deriv);
         end
     end
-	
-	// if max(abs(Constraints_Deriv))<10^-5
-	// pause
-	// end
-	
+
+    // if max(abs(Constraints_Deriv))<10^-5
+    // pause
+    // end
+
 
 endfunction
 
@@ -352,8 +352,8 @@ Deriv_variables = X2variables (Index_Imaclim_VarProHom, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
-Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
-execstr(Table_Deriv_Exogenous)
+    Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
+    execstr(Table_Deriv_Exogenous)
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
@@ -376,5 +376,5 @@ execstr("d."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 execstr("d."+fieldnames(Deriv_variables)+"= Deriv_variables."+fieldnames(Deriv_variables)+";");
 execstr("d."+fieldnames(Deriv_Var_interm)+"= Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+";");
 if exists('Deriv_Exogenous')==1
-execstr("d."+fieldnames(Deriv_Exogenous)+"= Deriv_Exogenous."+fieldnames(Deriv_Exogenous)+";");
+    execstr("d."+fieldnames(Deriv_Exogenous)+"= Deriv_Exogenous."+fieldnames(Deriv_Exogenous)+";");
 end

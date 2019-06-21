@@ -38,7 +38,7 @@
 //PREAMBULE
 
 disp("=====IMACLIM-Country Platform========");
- 
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,48 +47,35 @@ exec ("preambule.sce");
 exec("Dashboard.sce");
 
 if Output_files=='True'
-	runName = study + "_" + mydate();
-	SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
-	mkdir(SAVEDIR);
-	diary(SAVEDIR+"summary.log");
+    runName = study + "_" + mydate();
+    SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
+    mkdir(SAVEDIR);
+    diary(SAVEDIR+"summary.log");
 
-	SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
+    SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
     mkdir(SAVEDIR_IOA);	
-	
-	// Save Dashbord.csv & System_Resol.csv in output
-	copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
-	copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+
+    // Save Dashbord.csv & System_Resol.csv in output
+    copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+    copyfile(CODE + System_Resol + ".sce", SAVEDIR);
 end
 
-printf("===============================================\n");
 disp(" ======= IMACLIM-"+Country+" is running=============================");
-printf("===============================================\n");
 
-disp(" ======= for resolving the system: "+System_Resol)
-printf("===============================================\n");
-disp(" ======= using the study file: "+study)
-printf("===============================================\n");
-disp("======= with various class of households: "+H_DISAGG)
-printf("===============================================\n");
-disp("======= at aggregated level: "+AGG_type)
-printf("===============================================\n");
-disp("======= with the resolution mode: "+Resol_Mode)
-printf("===============================================\n")
-disp("======= using various iterations:"+Nb_Iter)
-printf("===============================================\n");
-disp("======= under the scenario nammed:"+Scenario)
-printf("===============================================\n");
-disp("======= under the macro framework number:"+Macro_nb)
-printf("===============================================\n");
-//disp("======= Recycling option of carbon tax:"+Recycling_Option)
-//printf("===============================================\n");
+disp(" ======= for resolving the system: "+System_Resol);
+disp(" ======= using the study file: "+study);
+disp("======= with various class of households: "+H_DISAGG);
+disp("======= at aggregated level: "+AGG_type);
+disp("======= with the resolution mode: "+Resol_Mode);
+disp("======= using various iterations:"+Nb_Iter);
+disp("======= under the scenario nammed:"+Scenario);
+disp("======= under the macro framework number:"+Macro_nb);
+//disp("======= Recycling option of carbon tax:"+Recycling_Option);
 if Output_files=='False'
-	disp("=======You choose not to print outputs in external files")
-	printf("===============================================\n");
+    disp("======= You choose not to print outputs in external files");
 end
 if CO2_footprint=='False'
-	disp("=======You choose not to realise a Carbon footprint analysis")
-	printf("===============================================\n");
+    disp("======= You choose not to realise a Carbon footprint analysis");
 end
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,12 +85,11 @@ end
 disp("STEP 1: DATA...");
 exec("Loading_data.sce");
 
-
 exec("IOT_DecompImpDom.sce");
- 
+
 //Execute Households_Disagg.sce file if Index_HouseholdsDISAGG is defined
 if H_DISAGG <> "HH1"
-	exec("Households_Desag.sce");
+    exec("Households_Desag.sce");
 end
 
 nb_size_I = 1;
@@ -114,7 +100,7 @@ end
 
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
-	exec("Aggregation.sce");
+    exec("Aggregation.sce");
     if Invest_matrix then
         nb_size_I = nb_SectorsAGG;
     end
@@ -143,7 +129,7 @@ exec("Calibration.sce");
 ////////////////////////////////////////////////////////////
 disp("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR");
 if CO2_footprint =="True"
-	exec(CODE+"IOA_BY.sce");
+    exec(CODE+"IOA_BY.sce");
 end
 
 
@@ -156,73 +142,74 @@ disp("STEP 5: RESOLUTION AND EQUILIBRIUM...");
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
 
-	// Creation of a new output subdirectory for each time step in case of several time steps calculation
-	if Nb_Iter<>1
-		if Output_files=='True'
-			SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + "Time_" + time_step + filesep();
-			mkdir(SAVEDIR);
-		end
-	end
+    // Creation of a new output subdirectory for each time step in case of several time steps calculation
+    if Nb_Iter<>1
+        if Output_files=='True'
+            SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + "Time_" + time_step + filesep();
+            mkdir(SAVEDIR);
+        end
+    end
 
-	//// Defining matrix with dimension of each variable for Resolution file
-	// if  System_Resol=="Projection_homothetic"
-	// VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
-	// else
-	// VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
-	// end
+    //// Defining matrix with dimension of each variable for Resolution file
+    // if  System_Resol=="Projection_homothetic"
+    // VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
+    // else
+    // VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
+    // end
 
-	// Loading macro framework (common feature for each country) 
-	if Macro_nb <> ""
-		exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
-	end
+    // Loading macro framework (common feature for each country) 
+    if Macro_nb <> ""
+        exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
+    end
 
-	// Loading other study changes (specific feature)
-	exec(STUDY_Country+study+".sce");
+    // Loading other study changes (specific feature)
+    exec(STUDY_Country+study+".sce");
 
-	exec(System_Resol+".sce");
-	warning("sign of ClimPolCompensbySect")
+    exec(System_Resol+".sce");
+    warning("sign of ClimPolCompensbySect")
 
     // Check if the projections are made correctly
     exec("Check_Projections.sce");
 
-	////////////////////////////////////////////////////////////
-	// 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
-	////////////////////////////////////////////////////////////
-	if Output_files=='True'
-		disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
-		exec(CODE+"outputs.sce");
-		if time_step == 1
-			BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
-		end
+    ////////////////////////////////////////////////////////////
+    // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
+    ////////////////////////////////////////////////////////////
+    if Output_files=='True'
+        disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
+        exec(CODE+"outputs.sce");
+        if time_step == 1
+            BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
+        end
 
-		exec(CODE+"outputs_indic.sce");
+        exec(CODE+"outputs_indic.sce");
 
-		if System_Resol == "Projection_ECOPA"
-			exec(CODE+"outputs_indic_ECOPA.sce");
-		end
-	end
 
-	////////////////////////////////////////////////////////////
-	// 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
-	////////////////////////////////////////////////////////////
-	if CO2_footprint == 'True'
-		disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
-		exec(CODE+"IOA_Run.sce");
-	end
+        if System_Resol == "Projection_ECOPA"
+            exec(CODE+"outputs_indic_ECOPA.sce");
+        end
+    end
 
-	////////////////////////////////////////////////////////////
-	// 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
-	////////////////////////////////////////////////////////////
-	if Nb_Iter <> 1
-		exec(CODE+"Variable_Storage.sce");
-	else
-		disp("Variable Storage not executed for the Nb_Iter = "+Nb_Iter)
-	end
+    ////////////////////////////////////////////////////////////
+    // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
+    ////////////////////////////////////////////////////////////
+    if CO2_footprint == 'True'
+        disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
+        exec(CODE+"IOA_Run.sce");
+    end
+
+    ////////////////////////////////////////////////////////////
+    // 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
+    ////////////////////////////////////////////////////////////
+    if Nb_Iter <> 1
+        exec(CODE+"Variable_Storage.sce");
+    else
+        disp("Variable Storage not executed for the Nb_Iter = "+Nb_Iter)
+    end
 
 
 end // Loop ending for for various time step calculation
 
 //shut down the diary
 if Output_files=='True'
-diary(0)
+    diary(0)
 end

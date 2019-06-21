@@ -55,30 +55,30 @@ ScaleEffect_Cost	= (1/2)*( d.Theta ./ d.Phi - d.Phi ./ d.Theta );
 
 //	Price effects
 
-	// Energy prices
-	
+// Energy prices
+
 EnergPriceEffect_Cost = (1/2)*sum((ini.alpha(Indice_EnerSect,:)./(ones(nb_EnerSect, 1).*.ini.Cost_Structure) + d.alpha(Indice_EnerSect,:)./(ones(nb_EnerSect, 1).*.d.Cost_Structure)).*( d.pIC(Indice_EnerSect,:) - ini.pIC(Indice_EnerSect,:) ), "r");
 
-	// Non energy prices (intermediate consumption + capital consumption)
-	
+// Non energy prices (intermediate consumption + capital consumption)
+
 NonEnergPriceEffect_Cost = (1/2)*( sum((ini.alpha(Indice_NonEnerSect,:)./(ones(nb_NonEnerSect, 1).*.ini.Cost_Structure) + d.alpha(Indice_NonEnerSect,:)./(ones(nb_NonEnerSect, 1).*.d.Cost_Structure)).*( d.pIC(Indice_NonEnerSect,:) - ini.pIC(Indice_NonEnerSect,:) ), "r") + (ini.kappa./ini.Cost_Structure + d.kappa./d.Cost_Structure).*(d.pK - ini.pK) );
 
-	// Net-of-tax wage
-	
+// Net-of-tax wage
+
 NetWageEffect_Cost = (1/2)* ( (ones(1, nb_Sectors) + ini.Labour_Tax_rate) .* ini.lambda ./ ini.Cost_Structure + (ones(1, nb_Sectors) + d.Labour_Tax_rate) .* d.lambda ./ d.Cost_Structure ) .* ( d.w - ini.w );
 
-	// Labour tax
-	
+// Labour tax
+
 LabourTaxEffect_Cost = (1/2)* ( ini.w .* ini.lambda ./ ini.Cost_Structure + d.w .* d.lambda ./ d.Cost_Structure ) .* ( ini.Labour_Tax_rate - d.Labour_Tax_rate );
 
 //	Profit margin and tax on production effects
-	
-	//	Price-cost wedge
+
+//	Price-cost wedge
 ini.PriceCost_wedge 	= ones(1, nb_Sectors) - ini.markup_rate - ini.Production_Tax_rate;
 d.PriceCost_wedge   	= ones(1, nb_Sectors) - d.markup_rate - Production_Tax_rate;		// Rq: modifier si Production_Tax_rate est variable: d.Production_Tax_rate
 
 MarginEffect_Cost = (1/2)* ( ini.PriceCost_wedge ./ d.PriceCost_wedge - d.PriceCost_wedge ./ ini.PriceCost_wedge );
-	
+
 //	Technical substitution effects
 
 SubstitutionEffect_Cost = (1/2)*sum((ini.pIC(:,:)./(ones(nb_Sectors, 1).*.ini.Cost_Structure) + d.pIC(:,:)./(ones(nb_Sectors, 1).*.d.Cost_Structure)).*( d.alpha(:,:) - ini.alpha(:,:) ), "r") + ( (ones(1, nb_Sectors) + ini.Labour_Tax_rate) .* ini.w ./ ini.Cost_Structure + (ones(1, nb_Sectors) + d.Labour_Tax_rate) .* d.w ./ d.Cost_Structure ) .* ( d.lambda - ini.lambda ) + (ini.pK./ini.Cost_Structure + d.pK./d.Cost_Structure).*(d.kappa - ini.kappa);
