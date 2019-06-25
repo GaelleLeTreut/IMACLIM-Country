@@ -2,8 +2,8 @@ Component;Name
 // SELECT a type of resoultion by uncomment it;
 // System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_ProjEcopa
-// System_Resol;Systeme_Static
-System_Resol;Systeme_Stat_RoW
+System_Resol;Systeme_Static
+// System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
