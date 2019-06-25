@@ -1,6 +1,12 @@
 // error max
 err = 1E-3;
 
+for var = ['Alpha_BU', 'C_BU', 'Trade_BU']
+    if ~isdef(var) then
+        execstr(var + ' = []');
+    end
+end
+
 function test_proj(var_name , proj_ind)
     d_indexes = getfield(1,d);
     Projection_indexes = getfield(1,Projection);

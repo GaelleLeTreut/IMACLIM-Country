@@ -90,13 +90,15 @@ param_table_sec($+1,1) = ["$delta_{LS_{S}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(delta_LS_S);
 
-param_table_sec($+1,1) = ["$delta_{LS_{I}}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4) = string(delta_LS_I);
+if Country == 'France' then
+    param_table_sec($+1,1) = ["$delta_{LS_{I}}$"];
+    param_table_sec($:$,2:3) = [" "];
+    param_table_sec($,4:4) = string(delta_LS_I);
 
-param_table_sec($+1,1) = ["$delta_{LS_{LT}}$"];
-param_table_sec($:$,2:3) = [" "];
-param_table_sec($,4:4) = string(delta_LS_LT);
+    param_table_sec($+1,1) = ["$delta_{LS_{LT}}$"];
+    param_table_sec($:$,2:3) = [" "];
+    param_table_sec($,4:4) = string(delta_LS_LT);
+end
 
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$\beta_{IC_{ji}}$"];
 param_table_sec($-nb_Sectors+1:$,2) = [" "];
