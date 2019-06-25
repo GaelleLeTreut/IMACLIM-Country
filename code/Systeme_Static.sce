@@ -329,6 +329,10 @@ sensibFsolve = 1e-15;
 Xbest        = X_Deriv_Var_init;
 a            = 0.1;
 
+if Test_mode then
+    countMax = testing.countMax;
+end
+
 tic();
 
 if %f

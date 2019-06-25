@@ -38,7 +38,7 @@ if Output_files=='True'
 end
 
 if count==countMax&vBest>sensib
-    disp("fsolve did NOT converge");
+    error("fsolve did NOT converge");
 else
     disp("equilibrium FOUND with vBest = "+vBest);
 end

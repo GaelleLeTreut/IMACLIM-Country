@@ -44,31 +44,8 @@
 
 disp( "=====PREAMBLE========");
 
-stacksize(1e8); // max stacksize in new scilab versions
-lines(0);       // No asking (continue to display) (scilab option)
-
-// MODEL FILE STRUCTURE
-
-sep = filesep(); // "/" or "\" depending on OS
-
-cd("..");
-PARENT    = pwd()  + sep;
-CODE      = PARENT + "code" + sep;
-
-LIB       = PARENT + "library" + sep;
 getd(LIB); // Charge toutes les fonctions dans LIB
-
-OUTPUT    = PARENT + "outputs" + sep;
 mkdir(OUTPUT);
-
-DATA      = PARENT + "data"         + sep; 
-STUDY     = PARENT + "study_frames" + sep;
-PARAMS    = PARENT + "params" + sep;
-ROBOT     = PARENT + "robot" + sep;
-
-
-
-cd(CODE);
 
 /// LOAD THE DEFAULT COUNTRY SELECTION IF COUNTRY SELECTION IS NOT DEFINED
 

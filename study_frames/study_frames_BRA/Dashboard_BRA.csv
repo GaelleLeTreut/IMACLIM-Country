@@ -1,43 +1,16 @@
-Component;Name
-// SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomot_BRA
-System_Resol;Systeme_Static_BRA
-// System_Resol;Systeme_StaCap_BRA
-// SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
-// study;Projection_evolution
+// *** Careful ;first line deleted by the program ***
+System_Resol;Systeme_Static
 study;Recursive_RunChoices
-// SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_PMR19
-// AGG_type;AGG_EnComp
-// SELECT an households dissagregation profil by uncomment it;
+AGG_type;
 H_DISAGG;HH1
-// H_DISAGG;H3
-// H_DISAGG;H4
-// H_DISAGG;H10
-// SELECT the resolution mode;
-// Resol_Mode;Static_comparative
-Resol_Mode;Dynamic_projection
-// SELECT the number of iteration (Default=1);
+Resol_Mode;Dynamic_Projection
 Nb_Iter;1
-// SELECT a Macro framework to run;
-// Macro_nb;
-Macro_nb;NDC
-// SELECT which shock from the Macro framework you want to apply ;
+Macro_nb;
 Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
-// SELECT the scenario to run (soft_linking);
-// Scenario;
-// Scenario;PMR_Ref_Disag
-Scenario;PMR_Ref
-// TELL if IOT_Quantities from scenario require aggregation as aggregation sectors; 
-// ScenAgg_IOT;%T
-// TELL if you want to realise a carbon footprint analysis;
-// CO2_footprint;True
+Invest_matrix;%F
+Scenario;
 CO2_footprint;False
-// TELL if you want output file;
-Output_files;True
-// Output_files;False
+Output_files;False

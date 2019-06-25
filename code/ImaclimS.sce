@@ -35,6 +35,9 @@
 
 // main executable script
 
+// test mode
+Test_mode = isdef('TEST_MODE');
+
 //PREAMBULE
 
 disp("=====IMACLIM-Country Platform========");
@@ -43,8 +46,20 @@ disp("=====IMACLIM-Country Platform========");
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
 disp("STEP 0: loading Dashboard ");
+
+exec("Load_file_structure.sce");
+
+//saved_files = listfiles(SAVED_DATA);
+//if saved_files <> [] then
+//    exec(TEST_FULLCODE + "restore_run_mode.sce");
+//end
+
 exec ("preambule.sce");
 exec("Dashboard.sce");
+
+if (AGG_type == '') & (Country_ISO == 'ARG') then
+    error("AGG type vide pour l''Argentine");
+end
 
 if Output_files=='True'
     runName = study + "_" + mydate();
@@ -77,6 +92,7 @@ end
 if CO2_footprint=='False'
     disp("======= You choose not to realise a Carbon footprint analysis");
 end
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA

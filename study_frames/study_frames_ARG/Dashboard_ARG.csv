@@ -1,41 +1,17 @@
-Component;Name
-// SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomothetic
+// *** Careful ;first line deleted by the program ***
 System_Resol;Systeme_Static
-// System_Resol;Systeme_Stat_RoW
-// SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
-// study;Projection_evolution
 study;Recursive_RunChoices
-// SELECT an aggregation sector profil by uncomment it;
 AGG_type;
-// AGG_type;AGG_EnComp
-// SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
-// SELECT the resolution mode;
-// Resol_Mode;Static_comparative
-Resol_Mode;Dynamic_projection
-// SELECT the number of iteration (Default=1);
+Resol_Mode;Dynamic_Projection
 Nb_Iter;1
-// SELECT a Macro framework to run;
 Macro_nb;
-// Macro_nb;Current
-// Macro_nb;StrucChgt
-// SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
-// SELECT an Capital Flow representation by uncomment it;
-// Invest_matrix;%T
 Invest_matrix;%F
-// SELECT the scenario to run (soft_linking);
-// Scenario;
-Scenario;NDC
-// Scenario;CCS
-// TELL if you want to realise a carbon footprint analysis;
-// CO2_footprint;True
+Scenario;CCS
 CO2_footprint;False
-// TELL if you want output file;
-// Output_files;True
 Output_files;False
+Systeme_Resol;Systeme_Stat_RoW
