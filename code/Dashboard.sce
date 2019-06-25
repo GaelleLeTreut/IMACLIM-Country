@@ -111,6 +111,10 @@ if (size(Macro_nb,"r")<>[1]| size(Macro_nb,"r")<>[1])
 	error ( "various types of macroeconomic framework been selected in Dashboard.csv.");
 end
 
+if (size(Recycling_Option,"r")<>[1]| size(Recycling_Option,"r")<>[1]) 
+    error ( "You have to choose only one carbon tax recycling option."); 
+end 
+
 if (size(CO2_footprint,"r")<>[1]| size(CO2_footprint,"r")<>[1])
 	error ( "You have to choose whether or not you want to realise an Input-Output Analysis about carbon footprint.");
 end
@@ -133,4 +137,6 @@ else
     ScenAgg_IOT = %F;
 end
 
-
+if (size(Term_Resol,"r")<>[1]| size(Term_Resol,"r")<>[1]) 
+    error ( "You have to choose whether or not you want to run terminate resolution file."); 
+end

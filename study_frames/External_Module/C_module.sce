@@ -44,9 +44,9 @@ if Scenario<>"" then
 	end 
 	
 	// parameter forcing
-	//parameters.delta_C_parameter(C_BU) = ((Projection.C(C_BU)./((BY.C(C_BU)==0)+(BY.C(C_BU)<>0).*BY.C(C_BU))).^(1/parameters.time_since_BY)-(Projection.C(C_BU)<>0))';
-	parameters.delta_C_parameter(C_BU) = ((Projection.C(C_BU)./((BY.C(C_BU)==0)+(BY.C(C_BU)<>0).*BY.C(C_BU))).^(1/parameters.time_since_BY)-(ones(Projection.C(C_BU))))';
-
+	// parameters.delta_C_parameter(C_BU) = ((Projection.C(C_BU)./((BY.C(C_BU)==0)+(BY.C(C_BU)<>0).*BY.C(C_BU))).^(1/parameters.time_since_BY)-(Projection.C(C_BU)<>0))';
+	// parameters.delta_C_parameter(C_BU) = ((Projection.C(C_BU)./((BY.C(C_BU)==0)+(BY.C(C_BU)<>0).*BY.C(C_BU))).^(1/parameters.time_since_BY)-(ones(Projection.C(C_BU))))';
+	parameters.delta_C_parameter(C_BU) = ((Projection.C(C_BU)./((sum(BY.C(C_BU,:),"c")==0)+(sum(BY.C(C_BU,:),"c")<>0).*sum(BY.C(C_BU,:),"c"))).^(1/parameters.time_since_BY)-(ones(Projection.C(C_BU))))';
 else
 	warning("No forcing available because no scenario selected");
 end

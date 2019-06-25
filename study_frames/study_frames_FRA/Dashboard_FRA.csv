@@ -29,20 +29,36 @@ Resol_Mode;Dynamic_projection
 Nb_Iter;1
 // SELECT a Macro framework to run;
 Macro_nb;
+// Macro_nb;Recalib
 // Macro_nb;NDC
 // Macro_nb;2deg
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
-World_prices;False
+World_prices;True
 X_nonEnerg;False
+Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
+Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
+// SELECT a carbon tax recycling option (standard = PublicDeficit); 
+Recycling_Option;LabTax_LumpSumHH
+// Recycling_Option;PublicDeficit
+// Recycling_Option;GreenInvest
+// Recycling_Option;LumpSumHH
+// Recycling_Option;LabTax
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_PublicDeficit
+// Recycling_Option;LabTax_GreenInvest
+// Recycling_Option;LabTax_LumpSumHH
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
 // Output_files;True
 Output_files;False
+// TELL if you want to call ""terminate_resolution""";
+//Term_Resol;True
+Term_Resol;False
