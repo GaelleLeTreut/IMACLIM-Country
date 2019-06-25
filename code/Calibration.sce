@@ -1106,21 +1106,23 @@ while norm(const_G_Consum_budget) > sensib
 end
 count=0;
 
-function [const_I_Consum_budget] =fcal_I_BudgBal_Const_1(x_I_Consumption_budget,  I, pI, Imaclim_VarCalib)
-    I_Consumption_budget = indiv_x2variable(Imaclim_VarCalib, "x_I_Consumption_budget");
-    const_I_Consum_budget =  I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
-endfunction
+if Country == 'France' then
+    function [const_I_Consum_budget] =fcal_I_BudgBal_Const_1(x_I_Consumption_budget,  I, pI, Imaclim_VarCalib)
+        I_Consumption_budget = indiv_x2variable(Imaclim_VarCalib, "x_I_Consumption_budget");
+        const_I_Consum_budget =  I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+    endfunction
 
-const_I_Consum_budget = 10^5;
-while norm(const_I_Consum_budget) > sensib
-    if  (count>=countMax)
-        error("review calib_I_Consumption_budget")
+    const_I_Consum_budget = 10^5;
+    while norm(const_I_Consum_budget) > sensib
+        if  (count>=countMax)
+            error("review calib_I_Consumption_budget")
+        end
+        count = count + 1;
+        [x_I_Consumption_budget, const_I_Consum_budget, info_calib_I_ConsBudget] = fsolve(x_I_Consumption_budget, list(fcal_I_BudgBal_Const_1,  I, pI, Index_Imaclim_VarCalib));
+        I_Consumption_budget = indiv_x2variable (Index_Imaclim_VarCalib, "x_I_Consumption_budget");
     end
-    count = count + 1;
-    [x_I_Consumption_budget, const_I_Consum_budget, info_calib_I_ConsBudget] = fsolve(x_I_Consumption_budget, list(fcal_I_BudgBal_Const_1,  I, pI, Index_Imaclim_VarCalib));
-    I_Consumption_budget = indiv_x2variable (Index_Imaclim_VarCalib, "x_I_Consumption_budget");
+    count=0;
 end
-count=0;
 
 /////////////////////////////////////////////////////
 // Start Difference between France (1) and Brasil (2)
@@ -1761,17 +1763,18 @@ else
     Government_closure = indiv_x2variable (Index_Imaclim_VarCalib, "x_Government_closure");
 end
 
+if Country == 'France' then
+    function [const_GFCFbyAgentshare] =fcalib_GFCFShare_Const_1(x_GFCF_Distribution_Shares, GFCF_byAgent,pI,I, Imaclim_VarCalib)
+        GFCF_Distribution_Shares= indiv_x2variable(Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
+        const_GFCFbyAgentshare=GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares);
+    endfunction
+    [x_GFCF_Distribution_Shares, const_GFCFbyAgentshare, info_calib_GFCFbyAgentshare] = fsolve(x_GFCF_Distribution_Shares, list(fcalib_GFCFShare_Const_1,GFCF_byAgent,pI,I, Index_Imaclim_VarCalib));
 
-function [const_GFCFbyAgentshare] =fcalib_GFCFShare_Const_1(x_GFCF_Distribution_Shares, GFCF_byAgent,pI,I, Imaclim_VarCalib)
-    GFCF_Distribution_Shares= indiv_x2variable(Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
-    const_GFCFbyAgentshare=GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares);
-endfunction
-[x_GFCF_Distribution_Shares, const_GFCFbyAgentshare, info_calib_GFCFbyAgentshare] = fsolve(x_GFCF_Distribution_Shares, list(fcalib_GFCFShare_Const_1,GFCF_byAgent,pI,I, Index_Imaclim_VarCalib));
-
-if norm(const_GFCFbyAgentshare) > sensib
-    error( "review calib_GFCF_byAgentShare")
-else
-    GFCF_Distribution_Shares = indiv_x2variable (Index_Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
+    if norm(const_GFCFbyAgentshare) > sensib
+        error( "review calib_GFCF_byAgentShare")
+    else
+        GFCF_Distribution_Shares = indiv_x2variable (Index_Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
+    end
 end
 
 //////////////////////////////////////////////////////////////////
