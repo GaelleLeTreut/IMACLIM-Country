@@ -112,8 +112,8 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
 
     CPI = CPI_Const_2( pC, C); // defined in relation to BY
 
-    [alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
-    //	[alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+	//[alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+    [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
     GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 
@@ -172,10 +172,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-    H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
 
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
@@ -343,8 +343,12 @@ if %f
 end
 
 printf("\n\n   count      vBest   info       toc\n");
-while (count<countMax)&(vBest>sensib)
+while (count<countMax)& (vBest>sensib) //((vBest>sensib)|(count<3))
     count = count + 1;
+
+//    if (count < 4) then
+//        Projection.X = val_proj_X * count/3;
+//    end
 
     try
         [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
