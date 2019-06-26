@@ -156,9 +156,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier 
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity) // H_Investment_Const_2(GFCF_byAgent,pC,C)
-    // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (si taux d'intérêt constants)
+    // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
     Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
-    // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB 
+    // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB / 3-constant en réel + Carbon Tax Revenu (option dashboard)
     G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
     //MacroClosure_Const_1(GFCF_byAgent, pI, I)
     // Interest_rate_Const_1(interest_rate, delta_interest_rate)
@@ -199,12 +199,16 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
 
-    //LUMP SUM : Const_1 for NO Transfert Const_2 for Transfert (delta_LS_H,delta_LS_S) Const 3 for indexation on GDP
-    ClimCompensat_Const_3(ClimPolicyCompens, GDP)
-    S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP)
+    //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
+    ClimCompensat_Const_3(ClimPolicyCompens, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C)
+    S_ClimCompensat_Const_3(ClimPolCompensbySect, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)
 
-    // Recycling options : RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
-    RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
+    // Recycling options : 1 et 2 could be deleted  
+    // RevenueRecycling_Const_1 for no labour tax cut 
+    // RevenueRecycling_Const_2 for all carb tax into labour tax cut
+    // RevenueRecycling_Const_3 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
+    // RevenueRecycling_Const_4 for labour tax reduction while maintaining netlending constant (with gdp variation)
+    RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP)
 
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 
@@ -368,8 +372,9 @@ while (count<countMax)&(vBest>sensib)
     printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
 end
 
-exec(CODE+"terminateResolution.sce");
-
+if Term_Resol == "True"
+    exec(CODE+"terminateResolution.sce");
+end
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////
@@ -385,7 +390,7 @@ if exists('Deriv_Exogenous')==1
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax ]= f_resol_interm(Deriv_variables);
+[M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables);
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 /////////////////////////////////////////////////////////////////

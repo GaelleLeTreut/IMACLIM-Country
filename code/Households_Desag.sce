@@ -356,7 +356,11 @@ value_DISAG.IOT_Val( Location3:Location3+nb_HouseholdsTEMP-1 , 1:size(initial_va
 //////////////	Consumption accounts Closure (the composite expenditures balance the consumption budget)
 
 // in value
-Location3 = find( "Row" == Index_IOTvalue(:,1) & "Composite" == Index_IOTvalue(:,2) ) - 1 ;
+if Country == 'France' then
+    Location3 = find( "Row" == Index_IOTvalue(:,1) & "Comp" == Index_IOTvalue(:,2) ) - 1 ;
+else
+    Location3 = find( "Row" == Index_IOTvalue(:,1) & "Composite" == Index_IOTvalue(:,2) ) - 1 ;
+end
 
 value_DISAG.IOT_Val( Location3 , Location2:Location2+nb_HouseholdsTEMP-1 ) = value_DISAG.FC_byAgent(Indice_HouseholdsTEMP) - ( sum(value_DISAG.IOT_Val(:, Location2:Location2+nb_HouseholdsTEMP-1 ),"r") - value_DISAG.IOT_Val(Location3, Location2:Location2+nb_HouseholdsTEMP-1 ) ) ;
 

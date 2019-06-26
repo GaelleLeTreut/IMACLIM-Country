@@ -477,6 +477,9 @@ M_FinEn_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
 BY.IC_output_ValueShare 	= sum(BY.IC_value)/ sum(BY.Output_value);
 BY.GDP_output_ValueShare 	= sum(BY.GDP)/ sum(BY.Output_value);
 
+d.IC_output_ValueShare 	= sum(d.IC_value)/ sum(d.Output_value);
+d.GDP_output_ValueShare 	= sum(d.GDP)/ sum(d.Output_value);
+
 // Decomposition of variations for the first level macroeconomic identity
 IC_Output_qLasp 	= BY.IC_output_ValueShare * IC_qLasp ;
 GDP_Output_qLasp 	= BY.GDP_output_ValueShare * GDP_qLasp ;
@@ -492,6 +495,14 @@ BY.I_Output_ValueShare	= sum(BY.I_value)/ sum(BY.Output_value);
 BY.X_Output_ValueShare	= sum(BY.X_value)/ sum(BY.Output_value); 
 BY.M_Output_ValueShare	= -sum(BY.M_value)/ sum(BY.Output_value);
 
+// Final value shares (in output) for each components of GDP
+	// added to have the same number of variables in output in input data list
+d.C_Output_ValueShare	= sum(d.C_value)/ sum(d.Output_value); 
+d.G_Output_ValueShare	= sum(d.G_value)/ sum(d.Output_value); 
+d.I_Output_ValueShare	= sum(d.I_value)/ sum(d.Output_value); 
+d.X_Output_ValueShare	= sum(d.X_value)/ sum(d.Output_value); 
+d.M_Output_ValueShare	= -sum(d.M_value)/ sum(d.Output_value);
+
 // Decomposition of variations for the second level macroeconomic identity
 C_GDP_qLasp = BY.C_Output_ValueShare * C_qLasp ;
 G_GDP_qLasp = BY.G_Output_ValueShare * G_qLasp ;
@@ -506,6 +517,12 @@ M_GDP_qLasp = BY.M_Output_ValueShare * M_qLasp ;
 // Initial value shares for each components of Households Consumption
 BY.Ener_C_ValueShare		= sum(BY.C_value(Indice_EnerSect, :))/sum(BY.C_value) ;
 BY.NonEner_C_ValueShare	= sum(BY.C_value(Indice_NonEnerSect, :))/sum(BY.C_value) ;
+
+d.Ener_C_ValueShare		= sum(d.C_value(Indice_EnerSect, :))/sum(d.C_value) ;
+d.NonEner_C_ValueShare	= sum(d.C_value(Indice_NonEnerSect, :))/sum(d.C_value) ;
+
+BY.Ener_C_ValueShareFish		= BY.Ener_C_ValueShare; 
+BY.NonEner_C_ValueShareFish	= BY.NonEner_C_ValueShare; 
 
 d.Ener_C_ValueShareFish		= (sum(d.C_value(Indice_EnerSect, :)) / C_En_pFish ) /(sum(d.C_value)/C_pFish) ;
 d.NonEner_C_ValueShareFish	= (sum(d.C_value(Indice_NonEnerSect, :))/C_NonEn_pFish)/(sum(d.C_value)/C_pFish);

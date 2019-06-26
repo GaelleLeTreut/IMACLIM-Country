@@ -1,0 +1,51 @@
+Component;Name
+// SELECT a type of resoultion by uncomment it;
+// System_Resol;Systeme_ProjHomothetic
+// System_Resol;Systeme_ProjEcopa
+System_Resol;Systeme_Static
+// System_Resol;Systeme_Stat_RoW
+// SELECT a type of study (shock in parameters) by uncomment it;
+study;Recursive_RunChoices
+AGG_type;
+H_DISAGG;HH1
+// H_DISAGG;H10
+// SELECT the resolution mode;
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
+// SELECT the number of iteration (Default=1);
+Nb_Iter;50
+// SELECT a Macro framework to run;
+// Macro_nb;
+Macro_nb;Recalib
+// Macro_nb;NDC
+// Macro_nb;2deg
+// SELECT which shock from the Macro framework you want to apply ;
+Demographic_shift;True
+Labour_product;True
+World_prices;True
+X_nonEnerg;False
+Energy_Balance;True
+// SELECT the scenario to run (soft_linking);
+// Scenario;
+Scenario;Recalib
+// Scenario;AME
+// Scenario;AMS
+// SELECT a carbon tax recycling option (standard = PublicDeficit); 
+Recycling_Option;to_fill
+// Recycling_Option;PublicDeficit
+// Recycling_Option;GreenInvest
+// Recycling_Option;LumpSumHH
+// Recycling_Option;LabTax
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_PublicDeficit
+// Recycling_Option;LabTax_GreenInvest
+// Recycling_Option;LabTax_LumpSumHH
+// TELL if you wantto realise a carbon footprint analysis;
+// CO2_footprint;True
+CO2_footprint;False
+// TELL if you want output file;
+Output_files;True
+// Output_files;False
+"// TELL if you want to call ""terminate_resolution""";
+//Term_Resol;True
+Term_Resol;False

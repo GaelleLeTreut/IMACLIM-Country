@@ -2,7 +2,7 @@
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //Sectors;Crude_oil;Natural_gas;Coking_coal;Bituminous_coal;Coke;Other_coal;Gasoline;LPG;Jetfuel;Fuel;Fuel_oil;Heavy_fuel_oil;Other_fuel_prod;Electricty;HeatGeoSol_Th;Metals;Cement;Buildings_constr;ChemicalPharma;Paper;Mining;TranspEquipment;Transport_serv;Agri_Forestry;Fishing;Food_industry;Composite;
 sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;
-Coef_real_wage;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
+Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 // Production;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 sigma_Phi;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1; 
@@ -11,7 +11,7 @@ phi_L;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 phi_K;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 ConstrainedShare_Labour;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;
 ConstrainedShare_Capital;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;
-// Consumption;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+// Consumption;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 delta_C_parameter;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //International trade parameters;;;;;;;;;;;;;;;;;;;;;;;;;;;;

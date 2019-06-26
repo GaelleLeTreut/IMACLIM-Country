@@ -782,6 +782,15 @@ function [y] = Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pen
     y=y1';
 endfunction
 
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP) ;
+
+    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
+    y1 = Pension_Benefits - BY.Pension_Benefits ;
+
+    y=y1';
+endfunction
+
 /// Unemployment benefits (by household class)
 function [y] = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param) ;
 
@@ -797,6 +806,14 @@ function [y] = UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, Unemp
 
     // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
     y1 = UnemployBenefits - (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
+
+    y=y1';
+endfunction
+
+function [y] = UnemployBenefits_Const_3(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param) ;
+
+    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
+    y1 = UnemployBenefits - BY.UnemployBenefits;
 
     y=y1';
 endfunction
@@ -818,6 +835,13 @@ function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Oth
     // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
     y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param ;
 
+    y=y1';
+endfunction
+
+function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+
+    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
+    y1 = Other_SocioBenef - BY.Other_SocioBenef;
     y=y1';
 endfunction
 
@@ -881,33 +905,19 @@ endfunction
 
 /// Transfert to households 
 
-function [y] = ClimCompensat_Const_1(ClimPolicyCompens) ;
+function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP) ;
     // /// No new direct compensations to households
-   y1 = zeros(1,nb_InstitAgents)  
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
-   
-   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - BY.ClimPolicyCompens(Indice_Households) ;
+   y1 = zeros(1,nb_InstitAgents); 
+   y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
+   y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   - BY.ClimPolicyCompens(Indice_Government);
+   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
+   y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - BY.ClimPolicyCompens(Indice_Households) ;
 
     y=y1';
 endfunction
 
-function [y] = ClimCompensat_Const_2(ClimPolicyCompens, ClimPolCompensbySect) ;
-    // /// No new direct compensations to households
-   y1 = zeros(1,nb_InstitAgents)
-   y1(Indice_RestOfWorld) = ClimPolicyCompens(Indice_RestOfWorld) - BY.ClimPolicyCompens(Indice_RestOfWorld)
-//   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) - BY.ClimPolicyCompens(Indice_Government)
-   y1(Indice_Government) = ClimPolicyCompens(Indice_Government) + ClimPolicyCompens(Indice_Households) + sum(ClimPolCompensbySect)
-   y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations)
-   
-   y1(Indice_Households) = ClimPolicyCompens(Indice_Households) - delta_LS_H .* ones(1, nb_Households).*((sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)) / nb_Households) ;
-
-    y=y1';
-endfunction
-
-///	proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP) ;
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
     y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
@@ -924,17 +934,8 @@ function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect) ;
     y=y1';
 endfunction
 
-	/// Uniform lump sum compensation of Sectors
-function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect, Carbon_Tax_IC, Carbon_Tax_C) ;
-
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - delta_LS_S.* ones(1, nb_Sectors).*( sum(Carbon_Tax_IC) + sum(Carbon_Tax_C) )/nb_Sectors ;
-
-    y=y1';
-endfunction
-
-///	proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP) ;
+/// proj: il faut que ça varie comme le PIB pour homothétie
+function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect, GDP) ;
 
     // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
     y1 = ClimPolCompensbySect - (BY.GDP/BY.GDP) * BY.ClimPolCompensbySect ;
@@ -973,7 +974,6 @@ function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_
     
 	y  = y1' ;
 endfunction
-
 
 // Ex-post labour tax rate
 function [y] = Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut) ;
@@ -1822,10 +1822,10 @@ endfunction
 // Entrepreneurs' investment demand equals to an exogenous proportion of fixed capital depreciation
 // Constant composition in goods of capital
 
-function [y] = Invest_demand_Const_1(Betta, I, kappa, Y) ;
-
+function [y] = Invest_demand_Const_1(Betta, I, kappa, Y)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+
     if Invest_matrix then
         y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
         y = matrix(y1, -1 , 1)
@@ -1833,6 +1833,7 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y) ;
     else
         y = I - Betta * sum( kappa .* Y' ) ;
     end
+
 endfunction
 
 // Betta calculation function of K cost & pI
@@ -2933,7 +2934,7 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y2 = matrix ( y2, -1, 1);
 
     // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
-    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((ini.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) ;
+    y3 = Other_Transfers - Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) ;
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
