@@ -862,6 +862,7 @@ function y = CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax
 endfunction
 
 /// for [1,sectors] dimensions used for Carbon Cap by sectors - CarbonTax_Diff_IC[1
+
 function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
 
     // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
@@ -1925,6 +1926,10 @@ function M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter);
     // y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter) .* Y' .* (M_ref' ./ Y_ref' ) ).^(1 ./sigma_M)  .*  (pM_ref' ./ pY_ref') .* (pY' ./ pM') );
 
 	M = ( (1 + delta_M_parameter).^(time_since_BY) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M )';
+
+    if Trade_BU <> [] then
+        M(Trade_BU) = Projection.M(Trade_BU);
+    end
 endfunction
 
 
@@ -1965,6 +1970,10 @@ function X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
     pM = abs(pM);
 
     X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X' )
+    
+    if Trade_BU <> [] then
+        X(Trade_BU) = Projection.X(Trade_BU);
+    end
 
 endfunction
 

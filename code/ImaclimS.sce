@@ -57,9 +57,6 @@ exec("Load_file_structure.sce");
 exec ("preambule.sce");
 exec("Dashboard.sce");
 
-if (AGG_type == '') & (Country_ISO == 'ARG') then
-    error("AGG type vide pour l''Argentine");
-end
 
 if Output_files=='True'
     runName = study + "_" + mydate();

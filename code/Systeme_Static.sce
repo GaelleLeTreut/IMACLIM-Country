@@ -347,12 +347,12 @@ if %f
 end
 
 printf("\n\n   count      vBest   info       toc\n");
-while (count<countMax)& (vBest>sensib) //((vBest>sensib)|(count<3))
+while (count<countMax)& ((vBest>sensib)|(count<3))
     count = count + 1;
 
-    //    if (count < 4) then
-    //        Projection.X = val_proj_X * count/3;
-    //    end
+        if (count < 4) then
+            Projection.X = val_proj_X * count/3;
+        end
 
     try
         [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);

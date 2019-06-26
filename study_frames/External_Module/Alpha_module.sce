@@ -3,16 +3,18 @@ Projection.Y = Proj_of("Y");
 
 // Compute projection of IC
 proj_IC = [];
+// TODO : faire un unique cas
 if ScenAgg_IOT then 
     IndSect = Index_SectInit;
 elseif ToAggregate == "True" then
-    IndSect = Index_SectorsTEMP;
+    IndSect = Index_SectInit;
 else
     IndSect = Index_Sectors;
 end
 for var = IndSect'
     proj_IC(:,1+$) = Proj_of(var);
 end
+// TODO : trouver une solution mieux que ça (première colonne ajoutée à 0 ??):
 proj_IC = proj_IC(:,2:$); // because first column added with zeros ?? remove it
 if ToAggregate == "True" then
     for line = 1:nb_SectorsAGG

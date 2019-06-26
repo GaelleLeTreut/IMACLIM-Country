@@ -10,10 +10,12 @@ function proj_of_var = Proj_of(var)
     execstr("IOT_Qtities_time = IOT_Qtities_" + time_step); 
 
     // Read the column whose header is var
+    // TODO : faire un unique cas
     if ScenAgg_IOT then 
         proj_of_var = fill_table(IOT_Qtities_time, IndexRow, IndCol_IOT_Qtities, Index_CommoInit, var);
     elseif ToAggregate == "True" then
-        proj_of_var = fill_table(IOT_Qtities_time, IndRow_IOT_Qtities, IndCol_IOT_Qtities, Index_CommoditiesTEMP, var);
+        // proj_of_var = fill_table(IOT_Qtities_time, IndRow_IOT_Qtities, IndCol_IOT_Qtities, Index_CommoditiesTEMP, var);
+        proj_of_var = fill_table(IOT_Qtities_time, IndRow_IOT_Qtities, IndCol_IOT_Qtities, Index_CommoInit, var);
     elseif ToAggregate == "False" then
         proj_of_var = fill_table(IOT_Qtities_time, IndexRow, IndexCol, Index_Commodities, var);
     else
@@ -28,5 +30,5 @@ function proj_of_var = Proj_of(var)
         end
         proj_of_var = proj_agg;
     end
-    
+
 endfunction
