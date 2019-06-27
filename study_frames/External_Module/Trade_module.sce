@@ -2,8 +2,9 @@
 Projection.Y = Proj_of("Y");
 
 Projection.M = Proj_of("M");
+Projection.X = Proj_of('X');
 val_proj_X = Proj_of("X");
-Projection.X = val_proj_X / 3;
+//Projection.X = val_proj_X / 3;
 
 // parameter forcing
 parameters.delta_X_parameter(Trade_BU) = ((Projection.X(Trade_BU) ./ ((BY.X(Trade_BU)==0) + (BY.X(Trade_BU)<>0) .* BY.X(Trade_BU))) .^ (1/parameters.time_since_BY) - ((Projection.X(Trade_BU)<>0) + (Projection.X(Trade_BU)==0)*0.9))';
