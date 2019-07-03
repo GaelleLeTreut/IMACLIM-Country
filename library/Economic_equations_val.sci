@@ -150,3 +150,114 @@ function G_disposable_income = G_income_Const_1_val(Income_Tax, Other_Direct_Tax
     G_disposable_income = (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
 
 endfunction
+
+/// Corporate Tax (by Corporations)
+function Corporate_Tax = Corporate_Tax_Const_1_val(Corporate_Tax_rate, GOS_byAgent)
+
+    // Corporate Tax ( Corporate_Tax(1:nb_Corporations) )
+    Corporate_Tax = Corporate_Tax_rate .* GOS_byAgent(Indice_Corporations);
+
+endfunction
+
+/// Production Tax (by productive sector)
+function Production_Tax = Production_Tax_Const_1_val(Production_Tax_rate, pY, Y)
+	pY= abs(pY);
+    // Production Tax ( Production_Tax(1:nb_Commodities) )
+    Production_Tax = Production_Tax_rate .* (pY .* Y)';
+
+    //if Y=0 Production_tax_rate =0
+    // y1_1 = (Y'==0).*(Production_Tax_rate);
+    // y1_2 = (Y'<>0).*(Production_Tax - (Production_Tax_rate .* pY' .* Y'));
+    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
+endfunction
+
+/// Labour Tax (by productive sector)
+function Labour_Tax = Labour_Tax_Const_1_val(Labour_Tax_rate, w, lambda, Y)
+
+    // Labour Tax ( Labour_Tax(nb_Sectors) )
+    Labour_Tax = (Labour_Tax_rate .* w .* lambda .* Y');
+
+    // y1_1 = (Y'==0).*(Labour_Tax_rate);
+    // y1_2 = (Y'<>0).*(Labour_Tax - (Labour_Tax_rate .* w .* lambda .* Y'));
+    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
+
+endfunction
+
+/// Energy Tax on intermediate energy consumptions (by energy product-by sector)
+/// Differentiated rates by consumer type.
+function Energy_Tax_IC = Energy_Tax_IC_Const_1_val(Energy_Tax_rate_IC, alpha, Y)
+
+    // Same rate for all sectors
+    // y = Energy_Tax_IC' - Energy_Tax_rate_IC' .* sum( alpha .* repmat(Y', nb_Commodities, 1), "c") ;
+    Energy_Tax_IC = ( Energy_Tax_rate_IC' .* sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") )';
+
+endfunction
+
+/// Energy Tax on final energy consumptions (by energy product-by consumer)
+/// Differentiated rates by consumer type.
+function Energy_Tax_FC = Energy_Tax_FC_Const_1_val(Energy_Tax_rate_FC, C)
+
+    // Same rates for all household classes
+    // Energy_Tax_rate = repmat(Energy_Tax_rate_FC',1, nb_Households);
+    // Energy_Tax_rate = ones(1, nb_Households).*.Energy_Tax_rate_FC';
+
+    // Energy Tax paid by final energy consumers: Energy_Tax_FC (nb_Sectors, nb_Households)
+    Energy_Tax_FC = ( Energy_Tax_rate_FC'.* sum( C , "c" ) )';
+
+
+endfunction
+
+/// Other indirect Tax on both Intermediate consumptions and Final consumptions - same rate-  (by product-sector)
+function OtherIndirTax = OtherIndirTax_Const_1_val(OtherIndirTax_rate, alpha, Y, C, G, I)
+
+    // Same rates for all sectors
+
+    // y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha.*repmat(Y', nb_Commodities, 1),"c")+sum( C,"c")+sum(G,"c")+I) ;
+    OtherIndirTax = ( OtherIndirTax_rate' .* (sum(alpha .*(ones(nb_Commodities, 1).*.Y'),"c")+sum( C,"c")+sum(G,"c")+sum(I, "c")) )';
+
+endfunction
+
+/// Value Added Tax (by product-sector)
+function VA_Tax = VA_Tax_Const_1_val(VA_Tax_rate, pC, C, pG, G, pI, I)
+
+    // Same rate for all items of domestic final demand
+    VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
+
+    //if VA_Tax =0 => VA_Tax_rate=0
+    // y_1 = (VA_Tax' ==0).*VA_Tax_rate';
+    // y_2 = (VA_Tax' <>0).*( VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* I)));
+    // y =(VA_Tax' ==0).*y_1 +  (VA_Tax' <>0).*y_2;
+
+endfunction
+
+/// Carbon Tax on intermediate energy consumptions (by energy product-by sector)
+/// Identical or differentiated rates by consumer type.
+function Carbon_Tax_IC = Carbon_Tax_IC_Const_1_val(Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
+
+    // Tax rates potentially differs across sectors
+    // y1 = Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ) ;
+
+    Carbon_Tax_IC = ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .*(ones(nb_Commodities, 1).*.Y') );
+
+    //if  Emission_Coef_IC = 0 => Carbon_Tax_rate_IC = 0
+    // y1_1 = (Emission_Coef_IC==0).*(Carbon_Tax_rate_IC);
+    // y1_2 =(Emission_Coef_IC<>0).*(Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ));
+
+    // y1 = (Emission_Coef_IC==0).*y1_1 + (Emission_Coef_IC<>0).*y1_2 ;
+
+endfunction
+
+/// Carbon Tax on final energy consumptions (by energy product-by consumer)
+/// Identical or differentiated rates by consumer type.
+function Carbon_Tax_C = Carbon_Tax_C_Const_1_val(Carbon_Tax_rate_C, C, Emission_Coef_C)
+
+    // Tax rates potentially differs across household classes
+    Carbon_Tax_C = ( Carbon_Tax_rate_C .* Emission_Coef_C .* C );
+
+    //if  Emission_Coef_C = 0 => Carbon_Tax_rate_C = 0
+    // y1_1 = (Emission_Coef_C==0).*(Carbon_Tax_rate_C);
+    // y1_2 =(Emission_Coef_C<>0).*(Carbon_Tax_C - ( Carbon_Tax_rate_C .* Emission_Coef_C .* C ));
+
+    // y1 = (Emission_Coef_C==0).*y1_1 + (Emission_Coef_C<>0).*y1_2 ;
+
+endfunction

@@ -99,7 +99,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm()
+function [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm()
     
     NetFinancialDebt = NetFinancialDebt_val();
     
@@ -129,6 +129,15 @@ function [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossO
     Property_income = Property_income_val(interest_rate, NetFinancialDebt);
     H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax);
     Household_savings = H_Savings_Const_1_val(H_disposable_income, Household_saving_rate);
+    Corporate_Tax = Corporate_Tax_Const_1_val(Corporate_Tax_rate, GOS_byAgent);
+    Production_Tax = Production_Tax_Const_1_val(Production_Tax_rate, pY, Y);
+    Labour_Tax = Labour_Tax_Const_1_val(Labour_Tax_rate, w, lambda, Y);
+    Energy_Tax_IC = Energy_Tax_IC_Const_1_val(Energy_Tax_rate_IC, alpha, Y);
+    Energy_Tax_FC = Energy_Tax_FC_Const_1_val(Energy_Tax_rate_FC, C);
+    OtherIndirTax = OtherIndirTax_Const_1_val(OtherIndirTax_rate, alpha, Y, C, G, I);
+    VA_Tax = VA_Tax_Const_1_val(VA_Tax_rate, pC, C, pG, G, pI, I);
+    Carbon_Tax_IC = Carbon_Tax_IC_Const_1_val(Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC);
+    Carbon_Tax_C = Carbon_Tax_C_Const_1_val(Carbon_Tax_rate_C, C, Emission_Coef_C);
     Corp_disposable_income = Corp_income_Const_1_val(GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax);
     Corporations_savings = Corp_savings_Const_1_val(Corp_disposable_income);
     G_disposable_income = G_income_Const_1_val(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect);
@@ -136,6 +145,7 @@ function [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossO
     GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I);
     NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings);
     Consumption_budget = ConsumBudget_Const_1_val(H_disposable_income, Household_saving_rate);
+
     
 
 endfunction
@@ -152,7 +162,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm()
+    [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm()
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -197,16 +207,17 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
 //    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
 
+    // **** H_disposable_income already needs Income_Tax
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
-    Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
-    Production_Tax_Const_1(Production_Tax, Production_Tax_rate, pY, Y)
-    Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y)
-    Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y)
-    Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C)
-    OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
-    VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
-    Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
-    Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
+//    Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
+//    Production_Tax_Const_1(Production_Tax, Production_Tax_rate, pY, Y)
+//    Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y)
+//    Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y)
+//    Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C)
+//    OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
+//    VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
+//    Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
+//    Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
 
     // Retraite/chômage indexé sur les salaires Const_1 ou sur le PIB Const_2 
     Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
@@ -410,7 +421,7 @@ if exists('Deriv_Exogenous')==1
     execstr(Table_Deriv_Exogenous)
 end
 /// Cacul des variables "temp" dans la fonction f_resolution
-[NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm();
+[NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget]= f_resol_interm();
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 /////////////////////////////////////////////////////////////////
