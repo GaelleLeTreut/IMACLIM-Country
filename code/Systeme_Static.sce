@@ -99,7 +99,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm(Deriv_variables)
     pM = pM_price_Const_2(); // check const_1
     M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Const_1(pY, pM, Y, M );
@@ -129,6 +129,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
     Corporations_savings = Corp_savings_Const_1_val(Corp_disposable_income);
     Government_savings = G_savings_Const_1_val(G_disposable_income, G_Consumption_budget);
     GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I);
+    NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings);
 
 endfunction
 
@@ -144,7 +145,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent]= f_resol_interm(Deriv_variables)
+    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -172,10 +173,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    MacroClosure_Const_1(GFCF_byAgent, pI, I)
     // Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
-    H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
-    Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
-    G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
-    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
+//    H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
+//    Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
+//    G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
+//    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
     H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)

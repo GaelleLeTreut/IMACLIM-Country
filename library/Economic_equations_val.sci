@@ -46,6 +46,8 @@ function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
     Property_income(Indice_Government) = - interest_rate(Indice_Government) .* NetFinancialDebt(Indice_Government);
     Property_income(Indice_RestOfWorld) = - (Property_income(Indice_Corporations) + sum(Property_income(Indice_Households)) + Property_income(Indice_Government));
     
+    Property_income = Property_income';
+    
 endfunction
 
 /// Household_savings_constraint_1 : Proportion of disposable income (saving rate)
@@ -82,5 +84,17 @@ function GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensit
     GFCF_byAgent(Indice_Corporations) = sum (pI .* sum(I,"c")) - GFCF_byAgent(Indice_Households) - GFCF_byAgent(Indice_Government);
     
     GFCF_byAgent = GFCF_byAgent';
+    
+endfunction
+
+// NetLending
+function NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings)
+    
+    NetLending(Indice_Households) = (Household_savings - GFCF_byAgent(Indice_Households));
+    NetLending(Indice_Corporations) = (Corporations_savings - GFCF_byAgent(Indice_Corporations));
+    NetLending(Indice_Government) = (Government_savings - GFCF_byAgent(Indice_Government));
+    NetLending(Indice_RestOfWorld) = ( sum(pM .* M) - sum(pX .* X) + Property_income(Indice_RestOfWorld) + Other_Transfers(Indice_RestOfWorld) );
+    
+    NetLending = NetLending';
     
 endfunction
