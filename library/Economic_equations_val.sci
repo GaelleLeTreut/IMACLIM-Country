@@ -320,3 +320,19 @@ function ClimPolCompensbySect = S_ClimCompensat_1_val()
     ClimPolCompensbySect = BY.ClimPolCompensbySect;
 
 endfunction
+
+// No recycling revenues in labour tax
+function Labour_Tax_Cut = RevenueRecycling_1_val()
+
+    // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
+    // Same rebate for all sectors.
+    Labour_Tax_Cut = 0;
+    
+endfunction
+
+// Ex-post labour tax rate
+function Labour_Tax_rate = Labour_Taxe_rate_1_val(LabTaxRate_BeforeCut, Labour_Tax_Cut)
+
+    Labour_Tax_rate = LabTaxRate_BeforeCut - Labour_Tax_Cut * ones(1, nb_Sectors);
+    
+endfunction
