@@ -1,5 +1,5 @@
 /// Household_income_1 
-function H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
+function H_disposable_income = H_Income_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
 
     // Income by sources, redistribution and tax payments
     H_Labour_Income     = NetCompWages_byAgent (Indice_Households) ;
@@ -15,7 +15,7 @@ function H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_by
 endfunction
 
 /// Pensions by household class
-function Pensions = Pensions_Const_1_val(Pension_Benefits, Retired)
+function Pensions = Pensions_1_val(Pension_Benefits, Retired)
 
     // Pension payments accruing to each household class, function of the level pension benefit and the number of pensioners
     Pensions = Pension_Benefits .* Retired  ;
@@ -23,7 +23,7 @@ function Pensions = Pensions_Const_1_val(Pension_Benefits, Retired)
 endfunction
 
 /// Unemployment transfers by household class
-function Unemployment_transfers = Unemploy_Transf_Const_1_val(UnemployBenefits, Unemployed)
+function Unemployment_transfers = Unemploy_Transf_1_val(UnemployBenefits, Unemployed)
 
     // Unemployment payments accruing to each household class, function of the level unemployment benefit and the number of unemployed
     Unemployment_transfers = UnemployBenefits .* Unemployed ;
@@ -31,7 +31,7 @@ function Unemployment_transfers = Unemploy_Transf_Const_1_val(UnemployBenefits, 
 endfunction
 
 /// Other social transfers by household class
-function Other_social_transfers = OtherSoc_Transf_Const_1_val(Other_SocioBenef, Population)
+function Other_social_transfers = OtherSoc_Transf_1_val(Other_SocioBenef, Population)
 
     // Other social transfers payments accruing to each household class, function of the level other social benefits and the number of people
     Other_social_transfers = Other_SocioBenef .* Population ;
@@ -51,7 +51,7 @@ function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
 endfunction
 
 /// Household_savings_constraint_1 : Proportion of disposable income (saving rate)
-function Household_savings = H_Savings_Const_1_val(H_disposable_income, Household_saving_rate)
+function Household_savings = H_Savings_1_val(H_disposable_income, Household_saving_rate)
 
     /// Household savings constraint (Household_savings)
     Household_savings = (H_disposable_income .* Household_saving_rate) ;
@@ -59,14 +59,14 @@ function Household_savings = H_Savings_Const_1_val(H_disposable_income, Househol
 endfunction
 
 /// Corporations_savings_constraint_1: All disposable incomes are savings (used to finance auto-investment or lent: NetLending(Indice_Corporations))
-function Corporations_savings = Corp_savings_Const_1_val(Corp_disposable_income)
+function Corporations_savings = Corp_savings_1_val(Corp_disposable_income)
 
     /// Corporations savings constraint (Corporations_savings)
     Corporations_savings = Corp_disposable_income ;
 		
 endfunction
 
-function Government_savings = G_savings_Const_1_val(G_disposable_income, G_Consumption_budget)
+function Government_savings = G_savings_1_val(G_disposable_income, G_Consumption_budget)
 
     /// Government savings constraint (Government_savings)
     Government_savings = (G_disposable_income - G_Consumption_budget) ;
@@ -112,7 +112,7 @@ function NetFinancialDebt = NetFinancialDebt_val() //time_since_ini, NetLending)
 endfunction
 
 /// Household Total consumption budget
-function Consumption_budget = ConsumBudget_Const_1_val(H_disposable_income, Household_saving_rate)
+function Consumption_budget = ConsumBudget_1_val(H_disposable_income, Household_saving_rate)
 
     /// Source of consumption budget - Share of disposable income (by household class)
     Consumption_budget = H_disposable_income .* (1 - Household_saving_rate);
@@ -120,7 +120,7 @@ function Consumption_budget = ConsumBudget_Const_1_val(H_disposable_income, Hous
 endfunction
 
 /// Corporations_income_1 :
-function Corp_disposable_income = Corp_income_Const_1_val(GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax)
+function Corp_disposable_income = Corp_income_1_val(GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax)
 
     // Income by sources, redistribution and tax payments
     Corp_Non_Labour_Income =  GOS_byAgent (Indice_Corporations);
@@ -134,7 +134,7 @@ function Corp_disposable_income = Corp_income_Const_1_val(GOS_byAgent, Other_Tra
 endfunction
 
 /// Government_income_1 :
-function G_disposable_income = G_income_Const_1_val(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
+function G_disposable_income = G_income_1_val(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
 
     // For one government. Distribution among different government must otherwise be specified.
 
@@ -152,7 +152,7 @@ function G_disposable_income = G_income_Const_1_val(Income_Tax, Other_Direct_Tax
 endfunction
 
 /// Corporate Tax (by Corporations)
-function Corporate_Tax = Corporate_Tax_Const_1_val(Corporate_Tax_rate, GOS_byAgent)
+function Corporate_Tax = Corporate_Tax_1_val(Corporate_Tax_rate, GOS_byAgent)
 
     // Corporate Tax ( Corporate_Tax(1:nb_Corporations) )
     Corporate_Tax = Corporate_Tax_rate .* GOS_byAgent(Indice_Corporations);
@@ -160,7 +160,7 @@ function Corporate_Tax = Corporate_Tax_Const_1_val(Corporate_Tax_rate, GOS_byAge
 endfunction
 
 /// Production Tax (by productive sector)
-function Production_Tax = Production_Tax_Const_1_val(Production_Tax_rate, pY, Y)
+function Production_Tax = Production_Tax_1_val(Production_Tax_rate, pY, Y)
 	pY= abs(pY);
     // Production Tax ( Production_Tax(1:nb_Commodities) )
     Production_Tax = Production_Tax_rate .* (pY .* Y)';
@@ -172,7 +172,7 @@ function Production_Tax = Production_Tax_Const_1_val(Production_Tax_rate, pY, Y)
 endfunction
 
 /// Labour Tax (by productive sector)
-function Labour_Tax = Labour_Tax_Const_1_val(Labour_Tax_rate, w, lambda, Y)
+function Labour_Tax = Labour_Tax_1_val(Labour_Tax_rate, w, lambda, Y)
 
     // Labour Tax ( Labour_Tax(nb_Sectors) )
     Labour_Tax = (Labour_Tax_rate .* w .* lambda .* Y');
@@ -185,7 +185,7 @@ endfunction
 
 /// Energy Tax on intermediate energy consumptions (by energy product-by sector)
 /// Differentiated rates by consumer type.
-function Energy_Tax_IC = Energy_Tax_IC_Const_1_val(Energy_Tax_rate_IC, alpha, Y)
+function Energy_Tax_IC = Energy_Tax_IC_1_val(Energy_Tax_rate_IC, alpha, Y)
 
     // Same rate for all sectors
     // y = Energy_Tax_IC' - Energy_Tax_rate_IC' .* sum( alpha .* repmat(Y', nb_Commodities, 1), "c") ;
@@ -195,7 +195,7 @@ endfunction
 
 /// Energy Tax on final energy consumptions (by energy product-by consumer)
 /// Differentiated rates by consumer type.
-function Energy_Tax_FC = Energy_Tax_FC_Const_1_val(Energy_Tax_rate_FC, C)
+function Energy_Tax_FC = Energy_Tax_FC_1_val(Energy_Tax_rate_FC, C)
 
     // Same rates for all household classes
     // Energy_Tax_rate = repmat(Energy_Tax_rate_FC',1, nb_Households);
@@ -208,7 +208,7 @@ function Energy_Tax_FC = Energy_Tax_FC_Const_1_val(Energy_Tax_rate_FC, C)
 endfunction
 
 /// Other indirect Tax on both Intermediate consumptions and Final consumptions - same rate-  (by product-sector)
-function OtherIndirTax = OtherIndirTax_Const_1_val(OtherIndirTax_rate, alpha, Y, C, G, I)
+function OtherIndirTax = OtherIndirTax_1_val(OtherIndirTax_rate, alpha, Y, C, G, I)
 
     // Same rates for all sectors
 
@@ -218,7 +218,7 @@ function OtherIndirTax = OtherIndirTax_Const_1_val(OtherIndirTax_rate, alpha, Y,
 endfunction
 
 /// Value Added Tax (by product-sector)
-function VA_Tax = VA_Tax_Const_1_val(VA_Tax_rate, pC, C, pG, G, pI, I)
+function VA_Tax = VA_Tax_1_val(VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Same rate for all items of domestic final demand
     VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
@@ -232,7 +232,7 @@ endfunction
 
 /// Carbon Tax on intermediate energy consumptions (by energy product-by sector)
 /// Identical or differentiated rates by consumer type.
-function Carbon_Tax_IC = Carbon_Tax_IC_Const_1_val(Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
+function Carbon_Tax_IC = Carbon_Tax_IC_1_val(Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
 
     // Tax rates potentially differs across sectors
     // y1 = Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ) ;
@@ -249,7 +249,7 @@ endfunction
 
 /// Carbon Tax on final energy consumptions (by energy product-by consumer)
 /// Identical or differentiated rates by consumer type.
-function Carbon_Tax_C = Carbon_Tax_C_Const_1_val(Carbon_Tax_rate_C, C, Emission_Coef_C)
+function Carbon_Tax_C = Carbon_Tax_C_1_val(Carbon_Tax_rate_C, C, Emission_Coef_C)
 
     // Tax rates potentially differs across household classes
     Carbon_Tax_C = ( Carbon_Tax_rate_C .* Emission_Coef_C .* C );
@@ -259,5 +259,30 @@ function Carbon_Tax_C = Carbon_Tax_C_Const_1_val(Carbon_Tax_rate_C, C, Emission_
     // y1_2 =(Emission_Coef_C<>0).*(Carbon_Tax_C - ( Carbon_Tax_rate_C .* Emission_Coef_C .* C ));
 
     // y1 = (Emission_Coef_C==0).*y1_1 + (Emission_Coef_C<>0).*y1_2 ;
+
+endfunction
+
+///	proj: il faut que ça varie comme le PIB pour homothétie
+function Pension_Benefits = Pension_Benefits_2_val(Pension_Benefits_param, GDP)
+
+    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
+    Pension_Benefits = (GDP/BY.GDP) * Pension_Benefits_param;
+
+endfunction
+
+/// Unemployment benefits (by household class)
+function UnemployBenefits = UnemployBenefits_1_val(NetWage_variation, UnemployBenefits_param)
+
+    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
+    UnemployBenefits = NetWage_variation * UnemployBenefits_param;
+
+endfunction
+
+///	proj: il faut que ça varie comme le PIB pour homothétie
+// peut être dimensionner avec l'évolution du nbre de chômeurs
+function Other_SocioBenef = Other_SocioBenef_2_val(Other_SocioBenef_param, GDP, Population)
+
+    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
+    Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param;
 
 endfunction
