@@ -99,7 +99,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,H_disposable_income]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income]= f_resol_interm(Deriv_variables)
     pM = pM_price_Const_2(); // check const_1
     M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Const_1(pY, pM, Y, M );
@@ -123,6 +123,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
     Pensions = Pensions_Const_1_val(Pension_Benefits, Retired);
     Unemployment_transfers = Unemploy_Transf_Const_1_val(UnemployBenefits, Unemployed);
     Other_social_transfers = OtherSoc_Transf_Const_1_val(Other_SocioBenef, Population);
+    Property_income = Property_income_val(interest_rate, NetFinancialDebt);
     H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax);
 
 endfunction
@@ -139,7 +140,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,H_disposable_income]= f_resol_interm(Deriv_variables)
+    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -150,10 +151,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    OtherSoc_Transf_Const_1(Other_social_transfers, Other_SocioBenef, Population)
 
     // const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-    H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-    Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-    G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-    RoW_PropTranf_Const_2(Property_income) 
+//    H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
+//    Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
+//    G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
+//    RoW_PropTranf_Const_2(Property_income) 
 
     H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
     Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)

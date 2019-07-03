@@ -38,4 +38,15 @@ function Other_social_transfers = OtherSoc_Transf_Const_1_val(Other_SocioBenef, 
 
 endfunction
 
+// *************** *
+// Property income *
+// *************** *
 
+function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
+    
+    Property_income(Indice_Households) = - interest_rate(Indice_Households) .* NetFinancialDebt(Indice_Households);
+    Property_income(Indice_Corporations) = - interest_rate(Indice_Corporations) .* NetFinancialDebt(Indice_Corporations);
+    Property_income(Indice_Government) = - interest_rate(Indice_Government) .* NetFinancialDebt(Indice_Government);
+    Property_income(Indice_RestOfWorld) = - (Property_income(Indice_Corporations) + sum(Property_income(Indice_Households)) + Property_income(Indice_Government));
+    
+endfunction

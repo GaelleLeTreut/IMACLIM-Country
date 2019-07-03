@@ -3,7 +3,7 @@ H_disposable_income;1;nb_Households;Var_interm;0;%inf
 Pensions;1;nb_Households;Var_interm;0;%inf
 Unemployment_transfers;1;nb_Households;Var_interm;0;%inf
 Other_social_transfers;1;nb_Households;Var_interm;0;%inf
-Property_income;1;nb_InstitAgents;Var;-%inf;%inf
+Property_income;1;nb_InstitAgents;Var_interm;-%inf;%inf
 Household_savings;1;nb_Households;Var;-%inf;%inf
 Corporations_savings;1;nb_Corporations;Var;0;%inf
 Government_savings;1;nb_Government;Var;-%inf;%inf
