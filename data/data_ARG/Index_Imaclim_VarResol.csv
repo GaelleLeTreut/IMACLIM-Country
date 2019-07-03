@@ -7,7 +7,7 @@ Property_income;1;nb_InstitAgents;Var_interm;-%inf;%inf
 Household_savings;1;nb_Households;Var_interm;-%inf;%inf
 Corporations_savings;1;nb_Corporations;Var_interm;0;%inf
 Government_savings;1;nb_Government;Var_interm;-%inf;%inf
-GFCF_byAgent;1;nb_DomesticAgents;Var;0;%inf
+GFCF_byAgent;1;nb_DomesticAgents;Var_interm;0;%inf
 NetLending;1;nb_InstitAgents;Var;-%inf;%inf
 NetFinancialDebt;1;nb_InstitAgents;Var;-%inf;%inf
 Consumption_budget;1;nb_Households;Var;0;%inf

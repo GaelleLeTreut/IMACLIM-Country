@@ -71,3 +71,16 @@ function Government_savings = G_savings_Const_1_val(G_disposable_income, G_Consu
 
 endfunction
 
+// GFCF_byAgent
+function GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I)
+    
+    /// Household_investment_constraint_1 : Proportion of disposable income ('propensity' to invest)
+    GFCF_byAgent(Indice_Households) = (H_disposable_income .* H_Invest_propensity);
+    /// Government_investment_constraint_2 : Proportion of GDP
+    GFCF_byAgent(Indice_Government) = ini.GFCF_byAgent(Indice_Government)*(GDP/ini.GDP);
+    // Current account closure
+    GFCF_byAgent(Indice_Corporations) = sum (pI .* sum(I,"c")) - GFCF_byAgent(Indice_Households) - GFCF_byAgent(Indice_Government);
+    
+    GFCF_byAgent = GFCF_byAgent';
+    
+endfunction
