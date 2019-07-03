@@ -1,16 +1,16 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-System_Resol;Systeme_ProjHomothetic_FRA
+// System_Resol;Systeme_ProjHomothetic_FRA
 // System_Resol;Systeme_ProjEcopa
-// System_Resol;Systeme_Static
+System_Resol;Systeme_Static_FRA
 // System_Resol;Systeme_Stat_RoW
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
-study;Projection_evolution
-// study;Recursive_RunChoices
+// study;Projection_evolution
+study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-// AGG_type;AGG_SNBC2
+AGG_type;AGG_SNBC2
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
@@ -18,7 +18,7 @@ study;Projection_evolution
 // AGG_type;AGG_Ener2
 // AGG_type;AGG_4Sec
 // AGG_type;AGG_3Sec
-AGG_type;AGG_EnComp
+// AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
@@ -57,8 +57,8 @@ Recycling_Option;LabTax_LumpSumHH
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False
 // TELL if you want to call ""terminate_resolution"";
-//Term_Resol;True
-Term_Resol;False
+Term_Resol;True
+// Term_Resol;False

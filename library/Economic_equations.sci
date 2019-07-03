@@ -329,7 +329,9 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
     y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - NonFinEn_BudgShare_ref .* ( NonFinEn_budget .*. ones(nb_NonEnerSect, 1) ) ;
 
-
+    if isdef('Proj') & Proj.C.apply_proj then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
 
     y = matrix(y1 .* signRuben, -1 , 1) ;
 
@@ -352,6 +354,9 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 	
 	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
+    if isdef('Proj') & Proj.C.apply_proj then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
 endfunction
@@ -1536,39 +1541,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
     kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
     ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
-    
-    
-    // Force some indices for alpha
-    
-    // Defaut setting: forcing volume
-    if ~ isdef('Alpha_BU_Intens')
-        Alpha_BU_Intens = %F;
-    end 
-
-    if Scenario <> "" & ~Alpha_BU_Intens
-        // Force les volumes
-
-        // All sector forced
-        if isdef('Alpha_BU') & Alpha_BU <> []
-            alpha(Alpha_BU,:) = Projection.IC(Alpha_BU,:) ./ (ones(Alpha_BU)' * Y');
-        end
-
-        // Partial sector forced
-        if isdef('Alpha_Part_BU') & Alpha_Part_BU <> []	
-            for elt = 1:size(Alpha_Part_BU,"r")
-                Ind_line = Alpha_Part_BU(elt,1);
-                Ind_col = setdiff(Alpha_Part_BU(elt,2:$),0);
-                Rest_col = setdiff(Indice_Sectors,Ind_col);
-                //forced
-                alpha(Ind_line,Ind_col) = Projection.IC(Ind_line,Ind_col)./(((Y(Ind_col)==0)+(Y(Ind_col)<>0).*Y(Ind_col))');
-                //calculating the rest of the line with ces
-                alpha(Ind_line,Rest_col) = (Theta(Rest_col) ./ Phi(Rest_col)) .* (ones(1,size(Rest_col,"c"))./(1+phi_IC(Ind_line,Rest_col)).^time_since_BY).* ..
-                (ConstrainedShare_IC(Ind_line,Rest_col) .* BY.alpha(Ind_line,Rest_col) + ((aIC(Ind_line,Rest_col) ./ pIC(Ind_line,Rest_col)) .^ (sigma(Rest_col))) .* ..
-                (FPI(Rest_col).^(sigma(Rest_col)/(1 - sigma(Rest_col))))) ;	
-            end
-        end
-        
-    end
 
 endfunction
 
@@ -1798,11 +1770,14 @@ function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
     y4 = y4_1 + y4_2 ;
     y4 =matrix (y4, -1, 1);
 
-
-    y5_1 = (X'==0).*(SpeMarg_rates_X) ;
-    y5_2 = (X'<>0).*(SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
-
-    y5 = y5_1 + y5_2 ;
+    if Country == 'Brasil' then
+        y5 = (SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
+    else
+        y5_1 = (X'==0).*(SpeMarg_rates_X) ;
+        y5_2 = (X'<>0).*(SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
+        y5 = y5_1 + y5_2 ;
+    end
+    
     y5 =matrix (y5, -1, 1);
 
     y =[y1;y2;y3;y4;y5];
@@ -1905,6 +1880,10 @@ function [y] = IC_Const_1(IC, Y, alpha) ;
     // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
     // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
 
+    if isdef('Proj') & Proj.IC.apply_proj then
+        y1 = apply_proj_eq(y1, IC, 'IC');
+    end
+
     y = matrix(y1, -1 , 1);
 endfunction
 
@@ -1927,9 +1906,10 @@ function M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter);
 
 	M = ( (1 + delta_M_parameter).^(time_since_BY) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M )';
 
-    if Trade_BU <> [] then
-        M(Trade_BU) = Projection.M(Trade_BU);
+    if isdef('Proj') & Proj.M.apply_proj then
+        M = apply_proj_val(M, 'M');
     end
+    
 endfunction
 
 
@@ -1971,8 +1951,8 @@ function X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
 
     X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X' )
     
-    if Trade_BU <> [] then
-        X(Trade_BU) = Projection.X(Trade_BU);
+    if isdef('Proj') & Proj.X.apply_proj then
+        X = apply_proj_val(X, 'X');
     end
 
 endfunction

@@ -172,7 +172,7 @@ for time_step=1:Nb_Iter
 
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
-        exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
+        exec(STUDY + "Macro_Framework.sce");
     end
 
     // Loading other study changes (specific feature)

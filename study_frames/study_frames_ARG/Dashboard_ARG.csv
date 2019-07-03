@@ -37,7 +37,7 @@ Scenario;NDC
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False
 Recycling_Option;
 Term_Resol;False
