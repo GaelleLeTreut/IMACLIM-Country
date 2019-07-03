@@ -99,7 +99,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings]= f_resol_interm(Deriv_variables)
     pM = pM_price_Const_2(); // check const_1
     M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Const_1(pY, pM, Y, M );
@@ -125,6 +125,9 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
     Other_social_transfers = OtherSoc_Transf_Const_1_val(Other_SocioBenef, Population);
     Property_income = Property_income_val(interest_rate, NetFinancialDebt);
     H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax);
+    Household_savings = H_Savings_Const_1_val(H_disposable_income, Household_saving_rate);
+    Corporations_savings = Corp_savings_Const_1_val(Corp_disposable_income);
+    Government_savings = G_savings_Const_1_val(G_disposable_income, G_Consumption_budget);
 
 endfunction
 
@@ -140,7 +143,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income]= f_resol_interm(Deriv_variables)
+    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -156,14 +159,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
 //    RoW_PropTranf_Const_2(Property_income) 
 
-    H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
-    Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
-    G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
+//    H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
+//    Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
+//    G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
 
     // Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier 
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity) // H_Investment_Const_2(GFCF_byAgent,pC,C)
     // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
-    // Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
     // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB 
     G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
     MacroClosure_Const_1(GFCF_byAgent, pI, I)

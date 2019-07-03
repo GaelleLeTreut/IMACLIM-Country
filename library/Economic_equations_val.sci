@@ -1,4 +1,4 @@
-
+/// Household_income_1 
 function H_disposable_income = H_Income_Const_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax) ;
 
     // Income by sources, redistribution and tax payments
@@ -38,10 +38,7 @@ function Other_social_transfers = OtherSoc_Transf_Const_1_val(Other_SocioBenef, 
 
 endfunction
 
-// *************** *
-// Property income *
-// *************** *
-
+// Property income
 function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
     
     Property_income(Indice_Households) = - interest_rate(Indice_Households) .* NetFinancialDebt(Indice_Households);
@@ -50,3 +47,27 @@ function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
     Property_income(Indice_RestOfWorld) = - (Property_income(Indice_Corporations) + sum(Property_income(Indice_Households)) + Property_income(Indice_Government));
     
 endfunction
+
+/// Household_savings_constraint_1 : Proportion of disposable income (saving rate)
+function Household_savings = H_Savings_Const_1_val(H_disposable_income, Household_saving_rate) ;
+
+    /// Household savings constraint (Household_savings)
+    Household_savings = (H_disposable_income .* Household_saving_rate) ;
+		
+endfunction
+
+/// Corporations_savings_constraint_1: All disposable incomes are savings (used to finance auto-investment or lent: NetLending(Indice_Corporations))
+function Corporations_savings = Corp_savings_Const_1_val(Corp_disposable_income)
+
+    /// Corporations savings constraint (Corporations_savings)
+    Corporations_savings = Corp_disposable_income ;
+		
+endfunction
+
+function Government_savings = G_savings_Const_1_val(G_disposable_income, G_Consumption_budget) ;
+
+    /// Government savings constraint (Government_savings)
+    Government_savings = (G_disposable_income - G_Consumption_budget) ;
+
+endfunction
+
