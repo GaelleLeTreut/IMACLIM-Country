@@ -98,3 +98,15 @@ function NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporatio
     NetLending = NetLending';
     
 endfunction
+
+// NetFinancialDebt
+function NetFinancialDebt = NetFinancialDebt_val() //time_since_ini, NetLending)
+    
+    NetFinancialDebt(Indice_Households) = BY.NetFinancialDebt(Indice_Households);
+    NetFinancialDebt(Indice_Corporations) = BY.NetFinancialDebt(Indice_Corporations);
+    NetFinancialDebt(Indice_Government) = BY.NetFinancialDebt(Indice_Government);
+    NetFinancialDebt(Indice_RestOfWorld) = BY.NetFinancialDebt(Indice_RestOfWorld);
+    
+    NetFinancialDebt = NetFinancialDebt';
+    
+endfunction

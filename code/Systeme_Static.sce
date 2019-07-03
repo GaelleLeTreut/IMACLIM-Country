@@ -99,7 +99,10 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm(Deriv_variables)
+function [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm()
+    
+    NetFinancialDebt = NetFinancialDebt_val();
+    
     pM = pM_price_Const_2(); // check const_1
     M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Const_1(pY, pM, Y, M );
@@ -145,7 +148,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm(Deriv_variables)
+    [NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm()
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -179,10 +182,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+//    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+//    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+//    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
+//    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
 
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
@@ -402,9 +405,8 @@ if exists('Deriv_Exogenous')==1
     Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
     execstr(Table_Deriv_Exogenous)
 end
-
 /// Cacul des variables "temp" dans la fonction f_resolution
-[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax ]= f_resol_interm(Deriv_variables);
+[NetFinancialDebt,M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax,Pensions,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporations_savings,Government_savings,GFCF_byAgent,NetLending]= f_resol_interm();
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 /////////////////////////////////////////////////////////////////
