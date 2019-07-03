@@ -336,3 +336,27 @@ function Labour_Tax_rate = Labour_Taxe_rate_1_val(LabTaxRate_BeforeCut, Labour_T
     Labour_Tax_rate = LabTaxRate_BeforeCut - Labour_Tax_Cut * ones(1, nb_Sectors);
     
 endfunction
+
+///	proj : utiliser G_ConsumpBudget_Const_2 + G_demand_Const_2
+/// Government Total consumption budget 
+	////- Constant proportion of GDP
+function G_Consumption_budget = G_ConsumpBudget_2_val(GDP)
+
+    /// Public consumption budget - Proportion of GDP
+    G_Consumption_budget = (GDP/BY.GDP) *  BY.G_Consumption_budget;
+    
+endfunction
+
+/// General technical progress
+function Phi =  TechnicProgress_1_val()
+    
+    Phi = ones(1, nb_Sectors);
+
+endfunction
+
+/// General decreasing return
+function Theta =  DecreasingReturn_1_val()
+
+    Theta =  ones(1, nb_Sectors);
+
+endfunction
