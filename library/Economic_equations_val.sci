@@ -286,3 +286,37 @@ function Other_SocioBenef = Other_SocioBenef_2_val(Other_SocioBenef_param, GDP, 
     Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param;
 
 endfunction
+
+/// Carbon tax on productive sectors (intermediate energy consumptions)
+function Carbon_Tax_rate_IC = CTax_rate_IC_1_val(Carbon_Tax_rate, CarbonTax_Diff_IC)
+
+    // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
+    // Unique carbon tax
+    Carbon_Tax_rate_IC = Carbon_Tax_rate * CarbonTax_Diff_IC;
+
+endfunction
+
+/// Carbon tax on households (final energy consumptions)
+function Carbon_Tax_rate_C = CTax_rate_C_1_val(Carbon_Tax_rate, CarbonTax_Diff_C)
+
+    // Matrix of carbon tax rates (final consumption of energy, household classes)
+    // Unique carbon tax
+    Carbon_Tax_rate_C = Carbon_Tax_rate * CarbonTax_Diff_C;
+
+endfunction
+
+/// Transfert to households
+function ClimPolicyCompens = ClimCompensat_1_val()
+    // /// No new direct compensations to households
+
+    ClimPolicyCompens = BY.ClimPolicyCompens;
+
+endfunction
+
+/// Transfert to productive sectors
+function ClimPolCompensbySect = S_ClimCompensat_1_val()
+    
+    /// No new direct compensations to sectors
+    ClimPolCompensbySect = BY.ClimPolCompensbySect;
+
+endfunction
