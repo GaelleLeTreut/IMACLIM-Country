@@ -48,10 +48,10 @@ Transp_margins;1;nb_Commodities;Var_interm;-%inf;%inf
 delta_TradeMargins_rate;1;1;Var;-%inf;%inf
 Trade_margins_rates;1;nb_Commodities;Var_interm;-1;1
 Trade_margins;1;nb_Commodities;Var_interm;-%inf;%inf
-SpeMarg_IC;nb_Sectors;nb_Commodities;Var;-%inf;%inf
-SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
-SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
-SpeMarg_I;1;nb_Commodities;Var;-%inf;%inf
+SpeMarg_IC;nb_Sectors;nb_Commodities;Var_interm;-%inf;%inf
+SpeMarg_C;nb_Households;nb_Commodities;Var_interm;-%inf;%inf
+SpeMarg_X;1;nb_Commodities;Var_interm;-%inf;%inf
+SpeMarg_I;1;nb_Commodities;Var_interm;-%inf;%inf
 I;nb_Commodities;nb_size_I;Var_interm;0;%inf
 pK;1;nb_Sectors;Var_interm;0;%inf
 Y;nb_Sectors;1;Var;0;%inf

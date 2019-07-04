@@ -99,7 +99,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour] = f_resol_interm()
+function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour,SpeMarg_IC,SpeMarg_C,SpeMarg_X,SpeMarg_I] = f_resol_interm()
 
     NetFinancialDebt = NetFinancialDebt_val();
     ClimPolicyCompens = ClimCompensat_1_val();
@@ -176,7 +176,7 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I);
     NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings);
     Consumption_budget = ConsumBudget_1_val(H_disposable_income, Household_saving_rate);
-
+    [SpeMarg_IC, SpeMarg_C, SpeMarg_X, SpeMarg_I] =  SpeMarg_1_val(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X);
 endfunction
 
 // execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
@@ -191,7 +191,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour] = f_resol_interm();
+    [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour,SpeMarg_IC,SpeMarg_C,SpeMarg_X,SpeMarg_I] = f_resol_interm();
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -293,7 +293,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     delta_TradeMarg_rate_eq(Trade_margins);
 
 //    Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
-    SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
+//    SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
 
 //    Invest_demand_Const_1(Betta, I, kappa, Y) 
 //    Capital_Cost_Const_1(pK, pI, I)
@@ -457,7 +457,7 @@ if exists('Deriv_Exogenous')==1
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-[NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour] = f_resol_interm();
+[NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI,pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour,SpeMarg_IC,SpeMarg_C,SpeMarg_X,SpeMarg_I] = f_resol_interm();
 
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
