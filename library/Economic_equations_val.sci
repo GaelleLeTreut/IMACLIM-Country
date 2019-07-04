@@ -556,3 +556,24 @@ function y = delta_TranspMarg_rate_eq(Transp_margins)
     y = sum(Transp_margins);
     
 endfunction
+
+function Trade_margins_rates =  Trade_MargRates_2_val(delta_TradeMargins_rate)
+
+    delta_trade = delta_TradeMargins_rate * BY.Trade_margins_rates;
+    for i = 1:size(BY.Trade_margins_rates,2) 
+        if (BY.Trade_margins_rates >= 0) then
+            Trade_margins_rates(i) = BY.Trade_margins_rates(i);
+        else
+            Trade_margins_rates(i) = delta_trade(i);
+        end
+    end
+
+    Trade_margins_rates = Trade_margins_rates';
+
+endfunction
+
+function y = delta_TradeMarg_rate_eq(Trade_margins)
+    
+    y = sum(Trade_margins);
+    
+endfunction
