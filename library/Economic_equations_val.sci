@@ -535,3 +535,24 @@ function Capital_income = Capital_income_1_val(pK, kappa, Y)
     // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
 
 endfunction
+
+function Transp_margins_rates =  Transp_MargRates_2_val(delta_TranspMargins_rate)
+
+    delta_transp = delta_TranspMargins_rate * BY.Transp_margins_rates;
+    for i = 1:size(BY.Transp_margins_rates,2) 
+        if (BY.Transp_margins_rates >= 0) then
+            Transp_margins_rates(i) = BY.Transp_margins_rates(i);
+        else
+            Transp_margins_rates(i) = delta_transp(i);
+        end
+    end
+
+    Transp_margins_rates = Transp_margins_rates';
+
+endfunction
+
+function y = delta_TranspMarg_rate_eq(Transp_margins)
+    
+    y = sum(Transp_margins);
+    
+endfunction
