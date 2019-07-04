@@ -378,3 +378,58 @@ function Trade_margins =  Trade_margins_1_val(Trade_margins_rates, p, alpha, Y, 
     Trade_margins = Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )';
 
 endfunction
+
+// Entrepreneurs' investment demand equals to an exogenous proportion of fixed capital depreciation
+// Constant composition in goods of capital
+function I = Invest_demand_1_val(Betta, kappa, Y)
+    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+
+    if Invest_matrix then
+        I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+    else
+        I = Betta * sum( kappa .* Y' );
+    end
+
+endfunction
+
+// PAS POUR CALIBRAGE //
+// Capital cost (pK)
+function pK = Capital_Cost_1_val(pI, I)
+
+    // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
+    if Invest_matrix then
+        pK = sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r");
+    else 
+        pK = ( sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) )';
+    end
+    
+
+endfunction
+
+
+// For calibration
+// Total intermediate consumptions in quantities: IC (Sm_index, Sm_index)
+function IC = IC_1_val(Y, alpha)
+
+    // y1 = IC - ( alpha .* repmat(Y', nb_Commodities, 1) ) ;
+
+    IC = ( alpha .* (ones(nb_Commodities, 1).*.Y') ) ;
+
+    //If IC= 0 => alpha = 0
+    // y1_1 = (IC==0).*(alpha) ;
+    // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
+    // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
+
+    if isdef('Proj') & Proj.IC.apply_proj then
+        IC = apply_proj_val(IC, 'IC');
+    end
+
+endfunction
+
+// Total Fixed Capital Consumption in quantities: Capital_consumption (nb_Sectors)
+function Capital_consumption = Capital_Consump_1_val(Y, kappa)
+
+    Capital_consumption = ( kappa .* Y' );
+
+endfunction
