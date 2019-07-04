@@ -19,8 +19,3 @@ end
 exec(STUDY + "Import_Proj_Volume.sce");
 
 exec('Load_Projections.sce');
-
-if isdef('Proj') & find(fieldnames(Proj) == 'X') <> [] then
-    val_proj_X = Proj.X.val;
-end
-

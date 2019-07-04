@@ -306,13 +306,8 @@ if %f
 end
 
 printf("\n\n   count      vBest   info       toc\n");
-while (count<countMax)& ((vBest>sensib)|(count<2))
+while (count<countMax)& (vBest>sensib)
     count = count + 1;
-
-    // TODO : find a general way
-    if (count < 3) & isdef('Proj') & find(fieldnames(Proj) == 'X') <> [] then
-        Proj.X.val = val_proj_X * count/2;
-    end
 
     try
         [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var),sensibFsolve);
