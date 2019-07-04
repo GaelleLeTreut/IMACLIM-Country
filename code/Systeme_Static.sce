@@ -199,137 +199,30 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
 
-//    H_Income_Const_1(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
-//    Pensions_Const_1(Pensions, Pension_Benefits, Retired)
-//    Unemploy_Transf_Const_1(Unemployment_transfers, UnemployBenefits, Unemployed)
-//    OtherSoc_Transf_Const_1(Other_social_transfers, Other_SocioBenef, Population)
-
-    // const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-//    H_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-//    Corp_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-//    G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt)
-//    RoW_PropTranf_Const_2(Property_income) 
-
-//    H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
-//    Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
-//    G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
-
-    // Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier 
-//    H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity) // H_Investment_Const_2(GFCF_byAgent,pC,C)
-    // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
-    // Contribution à la FBCF du gob : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB 
-//    G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
-//    MacroClosure_Const_1(GFCF_byAgent, pI, I)
-    // Interest_rate_Const_1(interest_rate, delta_interest_rate)
-
-//    H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
-//    Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
-//    G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
-//    RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
-
-    // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-//    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-//    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-//    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-//    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending)
-
-//    ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
-    // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
-    
     // **** CPI -> C -> CPI
-       H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
-    
-//    Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
-//    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
+    H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
 
     // **** H_disposable_income -> Income_Tax -> H_disposable_income
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
-//    Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
-//    Production_Tax_Const_1(Production_Tax, Production_Tax_rate, pY, Y)
-//    Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y)
-//    Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y)
-//    Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C)
-//    OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
-//    VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
-//    Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
-//    Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
-
-    // Retraite/chômage indexé sur les salaires Const_1 ou sur le PIB Const_2 
-//    Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
-//    UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param)
-//    Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
-
-//    CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
-//    CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
-
-    //LUMP SUM : Const_1 for NO Transfert Const_2 for Transfert (delta_LS_H,delta_LS_S) Const 3 for indexation on GDP
-//    ClimCompensat_Const_1(ClimPolicyCompens)
-//    S_ClimCompensat_Const_1(ClimPolCompensbySect)
-
-    // Recycling options : RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
-//    RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) 
-
-//    Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
-
-//    G_ConsumpBudget_Const_2(G_Consumption_budget, G, pG, GDP)
 
     // **** G_Consumption_budget -> G -> VA_Tax -> GDP -> G_consumption_budget
     G_demand_Const_2(G, pG, G_Consumption_budget, BudgetShare_GConsump) // check const_1
 
-    // Contrainte sur l'évolution de la Balance Commerciale : 1-évolution proportionnelle au PIB "réel" (GDP/CPI) / 2-... au PIB nominal
-
-//    TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
-//    DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
-
-//  **** pIC -> pY -> M -> p -> pIC
+    //  **** pIC -> pY -> M -> p -> pIC
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
 
-//    Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate) // check Const_1 (old)
-//    Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
-
     // *** Equation to deduce delta_TranspMargins_rate ***
-    delta_TranspMarg_rate_eq(Transp_margins);
-
-//    Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate) // check Const_1 (old)
+    delta_TranspMarg_rate_eq(Transp_margins)
 
     // *** Equation to deduce delta_TradeMargins_rate ***
-    delta_TradeMarg_rate_eq(Trade_margins);
-
-//    Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
-//    SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
-
-//    Invest_demand_Const_1(Betta, I, kappa, Y) 
-//    Capital_Cost_Const_1(pK, pI, I)
+    delta_TradeMarg_rate_eq(Trade_margins)
 
     // **** IC -> Y -> IC
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
-    
-//    IC_Const_1(IC, Y, alpha)
-//    Capital_Consump_Const_1(Capital_consumption, Y, kappa)
-
-//    pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
-//    Employment_Const_1(Labour, lambda, Y)
 
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 
-    // WAGE CURVE : TO CLEAR !!! 
-    // Mean_wage_Const_? for standard wage curve  // Wage_Const_? for sectorial wage curve
-    
     Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
-    
-    // Wage_Variation_Const_1 for a standard wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-//    Wage_Variation_Const_1(w, NetWage_variation)
-
-//    HH_Unemployment_Const_1(u, u_tot)
-//    HH_Employment_Const_1(Unemployed, u, Labour_force)
-//    Labour_Cost_Const_1(pL, w, Labour_Tax_rate)
-
-//    GDP_Const_1(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
-//    Labour_income_Const_1(Labour_income, Labour, w) 
-//    Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
-//    Capital_income_Const_1(Capital_income, pK, kappa, Y)
-//    DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
-//    IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
 
     ];
     //7076:7087
