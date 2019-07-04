@@ -131,6 +131,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Consump_Units_const_1(Consumption_Units, Consumption_Units_ref)
     // Retired_Const_1(Retired, Retired_ref)
     // Demo_ratio_Const_1(Retired, Retired_ref, Labour_force, Labour_force_ref, Demo_ratio_change)
+
     H_Income_Const_1(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
     Pensions_Const_1(Pensions, Pension_Benefits, Retired)
     Unemploy_Transf_Const_1(Unemployment_transfers, UnemployBenefits, Unemployed)
@@ -340,9 +341,9 @@ while (count<countMax)&(vBest>sensib)
     printf("     %3.0f   %3.2e      %1.0f   %3.1e\n",count,vBest,info,toc()/60);
 end
 
-if Term_Resol == "True"
-    exec(CODE+"terminateResolution.sce");
-end
+
+exec(CODE+"terminateResolution.sce");
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////

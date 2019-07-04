@@ -384,9 +384,9 @@ while (count<countMax)&(vBest>sensib)
     //    printf(norm(Transp_margins_rates)+"	"+sum(Transp_margins)+"	"+delta_TradeMargins_rate+"\n");
 end
 
-if Term_Resol == "True"
+
     exec(CODE+"terminateResolution.sce");
-end
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////

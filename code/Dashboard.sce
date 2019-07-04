@@ -137,6 +137,3 @@ else
     ScenAgg_IOT = %F;
 end
 
-if (size(Term_Resol,"r")<>[1]| size(Term_Resol,"r")<>[1]) 
-    error ( "You have to choose whether or not you want to run terminate resolution file."); 
-end
