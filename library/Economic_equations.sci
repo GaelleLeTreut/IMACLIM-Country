@@ -1687,13 +1687,18 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
 
     // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
 
-    // if IC is equal to zero
-    y1_1 = (IC'==0).*(SpeMarg_rates_IC) ;
-    // if IC is equal to zero
-    // y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1) )');
-    y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
+    if Country == 'Argentina' then
+        y1 = (SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
+    else
+        // if IC is equal to zero
+        y1_1 = (IC'==0).*(SpeMarg_rates_IC) ;
+        // if IC is equal to zero
+        // y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1) )');
+        y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
+        
+        y1 = y1_1 + y1_2 ;
+    end
 
-    y1 = y1_1 + y1_2 ;
     y1 =matrix (y1, -1, 1);
 
 
