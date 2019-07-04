@@ -588,3 +588,30 @@ function [SpeMarg_IC,SpeMarg_C,SpeMarg_X,SpeMarg_I] =  SpeMarg_1_val(SpeMarg_rat
     SpeMarg_I = SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 
 endfunction
+
+// PAS POUR CALIBRAGE !
+// Distribution shares (matrix: in columns, institutional agents : household classes, businesses, government ; and in rows, income sources)
+function Distribution_Shares = DistributShares_1_val(Labour_force, Unemployed)
+
+    // Distribution Matrix for n households classes (hn_index), 1 aggregated government and 1 aggregated business, and 3 different sources of incomes (Labour, Non-labour (gross operating surpluses), and other transfers)
+    Distribution_Shares = zeros (nb_IncomeSources, nb_InstitAgents);
+
+    // Distribution of labour income (endogenous)
+    // Change in labour force by household class
+    Labour_change = ( Labour_force - Unemployed ) ./ ( BY.Labour_force - BY.Unemployed );
+
+    // Share of Labour income accruing to each household class
+    Distribution_Shares(Indice_Labour_Income, Indice_Households) = ( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) ) ./ sum( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) );
+
+    // Share of Labour income accruing to other institutional agents
+    j = [Indice_Corporations, Indice_Government, Indice_RestOfWorld];
+
+    Distribution_Shares(Indice_Labour_Income, j) = BY.Distribution_Shares(Indice_Labour_Income, j);
+
+    // Distribution of non-Labour incomes: Gross operating surplus (exogenous)
+    Distribution_Shares(Indice_Non_Labour_Income, :) = BY.Distribution_Shares(Indice_Non_Labour_Income, :);
+
+    // Distribution of other transfers incomes
+    Distribution_Shares(Indice_Other_Transfers, :) = BY.Distribution_Shares(Indice_Other_Transfers, :);
+
+endfunction
