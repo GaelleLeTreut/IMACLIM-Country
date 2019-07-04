@@ -217,7 +217,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
 //    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
 
-    // **** H_disposable_income already needs Income_Tax
+    // **** H_disposable_income -> Income_Tax -> H_disposable_income
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
 //    Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
 //    Production_Tax_Const_1(Production_Tax, Production_Tax_rate, pY, Y)
@@ -254,6 +254,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 //    TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
 //    DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
 
+//  **** pIC -> pY -> M -> p -> pIC
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
 
     Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, delta_TranspMargins_rate) // check Const_1 (old)
