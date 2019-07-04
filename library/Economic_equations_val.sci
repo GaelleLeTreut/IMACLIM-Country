@@ -433,3 +433,26 @@ function Capital_consumption = Capital_Consump_1_val(Y, kappa)
     Capital_consumption = ( kappa .* Y' );
 
 endfunction
+
+// Export price, after trade, transport and energy margins (no indirect taxation)
+function pX = pX_price_1_val(Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
+
+    //  Trade, transport and specific margins for energy
+    margins_rates = Transp_margins_rates' + Trade_margins_rates' + SpeMarg_rates_X';
+
+    // Export price
+    pX =  p' .* (ones(nb_Commodities, 1) + margins_rates);
+    
+endfunction
+
+// For calibration
+// Employment by productive sector
+function Labour = Employment_1_val(lambda, Y)
+
+    Labour = ( lambda .* Y' );
+    //if Labour=0 => lambda = 0
+    // y1_1 = (Labour==0).*(lambda);
+    // y1_2 = (Labour<>0).*(Labour - ( lambda .* Y') );
+    // y1 = (Labour==0).*y1_1 +(Labour<>0).*y1_2;
+
+endfunction
