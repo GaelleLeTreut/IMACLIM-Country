@@ -615,3 +615,18 @@ function Distribution_Shares = DistributShares_1_val(Labour_force, Unemployed)
     Distribution_Shares(Indice_Other_Transfers, :) = BY.Distribution_Shares(Indice_Other_Transfers, :);
 
 endfunction
+
+// For calibration
+// Distribution of incomes (according to the distribution shares)
+function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_1_val(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    NetCompWages_byAgent = Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    GOS_byAgent = Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus);
+
+    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
+    Other_Transfers = Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP);
+
+endfunction
