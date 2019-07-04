@@ -1,5 +1,5 @@
 
-stacksize(1e8); // max stacksize in new scilab versions
+//stacksize(1e8); // max stacksize in new scilab versions
 lines(0);       // No asking (continue to display) (scilab option)
 
 // MODEL FILE STRUCTURE
