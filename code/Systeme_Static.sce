@@ -199,32 +199,42 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
 
-    // **** CPI -> C -> CPI
+    // C
+    // **** CPI -> C -> CPI ****
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
 
-    // **** H_disposable_income -> Income_Tax -> H_disposable_income
+    // Income_Tax
+    // **** H_disposable_income -> Income_Tax -> H_disposable_income ****
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
 
-    // **** G_Consumption_budget -> G -> VA_Tax -> GDP -> G_consumption_budget
+    // G
+    // **** G_Consumption_budget -> G -> VA_Tax -> GDP -> G_consumption_budget ****
     G_demand_Const_2(G, pG, G_Consumption_budget, BudgetShare_GConsump) // check const_1
 
+    // pY, Y
     //  **** pIC -> pY -> M -> p -> pIC
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
 
-    // *** Equation to deduce delta_TranspMargins_rate ***
+    // delta_TranspMargins_rate
+    // **** Equation to deduce delta_TranspMargins_rate ****
     delta_TranspMarg_rate_eq(Transp_margins)
 
-    // *** Equation to deduce delta_TradeMargins_rate ***
+    // delta_TradeMargins_rate
+    // **** Equation to deduce delta_TradeMargins_rate ****
     delta_TradeMarg_rate_eq(Trade_margins)
 
-    // **** IC -> Y -> IC
+    // Y, C, G
+    // **** IC -> Y -> IC ****
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
 
+    // u_tot, Y
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 
+    // u_tot, Y
     Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
 
     ];
+    
     //7076:7087
     if ~isreal(Constraints_Deriv)
         warning("~isreal(Constraints_Deriv)");
