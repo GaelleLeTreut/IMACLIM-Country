@@ -360,3 +360,21 @@ function Theta =  DecreasingReturn_1_val()
     Theta =  ones(1, nb_Sectors);
 
 endfunction
+
+// Transport margins
+function Transp_margins =  Transp_margins_1_val(Transp_margins_rates, p, alpha, Y, C, G, I, X)
+
+    // y1 = Transp_margins - Transp_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
+
+    Transp_margins = Transp_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )';
+
+endfunction
+
+// Trade margins
+function Trade_margins =  Trade_margins_1_val(Trade_margins_rates, p, alpha, Y, C, G, I, X)
+
+    // y1 = Trade_margins - Trade_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
+
+    Trade_margins = Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )';
+
+endfunction
