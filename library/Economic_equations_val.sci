@@ -456,3 +456,11 @@ function Labour = Employment_1_val(lambda, Y)
     // y1 = (Labour==0).*y1_1 +(Labour<>0).*y1_2;
 
 endfunction
+
+// PAS POUR CALIBRAGE !
+// Net wage by productive sector (w)
+function w = Wage_Variation_1_val(NetWage_variation)
+
+    w = NetWage_variation * BY.w;
+
+endfunction
