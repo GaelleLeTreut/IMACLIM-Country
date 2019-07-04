@@ -464,3 +464,27 @@ function w = Wage_Variation_1_val(NetWage_variation)
     w = NetWage_variation * BY.w;
 
 endfunction
+
+// Unemployment by households class
+function u = HH_Unemployment_1_val(u_tot)
+    
+	u_tot = abs(u_tot);
+    u = ini.u * ( u_tot / ini.u_tot );
+
+endfunction
+
+// Unemployment rate and Number of unemployed by household class
+function Unemployed = HH_Employment_1_val(u, Labour_force)
+    
+	u= abs(u);
+    // Number of unemployed ( Unemployed (nb_Households) )
+    Unemployed = (u .* Labour_force);
+
+endfunction
+
+// Labour cost (pL)
+function pL = Labour_Cost_1_val(w, Labour_Tax_rate)
+
+    pL =  w .* ( ones(1, nb_Sectors) + Labour_Tax_rate );
+
+endfunction

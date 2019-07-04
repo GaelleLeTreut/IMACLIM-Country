@@ -70,9 +70,9 @@ Labour;1;nb_Sectors;Var_interm;0;%inf
 u_tot;1;1;Var;0;1
 NetWage_variation;1;1;Var;0;1
 w;1;nb_Sectors;Var_interm;0;%inf
-u;1;nb_Households;Var;0;1
-Unemployed;1;nb_Households;Var;0;%inf
-pL;1;nb_Sectors;Var;0;%inf
+u;1;nb_Households;Var_interm;0;1
+Unemployed;1;nb_Households;Var_interm;0;%inf
+pL;1;nb_Sectors;Var_interm;0;%inf
 GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf
