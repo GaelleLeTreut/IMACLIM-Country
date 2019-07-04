@@ -488,3 +488,10 @@ function pL = Labour_Cost_1_val(w, Labour_Tax_rate)
     pL =  w .* ( ones(1, nb_Sectors) + Labour_Tax_rate );
 
 endfunction
+
+// Gross domestic product (GDP) -
+function GDP = GDP_1_val(Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
+
+    GDP = (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) - sum(ClimPolCompensbySect) + sum(Labour_Tax) + sum(OtherIndirTax) + sum(VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C));
+
+endfunction
