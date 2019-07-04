@@ -20,7 +20,7 @@ end
 
     mat_path = stripblanks(mat_path)
 
-    //lis les données brutes
+    //lis les donnÃ©es brutes
     [values] = read_csv(mat_path,sep)//,dec,"string",["""",""]);
     //lis le nom des fields    
     header_col = values(1,2:$)
@@ -69,7 +69,8 @@ end
 endfunction
 
 
-//csv2struct_params
+// csv2struct_params
+// Very heavy result
 function [res] = csv2struct_params(fileName,extension)
 
     text = mgetl(fileName);
@@ -81,7 +82,31 @@ function [res] = csv2struct_params(fileName,extension)
 		a=a+' %f'; 
 	end
 	res = msscanf(-1,processedText,a);
-	
+endfunction
+
+function param_table = csv2struct_params_quick(fileName,extension)
+    
+    // Separation used by csv file
+    sep = ';';
+    
+    // remove any space before and after the path
+    path_csv_file = stripblanks(fileName);
+    
+    // load the csv table
+    table = read_csv(path_csv_file, sep);
+    
+    // remove any space before and after the elements of the table
+    table = stripblanks(table);
+    
+    // fill the param table
+    param_table = [];
+    for i = 1:size(table,1)
+        // load only uncommented lines
+        if part(table(i,1),[1,2]) <> '//' then
+            // load the number 'extension' of columns values
+            param_table($+1,1:extension+1) = table(i,1:extension+1);
+        end
+    end
 
 endfunction
 

@@ -41,10 +41,10 @@
 // DEFAULT VALUES OF Parameters//
 
 // All general parameters - not depending on sector aggregation
-table_params_general = csv2struct_params(PARAMS_Country+"params_general.csv",1);
+table_params_general = csv2struct_params_quick(PARAMS_Country+"params_general.csv",1);
 nbFields = size(table_params_general);
 for i = 1:nbFields(1)
-    parameters(table_params_general(i,1)) = table_params_general(i,2);
+    parameters(table_params_general(i,1)) = evstr(table_params_general(i,2));
 end
 
 // Defining nb sectors
@@ -98,14 +98,14 @@ end
 ///////////////////////////////////////////////////////////////
 
 if AGG_type == ""
-    table_params_sect = csv2struct_params(PARAMS_Country+"params_sect"+".csv",nb_SectorsTEMP);
+    table_params_sect = csv2struct_params_quick(PARAMS_Country+"params_sect"+".csv",nb_SectorsTEMP);
 else
-    table_params_sect = csv2struct_params(PARAMS_Country+string(AGG_type)+sep+"params_sect_"+string(AGG_type)+".csv",nb_SectorsTEMP);
+    table_params_sect = csv2struct_params_quick(PARAMS_Country+string(AGG_type)+sep+"params_sect_"+string(AGG_type)+".csv",nb_SectorsTEMP);
 end
 
 nbFields = size(table_params_sect);
 for i = 1:nbFields(1)
-    parameters(table_params_sect(i,1)) = table_params_sect(i,2:nb_SectorsTEMP+1);
+    parameters(table_params_sect(i,1)) = evstr(table_params_sect(i,2:nb_SectorsTEMP+1));
 end
 
 ///////////////////////////////////////////////////////////////
