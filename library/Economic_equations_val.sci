@@ -495,3 +495,43 @@ function GDP = GDP_1_val(Labour_income, GrossOpSurplus, Production_Tax, Labour_T
     GDP = (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) - sum(ClimPolCompensbySect) + sum(Labour_Tax) + sum(OtherIndirTax) + sum(VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C));
 
 endfunction
+
+// For calibration
+// Compensation of workers by sector (net labour incomes)
+function Labour_income = Labour_income_1_val(Labour, w)
+
+    Labour_income = ( Labour .* w );
+
+    // if Labour =0 => w=0
+    // y1_1 = (Labour==0).*(w);
+    // y1_2 = (Labour<>0).*( Labour_income - ( Labour .* w ));
+    // y1 = (Labour==0).*y1_1  + (Labour<>0).*y1_2;
+
+endfunction
+
+// For calibration
+// Net profit margins by sector (Net from the valuation of fixed capital consumption)
+function Profit_margin = Profit_income_1_val(markup_rate, pY, Y)
+
+    Profit_margin = ( markup_rate .* pY' .* Y' );
+
+    // if Profit_margin = 0 => markup_rate = 0
+    // y1_1 = (Profit_margin==0).*markup_rate;
+    // y1_2 = (Profit_margin<>0).* ( Profit_margin - ( markup_rate .* pY' .* Y' ) ) ;
+    // y1 = (Profit_margin==0).*y1_1 + (Profit_margin<>0).*y1_2 ;
+
+endfunction
+
+// For calibration
+// Capital income (valuation of fixed capital consumption)
+function Capital_income = Capital_income_1_val(pK, kappa, Y)
+    
+	pK=abs(pK);
+    Capital_income = ( sum(pK .* kappa .* Y', "r") );
+
+    // if Y =0 => kappa=0
+    // y1_1 = (Y'==0).*(kappa);
+    // y1_2 = (Y'<>0).*(  Capital_income - ( sum(pK .* kappa .* Y', "r") ));
+    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
+
+endfunction
