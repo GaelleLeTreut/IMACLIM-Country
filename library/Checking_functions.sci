@@ -33,11 +33,10 @@ function	[errors] = CheckSystem (Imaclim_variables) ;
 	end
 	
 	if ~isempty(errors)
-		disp("The system is not well defined");
-		disp(errors);
-		exit
-	else
-		disp("The system is well defined");
+        disp(errors);
+		error("The system is not well defined");
+	//else
+		//print(out,"The system is well defined");
 	end
 	
 endfunction

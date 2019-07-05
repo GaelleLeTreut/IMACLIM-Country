@@ -40,10 +40,10 @@ end
 if count==countMax&vBest>sensib
     error("fsolve did NOT converge");
 else
-    disp("equilibrium FOUND with vBest = "+vBest);
+    print(out,"equilibrium FOUND with vBest = " + string(vBest));
 end
 
-disp("Time for solving="+toc()+"seconds");
+print(out,"Time for solving=" + string(toc()) + "seconds");
 
 if Output_files=='True'
     driver("PDF");

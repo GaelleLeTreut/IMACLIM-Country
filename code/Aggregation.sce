@@ -33,8 +33,8 @@
 /////////// Agregation file : aggregation of sectors (only)
 //////////////////////////////////////////////////////////////////////
 
-disp("Substep 2: AGGREGATION of DATA...")
-//disp("IMACLIM-S is running at aggregated level: "+AGG_type)
+print(out,"Substep 2: AGGREGATION of DATA...")
+//print(out,"IMACLIM-S is running at aggregated level: "+AGG_type)
 
 /// A REPRENDRE SI AGREGATION DIFFERENTES ENTRE SECTEUR ET COMMODITIES.... AGGREGATION SYMETRIQUE EN LIGNE ET COLONNE
 
@@ -333,7 +333,7 @@ initial_valueAGG.tot_ressources_val = initial_valueAGG.tot_IC_row_val + tot_OthP
 // Ressources and uses balance
 initial_valueAGG.ERE_balance_val = initial_valueAGG.tot_ressources_val - initial_valueAGG.tot_uses_val' ;
 if abs(initial_valueAGG.ERE_balance_val)>= Err_balance_tol then
-    disp("Warning : unbalanced IOT AGG")
+    print(out,"Warning : unbalanced IOT AGG")
 end
 
 // CHECKING BALANCE OF IMPORTS
@@ -346,7 +346,7 @@ initial_valueAGG.tot_uses_valIMP = sum(initial_valueAGG.IC_valueIMP,"c")+sum(ini
 
 initial_valueAGG.ERE_balance_valIMP =initial_valueAGG.tot_ress_valIMP  - initial_valueAGG.tot_uses_valIMP' ;
 if abs(initial_valueAGG.ERE_balance_valIMP)>= Err_balance_tol then
-    disp('Warning : unbalanced IOT of IMPORTS AGG')
+    print(out,'Warning : unbalanced IOT of IMPORTS AGG')
 end	
 
 
@@ -389,7 +389,7 @@ end
 // Checking balance in quantities
 initial_valueAGG.ERE_balance = initial_valueAGG.tot_IC_col + initial_valueAGG.tot_FC - initial_valueAGG.tot_supply ;
 if abs(initial_valueAGG.ERE_balance)>= Err_balance_tol then
-    disp("Warning : unbalanced quantities table")
+    print(out,"Warning : unbalanced quantities table")
 end
 
 /////////////////

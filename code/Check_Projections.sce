@@ -19,10 +19,10 @@ endfunction
 for var_name = fieldnames(Proj)'
     if Proj(var_name).apply_proj then
         test_proj(var_name);
-        disp('*** ' + var_name + ' has been well projected.');
+        print(out,'*** ' + var_name + ' has been well projected.');
     else
-        disp('*** ' + var_name + ' : not projected.');
+        print(out,'*** ' + var_name + ' : not projected.');
     end
 end
 
-disp("** Projections checked");
+print(out,"** Projections checked");

@@ -241,7 +241,7 @@ initial_value.SpeMarg_FC = [initial_value.SpeMarg_C; initial_value.SpeMarg_G; in
 initial_value.OthPart_IOT = [initial_value.Value_Added;initial_value.M_value;initial_value.Margins;initial_value.SpeMarg;initial_value.Taxes];
 tot_OthPart_IOT = sum (initial_value.OthPart_IOT, "r");
 
-printf("test equilibrium on specific margins after hybridization\n");
+print(out,"test equilibrium on specific margins after hybridization\n");
 for column  = 1:nb_Commodities
     if abs(sum(initial_value.SpeMarg(:,column)))>=Err_balance_tol then
         printf(Index_Commodities(column)+" to balance: "+sum(initial_value.SpeMarg(:,column))+"\n");

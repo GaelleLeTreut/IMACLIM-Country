@@ -48,7 +48,7 @@ if %f
         contrainte_result =  f_resolution (X_Deriv_Var, rubenMat, variableListRuben, structNumRuben , Deriv_variablesRuben , listDeriv_Var, Deriv_calib, Deriv_parameters, Deriv_Var_temp);
         contrainte_result_lin =  f_resolution (X_Deriv_Var*2, rubenMat, variableListRuben, structNumRuben , Deriv_variablesRuben , listDeriv_Var, Deriv_calib, Deriv_parameters, Deriv_Var_temp);
     end
-    disp("elapsed time is "+toc()/60+" mins")
+    print(out,"elapsed time is "+toc()/60+" mins")
     showprofile(f_resolution)
     //showprofile(struct2Variables)
 
@@ -79,8 +79,8 @@ if %t
         //     warning("~isreal(tempRuben)");
         //     if or(imag(tempRuben)<>0)
         //         warning("nb imaginaires")
-        //         disp(find(imag(tempRuben)~=0))
-        //         disp(bounds.name(find(imag(tempRuben)~=0))')
+        //         print(out,find(imag(tempRuben)~=0))
+        //         print(out,bounds.name(find(imag(tempRuben)~=0))')
         //     end
         // end
 

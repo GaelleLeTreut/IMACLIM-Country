@@ -38,14 +38,31 @@
 // test mode
 Test_mode = isdef('TEST_MODE');
 
+// mute mode
+mute_mode = %T;
+
+// defined in the test program
+if Test_mode then
+    mute_mode = testing.mute_mode;
+end
+
+// output of print
+if mute_mode then
+    out = 0;
+    warning('off');
+else
+    out = %io(2);
+    warning('on');
+end
+
 //PREAMBULE
 
-disp("=====IMACLIM-Country Platform========");
+print(out,"=====IMACLIM-Country Platform========");
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
-disp("STEP 0: loading Dashboard ");
+printf("STEP 0: loading Dashboard \n");
 
 exec("Load_file_structure.sce");
 
@@ -72,22 +89,22 @@ if Output_files=='True'
     copyfile(CODE + System_Resol + ".sce", SAVEDIR);
 end
 
-disp(" ======= IMACLIM-"+Country+" is running=============================");
+print(out," ======= IMACLIM-"+Country+" is running=============================");
 
-disp(" ======= for resolving the system: "+System_Resol);
-disp(" ======= using the study file: "+study);
-disp("======= with various class of households: "+H_DISAGG);
-disp("======= at aggregated level: "+AGG_type);
-disp("======= with the resolution mode: "+Resol_Mode);
-disp("======= using various iterations:"+Nb_Iter);
-disp("======= under the scenario nammed:"+Scenario);
-disp("======= under the macro framework number:"+Macro_nb);
-//disp("======= Recycling option of carbon tax:"+Recycling_Option);
+print(out," ======= for resolving the system: "+System_Resol);
+print(out," ======= using the study file: "+study);
+print(out,"======= with various class of households: "+H_DISAGG);
+print(out,"======= at aggregated level: "+AGG_type);
+print(out,"======= with the resolution mode: "+Resol_Mode);
+print(out,"======= using various iterations:" + string(Nb_Iter));
+print(out,"======= under the scenario nammed:"+Scenario);
+print(out,"======= under the macro framework number:"+Macro_nb);
+//print(out,"======= Recycling option of carbon tax:"+Recycling_Option);
 if Output_files=='False'
-    disp("======= You choose not to print outputs in external files");
+    print(out,"======= You choose not to print outputs in external files");
 end
 if CO2_footprint=='False'
-    disp("======= You choose not to realise a Carbon footprint analysis");
+    print(out,"======= You choose not to realise a Carbon footprint analysis");
 end
 
 
@@ -95,7 +112,7 @@ end
 //	STEP 1: LOADING DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-disp("STEP 1: DATA...");
+printf("STEP 1: DATA... \n");
 exec("Loading_data.sce");
 
 exec("IOT_DecompImpDom.sce");
@@ -126,21 +143,21 @@ exec("Loading_params.sce");
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 2: CHECKING BENCHMARK DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
-disp("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA...")
+printf("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA... \n")
 exec("Checks_loads.sce");
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 3: CALIBRATION
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-disp("STEP 3: CODE CALIBRATION...");
+printf("STEP 3: CODE CALIBRATION... \n");
 exec("Check_CalibSyst.sce");
 exec("Calibration.sce");
 
 ////////////////////////////////////////////////////////////
 // 	STEP 4: INPUT OUTPUT ANALYSIS BY
 ////////////////////////////////////////////////////////////
-disp("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR");
+printf("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR \n");
 if CO2_footprint =="True"
     exec(CODE+"IOA_BY.sce");
 end
@@ -150,7 +167,7 @@ end
 // 	STEP 5: RESOLUTION - EQUILIBRIUM
 ////////////////////////////////////////////////////////////
 
-disp("STEP 5: RESOLUTION AND EQUILIBRIUM...");
+printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
@@ -188,7 +205,7 @@ for time_step=1:Nb_Iter
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
     if Output_files=='True'
-        disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
+        print(out,"STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
         exec(CODE+"outputs.sce");
         if time_step == 1
             BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
@@ -206,7 +223,7 @@ for time_step=1:Nb_Iter
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
     ////////////////////////////////////////////////////////////
     if CO2_footprint == 'True'
-        disp("STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
+        print(out,"STEP 7: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS...");
         exec(CODE+"IOA_Run.sce");
     end
 
@@ -216,7 +233,7 @@ for time_step=1:Nb_Iter
     if Nb_Iter <> 1
         exec(CODE+"Variable_Storage.sce");
     else
-        disp("Variable Storage not executed for the Nb_Iter = "+Nb_Iter)
+        print(out,"Variable Storage not executed for the Nb_Iter = " + string(Nb_Iter));
     end
 
 

@@ -6,7 +6,7 @@ TEST_MODE = %T;
 
 // Parameters of the tests
 testing.countMax = 2;
-testing.mute_mode = %F;
+testing.mute_mode = %T;
 
 // enable or disable the mute mode
 if testing.mute_mode then

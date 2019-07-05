@@ -1,6 +1,6 @@
-//////  Copyright or © or Copr. Ecole des Ponts ParisTech / CNRS 2018
-//////  Main Contributor (2017) : Gaëlle Le Treut / letreut[at]centre-cired.fr
-//////  Contributors : Emmanuel Combet, Ruben Bibas, Julien Lefèvre
+//////  Copyright or Â© or Copr. Ecole des Ponts ParisTech / CNRS 2018
+//////  Main Contributor (2017) : GaÃ«lle Le Treut / letreut[at]centre-cired.fr
+//////  Contributors : Emmanuel Combet, Ruben Bibas, Julien LefÃ¨vre
 //////  
 //////  
 //////  This software is a computer program whose purpose is to centralise all  
@@ -37,7 +37,7 @@
 /////////// Decomposition of IOT_value into domestic and imports IOT_value
 //////////////////////////////////////////////////////////////////////
 
-// il faut l'exécuter avant l'agrégation, et recalculer les nouvelles tables agrégés dans le fichier agrégation
+// il faut l'exÃ©cuter avant l'agrÃ©gation, et recalculer les nouvelles tables agrÃ©gÃ©s dans le fichier agrÃ©gation
 	
 // Calculation of IC_valueIMP et FC_valueIMP (tables of imports) : multiplication of IC_value and FC_value by respectively IC_Import_rate and FC_Import_rate
 //IC_valueDOM et FC_valueDOM are then deduced 
@@ -65,7 +65,7 @@
 	initial_value.MarginsIMP = initial_value.Margins.* repmat((initial_value.M_value ./ (initial_value.M_value + initial_value.Y_value)),nb_Margins,1); 
 	initial_value.MarginsDOM = initial_value.Margins - initial_value.MarginsIMP;
 
-	// Calculation of imports spécific margins
+	// Calculation of imports spÃ©cific margins
 	// initial_value.SpeMarg_IC_IMP = initial_value.SpeMarg_IC.*initial_value.IC_Import_rate';
 	// initial_value.SpeMarg_IC_DOM = initial_value.SpeMarg_IC - initial_value.SpeMarg_IC_IMP;
 	
@@ -154,6 +154,6 @@ end
 	
 	initial_value.ERE_balance_valIMP =initial_value.tot_ress_valIMP - initial_value.tot_uses_valIMP' ;
     if abs(initial_value.ERE_balance_valIMP)>= Err_balance_tol then
-        disp('Warning : unbalanced IOT of IMPORTS')
+        print(out,'Warning : unbalanced IOT of IMPORTS')
     end
 	

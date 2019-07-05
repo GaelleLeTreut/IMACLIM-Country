@@ -1,5 +1,5 @@
 ////	Investment desegregation into a square matrix
-disp("Substep 2: DISAGGREGATION of Investment into a square matrix...")
+print(out,"Substep 2: DISAGGREGATION of Investment into a square matrix...")
 
 // load file
 I_ratio_str = read_csv(DATA_Country+"Invest_Desag.csv",";");

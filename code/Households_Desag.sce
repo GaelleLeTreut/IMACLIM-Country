@@ -37,8 +37,8 @@
 ////	Households desegregation
 
 
-disp("Substep 1: DISAGGREGATION of HOUSEHOLDS...")
-// disp("IMACLIM-S is running with various class of households: "+H_DISAGG)
+print(out,"Substep 1: DISAGGREGATION of HOUSEHOLDS...")
+// print(out,"IMACLIM-S is running with various class of households: "+H_DISAGG)
 
 //////////////////////////////////////////////////////////////////
 // READ CSV FILES
@@ -135,7 +135,7 @@ for elt = 2:evstr("size(DataAccount_rate_"+H_DISAGG+",1)")
     ValueName 	= evstr("DataAccount_rate_"+H_DISAGG+"(elt, 1)") ;
     Location 	= find( ValueName == Index_EconData(:, 2) ) ;
     if	isempty(Location)
-        disp("DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
+        print(out,"DataAccount_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
     else
         LocationIndex(elt-1)	= Location ;
         ValueNamesDISAG(elt-1) = ValueName ; 
@@ -275,7 +275,7 @@ for elt = 2:evstr("size(IOT_rate_"+H_DISAGG+",1)")
     Location 	= find( "Row" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - 1 ;
 
     if	isempty(Location)
-        disp("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
+        print(out,"IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
     else		
         LocationIndex(elt-1)	= Location ;
         ValueNamesDISAG(elt-1) 	= ValueName ; 
@@ -335,7 +335,7 @@ for elt = 2:evstr("size(IOT_rate_"+H_DISAGG+",1)")
     Location 	= find( "Column" == Index_IOTvalue(:,1) & ValueName == Index_IOTvalue(:,2) ) - members("Row", Index_IOTvalue) - 1 ;
 
     if	isempty(Location)
-        disp("IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
+        print(out,"IOT_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in IOT");
     else		
         LocationIndex2(elt-1)	= Location ;
         ValueNamesDISAG(elt-1) 	= ValueName ; 
@@ -401,7 +401,7 @@ for elt = 2:evstr("size(Demography_rate_"+H_DISAGG+",1)")
     ValueName 	= evstr("Demography_rate_"+H_DISAGG+"(elt, 1)") ;
     Location 	= find( ValueName == Demography(:, 1) ) ;
     if	isempty(Location)
-        disp("Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
+        print(out,"Demography_rate_"+H_DISAGG+".csv does not correspond to Disaggregation type: "+ValueName+" does not appear in DataAccountTable");
     else
         LocationIndex(elt-1)	= Location ;
         ValueNamesDISAG(elt-1) = ValueName ; 

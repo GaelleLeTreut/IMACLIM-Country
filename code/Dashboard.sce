@@ -57,7 +57,7 @@ for elt=1:size(listStudyCSVfiles)
     matStr = read_csv(STUDY_Country+listStudyCSVfiles(elt),";");
     varname = strsubst(listStudyCSVfiles(elt),".csv","");
     if isdef(varname)
-        disp(varname)
+        print(out,varname)
         error(" is already defined. please choose a sufix ")
     end
     execstr(varname +"=matStr;");

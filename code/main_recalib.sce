@@ -4,12 +4,12 @@ clear
 // main executable script
 //PREAMBULE
 
-disp("=====IMACLIM-Country Platform========");
+print(out,"=====IMACLIM-Country Platform========");
  
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
-disp("STEP 0: loading Dashboard ");
+print(out,"STEP 0: loading Dashboard ");
 exec("preambule.sce");
 exec("Dashboard.sce");
 
@@ -34,7 +34,7 @@ end
 //	STEP 1: LOADING DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-disp("STEP 1: DATA...");
+print(out,"STEP 1: DATA...");
 exec("Loading_data.sce");
 
 exec("IOT_DecompImpDom.sce");
@@ -57,20 +57,20 @@ exec("Loading_params.sce");
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 2: CHECKING BENCHMARK DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
-disp("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA...")
+print(out,"STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA...")
 exec("Checks_loads.sce");
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 3: CALIBRATION
 /////////////////////////////////////////////////////////////////////////////////////////////
-disp("STEP 3: CODE CALIBRATION...");
+print(out,"STEP 3: CODE CALIBRATION...");
 exec("Check_CalibSyst.sce");
 exec("Calibration.sce");
 
 ////////////////////////////////////////////////////////////
 // 	STEP 4: RESOLUTION - EQUILIBRIUM 2016
 ////////////////////////////////////////////////////////////
-disp("STEP 4: RESOLUTION AND EQUILIBRIUM 2016");
+print(out,"STEP 4: RESOLUTION AND EQUILIBRIUM 2016");
 
 // Loop initialisation for various time step calculation
 time_step=1;
@@ -133,7 +133,7 @@ if Optimum_1 == "True"
 	mkdir(SAVEDIR_OPT);
 	csvWrite(scal_opt_1,SAVEDIR_OPT+"scal_opt_1.csv", ';');
 
-	disp("abort because of you choose to run an optimisation")
+	print(out,"abort because of you choose to run an optimisation")
 	abort
 	scal = scal_opt_1;
 end
@@ -146,9 +146,9 @@ end
 ////////////////////////////////////////////////////////////
 // 	STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016
 ////////////////////////////////////////////////////////////
-disp("STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
+print(out,"STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
 if Output_files=='True'
-	disp("STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
+	print(out,"STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
 	exec(CODE+"outputs.sce");
 	if time_step == 1
 		BY = ini; // Carbon_Tax absent de BY mais pas de ini et nécessaire pour outputs_indic.sce
@@ -170,7 +170,7 @@ exec(CODE+"Variable_Storage.sce");
 ////////////////////////////////////////////////////////////
 // 	STEP 8: Data actualisation for 2018 (reference)
 ////////////////////////////////////////////////////////////
-disp("STEP 8: Data actualisation for 2018 (reference)");
+print(out,"STEP 8: Data actualisation for 2018 (reference)");
 time_step = 2;
 
 // Dashboard elements
@@ -208,7 +208,7 @@ if Test_recalib_1 == "True"
 	for elt=1:size(list_calib)
 		execstr("test_BY = calib."+ list_calib(elt) + "- data_1."+ list_calib(elt)+";");
 		if norm(test_BY)>%eps
-			disp(list_calib(elt))
+			print(out,list_calib(elt))
 			norm(test_BY)
 			pause	
 			// les différences sont normales : tout n'est pas recalculé dans le système.. d'où le besoin de recalibrer
@@ -222,7 +222,7 @@ end
 ////////////////////////////////////////////////////////////
 // 	STEP 9: RESOLUTION - EQUILIBRIUM 2018
 ////////////////////////////////////////////////////////////
-disp("STEP 9: RESOLUTION AND EQUILIBRIUM 2018");
+print(out,"STEP 9: RESOLUTION AND EQUILIBRIUM 2018");
 // Creation of a new output subdirectory for each time step in case of several time steps calculation
 if Nb_Iter<>1
 	if Output_files=='True'
@@ -279,7 +279,7 @@ if Optimum_2 == "True"
 	mkdir(SAVEDIR_OPT);
 	csvWrite(scal_opt_2,SAVEDIR_OPT+"scal_opt_2.csv", ';');
 
-	disp("abort because of you choose to run an optimisation")
+	print(out,"abort because of you choose to run an optimisation")
 	abort
 	scal = scal_opt_2;
 end
@@ -295,7 +295,7 @@ end
 ////////////////////////////////////////////////////////////
 // 	STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2018
 ////////////////////////////////////////////////////////////
-disp("STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2019");
+print(out,"STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2019");
 if Output_files=='True'
 	exec(CODE+"outputs.sce");
 	exec(CODE+"outputs_indic.sce");
@@ -312,7 +312,7 @@ exec(CODE+"Variable_Storage.sce");
 ////////////////////////////////////////////////////////////
 // 	STEP 11: Static comparative based on 2018 reference
 ////////////////////////////////////////////////////////////
-disp("STEP 11: Static comparative based on 2018 reference");
+print(out,"STEP 11: Static comparative based on 2018 reference");
 time_step = 3; // avant la boucle 
 
 // Dashboard elements
@@ -353,7 +353,7 @@ warning("la recalibration ne fonctionne que si output_files = True")
 Test_recalib_2 = "False";
 if Test_recalib_2 == "True"
 	for elt=1:size(list_calib)
-		disp(list_calib(elt))
+		print(out,list_calib(elt))
 		execstr("test_BY = calib."+ list_calib(elt) + "- data_2."+ list_calib(elt)+";");
 		test_BY
 		execstr("test_current = calib."+ list_calib(elt) + "- "+ list_calib(elt)+";");
@@ -379,7 +379,7 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 								"CoefW"+string(Loop_elements.Coef_real_wage(CoefW_elt)) + "_" + .. 
 								"SigTrade"+string(Loop_elements.sigma_Trade_coef(SigTrade_elt));
 
-				disp("STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
+				print(out,"STEP 11-"+string(time_step-2)+" : "+ Current_Simu);
 
 				parameters.Carbon_Tax_rate = Loop_elements.Carbon_Tax_rate(CTax_elt);
 				parameters.sigma_omegaU = Loop_elements.sigma_omegaU(sigW_elt);

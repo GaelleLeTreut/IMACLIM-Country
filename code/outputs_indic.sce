@@ -888,7 +888,7 @@ end
 
 
 disp "===== MAIN MACRO OUTPUT =============================="
-disp(OutputTable.MacroT);
+print(out,OutputTable.MacroT);
 
 
 

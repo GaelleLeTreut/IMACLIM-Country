@@ -42,7 +42,7 @@
 ////           It also defines  the *USER CHOICE*  ETUDE                        /////
 /////////////////////////////////////////////////////////////////////////////////////
 
-disp( "=====PREAMBLE========");
+print(out, "=====PREAMBLE========");
 
 getd(LIB); // Charge toutes les fonctions dans LIB
 mkdir(OUTPUT);
@@ -76,7 +76,7 @@ for elt=1:size(listStudyCSVfiles)
     matStr = read_csv(STUDY+listStudyCSVfiles(elt),";");
     varname = strsubst(listStudyCSVfiles(elt),".csv","");
     if isdef(varname)
-        disp(varname)
+        print(out,varname)
         error(" is already defined. please choose a sufix ")
     end
     execstr(varname +"=matStr;");

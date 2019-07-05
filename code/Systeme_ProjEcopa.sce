@@ -132,6 +132,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Retired_Const_1(Retired, Retired_ref)
     // Demo_ratio_Const_1(Retired, Retired_ref, Labour_force, Labour_force_ref, Demo_ratio_change)
 
+
     H_Income_Const_1(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
     Pensions_Const_1(Pensions, Pension_Benefits, Retired)
     Unemploy_Transf_Const_1(Unemployment_transfers, UnemployBenefits, Unemployed)
@@ -242,8 +243,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
         if or(imag(Constraints_Deriv)<>0)
             warning("nb imaginaires")
             // Constraints_Deriv = abs(Constraints_Deriv) * 1e5;
-            disp(find(imag(Constraints_Deriv)~=0))
-            disp(bounds.name(find(imag(Constraints_Deriv)~=0))')
+            print(out,find(imag(Constraints_Deriv)~=0))
+            print(out,bounds.name(find(imag(Constraints_Deriv)~=0))')
             pause
         else
             Constraints_Deriv = real(Constraints_Deriv);
@@ -283,7 +284,7 @@ if %f
 end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
-    disp("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
+    print(out,"X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
     error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarProHom.csv")
 end
 
@@ -328,7 +329,7 @@ while (count<countMax)&(vBest>sensib)
 
     catch
         [str,n,line,func]=lasterror(%f);
-        disp("Error "+n+" with fsolve: "+str);
+        print(out,"Error "+n+" with fsolve: "+str);
         pause
     end
 

@@ -131,7 +131,7 @@ while (count<countMax)&(vBest>sensib)
 
     catch
         [str,n,line,func]=lasterror(%f);
-        disp("Error "+n+" with fsolve: "+str);
+        print(out,"Error "+n+" with fsolve: "+str);
         pause
     end
 
@@ -164,10 +164,10 @@ d.tot_uses_valIMP = sum(d.IC_valueIMP,"c")+sum(d.FC_valueIMP,"c");
 
 d.ERE_M_value =d.tot_ress_valIMP - d.tot_uses_valIMP' ;
 if norm(d.ERE_M_value)>= Err_balance_tol then
-    disp("Warning : unbalanced IOT of IMPORTS for sectors")
+    print(out,"Warning : unbalanced IOT of IMPORTS for sectors")
     for elt=1:nb_Sectors
         if abs(d.ERE_M_value(elt))>= Err_balance_tol then		
-            disp(Index_Sectors(elt)+": "+string(d.ERE_M_value(elt)))
+            print(out,Index_Sectors(elt)+": "+string(d.ERE_M_value(elt)))
         end
     end
 end

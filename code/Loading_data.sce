@@ -277,7 +277,7 @@ initial_value.tot_ressources_val = initial_value.tot_IC_row_val + tot_OthPart_IO
 initial_value.ERE_balance_val = initial_value.tot_ressources_val - initial_value.tot_uses_val';
 // initial_value.ERE_balance_val = round_decimal(initial_value.ERE_balance_val,10^-2) ;
 if abs(initial_value.ERE_balance_val)>= Err_balance_tol then
-    disp("Warning : unbalanced IOT")
+    print(out,"Warning : unbalanced IOT")
 end
 
 // Error en M_value if M<>0 , if not, error in X
@@ -301,7 +301,7 @@ initial_value.tot_ressources_val = initial_value.tot_IC_row_val + tot_OthPart_IO
 // Ressources and uses balance
 initial_value.ERE_balance_val = initial_value.tot_ressources_val - initial_value.tot_uses_val' ;
 if abs(initial_value.ERE_balance_val)>= Err_balance_tol then
-    disp("Warning : unbalanced IOT")
+    print(out,"Warning : unbalanced IOT")
 end
 
 
@@ -338,7 +338,7 @@ initial_value.tot_supply = sum (initial_value.M+initial_value.Y, "c");
 // Checking balance in quantities
 initial_value.ERE_balance = initial_value.tot_IC_col + initial_value.tot_FC - initial_value.tot_supply ;
 if abs(initial_value.ERE_balance)>= Err_balance_tol then
-    disp("Warning : unbalanced quantities table")
+    print(out,"Warning : unbalanced quantities table")
 end
 
 
@@ -354,7 +354,7 @@ initial_value.tot_FC = sum(initial_value.FC,"c");
 // New check ressources and uses balances
 initial_value.ERE_balance = initial_value.tot_IC_col + initial_value.tot_FC - initial_value.tot_supply ;
 if abs(initial_value.ERE_balance)>= Err_balance_tol then
-    disp("Warning : unbalanced quantities table")
+    print(out,"Warning : unbalanced quantities table")
 end
 
 
@@ -590,7 +590,7 @@ if Country=="France" then
             matStr = read_csv(DATA_Country+'Data_RoW'+sep+listCSVfiles(elt),';');
             varname = strsubst(listCSVfiles(elt),".csv","");
             if isdef(varname)
-                disp(varname)
+                print(out,varname)
                 error(' is already define. please choose a sufix ')
             end
             execstr(varname +'=matStr;');
@@ -600,7 +600,7 @@ if Country=="France" then
             matStr =evstr(matStr);
             varname = strsubst(listCSVfiles(elt),".csv","");
             if isdef(varname)
-                disp(varname)
+                print(out,varname)
                 error(' is already define. please choose a sufix ')
             end
             execstr(varname +'=matStr;');
