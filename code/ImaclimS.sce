@@ -205,7 +205,7 @@ for time_step=1:Nb_Iter
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
     if Output_files=='True'
-        print(out,"STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
+        printf("STEP 6: RECORDING THE OUTPUTS... \n");
         exec(CODE+"outputs.sce");
         if time_step == 1
             BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
@@ -243,3 +243,5 @@ end // Loop ending for for various time step calculation
 if Output_files=='True'
     diary(0)
 end
+
+printf('Done :) \n');

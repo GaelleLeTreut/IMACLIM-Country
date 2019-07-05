@@ -887,7 +887,7 @@ if (d.pX ./ BY.pX ) <> 1
 end
 
 
-disp "===== MAIN MACRO OUTPUT =============================="
+print(out,"===== MAIN MACRO OUTPUT ==============================");
 print(out,OutputTable.MacroT);
 
 

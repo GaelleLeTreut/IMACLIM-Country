@@ -33,11 +33,11 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
-printf("===============================================\n");
-printf("===== OUTPUTS =================================\n");
-printf("===============================================\n");
+print(out,"===============================================\n");
+print(out,"===== OUTPUTS =================================\n");
+print(out,"===============================================\n");
 
-// printf("\n ====== Changes in this study ==================");
+// print(out,"\n ====== Changes in this study ==================");
 // exec(STUDY+study+".sce")
 
 
@@ -127,7 +127,7 @@ param_table_sec($,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(phi_L);
 
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\beta_{i_h}$"];
-param_table_sec($-(nb_Households-1):$,2) = [""]
+param_table_sec($-(nb_Households-1):$,2) = [""];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(ConstrainedShare_C');
 
@@ -159,7 +159,7 @@ param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(delta_X_parameter);
 
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\sigma_{CP_i}$"];
-param_table_sec($-(nb_Households-1):$,2) = [""]
+param_table_sec($-(nb_Households-1):$,2) = [""];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(sigma_pC');
 
@@ -212,19 +212,19 @@ param_table_sec($,4) = string(sum(Retired));
 csvWrite(param_table_sec,SAVEDIR+"param_table_sec_"+time_step+".csv", ';');
 
 
-disp "== Households consumption variation ==========="
+print(out,"== Households consumption variation ===========");
 print(out,[ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum(C,"c") sum(round(100*(divide(C,ini.C,%nan)-1)),"c")]]);
 
 
 if  Country<>"Brasil" then
-    disp "===== Households =============================="
+    print(out,"===== Households ==============================");
     print(out,[
     "Items"                "Initial Value"                 "Run";
     "H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
     "Other_Direct_Tax"      sum(ini.Other_Direct_Tax,"c")  sum(d.Other_Direct_Tax,"c")
     ]);
 else
-    disp "===== Households =============================="
+    print(out,"===== Households ==============================");
     print(out,[
     "Items"                "Initial Value"                 "Run";
     "H_disposable_income"   sum(ini.H_disposable_income,"c")       sum(d.H_disposable_income,"c");
@@ -232,33 +232,33 @@ else
 end
 
 
-disp "===== Firms ==================================="
+print(out,"===== Firms ===================================");
 print(out,[
 "Items"                     "Initial Value"                 "Run";
 "Corp_disposable_income"    ini.Corp_disposable_income    d.Corp_disposable_income;
 "Corporate_Tax"             ini.Corporate_Tax     d.Corporate_Tax;
 ]);
 
-disp "===== pY    ==================================="
+print(out,"===== pY    ===================================");
 print(out,[ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors round(ini.pY) round(d.pY) round((d.pY./ini.pY-1)*100)]]);
 
-disp "===== Trade margins ==========================="
+print(out,"===== Trade margins ===========================");
 print(out,[["Sectors" "Initial value" "Run" "Rate Initial Value" "Rate Run" "Rate ratio" ]; [Index_Sectors';  ini.Trade_margins ; d.Trade_margins ; ini.Trade_margins_rates; d.Trade_margins_rates ; divide(ini.Trade_margins_rates,d.Trade_margins_rates,%nan)]'])
 
 
-disp "===== Transp margins =========================="
+print(out,"===== Transp margins ==========================");
 print(out,[["Sectors" "Initial value" "Run" "Rate Initial Value" "Rate Run" "Rate ratio" ];
 [Index_Sectors';  ini.Transp_margins ; d.Transp_margins ; ini.Transp_margins_rates; d.Transp_margins_rates ; divide(ini.Transp_margins_rates,d.Transp_margins_rates,%nan)]'])
 
-disp "===== Decomposition pY - Initial Value ========================"
+print(out,"===== Decomposition pY - Initial Value ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  round([ ini.pY' ; sum(ini.pIC .* ini.alpha,"r") ; sum(ini.pL .* ini.lambda,"r") ; sum(ini.pK .* ini.kappa, "r") ; ini.Production_Tax_rate .* ini.pY' ; ini.markup_rate .* ini.pY' ])]']);
 
-disp "===== Decomposition pY Run ========================"
+print(out,"===== Decomposition pY Run ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  round([ d.pY' ; sum(d.pIC .* d.alpha,"r") ; sum(d.pL .* d.lambda,"r") ; sum(d.pK .* d.kappa, "r") ;d.Production_Tax_rate .* d.pY' ; d.markup_rate .* d.pY' ])]']);
 
-disp "===== Decomposition pY Ratio ========================"
+print(out,"===== Decomposition pY Ratio ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; divide(sum(d.pK .* d.kappa, "r"),sum(ini.pK .* ini.kappa, "r"),%nan) ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
 
@@ -402,15 +402,15 @@ function Prices = buildPriceT( pIC , pFC, w, pL, pK, pY, pM, p, fact , decimals 
 endfunction
 
 
-disp " * Initial table - Unitary prices"
+print(out," * Initial table - Unitary prices");
 Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , 1);
 print(out,Prices.ini);
 
-disp " * Run table - Unitary prices"
+print(out," * Run table - Unitary prices");
 Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , 1);
 print(out,Prices.run);
 
-disp " * Evolution table - Unitary prices"
+print(out," * Evolution table - Unitary prices");
 Prices.evo = buildPriceT( evol.pIC , evol.pFC, evol.w, evol.pL, evol.pK, evol.pY, evol.pM, evol.p, 100 , 1);
 print(out,Prices.evo);
 
@@ -455,15 +455,15 @@ function TechCOef = buildTechCoefT( alpha, lambda, kappa, fact , decimals )
 endfunction
 
 
-disp " * Initial table - Technical Coefficient"
+print(out," * Initial table - Technical Coefficient");
 TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , 1);
 print(out,TechCOef.ini);
 
-disp " * Run table - Technical Coefficient"
+print(out," * Run table - Technical Coefficient");
 TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , 1);
 print(out,TechCOef.run);
 
-disp " * Evolution table - Technical Coefficient"
+print(out," * Evolution table - Technical Coefficient");
 TechCOef.evo = buildTechCoefT( evol.alpha, evol.lambda, evol.kappa, 100 , 1);
 print(out,TechCOef.evo);
 
@@ -548,15 +548,15 @@ function CO2Emis = buildEmisT( CO2Emis_IC , CO2Emis_C , CO2Emis_X, CO2Emis_Sec,T
 
 endfunction
 
-disp " * Initial table - CO2 Emissions"
+print(out," * Initial table - CO2 Emissions");
 CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,1);
 print(out,CO2Emis.ini);
 
-disp " * Run table - CO2 Emissions"
+print(out," * Run table - CO2 Emissions");
 CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , 1);
 print(out,CO2Emis.run);
 
-disp " * Evolution table - CO2 Emissions"
+print(out," * Evolution table - CO2 Emissions");
 CO2Emis.evo = buildEmisT( evol.CO2Emis_IC , evol.CO2Emis_C, evol.CO2Emis_X , evol.CO2Emis_Sec,evol.Tot_CO2Emis_IC,evol.Tot_CO2Emis_C,evol.DOM_CO2,100 , 1);
 print(out,CO2Emis.evo);
 
@@ -630,15 +630,15 @@ function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, U
 endfunction
 
 
-disp " * Initial table"
+print(out," * Initial table");
 io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,1e-6 , 1);
 print(out,io.ini);
 
-disp " * Run table"
+print(out," * Run table");
 io.run = buildIot(   d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, 1e-6 , 1);
 print(out,io.run);
 
-disp " * Evolution table"
+print(out," * Evolution table");
 io.evo = buildIot(   evol.IC_value ,   evol.FC_value ,   evol.OthPart_IOT ,evol.Carbon_Tax,evol.Supply, evol.Uses, 100 , 1);
 print(out,io.evo);
 
@@ -699,15 +699,15 @@ function iot = buildIotQ( ic , fc , oth_io, fact , decimals )
 
 endfunction
 
-disp " * Initial table - QUANTITIES"
+print(out," * Initial table - QUANTITIES");
 ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , 1);
 print(out,ioQ.ini);
 
-disp " * Run table - QUANTITIES"
+print(out," * Run table - QUANTITIES");
 ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , 1);
 print(out,ioQ.run);
 
-disp " * Evolution table - QUANTITIES"
+print(out," * Evolution table - QUANTITIES");
 ioQ.evo = buildIotQ(   evol.IC ,   evol.FC ,   evol.OthQ , 100 , 1);
 print(out,ioQ.evo);
 
@@ -898,15 +898,15 @@ function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
 endfunction
 
 
-disp " * Initial table - Economic Account table"
+print(out," * Initial table - Economic Account table");
 ecoT.ini = buildEcoTabl(ini.Ecotable , 1e-6 , 1);
 print(out,ecoT.ini);
 
-disp " * Run table - Economic Account table"
+print(out," * Run table - Economic Account table");
 ecoT.run = buildEcoTabl(d.Ecotable , 1e-6 , 1);
 print(out,ecoT.run);
 
-disp " * Evolution table - Economic Account table"
+print(out," * Evolution table - Economic Account table");
 ecoT.evo = buildEcoTabl(evol.Ecotable ,100 , 1);
 print(out,ecoT.evo);
 
