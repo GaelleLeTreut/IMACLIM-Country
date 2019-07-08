@@ -143,7 +143,7 @@ exec("Loading_params.sce");
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 2: CHECKING BENCHMARK DATA
 /////////////////////////////////////////////////////////////////////////////////////////////
-printf("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA... \n")
+printf("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA... \n");
 exec("Checks_loads.sce");
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +196,7 @@ for time_step=1:Nb_Iter
     exec(STUDY_Country+study+".sce");
 
     exec(System_Resol+".sce");
-    warning("sign of ClimPolCompensbySect")
+    warning("sign of ClimPolCompensbySect");
 
     // Check if the projections are made correctly
     exec("Check_Projections.sce");
@@ -241,7 +241,7 @@ end // Loop ending for for various time step calculation
 
 //shut down the diary
 if Output_files=='True'
-    diary(0)
+    diary(0);
 end
 
-printf('Done :) \n');
+printf('\n------------ Done ! :) ------------\n');

@@ -1,3 +1,4 @@
 # ignore the directory outputs and all its content
 outputs
 study_frames/Country_Selection.csv
+code/Test_FullCode/Saved_data
