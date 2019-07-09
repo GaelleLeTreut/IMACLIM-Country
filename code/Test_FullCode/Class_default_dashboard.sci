@@ -1,6 +1,6 @@
-// *********************** *
+// ----------------------- *
 // Structure for dashboard *
-// *********************** *
+// ----------------------- *
 
 // /!\ Make sure this default dashboard is consistent with the last
 //      version of the program.

@@ -1,11 +1,11 @@
-// ---------------------------------- -
-// This code can be run undependantly -
-// ---------------------------------- -
+// ---------------------------------- *
+// This code can be run undependantly *
+// ---------------------------------- *
 
 
-// ************** *
+// -------------- *
 // Initialization *
-// ************** *
+// -------------- *
 
 // Load the paths of the directories
 exec('Load_paths.sce');
@@ -20,9 +20,9 @@ exec(TEST_FULLCODE + 'def_of_tests.sce');
 saved_files = listfiles(SAVED_DATA);
 
 
-// ********************** *
+// ---------------------- *
 // Restore the saved file *
-// ********************** *
+// ---------------------- *
 
 disp('Files restored : ');
 

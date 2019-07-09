@@ -1,9 +1,8 @@
-// TODO : effacer le code erreur commenté
 // TODO : mode output en supprimant le fichier outputs créé
 
-// ************** *
+// -------------- *
 // Initialization *
-// ************** *
+// -------------- *
 
 // Enable test_mode in ImaclimS.sce
 TEST_MODE = %T;
@@ -13,9 +12,9 @@ testing.countMax = 2;
 testing.mute_mode = %T;
 
 
-// ********************** *
+// ---------------------- *
 // Structure of directory *
-// ********************** *
+// ---------------------- *
 
 // Paths of the directories
 exec('Load_paths.sce');
@@ -24,7 +23,9 @@ exec('Load_paths.sce');
 mkdir(SAVED_DATA);
 
 // Name of this tests run
+funcprot(0);
 exec(LIB + 'tools.sci');
+funcprot(1);
 RunName = 'Run_' + mydate();
 
 // To save the not working Dashboards
@@ -34,9 +35,9 @@ mkdir(NOT_WORKING);
 mkdir(NOT_WORKING + RunName);
 
 
-// ********* *
+// --------- *
 // Code data *
-// ********* *
+// --------- *
 
 // Classes and functions
 getd(TEST_FULLCODE);
@@ -45,9 +46,9 @@ getd(TEST_FULLCODE);
 exec(TEST_FULLCODE + 'def_of_tests.sce');
 
 
-// ************* *
+// ------------- *
 // Run the tests *
-// ************* *
+// ------------- *
 
 // Save the current Country Selection file
 save_file(country_selection, STUDY);
@@ -92,7 +93,7 @@ for country = countries
         catch
             printf('\n************** ERROR **************\n');
             nb_errors = nb_errors + 1;
-            csvWrite(dash, NOT_WORKING + RunName + ..
+            csvWrite(dash, NOT_WORKING + RunName + filesep() + ..
             string(nb_errors) + '_' + country.dashboard_file,";");
         end
         cd(TEST_FULLCODE);
@@ -104,9 +105,9 @@ for country = countries
 end
 
 
-// ******************************** *
+// -------------------------------- *
 // Display the results of the tests *
-// ******************************** *
+// -------------------------------- *
 
 disp('Tests made : ' + string(nb_tests));
 disp('      - Successful tests : ' + string(nb_tests - nb_errors));
@@ -115,8 +116,8 @@ disp('      - Failed tests : ' + string(nb_errors));
 disp('Find the not working dashboards in ' + NOT_WORKING + RunName);
 
 
-// **************************************************** *
+// ---------------------------------------------------- *
 // Restore the initial Country_Selection and Dashboards *
-// **************************************************** *
+// ---------------------------------------------------- *
 
 exec('restore_saved_files.sce');

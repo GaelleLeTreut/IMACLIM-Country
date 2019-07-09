@@ -1,6 +1,6 @@
-// ******************************* *
+// ------------------------------- *
 // Structure for testing a country *
-// ******************************* *
+// ------------------------------- *
 
 function country = new_country(name, iso, test)
     // init : structure of initial values of the country
