@@ -1,3 +1,6 @@
+// TODO : effacer le code erreur commenté
+// TODO : mode output en supprimant le fichier outputs créé
+
 // ************** *
 // Initialization *
 // ************** *
@@ -9,14 +12,36 @@ TEST_MODE = %T;
 testing.countMax = 2;
 testing.mute_mode = %T;
 
+
+// ********************** *
+// Structure of directory *
+// ********************** *
+
 // Paths of the directories
 exec('Load_paths.sce');
+
+// To save Country_Selection and Dashboards
 mkdir(SAVED_DATA);
+
+// Name of this tests run
+exec(LIB + 'tools.sci');
+RunName = 'Run_' + mydate();
+
+// To save the not working Dashboards
+Not_working_name = 'Not_working_dashboards';
+NOT_WORKING = TEST_FULLCODE + Not_working_name + filesep();
+mkdir(NOT_WORKING);
+mkdir(NOT_WORKING + RunName);
+
+
+// ********* *
+// Code data *
+// ********* *
 
 // Classes and functions
 getd(TEST_FULLCODE);
 
-// Data of the test
+// Data for the tests
 exec(TEST_FULLCODE + 'def_of_tests.sce');
 
 
@@ -27,13 +52,14 @@ exec(TEST_FULLCODE + 'def_of_tests.sce');
 // Save the current Country Selection file
 save_file(country_selection, STUDY);
 
-// Record the not working configurations
-errors = list();
-
 // launch the tests
+
+nb_errors = 0;
+nb_tests = 0;
+
 for country = countries
     
-    // Write Country_Selection.csv with the test country
+    // Write Country_Selection.csv of the tested country
     write_country_selection(country);
     
     // Save the current Dashboard_COUNTRY file
@@ -45,10 +71,13 @@ for country = countries
     // Test each dashboard
     for dash = dashboards
         
+        nb_tests = nb_tests + 1;
+        
+        // Display the current test information
         printf(country.name + '\n');
         for var = fieldnames(country.test)'
             ind = find(dash(:,1) == var);
-            printf('    ' + var + ' = ' + dash(ind,2) + '\n');
+            printf('    ' + var + ' = ""' + dash(ind,2) + '""\n');
         end
         
         printf('\nTESTING ..\n\n');
@@ -56,13 +85,15 @@ for country = countries
         // Write the dashboard to test
         csvWrite(dash, STUDY + country.study_frames + country.dashboard_file,";");
         
-        // Run ImaclimS.sce. If an error is raised, save it
+        // Run ImaclimS.sce. If an error is raised, save the dashboard
         cd(CODE);
         try
             launch_ImaclimS();
         catch
             printf('\n************** ERROR **************\n');
-            errors($+1) = new_error(country,dash);
+            nb_errors = nb_errors + 1;
+            csvWrite(dash, NOT_WORKING + RunName + ..
+            string(nb_errors) + '_' + country.dashboard_file,";");
         end
         cd(TEST_FULLCODE);
         
@@ -73,29 +104,15 @@ for country = countries
 end
 
 
-// ************************ *
-// Display the errors found *
-// ************************ *
+// ******************************** *
+// Display the results of the tests *
+// ******************************** *
 
-nb_errors = size(errors);
-error_count = 0;
+disp('Tests made : ' + string(nb_tests));
+disp('      - Successful tests : ' + string(nb_tests - nb_errors));
+disp('      - Failed tests : ' + string(nb_errors));
 
-for err = errors
-    
-    // Counter of errors
-    error_count = error_count + 1;
-    disp('ERROR ' + string(error_count) + ' / ' + string(nb_errors) + ' :');
-    
-    // Country of the error
-    disp('Country : ' + err.country_name + ' / ' + err.country_ISO);
-    
-    // Dashboard
-    disp('Dashboard :');    
-    disp(err.dashboard);
-    
-    disp('* --------------------------------------------------- *');
-    
-end
+disp('Find the not working dashboards in ' + NOT_WORKING + RunName);
 
 
 // **************************************************** *
