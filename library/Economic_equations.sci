@@ -1793,7 +1793,28 @@ function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
     // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
     // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
 
-endfunction															 
+endfunction
+
+function [y] =  SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X) ;
+
+    // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
+
+    y1 = SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )';
+    y1 =matrix (y1, -1, 1);
+
+    y2 = SpeMarg_C - SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+    y2 =matrix (y2, -1, 1);
+
+    y3 = SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )';
+    y3 =matrix (y3, -1, 1);
+
+    y4 = SpeMarg_I - SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
+    y4 =matrix (y4, -1, 1);
+
+    y =[y1;y2;y3;y4];
+
+endfunction
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   C.3  Investment decision
