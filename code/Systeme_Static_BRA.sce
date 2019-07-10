@@ -328,7 +328,7 @@ try
     Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var);
 catch
     [str,n,line,func]=lasterror(%f);
-    error("Error " + string(n) + " with initial fsolve: " + str);
+    error("Error " + string(n) + " with initial f_resolution: " + str);
 end
 
 [maxos,lieu]=max(abs(Constraints_Init));
