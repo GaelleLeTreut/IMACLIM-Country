@@ -75,10 +75,10 @@ for country = countries
         nb_tests = nb_tests + 1;
         
         // Display the current test information
-        printf(country.name + '\n');
+        printf('%s\n', country.name);
         for var = fieldnames(country.test)'
             ind = find(dash(:,1) == var);
-            printf('    ' + var + ' = ""' + dash(ind,2) + '""\n');
+            printf('    %s = ""%s""\n', var, dash(ind,2));
         end
         
         printf('\nTESTING ..\n\n');

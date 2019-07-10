@@ -308,7 +308,12 @@ end
 
 ///////////////////////////////////////////
 // Test function f_resolution and consistency between size of constraint and X vector of variable for fsolve
-Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var);
+try
+    Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var);
+catch
+    [str,n,line,func]=lasterror(%f);
+    error("Error " + string(n) + " with initial fsolve: " + str);
+end
 [maxos,lieu]=max(abs(Constraints_Init));
 SizeCst = size(Constraints_Init);
 [contrainte_tri , coord] =gsort(Constraints_Init);
@@ -334,6 +339,10 @@ sensib       = 1e-5;
 sensibFsolve = 1e-15;
 Xbest        = X_Deriv_Var_init;
 a            = 0.1;
+
+if Test_mode then
+    countMax = testing.countMax;
+end
 
 tic();
 
