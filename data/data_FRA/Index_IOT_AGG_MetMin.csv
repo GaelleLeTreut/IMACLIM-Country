@@ -11,7 +11,7 @@ Row;Fuel;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Fuel_oil;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Heavy_fuel_oil;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Other_fuel_prod;Commodities;EnerSect;FinEnerSect;HybridCommod
-Row;Electricty;Commodities;EnerSect;FinEnerSect;HybridCommod
+Row;Electricity;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;HeatGeoSol_Th;Commodities;EnerSect;FinEnerSect;HybridCommod
 Row;Metals;Commodities;NonEnerSect;-;NonHybridCommod
 Row;Minerals;Commodities;NonEnerSect;-;NonHybridCommod
@@ -82,7 +82,7 @@ Column;Fuel;Sectors;-;-;-
 Column;Fuel_oil;Sectors;-;-;-
 Column;Heavy_fuel_oil;Sectors;-;-;-
 Column;Other_fuel_prod;Sectors;-;-;-
-Column;Electricty;Sectors;-;-;-
+Column;Electricity;Sectors;-;-;-
 Column;HeatGeoSol_Th;Sectors;-;-;-
 Column;Metals;Sectors;-;-;-
 Column;Minerals;Sectors;-;-;-
