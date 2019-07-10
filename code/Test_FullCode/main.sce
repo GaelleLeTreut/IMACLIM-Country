@@ -8,8 +8,8 @@
 TEST_MODE = %T;
 
 // Parameters of the tests
-testing.countMax = 2;
-testing.mute_mode = %T;
+testing.countMax = 3;
+testing.debug_mode = %F;
 
 
 // ---------------------- *

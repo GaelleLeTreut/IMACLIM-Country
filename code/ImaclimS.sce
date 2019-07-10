@@ -39,20 +39,20 @@
 Test_mode = isdef('TEST_MODE');
 
 // mute mode
-mute_mode = %T;
+debug_mode = %T;
 
 // defined in the test program
 if Test_mode then
-    mute_mode = testing.mute_mode;
+    debug_mode = testing.debug_mode;
 end
 
 // output of print
-if mute_mode then
-    out = 0;
-    warning('off');
-else
+if debug_mode then
     out = %io(2);
     warning('on');
+else
+    out = 0;
+    warning('off');
 end
 
 //PREAMBULE

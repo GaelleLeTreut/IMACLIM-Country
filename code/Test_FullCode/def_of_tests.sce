@@ -6,48 +6,42 @@
 // * Argentina *
 // * --------- *
 
-name = 'Argentina';
-iso = 'ARG';
+name_arg = 'Argentina';
+iso_arg = 'ARG';
 
-test.System_Resol = ['Systeme_Static'];//, 'Systeme_ProjHomothetic', ..
-//'Systeme_Stat_RoW'];
-//test.study = ['Static_RunChoices', 'Projection_evolution', 'Recursive_RunChoices'];
-//test.Resol_Mode = ['Static_comparative', 'Dynamic_projection'];
-//test.Macro_nb = ['', 'Current', 'StrucChgt'];
-//test.Demographic_shift = ['True', 'False'];
-//test.Labour_product = ['True', 'False'];
-//test.World_prices = ['True', 'False'];
-//test.X_nonEnerg = ['True', 'False'];
-//test.CO2_footprint = ['True', 'False'];
-//test.Invest_matrix = ['%T', '%F'];
-test.Scenario = ['', 'NDC', 'CCS'];
-test.AGG_type = ['AGG_EnComp', ''];
+test_arg.System_Resol = ['Systeme_Static'];
+test_arg.Scenario = ['', 'NDC', 'CCS'];
+test_arg.AGG_type = ['AGG_EnComp', ''];
 
-argentina = new_country(name, iso, test);
+argentina = new_country(name_arg, iso_arg, test_arg);
 
 
 // * ------------------------------------------------------------- *
 // * Brasil *
 // * ------ *
 
-name = 'Brasil';
-iso = 'BRA';
+name_bra = 'Brasil';
+iso_bra = 'BRA';
 
-test = struct();
+test_bra.System_Resol = ['Systeme_Static_BRA'];
+test_bra.Scenario = ['PMR_Ref_Disag'];
+test_bra.AGG_type = ['AGG_PMR19'];
 
-brasil = new_country(name, iso, test);
+brasil = new_country(name_bra, iso_bra, test_bra);
 
 
 // * ------------------------------------------------------------- *
 // * France *
 // * ------ *
 
-name = 'France';
-iso = 'FRA';
+name_fra = 'France';
+iso_fra = 'FRA';
 
-test = struct();
+test_fra.System_Resol = ['Systeme_Static_FRA'];
+test_fra.Scenario = ['Recalib'];
+test_fra.AGG_type = ['AGG_SNBC2'];
 
-france = new_country(name, iso, test);
+france = new_country(name_fra, iso_fra, test_fra);
 
 // * ------------------------------------------------------------- *
 
