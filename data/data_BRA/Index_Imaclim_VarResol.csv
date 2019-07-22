@@ -74,8 +74,6 @@ w;1;nb_Sectors;Var;0;%inf
 u;1;nb_Households;Var;0;1
 Unemployed;1;nb_Households;Var;0;%inf
 pL;1;nb_Sectors;Var;0;%inf
-delta_interest_rate;1;1;Var;0;10
-interest_rate;1;nb_InstitAgents;Var;-1;1
 GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf

@@ -272,10 +272,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Brasil; specific  formulation to take into account both taxes types 
     // Il pourrait exister une formalation généraliser....
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
-    MacroClosure_Const_1(GFCF_byAgent, pI, I)
-
+    
     // Antoine : delta_interest_rate défini par rapport à BY pour des questions d'harmonisation avec CPI et NetWage_variation
-    Interest_rate_Const_1(interest_rate, delta_interest_rate)
+    // MacroClosure_Const_1(GFCF_byAgent, pI, I)
+	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     // Brasil : specific formulation 
     GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)

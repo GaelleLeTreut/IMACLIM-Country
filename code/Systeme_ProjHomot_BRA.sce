@@ -38,12 +38,12 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// defined in "loading data" : Index_Imaclim_VarProHom
+// defined in "loading data" : Index_Imaclim_VarResol
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
 
-VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
+VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 
 /////////////////////////////////////////////////////////////////////////
 // LOADING STUDY CHANGES
@@ -64,17 +64,17 @@ execstr(Table_parameters);
 // Endogenous variable (set of variables for the system below - fsolve)
 /////////////////////////////////////////////////////////////////////////
 // list
-[listDeriv_Var] = varTyp2list (Index_Imaclim_VarProHom, "Var");
+[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResol, "Var");
 // Initial values for variables
 Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
-X_Deriv_Var_init = variables2X (Index_Imaclim_VarProHom, listDeriv_Var, Deriv_variables);
-bounds = createBounds( Index_Imaclim_VarProHom , listDeriv_Var );
+X_Deriv_Var_init = variables2X (Index_Imaclim_VarResol, listDeriv_Var, Deriv_variables);
+bounds = createBounds( Index_Imaclim_VarResol , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 // list // SOLVE Endogenous variable (set of variables for independant fsolve)
-listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarProHom, "Var_interm");
+listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResol, "Var_interm");
 Deriv_Var_interm     = Variables2struct(listDeriv_Var_interm);
 [Table_Deriv_Var_interm] = struct2Variables(Deriv_Var_interm,"Deriv_Var_interm");
 execstr(Table_Deriv_Var_interm);
@@ -169,11 +169,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
-    // H_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
-    // Corp_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
-    // G_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
-    // RoW_NetDebt_Const_1(NetFinancialDebt, time_period, NetLending)
-    ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
+
+    H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) 
+    Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) 
+    G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) 
+    RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) 
+    
+	ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)//29
     Corp_income_Const_2(Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax)
     G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect)
@@ -262,7 +264,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
 
     // MacroClosure_Const_1(GFCF_byAgent, pI, I)
-    // Interest_rate_Const_1(interest_rate, delta_interest_rate)
+    //Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
 
@@ -295,7 +297,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 endfunction
 
 //////////////////////////////////////////////////////////////////////////
-//	Number of Index and Indice from Index_Imaclim_VarProHom used by f_resolution
+//	Number of Index and Indice from Index_Imaclim_VarResol used by f_resolution
 /////////////////////////////////////////////////////////////////////////
 
 nVarDeriv = size(listDeriv_Var);
@@ -303,7 +305,7 @@ RowNumCsVDerivVarList = list();
 structNumDerivVar = zeros(nVarDeriv,1);
 EltStructDerivVar = getfield(1 , Deriv_variablesStart);
 for ind = 1:nVarDeriv
-    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarProHom==listDeriv_Var(ind)) ;
+    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResol==listDeriv_Var(ind)) ;
     structNumDerivVar(ind) = find(EltStructDerivVar == listDeriv_Var(ind));
 end
 
@@ -324,7 +326,7 @@ end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
     print(out,"X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
-    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarProHom.csv")
+    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResol.csv")
 end
 
 /////////////////////////////////////////////////
@@ -393,7 +395,7 @@ end
 // Reafectation des valeurs aux variables et à la structure après résolution
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-Deriv_variables = X2variables (Index_Imaclim_VarProHom, listDeriv_Var, Xbest);
+Deriv_variables = X2variables (Index_Imaclim_VarResol, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1
