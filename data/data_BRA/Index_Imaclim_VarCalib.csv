@@ -51,12 +51,12 @@ Transp_margins;1;nb_Commodities;InitVal
 Transp_margins_rates;1;nb_Commodities;calib
 alpha;nb_Commodities;nb_Sectors;calib
 G;nb_Commodities;nb_Government;calib
-I;nb_Commodities;1;calib
+I;nb_Commodities;nb_size_I;calib
 X;nb_Commodities;1;calib
 IC;nb_Commodities;nb_Sectors;calib
 G_value;nb_Commodities;nb_Government;InitVal
 pG;nb_Commodities;nb_Government;InitVal
-I_value;nb_Commodities;1;InitVal
+I_value;nb_Commodities;nb_size_I;InitVal
 pI;nb_Commodities;1;InitVal
 Trade_margins;1;nb_Commodities;InitVal
 IC_value;nb_Commodities;nb_Sectors;InitVal
@@ -122,7 +122,7 @@ pL;1;nb_Sectors;calib
 aK;1;nb_Sectors;calib
 pK;1;nb_Sectors;calib
 markup_rate;1;nb_Sectors;calib
-Betta;nb_Commodities;1;calib
+Betta;nb_Commodities;nb_size_I;calib
 delta_pM;nb_Commodities;1;calib
 Distribution_Shares;nb_IncomeSources;nb_InstitAgents;calib
 LabourByWorker_coef;1;1;calib
