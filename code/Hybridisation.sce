@@ -45,8 +45,11 @@
 /// Hypothesis : unique arbitrary price for non hybrid sectors 
 //////////////////////////////////////////////////////////////
 
-
+if Country=="Argentina"
+p(1,Indice_NonHybridCommod) = 1;
+else
 p(1,Indice_NonHybridCommod) = 1000;
+end
 
 p(Indice_HybridCommod) = (sum(initial_value.IC_value(:,Indice_HybridCommod),"r") + sum(initial_value.Value_Added(:,Indice_HybridCommod), "r") + initial_value.M_value(Indice_HybridCommod))  ./ (sum(initial_value.IC(Indice_HybridCommod,:),"c")+sum(initial_value.FC(Indice_HybridCommod,:),"c"))';
 
@@ -57,11 +60,18 @@ initial_value.p = p;
 
 // Hypothesis for non hybrid commodities
 initial_value.pM= zeros( nb_Sectors,1);
+if Country=="Argentina"
+initial_value.pM(Indice_NonHybridCommod,1) = 1;
+else
 initial_value.pM(Indice_NonHybridCommod,1) = 1000;
+end
 
 initial_value.pY= zeros( nb_Sectors,1);
+if Country=="Argentina"
+initial_value.pY(Indice_NonHybridCommod,1) = 1;
+else
 initial_value.pY(Indice_NonHybridCommod,1) = 1000;
-
+end
 
 initial_value.Y(Indice_NonHybridCommod,1) = initial_value.Y_value(1,Indice_NonHybridCommod)'./initial_value.pY(Indice_NonHybridCommod,1);
 
