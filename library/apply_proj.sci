@@ -1,17 +1,35 @@
-function eq = apply_proj_eq(y, var_value, var_name)
+function y = apply_proj_eq(eq, var_value, var_name)
+    // eq : equation before projection
+    // var_value : variable to project
+    // var_name : name of the variable to project
+    // y : equation after projection
     
-    eq = y;
-    proj_var = Proj(var_name).val;
+    // value of projection
+    proj_value = Proj(var_name).val;
+    
+    // indexes of projection
     ind_of_proj = Proj(var_name).ind_of_proj;
-    eq(ind_of_proj,:) = var_value(ind_of_proj,:) - proj_var(ind_of_proj,:);
+    
+    // apply the projection
+    y = eq;
+    y(ind_of_proj,:) = var_value(ind_of_proj,:) - proj_value(ind_of_proj,:);
 
 endfunction
 
-function val = apply_proj_val(var_value, var_name)
+function var_proj = apply_proj_val(var_value, var_name)
     
-    val = var_value;
-    proj_var = Proj(var_name).val;
+    // var_value : variable before projection
+    // var_name : name of the variable
+    // var_proj : variable after projection
+    
+    // value of projection
+    proj_value = Proj(var_name).val;
+    
+    // indexes of projection
     ind_of_proj = Proj(var_name).ind_of_proj;
-    val(ind_of_proj,:) = proj_var(ind_of_proj,:);
+    
+    // apply the projection
+    var_proj = var_value;
+    var_proj(ind_of_proj,:) = proj_value(ind_of_proj,:);
 
 endfunction
