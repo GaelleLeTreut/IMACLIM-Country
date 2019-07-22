@@ -12,10 +12,3 @@ if [System_Resol == "Systeme_ProjHomothetic"]
     parameters.Carbon_Tax_rate = 0.0;
     parameters.u_param = BY.u_tot;
 end
-
-// Load the projections for forcing
-
-//exec('Import_Proj_Volume.sce');
-exec(STUDY + "Import_Proj_Volume.sce");
-
-exec('Load_Projections.sce');

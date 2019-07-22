@@ -1,5 +1,3 @@
-if Scenario <> '' then
-
     // error max
     err = 1E-3;
 
@@ -30,5 +28,3 @@ if Scenario <> '' then
     print(out,"** Projections checked");
     
     clear err difference ind_of_proj zero z var_name
-
-end

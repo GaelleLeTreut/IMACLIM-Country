@@ -20,10 +20,3 @@ if CO2_footprint == "True" & Scenario <>"" then
 	end
 	execstr("Deriv_Exogenous.CoefCO2_reg = CoefCO2_reg_" + time_step + "_" + Macro_nb);
 end
-
-// Load the projections for forcing
-
-//exec('Import_Proj_Volume.sce');
-exec(STUDY + "Import_Proj_Volume.sce");
-
-exec('Load_Projections.sce');
