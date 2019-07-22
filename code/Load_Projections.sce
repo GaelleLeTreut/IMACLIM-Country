@@ -44,18 +44,41 @@ end
 // Load projection data *
 // -------------------- *
 
+// load IOT_Qtities_TimeStep
+execstr('iot_qtities = IOT_Qtities' + '_' + string(time_step));
+
+// Check IOT_Qtities_TimeStep's aggregation
+proj_desaggregated = ..
+prod(IndexRow == IndRow_IOT_Qtities) & prod(IndexCol == IndCol_IOT_Qtities);
+
+proj_well_aggregated = ..
+prod(IndexRow(1:nb_Sectors,:) == Index_Commodities) & prod(IndexCol(:,1:nb_Sectors) == Index_Commodities');
+
 for var = fieldnames(Proj)'
-    proj_param = Proj(var);
-    if proj_param.apply_proj then
-        execstr('proj_values = ' + proj_param.file + '_' + string(time_step));
-        if Country <> 'France' then
-            proj_val = fill_table(proj_values, IndRow_IOT_Qtities, IndCol_IOT_Qtities, Index_CommoInit, proj_param.headers);
+    if Proj(var).apply_proj then
+        // Read IOT_Qtities
+        if Proj(var).file == 'IOT_Qtities' then
+            
+            // IndexRow / IndexCol : Index of IOT_Qtities_TimeStep
+            // IndRow_IOT_Qtities / IndCol_IOT_Qtities : Index of desagregated IOT
+            // Index_Commodities : aggregated commodities
+            // Index_CommoInit : desagregated commodities
+
+            // If IOT_Qtities_TimeStep is not aggregated
+            if proj_desaggregated then
+                Proj(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_CommoInit, Proj(var).headers);
+            // If IOT_Qtities_TimeStep is aggregated
+            else
+                // Check that the aggregation is fine
+                if proj_well_aggregated then
+                    Proj(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_Commodities, Proj(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
         else
-            proj_val = fill_table(proj_values, IndexRow, IndexCol, Index_Commodities, proj_param.headers);
+            error('You need to define how to read the projection file ' + proj_param.file + 'for projection of ' + var)
         end
-        Proj(var).val = proj_val;
-        //    else
-        //        Proj(var) = null();
     end
 end
 
@@ -64,7 +87,7 @@ end
 // If needed, aggregate the projections *
 // ------------------------------------ *
 
-if AGG_type <> '' & Country <> 'France' then
+if AGG_type <> '' & proj_desaggregated then
 
     for var = fieldnames(Proj)'
         if Proj(var).apply_proj then
