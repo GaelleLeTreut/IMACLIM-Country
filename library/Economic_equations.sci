@@ -329,7 +329,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
     y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - NonFinEn_BudgShare_ref .* ( NonFinEn_budget .*. ones(nb_NonEnerSect, 1) ) ;
 
-    if isdef('Proj') & Proj.C.apply_proj then
+    if is_projected('C') then
         y1 = apply_proj_eq(y1,C,'C');
     end
 
@@ -354,7 +354,7 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 	
 	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
-    if isdef('Proj') & Proj.C.apply_proj then
+    if is_projected('C') then
         y1 = apply_proj_eq(y1,C,'C');
     end
 	
@@ -1906,7 +1906,7 @@ function [y] = IC_Const_1(IC, Y, alpha) ;
     // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
     // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
 
-    if isdef('Proj') & Proj.IC.apply_proj then
+    if is_projected('IC') then
         y1 = apply_proj_eq(y1, IC, 'IC');
     end
 
@@ -1932,7 +1932,7 @@ function M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter);
 
 	M = ( (1 + delta_M_parameter).^(time_since_BY) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M )';
 
-    if isdef('Proj') & Proj.M.apply_proj then
+    if is_projected('M') then
         M = apply_proj_val(M, 'M');
     end
     
@@ -1977,7 +1977,7 @@ function X = Exports_Const_2( pM, pX, sigma_X, delta_X_parameter);
 
     X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X' )
     
-    if isdef('Proj') & Proj.X.apply_proj then
+    if is_projected('X') then
         X = apply_proj_val(X, 'X');
     end
 
