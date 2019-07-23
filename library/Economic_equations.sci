@@ -1359,6 +1359,10 @@ function [y] = Technical_Coef_Const_1(alpha, lambda, kappa, aIC, sigma, pIC, aL,
     // if or(testBounds1)
     //     y1(testBounds1) = alpha(testBounds1) - pIC(testBounds1) .* aIC(testBounds1);
     // end
+    
+    if is_projected('alpha') then
+        y1 = apply_proj_eq(y1, alpha, 'alpha');
+    end
 
     //  Labour intensity ( lambda(nb_Sectors) )
     y2 = lambda - (pL<>0).* ( (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + (aL ./ ((pL<>0).*pL+(pL==0))) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
@@ -1378,6 +1382,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_2( aIC, sigma, pIC, aL, p
     alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + (aIC ./ pIC) .^ sigmaM .* (ones( nb_Sectors, 1).*.((FPI<>0).*FPI+(FPI==0)).^(sigma./(1 - sigma))) ) ;
     lambda = (pL<>0).* ( (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + (aL ./ ((pL<>0).*pL+(pL==0))) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
     kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + (aK ./ pK) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+    
 endfunction
 
 warning("Technical_Coef_Const_3 : check that it is correct!!!");
@@ -1394,6 +1403,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_3( aIC, sigma, pIC, aL, p
     lambda = (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ pL) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
     lambda(test_pL|test_FPI) = 0;
     kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+    
 endfunction
 
 //	Fixed technical coefficients
@@ -1401,6 +1415,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_4( aIC, sigma, pIC, aL, p
     alpha 	=  alpha_ref ;
     lambda = lambda_ref ;
     kappa 	= kappa_ref ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+    
 endfunction
 
 
@@ -1423,6 +1442,10 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_5( aIC, sigma, pIC, aL, p
     lambda = (1 / Labour_Product)*(Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL / Labour_Product) ) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
     lambda(test_pL|test_FPI) = 0;
     kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
 	
 endfunction
 
@@ -1442,9 +1465,13 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_6( aIC, sigma, pIC, aL, p
 	
 	alpha =  ((ones(nb_Sectors, 1).*.Theta) ./ Phi_Ecopa) .* ( ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ sigmaM) .* (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
 	
-	 lambda = (1 / Labour_Product)*(Theta) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL / Labour_Product) ) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
+    lambda = (1 / Labour_Product)*(Theta) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL / Labour_Product) ) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
     lambda(test_pL|test_FPI) = 0;
     kappa = ( (Theta) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
 	
 endfunction
 
@@ -1477,6 +1504,10 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma,
 	kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
             ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
             (FPI .^(sigma./(1 - sigma)))) ;
+            
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
 
 endfunction
 
@@ -1511,6 +1542,10 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma,
     kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
             ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
             (FPI .^(sigma./(1 - sigma)))) ;
+            
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
 
 endfunction
 
@@ -1541,6 +1576,10 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
     kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
     ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
 
 endfunction
 

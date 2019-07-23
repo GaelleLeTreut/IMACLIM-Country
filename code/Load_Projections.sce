@@ -1,3 +1,29 @@
+// -------------------- *
+// Load projection data *
+// -------------------- *
+
+// load IOT_Qtities_TimeStep
+execstr('iot_qtities = IOT_Qtities' + '_' + string(time_step));
+
+// Check IOT_Qtities_TimeStep's aggregation
+proj_desaggregated = ..
+prod(IndexRow == IndRow_IOT_Qtities) & prod(IndexCol == IndCol_IOT_Qtities);
+
+proj_well_aggregated = ..
+prod(IndexRow(1:nb_Sectors,:) == Index_Commodities) & prod(IndexCol(:,1:nb_Sectors) == Index_Commodities');
+
+
+// -------------- *
+// Headers for IC *
+// -------------- *
+
+if proj_desaggregated then
+    Index_Sectors_IC = Index_SectInit;
+else
+    Index_Sectors_IC = Index_Sectors;
+end
+
+
 // ------------------------- *
 // Load projection structure *
 // ------------------------- *
@@ -10,11 +36,12 @@ proj_file = STUDY_Country + file_name;
 // [headers columns , headers rows , values]
 [param_names, proj_variables, param_values] = read_csv_table(proj_file,';');
 
-// Check if the headers are consistent
+// Define and check if the headers are consistent
 head_col.file = 'file';
 head_col.headers = 'headers';
 head_col.ind_of_proj = 'indexes_of_proj';
 head_col.apply_proj = 'apply_the_proj';
+head_col.intens = 'Intens';
 
 for param = fieldnames(head_col)'
     ind_of(param) = find(param_names == head_col(param));
@@ -40,19 +67,16 @@ for i = 1:nb_var
 end
 
 
-// -------------------- *
-// Load projection data *
-// -------------------- *
+// ---------------------- *
+// Fill projection's data *
+// ---------------------- *
 
-// load IOT_Qtities_TimeStep
-execstr('iot_qtities = IOT_Qtities' + '_' + string(time_step));
-
-// Check IOT_Qtities_TimeStep's aggregation
-proj_desaggregated = ..
-prod(IndexRow == IndRow_IOT_Qtities) & prod(IndexCol == IndCol_IOT_Qtities);
-
-proj_well_aggregated = ..
-prod(IndexRow(1:nb_Sectors,:) == Index_Commodities) & prod(IndexCol(:,1:nb_Sectors) == Index_Commodities');
+// if proj intens, load Y
+if Proj.IC.intens then
+    Proj.Y.file = Proj.IC.file;
+    Proj.Y.headers = 'Y';
+    Proj.Y.apply_proj = Proj.IC.apply_proj;
+end
 
 for var = fieldnames(Proj)'
     if Proj(var).apply_proj then
@@ -104,9 +128,17 @@ if AGG_type <> '' & proj_desaggregated then
 end
 
 
+// IC intensity projection
+if Proj.IC.intens then
+    Proj.alpha = Proj.IC;
+    Proj.alpha.val = Proj.IC.val ./ (ones(nb_Sectors,1) * Y');
+    Proj.IC.apply_proj = %F;
+    Proj.Y = null();
+end
+
+
 // ---------------------- *
 // Clear unused variables *
 // ---------------------- *
-
 clear file_name proj_file param_names proj_variables param_values head_col ind_of nb_var param var param_val proj_param proj_val;
 
