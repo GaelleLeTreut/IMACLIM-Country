@@ -224,6 +224,7 @@ indicEltFC = 1;
 
 for elt=1:nb_FC
     varname = Index_FC(elt);
+//    initial_value(varname+"_value") = initial_value.FC_value(:,elt);
     execstr ("initial_value."+varname+"_value"+"=initial_value.FC_value(:,elt);");
     indicEltFC = 1 + indicEltFC;
 end

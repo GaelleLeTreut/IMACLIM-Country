@@ -97,7 +97,7 @@ for elt=1:size(Country_available,"r");
 end
 
 if ~(isdef("Country")) then
-    disp("Please select a Country in this file : " + STUDY + "Country_Selection.csv");    
+    printf("Please select a Country in this file : %s Country_Selection.csv", STUDY);    
     error("");
 end
 

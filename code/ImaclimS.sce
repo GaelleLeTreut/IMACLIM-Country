@@ -38,8 +38,8 @@
 // test mode
 Test_mode = isdef('TEST_MODE');
 
-// mute mode
-debug_mode = %T;
+// debug mode
+debug_mode = %F;
 
 // defined in the test program
 if Test_mode then
@@ -130,6 +130,7 @@ end
 
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
+    error('agg_type');
     exec("Aggregation.sce");
     if Invest_matrix then
         nb_size_I = nb_SectorsAGG;

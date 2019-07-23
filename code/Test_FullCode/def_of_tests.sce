@@ -12,7 +12,7 @@ iso_arg = 'ARG';
 test_arg.System_Resol = ['Systeme_Static'];
 test_arg.Scenario = ['', 'NDC', 'CCS'];
 test_arg.AGG_type = ['AGG_EnComp', ''];
-test_arg.Invest_matrix = ['%T', '%F'];
+//test_arg.Invest_matrix = ['%T', '%F'];
 
 argentina = new_country(name_arg, iso_arg, test_arg);
 
@@ -25,8 +25,8 @@ name_bra = 'Brasil';
 iso_bra = 'BRA';
 
 test_bra.System_Resol = ['Systeme_Static_BRA'];
-test_bra.AGG_type = ['', 'AGG_PMR19', 'AGG_EnComp'];
-test_bra.H_DISAGG = ['HH1', 'H3', 'H4'];
+//test_bra.AGG_type = ['', 'AGG_PMR19', 'AGG_EnComp'];
+//test_bra.H_DISAGG = ['HH1', 'H3', 'H4'];
 
 brasil = new_country(name_bra, iso_bra, test_bra);
 
@@ -62,4 +62,4 @@ france_scenario = new_country(name_fra, iso_fra, test_fra_scen);
 // List of countries to test *
 // ------------------------- * 
 
-countries = list(argentina, brasil, brasil_scenario, france, france_scenario);
+countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
