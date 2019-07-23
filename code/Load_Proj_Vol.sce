@@ -101,7 +101,7 @@ for var = fieldnames(Proj_Vol)'
                 end
             end
         else
-            error('You need to define how to read the projection file ' + proj_param.file + 'for projection of ' + var)
+            error('You need to define how to read the projection file ' + Proj_Vol(var).file + 'for projection of ' + var)
         end
     end
 end
@@ -135,10 +135,3 @@ if Proj_Vol.IC.intens then
     Proj_Vol.IC.apply_proj = %F;
     Proj_Vol.Y = null();
 end
-
-
-// ---------------------- *
-// Clear unused variables *
-// ---------------------- *
-clear file_name proj_file param_names proj_variables param_values head_col ind_of nb_var param var param_val proj_param proj_val;
-
