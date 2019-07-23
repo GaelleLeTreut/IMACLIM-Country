@@ -1831,8 +1831,8 @@ end
 // initial_value.FC = null();
 
 //Struture BY. created to reunite all BY values before introducing a choc
-execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
 execstr("BY."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_value)+";");
+execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
 execstr("BY."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 
 //Structure ini. = structure of initial value on one iteration
