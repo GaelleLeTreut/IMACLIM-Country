@@ -1978,32 +1978,12 @@ function X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
 
 endfunction
 
-function X = Exports_Const_4( pM, pX, sigma_X, delta_X_parameter);
-
-    delta_X_parameter = abs(delta_X_parameter);
-    pX = abs(pX);
-    pM = abs(pM);
-
-    X = ( (ones(nb_Sectors, 1) + delta_X_parameter') .* (pX_ref.*X_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )./pX
-
-endfunction
-
-function X = Exports_Const_4(pM, pM_ref, pX, pX_ref, X_ref, sigma_X, delta_X_parameter,time_period);
-
-    delta_X_parameter = abs(delta_X_parameter);
-    pX = abs(pX);
-    pM = abs(pM);
-
-//    X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^(time_period) .* (pX_ref.*X_ref) .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )./pX
-    X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^(time_period) .* X_ref .* ( (pX_ref ./ pM_ref) .* (pM ./ pX) ) .^ sigma_X' )
-
-endfunction
 
 /// Trade balance constant to GDP growth
 function y = Trade_Balance_Const_1( pM, pX, X, M, GDP);
 
   y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
-// y = (sum(pX.*X) - sum(pM.*M)) - (sum(pX_ref.*X_ref) - sum(pM_ref.*M_ref))
+
 endfunction
 
 /// Trade balance constant to GDP growth
