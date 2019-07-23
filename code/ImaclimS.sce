@@ -190,7 +190,15 @@ for time_step=1:Nb_Iter
 
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
-        exec(STUDY + "Macro_Framework.sce");
+        exec("Macro_Framework.sce");
+    end
+
+    // Load the projections for forcing
+    if Scenario <> '' then
+        if time_step == 1 then
+            exec("Import_Proj_Volume.sce");
+        end
+        exec('Load_Projections.sce');
     end
 
     // Loading other study changes (specific feature)
@@ -200,7 +208,9 @@ for time_step=1:Nb_Iter
     warning("sign of ClimPolCompensbySect");
 
     // Check if the projections are made correctly
-    exec("Check_Projections.sce");
+    if Scenario <> '' then
+        exec("Check_Projections.sce");
+    end
 
     ////////////////////////////////////////////////////////////
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY

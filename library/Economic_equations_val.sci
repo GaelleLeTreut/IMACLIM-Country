@@ -421,7 +421,7 @@ function IC = IC_1_val(Y, alpha)
     // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
     // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
 
-    if isdef('Proj') & Proj.IC.apply_proj then
+    if is_projected('IC') then
         IC = apply_proj_val(IC, 'IC');
     end
 
