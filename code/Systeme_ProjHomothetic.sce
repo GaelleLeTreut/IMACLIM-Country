@@ -38,6 +38,20 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
+// setting parameters for homothetic projection
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	parameters.sigma_pC = ones(parameters.sigma_pC);
+	parameters.sigma_ConsoBudget = ones(parameters.sigma_ConsoBudget);
+	parameters.ConstrainedShare_C = zeros(parameters.ConstrainedShare_C);
+	parameters.sigma_M = ones(parameters.sigma_M);
+	parameters.sigma_X = ones(parameters.sigma_X);
+	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+	parameters.Carbon_Tax_rate = 0.0;
+	parameters.u_param = BY.u_tot;
+
+/////////////////////////////////////////////////////////////////////////////////////////
 // defined in "loading data" : Index_Imaclim_VarResol
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +111,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ///// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
     pM = pM_price_Const_2(); // check const_1
     M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Const_1(pY, pM, Y, M );
@@ -109,13 +123,17 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,Other_Di
     pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
 
     CPI = CPI_Const_2( pC, C); // defined in relation to BY
+	GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
+	G_pFish = G_pFish_Const_1(pG, G);
+	I_pFish = I_pFish_Const_1(pI, I);
 
-    [alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+    [alpha, lambda, kappa] =Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 
     GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X); 
 
     // const_1 : calib / const_2 : CPI / const_3 : GDP
     Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
+	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C)
 endfunction
 
 // execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
@@ -130,7 +148,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus, Other_Direct_Tax]= f_resol_interm(Deriv_variables)
+    [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -303,7 +321,12 @@ end
 
 ///////////////////////////////////////////
 // Test function f_resolution and consistency between size of constraint and X vector of variable for fsolve
-Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var);
+try  
+	Constraints_Init =  f_resolution (X_Deriv_Var_init, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var); 
+catch
+    [str,n,line,func]=lasterror(%f);
+    error("Error " + string(n) + " with initial f_resolution: " + str);
+end								
 [maxos,lieu]=max(abs(Constraints_Init));
 SizeCst = size(Constraints_Init);
 [contrainte_tri , coord] =gsort(Constraints_Init);
@@ -330,6 +353,9 @@ sensibFsolve = 1e-15;
 Xbest        = X_Deriv_Var_init;
 a            = 0.1;
 
+if Test_mode then
+    countMax = testing.countMax;
+end				 
 tic();
 
 if %f

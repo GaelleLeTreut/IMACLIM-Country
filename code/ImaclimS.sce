@@ -192,9 +192,12 @@ for time_step=1:Nb_Iter
         exec(STUDY + "Macro_Framework.sce");
     end
 
-    // Loading other study changes (specific feature)
+    // Loading other study changes (specific feature) except for homothetic projections
+	Homo_Shortname = "Systeme_ProjHomo";
+	if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
     exec(STUDY_Country+study+".sce");
-
+	end 
+	
     exec(System_Resol+".sce");
     warning("sign of ClimPolCompensbySect");
 
