@@ -15,7 +15,7 @@ if time_step==1 then
 
     for var=1:nb_Var_Macro
         varname=Index_Var_Macro(var);
-        execstr("Projection."+varname+"=evstr(Macro_Framework_"+Macro_nb+"(find(Macro_Framework_"+Macro_nb+"==varname),2:$));");
+        execstr("Proj_Macro."+varname+"=evstr(Macro_Framework_"+Macro_nb+"(find(Macro_Framework_"+Macro_nb+"==varname),2:$));");
     end
 end
 
@@ -28,22 +28,22 @@ if Resol_Mode == "Static_comparative"
 	time_step=1;
 end
 if Resol_Mode == "Dynamic_projection"
-	parameters.time_since_ini = Projection.current_year(time_step) - Projection.reference_year(time_step);
-	parameters.time_since_BY = Projection.current_year(time_step) - Projection.reference_year(1);
+	parameters.time_since_ini = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(time_step);
+	parameters.time_since_BY = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
 end
 
 // Set up demographic context
 if Demographic_shift == "True"
-	Deriv_Exogenous.Labour_force =  ((1+Projection.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
-	Deriv_Exogenous.Population =  ((1+Projection.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
+	Deriv_Exogenous.Labour_force =  ((1+Proj_Macro.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
+	Deriv_Exogenous.Population =  ((1+Proj_Macro.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
 	if [System_Resol<>"Systeme_ProjHomothetic"]&[System_Resol<>"Systeme_ProjHomot_BRA"] then
-		Deriv_Exogenous.Retired =  ((1+Projection.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
+		Deriv_Exogenous.Retired =  ((1+Proj_Macro.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
 	end
 end
 
 // Set up macroeconomic context
 if Labour_product == "True"
-	GDP_index(time_step) = prod((1 + Projection.GDP(1:time_step)).^(Projection.current_year(1:time_step) - Projection.reference_year(1:time_step)));
+	GDP_index(time_step) = prod((1 + Proj_Macro.GDP(1:time_step)).^(Proj_Macro.current_year(1:time_step) - Proj_Macro.reference_year(1:time_step)));
 	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
@@ -57,7 +57,7 @@ if World_prices == "True"
 //		name = World_energy_prices(k);
 		name = Index_Sectors(k);
 		if sum(Index_Sectors == name)==1
-			execstr("parameters.delta_pM_parameter("+k+") = Projection.pM_"+name+"(time_step);");
+			execstr("parameters.delta_pM_parameter("+k+") = Proj_Macro.pM_"+name+"(time_step);");
 		else
 			warning("the energy quantity "+ name +" does not fit with the agregation level used: the related prices won't be informed.");  
 		end
@@ -68,7 +68,7 @@ end
 //////// Exportation in volume 
 // Export growth of non-energy sectors as GDP_world
 if X_nonEnerg == "True"
-	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Projection.GDP_world(time_step);
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Proj_Macro.GDP_world(time_step);
 end
 
 

@@ -197,7 +197,7 @@ for time_step=1:Nb_Iter
         if time_step == 1 then
             exec("Import_Proj_Volume.sce");
         end
-        exec('Load_Projections.sce');
+        exec('Load_Proj_Vol.sce');
     end
 
     // Loading other study changes (specific feature)
@@ -208,7 +208,7 @@ for time_step=1:Nb_Iter
 
     // Check if the projections are made correctly
     if Scenario <> '' then
-        exec("Check_Projections.sce");
+        exec("Check_Proj_Vol.sce");
     end
 
     ////////////////////////////////////////////////////////////

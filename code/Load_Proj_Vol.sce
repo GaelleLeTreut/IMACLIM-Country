@@ -63,7 +63,7 @@ nb_var = size(proj_variables,1);
 for i = 1:nb_var
     var = proj_variables(i);
     param_val = param_values(i,:);
-    Proj(var) = new_proj(param_val);
+    Proj_Vol(var) = new_proj(param_val);
 end
 
 
@@ -72,16 +72,16 @@ end
 // ---------------------- *
 
 // if proj intens, load Y
-if Proj.IC.intens then
-    Proj.Y.file = Proj.IC.file;
-    Proj.Y.headers = 'Y';
-    Proj.Y.apply_proj = Proj.IC.apply_proj;
+if Proj_Vol.IC.intens then
+    Proj_Vol.Y.file = Proj_Vol.IC.file;
+    Proj_Vol.Y.headers = 'Y';
+    Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
 end
 
-for var = fieldnames(Proj)'
-    if Proj(var).apply_proj then
+for var = fieldnames(Proj_Vol)'
+    if Proj_Vol(var).apply_proj then
         // Read IOT_Qtities
-        if Proj(var).file == 'IOT_Qtities' then
+        if Proj_Vol(var).file == 'IOT_Qtities' then
             
             // IndexRow / IndexCol : Index of IOT_Qtities_TimeStep
             // IndRow_IOT_Qtities / IndCol_IOT_Qtities : Index of desagregated IOT
@@ -90,12 +90,12 @@ for var = fieldnames(Proj)'
 
             // If IOT_Qtities_TimeStep is not aggregated
             if proj_desaggregated then
-                Proj(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_CommoInit, Proj(var).headers);
+                Proj_Vol(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
             // If IOT_Qtities_TimeStep is aggregated
             else
                 // Check that the aggregation is fine
                 if proj_well_aggregated then
-                    Proj(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_Commodities, Proj(var).headers);
+                    Proj_Vol(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
                 else
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
@@ -113,12 +113,12 @@ end
 
 if AGG_type <> '' & proj_desaggregated then
 
-    for var = fieldnames(Proj)'
-        if Proj(var).apply_proj then
+    for var = fieldnames(Proj_Vol)'
+        if Proj_Vol(var).apply_proj then
             if var == 'IC' then
-                Proj(var).val = aggregate(Proj(var).val, all_IND, all_IND);
-            elseif size(Proj(var).val,2) == 1 then
-                Proj(var).val = aggregate(Proj(var).val, all_IND, list(1));
+                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, all_IND);
+            elseif size(Proj_Vol(var).val,2) == 1 then
+                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, list(1));
             else
                 error('Projection of 'var + ' needs a rule to aggregate the columns');
             end
@@ -129,11 +129,11 @@ end
 
 
 // IC intensity projection
-if Proj.IC.intens then
-    Proj.alpha = Proj.IC;
-    Proj.alpha.val = Proj.IC.val ./ (ones(nb_Sectors,1) * Y');
-    Proj.IC.apply_proj = %F;
-    Proj.Y = null();
+if Proj_Vol.IC.intens then
+    Proj_Vol.alpha = Proj_Vol.IC;
+    Proj_Vol.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+    Proj_Vol.IC.apply_proj = %F;
+    Proj_Vol.Y = null();
 end
 
 

@@ -3,9 +3,9 @@ err = 1E-3;
 
 function test_proj(var_name , proj_ind)
 
-    difference = d(var_name) - Proj(var_name).val;
+    difference = d(var_name) - Proj_Vol(var_name).val;
 
-    for ind = Proj(var_name).ind_of_proj;
+    for ind = Proj_Vol(var_name).ind_of_proj;
         zero = difference(ind(1),ind(2));
 
         for z = zero'
@@ -17,8 +17,8 @@ function test_proj(var_name , proj_ind)
 
 endfunction
 
-for var_name = fieldnames(Proj)'
-    if Proj(var_name).apply_proj then
+for var_name = fieldnames(Proj_Vol)'
+    if Proj_Vol(var_name).apply_proj then
         test_proj(var_name);
         print(out,'*** ' + var_name + ' has been well projected.');
     else
