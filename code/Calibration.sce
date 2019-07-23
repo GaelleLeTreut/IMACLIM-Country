@@ -1828,12 +1828,20 @@ for elt=1:nb_FC
     indicEltFC = 1 + indicEltFC;
 end
 
-// initial_value.FC = null();
 
+// initial_value.FC = null();
+for var = fieldnames(calib)'
+	if find(fieldnames(initial_value) == var) <> [] then
+		initial_value(var) = calib(var);
+	end
+end
+pause
 //Struture BY. created to reunite all BY values before introducing a choc
 execstr("BY."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_value)+";");
 execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
 execstr("BY."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
+
+
 
 //Structure ini. = structure of initial value on one iteration
 // iter = 1 ==> BY = ini
