@@ -2,6 +2,29 @@
 clear
 
 // main executable script
+
+
+// test mode
+Test_mode = isdef('TEST_MODE');
+
+// mute mode
+debug_mode = %T;
+
+// defined in the test program
+if Test_mode then
+    debug_mode = testing.debug_mode;
+end
+
+// output of print
+if debug_mode then
+    out = %io(2);
+    warning('on');
+else
+    out = 0;
+    warning('off');
+end
+
+
 //PREAMBULE
 
 print(out,"=====IMACLIM-Country Platform========");
@@ -10,6 +33,9 @@ print(out,"=====IMACLIM-Country Platform========");
 //	STEP 0: SYSTEM DEFINITION & SAVEDIR SETUP
 /////////////////////////////////////////////////////////////////////////////////////////////
 print(out,"STEP 0: loading Dashboard ");
+
+exec("Load_file_structure.sce");
+
 exec("preambule.sce");
 exec("Dashboard.sce");
 
@@ -42,6 +68,12 @@ exec("IOT_DecompImpDom.sce");
 //Execute Households_Disagg.sce file if Index_HouseholdsDISAGG is defined
 if H_DISAGG <> "HH1"
 	exec("Households_Desag.sce");
+end
+
+nb_size_I = 1;
+if Invest_matrix then
+    nb_size_I = nb_Sectors;
+    exec("Invest_Desag.sce");
 end
 
 //Execute agreagation.sce file if Index_SectorsAGG is defined
@@ -83,14 +115,17 @@ if Nb_Iter<>1
 	end
 end
 
-// Loading macro framework (common feature for each country) 
-if Macro_nb <> ""
-	exec(STUDY+"External_Module"+sep+"Macro_Framework.sce");
-end
+    // Loading macro framework (common feature for each country) 
+    if Macro_nb <> ""
+        exec(STUDY + "Macro_Framework.sce");
+    end
 
-// Loading other study changes (specific feature)
-exec(STUDY_Country+study+".sce");
-
+    // Loading other study changes (specific feature) except for homothetic projections
+	// Homo_Shortname = "Systeme_ProjHomo";
+	// if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
+    // exec(STUDY_Country+study+".sce");
+	// end 
+	
 
 // Recherche d'optimum ou simple résolution
 //		[Mu    			u_param  		sigma_omegaU	CoefRealWage	phi_K..		

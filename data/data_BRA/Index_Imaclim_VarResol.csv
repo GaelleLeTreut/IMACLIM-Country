@@ -53,7 +53,7 @@ SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_I;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_G;1;nb_Commodities;Var;-%inf;%inf 
-I;nb_Commodities;1;Var;0;%inf
+I;nb_Commodities;nb_size_I;Var;0;%inf
 pK;1;nb_Sectors;Var;0;%inf
 Y;nb_Sectors;1;Var;0;%inf
 IC;nb_Commodities;nb_Sectors;Var;0;%inf
@@ -74,8 +74,6 @@ w;1;nb_Sectors;Var;0;%inf
 u;1;nb_Households;Var;0;1
 Unemployed;1;nb_Households;Var;0;%inf
 pL;1;nb_Sectors;Var;0;%inf
-delta_interest_rate;1;1;Var;0;10
-interest_rate;1;nb_InstitAgents;Var;-1;1
 GDP;1;1;Var;0;%inf
 GrossOpSurplus;1;nb_Sectors;Var_interm;-%inf;%inf
 Labour_income;1;nb_Sectors;Var;0;%inf

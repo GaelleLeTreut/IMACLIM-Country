@@ -578,12 +578,13 @@ function y = delta_TradeMarg_rate_eq(Trade_margins)
     
 endfunction
 
-function [SpeMarg_IC,SpeMarg_C,SpeMarg_X,SpeMarg_I] =  SpeMarg_1_val(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X)
+function [SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I] =  SpeMarg_1_val(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X)
 
     // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
 
     SpeMarg_IC = SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )';
     SpeMarg_C = SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
+	SpeMarg_G = SpeMarg_rates_G .* ( p' .* G )'
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
     SpeMarg_I = SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
 

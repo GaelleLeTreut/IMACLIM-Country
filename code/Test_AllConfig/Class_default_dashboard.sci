@@ -10,7 +10,7 @@ function default_dashboard = new_default_dashboard()
     //                      values by default
     
     default_dashboard = struct( ..
-    'System_Resol', 'Systeme_Static', ..
+    'System_Resol', 'System_StatRed', ..
     'study', 'Recursive_RunChoices', ..
     'AGG_type', '', ..
     'H_DISAGG', 'HH1', ..

@@ -180,13 +180,6 @@ for time_step=1:Nb_Iter
         end
     end
 
-    //// Defining matrix with dimension of each variable for Resolution file
-    // if  System_Resol=="Projection_homothetic"
-    // VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
-    // else
-    // VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
-    // end
-
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
         exec("Macro_Framework.sce");
@@ -200,9 +193,12 @@ for time_step=1:Nb_Iter
         exec('Load_Proj_Vol.sce');
     end
 
-    // Loading other study changes (specific feature)
+    // Loading other study changes (specific feature) except for homothetic projections
+	Homo_Shortname = "Systeme_ProjHomo";
+	if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
     exec(STUDY_Country+study+".sce");
-
+	end 
+	
     exec(System_Resol+".sce");
     warning("sign of ClimPolCompensbySect");
 

@@ -107,8 +107,8 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
     pI = pI_price_Const_3( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, Cons_Tax_rate) ;
     CPI = CPI_Const_2( pC, C);
     // 	Specific to any projection in relation to BY
-    [alpha, lambda, kappa] =Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
-    GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
+    [alpha, lambda, kappa] =Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
 
 endfunction
 
@@ -239,7 +239,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
 
-    SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
+    SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 
     // Glt; à revoir pour PMR
     Invest_demand_Const_1(Betta, I, kappa, Y) 
@@ -273,10 +273,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Brasil; specific  formulation to take into account both taxes types 
     // Il pourrait exister une formalation généraliser....
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
-    MacroClosure_Const_1(GFCF_byAgent, pI, I)
+    // MacroClosure_Const_1(GFCF_byAgent, pI, I)
 
     // Antoine : delta_interest_rate défini par rapport à BY pour des questions d'harmonisation avec CPI et NetWage_variation
-    Interest_rate_Const_1(interest_rate, delta_interest_rate)
+    // Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     // Brasil : specific formulation 
     GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
