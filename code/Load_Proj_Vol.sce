@@ -23,6 +23,12 @@ else
     Index_Sectors_IC = Index_Sectors;
 end
 
+if nb_Households == 1 then
+    Index_Headers_H = 'C';
+else
+    Index_Headers_H = Index_Households;
+end
+
 
 // ------------------------- *
 // Load projection structure *
@@ -130,7 +136,9 @@ end
 
 // IC intensity projection
 if Proj_Vol.IC.intens then
+	warning("alpha est calculé à partir de Y initial : il faut la projection de Y");
     Proj_Vol.alpha = Proj_Vol.IC;
+	// Proj_Vol.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Proj.Y.val');
     Proj_Vol.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
     Proj_Vol.IC.apply_proj = %F;
     Proj_Vol.Y = null();

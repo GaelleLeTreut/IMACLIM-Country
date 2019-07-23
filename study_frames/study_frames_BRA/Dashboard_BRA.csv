@@ -12,9 +12,9 @@ study;Recursive_RunChoices
 AGG_type;AGG_PMR19
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
+// H_DISAGG;HH1
 // H_DISAGG;H3
-// H_DISAGG;H4
+H_DISAGG;H4
 // H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
@@ -31,8 +31,8 @@ World_prices;False
 X_nonEnerg;False
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-Scenario;PMR_Ref_Disag
-// Scenario;PMR_Ref
+// Scenario;PMR_Ref_Disag
+Scenario;PMR_Ref
 // TELL if IOT_Quantities from scenario require aggregation as aggregation sectors; 
 // ScenAgg_IOT;%T
 // TELL if you want to realise a carbon footprint analysis;
