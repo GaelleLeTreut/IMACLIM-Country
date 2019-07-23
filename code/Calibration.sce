@@ -1835,7 +1835,7 @@ for var = fieldnames(calib)'
 		initial_value(var) = calib(var);
 	end
 end
-pause
+
 //Struture BY. created to reunite all BY values before introducing a choc
 execstr("BY."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_value)+";");
 execstr("BY."+fieldnames(calib)+"= calib."+fieldnames(calib)+";");
