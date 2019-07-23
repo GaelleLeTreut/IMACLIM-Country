@@ -180,13 +180,6 @@ for time_step=1:Nb_Iter
         end
     end
 
-    //// Defining matrix with dimension of each variable for Resolution file
-    // if  System_Resol=="Projection_homothetic"
-    // VarDimMat_resol = eval(Index_Imaclim_VarProHom(2:$,2:3));
-    // else
-    // VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
-    // end
-
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
         exec(STUDY + "Macro_Framework.sce");

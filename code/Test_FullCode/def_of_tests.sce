@@ -9,7 +9,7 @@
 name_arg = 'Argentina';
 iso_arg = 'ARG';
 
-test_arg.System_Resol = ['Systeme_Static'];
+test_arg.System_Resol = ['System_StatRed'];
 test_arg.Scenario = ['', 'NDC', 'CCS'];
 test_arg.AGG_type = ['AGG_EnComp', ''];
 test_arg.Invest_matrix = ['%T', '%F'];
@@ -42,14 +42,14 @@ brasil_scenario = new_country(name_bra, iso_bra, test_bra_scen);
 name_fra = 'France';
 iso_fra = 'FRA';
 
-test_fra.System_Resol = ['Systeme_Static_FRA', 'Systeme_ProjHomothetic_FRA'];
+test_fra.System_Resol = ['Systeme_Static', 'Systeme_ProjHomothetic'];
 test_fra.AGG_type = ['', 'AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra.H_DISAGG = ['HH1', 'H10'];
 
 france = new_country(name_fra, iso_fra, test_fra);
 
-test_fra_scen.System_Resol = ['Systeme_Static_FRA'];
+test_fra_scen.System_Resol = ['Systeme_Static'];
 test_fra_scen.Scenario = ['Recalib', 'AME', 'AMS'];
 test_fra_scen.AGG_type = ['AGG_SNBC2'];
 
