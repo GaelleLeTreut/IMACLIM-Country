@@ -85,7 +85,6 @@ execstr(Table_Deriv_Var_interm);
 /////////////////////////////////////////////////////////////////////////
 ///// Extra calculation
 /////////////////////////////////////////////////////////////////////////
-warning("ruben: created sigmaM here, instead of Technical_Coef_Const_1, maybe change?");
 sigmaM = sigma(1);
 if ~or(sigma==sigmaM)
     error("problem with sigma");
@@ -132,7 +131,7 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     w = Wage_Variation_1_val(NetWage_variation);
     pL = Labour_Cost_1_val(w, Labour_Tax_rate);
 
-    [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+    [alpha, lambda, kappa] = Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
     I = Invest_demand_1_val(Betta, kappa, Y);
     pK = Capital_Cost_1_val(pI, I);

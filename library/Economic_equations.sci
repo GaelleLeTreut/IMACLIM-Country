@@ -1338,218 +1338,13 @@ endfunction
 
 
 /// Technical substitution
-warning(" ruben again : Technical_Coef_Const_1: abs(prix)")
-function [y] = Technical_Coef_Const_1(alpha, lambda, kappa, aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
-
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pK = abs(pK);
-    //  Aggregate factor price index ( FPI(Sm_index) )
-    //If pL =0 => aL = 0 => aL .^ sigma .* pL.^(ones(1, nb_Sectors) - sigma) == 0 // Il faut juste mettre une condition sur le pL car il est exposant un nombre négatif.
-    FPI = sum(aIC .^ sigmaM .* pIC.^(1 - sigmaM),"r") + aL .^ sigma .* ( (pL<>0).*pL + (pL==0) ).^(ones(1, nb_Sectors) - sigma) + aK .^ sigma .* pK.^(ones(1, nb_Sectors) - sigma) ;
-    // testBounds1 = (pIC .* aIC)<0;
-    // testBounds2 = or(testBounds1 , "r");
-    // if or(testBounds2)
-    //     temp = - sum(pIC .* aIC .* testBounds1,"r");
-    //     FPI(testBounds2) = temp(testBounds2);
-    // end
-
-    //  Intermediate consumptions ( alpha(nb_Commodities*nb_Sectors) )
-    y1 = alpha -  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + (aIC ./ pIC) .^ sigmaM .* (ones( nb_Sectors, 1).*.((FPI<>0).*FPI+(FPI==0)).^(sigma./(1 - sigma))) ) ;
-    // if or(testBounds1)
-    //     y1(testBounds1) = alpha(testBounds1) - pIC(testBounds1) .* aIC(testBounds1);
-    // end
-    
-    if is_projected('alpha') then
-        y1 = apply_proj_eq(y1, alpha, 'alpha');
-    end
-
-    //  Labour intensity ( lambda(nb_Sectors) )
-    y2 = lambda - (pL<>0).* ( (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + (aL ./ ((pL<>0).*pL+(pL==0))) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
-
-    //  Capital intensity ( kappa(nb_Sectors) )
-    y3 = kappa - ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + (aK ./ pK) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
-
-    y = [ matrix(y1, -1 , 1) ; y2' ; y3' ];
-
-endfunction
-
-function [alpha, lambda, kappa] = Technical_Coef_Const_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pK = abs(pK);
-    FPI = sum(aIC .^ sigmaM .* pIC.^(1 - sigmaM),"r") + aL .^ sigma .* ( (pL<>0).*pL + (pL==0) ).^(ones(1, nb_Sectors) - sigma) + aK .^ sigma .* pK.^(ones(1, nb_Sectors) - sigma) ;
-    alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + (aIC ./ pIC) .^ sigmaM .* (ones( nb_Sectors, 1).*.((FPI<>0).*FPI+(FPI==0)).^(sigma./(1 - sigma))) ) ;
-    lambda = (pL<>0).* ( (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + (aL ./ ((pL<>0).*pL+(pL==0))) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
-    kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + (aK ./ pK) .^ sigma .* ((FPI<>0).*FPI+(FPI==0)).^(sigma./(ones(1, nb_Sectors) - sigma)) ) ) ;
-    
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-    
-endfunction
-
-warning("Technical_Coef_Const_3 : check that it is correct!!!");
-function [alpha, lambda, kappa] = Technical_Coef_Const_3( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pK = abs(pK);
-    FPI = sum((aIC .^ sigmaM) .* (pIC.^(1 - sigmaM)),"r") + (aL .^ sigma) .* (pL .^(1 - sigma)) + (aK .^ sigma) .* (pK.^(1 - sigma)) ;
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-    alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ sigmaM) .* (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-    lambda = (Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ pL) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
-    lambda(test_pL|test_FPI) = 0;
-    kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
-    
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-    
-endfunction
-
-//	Fixed technical coefficients
-function [alpha, lambda, kappa] = Technical_Coef_Const_4( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
-    alpha 	=  alpha_ref ;
-    lambda = lambda_ref ;
-    kappa 	= kappa_ref ;
-    
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-    
-endfunction
-
 
 ///	proj & homothétie: utiliser DecreasingReturn_Const_1 + TechnicProgress_Const_1  ( soit =1)
 ///		Gain de productivité sur le travail lambda = 1/(1+Mhu)^t * equation actuelle 
 ///		Prix pL remplacé par pL / (1+Mhu)^t dans les équations d'arbitrage : le salaire récupère les gains de productivité, ce qui ne change pas les arbitrages techniques dans la production
 ///		le calcul de la productivité du travail Labour_Product = (1+Mhu)^t est fait dans Homothetic_projection.sce
 
-function [alpha, lambda, kappa] = Technical_Coef_Const_5( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Labour_Product ) ;
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pK = abs(pK);
-    FPI = sum((aIC .^ sigmaM) .* (pIC.^(1 - sigmaM)),"r") + (aL .^ sigma) .* ((pL / Labour_Product) .^(1 - sigma)) + (aK .^ sigma) .* (pK.^(1 - sigma)) ;
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-    alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ sigmaM) .* (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-	
-    lambda = (1 / Labour_Product)*(Theta ./ Phi) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL / Labour_Product) ) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
-    lambda(test_pL|test_FPI) = 0;
-    kappa = ( (Theta ./ Phi) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
-    
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-	
-endfunction
-
-function [alpha, lambda, kappa] = Technical_Coef_Const_6( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Labour_Product ) ;
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pK = abs(pK);
-    FPI = sum((aIC .^ sigmaM) .* (pIC.^(1 - sigmaM)),"r") + (aL .^ sigma) .* ((pL / Labour_Product) .^(1 - sigma)) + (aK .^ sigma) .* (pK.^(1 - sigma)) ;
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-    // alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* ( ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ sigmaM) .* (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-	
-	Phi_Ecopa = ones(nb_EnerSect, 1).*.Phi;
-	Phi_Ecopa($+1:$+nb_NonEnerSect,:) = 1;
-	
-	alpha =  ((ones(nb_Sectors, 1).*.Theta) ./ Phi_Ecopa) .* ( ConstrainedShare_IC .* alpha_ref + ((aIC ./ pIC) .^ sigmaM) .* (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-	
-    lambda = (1 / Labour_Product)*(Theta) .* ( ConstrainedShare_Labour .* lambda_ref + ((aL ./ (pL / Labour_Product) ) .^ sigma) .* (FPI .^(sigma./(1 - sigma)))) ;
-    lambda(test_pL|test_FPI) = 0;
-    kappa = ( (Theta) .* ( ConstrainedShare_Capital .* kappa_ref + ((aK ./ pK) .^ sigma) .* (FPI .^(sigma./(1 - sigma))) ) ) ;
-    
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-	
-endfunction
-
-
-
-function [alpha, lambda, kappa] = Technical_Coef_Const_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pK = abs(pK);
-    
-    FPI = sum((aIC .^(sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
-          (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
-          (aK .^ sigma) .* (pK.^(1 - sigma)) ;
-    
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-
-	alpha =  (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
-             (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
-             (ones( nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-	
-	lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
-             ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
-             (FPI .^(sigma./(1 - sigma)))) ;
-    
-    //lambda(test_pL|test_FPI) = 0;
-    
-	kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
-            ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
-            (FPI .^(sigma./(1 - sigma)))) ;
-            
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-
-endfunction
-
-function [alpha, lambda, kappa] = Technical_Coef_Const_8(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pK = abs(pK);
-    
-    FPI = sum((aIC .^(sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
-          (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
-          (aK .^ sigma) .* (pK.^(1 - sigma)) ;
-    
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-
-	alpha = zeros(nb_Sectors,nb_Sectors);
-
-	alpha(Indice_EnerSect,:) = Projection.IC(Indice_EnerSect,:)./(ones(Indice_EnerSect)'*((Y==0)+(Y<>0).*Y)');
-
-	alpha(Indice_NonEnerSect,:) = (ones(size(Indice_NonEnerSect,2), 1).*.(Theta ./ Phi)) .* (ones(size(Indice_NonEnerSect,2),nb_Sectors)./(1+phi_IC(Indice_NonEnerSect,:)).^time_since_BY).* ..
-             (ConstrainedShare_IC(Indice_NonEnerSect,:) .* BY.alpha(Indice_NonEnerSect,:) + ((aIC(Indice_NonEnerSect,:) ./ pIC(Indice_NonEnerSect,:)) .^ (sigma.*.ones(size(Indice_NonEnerSect,2),1))) .* ..
-             (ones(size(Indice_NonEnerSect,2), 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-	
-	lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
-             ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
-             (FPI .^(sigma./(1 - sigma)))) ;
-    
-    //lambda(test_pL|test_FPI) = 0;
-    
-    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
-            ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
-            (FPI .^(sigma./(1 - sigma)))) ;
-            
-    if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-
-endfunction
-
-function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+function [alpha, lambda, kappa] = Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
@@ -1582,6 +1377,20 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma,
     end
 
 endfunction
+
+
+//	Fixed technical coefficients
+function [alpha, lambda, kappa] = Technical_Coef_Const_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
+    alpha 	=  alpha_ref ;
+    lambda = lambda_ref ;
+    kappa 	= kappa_ref ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+    
+endfunction
+
 
 //Labour productivity semi-endogenous (power sector)
 function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, lambda_ref, Mu_b, time_period,Indice)

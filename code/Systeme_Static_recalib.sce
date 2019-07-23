@@ -85,7 +85,6 @@ execstr(Table_Deriv_Var_interm);
 /////////////////////////////////////////////////////////////////////////
 ///// Extra calculation
 /////////////////////////////////////////////////////////////////////////
-warning("ruben: created sigmaM here, instead of Technical_Coef_Const_1, maybe change?");
 sigmaM = sigma(1);
 if ~or(sigma==sigmaM)
     error("problem with sigma");
@@ -115,7 +114,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
 	G_pFish = G_pFish_Const_1(pG, G);
 	I_pFish = I_pFish_Const_1(pI, I);
 
-	[alpha, lambda, kappa] = Technical_Coef_Const_9(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+	[alpha, lambda, kappa] = Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
 	GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
 
