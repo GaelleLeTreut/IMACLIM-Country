@@ -7,12 +7,11 @@ function y = apply_proj_eq(eq, var_value, var_name)
     // value of projection
     proj_value = Proj(var_name).val;
     
-    // indexes of projection
-    ind_of_proj = Proj(var_name).ind_of_proj;
-    
     // apply the projection
     y = eq;
-    y(ind_of_proj,:) = var_value(ind_of_proj,:) - proj_value(ind_of_proj,:);
+    for ind = Proj(var_name).ind_of_proj
+        y(ind(1),ind(2)) = var_value(ind(1),ind(2)) - proj_value(ind(1),ind(2));
+    end
 
 endfunction
 
@@ -25,11 +24,10 @@ function var_proj = apply_proj_val(var_value, var_name)
     // value of projection
     proj_value = Proj(var_name).val;
     
-    // indexes of projection
-    ind_of_proj = Proj(var_name).ind_of_proj;
-    
     // apply the projection
     var_proj = var_value;
-    var_proj(ind_of_proj,:) = proj_value(ind_of_proj,:);
+    for ind = Proj(var_name).ind_of_proj
+        var_proj(ind(1),ind(2)) = proj_value(ind(1),ind(2));
+    end
 
 endfunction
