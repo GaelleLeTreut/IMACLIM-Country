@@ -611,10 +611,7 @@ function [const_SpeMarg_rate] =fcalib_SpeMarg_Const_1(x_SpeMarg_rate, SpeMarg_IC
     SpeMarg_rates_I= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_I");
     SpeMarg_rates_X= indiv_x2variable(Imaclim_VarCalib, "x_SpeMarg_rates_X");
 
-
-    // const_SpeMarg_rate=SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X);
-
-    const_SpeMarg_rate= SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I,SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X);
+    const_SpeMarg_rate= SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I,SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X);
 
 endfunction
 
@@ -1218,7 +1215,7 @@ end
 
 function [const_GOS] =fcalib_GOS_Const_1(x_GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins, SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I,SpeMarg_rates_G, p, alpha, Y, C, X, Imaclim_VarCalib)
     GrossOpSurplus= indiv_x2variable(Imaclim_VarCalib, "x_GrossOpSurplus");
-    const_GOS = GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X);
+    const_GOS = GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X);
 endfunction
 
 const_GOS = 10^5;

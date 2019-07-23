@@ -1683,10 +1683,11 @@ endfunction
 
 // A UTILISER POUR LE CALIBRAGE
 // Specific margin rates on hydrid sector purchases
-function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X) ;
+
+function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X) ;
 
     // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
-
+    // if IC is equal to zero
     if Country == 'Argentina' then
         y1 = (SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
     else
@@ -1700,59 +1701,6 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
     end
 
     y1 =matrix (y1, -1, 1);
-
-
-    // if C is equal to zero
-    y2_1 = (C'==0).*(SpeMarg_rates_C) ;
-    // if C is equal to zero
-    // y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( repmat(p', 1, nb_Households) .* C)');
-    y2_2 = (C'<>0).*(SpeMarg_C - SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)');
-
-    y2 = y2_1 + y2_2 ;
-    y2 =matrix (y2, -1, 1);
-
-
-    // y3 = SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )' ;
-    y3_1 = (X'==0).*(SpeMarg_rates_X) ;
-    // if C is equal to zero
-    y3_2 = (X'<>0).*(SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )');
-
-    y3 = y3_1 + y3_2 ;
-    y3 =matrix (y3, -1, 1);
-
-    // y4 = SpeMarg_I - SpeMarg_rates_I .* ( p' .* I)' ;
-    y4_1 = (sum(I,"c")'==0).*(SpeMarg_rates_I) ;
-    // if C is equal to zero
-    y4_2 = (sum(I,"c")'<>0).*( SpeMarg_I - SpeMarg_rates_I .* ( p' .* sum(I,"c"))' );
-
-    y4 = y4_1 + y4_2 ;
-    y4 =matrix (y4, -1, 1);
-
-    y =[y1;y2;y3;y4];
-
-    // y =  zeros(length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X)++ length(SpeMarg_rates_I), 1) ;
-    // y (1: length(SpeMarg_rates_IC), 1) =  matrix(y1, length(SpeMarg_rates_IC), 1) ;
-    // y (length(SpeMarg_rates_IC)+1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C), 1) =  matrix(y2, length(SpeMarg_rates_C), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
-
-endfunction
-
-// Glt: revoir pour généralisation pays + classe de ménage (diff de const 2 : gov à l'intérieur)
-
-function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X) ;
-
-    // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
-
-    // if IC is equal to zero
-    y1_1 = (IC'==0).*(SpeMarg_rates_IC) ;
-    // if IC is equal to zero
-    // y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1) )');
-    y1_2 = (IC'<>0).*(SpeMarg_IC - SpeMarg_rates_IC .* ( (ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )');
-
-    y1 = y1_1 + y1_2 ;
-    y1 =matrix (y1, -1, 1);
-
 
     // if C is equal to zero
     y2_1 = (C'==0).*(SpeMarg_rates_C) ;
@@ -1787,15 +1735,9 @@ function [y] =  SpeMarg_Const_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
 
     y =[y1;y2;y3;y4;y5];
 
-    // y =  zeros(length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X)++ length(SpeMarg_rates_I), 1) ;
-    // y (1: length(SpeMarg_rates_IC), 1) =  matrix(y1, length(SpeMarg_rates_IC), 1) ;
-    // y (length(SpeMarg_rates_IC)+1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C), 1) =  matrix(y2, length(SpeMarg_rates_C), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
-
 endfunction
 
-function [y] =  SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X) ;
+function [y] =  SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C,SpeMarg_G, SpeMarg_rates_G, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X) ;
 
     // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
 
@@ -1804,14 +1746,17 @@ function [y] =  SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMa
 
     y2 = SpeMarg_C - SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     y2 =matrix (y2, -1, 1);
-
-    y3 = SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )';
+	
+	y3 = SpeMarg_G - SpeMarg_rates_G .* ( p' .* G )';
     y3 =matrix (y3, -1, 1);
 
-    y4 = SpeMarg_I - SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
+    y4 = SpeMarg_X - SpeMarg_rates_X .* ( p' .* X )';
     y4 =matrix (y4, -1, 1);
 
-    y =[y1;y2;y3;y4];
+    y5 = SpeMarg_I - SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
+    y5 =matrix (y5, -1, 1);
+
+    y =[y1;y2;y3;y4;y5];
 
 endfunction
 
@@ -2244,11 +2189,11 @@ function pC = pC_price_Const_3( Transp_margins_rates, Trade_margins_rates, SpeMa
 endfunction
 
 // Purchase price (Government Final consumptions) after trade, transport and indirect tax (no final energy consumption by the government)
-function [y] = pG_price_Const_1(pG, Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
+function [y] = pG_price_Const_1(pG, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
 
     //  Trade and transport
     // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Government) ;
-    margins_rates = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) ;
+    margins_rates = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) + SpeMarg_rates_G' ;
 
     // Indirect tax
     // Indirect_tax_rates = repmat(Energy_Tax_rate_FC' + OtherIndirTax_rate', 1, nb_Government) ;
@@ -2262,11 +2207,11 @@ function [y] = pG_price_Const_1(pG, Transp_margins_rates, Trade_margins_rates, E
 endfunction
 
 // Purchase price (Government Final consumptions) after trade, transport and indirect tax (no final energy consumption by the government)
-function pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
+function pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
 
     //  Trade and transport
     // margins_rates = repmat(Transp_margins_rates' + Trade_margins_rates', 1, nb_Government) ;
-    margins_rates = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) ;
+    margins_rates = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) + SpeMarg_rates_G' ;
 
     // Indirect tax
     // Indirect_tax_rates = repmat(Energy_Tax_rate_FC' + OtherIndirTax_rate', 1, nb_Government) ;
@@ -2795,36 +2740,7 @@ function [y] = GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, L
 
 endfunction
 // Gross operating surplus
-function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X) ;
-
-    // SpeMarg_IC = SpeMarg_rates_IC .* ( repmat(p', 1, nb_Sectors) .* alpha .* repmat(Y', nb_Sectors, 1))';
-    // SpeMarg_C =  SpeMarg_rates_C .* ( repmat(p', 1, nb_Households) .* C)';
-    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.p') .* alpha .* (ones(nb_Sectors, 1).*.Y') )';
-    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
-    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
-
-
-    y1 = GrossOpSurplus - ( Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I ) ;
-
-    y  = y1';
-endfunction
-
-// Gross operating surplus
-function GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X)
-
-    SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
-    SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
-    SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
-    SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
-
-    GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I ;
-
-endfunction
-
-
-// SpeMarg_G 
-function [y] =  GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
 
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
@@ -2837,7 +2753,8 @@ function [y] =  GrossOpSurplus_Const_3(GrossOpSurplus, Capital_income, Profit_ma
     y  = y1';
 endfunction
 
-function GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+// Gross operating surplus
+function GrossOpSurplus = GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
 
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
@@ -2848,6 +2765,7 @@ function GrossOpSurplus =  GrossOpSurplus_Const_4( Capital_income, Profit_margin
     GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G;
 
 endfunction
+
 
 // Value-added sharing (Between labour incomes, non labour incomes, taxes)
 

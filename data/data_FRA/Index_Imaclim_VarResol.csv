@@ -50,6 +50,7 @@ Trade_margins_rates;1;nb_Commodities;Var;-1;1
 Trade_margins;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_IC;nb_Sectors;nb_Commodities;Var;-%inf;%inf
 SpeMarg_C;nb_Households;nb_Commodities;Var;-%inf;%inf
+SpeMarg_G;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_X;1;nb_Commodities;Var;-%inf;%inf
 SpeMarg_I;1;nb_Commodities;Var;-%inf;%inf
 I;nb_Commodities;nb_size_I;Var;0;%inf

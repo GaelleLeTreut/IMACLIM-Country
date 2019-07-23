@@ -2,13 +2,13 @@
 // Indices de prix réel
 //////////////////////////
 function GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP)
-	GDP_pLasp = (sum(pC.*BY.C)+sum(pG.*BY.G)+sum(pI.*BY.I)+sum(pX.*BY.X)-sum(pM.*BY.M))/BY.GDP ;
-	GDP_pPaas = GDP / (sum(BY.pC.*C)+sum(BY.pG.*G)+sum(BY.pI.*I)+sum(BY.pX.*X)-sum(BY.pM.*M)); 
+	GDP_pLasp = (sum(pC.*BY.C)+sum(pG.*BY.G)+sum(pI.*sum(BY.I,"c"))+sum(pX.*BY.X)-sum(pM.*BY.M))/BY.GDP ;
+	GDP_pPaas = GDP / (sum(BY.pC.*C)+sum(BY.pG.*G)+sum(BY.pI.*sum(I,"c"))+sum(BY.pX.*X)-sum(BY.pM.*M)); 
 	GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas)
 endfunction
 
 function I_pFish = I_pFish_Const_1(pI, I)
-	I_pFish = PInd_Fish( BY.pI, BY.I, pI, I, :, :);
+	I_pFish = PInd_Fish( BY.pI, sum(BY.I,"c"), pI, sum(I,"c"), :, :);
 endfunction
 
 function G_pFish = G_pFish_Const_1(pG, G)
