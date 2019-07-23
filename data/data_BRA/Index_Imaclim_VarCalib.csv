@@ -132,3 +132,10 @@ SpeMarg_I;1;nb_Commodities;InitVal
 SpeMarg_rates_I;1;nb_Commodities;calib
 SpeMarg_G;1;nb_Commodities;InitVal
 SpeMarg_rates_G;1;nb_Commodities;calib
+delta_interest_rate;1;1;calib
+delta_TranspMargins_rate;1;1;calib
+delta_TradeMargins_rate;1;1;calib
+delta_LS_H;1;nb_Households;calib
+delta_LS_S;1;nb_Sectors;calib
+delta_LS_I;1;1;calib
+delta_LS_LT;1;1;calib							 
