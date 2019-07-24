@@ -51,7 +51,13 @@ VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 // exec(STUDY+study+".sce");
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
+
 if exists('Deriv_Exogenous')==1
+		for var = fieldnames(Deriv_Exogenous)'
+			if find(fieldnames(parameters) == var) <> [] then
+				parameters(var) = Deriv_Exogenous(var);
+			end
+		end
     [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
     execstr(Table_Deriv_Exogenous);
 end
@@ -255,11 +261,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 
 	// For Mean wage curve: 
-    Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
-    Wage_Variation_Const_1(w, NetWage_variation) 
+    // Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+    // Wage_Variation_Const_1(w, NetWage_variation) 
 	// For Sectoral wage curve: 
-	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L)
-    // MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+	Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L)
+    MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
     HH_Unemployment_Const_1(u, u_tot)
     HH_Employment_Const_1(Unemployed, u, Labour_force)

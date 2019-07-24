@@ -42,6 +42,8 @@
 ////           It also defines  the *USER CHOICE*  ETUDE                        /////
 /////////////////////////////////////////////////////////////////////////////////////
 
+stacksize(1e8);
+
 print(out, "=====PREAMBLE========");
 
 getd(LIB); // Charge toutes les fonctions dans LIB

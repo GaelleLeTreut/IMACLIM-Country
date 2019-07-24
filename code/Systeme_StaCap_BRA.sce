@@ -51,17 +51,20 @@ VarDimMat_resol = eval(Index_Imaclim_VarResCap(2:$,2:3));
 /////////////////////////////////////////////////////////////////////////
 // exec(STUDY+study+".sce");
 //  Introduire le changement des valeurs par défaut des parametres selon les différentes simulation
-[Table_parameters] = struct2Variables(parameters,"parameters");
-execstr(Table_parameters);
 
-// Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
-// Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1
+		for var = fieldnames(Deriv_Exogenous)'
+			if find(fieldnames(parameters) == var) <> [] then
+				parameters(var) = Deriv_Exogenous(var);
+			end
+		end
     [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
     execstr(Table_Deriv_Exogenous);
 end
 
-
+//  Introduire le changement des valeurs par défaut des parametres selon les différentes simulation
+[Table_parameters] = struct2Variables(parameters,"parameters");
+execstr(Table_parameters);
 
 //////////////////////////////////////////////////////////////////////////
 // Endogenous variable (set of variables for the system below - fsolve)
