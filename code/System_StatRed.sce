@@ -128,7 +128,8 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     G_pFish = G_pFish_Const_1(pG, G);
     I_pFish = I_pFish_Const_1(pI, I);
 
-    w = Wage_Variation_1_val(NetWage_variation);
+    //w: A retirer pour laisser la possibilité de jongler entre WC sectorielle ou globale
+	w = Wage_Variation_1_val(NetWage_variation);
     pL = Labour_Cost_1_val(w, Labour_Tax_rate);
 
     [alpha, lambda, kappa] = Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
@@ -235,7 +236,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 
     // u_tot, Y
-    Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+    Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
 
     ];
     

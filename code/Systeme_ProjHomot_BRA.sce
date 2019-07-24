@@ -257,20 +257,14 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
     Employment_Const_1(Labour, lambda, Y)
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
-    // Mean_wage_Const_1 for wage curve on nominal wage //  Mean_wage_Const_2 for wage curve on real wage //  Wage_Const_1 for wage curve nominal wages by sectors
-    // Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
-    // Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect)
-    // Wage_Variation_Const_1 : for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-
-    //Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage)
-    // If sectorial wage curve... To adapt
-    Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
-    // mean wage curve
-
-    // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
-    Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-    //MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
-
+    
+	// For Mean wage curve: 
+    Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+    Wage_Variation_Const_1(w, NetWage_variation) 
+	// For Sectoral wage curve: 
+	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L)
+    // MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+	
     HH_Unemployment_Const_1(u, u_tot)
     HH_Employment_Const_1(Unemployed, u, Labour_force)
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)

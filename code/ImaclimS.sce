@@ -219,10 +219,6 @@ for time_step=1:Nb_Iter
 
         exec(CODE+"outputs_indic.sce");
 
-
-        if System_Resol == "Projection_ECOPA"
-            exec(CODE+"outputs_indic_ECOPA.sce");
-        end
     end
 
     ////////////////////////////////////////////////////////////

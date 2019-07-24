@@ -2281,163 +2281,26 @@ endfunction
 /// Rq : Si l'on prend en compte du progrès technique sur le travail récupéré par les salaires, et que l'on ne veut pas que la hausse des salaires induite change le niveau de chômage de long terme, alors il faut corriger les wages curves (diviser le salaire qui entre dans la wage curve par la hausse de la productivité) : 1/(1+Mhu)^t
 
 // PAS POUR CALIBRAGE !
-warning( "ruben: Mean_wage_Const_1, abs(w)&abs(lambda), abs(u_tot)")
-
-// Wage curve by sector
-function y = Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage);
-
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-    // Wage curve on nominal  wage
-
-	y = (w  - ( w_ref .* ( ones(1,nb_Sectors).*.(u_tot ./ u_tot_ref) ).^ sigma_omegaU_sect ))' 
-
-endfunction
-
-// Real Wage curve by sector
-function y = Wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage );
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-    // Wage curve on real  wage
-
-	y = (w  - ( w_ref.*CPI .* ( ones(1,nb_Sectors).*.(u_tot ./ u_tot_ref) ).^ sigma_omegaU_sect ))' 
-endfunction
-
-
-// Wage curve by sector with coeff between real wage and nominal wage
-function y = Wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage);
+// Wage curve by sector: Sectoral wage curve with different indexation of wages 
+function y = Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L);
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
 	
-    // Wage curve on nominal  wage
-	y = w  - ( BY.w .* ( ones(1,nb_Sectors).*.(u_tot ./ BY.u_tot) ).^ sigma_omegaU .*(Coef_real_wage*CPI + (1-Coef_real_wage)) ) ; 
-	y = y';
-
-endfunction
-
-function y = Wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU, Coef_real_wage, phi_L);
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
+    // Sectoral Wage curve
+	// Coef_real_wage_sect defined in parameter => indexation allowed by sectors
+	// Coef_real_wage_sect = 1 =>  real wage curve for the sector
+	// Coef_real_wage_sect = 0 =>  nominal wage curve for the sector
+	// If no macroframework for projection =>  phi_L = 0  
+	y = w  - ( ini.w.* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU_sect .*(Coef_real_wage_sect*CPI + (1-Coef_real_wage_sect)).*(1+phi_L).^(time_since_ini) ) ; 
 	
-    // Wage curve on nominal  wage
-	y = w  - ( w_ref .* ( ones(1,nb_Sectors).*.(u_tot ./ u_tot_ref) ).^ sigma_omegaU .*(Coef_real_wage*CPI + (1-Coef_real_wage)).*(1+phi_L) ) ; 
 	y = y';
-
 endfunction
 
-//////////////////
-// Antoine: Wage curve by sector for dynamic projection... a confirmer
-function y = Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect, Coef_real_wage, phi_L);
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-	
-    // Wage curve on nominal  wage
-	y = w.*(Coef_real_wage*ini.CPI + (1-Coef_real_wage))  - ( ini.w .* ( ones(1,nb_Sectors).*.(u_tot ./ ini.u_tot) ).^ sigma_omegaU_sect .*(Coef_real_wage*CPI + (1-Coef_real_wage))).*(ones(1,nb_Sectors)+phi_L).^(time_since_ini) ; 
-	y = y';
-
-endfunction
 
 // Wage setting (implicitly determines the overall variation of net wages : NetWage_variation )
 //	Wage curve on the level of the economy-wide mean nominal wage
-
-// Nominal Mean wage 
-function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU);
-	
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-
-    // Mean wage (omega).
-    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
-    // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-    // Wage curve. Wage bargaining over the mean wage
-	y = omega  - ( omega_ref * ( u_tot / u_tot_ref ).^ sigma_omegaU ) ;
-
-endfunction
-
-// Real Mean wage 
-function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU);
-
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-
-    Price_index_w = CPI ;
-
-    // Mean wage (omega).
-    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
-
-    // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-
-    // Wage curve. Wage bargaining over the mean wage 
-    y = omega / Price_index_w - ( omega_ref * ( u_tot / u_tot_ref ).^ sigma_omegaU ) ;
-
-    testRuben = abs(lambda) > 1;
-    if or(testRuben)
-        y = Mean_wage_Const_1(u_tot, w, 1, Y, sigma_omegaU) + 1e50*(exp(abs(sum(lambda(testRuben)))-1)-1);
-    end
-
-endfunction
-
-
-//	Fixed economy-wide mean nominal wage
-function y = Mean_wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU)
-
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-
-    // Mean wage (omega).
-    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
-
-    // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-
-    // Fixed mean nominal wage
-    y = omega - omega_ref ;
-
-    testRuben = abs(lambda) > 1;
-    if or(testRuben)
-        y = Mean_wage_Const_1(u_tot, w, 1, Y, sigma_omegaU) + 1e50*(exp(abs(sum(lambda(testRuben)))-1)-1);
-    end
-
-endfunction
-
-
-//	Fixed economy-wide mean real wage
-function y = Mean_wage_Const_4(u_tot, w, lambda, Y, sigma_omegaU)
-
-    w=abs(w);
-    lambda = abs(lambda);
-    u_tot = abs(u_tot);
-	
-    // Wage curve on nominal  wage
-    Price_index_w = CPI ;
-    
-	// Mean wage (omega).
-    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
-
-    // Mean wage reference (omega_ref).
-    omega_ref = sum (w_ref .* lambda_ref .* Y_ref') / sum(lambda_ref .* Y_ref') ;
-
-    // Fixed mean real wage
-    y = omega / Price_index_w - omega_ref ;
-
-    testRuben = abs(lambda) > 1;
-    if or(testRuben)
-        y = Mean_wage_Const_1(u_tot, w, 1, Y, sigma_omegaU) + 1e50*(exp(abs(sum(lambda(testRuben)))-1)-1);
-    end
-
-endfunction
-
-function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
+function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
     w=abs(w);
     lambda = abs(lambda);
     u_tot = abs(u_tot);
@@ -2448,9 +2311,37 @@ function y = Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
     // Mean wage reference (omega_ref).
     omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
   
-    // Wage curve on nominal  wage
-      y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+    // Wage curve
+	// Coef_real_wage defined in parameter
+	// Coef_real_wage = 1 => mean real wage curve 
+	// Coef_real_wage = 0 => mean nominal wage curve
+    // If no macroframework for projection =>  Mu = 0  
+	
+	// y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+	
+	y = omega  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
       
+endfunction
+
+//	Fixed economy-wide mean wage
+function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
+
+    w=abs(w);
+    lambda = abs(lambda);
+    u_tot = abs(u_tot);
+    
+    // Mean wage (omega).
+    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
+
+    // Mean wage reference (omega_ref).
+    omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
+  
+    // Wage curve
+	// Coef_real_wage defined in parameter
+	// Coef_real_wage = 1 => mean real wage curve 
+	// Coef_real_wage = 0 => mean nominal wage curve
+      // y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
+	y = omega - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
 endfunction
 
 // PAS POUR CALIBRAGE !
@@ -2478,8 +2369,6 @@ function y = MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
     y = omega - NetWage_variation * omega_ref ;
 
 endfunction
-
-
 
 
 // Labour cost (pL)

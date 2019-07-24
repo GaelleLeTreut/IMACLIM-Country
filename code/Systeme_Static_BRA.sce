@@ -252,18 +252,13 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Antoine : Market closure à retirer pour forcer le commerce   
     // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
-
-    // Mean_wage_Const_1 for wage curve on nominal wage //  Mean_wage_Const_2 for wage curve on real wage //  Wage_Const_1 for wage curve nominal wages by sectors
-    // Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
-    // Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage )
-    // Antoine : wage curve en dynamique sans les références (5)
-    //Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU_sect,Coef_real_wage)
-    // Glt: revoir la library, car elle integre les ref....
-
-    Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
-    // Antoine : J'ai défini le NetWage_variation par rapport à BY comme le CPI à cause de Pension_Benefits_param / UnemployBenefits_param / Other_SocioBenef_param
-    Wage_Variation_Const_1(w, NetWage_variation) // for a mean wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-    //MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+	
+	// For Mean wage curve: 
+    Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+    Wage_Variation_Const_1(w, NetWage_variation) 
+	// For Sectoral wage curve: 
+	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L)
+    // MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
     HH_Unemployment_Const_1(u, u_tot)
     HH_Employment_Const_1(Unemployed, u, Labour_force)

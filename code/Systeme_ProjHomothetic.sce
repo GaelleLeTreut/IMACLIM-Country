@@ -264,12 +264,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Employment_Const_1(Labour, lambda, Y)
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
 
-    // WAGE CURVE : TO CLEAR !!! 
-    // Mean_wage_Const_? for standard wage curve  // Wage_Const_? for sectorial wage curve
-    Mean_wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
-    // Wage_Const_5(u_tot, w, lambda, Y, sigma_omegaU,Coef_real_wage)
-    // Wage_Variation_Const_1 for a standard wage curve // MeanWageVar_Const_1 : for a sectoral wage curve
-    Wage_Variation_Const_1(w, NetWage_variation)
+	// For Mean wage curve: 
+    Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage)
+    Wage_Variation_Const_1(w, NetWage_variation) 
+	// For Sectoral wage curve: 
+	// Wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L)
     // MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
     HH_Unemployment_Const_1(u, u_tot)
