@@ -1200,12 +1200,12 @@ else
 end
 
 
-function [const_G_investPropens] =fcalib_G_invest_Const_1(x_G_invest_propensity, GFCF_byAgent, G_disposable_income,GDP, Imaclim_VarCalib)
+function [const_G_investPropens] =fcalib_G_invest_Const_1(x_G_invest_propensity, GFCF_byAgent, G_disposable_income, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Imaclim_VarCalib)
     G_invest_propensity= indiv_x2variable(Imaclim_VarCalib, "x_G_invest_propensity");
-    const_G_investPropens =  G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)	;
+    const_G_investPropens =  G_investment_Const_1(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)	;
 endfunction
 
-[x_G_invest_propensity, const_G_investPropens, info_cal_G_investPropens] = fsolve(x_G_invest_propensity, list(fcalib_G_invest_Const_1, GFCF_byAgent, G_disposable_income, GDP, Index_Imaclim_VarCalib));
+[x_G_invest_propensity, const_G_investPropens, info_cal_G_investPropens] = fsolve(x_G_invest_propensity, list(fcalib_G_invest_Const_1, GFCF_byAgent, G_disposable_income, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Index_Imaclim_VarCalib));
 
 if norm(const_G_investPropens) > sensib
     error( "review calib_G_invest_propensity")

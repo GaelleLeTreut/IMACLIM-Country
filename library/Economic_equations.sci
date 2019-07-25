@@ -1064,7 +1064,7 @@ endfunction
 
 /// Government_investment_constraint_1 : Proportion of disposable income ('propensity' to invest)
 
-function [y] = G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) ;
+function [y] = G_investment_Const_1(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C);
 
     // Government gross fixed capital formation constraint (GFCF_byAgent(Indice_Government))
     y1 = GFCF_byAgent(Indice_Government) - (G_disposable_income .* G_invest_propensity) ;
@@ -1074,7 +1074,7 @@ endfunction
 
 
 /// Government_investment_constraint_2 : Proportion of GDP
-function [y] = G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) ;
+function [y] = G_investment_Const_2(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C) ;
     // Government gross fixed capital formation constraint (GFCF_byAgent(Indice_Government))
     y1 = GFCF_byAgent(Indice_Government) - ini.GFCF_byAgent(Indice_Government)*(GDP/ini.GDP) ;
     y  = y1' ;

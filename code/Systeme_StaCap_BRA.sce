@@ -154,7 +154,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
     Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
     //G_investment_Const_1 : indexation de la FBCF des gouv sur les revenus /// G_investment_Const_2 : indexation de la FBCF des gouv sur le pib
-    G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) 
+    G_investment_Const_2(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C) 
     // RoW_investment_Const_1(GFCF_byAgent) // Equation supprimee, pas d'investissement direct etranger
 
     H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
