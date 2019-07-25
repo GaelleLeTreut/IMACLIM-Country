@@ -387,9 +387,11 @@ end
 
 
 for elt=1:size(evstr("Demography_rate_"+H_DISAGG+"(2:$,2:$)"),"r")
-    if	round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>1&round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>0
-        error("Demography_rate_"+H_DISAGG+".csv does not sum 1: error in shares for disaggregation at line"+elt)
-    end
+	if evstr("Demography_rate_"+H_DISAGG+"(elt+1,1)") <> "Consumption_Units"
+		if	round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>1&round(sum(eval(evstr("Demography_rate_"+H_DISAGG+"(elt+1,2:$)")),"c")*100000)/100000<>0
+			error("Demography_rate_"+H_DISAGG+".csv does not sum 1: error in shares for disaggregation at line"+elt)
+		end
+	end
 end
 
 
