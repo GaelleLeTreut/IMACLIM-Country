@@ -170,7 +170,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
     // Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
     // Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
-    G_investment_Const_3(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+    G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
     // Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
@@ -220,7 +220,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // RevenueRecycling_Const_2 for all carb tax into labour tax cut
     // RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation) 
     // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
-    RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) 
+    RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) 
 
 
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)

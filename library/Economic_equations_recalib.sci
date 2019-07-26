@@ -76,14 +76,13 @@ function [y] = Betta_Const_2(Betta, tau_Betta) ;
 
 endfunction
 
-function [y] = G_investment_Const_3(GFCF_byAgent, G_disposable_income,G_invest_propensity, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C) ;
 
     // Government gross fixed capital formation constraint (GFCF_byAgent(Indice_Government))
     y1 = GFCF_byAgent(Indice_Government) - I_pFish * BY.GFCF_byAgent(Indice_Government) - delta_LS_I*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C));
 
     y  = y1' ;
 endfunction
-
 
 function [y] = ConsumBudget_Const_2(Consumption_budget, H_disposable_income, Household_saving_rate, CPI) ;
 
