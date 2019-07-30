@@ -39,7 +39,7 @@ function Other_social_transfers = OtherSoc_Transf_1_val(Other_SocioBenef, Popula
 endfunction
 
 // Property income
-function Property_income = Property_income_val(interest_rate, NetFinancialDebt)
+function Property_income = Property_income_1_val(interest_rate, NetFinancialDebt)
     
     Property_income(Indice_Households) = - interest_rate(Indice_Households) .* NetFinancialDebt(Indice_Households);
     Property_income(Indice_Corporations) = - interest_rate(Indice_Corporations) .* NetFinancialDebt(Indice_Corporations);
@@ -74,7 +74,7 @@ function Government_savings = G_savings_1_val(G_disposable_income, G_Consumption
 endfunction
 
 // GFCF_byAgent
-function GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I)
+function GFCF_byAgent = GFCF_byAgent_1_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I)
     
     /// Household_investment_constraint_1 : Proportion of disposable income ('propensity' to invest)
     GFCF_byAgent(Indice_Households) = (H_disposable_income .* H_Invest_propensity);
@@ -88,7 +88,7 @@ function GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensit
 endfunction
 
 // NetLending
-function NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings)
+function NetLending = NetLending_1_val(GFCF_byAgent, Household_savings, Corporations_savings)
     
     NetLending(Indice_Households) = (Household_savings - GFCF_byAgent(Indice_Households));
     NetLending(Indice_Corporations) = (Corporations_savings - GFCF_byAgent(Indice_Corporations));
@@ -100,7 +100,7 @@ function NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporatio
 endfunction
 
 // NetFinancialDebt
-function NetFinancialDebt = NetFinancialDebt_val() //time_since_ini, NetLending)
+function NetFinancialDebt = NetFinancialDebt_1_val() //time_since_ini, NetLending)
     
     NetFinancialDebt(Indice_Households) = BY.NetFinancialDebt(Indice_Households);
     NetFinancialDebt(Indice_Corporations) = BY.NetFinancialDebt(Indice_Corporations);
@@ -629,5 +629,121 @@ function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_1_
 
     // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
     Other_Transfers = Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP);
+
+endfunction
+
+// PAS NECESSAIRE CALIBRAGE //
+/// Household_demand_constraint_1 : Demand functions only for energy final products,
+///         The demand for the non-energy product balances the consumption budget
+///         The distribution of budget shares for non-energy products is exogenous
+///         Same demand functions for all household classes
+warning("ruben again : H_demand_Const_1: abs(pC)")
+
+function C = H_demand_1_val(Consumption_budget, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+    C = zeros(C);
+    /// They number of demand functions is equal to the number of productive sectors times the number of household classes
+    /// Here, a productive sector produces only one consumption product
+    /// Some productive sectors produce only intermediate consumptions. In this case, the final demand is zero.
+
+    /// Household demand constraint: C (nb_Sectors, nb_Households)
+
+    /// Final energy consumption ( when Commodities indices = Indice_EnerSect )
+    ///. Constrained level of demand
+    /// . Variable consumption level
+    ///. Variation with relative prices (price-elasticities sigma_pC)
+    ///. Variation with consumption budget (income-elasticities : sigma_ConsoBudget)
+
+    C(Indice_EnerSect, :) = ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
+(ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_EnerSect, 1)) );
+
+    /// Non energy consumption (when Commodities = Indice_NonEnerSect )
+    /// Exogenous distribution of budget shares among non final energy consumption items (Budget_Shares_ref)
+    // y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - Budget_Shares_ref(Indice_NonEnerSect, :) * Consumption_budget ;
+
+    NonFinEn_budget =  Consumption_budget - sum(pC(Indice_EnerSect,:) .* C(Indice_EnerSect,:),"r");
+    value_C = NonFinEn_BudgShare_ref .* (NonFinEn_budget .*. ones(nb_NonEnerSect, 1));
+
+    C(Indice_NonEnerSect, :) = (pC(Indice_NonEnerSect, :) <> 0) .* divide(value_C, pC(Indice_NonEnerSect,:), 1);
+
+    if is_projected('C') then
+        C = apply_proj_val(C,'C');
+    end
+
+endfunction
+
+
+///	Linear demand function with price and income elasticities for all goods - 
+function C = H_demand_2_val(Consumption_budget, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+    C = zeros(C);
+
+    C(1:nb_Sectors-1, :) = (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
+
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+    
+    C(nb_Sectors,:) = (pC(nb_Sectors,:) <> 0) .* divide(Composite_budget, pC(nb_Sectors,:), 1);
+    
+    if is_projected('C') then
+        C = apply_proj_val(C,'C');
+    end
+    
+endfunction
+
+
+
+function Income_Tax = Income_Tax_1_val(Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
+
+    // Income Tax Constraint by household classes
+    Income_Tax = Income_Tax_rate .* (H_disposable_income + Income_Tax + Other_Direct_Tax);
+
+endfunction
+
+function Income_Tax = Income_Tax_2_val(Income_Tax_rate, H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax)
+
+    // Income Tax Constraint by household classes
+    Income_Tax = Income_Tax_rate .* (H_disposable_income + Income_Tax + Gov_Direct_Tax + Corp_Direct_Tax);
+
+endfunction
+
+/// Government_demand_constraint_1  : No direct energy consumption by the government (by convention, energy is an intermediate input in public service production)
+	// Constant real public consumption
+function G = G_demand_1_val(pG, G_Consumption_budget, BudgetShare_GConsump)
+    
+    G = BY.G;
+    
+endfunction
+
+
+///	proj : utiliser G_ConsumpBudget_Const_2 + G_demand_Const_2
+///         The public budget is an exogenous proportion of the GDP
+///         The distribution of budget shares for non-energy products is exogenous
+
+function G = G_demand_2_val(pG, G_Consumption_budget, BudgetShare_GConsump)
+    /// Exogenous distribution of budget shares among consumption items
+    
+    value_G = BudgetShare_GConsump .* (ones( nb_Commodities, 1).*.G_Consumption_budget);
+    
+    G = (pG <> 0) .* divide(value_G, pG, 1);
+    
+endfunction
+
+// PAS POUR CALIBRAGE //
+// Production Price
+warning("ruben: pIC = abs(pIC);");
+function pY =  Production_price_1_val(alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y)
+    pY=abs(pY);
+	pIC = abs(pIC);
+	pK = abs(pK);
+    pL = abs(pL);
+	// Mark-up pricing rule ( pY(nb_Sectors) ). The formula enables the use of different types of labour and capital inputs
+    pY = (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY' + markup_rate .* pY')' ;
 
 endfunction

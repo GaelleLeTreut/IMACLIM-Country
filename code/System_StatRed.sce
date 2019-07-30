@@ -100,7 +100,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 
 function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_Tax_rate,Carbon_Tax_rate_IC,Carbon_Tax_rate_C,Transp_margins_rates,Trade_margins_rates,ClimPolicyCompens,ClimPolCompensbySect,M,p,pX,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, pL,alpha,lambda,kappa,I,pK,IC,Capital_consumption,Transp_margins,Trade_margins,Profit_margin,Capital_income,Labour_income,GrossOpSurplus,GDP,Other_Direct_Tax,Pension_Benefits,UnemployBenefits,Other_SocioBenef,Pensions,u,Unemployed,Unemployment_transfers,Other_social_transfers,Property_income,NetCompWages_byAgent,GOS_byAgent,Other_Transfers,H_disposable_income,Household_savings,Corporate_Tax,Production_Tax,w,Labour_Tax,Energy_Tax_IC,Energy_Tax_FC,OtherIndirTax,VA_Tax,Carbon_Tax_IC,Carbon_Tax_C,Corp_disposable_income,Corporations_savings,G_disposable_income,Government_savings,GFCF_byAgent,NetLending,Consumption_budget,Labour,SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I,Distribution_Shares, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = f_resol_interm()
 
-    NetFinancialDebt = NetFinancialDebt_val();
+    NetFinancialDebt = NetFinancialDebt_1_val();
     ClimPolicyCompens = ClimCompensat_1_val();
     ClimPolCompensbySect = S_ClimCompensat_1_val();
     Labour_Tax_Cut = RevenueRecycling_1_val();
@@ -167,7 +167,7 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     Unemployed = HH_Employment_1_val(u, Labour_force);
     Unemployment_transfers = Unemploy_Transf_1_val(UnemployBenefits, Unemployed);
     Other_social_transfers = OtherSoc_Transf_1_val(Other_SocioBenef, Population);
-    Property_income = Property_income_val(interest_rate, NetFinancialDebt);
+    Property_income = Property_income_1_val(interest_rate, NetFinancialDebt);
     Distribution_Shares = DistributShares_1_val(Labour_force, Unemployed);
     [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_1_val(GDP, Distribution_Shares, Labour_income, GrossOpSurplus);
     H_disposable_income = H_Income_1_val(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax);
@@ -178,8 +178,8 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     G_disposable_income = G_income_1_val(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect);
     G_Consumption_budget = G_ConsumpBudget_2_val(GDP);
     Government_savings = G_savings_1_val(G_disposable_income, G_Consumption_budget);
-    GFCF_byAgent = GFCF_byAgent_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I);
-    NetLending = NetLending_val(GFCF_byAgent, Household_savings, Corporations_savings);
+    GFCF_byAgent = GFCF_byAgent_1_val(H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I);
+    NetLending = NetLending_1_val(GFCF_byAgent, Household_savings, Corporations_savings);
     Consumption_budget = ConsumBudget_1_val(H_disposable_income, Household_saving_rate);
    [SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I] =  SpeMarg_1_val(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X);
 	
