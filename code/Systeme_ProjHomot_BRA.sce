@@ -218,11 +218,16 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population )
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
-    CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) 
+    CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
     // ClimCompensat_Const_1(ClimPolicyCompens)
     // 	Specific to the homothetic projection: 
     S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP)
-
+	
+	// Recycling options : 1 et 2 could be deleted  
+    // RevenueRecycling_Const_1 for no labour tax cut 
+    // RevenueRecycling_Const_2 for all carb tax into labour tax cut
+    // RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation) 
+    // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
     RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 

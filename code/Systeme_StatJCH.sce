@@ -216,8 +216,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Recycling options : 1 et 2 could be deleted  
     // RevenueRecycling_Const_1 for no labour tax cut 
     // RevenueRecycling_Const_2 for all carb tax into labour tax cut
-    // RevenueRecycling_Const_3 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
-    // RevenueRecycling_Const_4 for labour tax reduction while maintaining netlending constant (with gdp variation)
+    // RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation) 
+    // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
     RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP)
 
 	
