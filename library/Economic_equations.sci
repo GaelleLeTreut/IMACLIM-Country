@@ -2458,7 +2458,7 @@ function [y] = GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, L
 
 endfunction
 // Gross operating surplus
-function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I)
 
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
@@ -2472,7 +2472,7 @@ function [y] =  GrossOpSurplus_Const_1(GrossOpSurplus, Capital_income, Profit_ma
 endfunction
 
 // Gross operating surplus
-function GrossOpSurplus = GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X)
+function GrossOpSurplus = GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I)
 
     SpeMarg_IC = SpeMarg_rates_IC .* ((ones(1, nb_Sectors).*.(p')) .* alpha .* (ones(nb_Sectors, 1).*.(Y')) )';
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';

@@ -122,7 +122,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
 
     [alpha, lambda, kappa] =Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 
-    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
+    GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
     // const_1 : calib / const_2 : CPI / const_3 : GDP
     Other_Direct_Tax = Other_Direct_Tax_Const_2(CPI, Other_Direct_Tax_param);
@@ -246,7 +246,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) 
     Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate) // check Const_1 (old)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
-    SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C,SpeMarg_G, SpeMarg_rates_G, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X)
+    SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C,SpeMarg_G, SpeMarg_rates_G, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X, I, G)
 
     // 1-standard / 2-investment matrix / 3-Real total invest const + carbon tax revenu (option dashboard)
     Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)

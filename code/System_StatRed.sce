@@ -148,7 +148,7 @@ function [NetFinancialDebt,Labour_Tax_Cut,Phi,Theta,G_Consumption_budget,Labour_
     Trade_margins =  Trade_margins_1_val(Trade_margins_rates, p, alpha, Y, C, G, I, X);
     Profit_margin = Profit_income_1_val(markup_rate, pY, Y);
     Capital_income = Capital_income_1_val(pK, kappa, Y);
-    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
+    GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
     Production_Tax = Production_Tax_1_val(Production_Tax_rate, pY, Y);
     Labour_Tax = Labour_Tax_1_val(Labour_Tax_rate, w, lambda, Y);
     OtherIndirTax = OtherIndirTax_1_val(OtherIndirTax_rate, alpha, Y, C, G, I);

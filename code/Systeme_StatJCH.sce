@@ -120,7 +120,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,GDP_pFish,G_pFish,I_pFish, alpha, lambda, ka
 
     [alpha, lambda, kappa] =Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 
-    GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
+    GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
     // const_1 : calib / const_2 : CPI / const_3 : GDP
     Other_Direct_Tax = Other_Direct_Tax_Const_2(CPI, Other_Direct_Tax_param);
