@@ -19,17 +19,18 @@ parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 
 
 /// Wage indexation
-Deriv_Exogenous.Coef_real_wage = parameters.Coef_real_wage ;
- // Deriv_Exogenous.Coef_real_wage =[0,0,0,0,0,0,0.4,0,0.8,0.4,0,0,0.8];
-Deriv_Exogenous.Coef_real_wage =[1,1,1,1,1,0,1,1,1,1,1,1,1];
-// Deriv_Exogenous.Coef_real_wage =[0,0,0,0,0,0,1,1,1,1,1,1,1];
-// Deriv_Exogenous.Coef_real_wage = Deriv_Exogenous.Coef_real_wage.*1;
+// Deriv_Exogenous.Coef_real_wage_sect = parameters.Coef_real_wage_sect ;
+// Deriv_Exogenous.Coef_real_wage_sect = ones(1,nb_Sectors);
+ // Deriv_Exogenous.Coef_real_wage_sect =[0,0,0,0,0,0,0.4,0,0.8,0.4,0,0,0.8];
+// Deriv_Exogenous.Coef_real_wage_sect =[1,1,1,1,1,0,1,1,1,1,1,1,1];
+// Deriv_Exogenous.Coef_real_wage_sect =[0,0,0,0,0,0,1,1,1,1,1,1,1];
+// Deriv_Exogenous.Coef_real_wage_sect = Deriv_Exogenous.Coef_real_wage_sect.*1;
 
 //// Parametres import/export
 /// pour 3 sexteurs
-NewInd_AllComp = find(Index_Sectors=="AllComp");
-Deriv_Exogenous.sigma_M = parameters.sigma_M;
-Deriv_Exogenous.sigma_X = parameters.sigma_X;
+// NewInd_AllComp = find(Index_Sectors=="AllComp");
+// Deriv_Exogenous.sigma_M = parameters.sigma_M;
+// Deriv_Exogenous.sigma_X = parameters.sigma_X;
 
 // Deriv_Exogenous.sigma_M (1,NewInd_AllComp) = parameters.sigma_M (NewInd_AllComp)*2;
 // Deriv_Exogenous.sigma_X (1,NewInd_AllComp) = parameters.sigma_X (NewInd_AllComp)*2;
