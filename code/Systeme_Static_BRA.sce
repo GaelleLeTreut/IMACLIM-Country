@@ -135,11 +135,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     [Constraints_Deriv] = [
     H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax)
 
-    //equation identique déboublée pour Gov et Corp 2
+    //Brasil: equation identique déboublée pour Gov et Corp 2
     OtherSoc_Transf_Const_1(Gov_social_transfers, Gov_SocioBenef, Population)
     OtherSoc_Transf_Const_1(Corp_social_transfers, Corp_SocioBenef, Population)
-
-    // équations sorties des variables intermédiaires
     OthDirTax_rate_Const_1(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
     OthDirTax_rate_Const_1(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
 
@@ -151,21 +149,21 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
     Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
     G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
-    // Rq : voir si le calcul de Property_income et de Savings est vraiment nécessaire, il semble que ça allonge le temps (faire le test)
-    // Traitement différent de savings, une variable par type d'agent
+	
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
-    Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
-    //G_investment_Const_1 : indexation de la FBCF des gouv sur les revenus /// G_investment_Const_2 : indexation de la FBCF des gouv sur le pib
+    // Contribution à la FBCF du GOV : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
     G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) 
-    // RoW_investment_Const_1(GFCF_byAgent) // Equation supprimee, pas d'investissement direct etranger
-
-    H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
+	//G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+	
+	 // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
+    Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
+    // MacroClosure_Const_1(GFCF_byAgent, pI, I)
+	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     //01/2019: marche pas bien
+	H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
-    //01/2019: marche pas bien 
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
-    //01/2019: marche pas bien
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers) 
 
     H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
@@ -174,9 +172,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
 
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
-
     H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
-
 
     // Brasil Const_2; income need to take into account Labour tax and direct tax for and social transfer from Corp
     Corp_income_Const_2(Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax)
@@ -194,7 +190,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y)
     Labour_Tax_Const_1(Labour_Corp_Tax, Labour_Corp_Tax_rate, w, lambda, Y)
 
-    // Glt; retirer equations et variable associé pour le brésil
     Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y)
     Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C)
     OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
@@ -234,7 +229,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Public_finance_Const_1(Government_closure) 
     // G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity)
 
-    // Comment Antoine : les fonctions de Theta et Phi les imposent à 1. Créer une fonction généraliser qui permette d'activer le changement technique endogène en prenant un sigma_Theta et un sigma_Phi != 0. Ici en cas désactiver, on ne peut pas faire car la fonction prendre faire une division par sigma_Theta et sigma_Phi
     TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
     DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
 
@@ -274,12 +268,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     HH_Employment_Const_1(Unemployed, u, Labour_force)
 
     // Brasil; specific  formulation to take into account both taxes types 
-    // Il pourrait exister une formalation généraliser....
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
-    
-    // Antoine : delta_interest_rate défini par rapport à BY pour des questions d'harmonisation avec CPI et NetWage_variation
-    // MacroClosure_Const_1(GFCF_byAgent, pI, I)
-	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     // Brasil : specific formulation 
     GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
@@ -292,7 +281,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
     ];
 
-    //7076:7087
     if ~isreal(Constraints_Deriv)
         warning("~isreal(Constraints_Deriv)");
         if or(imag(Constraints_Deriv)<>0)

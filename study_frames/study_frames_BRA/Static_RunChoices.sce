@@ -13,13 +13,13 @@ parameters.u_param = BY.u_tot;
 
 
 ////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-parameters.CarbonCap = 0.2 ;
+// parameters.CarbonCap = 0.2 ;
 //  Same reduction cap for each sectors and HH classes
-parameters.CarbonCap_Diff_HH = ones(1, nb_Households);
-parameters.CarbonCap_Diff_sect = ones(1, nb_Sectors);
+// parameters.CarbonCap_Diff_HH = ones(1, nb_Households);
+// parameters.CarbonCap_Diff_sect = ones(1, nb_Sectors);
 
-Adj_Tax_C = ones(1, nb_Households);
-Adj_Tax_IC = ones(nb_Sectors,1);
+// Adj_Tax_C = ones(1, nb_Households);
+// Adj_Tax_IC = ones(nb_Sectors,1);
 
-CarbonCap_HH = ones(1, nb_Households);
-CarbonCap_sect = ones(1,nb_Sectors);
+// CarbonCap_HH = ones(1, nb_Households);
+// CarbonCap_sect = ones(1,nb_Sectors);

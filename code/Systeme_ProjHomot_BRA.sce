@@ -131,8 +131,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
     // 	Specific to any projection in relation to BY
     [alpha, lambda, kappa] =Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
     GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I);
-    // 	Specific to the homothetic projection:  
-    //Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
+  
 endfunction
 
 // execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
@@ -153,36 +152,33 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
-    // Consump_Units_const_1(Consumption_Units, Consumption_Units_ref)
-    // Retired_Const_1(Retired, Retired_ref)
-    // Demo_ratio_Const_1(Retired, Retired_ref, Labour_force, Labour_force_ref, Demo_ratio_change)
-    H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax)
 
+    H_Income_Const_2(H_disposable_income, NetCompWages_byAgent, GOS_byAgent, Gov_social_transfers, Corp_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Gov_Direct_Tax, Corp_Direct_Tax)
+	
+	//Brasil: equation identique déboublée pour Gov et Corp 2
     OtherSoc_Transf_Const_1(Gov_social_transfers, Gov_SocioBenef, Population)
     OtherSoc_Transf_Const_1(Corp_social_transfers, Corp_SocioBenef, Population)
-
-    // équations sorties des variables intermédiaires
     OthDirTax_rate_Const_1(Gov_Direct_Tax, Labour_income, Gov_Direct_Tax_rate)
     OthDirTax_rate_Const_1(Corp_Direct_Tax, Labour_income, Corp_Direct_Tax_rate)
 
-    // 	Specific to the homothetic projection: 
+    //Const-2 : Specific to the homothetic projection: 
     H_PropTranf_Const_2(Property_income, GDP)
     Corp_PropTranf_Const_2(Property_income, GDP)
     G_PropTranf_Const_2(Property_income, GDP)
-
+	
     RoW_PropTranf_Const_2(Property_income)
 
     H_Savings_Const_1(Household_savings, H_disposable_income, Household_saving_rate)
     Corp_savings_Const_1(Corporations_savings, Corp_disposable_income)
     G_savings_Const_1(Government_savings, G_disposable_income, G_Consumption_budget)
 
-    // Rq : voir si le calcul de Property_income et de Savings est vraiment nécessaire, il semble que ça allonge le temps (faire le test)
-    // Traitement différent de savings, une variable par type d'agent
     H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity)
+	// Contribution à la FBCF du GOV : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
+	G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)  
+	 // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
     Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
-    //G_investment_Const_1 : indexation de la FBCF des gouv sur les revenus /// G_investment_Const_2 : indexation de la FBCF des gouv sur le pib
-    G_investment_Const_1(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)  
-    // RoW_investment_Const_1(GFCF_byAgent) // Equation supprimee, pas d'investissement direct etranger
+	// MacroClosure_Const_1(GFCF_byAgent, pI, I)
+	// Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
     H_NetLending_Const_1(NetLending, GFCF_byAgent, Household_savings)
     Corp_NetLending_Const_1(NetLending, GFCF_byAgent, Corporations_savings)
@@ -219,6 +215,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
+	
     // ClimCompensat_Const_1(ClimPolicyCompens)
     // 	Specific to the homothetic projection: 
     S_ClimCompensat_Const_3(ClimPolCompensbySect, GDP)
@@ -239,7 +236,6 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // G_closure_Const_1(Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity)
     TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
     DecreasingReturn_Const_1(Theta, Y, sigma_Theta)
-    // Comment Antoine : les fonctions de Theta et Phi les imposent à 1. Créer une fonction généraliser qui permette d'activer le changement technique endogène en prenant un sigma_Theta et un sigma_Phi != 0. Ici en cas désactiver, on ne peut pas faire car la fonction prendre faire une division par sigma_Theta et sigma_Phi
 
     Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate)
     // Markup_Const_1(markup_rate)
@@ -258,14 +254,12 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
-    // //	Voir si nécessaire de garder IC dans les équations
-    // Imports_Const_1(M, pM, pY, Y, sigma_M, delta_M_parameter)
 
     // Antoine : J'ai retiré la marketclosure sinon je ne peux pas forcer le commerce    
     // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
 
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
-    // //	Voir si nécessaire de garder Capital_consumption dans les équations
+
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
     Employment_Const_1(Labour, lambda, Y)
     LabourByWorker_Const_1(LabourByWorker_coef, u_tot, Labour_force, lambda, Y)
@@ -281,14 +275,12 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     HH_Employment_Const_1(Unemployed, u, Labour_force)
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
 
-    // MacroClosure_Const_1(GFCF_byAgent, pI, I)
-    //Interest_rate_Const_1(interest_rate, delta_interest_rate)
-
     GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
 
     Labour_income_Const_1(Labour_income, Labour, w) 
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)
     Capital_income_Const_1(Capital_income, pK, kappa, Y)
+	
     // 	Specific to the homothetic projection: voir s'il faut changer cette équation aussi
     DistributShares_Const_1(Distribution_Shares, Labour_force, Unemployed)
     IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
