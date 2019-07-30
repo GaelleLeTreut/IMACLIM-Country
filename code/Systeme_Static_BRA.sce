@@ -98,7 +98,7 @@ end
 // Dimension (nb_NonFinalEnergy , nb_HH)
 NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerSect, :))./( (ini.Consumption_budget - sum( ini.pC(Indice_EnerSect,:) .* ini.C(Indice_EnerSect,:),"r" ) ).*.ones(nb_NonEnerSect,1) ) ;
 
-function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_resol_interm(Deriv_variables)
+function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
     // Ajout d'une variable pour forçage
     pM = pM_price_Const_2();
     M = Imports_Const_2 (pM, pY, Y, sigma_M, delta_M_parameter)
@@ -112,6 +112,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_reso
     // 	Specific to any projection in relation to BY
     [alpha, lambda, kappa] =Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
     GrossOpSurplus =  GrossOpSurplus_Const_2( Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X); 
+	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C);
 
 endfunction
 
@@ -128,7 +129,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // Calcul des variables qui ne sont pas des variables d'états
     /// Trois fois plus long avec appel de la fonction 
-    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus]= f_resol_interm(Deriv_variables)
+    [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
 
     // Création du vecteur colonne Constraints
     [Constraints_Deriv] = [
@@ -216,7 +217,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     //ClimCompensat_Const_2(ClimPolicyCompens) // to HH : Const_1 for NO Transfert Const_2 for Transfert
     S_ClimCompensat_Const_1(ClimPolCompensbySect) //to Sect : Const_1 for NO Transfert Const_2 for Transfert
     // Recycling options // RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
-    RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) 
+    RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP)
 
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 
@@ -419,7 +420,7 @@ if exists('Deriv_Exogenous')==1
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus ]= f_resol_interm(Deriv_variables);
+[M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables);
 execstr("Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+"="+fieldnames(Deriv_Var_interm));
 
 /////////////////////////////////////////////////////////////////
