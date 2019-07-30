@@ -126,7 +126,7 @@ if AGG_type <> '' & proj_desaggregated then
             elseif size(Proj_Vol(var).val,2) == 1 then
                 Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, list(1));
             else
-                error('Projection of 'var + ' needs a rule to aggregate the columns');
+                error('Projection of ' + var + ' needs a rule to aggregate the columns');
             end
         end
     end
