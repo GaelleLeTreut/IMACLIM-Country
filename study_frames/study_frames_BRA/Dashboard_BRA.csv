@@ -33,12 +33,13 @@ X_nonEnerg;False
 // Scenario;
 // Scenario;PMR_Ref_Disag
 Scenario;PMR_Ref
-// TELL if IOT_Quantities from scenario require aggregation as aggregation sectors; 
-// ScenAgg_IOT;%T
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-// Output_files;True
-Output_files;False
-Recycling_Option;
+Output_files;True
+// Output_files;False
+// SELECT the uses of carbon tax revenues;
+// Recycling_Option;
+// Recycling_Option;LabTax
+Recycling_Option;PublicDeficit
