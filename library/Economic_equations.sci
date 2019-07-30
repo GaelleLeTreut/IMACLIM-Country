@@ -1981,6 +1981,7 @@ endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
 
+
 function pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
 
     // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
@@ -2737,7 +2738,6 @@ GrossOpSurplus_2_val = GrossOpSurplus_Const_2;
 Other_Direct_Tax_2_val = Other_Direct_Tax_Const_2;
 Recycling_Option_1_val = Recycling_Option_Const_1;
 
-MarketBalance_1_eq = MarketBalance_Const_1;
 LabourByWorker_1_eq = LabourByWorker_Const_1;
 Mean_wage_1_eq = Mean_wage_Const_1;
 

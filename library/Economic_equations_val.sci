@@ -747,3 +747,18 @@ function pY =  Production_price_1_val(alpha, pIC, pL, lambda, pK, kappa, markup_
     pY = (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY' + markup_rate .* pY')' ;
 
 endfunction
+
+// PAS POUR CALIBRAGE //
+// Market balance
+function Y = MarketBalance_1_val(IC, C, G, I, X, M)
+
+    Y = ( sum( IC,"c") + sum(C, "c") + G + sum(I, "c") + X - M );
+
+endfunction
+
+// Balance between Supply and Use of Labour
+function u_tot = LabourByWorker_1_val(LabourByWorker_coef, Labour_force, lambda, Y)
+
+    u_tot = 1 - sum( lambda .* Y' ) / LabourByWorker_coef / sum(Labour_force);
+
+endfunction

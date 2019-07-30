@@ -77,6 +77,6 @@ G;G_demand_1_val;pG, G_Consumption_budget, BudgetShare_GConsump
 pY;Production_price_1_val;alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y
 ;delta_TranspMarg_rate_eq;Transp_margins
 ;delta_TradeMarg_rate_eq;Trade_margins
-;MarketBalance_1_eq;Y, IC, C, G, I, X, M
+Y;MarketBalance_1_val;IC, C, G, I, X, M
 ;LabourByWorker_1_eq;LabourByWorker_coef, u_tot, Labour_force, lambda, Y
 ;Mean_wage_1_eq;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage
