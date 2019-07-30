@@ -155,36 +155,36 @@ function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Co
 
 endfunction
 
-function [y] = ClimCompensat_Const_3(ClimPolicyCompens, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
+// function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
 
-    delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
-    Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
+    // delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
+    // Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
 
-    y1 = zeros(1,nb_InstitAgents);
+    // y1 = zeros(1,nb_InstitAgents);
 
-    y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
-    y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   + delta_LS * Ctot * ones(Indice_Government);
-    y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
-    y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - delta_LS_H * Ctot;
+    // y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
+    // y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   + delta_LS * Ctot * ones(Indice_Government);
+    // y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
+    // y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - delta_LS_H * Ctot;
 
-    y=y1';
+    // y=y1';
 
-endfunction
+// endfunction
 
-function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;
+// function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
 
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)) ;
+   ///// No compensations ( ClimPolCompensbySect(nb_Households)=0 )
+    // y1 = ClimPolCompensbySect - delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)) ;
 
-    y=y1';
-endfunction
+    // y=y1';
+// endfunction
 
-function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
+// function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
 
-    y1 = sum(Labour_Tax) - (..
-         sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
-         delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C))..
-         ) ;
+    // y1 = sum(Labour_Tax) - (..
+         // sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
+         // delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C))..
+         // ) ;
 
-    y=y1';
-endfunction
+    // y=y1';
+// endfunction

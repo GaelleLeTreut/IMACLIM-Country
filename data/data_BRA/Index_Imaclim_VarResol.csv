@@ -31,6 +31,7 @@ Gov_SocioBenef;1;nb_Households;Var;0;"%inf						   "
 Corp_SocioBenef;1;nb_Households;Var;0;%inf
 Carbon_Tax_rate_IC;nb_Commodities;nb_Sectors;Var;0;%inf
 Carbon_Tax_rate_C;nb_Commodities;nb_Households;Var;0;%inf
+ClimPolicyCompens;1;nb_InstitAgents;Var;0;%inf
 ClimPolCompensbySect;1;nb_Sectors;Var;0;%inf
 Labour_Tax_Cut;1;1;Var;0;1
 Labour_Tax_rate;1;nb_Sectors;Var;0;1

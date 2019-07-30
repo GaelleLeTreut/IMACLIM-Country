@@ -210,8 +210,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
 	
     //LUMP SUM
-    ClimCompensat_Const_3(ClimPolicyCompens, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C)
-    S_ClimCompensat_Const_3(ClimPolCompensbySect, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)
+    ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C)
+    S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) 
 
     // Recycling options : 1 et 2 could be deleted  
     // RevenueRecycling_Const_1 for no labour tax cut 

@@ -909,10 +909,11 @@ endfunction
 // PAS POUR CALIBRAGE //
 
 
-/// Transfert to households 
+/// Transfert to institutional agents // A REVOIR : Un transfert sur les agents HH devrait être suffisant! Le transfert sur les sociétés se fait dans une autre fonction
 
-function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP) ;
-    // /// No new direct compensations to households
+function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C);
+    // /// No new direct compensations to institutional agents
+	
    y1 = zeros(1,nb_InstitAgents); 
    y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
    y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   - BY.ClimPolicyCompens(Indice_Government);
@@ -923,17 +924,45 @@ function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP) ;
 endfunction
 
 /// proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP) ;
+function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
-    y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
+    // y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
+	
+	y1 = zeros(1,nb_InstitAgents); 
+	y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_RestOfWorld);
+	y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   - (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Government);
+    y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Corporations);
+    y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Households) ;
+	
+	
 
     y=y1';
 endfunction
 
-/// Transfert to productive sectors
 
-function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect) ;
+function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
+// /// Compensations to institutional agents consistent with the LUMP SUM options selected in dashboard
+    delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
+    Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
+
+    y1 = zeros(1,nb_InstitAgents);
+    y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
+    y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   + delta_LS * Ctot * ones(Indice_Government);
+    y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
+	// y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - sum(ClimPolCompensbySect); 
+	
+	/// Probablement un probleme sur plusieurs classes de ménages
+    y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - delta_LS_H * Ctot;
+
+    y=y1';
+
+endfunction
+
+
+/// Transfert to productive sectors : A VERIFIER:  Doublon avec les équations du dessus pour Corporations
+
+function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
     /// No new direct compensations to sectors
     y1 = ClimPolCompensbySect - BY.ClimPolCompensbySect ;
 
@@ -941,13 +970,22 @@ function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect) ;
 endfunction
 
 /// proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect, GDP) ;
+function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
 
     // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
     y1 = ClimPolCompensbySect - (BY.GDP/BY.GDP) * BY.ClimPolCompensbySect ;
 
     y=y1';
 endfunction
+
+function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;
+
+    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
+    y1 = ClimPolCompensbySect - delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)) ;
+
+    y=y1';
+endfunction
+
 
 //////////////////
 /// CARBON REVENUE RECYCLING OPTIONS (use of the carbon tax revenue after direct compensations)
@@ -980,6 +1018,17 @@ function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_
     
 	y  = y1' ;
 endfunction
+
+function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
+
+    y1 = sum(Labour_Tax) - (..
+         sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
+         delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C))..
+         ) ;
+
+    y=y1';
+endfunction
+
 
 
 // Ex-post labour tax rate
@@ -2552,6 +2601,7 @@ function [y] = DistributShares_Const_1(Distribution_Shares, Labour_force, Unempl
     // Distribution of labour income (endogenous)
     // Change in labour force by household class
     Labour_change = ( Labour_force - Unemployed ) ./ ( BY.Labour_force - BY.Unemployed ) ;
+	
 
     // Share of Labour income accruing to each household class
     y1(Indice_Labour_Income, Indice_Households) = Distribution_Shares(Indice_Labour_Income, Indice_Households) - ( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) ) ./ sum( Labour_change .* ini.Distribution_Shares(Indice_Labour_Income, Indice_Households) ) ;
