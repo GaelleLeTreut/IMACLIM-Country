@@ -1,0 +1,82 @@
+﻿// Membre gauche de l'équation (vide -> 0) ;Membre droite de l'équation;Arguments
+NetFinancialDebt;NetFinancialDebt_1_val;
+ClimPolicyCompens;ClimCompensat_1_val;
+ClimPolCompensbySect;S_ClimCompensat_1_val;
+Labour_Tax_Cut;RevenueRecycling_1_val;
+Phi;TechnicProgress_1_val;
+Theta;DecreasingReturn_1_val;
+Labour_Tax_rate;Labour_Taxe_rate_1_val;LabTaxRate_BeforeCut, Labour_Tax_Cut
+Carbon_Tax_rate_IC;CTax_rate_IC_1_val;Carbon_Tax_rate, CarbonTax_Diff_IC
+Carbon_Tax_rate_C;CTax_rate_C_1_val;Carbon_Tax_rate, CarbonTax_Diff_C
+Transp_margins_rates;Transp_MargRates_2_val;delta_TranspMargins_rate
+Trade_margins_rates;Trade_MargRates_2_val;delta_TradeMargins_rate
+pM;pM_price_2_val;
+M;Imports_2_val;pM, pY, Y, sigma_M, delta_M_parameter
+p;Mean_price_1_val;pY, pM, Y, M
+pX;pX_price_1_val;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p
+X;Exports_2_val;pM, pX, sigma_X, delta_X_parameter
+pIC;pIC_price_2_val;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p
+pC;pC_price_2_val;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate
+pG;pG_price_2_val;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate
+pI;pI_price_2_val;Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate
+CPI;CPI_2_val;pC, C
+GDP_pFish;GDP_pFish_1_val;pC, C, pG, G, pI, I, pX, X, pM, M, GDP
+G_pFish;G_pFish_1_val;pG, G
+I_pFish;I_pFish_1_val;pI, I
+w;Wage_Variation_1_val;NetWage_variation
+pL;Labour_Cost_1_val;w, Labour_Tax_rate
+alpha, lambda, kappa;Technical_Coef_1_val;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y
+I;Invest_demand_1_val;Betta, kappa, Y
+pK;Capital_Cost_1_val;pI, I
+IC;IC_1_val;Y, alpha
+Capital_consumption;Capital_Consump_1_val;Y, kappa
+Transp_margins;Transp_margins_1_val;Transp_margins_rates, p, alpha, Y, C, G, I, X
+Trade_margins;Trade_margins_1_val;Trade_margins_rates, p, alpha, Y, C, G, I, X
+Profit_margin;Profit_income_1_val;markup_rate, pY, Y
+Capital_income;Capital_income_1_val;pK, kappa, Y
+GrossOpSurplus;GrossOpSurplus_2_val;Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X
+Production_Tax;Production_Tax_1_val;Production_Tax_rate, pY, Y
+Labour_Tax;Labour_Tax_1_val;Labour_Tax_rate, w, lambda, Y
+OtherIndirTax;OtherIndirTax_1_val;OtherIndirTax_rate, alpha, Y, C, G, I
+VA_Tax;VA_Tax_1_val;VA_Tax_rate, pC, C, pG, G, pI, I
+Energy_Tax_IC;Energy_Tax_IC_1_val;Energy_Tax_rate_IC, alpha, Y
+Energy_Tax_FC;Energy_Tax_FC_1_val;Energy_Tax_rate_FC, C
+Carbon_Tax_IC;Carbon_Tax_IC_1_val;Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC
+Carbon_Tax_C;Carbon_Tax_C_1_val;Carbon_Tax_rate_C, C, Emission_Coef_C
+Labour;Employment_1_val;lambda, Y
+Labour_income;Labour_income_1_val;Labour, w
+GDP;GDP_1_val;Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, OtherIndirTax, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect
+Other_Direct_Tax;Other_Direct_Tax_2_val;CPI, Other_Direct_Tax_param
+Pension_Benefits;Pension_Benefits_2_val;Pension_Benefits_param, GDP
+UnemployBenefits;UnemployBenefits_1_val;NetWage_variation, UnemployBenefits_param
+Other_SocioBenef;Other_SocioBenef_2_val;Other_SocioBenef_param, GDP, Population
+Pensions;Pensions_1_val;Pension_Benefits, Retired
+u;HH_Unemployment_1_val;u_tot
+Unemployed;HH_Employment_1_val;u, Labour_force
+Unemployment_transfers;Unemploy_Transf_1_val;UnemployBenefits, Unemployed
+Other_social_transfers;OtherSoc_Transf_1_val;Other_SocioBenef, Population
+Property_income;Property_income_1_val;interest_rate, NetFinancialDebt
+Distribution_Shares;DistributShares_1_val;Labour_force, Unemployed
+NetCompWages_byAgent, GOS_byAgent, Other_Transfers;IncomeDistrib_1_val;GDP, Distribution_Shares, Labour_income, GrossOpSurplus
+H_disposable_income;H_Income_1_val;NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax
+Household_savings;H_Savings_1_val;H_disposable_income, Household_saving_rate
+Corporate_Tax;Corporate_Tax_1_val;Corporate_Tax_rate, GOS_byAgent
+Corp_disposable_income;Corp_income_1_val;GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax
+Corporations_savings;Corp_savings_1_val;Corp_disposable_income
+G_disposable_income;G_income_1_val;Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect
+G_Consumption_budget;G_ConsumpBudget_2_val;GDP
+Government_savings;G_savings_1_val;G_disposable_income, G_Consumption_budget
+GFCF_byAgent;GFCF_byAgent_1_val;H_disposable_income, H_Invest_propensity, G_disposable_income, G_invest_propensity, GDP, pI, I
+NetLending;NetLending_1_val;GFCF_byAgent, Household_savings, Corporations_savings
+Consumption_budget;ConsumBudget_1_val;H_disposable_income, Household_saving_rate
+SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_1_val;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X
+delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT;Recycling_Option_1_val;Carbon_Tax_IC, Carbon_Tax_C
+C;H_demand_1_val;Consumption_budget, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget
+Income_Tax;Income_Tax_1_val;Income_Tax_rate, H_disposable_income, Other_Direct_Tax
+G;G_demand_1_val;pG, G_Consumption_budget, BudgetShare_GConsump
+pY;Production_price_1_val;alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y
+;delta_TranspMarg_rate_eq;Transp_margins
+;delta_TradeMarg_rate_eq;Trade_margins
+Y;MarketBalance_1_val;IC, C, G, I, X, M
+;LabourByWorker_1_eq;LabourByWorker_coef, u_tot, Labour_force, lambda, Y
+;Mean_wage_1_eq;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage

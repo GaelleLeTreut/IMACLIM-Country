@@ -2030,6 +2030,8 @@ function [y] = pC_price_Const_1(pC, Transp_margins_rates, Trade_margins_rates, S
 endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
+
+
 function pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
 
     // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
@@ -2763,4 +2765,30 @@ function [y] = ExogCO2_C_2030( CO2Emis_C, CO2Emis_C_2030)
     y = matrix(y1, -1 , 1) ;
 endfunction
 
+
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+pM_price_2_val = pM_price_Const_2;
+Imports_2_val = Imports_Const_2;
+Mean_price_1_val = Mean_price_Const_1;
+Exports_2_val = Exports_Const_2;
+pIC_price_2_val = pIC_price_Const_2;
+pC_price_2_val = pC_price_Const_2;
+pG_price_2_val =  pG_price_Const_2;
+pI_price_2_val = pI_price_Const_2;
+CPI_2_val = CPI_Const_2;
+GDP_pFish_1_val = GDP_pFish_Const_1;
+G_pFish_1_val = G_pFish_Const_1;
+I_pFish_1_val = I_pFish_Const_1;
+Technical_Coef_1_val = Technical_Coef_Const_1;
+GrossOpSurplus_2_val = GrossOpSurplus_Const_2;
+Other_Direct_Tax_2_val = Other_Direct_Tax_Const_2;
+Recycling_Option_1_val = Recycling_Option_Const_1;
+
+LabourByWorker_1_eq = LabourByWorker_Const_1;
+Mean_wage_1_eq = Mean_wage_Const_1;
 

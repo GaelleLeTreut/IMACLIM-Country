@@ -19,6 +19,7 @@ STUDY     = PARENT + "study_frames" + sep;
 PARAMS    = PARENT + "params" + sep;
 ROBOT     = PARENT + "robot" + sep;
 
+SYST_RESOL = CODE + 'Systeme_Resolution' + sep;
 TEST_FULLCODE = CODE + 'Test_AllConfig' + sep;
 SAVED_DATA = TEST_FULLCODE + 'Saved_Data' + sep;
 
