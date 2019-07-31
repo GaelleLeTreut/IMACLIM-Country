@@ -1,23 +1,8 @@
 reference_year;2010;2030
 current_year;2030;2050
 GDP;0.01475;0.017
-GDP_world;0.0211186099;0.0201069551
-Population;0.0042131436;0.0025984392
-Labour_force;0.0030480279;0.0013270206
-Retired;0.0178530092;0.0079111127
-pM_Crude_oil;-0.0249810818;-0.0495026115
-pM_Natural_gas;-0.0053827986;-0.0434638776
-pM_Coal;0.0102984679;-0.0439856777
-pM_AllFuels;-0.0182511624;0.0104420948
-pM_Electricity;0.0136423383;-0.0337104311
-pM_HeatGeoSol_Th;0.0136423383;-0.0337104311
-pM_Heavy_Industry;0.0015;0.0015
-pM_Buildings_constr;0.0015;0.0015
-pM_Work_constr;0.0015;0.0015
-pM_Automobile;0.0015;0.0015
-pM_Load_PipeTransp;0.0015;0.0015
-pM_PassTransp;0.0015;0.0015
-pM_Agri_Food_industry ;0.0015;0.0015
-pM_Property_business;0.0015;0.0015
-pM_OthSectors;0.0;0.0
+GDP_world;0.02111861;0.020106955
+Population;0.004213144;0.002598439
+Labour_force;0.003048028;0.001327021
+Retired;0.017853009;0.007911113
 units;mean_yearly_growth_rate;

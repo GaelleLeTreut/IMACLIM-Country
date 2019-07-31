@@ -2,21 +2,34 @@
 // load of macroeconomic and demographic context for the first step only
 ////////////////////////////////////////////////////////////////////////
 if time_step==1 then
-    for elt=1:size(Row_Column,"r")
-        NameTemp = Row_Column(elt);
-        TempIndicElt = find( NameTemp ==Index_Macro_Framework(:,1));
-        TableTemp = Index_Macro_Framework(TempIndicElt,:);
-        TableTemp(:,1)=[];
-        if NameTemp=="Row"
-            Index_Var_Macro = TableTemp;
-            nb_Var_Macro = size(Index_Var_Macro,1);
-        end
-    end
 
-    for var=1:nb_Var_Macro
-        varname=Index_Var_Macro(var);
-        execstr("Proj_Macro."+varname+"=evstr(Macro_Framework_"+Macro_nb+"(find(Macro_Framework_"+Macro_nb+"==varname),2:$));");
-    end
+	execstr( "Table_Macro= Macro_Framework_"+Macro_nb+";")
+	list_macro_var= Table_Macro(1:$-1,1);
+	Macro_NumRow = size(list_macro_var,"r");
+
+	for elt=1:size(list_macro_var,"r");
+		indtemp= find(Table_Macro(:,1)==list_macro_var(elt));
+		valtemp = evstr(Table_Macro(indtemp,2:$));
+		execstr("Proj_Macro."+list_macro_var(elt)+"=valtemp;")
+	end
+	
+	if World_prices == "True"
+	/// Stocker les variations des prix des importations dans une autre structures
+	Index_Worldprice = "pM_";
+	Indice_Worldprice = find( part(list_macro_var,1:length(Index_Worldprice))==Index_Worldprice);
+		if Indice_Worldprice==[]
+		error("World_prices option is asking by the Dashboard but there is no information about any world prices within the macroeconomic economic study selected")
+		end
+	
+	list_Worldprice = [];
+		for elt = 1:size(Indice_Worldprice,"c")
+		list_Worldprice(elt) = list_macro_var(eval(Indice_Worldprice(elt)));
+		end
+		
+	SectDefineWP = part(list_Worldprice,length(Index_Worldprice)+1:$);
+	end
+
+	
 end
 
 /////////////////////////
@@ -50,19 +63,17 @@ if Labour_product == "True"
 end
 
 //Set imported prices as Macro_framework
-//if World_energy_prices <> []
 if World_prices == "True"
-//	for k=1:size(World_energy_prices,2)
-	for k=1:size(Index_Sectors,1)
-//		name = World_energy_prices(k);
-		name = Index_Sectors(k);
-		if sum(Index_Sectors == name)==1
-			execstr("parameters.delta_pM_parameter("+k+") = Proj_Macro.pM_"+name+"(time_step);");
-		else
-			warning("the energy quantity "+ name +" does not fit with the agregation level used: the related prices won't be informed.");  
-		end
-	end
-end
+	for k=1:size(Indice_Worldprice,"c")
+		name = SectDefineWP(k);
+		if find(Index_Sectors==name)<>[]
+			Match_Ind = find(Index_Sectors==name);
+            execstr("parameters.delta_pM_parameter("+Match_Ind+") = Proj_Macro.pM_"+name+"(time_step);");
+        else
+            warning("the import variation price of "+ name +" does not fit with any sectors used in this run: this information is not used");
+        end
+    end
+end 
 
 
 //////// Exportation in volume 
