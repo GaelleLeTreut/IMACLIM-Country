@@ -13,7 +13,7 @@ iso_arg = 'ARG';
 test_arg_homo.System_Resol = ['Systeme_ProjHomothetic',''];
 test_arg_homo.study = ['Recursive_RunChoices'];
 test_arg_homo.AGG_type = ['AGG_EnComp', ''];
-test_arg_homo.Macro_nb = ['NDC'];
+test_arg_homo.Macro_nb = ['Current'];
 
 argentina_homo = new_country(name_bra, iso_bra, test_arg_homo);
 
@@ -21,7 +21,7 @@ argentina_homo = new_country(name_bra, iso_bra, test_arg_homo);
 //// Scenario projection tests
 test_arg_scen.System_Resol = ['System_StatRed','Systeme_Static'];
 test_arg_scen.AGG_type = ['AGG_EnComp', ''];
-test_arg_homo.Macro_nb = ['NDC'];
+test_arg_homo.Macro_nb = ['Current'];
 test_arg_scen.Scenario = ['', 'NDC', 'CCS'];
 // test_arg_scen.Invest_matrix = ['%T', '%F'];
 
