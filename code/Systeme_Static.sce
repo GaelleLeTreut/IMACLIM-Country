@@ -170,7 +170,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // Constribution à la FBCF des corp : Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables) / MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
     // Corp_investment_Const_1(GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity)
     // Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
-    G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+	 G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP)
+    // G_investment_Const_3(GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
     MacroClosure_Const_1(GFCF_byAgent, pI, I)
     // Interest_rate_Const_1(interest_rate, delta_interest_rate)
 
@@ -248,8 +249,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C,SpeMarg_G, SpeMarg_rates_G, SpeMarg_X, SpeMarg_rates_X,SpeMarg_I, SpeMarg_rates_I, p, alpha, Y, C, X, I, G)
 
-    // 1-standard / 2-investment matrix / 3-Real total invest const + carbon tax revenu (option dashboard)
-    Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+    // 1-standard  / 3-Real total invest const + carbon tax revenu (option dashboard)
+	//  Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+	Invest_demand_Const_1(Betta, I, kappa, Y)
     Capital_Cost_Const_1(pK, pI, I)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
