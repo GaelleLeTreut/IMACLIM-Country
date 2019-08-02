@@ -18,8 +18,8 @@ AGG_type;AGG_SNBC2
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
-// H_DISAGG;H10
+// H_DISAGG;HH1
+H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
@@ -42,7 +42,7 @@ Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-Recycling_Option;LumpSumHH
+Recycling_Option;LabTax
 // Recycling_Option;PublicDeficit
 // Recycling_Option;GreenInvest
 // Recycling_Option;LumpSumHH
@@ -57,6 +57,6 @@ CO2_footprint;False
 // TELL if you want output file;
 Output_files;True
 // Output_files;False
-// TELL if you want to call "terminate_resolution";
+"// TELL if you want to call ""terminate_resolution""";
 //Term_Resol;True
 Term_Resol;False

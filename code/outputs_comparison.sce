@@ -1,12 +1,12 @@
 // Scenarios options
 //Loop_elements.Recycling_option = ["PublicDeficit" "GreenInvest" "LumpSumHH" "LabTax" "ExactRestitution" "LabTax_PublicDeficit" "LabTax_GreenInvest" "LabTax_LumpSumHH"];
-Loop_elements.Recycling_option = ["LabTax" "LumpSumHH"];
+Loop_elements.Recycling_option = ["PublicDeficit" "GreenInvest" "LumpSumHH" "LabTax"];
 Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
 Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
 Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-Loop_elements.sobriety = 1.0;//[1.0 0.0];
-Loop_elements.OverInvest = [30.0 0.0]*1E6;
+Loop_elements.sigma_Trade_coef = [0.0 1.0];//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sobriety = [1.0 0.0];
+Loop_elements.OverInvest = [16.0 0.0]*1E6;
 Loop_elements.MarginAdapt = [0.0 1.0 2.0 3.0];
 
 // MODEL FILE STRUCTURE
@@ -63,8 +63,6 @@ for Ropt_eld=1:size(Loop_elements.Recycling_option,2)
 		end
 	end
 end
-
-pause
 
 // définition de l'en tête
 top = 	["type", "Variables", "unit", "Agents/Sectors", Scenarios];

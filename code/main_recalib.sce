@@ -384,13 +384,13 @@ if Test_recalib_2 == "True"
 	end
 end
 
-Loop_elements.Carbon_Tax_rate = 100*1E3;//[50 100 250]*1E3; // Taxe Carbone
-Loop_elements.sigma_omegaU = 0.0;//[0.0 -0.1]; // Wage Curve : elasticity
-Loop_elements.Coef_real_wage = 0.0;//[0.0 1.0]; // wage Curve : wage indexation
-Loop_elements.sigma_Trade_coef = 1.0;//[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
-Loop_elements.sobriety = 1.0;//[1.0 0.0];
-Loop_elements.OverInvest = [30.0 0.0]*1E6;
-Loop_elements.MarginAdapt = [0.0 1.0 2.0 3.0];
+Loop_elements.Carbon_Tax_rate = 300*1E3; // [50 100 250]*1E3; // Taxe Carbone
+Loop_elements.sigma_omegaU = -0.1; //[0.0 -0.1]; // Wage Curve : elasticity
+Loop_elements.Coef_real_wage = 1.0; //[0.0 1.0]; // wage Curve : wage indexation
+Loop_elements.sigma_Trade_coef = 1.0; //[2.0 1.0 0.5 0.0]; // Élasticité du commerce 
+Loop_elements.sobriety = 0.0; //[1.0 0.0];
+Loop_elements.OverInvest = 0.0; //[16.0 0.0]*1E6;
+Loop_elements.MarginAdapt = 0.0; //[0.0 1.0 2.0 3.0];
 
 for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 	for sigW_elt=1:size(Loop_elements.sigma_omegaU,2)
@@ -437,9 +437,9 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
 								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
 							end
-							if Loop_elements.MarginAdapt(MarAdap_elt) == 1.0
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 3.0
 								// markup_rate increased ex-ante to meet higher invest. needs
-								Deriv_Exogenous.markup_rate = BY.markup_rate*(sum(data_2.Profit_margin) + parameters.OverInvest)/sum(data_2.Profit_margin);
+								Deriv_Exogenous.markup_rate = BY.markup_rate*(sum(data_2.Profit_margin) + 32.0*1E6)/sum(data_2.Profit_margin);
 								// pY as a variable / Profit_margin_rate as a variable / markup_rate as a calibrated parameter
 								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
 								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
@@ -450,7 +450,7 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(130,1:3) "Var" "-%inf" "%inf"];
 							end	
 
-							if Loop_elements.MarginAdapt(MarAdap_elt) == 3.0
+							if Loop_elements.MarginAdapt(MarAdap_elt) == 1.0
 								// pY as a variable / Profit_margin_rate as a calibrated parameter / markup_rate as a variable
 								Index_Imaclim_VarResol(44,:) = [Index_Imaclim_VarCalib(49,1:3) "Var" "0" "%inf"];
 								Index_Imaclim_VarResol(83,:) = [Index_Imaclim_VarCalib(129,1:3) "Var" "-%inf" "%inf"];

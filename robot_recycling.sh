@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Tabular="PublicDeficit GreenInvest LumpSumHH LabTax ExactRestitution LabTax_PublicDeficit LabTax_GreenInvest LabTax_LumpSumHH"
+Tabular="PublicDeficit GreenInvest LumpSumHH LabTax"
 
 #code='ImaclimS.sce'
 code='main_recalib.sce'

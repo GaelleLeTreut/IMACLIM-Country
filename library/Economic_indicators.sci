@@ -82,3 +82,10 @@ endfunction
 function Import_penet_rate = M_penetRat(M, Y, X);
 Import_penet_rate = divide ( M, Y+M-X, %nan) ;
 endfunction 
+
+// Gini indicator on source of income (H_disposable_income or effective consumption for instance)
+function Gini = Gini_indicator(Income, Population);
+	Cumulative_share = [0 cumsum(Income)/sum(Income)]
+	Gini = 1 - sum((Cumulative_share(1:nb_Households) + Cumulative_share(2:nb_Households+1)).* Population./sum(Population))
+endfunction
+

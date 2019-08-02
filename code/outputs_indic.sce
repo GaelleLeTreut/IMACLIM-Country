@@ -539,6 +539,11 @@ lambda_pLasp = PInd_Lasp( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
 lambda_pPaas = PInd_Paas( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
 lambda_pFish = PInd_Fish( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
 
+ // Labour intensity of Non Energy Products (Laspeyres, Paasche and Fisher)
+lambda_NonEn_pLasp = PInd_Lasp( BY.lambda, BY.Y', d.lambda, d.Y', :, Indice_NonEnerSect);
+lambda_NonEn_pPaas = PInd_Paas( BY.lambda, BY.Y', d.lambda, d.Y', :, Indice_NonEnerSect);
+lambda_NonEn_pFish = PInd_Fish( BY.lambda, BY.Y', d.lambda, d.Y', :, Indice_NonEnerSect);
+
 ////////////////////////
 //////////// Energy intensity
 ////////////////////////
@@ -876,6 +881,43 @@ OutputTable.Elasticities($+1,1)=  "Revenue-reclycling option";
 OutputTable.Elasticities($,2)=  [DispLabTabl] ;
 end
 
+if [H_DISAGG == "H10"] & [Country == "France"]
+
+	d.H_Primary_income = d.H_disposable_income - d.Other_Direct_Tax(Indice_Households) - d.Income_Tax(Indice_Households);
+	BY.H_Primary_income = ini.H_disposable_income - ini.Other_Direct_Tax(Indice_Households) - ini.Income_Tax(Indice_Households);	
+
+	for k=1:nb_Households
+		C_H10_qFish(1,k) = QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, k);
+		C_H10_pFish(1,k) = PInd_Fish( BY.pC, BY.C, d.pC, d.C, :, k);
+	end
+
+	OutputTable.EfficiencyEquity = ["Variables" 	"BY values" 												"Variation to BY (+x%)"
+		["Total CO2 emissions", 					string(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))+" GtCO2",		100*((sum(d.CO2Emis_IC)+sum(d.CO2Emis_C))./(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))-1)];..
+		["Real GDP",			 					string(BY.GDP*1E-6)+" M€", 									100*((d.GDP/(GDP_pLasp*BY.GDP))-1)];..
+		["Total employment (full time equivalent)",	string(sum(BY.Labour*1E-3))+" mil",							100*(sum(d.Labour)/sum(BY.Labour)-1)];..
+		["Government expenditure (real)",			string(sum(BY.G_value)*1E-6)+" M€",							100*((sum(d.G_value)/sum(G_pLasp*BY.G_value))-1)];..
+		["Government expenditure (nom)",			string(sum(BY.G_value)*1E-6)+" M€",							100*((sum(d.G_value)/sum(BY.G_value))-1)];..
+		["Real investment",							string(sum(BY.I_value)*1E-6)+" M€",							100*((sum(d.I_value)/sum(I_pLasp*BY.I_value))-1)];..
+		["Producer price of the composite good",	"-",			 											100*(Y_NonEn_pLasp-1)];..
+		["Labour intensity of the composite good",	"-",														100*(lambda_NonEn_pLasp-1)];..
+		["Effective Consumption",					" ",														" "];..
+		["Total",									string(sum(BY.C_value)*1E-6)+" M€",							100*(C_qFish-1)];..
+		["Poor (F0-10)",							string(sum(BY.C_value(:,1))*1E-6)+" M€",					100*(QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, 1)-1)];..
+		["Lower class (F10-30)",					string(sum(BY.C_value(:,2:3))*1E-6)+" M€",					100*(QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, 2:3)-1)];..
+		["Middle class (F30-70)",					string(sum(BY.C_value(:,4:7))*1E-6)+" M€",					100*(QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, 4:7)-1)];..
+		["Upper class (F70-90)",					string(sum(BY.C_value(:,8:9))*1E-6)+" M€",					100*(QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, 8:9)-1)];..
+		["Rich (F95-100)",							string(sum(BY.C_value(:,10))*1E-6)+" M€",					100*(QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, 10)-1)];..
+		["Gini index",								Gini_indicator(sum(BY.C_value,"r"),BY.Population),			100*(Gini_indicator(sum(d.C_value,"r")./C_H10_pFish,d.Population)/Gini_indicator(sum(BY.C_value,"r"),BY.Population)-1)];..
+		["Share of H_disposable_income (pts)",		" ",														" "];..
+		["Poor (F0-10)",							BY.H_disposable_income(1)/sum(BY.H_disposable_income),		100*(d.H_disposable_income(1)/sum(d.H_disposable_income)-BY.H_disposable_income(1)/sum(BY.H_disposable_income))];..
+		["Lower class (F10-30)",				sum(BY.H_disposable_income(2:3))/sum(BY.H_disposable_income),	100*(sum(d.H_disposable_income(2:3))/sum(d.H_disposable_income)-sum(BY.H_disposable_income(2:3))/sum(BY.H_disposable_income))];..
+		["Middle class (F30-70)",				sum(BY.H_disposable_income(4:7))/sum(BY.H_disposable_income),	100*(sum(d.H_disposable_income(4:7))/sum(d.H_disposable_income)-sum(BY.H_disposable_income(4:7))/sum(BY.H_disposable_income))];..
+		["Upper class (F70-90)",				sum(BY.H_disposable_income(8:9))/sum(BY.H_disposable_income),	100*(sum(d.H_disposable_income(8:9))/sum(d.H_disposable_income)-sum(BY.H_disposable_income(8:9))/sum(BY.H_disposable_income))];..
+		["Rich (F95-100)",							BY.H_disposable_income(10)/sum(BY.H_disposable_income),		100*(d.H_disposable_income(10)/sum(d.H_disposable_income)-BY.H_disposable_income(10)/sum(BY.H_disposable_income))];..
+		["Gini index (on Gross primary income)",	Gini_indicator(BY.H_Primary_income,BY.Population),			100*(Gini_indicator(d.H_Primary_income,d.Population)/Gini_indicator(BY.H_Primary_income,BY.Population)-1)];..
+		["Gini index (on Gross disposable income)", Gini_indicator(BY.H_disposable_income,BY.Population)		100*(Gini_indicator(d.H_disposable_income,d.Population)./Gini_indicator(BY.H_disposable_income,BY.Population)-1)];..
+		];
+end
 
 disp "===== MAIN MACRO OUTPUT =============================="
 disp(OutputTable.MacroT);
@@ -891,6 +933,8 @@ disp(OutputTable.MacroT);
  csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS.csv", ';');
  csvWrite(OutputTable.Trade_Sect,SAVEDIR+"Trade_Sect.csv", ';');
  csvWrite(OutputTable.Trade_Sect_Share,SAVEDIR+"Trade_Sect_Share.csv", ';');
+
+ csvWrite(OutputTable.EfficiencyEquity,SAVEDIR+"EfficiencyEquity.csv", ';');
   
   
  
