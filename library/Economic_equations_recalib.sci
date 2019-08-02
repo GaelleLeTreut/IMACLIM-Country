@@ -104,7 +104,9 @@ function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I
 
     y = I.*pI- BY.I.*BY.pI.*I_pFish;
 
-    y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+	
+	// (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))
 
 endfunction
 warning( "Invest_demand_Const_3 avec recyclage de la taxe à généraliser")
@@ -125,7 +127,7 @@ function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Co
  
     delta_LS_H =    (Recycling_Option=="PublicDeficit")*zeros(Indice_Households)+.. 
                     (Recycling_Option=="GreenInvest")*zeros(Indice_Households)+.. 
-                    (Recycling_Option=="LumpSumHH")*ones(Indice_Households)/nb_Households+.. 
+                    (Recycling_Option=="LumpSumHH")*Consumption_Units.*Nb_Households./sum(Consumption_Units.*Nb_Households)+.. 
                     (Recycling_Option=="LabTax")*zeros(Indice_Households)+.. 
                     (Recycling_Option=="ExactRestitution")*sum(Carbon_Tax_C,"r")/((Ctot<>0)*Ctot + (Ctot==0))+.. 
                     (Recycling_Option=="LabTax_PublicDeficit")*0 +..
