@@ -15,17 +15,17 @@ test_arg_homo.study = ['Recursive_RunChoices'];
 test_arg_homo.AGG_type = ['AGG_EnComp', ''];
 test_arg_homo.Macro_nb = ['Current'];
 
-argentina_homo = new_country(name_bra, iso_bra, test_arg_homo);
+argentina_homo = new_country(name_arg, iso_arg, test_arg_homo);
 
 
 //// Scenario projection tests
 test_arg_scen.System_Resol = ['System_StatRed','Systeme_Static'];
 test_arg_scen.AGG_type = ['AGG_EnComp', ''];
-test_arg_homo.Macro_nb = ['Current'];
+test_arg_scen.Macro_nb = ['Current'];
 test_arg_scen.Scenario = ['', 'NDC', 'CCS'];
 // test_arg_scen.Invest_matrix = ['%T', '%F'];
 
-argentina_scen = new_country(name_arg, iso_arg, test_arg);
+argentina_scen = new_country(name_arg, iso_arg, test_arg_scen);
 
 
 // * ------------------------------------------------------------- *
@@ -36,8 +36,11 @@ name_bra = 'Brasil';
 iso_bra = 'BRA';
 
 //// System static resolution test
-test_bra_stat.System_Resol = ['Systeme_Static_BRA',''];
-test_fra_stat.study = ['Static_RunChoices'];
+test_bra_stat.System_Resol = ['Systeme_Static_BRA'];
+test_bra_stat.Optimization_Resol = ['%T'];
+test_bra_stat.SystemOpt_Resol = ['SystemOpt_Static_BRA'];
+
+test_bra_stat.study = ['Static_RunChoices'];
 test_bra_stat.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_stat.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
@@ -45,7 +48,7 @@ test_bra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
 brasil_stat = new_country(name_bra, iso_bra, test_bra_stat);
 
 //// homothetic projection tests
-test_bra_homo.System_Resol = ['Systeme_ProjHomot_BRA',''];
+test_bra_homo.System_Resol = ['Systeme_ProjHomot_BRA'];
 test_bra_homo.study = ['Recursive_RunChoices'];
 test_bra_homo.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_homo.H_DISAGG = ['HH1', 'H3', 'H4'];
@@ -130,5 +133,5 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 // ------------------------- * 
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
-countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
-
+//countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
+countries = list(brasil_stat);
