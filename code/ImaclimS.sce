@@ -86,7 +86,11 @@ if Output_files=='True'
 
     // Save Dashbord.csv & System_Resol.csv in output
     copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
-    copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    if Optimization_Resol then
+        copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
+    else
+        copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    end
 end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
@@ -199,7 +203,13 @@ for time_step=1:Nb_Iter
     exec(STUDY_Country+study+".sce");
 	end 
 	
-    exec(System_Resol+".sce");
+    if Optimization_Resol then
+        exec('Order_resolution.sce');
+        exec('Resolution.sce');
+    else
+        exec(System_Resol+".sce");
+    end
+    
     warning("sign of ClimPolCompensbySect");
 
     // Check if the projections are made correctly

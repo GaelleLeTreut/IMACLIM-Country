@@ -1,13 +1,16 @@
-
+Var_Resol = Index_Imaclim_VarResol;
 
 // TODO : Read the equations to solve
 
-file_eq_path = SYST_RESOL + 'Systeme_Static_Red.csv';
+file_eq_path = SYST_RESOL + SystemOpt_Resol + '.csv';
 file_eq = read_csv(file_eq_path, ';');
 file_eq = stripblanks(file_eq);
 remove_comments = list();
 for i = 1:size(file_eq,1)
-    if part(file_eq(i,1),1:2) <> '//' then
+    // remove the comments and the empty lines
+    if part(file_eq(i,1),1:2) <> '//' ..
+        & (file_eq(i,1) <> '' | file_eq(i,2) <> '' | file_eq(i,3) <> '') ..
+        then
         remove_comments($+1) = file_eq(i,:);
     end
 end
@@ -18,8 +21,11 @@ file_eq = remove_comments;
 
 fun_eq_list = list();
 fun_val_list = list();
+id = 0;
 for eq = file_eq
     eq_struct = struct();
+    id = id + 1;
+    eq_struct.id = id;
     eq_struct.output = stripblanks(strsplit(eq(1),','));
     if eq_struct.output == '' then
         eq_struct.output = [];
@@ -40,7 +46,6 @@ end
 // TODO : Sort the val functions
 
 // Read the variable resol
-Var_Resol = Index_Imaclim_VarResRed;
 Var_Resol(1,:) = [];
 
 var_resolution = [];
@@ -84,7 +89,7 @@ function [fun_list_red, var_treatment, fun_out, var_out] = take_fun(fun_list, fu
         fun_val_treatment = list();
         for i = 1:size(fun_list)
             if fun_list(i).args == [] then
-                fun_list_out($+1) = fun_list(i).name;
+                fun_list_out($+1) = fun_list(i).id;
                 // remove the compute var from var resolution
                 for var = fun_list(i).output'
                     arg_list_out($+1) = var;
@@ -224,10 +229,10 @@ while (fun_val_list <> list())
         // remove fun_circ
         for i = 1:size(fun_val_list)
             fun = fun_val_list(i);
-            if fun.name == fun_circ.name then
+            if fun.id == fun_circ.id then
                 // remets les vrais arguments
                 for fun_copy = fun_val_list_copy
-                    if fun_copy.name == fun.name then
+                    if fun_copy.id == fun.id then
                         fun.args = fun_copy.args;
                     end
                 end
@@ -278,11 +283,11 @@ var_resolution = [var_resolution ; var_resol_treatment];
 // fun_val_interm : liste des équations à résoudre dans f_resol_interm
 // fun_val_in_eq
 
-function fun_list = restore_functions(fun_name_list, fun_val_list_copy)
+function fun_list = restore_functions(fun_id_list, fun_val_list_copy)
     fun_list = list();
-    for i = 1:size(fun_name_list)
+    for i = 1:size(fun_id_list)
         for fun_val = fun_val_list_copy
-            if fun_val.name == fun_name_list(i)
+            if fun_val.id == fun_id_list(i)
                 fun_list($+1) = fun_val;
                 break;
             end

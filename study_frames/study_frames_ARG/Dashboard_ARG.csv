@@ -1,8 +1,11 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
 // System_Resol;Systeme_ProjHomothetic
-System_Resol;System_StatRed
+System_Resol;Systeme_Static
 // System_Resol;Systeme_Stat_RoW
+// * If Optimization_Resol == %T, System_Resol is ignored *;
+Optimization_Resol;%F
+// SystemOpt_Resol;SystemOpt_Static
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
@@ -37,6 +40,6 @@ Scenario;NDC
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+// Output_files;True
+Output_files;False
 Recycling_Option;

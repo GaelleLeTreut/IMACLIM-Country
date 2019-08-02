@@ -100,9 +100,15 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 // TABLES
 ////////////////////////////////////////////////////////////////////
 
+
+// *************************** *
+// Functions to write the code *
+// *************************** *
+
 function str = string_from_table(table)
+    // If table = [a1,a2,...], returns the string str = "a1,a2,..."
     
-    str = ''
+    str = '';
     
     if size(table,1) <> 0 then
         str = table(1);
@@ -115,7 +121,7 @@ function str = string_from_table(table)
 endfunction
 
 function fun_code = write_fun_val_code(fun_struct)
-    // Return a string containing the code which computes the result
+    // Returns a string containing the code which computes the result
     // variable of the function in *fun_struct*.
     
     args = string_from_table(fun_struct.args);
@@ -126,7 +132,7 @@ function fun_code = write_fun_val_code(fun_struct)
 endfunction
 
 function fun_code = write_fun_eq_code(fun_struct)
-    // Return a string which evaluates the function in *fun_struct*.
+    // Returns a string which evaluates the function in *fun_struct*.
     
     args = string_from_table(fun_struct.args);
     
@@ -135,24 +141,52 @@ function fun_code = write_fun_eq_code(fun_struct)
 endfunction
 
 function y = eq_from_val(output_code,code)
-    // 
+    // Returns the constraints form of the functions defined by the
+    // string *code* which as *outpout_code* as outputs.
     
-    for var = output_code
-        execstr(var + '_save' + '=' + var);
+    suff_save = '_s';
+    
+    if isdef(var + suff_save) then
+        error(var + suff_save + ' is already defined, choose another suffix name');
     end
     
-    execstr(code);
-        
-    y = [];
-    
+    // save the current value of output variables
     for var = output_code
-        y = [y; matrix(eval(var + '_save' + '-' + var),-1,1)];
+        execstr(var + suff_save + '=' + var);
+    end
+    
+    // compute the new value of output variables
+    execstr(code);
+    
+    // Return the constraint
+    y = [];
+    for var = output_code
+        y = [y; matrix(eval(var + suff_save + '-' + var),-1,1)];
     end
     
 endfunction
 
+
+// ************************************************** *
+// Define tables containing the code of the functions *
+// ************************************************** *
+
+//for fun = fun_val_out
+//    fun_val_in_eq($+1) = fun;
+//end
+//
+//for fun = fun_val_interm
+//    fun_val_in_eq($+1) = fun;
+//end
+//
+//fun_val_out = list();
+//fun_val_interm = list();
+
+// Code for functions outside the resolution
 Table_resol_out = [];
+// Code computing the functions of intermediate resolution
 Table_resol_interm = [];
+// Code which defines Constraints_Deriv for resolution
 Table_resolution = ['Constraints_Deriv = [];'];
 
 for fun = fun_val_out
@@ -167,8 +201,10 @@ for fun = fun_eq_list
     Table_resolution($+1) = 'Constraints_Deriv = [Constraints_Deriv ;' + write_fun_eq_code(fun) + '];';
 end
 
-//Code_val_in_eq = []
+// Change fonctions _val into constraints
 for fun = fun_val_in_eq
+    
+    // code of the _val function
     code = write_fun_val_code(fun);
     output = fun.output;
     
@@ -180,7 +216,9 @@ for fun = fun_val_in_eq
         output_var = output_var + ',' + """" + fun.output(i) + """";
     end
     
+    // record the constraints
     Table_resolution($+1) = 'Constraints_Deriv = [Constraints_Deriv ; eq_from_val(' + '[' + output_var + ']' + ',' + """" + code + """" + ')];';
+    
 end
 
 
@@ -290,21 +328,27 @@ printf("\n\n   count      vBest   info       toc\n");
 while (count<countMax)&(vBest>sensib)
     count = count + 1;
 
-    try
-        [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variables , listDeriv_Var),sensibFsolve);
-        vMax = norm(Constraints_Deriv);
-
-        if vMax<vBest
-            vBest    = vMax;
-            infoBest = info;
-            Xbest    = X_Deriv_Var;
-        end
-
-    catch
-        [str,n,line,func]=lasterror(%f);
-        print(out,"Error "+n+" with fsolve: "+str);
-        pause
+    //    try
+    for var = [var_resolution ; var_resol_interm ; var_resol_out]'
+        execstr('clear(' + '''' + var + '''' + ');');
     end
+    NetLending = zeros(1,nb_InstitAgents);
+    
+    
+    [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variables , listDeriv_Var),sensibFsolve);
+    vMax = norm(Constraints_Deriv);
+
+    if vMax<vBest
+        vBest    = vMax;
+        infoBest = info;
+        Xbest    = X_Deriv_Var;
+    end
+
+    //    catch
+    //        [str,n,line,func]=lasterror(%f);
+    //        print(out,"Error "+n+" with fsolve: "+str);
+    //        pause
+    //    end
 
     result(count).xbest = Xbest;
     result(count).vmax  = vMax;
@@ -348,7 +392,12 @@ execstr("d."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_val
 execstr("d."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 // introducing changes in variable value
 execstr("d."+fieldnames(Deriv_variables)+"= Deriv_variables."+fieldnames(Deriv_variables)+";");
-execstr("d."+fieldnames(Deriv_Var_interm)+"= Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+";");
+
+for var = [var_resol_out; var_resol_interm]'
+    d(var) = eval(var);
+end
+
+//execstr("d."+fieldnames(Deriv_Var_interm)+"= Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+";");
 if exists('Deriv_Exogenous')==1
     execstr("d."+fieldnames(Deriv_Exogenous)+"= Deriv_Exogenous."+fieldnames(Deriv_Exogenous)+";");
 end

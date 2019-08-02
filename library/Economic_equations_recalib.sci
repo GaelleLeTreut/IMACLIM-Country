@@ -7,13 +7,22 @@ function GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP)
 	GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas)
 endfunction
 
+// const/val clean
+GDP_pFish_Val_1 = GDP_pFish_Const_1;
+
 function I_pFish = I_pFish_Const_1(pI, I)
 	I_pFish = PInd_Fish( BY.pI, sum(BY.I,"c"), pI, sum(I,"c"), :, :);
 endfunction
 
+// const/val clean
+I_pFish_Val_1 = I_pFish_Const_1;
+
 function G_pFish = G_pFish_Const_1(pG, G)
 	G_pFish = PInd_Fish( BY.pG, BY.G, pG, G, :, :);
 endfunction
+
+// const/val clean
+G_pFish_Val_1 = G_pFish_Const_1;
 
 //////////////////////////
 // Répartition de la FBCF
@@ -109,6 +118,14 @@ function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I
 endfunction
 warning( "Invest_demand_Const_3 avec recyclage de la taxe à généraliser")
 
+function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+
+    value_I = BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+    I = (pI <> 0) .* divide(value_I,pI,1);
+
+endfunction
+
+
 function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C); 
  
     Ctot = (sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)); 
@@ -154,6 +171,9 @@ function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Co
                     ; 
 
 endfunction
+
+// const/val clean
+Recycling_Option_Val_1 = Recycling_Option_Const_1;
 
 // function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
 

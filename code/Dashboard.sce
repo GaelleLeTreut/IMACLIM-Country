@@ -137,3 +137,13 @@ else
     ScenAgg_IOT = %F;
 end
 
+if isdef("Optimization_Resol") then
+    Optimization_Resol = eval(Optimization_Resol);
+    if ~isdef("SystemOpt_Resol") then
+        error("In Dashboard : you need to define a SystemOpt_Resol because Optimization_Resol is %T.");
+    end
+else
+    warning('No information about optimization resolution in dashboard : by default, no optimization');
+    Optimization_Resol = %F;
+end
+
