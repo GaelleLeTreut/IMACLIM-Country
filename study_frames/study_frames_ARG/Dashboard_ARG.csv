@@ -4,8 +4,9 @@ Component;Name
 System_Resol;Systeme_Static
 // System_Resol;Systeme_Stat_RoW
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%F
+Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
@@ -21,8 +22,8 @@ Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;1
 // SELECT a Macro framework to run;
-Macro_nb;
-// Macro_nb;Current
+// Macro_nb;
+Macro_nb;Current
 // Macro_nb;StrucChgt
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
@@ -33,13 +34,13 @@ X_nonEnerg;False
 // Invest_matrix;%T
 Invest_matrix;%F
 // SELECT the scenario to run (soft_linking);
-// Scenario;
-Scenario;NDC
+Scenario;
+// Scenario;NDC
 // Scenario;CCS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-// Output_files;True
-Output_files;False
+Output_files;True
+// Output_files;False
 Recycling_Option;

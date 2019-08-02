@@ -762,6 +762,8 @@ function Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Othe
 	
 endfunction
 
+// const/val clean
+Other_Direct_Tax_Val_3 = Other_Direct_Tax_Const_3;
 
 // Brazil
 function y = OthDirTax_rate_Const_1(Direct_Tax, Labour_income, Direct_Tax_rate) ;
@@ -1090,6 +1092,14 @@ function [y] = UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, Unemp
 
     y=y1';
 endfunction
+
+function UnemployBenefits = UnemployBenefits_Val_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param)
+
+    UnemployBenefits = (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
+
+endfunction
+
+
 
 function [y] = UnemployBenefits_Const_3(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param) ;
 
@@ -2353,6 +2363,9 @@ function X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);
     X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
 
 endfunction
+
+// const/val clean
+Exports_Val_3 = Exports_Const_3;
 
 
 /// Trade balance constant to GDP growth

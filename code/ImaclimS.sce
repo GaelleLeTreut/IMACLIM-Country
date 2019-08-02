@@ -94,8 +94,11 @@ if Output_files=='True'
 end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
-
+if Optimization_Resol then
+print(out," ======= for resolving the system: "+SystemOpt_Resol);
+else
 print(out," ======= for resolving the system: "+System_Resol);
+end
 print(out," ======= using the study file: "+study);
 print(out,"======= with various class of households: "+H_DISAGG);
 print(out,"======= at aggregated level: "+AGG_type);
@@ -199,9 +202,16 @@ for time_step=1:Nb_Iter
 
     // Loading other study changes (specific feature) except for homothetic projections
 	Homo_Shortname = "Systeme_ProjHomo";
-	if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
-    exec(STUDY_Country+study+".sce");
-	end 
+	OptHomo_Shortname ="SystemOpt_ProjHomo";
+	if Optimization_Resol then
+		if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
+			exec(STUDY_Country+study+".sce");
+		end 
+	else
+		if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
+			exec(STUDY_Country+study+".sce");
+		end 
+	end
 	
     if Optimization_Resol then
         exec('Order_resolution.sce');

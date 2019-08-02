@@ -144,7 +144,7 @@ function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Co
  
     delta_LS_H =    (Recycling_Option=="PublicDeficit")*zeros(Indice_Households)+.. 
                     (Recycling_Option=="GreenInvest")*zeros(Indice_Households)+.. 
-                    (Recycling_Option=="LumpSumHH")*Consumption_Units.*Nb_Households./sum(Consumption_Units.*Nb_Households)+.. 
+                    (Recycling_Option=="LumpSumHH")*divide(Consumption_Units.*Nb_Households,sum(Consumption_Units.*Nb_Households),1)+.. 
                     (Recycling_Option=="LabTax")*zeros(Indice_Households)+.. 
                     (Recycling_Option=="ExactRestitution")*sum(Carbon_Tax_C,"r")/((Ctot<>0)*Ctot + (Ctot==0))+.. 
                     (Recycling_Option=="LabTax_PublicDeficit")*0 +..
