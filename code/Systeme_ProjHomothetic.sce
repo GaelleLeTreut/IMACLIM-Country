@@ -137,7 +137,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
     GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
     // const_1 : calib / const_2 : CPI / const_3 : GDP
-    Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param);
+    Other_Direct_Tax = Other_Direct_Tax_Const_3( GDP, Other_Direct_Tax_param);
 	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C)
 endfunction
 

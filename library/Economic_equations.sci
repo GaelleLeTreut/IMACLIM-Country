@@ -1256,6 +1256,21 @@ function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, delta_L
     y=y1';
 endfunction
 
+function [ClimPolicyCompens] = ClimCompensat_Val_2(GDP, delta_LS_H, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;
+
+    // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
+    // y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
+	
+	ClimPolicyCompens = zeros(1,nb_InstitAgents); 
+	ClimPolicyCompens(Indice_RestOfWorld)  = (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_RestOfWorld);
+	ClimPolicyCompens(Indice_Government)   = (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Government);
+    ClimPolicyCompens(Indice_Corporations) = (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Corporations);
+    ClimPolicyCompens(Indice_Households)   = (GDP/BY.GDP) * BY.ClimPolicyCompens(Indice_Households) ;
+	
+	ClimPolicyCompens = matrix(ClimPolicyCompens,1,-1);
+
+endfunction
+
 
 function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C);
 // /// Compensations to institutional agents consistent with the LUMP SUM options selected in dashboard
@@ -1321,9 +1336,16 @@ endfunction
 function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
 
     // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - (BY.GDP/BY.GDP) * BY.ClimPolCompensbySect ;
+    y1 = ClimPolCompensbySect - (GDP/BY.GDP) * BY.ClimPolCompensbySect ;
 
     y=y1';
+endfunction
+
+
+function [ClimPolCompensbySect] = S_ClimCompensat_Val_2(GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
+    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
+    ClimPolCompensbySect = (GDP/BY.GDP) * BY.ClimPolCompensbySect ;
+
 endfunction
 
 function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;

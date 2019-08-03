@@ -90,7 +90,7 @@ test_fra_stat.System_Resol = ['Systeme_Static'];
 test_fra_stat.study = ['Static_RunChoices'];
 test_fra_stat.Optimization_Resol = ['%T'];
 test_fra_stat.SystemOpt_Resol = ['SystemOpt_Static'];
-test_fra_stat.AGG_type = ['AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
+test_fra_stat.AGG_type = ['AGG_SNBC2', 'AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_stat.H_DISAGG = ['HH1', 'H10'];
 test_fra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
@@ -100,7 +100,7 @@ france_stat = new_country(name_fra, iso_fra, test_fra_stat);
 //// homothetic projection tests
 test_fra_homo.System_Resol = ['Systeme_ProjHomothetic'];
 test_fra_homo.study = ['Recursive_RunChoices'];
-test_fra_homo.AGG_type = ['', 'AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
+test_fra_homo.AGG_type = ['', 'AGG_SNBC2','AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_homo.H_DISAGG = ['HH1', 'H10'];
 test_fra_homo.Macro_nb = ['NDC','2deg'];
@@ -120,7 +120,7 @@ france_scen = new_country(name_fra, iso_fra, test_fra_scen);
 
 //// Recalib tests /// TO CHECK
 test_fra_recalib.System_Resol = ['Systeme_Static_recalib'];
-test_fra_recalib.AGG_type = ['', 'AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
+test_fra_recalib.AGG_type = ['', 'AGG_SNBC2','AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_recalib.H_DISAGG = ['HH1', 'H10'];
 test_fra_recalib.Scenario = ['Recalib'];
