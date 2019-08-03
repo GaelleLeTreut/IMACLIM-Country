@@ -68,6 +68,11 @@ VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1
+		for var = fieldnames(Deriv_Exogenous)'
+			if find(fieldnames(parameters) == var) <> [] then
+				parameters(var) = Deriv_Exogenous(var);
+			end
+		end
     [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
     execstr(Table_Deriv_Exogenous);
 end

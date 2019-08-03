@@ -755,7 +755,7 @@ Other_Direct_Tax_Val_2 = Other_Direct_Tax_Const_2;
 
 ///	proj: il faut que ça varie comme le PIB pour homothétie
 ///	Other Direct Tax indexed on GDP
-function Other_Direct_Tax = Other_Direct_Tax_Const_3(Other_Direct_Tax, GDP, Other_Direct_Tax_param) ;
+function Other_Direct_Tax = Other_Direct_Tax_Const_3( GDP, Other_Direct_Tax_param) ;
     
     // Other direct Tax ( Other_Direct_Tax(1:nb_Households )
     Other_Direct_Tax = (GDP/BY.GDP) * Other_Direct_Tax_param ;
@@ -1093,7 +1093,7 @@ function [y] = UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, Unemp
     y=y1';
 endfunction
 
-function UnemployBenefits = UnemployBenefits_Val_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param)
+function UnemployBenefits = UnemployBenefits_Val_2(GDP, Unemployed, UnemployBenefits_param)
 
     UnemployBenefits = (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
 
