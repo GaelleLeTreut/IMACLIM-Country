@@ -88,7 +88,9 @@ iso_fra = 'FRA';
 //// Static resolution tests
 test_fra_stat.System_Resol = ['Systeme_Static'];
 test_fra_stat.study = ['Static_RunChoices'];
-test_fra_stat.AGG_type = ['', 'AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
+test_fra_stat.Optimization_Resol = ['%T'];
+test_fra_stat.SystemOpt_Resol = ['SystemOpt_Static'];
+test_fra_stat.AGG_type = ['AGG_SNBC2', 'AGG_MetMin', 'AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_stat.H_DISAGG = ['HH1', 'H10'];
 test_fra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
@@ -134,4 +136,5 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
 //countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
-countries = list(brasil_stat);
+// countries = list(brasil_stat);
+countries = list(france_stat);
