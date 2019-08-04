@@ -1,10 +1,9 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomothetic
-System_Resol;Systeme_Static
-// System_Resol;Systeme_Stat_RoW
+System_Resol;Systeme_ProjHomothetic
+// System_Resol;Systeme_Static
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%T
+Optimization_Resol;%F
 // SystemOpt_Resol;SystemOpt_Static
 SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
@@ -31,8 +30,8 @@ Labour_product;True
 World_prices;False
 X_nonEnerg;False
 // SELECT an Capital Flow representation by uncomment it;
-// Invest_matrix;%T
-Invest_matrix;%F
+// Invest_matrix;%F
+Invest_matrix;%T
 // SELECT the scenario to run (soft_linking);
 Scenario;
 // Scenario;NDC
