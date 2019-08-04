@@ -33,7 +33,7 @@ pL;Labour_Cost_Val_1;w, Labour_Tax_rate;
 pK;Capital_Cost_Val_1;pI, I;
 ;;;
 GrossOpSurplus;GrossOpSurplus_Val_2;Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X;
-SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X;
+SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G, I;
 ;;;
 CPI;CPI_Val_2;pC, C;// defined in relation to BY
 GDP_pFish;GDP_pFish_Val_1;pC, C, pG, G, pI, I, pX, X, pM, M, GDP;
@@ -53,7 +53,7 @@ Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate
 ;H_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Firms;;;
-;Corp_income_Const_1;Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax;
+Corp_disposable_income;Corp_income_Val_1; GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax;
 Corporations_savings;Corp_savings_Val_1;Corp_disposable_income;
 //;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
 ;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
@@ -83,7 +83,7 @@ G_disposable_income;G_income_Val_1;Income_Tax, Other_Direct_Tax, Corporate_Tax, 
 Government_savings;G_savings_Val_1;G_disposable_income, G_Consumption_budget;
 G_Consumption_budget;G_ConsumpBudget_Val_2;GDP;//  G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures // G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP // G_ConsumpBudget_Const_3 constant in real terms
 G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
-;G_investment_Const_3;GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C;// Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
+;G_investment_Const_2;GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP;// Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
 ;G_NetLending_Const_1;NetLending, GFCF_byAgent, Government_savings;
 ;G_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;G_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
@@ -120,7 +120,7 @@ w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_
 ;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
 ////// Investment and capital flows;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
-I;Invest_demand_Val_3;Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
+I;Invest_demand_Val_1;Betta, kappa, Y;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;;;
 ////////////////////// Carbon tax policies;;;
 Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;

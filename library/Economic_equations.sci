@@ -474,6 +474,20 @@ function y = Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Tran
 	y=y1';		
 endfunction
 
+function Corp_disposable_income = Corp_income_Val_1(GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) ;
+
+    // Income by sources, redistribution and tax payments
+    Corp_Non_Labour_Income =  GOS_byAgent (Indice_Corporations) ;
+    Corp_Other_Income      =  Other_Transfers(Indice_Corporations) ;
+    Corp_Property_income   =  Property_income(Indice_Corporations);
+    Corp_Tax_Payments      =  Corporate_Tax ;
+
+    // After tax disposable income constraint (H_disposable_income)
+    Corp_disposable_income = (Corp_Non_Labour_Income + Corp_Other_Income + Corp_Property_income - Corp_Tax_Payments);
+
+	
+endfunction
+
 // Brasil
 function y = Corp_income_Const_2(Corp_disposable_income, GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax) ;
     
@@ -2145,7 +2159,7 @@ function [y] =  SpeMarg_Const_1_2(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMa
 
 endfunction
 
-function [SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I] =  SpeMarg_Val_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G)
+function [SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I] =  SpeMarg_Val_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G, I)
 
     // Different margins, by products, for intermediate consumptions (nb_Sectors*Sm_index), household classes (nb_Sectors*hn_index), and exports (nb_Sectors*1)
 

@@ -5,15 +5,15 @@
 ///////////////////////  Demograhic context;;;
 u;HH_Unemployment_Val_1;u_tot;
 Unemployed;HH_Employment_Val_1;u, Labour_force;
-;OtherSoc_Transf_Const_1;Gov_social_transfers, Gov_SocioBenef, Population;
-;OtherSoc_Transf_Const_1;Corp_social_transfers, Corp_SocioBenef, Population;
+Gov_social_transfers;OtherSoc_Transf_Val_1; Gov_SocioBenef, Population;
+Corp_social_transfers;OtherSoc_Transf_Val_1; Corp_SocioBenef, Population;
 Gov_Direct_Tax;OthDirTax_rate_Val_1;Labour_income, Gov_Direct_Tax_rate;
 Corp_Direct_Tax;OthDirTax_rate_Val_1;Labour_income, Corp_Direct_Tax_rate;
 ;;;
 ////////////////////// Price formation;;;
 p;Mean_price_Val_1;pY, pM, Y, M;
 pM;pM_price_Val_2;;// check const_1
-;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate;
+;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y;
 pIC;pIC_price_Val_3;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p;
 pC;pC_price_Val_3;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate;
 pG;pG_price_Val_3;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, Cons_Tax_rate;
@@ -34,7 +34,7 @@ pL;Labour_Cost_Val_2;w, Labour_Tax_rate, Labour_Corp_Tax_rate;
 pK;Capital_Cost_Val_1;pI, I;
 ;;;
 GrossOpSurplus;GrossOpSurplus_Val_2;Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X;
-SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G;
+SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G, I;
 ;;;
 CPI;CPI_Val_2;pC, C;// defined in relation to BY
 ;;;
@@ -94,14 +94,14 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;;;
 ////////////////////// Production and consumption choices;;;
 ////// Households consumption choices;;;
-;H_demand_Const_2;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
+;H_demand_Const_1;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
 alpha, lambda, kappa;Technical_Coef_Val_1;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
 ////// International trade;;;
 M;Imports_Val_2;pM, pY, Y, sigma_M, delta_M_parameter;// check const_1, const_3 & const_4
-X;Exports_Val_2;pM, pX, sigma_X, delta_X_parameter;// const 3 : homothetic projection et const_2 static projection
+X;Exports_Val_3;pM, pX, sigma_X, delta_X_parameter, GDP;// const 3 : homothetic projection et const_2 static projection
 ;;;
 ////////////////////// Market balances;;;
 ////// Good Market;;;
