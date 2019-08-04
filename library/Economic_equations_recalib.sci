@@ -1,28 +1,22 @@
 //////////////////////////
 // Indices de prix réel
 //////////////////////////
-function GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP)
+function GDP_pFish = GDP_pFish_Val_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP)
 	GDP_pLasp = (sum(pC.*BY.C)+sum(pG.*BY.G)+sum(pI.*sum(BY.I,"c"))+sum(pX.*BY.X)-sum(pM.*BY.M))/BY.GDP ;
 	GDP_pPaas = GDP / (sum(BY.pC.*C)+sum(BY.pG.*G)+sum(BY.pI.*sum(I,"c"))+sum(BY.pX.*X)-sum(BY.pM.*M)); 
 	GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas)
 endfunction
 
-// const/val clean
-GDP_pFish_Val_1 = GDP_pFish_Const_1;
 
-function I_pFish = I_pFish_Const_1(pI, I)
+function I_pFish = I_pFish_Val_1(pI, I)
 	I_pFish = PInd_Fish( BY.pI, sum(BY.I,"c"), pI, sum(I,"c"), :, :);
 endfunction
 
-// const/val clean
-I_pFish_Val_1 = I_pFish_Const_1;
 
-function G_pFish = G_pFish_Const_1(pG, G)
+function G_pFish = G_pFish_Val_1(pG, G)
 	G_pFish = PInd_Fish( BY.pG, BY.G, pG, G, :, :);
 endfunction
 
-// const/val clean
-G_pFish_Val_1 = G_pFish_Const_1;
 
 //////////////////////////
 // Répartition de la FBCF
@@ -46,20 +40,20 @@ function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
 
 endfunction
 
-function y = Exo_Production_Tax_Const_1(Exo_Production_Tax, Production_Tax)
+function y = Exo_ProductTax_Const_1(Exo_Production_Tax, Production_Tax)
 
 	y = Exo_Production_Tax - sum(Production_Tax)
 
 endfunction
 
-function y = Production_Tax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
+function y = ProductTax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
 
     y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
     y = y1';
 
 endfunction
 
-function y = Exo_GrossOpSurplus_Const_1(Exo_GrossOpSurplus, GrossOpSurplus)
+function y = Exo_GrossOpSurp_Const_1(Exo_GrossOpSurplus, GrossOpSurplus)
 
 	y = Exo_GrossOpSurplus - sum(GrossOpSurplus)
 
@@ -128,7 +122,7 @@ function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbo
 endfunction
 
 
-function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C); 
+function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Val_1(Carbon_Tax_IC, Carbon_Tax_C); 
  
     Ctot = (sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)); 
  
@@ -174,8 +168,6 @@ function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Co
 
 endfunction
 
-// const/val clean
-Recycling_Option_Val_1 = Recycling_Option_Const_1;
 
 // function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
 

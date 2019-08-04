@@ -117,28 +117,28 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 /////////////////////////////////////////////////////////////////////////
 
 function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
-    pM = pM_price_Const_2(); // check const_1
-    M = Imports_Const_2(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
-    p = Mean_price_Const_1(pY, pM, Y, M );
+    pM = pM_price_Val_2(); // check const_1
+    M = Imports_Val_1(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
+    p = Mean_price_Val_1(pY, pM, Y, M );
     // const 3 : homothetic projection et const_2 static projection
-    X = Exports_Const_3( pM, pX, sigma_X, delta_X_parameter, GDP);// check const_1 et const_4
-    pIC = pIC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
-    pC = pC_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-    pG = pG_price_Const_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
-    pI = pI_price_Const_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
+    X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP);// check const_1 et const_4
+    pIC = pIC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
+    pC = pC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
+    pG = pG_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, VA_Tax_rate) ;
+    pI = pI_price_Val_1( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate) ;
 
-    CPI = CPI_Const_2( pC, C); // defined in relation to BY
-	GDP_pFish = GDP_pFish_Const_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
-	G_pFish = G_pFish_Const_1(pG, G);
-	I_pFish = I_pFish_Const_1(pI, I);
+    CPI = CPI_Val_1( pC, C); // defined in relation to BY
+	GDP_pFish = GDP_pFish_Val_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
+	G_pFish = G_pFish_Val_1(pG, G);
+	I_pFish = I_pFish_Val_1(pI, I);
 
-    [alpha, lambda, kappa] =Technical_Coef_Const_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
+    [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital);
 
-    GrossOpSurplus =  GrossOpSurplus_Const_2(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
+    GrossOpSurplus =  GrossOpSurplus_Val_1(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
     // const_1 : calib / const_2 : CPI / const_3 : GDP
-    Other_Direct_Tax = Other_Direct_Tax_Const_3( GDP, Other_Direct_Tax_param);
-	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Const_1(Carbon_Tax_IC, Carbon_Tax_C)
+    Other_Direct_Tax = Other_Direct_Tax_Val_2( GDP, Other_Direct_Tax_param);
+	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Val_1(Carbon_Tax_IC, Carbon_Tax_C)
 endfunction
 
 // execstr(fieldnames(Deriv_Var_temp)+"= Deriv_Var_temp." + fieldnames(Deriv_Var_temp));
