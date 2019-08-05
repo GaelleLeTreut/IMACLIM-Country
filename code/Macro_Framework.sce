@@ -46,12 +46,20 @@ if Resol_Mode == "Dynamic_projection"
 end
 
 // Set up demographic context
+Homo_Shortname = "Systeme_ProjHomo";
+OptHomo_Shortname ="SystemOpt_ProjHomo";
 if Demographic_shift == "True"
-	Deriv_Exogenous.Labour_force =  ((1+Proj_Macro.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
-	Deriv_Exogenous.Population =  ((1+Proj_Macro.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
-	if [System_Resol<>"Systeme_ProjHomothetic"]&[System_Resol<>"Systeme_ProjHomot_BRA"] then
-		Deriv_Exogenous.Retired =  ((1+Proj_Macro.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
-	end
+    Deriv_Exogenous.Labour_force =  ((1+Proj_Macro.Labour_force(time_step)).^(parameters.time_since_ini))*ini.Labour_force;
+    Deriv_Exogenous.Population =  ((1+Proj_Macro.Population(time_step)).^(parameters.time_since_ini))*ini.Population;
+    if Optimization_Resol then
+        if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
+            Deriv_Exogenous.Retired =  ((1+Proj_Macro.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
+        end 
+    else
+        if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
+            Deriv_Exogenous.Retired =  ((1+Proj_Macro.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
+        end 
+    end
 end
 
 // Set up macroeconomic context
