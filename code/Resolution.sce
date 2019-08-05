@@ -41,16 +41,15 @@
 // setting parameters for homothetic projection
 /////////////////////////////////////////////////////////////////////////////////////////
 if part(SystemOpt_Resol,1:length(OptHomo_Shortname))== OptHomo_Shortname
-		 
-	parameters.sigma_pC = ones(parameters.sigma_pC);
-	parameters.sigma_ConsoBudget = ones(parameters.sigma_ConsoBudget);
-	parameters.ConstrainedShare_C = zeros(parameters.ConstrainedShare_C);
-	parameters.sigma_M = ones(parameters.sigma_M);
-	parameters.sigma_X = ones(parameters.sigma_X);
-	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
-	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
-	parameters.Carbon_Tax_rate = 0.0;
-	parameters.u_param = BY.u_tot;
+    parameters.sigma_pC = ones(parameters.sigma_pC);
+    parameters.sigma_ConsoBudget = ones(parameters.sigma_ConsoBudget);
+    parameters.ConstrainedShare_C = zeros(parameters.ConstrainedShare_C);
+    parameters.sigma_M = ones(parameters.sigma_M);
+    parameters.sigma_X = ones(parameters.sigma_X);
+    parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+    parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
+    parameters.Carbon_Tax_rate = 0.0;
+    parameters.u_param = BY.u_tot;
 end
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +100,7 @@ Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
 X_Deriv_Var_init = variables2X (Index_Imaclim_VarResol, listDeriv_Var, Deriv_variables);
-bounds = createBounds( Index_Imaclim_VarResol , listDeriv_Var );
+//bounds = createBounds( Index_Imaclim_VarResol , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 /////////////////////////////////////////////////////////////////////////
@@ -312,7 +311,7 @@ if %f
 end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
-    print(out,"X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
+    printf("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
     error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResol.csv")
 end
 
