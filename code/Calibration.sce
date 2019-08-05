@@ -269,7 +269,7 @@ end
 
 // function [const_p] =fcalib_Mprice_Const_1(x_p, pY, pM, Y, M, Imaclim_VarCalib)
 // p= indiv_x2variable(Imaclim_VarCalib, "x_p");
-// const_p = Mean_price_Const_1(pY, pM, Y, M, p);
+// const_p = Mean_price_Val_1(pY, pM, Y, M, p);
 // endfunction
 // [x_p, const_p, info_calib_p] = fsolve(x_p, list(fcalib_Mprice_Const_1, pY, pM, Y, M, Index_Imaclim_VarCalib));
 
@@ -280,7 +280,7 @@ end
 // p = (abs(p) > %eps).*p;
 // end
 
-p = Mean_price_Const_1(pY, pM, Y, M, p);
+p = Mean_price_Val_1(pY, pM, Y, M, p);
 p = (abs(p) > %eps).*p;
 
 function [const_interest_rate] =fcalib_PropTranf_Const_1(x_interest_rate, Property_income, NetFinancialDebt, Imaclim_VarCalib)
@@ -1184,7 +1184,6 @@ while norm(const_Gov_savings) > sensib
 end
 count=0;
 
-warning(" Manu : modification of calibration.sce when we substitute some equations - G_demand_Const_2 and calibration of BudgetShare_GConsump")
 
 function [const_BudgShare_GConsump] =fcalib_G_demand_Const_1(x_BudgetShare_GConsump, G, pG, G_Consumption_budget, Imaclim_VarCalib)
     BudgetShare_GConsump= indiv_x2variable(Imaclim_VarCalib, "x_BudgetShare_GConsump");
@@ -1622,7 +1621,7 @@ clear Other_Transfers_ref ;
 
 function [const_CPI] =fcal_CPI_Const_1(x_CPI, pC, C, Imaclim_VarCalib)
     CPI= indiv_x2variable(Imaclim_VarCalib, "x_CPI");
-    const_CPI = CPI_Const_4(CPI, pC, C)
+    const_CPI = CPI_Const_2(CPI, pC, C)
 endfunction
 
 [x_CPI, const_CPI, infCal_CPI] = fsolve(x_CPI, list(fcal_CPI_Const_1, pC, C, Index_Imaclim_VarCalib));

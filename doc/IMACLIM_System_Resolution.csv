@@ -68,7 +68,7 @@ G_ConsumpToGDP_ratio;
 G_invest_propensity;
 Phi;TechnicProgress_Const_1
 Theta;DecreasingReturn_Const_1
-alpha;Technical_Coef_Const_1
+alpha;Technical_Coef_Val_1
 lambda;
 kappa;
 pY;Production_price_Const_1
@@ -95,7 +95,7 @@ delta_M_parameter;MarketClosure_Const_1
 delta_X_parameter;
 Capital_consumption;Capital_Consump_Const_1
 pM;Import_price_Const_1
-p;Mean_price_Const_1
+p;Mean_price_Val_1
 pIC;pIC_price_Const_1
 pC;pC_price_Const_1
 pG;pG_price_Const_1

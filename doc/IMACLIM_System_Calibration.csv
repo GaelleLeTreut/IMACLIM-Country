@@ -48,7 +48,7 @@ pC;pC_price_Const_1;Emission_Coef_C;;p
 ;;;;OtherIndirTax_rate
 ;;;;Carbon_Tax_rate_C
 ;;;;VA_Tax_rate
-p;Mean_price_Const_1;Y_Hybrid;pY_Hybrid;Y_NonHybrid
+p;Mean_price_Val_1;Y_Hybrid;pY_Hybrid;Y_NonHybrid
 ;;M_Hybrid;pY_NonHybrid;M_NonHybrid
 ;;;;
 ;;pM_NonHybrid;;pM_Hybrid
@@ -202,7 +202,7 @@ Phi;TechnicProgress_Const_1;sigma_Phi;;Capital_consumption_ref
 ;;;;Capital_consumption
 Theta;DecreasingReturn_Const_1;Y_Hybrid;sigma_Theta;Y_NonHybrid
 ;;;;Y_ref
-aIC;Technical_Coef_Const_1;ConstrainedShare_IC;sigma;alpha
+aIC;Technical_Coef_Val_1;ConstrainedShare_IC;sigma;alpha
 aL;;ConstrainedShare_Labour;;lambda
 aK;;ConstrainedShare_Capital;;kappa
 ;;;;pIC
