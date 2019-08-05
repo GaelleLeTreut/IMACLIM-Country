@@ -1,171 +1,241 @@
+// ------------------------------------- *
+// Read the csv defining the simulations *
+// ------------------------------------- *
+
+// Read the csv
 simu_file = read_csv(simu_path, ';');
 
-// remove blanks
+// Remove the blanks 
 simu_file = stripblanks(simu_file);
 
-// remove empty lines and comments
-remove_comments = [];
+// Remove empty lines and comments
+lines_kept = [];
 for i = 1:size(simu_file,1)
-    // empty line <-> the first 3 columns are empty
+    // Empty line <-> The first 3 columns are empty
     if part(simu_file(i,1),1:2) <> '//' ..
         & (simu_file(i,1) <> '' | simu_file(i,2) <> '' | simu_file(i,3) <> '') ..
         then
-        if remove_comments == [] then
-            remove_comments($,:) = simu_file(i,:);
+        if lines_kept == [] then
+            lines_kept($,:) = simu_file(i,:);
         else
-            remove_comments($+1,:) = simu_file(i,:);
+            lines_kept($+1,:) = simu_file(i,:);
         end
     end
 end
-simu_file = remove_comments;
+simu_file = lines_kept;
 
-// Load data
 
-// Split the file at each seperation
-dash_simu_parts = list();
+// ----------------------------------- *
+// Split the file from each seperation *
+// ----------------------------------- *
 
-ind_deb = 1;
-
+dash_simu_blocks = list();
 size_sep = length(separation_head);
 
+// Beginning of the first block
+ind_deb = 1;
+
+// Browse the file line by line
 for i = 1:size(simu_file,1)
+    // If the line i is a separation
     if part(simu_file(i,1), 1:size_sep) == separation_head then
-        dash_simu_parts($+1) = simu_file(ind_deb:(i-1),:);
+        // Record the block before i
+        dash_simu_blocks($+1) = simu_file(ind_deb:(i-1),:);
+        // Beginning of the next block
         ind_deb = i+1;
     end
 end
-// load the last block 
-dash_simu_parts($+1) = simu_file(ind_deb:$,:);
+// Load the last block 
+dash_simu_blocks($+1) = simu_file(ind_deb:$,:);
 
-// fill the data structures for the simulations
-for block = dash_simu_parts
+
+// ------------------------------------------- *
+// Fill the data structures : treat each block *
+// ------------------------------------------- *
+
+for block = dash_simu_blocks
+
+    // header of the block
     header = block(1,1);
+    // remove the header
     block(1,:) = [];
+
+    // Treat each block specifically on its header
     select header
-    case country_head then 
+
         // Country Selection
+    case country_head then 
+        // record the 3 first columns of country selection block
         if size(block,1) == 1 then
-            country_simu($+1,:) = block(1,1:3);
+            country_def($+1,:) = block(1,1:3);
         else
             error("""" + country_head + """" + ' has to be defined in 1 line');
         end
-    case dashboard_head then
+
         // Dashboard
-        dashboard_simu = block(:,1:2);
-    case functions_head then
+    case dashboard_head then
+        // record the 2 first columns of dashboard block
+        dashboard_def = block(:,1:2);
+
         // Functions
+    case functions_head then
+        // record the id and the definition of each function
         for fun = block'
             id = fun(1);
-            functions_simu(id) = fun(2:4)';
+            functions_def(id) = fun(2:4)';
         end
+
+        // Variables
     case variables_head then
+        // record the name and the size of each variable
         for var = block'
-            variables_simu(var(1)) = var(2:3)';
+            variables_def(var(1)) = var(2:3)';
         end
-    case simulations_head then
+
         // Simulations
-        columns = block(:,1);
-        ind_cat = list();
-        nb_cat = size(simu_cat,2);
+    case simulation_head then
+        
+        first_col = block(:,1);
+        // Number of categories to find
+        nb_cat = size(simu_list_cat);
+        // Index position of each category header
+        ind_cat_head = list();
         for i = 1:nb_cat
-            ind = find(columns == simu_cat(i));
+            ind = find(first_col == simu_list_cat(i));
             if size(ind) == [1,1] then
-                ind_cat($+1) = ind;
+                ind_cat_head($+1) = ind;
             elseif ind == []
                 disp(block);
-                error("""" + simu_cat(i) + """" + ' is not given for this simulation');
+                error("""" + simu_list_cat(i) + """" + ' is not given for this simulation');
             else
                 disp(block);
-                error("""" + simu_cat(i) + """" + ' is defined several times for this simulation');
+                error("""" + simu_list_cat(i) + """" + ' is defined several times for this simulation');
             end
         end
-        // sort the list by increasing index
+        
+        // Sort the category list by increasing index
         for i = 2:nb_cat
+            // List sorted between 1 and i-1
             ind = i;
-            while (ind > 1 & ind_cat(ind-1) > ind_cat(ind))
-                ind_temp = ind_cat(ind-1);
-                cat_temp = simu_cat(ind-1);
-                ind_cat(ind-1) = ind_cat(ind);
-                simu_cat(ind-1) = simu_cat(ind);
-                ind_cat(ind) = ind_temp;
-                simu_cat(ind) = cat_temp;
+            // Sort the list between 1 and i
+            while (ind > 1 & ind_cat_head(ind-1) > ind_cat_head(ind))
+                // Exhange values of ind and (ind-1)
+                ind_temp = ind_cat_head(ind-1);
+                cat_temp = simu_list_cat(ind-1);
+                ind_cat_head(ind-1) = ind_cat_head(ind);
+                simu_list_cat(ind-1) = simu_list_cat(ind);
+                ind_cat_head(ind) = ind_temp;
+                simu_list_cat(ind) = cat_temp;
                 ind = ind - 1;
             end
         end
-        // record the simulation
+        
+        // Record the simulation
         simu = struct();
         for i = 1:nb_cat
-            ind_deb = ind_cat(i) + 1;
+            // Record the block of data corresponding to category of header i
+            ind_deb = ind_cat_head(i) + 1;
             if i < nb_cat then
-                ind_fin = ind_cat(i+1) - 1;
+                ind_fin = ind_cat_head(i+1) - 1;
             else
                 ind_fin = $;
             end
             // Record the first 2 columns for dashboard, and only
             // the first column for the others
-            if simu_cat(i) == simu_dash then
+            if simu_list_cat(i) == dash_changes_head then
                 col_kept = 2;
             else
                 col_kept = 1;
             end
-            simu(simu_cat(i)) = block(ind_deb:ind_fin,1:col_kept);
+            simu(simu_list_cat(i)) = block(ind_deb:ind_fin,1:col_kept);
         end
-        simulations($+1) = simu;
+        simulation_list($+1) = simu;
+        
     else
-        // if header is not consistent
-        error("""" + header + """" + ' is not defined as a header');
+        // If header is not in a case above
+        error("""" + header + """" + ' is not defined as a header.');
     end
+    
 end
 
-// Record the dashboards of each simulations
-for i = 1:size(simulations)
-    simu = simulations(i);
-    dash_changes = simu(simu_dash);
-    dashboard = dashboard_simu;
-    for line = dash_changes'
-        head = line(1);
-        ind = find(dashboard(:,1) == head);
+
+// ------------------------------------------ *
+// Compute the dashboards of each simulations *
+// ------------------------------------------ *
+
+for i = 1:size(simulation_list)
+    simu = simulation_list(i);
+    
+    // initial dashboard 
+    dashboard = dashboard_def;
+    // modifications to apply
+    dash_changes = simu(dash_changes_head);
+    
+    for modif = dash_changes'
+        dash_entry = modif(1);
+        // Find the line to change
+        ind = find(dashboard(:,1) == dash_entry);
         if size(ind) == [1,1] then
-            dashboard(ind,2) = line(2);
+            // Apply the change
+            dashboard(ind,2) = modif(2);
         else
-            disp(simu)
-            error('In dash change of this simulation : ' + """" + head + """" + ' is not an header of Dashboard');
+            disp(dash_changes);
+            error('In dash_changes of this simulation : ' + """" + dash_entry + """" + ' is not an header of Dashboard');
         end
     end
+    // Record the modified dashboard
     simu(dashboard_head) = dashboard;
-    simulations(i) = simu;
+    
+    simulation_list(i) = simu;
 end
 
-// Associe les valeurs aux numéros lus
-for i = 1:size(simulations)
-    simu = simulations(i);
+
+// ------------------------------------------------------------- *
+// Replace the ID of functions and variables by its complete def *
+// ------------------------------------------------------------- *
+
+for i = 1:size(simulation_list)
+    simu = simulation_list(i);
+    
     // Fonctions
-    for head_fun = [simu_remove, simu_add]
-        simu_head_fun = list();
+    for head_fun = [remove_fun_head, add_fun_head]
+        
+        real_fun = list();
+        // For each ID, record the associated function
         for id = simu(head_fun)'
-            ind_id = find(fieldnames(functions_simu) == id);
+            ind_id = find(fieldnames(functions_def) == id);
             if size(ind_id) == [1,1] then
-                simu_head_fun($+1) = functions_simu(id);
+                real_fun($+1) = functions_def(id);
             else
                 disp(simu(head_fun));
                 error('In ' + """" + head_fun + """" + ', ' + """" + id + """" + ' is not an id of a function.');
             end
         end
-        simu(head_fun) = simu_head_fun;
+        
+        // Replace the id by the functions
+        simu(head_fun) = real_fun;
     end
-    // Variable
-    for head_var = [remove_var, add_var]
-        simu_head_var = list();
+    
+    // Variables
+    for head_var = [remove_var_head, add_var_head]
+
+        real_var = list();
+        // For each var, record the associated complete variable def
         for var = simu(head_var)'
-            ind_id = find(fieldnames(variables_simu) == var);
+            ind_id = find(fieldnames(variables_def) == var);
             if size(ind_id) == [1,1] then
-                simu_head_var($+1) = [var, variables_simu(var)];
+                real_var($+1) = [var, variables_def(var)];
             else
                 disp(simu(head_var));
                 error('In ' + """" + head_var + """" + ', ' + """" + var + """" + ' is not an id of a variable.');
             end
-            simu(head_var) = simu_head_var;
+            
+            // Record the var by the complete variables
+            simu(head_var) = real_var;
         end
-        simulations(i) = simu;
+        
+        // Record the modified simulation
+        simulation_list(i) = simu;
     end
+    
 end

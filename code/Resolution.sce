@@ -352,7 +352,7 @@ while (count<countMax)&(vBest>sensib)
     for var = [var_resolution ; var_resol_interm ; var_resol_out]'
         execstr('clear(' + '''' + var + '''' + ');');
     end
-    NetLending = zeros(1,nb_InstitAgents);
+//    NetLending = zeros(1,nb_InstitAgents);
     
     
     [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variables , listDeriv_Var),sensibFsolve);
