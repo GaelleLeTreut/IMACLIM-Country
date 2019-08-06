@@ -53,11 +53,11 @@ if part(SystemOpt_Resol,1:length(OptHomo_Shortname))== OptHomo_Shortname
 end
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// defined in "loading data" : Index_Imaclim_VarResol
+// defined in "loading data" : Index_VarResol
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
+VarDimMat_resol = eval(Index_VarResol(2:$,2:3));
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ execstr(Table_parameters);
 // Endogenous variable (set of variables for the system below - fsolve)
 /////////////////////////////////////////////////////////////////////////
 // list
-//[listDeriv_Var] = varTyp2list (Index_Imaclim_VarResol, "Var");
+//[listDeriv_Var] = varTyp2list (Index_VarResol, "Var");
 
 // Record the Deriv variables
 listDeriv_Var = list();
@@ -99,8 +99,8 @@ end
 Deriv_variables = Variables2struct(listDeriv_Var);
 Deriv_variablesStart = Deriv_variables;
 // Create X vector column for solver from all variables which are endogenously calculated in derivation
-X_Deriv_Var_init = variables2X (Index_Imaclim_VarResol, listDeriv_Var, Deriv_variables);
-//bounds = createBounds( Index_Imaclim_VarResol , listDeriv_Var );
+X_Deriv_Var_init = variables2X (Index_VarResol, listDeriv_Var, Deriv_variables);
+//bounds = createBounds( Index_VarResol , listDeriv_Var );
 // [(1:162)' X_Deriv_Var_init >=bounds.inf  bounds.inf X_Deriv_Var_init bounds.sup X_Deriv_Var_init<= bounds.sup]
 
 /////////////////////////////////////////////////////////////////////////
@@ -269,7 +269,7 @@ function [Constraints_Deriv] = f_resolution(X_Deriv_Var_init, VarDimMat, RowNumC
 endfunction
 
 //////////////////////////////////////////////////////////////////////////
-//	Number of Index and Indice from Index_Imaclim_VarResol used by f_resolution
+//	Number of Index and Indice from Index_VarResol used by f_resolution
 /////////////////////////////////////////////////////////////////////////
 
 nVarDeriv = size(listDeriv_Var);
@@ -277,7 +277,7 @@ RowNumCsVDerivVarList = list();
 structNumDerivVar = zeros(nVarDeriv,1);
 EltStructDerivVar = getfield(1 , Deriv_variablesStart);
 for ind = 1:nVarDeriv
-    RowNumCsVDerivVarList($+1) = find(Index_Imaclim_VarResol==listDeriv_Var(ind)) ;
+    RowNumCsVDerivVarList($+1) = find(Index_VarResol==listDeriv_Var(ind)) ;
     structNumDerivVar(ind) = find(EltStructDerivVar == listDeriv_Var(ind));
 end
 
@@ -296,7 +296,7 @@ end
 
 if length(X_Deriv_Var_init) ~= length(Constraints_Init)
     printf("X_Deriv_Var_init is "+length(X_Deriv_Var_init)+" long when Constraints_Init is "+length(Constraints_Init)+" long");
-    error("The constraint and solution vectors do not have the same size, check data/Index_Imaclim_VarResol.csv")
+    error("The constraint and solution vectors do not have the same size, check data/Index_VarResol.csv")
 end
 
 /////////////////////////////////////////////////
@@ -367,7 +367,7 @@ exec(CODE+"terminateResolution.sce");
 // Reafectation des valeurs aux variables et à la structure après résolution
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-Deriv_variables = X2variables (Index_Imaclim_VarResol, listDeriv_Var, Xbest);
+Deriv_variables = X2variables (Index_VarResol, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
 
 if exists('Deriv_Exogenous')==1

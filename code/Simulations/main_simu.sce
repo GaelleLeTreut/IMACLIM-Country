@@ -78,26 +78,11 @@ save_file(dashboard_file_name, study_frames_country);
 // Save all the SystemOpt Resol .csv
 save_sys = 'Save_System_Resol' + filesep();
 mkdir(save_sys);
-for f = listfiles(SYST_RESOL)'
-    // Save the .csv file, only if it is not already saved
-    list_saved_files = listfiles(save_sys);
-    if part(f,$-3:$) == '.csv' & (find(list_saved_files == f) == []) then
-        copyfile(SYST_RESOL + f, save_sys);
-    end
-end
 
 // Save all the Var Resol files
 save_var_resol = 'Save_Var_Resol' + filesep();
 mkdir(save_var_resol);
 data_country = DATA + 'data_' + country_iso + filesep();
-pref = 'Index_Imaclim_Var';
-for f = listfiles(data_country)'
-    // Save the .csv file, only if it is not already saved
-    list_saved_files = listfiles(save_var_resol);
-    if part(f,1:length(pref)) == pref & (find(list_saved_files == f) == []) then
-        copyfile(data_country + f, save_var_resol);
-    end
-end
 
 
 // --------------------------------- *
@@ -131,10 +116,9 @@ for simu = simulation_list
 
     csvWrite(simu(dashboard_head), study_frames_country + dashboard_file_name, ';');
 
-
-    // ----------------------------------------------------- *
-    // Write the SystemOpt Resol csv file for the simulation *
-    // ----------------------------------------------------- *
+    // ---------------------------------------------------- *
+    // Write the SystemOpt Resol csv file of the simulation *
+    // ---------------------------------------------------- *
 
     opt_resol_entry = 'Optimization_Resol';
     systopt_resol_entry = 'SystemOpt_Resol';
@@ -153,8 +137,14 @@ for simu = simulation_list
 
                 // Name of the SystemeOpt Resol file
                 systopt_resol_name = simu(dashboard_head)(ind_systopt,2);
-                // Functions csv file 
-                SystOpt_resol_Fun = read_csv(save_sys + systopt_resol_name + '.csv', ';');
+                                
+                // Functions csv file
+                // Read the initial file
+                if find(listfiles(save_sys) == systopt_resol_name + '.csv') <> [] then
+                    SystOpt_resol_Fun = read_csv(save_sys + systopt_resol_name + '.csv', ';');
+                else
+                    SystOpt_resol_Fun = read_csv(SYST_RESOL + systopt_resol_name + '.csv', ';');
+                end
 
                 // Remove functions to remove
                 for fun_line = simu(remove_fun_head)
@@ -185,6 +175,12 @@ for simu = simulation_list
                     SystOpt_resol_Fun($+1,1:3) = fun_line(1:3);
                 end
 
+                // Save the initial SystemOpt Resol file
+                list_saved_files = listfiles(save_sys);
+                if find(list_saved_files == systopt_resol_name + '.csv') == [] then
+                    copyfile(SYST_RESOL + systopt_resol_name + '.csv', save_sys);
+                end
+                
                 // Write the new SystemOpt Resol functions file
                 csvWrite(SystOpt_resol_Fun, SYST_RESOL + systopt_resol_name + '.csv', ';');
 
@@ -211,9 +207,15 @@ for simu = simulation_list
     // ------------------------------------------ *
 
     // Load the Var Resol file
-    // TODO : Systeme Resol dans le systeme de résolution !
-    var_resol_file_name = 'Index_Imaclim_VarResol.csv';
-    var_resol = read_csv(save_var_resol + var_resol_file_name, ';');
+    var_resol_file_name = stripblanks(SystOpt_resol_Fun(1,2)) + '.csv';
+    
+    // Read the initial file
+    if find(listfiles(save_var_resol) == var_resol_file_name) <> [] then
+        var_resol = read_csv(save_var_resol + var_resol_file_name, ';');
+    else
+        var_resol = read_csv(data_country + var_resol_file_name, ';');
+    end
+    
     var_resol = stripblanks(var_resol);
 
     // Remove the variables to remove
@@ -239,6 +241,12 @@ for simu = simulation_list
         else
             var_resol($+1,1:size(var_line,2)) = var_line;
         end
+    end
+
+    // Save the initial Var Resol file
+    list_saved_files = listfiles(save_var_resol);
+    if find(list_saved_files == var_resol_file_name) == [] then
+        copyfile(data_country + var_resol_file_name, save_var_resol);
     end
 
     // Write the new Var Resol file

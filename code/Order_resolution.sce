@@ -1,8 +1,3 @@
-// TODO : Var_Resol directement dans le fichier csv SystOpt Resol
-Var_Resol = Index_Imaclim_VarResol;
-Var_Resol(1,:) = [];
-
-
 // --------------- *
 // Data structures *
 // --------------- *
@@ -22,9 +17,7 @@ fun_resolution_eq = list();
 // variables associated
 var_resol_out = [];
 var_resol_interm = [];
-
-var_resolution = stripblanks(Var_Resol(:,1));
-
+var_resolution = [];
 
 // ------------------------ *
 // Load the equations' file *
@@ -48,6 +41,26 @@ for i = 1:size(file_eq,1)
     end
 end
 file_eq = lines_kept;
+
+
+// --------------------- *
+// Define Index_VarResol *
+// --------------------- *
+
+var_resol_head = 'Var_Resol';
+
+if file_eq(1)(1,1) == var_resol_head then
+    // Load Var_Resol
+    Index_VarResol = eval(file_eq(1)(1,2));
+else
+    // Var_Resol is not defined
+    error('You need to define ' + """" + var_resol_head + """" + ' at the beginning of SystemOpt_Resol csv file.');
+end
+
+var_resolution = Index_VarResol(2:$,1);
+
+// Remove the line which defines Var_Resol
+file_eq(1) = null();
 
 
 // ------------------------------------------ *
@@ -343,8 +356,8 @@ while (fun_val_not_sorted <> list())
         for fun = fun_cycle
             current_size = 0;
             for var = fun.output'
-                ind = find(Var_Resol(:,1) == var);
-                current_size = current_size + eval(Var_Resol(ind,2) + '*' + Var_Resol(ind,3));
+                ind = find(Index_VarResol(:,1) == var);
+                current_size = current_size + eval(Index_VarResol(ind,2) + '*' + Index_VarResol(ind,3));
             end
             size_outputs($+1) = current_size;
         end
