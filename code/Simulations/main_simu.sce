@@ -11,8 +11,6 @@ cd(SIMUS);
 // Data structure initialisation *
 // ----------------------------- *
 
-// Country
-country_def = ['Component', 'Name', ''];
 // Default dashboard 
 dashboard_def = [];
 // Given functions
@@ -24,7 +22,6 @@ simulation_list = list();
 
 // Headers to read the csv
 separation_head = '**********';
-country_head = 'Country Selection';
 dashboard_head = 'Dashboard';
 functions_head = 'Functions';
 variables_head = 'Variables';
@@ -46,10 +43,26 @@ remove_var_head, add_var_head);
 // Load the simulations *
 // -------------------- *
 
-// Name
-simu_file_name = 'SimuTest.csv';
+// Read the country
+count_selec = read_csv(STUDY + 'Country_Selection.csv' , ';');
+count_selec = stripblanks(count_selec);
+for line = count_selec'
+    if line(1) == 'Country' then
+        country_name = line(2);
+        country_iso = line(3);
+    end
+end
+
+study_frames_country = STUDY + 'study_frames_' + country_iso + filesep();
+data_country = DATA + 'data_' + country_iso + filesep();
+
+simu_dir = study_frames_country + 'Simulations' + filesep();
+
+// Get the name of the simulation
+exec('def_simu_file_name.sce');
+
 // Path
-simu_path = SIMUS + simu_file_name;
+simu_path = simu_dir + simu_file_name;
 
 // Fill the data structures
 exec('Read_Simu.sce');
@@ -70,9 +83,7 @@ country_selection = 'Country_Selection.csv';
 save_file(country_selection, STUDY);
 
 // Save the current Dashboard
-country_iso = country_def(2,3);
 dashboard_file_name = 'Dashboard_' + country_iso + '.csv';
-study_frames_country = STUDY + 'study_frames_' + country_iso + filesep();
 save_file(dashboard_file_name, study_frames_country);
 
 // Save all the SystemOpt Resol .csv
@@ -82,7 +93,6 @@ mkdir(save_sys);
 // Save all the Var Resol files
 save_var_resol = 'Save_Var_Resol' + filesep();
 mkdir(save_var_resol);
-data_country = DATA + 'data_' + country_iso + filesep();
 
 
 // --------------------------------- *
@@ -95,13 +105,6 @@ TEST_MODE = %T;
 // Parameters of the simulations
 testing.countMax = 3;
 testing.debug_mode = %F;
-
-
-// ------------------------------------------------- *
-// Write Country_Selection.csv of the tested country *
-// ------------------------------------------------- *
-
-csvWrite(country_def, STUDY + country_selection, ';');
 
 
 // -------------------------------- *

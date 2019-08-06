@@ -63,15 +63,6 @@ for block = dash_simu_blocks
     // Treat each block specifically on its header
     select header
 
-        // Country Selection
-    case country_head then 
-        // record the 3 first columns of country selection block
-        if size(block,1) == 1 then
-            country_def($+1,:) = block(1,1:3);
-        else
-            error("""" + country_head + """" + ' has to be defined in 1 line');
-        end
-
         // Dashboard
     case dashboard_head then
         // record the 2 first columns of dashboard block

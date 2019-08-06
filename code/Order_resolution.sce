@@ -243,6 +243,8 @@ for i = 1:size(fun_val_not_sorted)
     fun = fun_val_not_sorted(i);
     for var = fun.output'
         if find(var_resolution == var) == [] then
+            disp("""" + var + """" + ' is not in Var Resol file :' ..
+            + """" + fun.name + """" + ' is moved to resolution.');
             fun_resolution_val($+1) = fun;
             fun_val_kept(i) = null();
             break;
