@@ -67,11 +67,11 @@ VarDimMat_resol = eval(Index_Imaclim_VarResol(2:$,2:3));
 // Les changements de variables exogènes sont stockées dans la structure dans le fichier study: Deriv_Exogenous 
 // Attribuer les changements exogenes aux variables
 if exists('Deriv_Exogenous')==1
-		for var = fieldnames(Deriv_Exogenous)'
-			if find(fieldnames(parameters) == var) <> [] then
-				parameters(var) = Deriv_Exogenous(var);
-			end
-		end
+    for var = fieldnames(Deriv_Exogenous)'
+        if find(fieldnames(parameters) == var) <> [] then
+            parameters(var) = Deriv_Exogenous(var);
+        end
+    end
     [Table_Deriv_Exogenous] = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
     execstr(Table_Deriv_Exogenous);
 end
@@ -121,86 +121,75 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 ////////////////////////////////////////////////////////////////////
 
 
-// *************************** *
+// --------------------------- *
 // Functions to write the code *
-// *************************** *
+// --------------------------- *
 
 function str = string_from_table(table)
     // If table = [a1,a2,...], returns the string str = "a1,a2,..."
-    
+
     str = '';
-    
+
     if size(table,1) <> 0 then
         str = table(1);
     end
-    
+
     for i = 2:size(table,1)
         str = str + ',' + table(i);
     end
-    
+
 endfunction
 
 function fun_code = write_fun_val_code(fun_struct)
     // Returns a string containing the code which computes the result
-    // variable of the function in *fun_struct*.
-    
+    // variable of the function *fun_struct*.
+
     args = string_from_table(fun_struct.args);
     output_var = string_from_table(fun_struct.output);
-    
+
     fun_code = '[' + output_var + ']' + '=' + fun_struct.name + '(' + args + ');';
-    
+
 endfunction
 
 function fun_code = write_fun_eq_code(fun_struct)
-    // Returns a string which evaluates the function in *fun_struct*.
-    
+    // Returns a string which evaluates the function *fun_struct*.
+
     args = string_from_table(fun_struct.args);
-    
+
     fun_code = fun_struct.name + '(' + args + ')';
-    
+
 endfunction
 
 function y = eq_from_val(output_code,code)
     // Returns the constraints form of the functions defined by the
     // string *code* which as *outpout_code* as outputs.
-    
+
     suff_save = '_s';
-    
+
     if isdef(var + suff_save) then
         error(var + suff_save + ' is already defined, choose another suffix name');
     end
-    
+
     // save the current value of output variables
     for var = output_code
         execstr(var + suff_save + '=' + var);
     end
-    
+
     // compute the new value of output variables
     execstr(code);
-    
+
     // Return the constraint
     y = [];
     for var = output_code
         y = [y; matrix(eval(var + suff_save + '-' + var),-1,1)];
     end
-    
+
 endfunction
 
 
-// ************************************************** *
+// -------------------------------------------------- *
 // Define tables containing the code of the functions *
-// ************************************************** *
-
-//for fun = fun_val_out
-//    fun_val_in_eq($+1) = fun;
-//end
-//
-//for fun = fun_val_interm
-//    fun_val_in_eq($+1) = fun;
-//end
-//
-//fun_val_out = list();
-//fun_val_interm = list();
+// -------------------------------------------------- *
 
 // Code for functions outside the resolution
 Table_resol_out = [];
@@ -209,25 +198,25 @@ Table_resol_interm = [];
 // Code which defines Constraints_Deriv for resolution
 Table_resolution = ['Constraints_Deriv = [];'];
 
-for fun = fun_val_out
+for fun = fun_resol_out
     Table_resol_out($+1) = write_fun_val_code(fun);
 end
 
-for fun = fun_val_interm
+for fun = fun_resol_interm
     Table_resol_interm($+1) = write_fun_val_code(fun);
 end
 
-for fun = fun_eq_list
+for fun = fun_resolution_eq
     Table_resolution($+1) = 'Constraints_Deriv = [Constraints_Deriv ;' + write_fun_eq_code(fun) + '];';
 end
 
 // Change fonctions _val into constraints
-for fun = fun_val_in_eq
-    
+for fun = fun_resolution_val
+
     // code of the _val function
     code = write_fun_val_code(fun);
     output = fun.output;
-    
+
     output_var = '';
     if size(fun.output) <> 0 then
         output_var = """" + fun.output(1) + """";
@@ -235,10 +224,10 @@ for fun = fun_val_in_eq
     for i = 2:size(fun.output,1)
         output_var = output_var + ',' + """" + fun.output(i) + """";
     end
-    
+
     // record the constraints
     Table_resolution($+1) = 'Constraints_Deriv = [Constraints_Deriv ; eq_from_val(' + '[' + output_var + ']' + ',' + """" + code + """" + ')];';
-    
+
 end
 
 
@@ -250,24 +239,19 @@ end
 
 function [Constraints_Deriv] = f_resolution(X_Deriv_Var_init, VarDimMat, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var)
 
-    // TODO : clear deriv variables out interm et global pour éviter les bug
-
     // Création des variables à partir de x et de info_structure_x
     [Deriv_variables] = X2variablesRuben (RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , VarDimMat, listDeriv_Var, X_Deriv_Var_init)
-    
+
     // Affectation des valeurs aux noms de variables,  pour les variables du solveur, les valeurs calibrées, et les parametres
     execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables));
 
     // Calcul des variables qui ne sont pas des variables d'états
 
-    // TODO : resol_out en dehors de f_resolution !
-
-    execstr(Table_resol_out);
     execstr(Table_resol_interm);
-    
+
     // Création du vecteur colonne Constraints
     execstr(Table_resolution);
-    
+
     //7076:7087
     if ~isreal(Constraints_Deriv)
         warning("~isreal(Constraints_Deriv)");
@@ -348,13 +332,15 @@ printf("\n\n   count      vBest   info       toc\n");
 while (count<countMax)&(vBest>sensib)
     count = count + 1;
 
-    //    try
+    // Security : clear the variables to make sure they are really computed by the resolution
     for var = [var_resolution ; var_resol_interm ; var_resol_out]'
         execstr('clear(' + '''' + var + '''' + ');');
     end
-//    NetLending = zeros(1,nb_InstitAgents);
     
-    
+    // Compute the variables which do not need the solver
+    execstr(Table_resol_out);
+
+    // Launch the solver
     [X_Deriv_Var, Constraints_Deriv, info] = fsolve(Xbest.*(1 + a*(rand(Xbest)-1/2)), list(f_resolution, VarDimMat_resol, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variables , listDeriv_Var),sensibFsolve);
     vMax = norm(Constraints_Deriv);
 
@@ -363,12 +349,6 @@ while (count<countMax)&(vBest>sensib)
         infoBest = info;
         Xbest    = X_Deriv_Var;
     end
-
-    //    catch
-    //        [str,n,line,func]=lasterror(%f);
-    //        print(out,"Error "+n+" with fsolve: "+str);
-    //        pause
-    //    end
 
     result(count).xbest = Xbest;
     result(count).vmax  = vMax;
@@ -396,8 +376,6 @@ if exists('Deriv_Exogenous')==1
 end
 
 /// Cacul des variables "temp" dans la fonction f_resolution
-// TODO : f_resol_out en dehors
-execstr(Table_resol_out);
 execstr(Table_resol_interm);
 
 /////////////////////////////////////////////////////////////////
