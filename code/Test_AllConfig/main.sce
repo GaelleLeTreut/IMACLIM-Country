@@ -4,7 +4,7 @@
 // Initialization *
 // -------------- *
 
-// Enable test_mode in ImaclimS.sce
+// Enable TEST_MODE in ImaclimS.sce
 TEST_MODE = %T;
 
 // Parameters of the tests

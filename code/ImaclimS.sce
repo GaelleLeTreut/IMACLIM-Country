@@ -36,13 +36,19 @@
 // main executable script
 
 // test mode
-Test_mode = isdef('TEST_MODE');
+if ~isdef('TEST_MODE') then
+    TEST_MODE = %F;
+end
+
+if ~isdef('SIMU_MODE') then
+    SIMU_MODE = %F;
+end
 
 // debug mode
 debug_mode = %T;
 
 // defined in the test program
-if Test_mode then
+if TEST_MODE then
     debug_mode = testing.debug_mode;
 end
 
@@ -76,12 +82,25 @@ exec("Dashboard.sce");
 
 
 if Output_files=='True'
-    runName = study + "_" + mydate();
-    SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
+
+    simu_name = '';
+    if SIMU_MODE then
+        simu_name = Current_Simu_Name;
+    end
+
+    syst_name = '';
+    if Optimization_Resol then
+        syst_name = SystemOpt_Resol;
+    else
+        syst_name = System_Resol;
+    end
+    
+    runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+    SAVEDIR = OUTPUT + runName + filesep();
     mkdir(SAVEDIR);
     diary(SAVEDIR+"summary.log");
 
-    SAVEDIR_IOA = OUTPUT+Country_ISO+"_"+runName + filesep()+ "outputs_IOA"+filesep();
+    SAVEDIR_IOA = SAVEDIR + "outputs_IOA" + filesep();
     mkdir(SAVEDIR_IOA);	
 
     // Save Dashbord.csv & System_Resol.csv in output
@@ -95,9 +114,9 @@ end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
 if Optimization_Resol then
-print(out," ======= for resolving the system: "+SystemOpt_Resol);
+    print(out," ======= for resolving the system: "+SystemOpt_Resol);
 else
-print(out," ======= for resolving the system: "+System_Resol);
+    print(out," ======= for resolving the system: "+System_Resol);
 end
 print(out," ======= using the study file: "+study);
 print(out,"======= with various class of households: "+H_DISAGG);
@@ -201,25 +220,25 @@ for time_step=1:Nb_Iter
     end
 
     // Loading other study changes (specific feature) except for homothetic projections
-	Homo_Shortname = "Systeme_ProjHomo";
-	OptHomo_Shortname ="SystemOpt_ProjHomo";
-	if Optimization_Resol then
-		if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
-			exec(STUDY_Country+study+".sce");
-		end 
-	else
-		if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
-			exec(STUDY_Country+study+".sce");
-		end 
-	end
-	
+    Homo_Shortname = "Systeme_ProjHomo";
+    OptHomo_Shortname ="SystemOpt_ProjHomo";
+    if Optimization_Resol then
+        if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
+            exec(STUDY_Country+study+".sce");
+        end 
+    else
+        if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
+            exec(STUDY_Country+study+".sce");
+        end 
+    end
+
     if Optimization_Resol then
         exec('Order_resolution.sce');
         exec('Resolution.sce');
     else
         exec(System_Resol+".sce");
     end
-    
+
     warning("sign of ClimPolCompensbySect");
 
     // Check if the projections are made correctly

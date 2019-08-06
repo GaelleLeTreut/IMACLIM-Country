@@ -5,13 +5,13 @@ clear
 
 
 // test mode
-Test_mode = isdef('TEST_MODE');
+TEST_MODE = isdef('TEST_MODE');
 
 // mute mode
 debug_mode = %T;
 
 // defined in the test program
-if Test_mode then
+if TEST_MODE then
     debug_mode = testing.debug_mode;
 end
 

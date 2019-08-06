@@ -34,6 +34,8 @@ dash_changes_head = 'Dash_changes';
 remove_var_head = 'Remove_Var';
 add_var_head = 'Add_Var';
 
+simu_name_head = 'Name';
+
 // List of the categories
 simu_list_cat = list(remove_fun_head, add_fun_head, dash_changes_head, ..
 remove_var_head, add_var_head);
@@ -78,10 +80,6 @@ getd(TEST_FULLCODE);
 // To save Country_Selection and Dashboards, in Test_AllConfig directory
 mkdir(SAVED_DATA);
 
-// Save the current Country Selection file
-country_selection = 'Country_Selection.csv';
-save_file(country_selection, STUDY);
-
 // Save the current Dashboard
 dashboard_file_name = 'Dashboard_' + country_iso + '.csv';
 save_file(dashboard_file_name, study_frames_country);
@@ -99,19 +97,23 @@ mkdir(save_var_resol);
 // Parameters to launch ImaclimS.sce *
 // --------------------------------- *
 
-// Enable test_mode
+// Enable TEST_MODE
 TEST_MODE = %T;
 
 // Parameters of the simulations
 testing.countMax = 3;
 testing.debug_mode = %F;
 
+SIMU_MODE = %T;
+Current_Simu_Name = '';
 
 // -------------------------------- *
 // Launh each simulation one by one *
 // -------------------------------- *
 
 for simu = simulation_list
+    
+    Current_Simu_Name = simu(simu_name_head);
 
     // ------------------------------------- *
     // Write the dashboard of the simulation *
@@ -270,9 +272,6 @@ end
 // -------------------------------------- *
 // Restore the files which had been saved *
 // -------------------------------------- *
-
-// Restore Country_Selection
-restore_file(country_selection, STUDY);
 
 // Restore Dashboard
 restore_file(dashboard_file_name, study_frames_country);

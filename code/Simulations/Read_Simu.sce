@@ -57,6 +57,8 @@ for block = dash_simu_blocks
 
     // header of the block
     header = block(1,1);
+    // specific name
+    name_spec = block(1,2);
     // remove the header
     block(1,:) = [];
 
@@ -123,6 +125,7 @@ for block = dash_simu_blocks
         
         // Record the simulation
         simu = struct();
+        simu(simu_name_head) = name_spec;
         for i = 1:nb_cat
             // Record the block of data corresponding to category of header i
             ind_deb = ind_cat_head(i) + 1;
