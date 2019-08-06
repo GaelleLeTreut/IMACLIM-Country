@@ -22,7 +22,8 @@ fun_resolution_eq = list();
 // variables associated
 var_resol_out = [];
 var_resol_interm = [];
-var_resolution = [];
+
+var_resolution = stripblanks(Var_Resol(:,1));
 
 
 // ------------------------ *
@@ -92,17 +93,6 @@ for fun = file_eq
 end
 
 
-// --------------------------------------------- *
-// Initialize the functions and variable to sort *
-// --------------------------------------------- *
-
-// Functions
-fun_val_not_sorted = fun_val_list;
-
-// Variables
-for i = 1:size(Var_Resol,1)
-    var_resolution($+1) = stripblanks(Var_Resol(i,1));
-end
 
 // ------- *
 // Library *
@@ -222,6 +212,57 @@ function fun_list = restore_args(fun_list, fun_val_list)
 
 endfunction
 
+
+// --------------------------- *
+// Begin to sort the functions *
+// --------------------------- *
+
+fun_val_not_sorted = fun_val_list;
+
+
+// --------------------------------------------------------- *
+// Extract functions whose output is not a variable to solve *
+// --------------------------------------------------------- *
+
+fun_val_kept = fun_val_not_sorted;
+
+for i = 1:size(fun_val_not_sorted)
+    fun = fun_val_not_sorted(i);
+    for var = fun.output'
+        if find(var_resolution == var) == [] then
+            fun_resolution_val($+1) = fun;
+            fun_val_kept(i) = null();
+            break;
+        end
+    end
+end
+
+fun_val_not_sorted = fun_val_kept;
+
+// --------------------------------------------------------------------- *
+// Extract functions Val with an output computed by another function Val *
+// --------------------------------------------------------------------- *
+
+fun_val_kept = fun_val_not_sorted;
+
+computed_output = [];
+for i = 1:size(fun_val_not_sorted)
+    fun = fun_val_not_sorted(i);
+    is_kept = %T;
+    for var = fun.output'
+        if find(computed_output == var) <> [] then
+            fun_resolution_val($+1) = fun;
+            fun_val_kept(i) = null();
+            is_kept = %F;
+            break;
+        end
+    end
+    if is_kept then
+        computed_output = [computed_output ; fun.output];
+    end
+end
+
+fun_val_not_sorted = fun_val_kept;
 
 // ---------------------------------------------*
 // Extract functions which does not need solver *
