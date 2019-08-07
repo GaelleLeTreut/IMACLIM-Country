@@ -55,7 +55,11 @@ else
     moneyTex="Current money"
 end
 
-
+/// Deleting random values resulting from 0 
+d.Carbon_Tax_rate_C=(CO2Emis_C <> 0) .* (d.Carbon_Tax_rate_C) +(CO2Emis_C == 0).* (d.Carbon_Tax_rate.*ones(nb_Sectors,nb_Households));
+d.Carbon_Tax_rate_IC=(CO2Emis_IC <> 0) .* (d.Carbon_Tax_rate_IC) +(CO2Emis_IC == 0).* (d.Carbon_Tax_rate.*ones(nb_Sectors,nb_Sectors));
+d.CarbonTax_Diff_C = (CO2Emis_C <> 0) .* d.CarbonTax_Diff_C +(CO2Emis_C == 0).*BY.CarbonTax_Diff_C;
+d.CarbonTax_Diff_IC = (CO2Emis_IC <> 0) .* d.CarbonTax_Diff_IC +(CO2Emis_IC == 0).*BY.CarbonTax_Diff_IC;
 
 print(out," ");
 print(out,"==========================================")
@@ -273,6 +277,7 @@ d.Y_value = value(d.pY,d.Y)';
 
 
 //Calcul Emissions
+
 d.CO2Emis_C = d.Emission_Coef_C .*d.C;
 d.CO2Emis_IC = d.Emission_Coef_IC .*d.IC;
 

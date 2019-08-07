@@ -85,9 +85,8 @@ NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf
 GOS_byAgent;1;nb_InstitAgents;Var;0;%inf
 Other_Transfers;1;nb_InstitAgents;Var;-%inf;%inf
 pM;nb_Sectors;1;Var_interm;0;%inf
-CO2Emis_IC;nb_Commodities;nb_Sectors;Var;0;%inf
-CO2Emis_C;nb_Commodities;nb_Households;Var;0;%inf
-CarbonCap_sect;1;nb_Sectors;Var;0;1
-CarbonCap_HH;1;nb_Households;Var;0;1
-Adj_Tax_IC;1;nb_Sectors;Var;0;%inf
-Adj_Tax_C;1;nb_Households;Var;0;%inf
+delta_LS_H;1;nb_Households;Var_interm;0;1
+delta_LS_S;1;nb_Sectors;Var_interm;0;1
+delta_LS_I;1;1;Var_interm;0;1
+delta_LS_LT;1;1;Var_interm;0;1
+CarbonTax_Diff_IC;nb_Commodities;nb_Sectors;Var;0;%inf

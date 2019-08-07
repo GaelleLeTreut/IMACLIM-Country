@@ -81,9 +81,11 @@ bounds = createBounds( Index_Imaclim_VarResCap , listDeriv_Var );
 
 // list // SOLVE Endogenous variable (set of variables for independant fsolve)
 listDeriv_Var_interm = varTyp2list (Index_Imaclim_VarResCap, "Var_interm");
+
 Deriv_Var_interm     = Variables2struct(listDeriv_Var_interm);
 [Table_Deriv_Var_interm] = struct2Variables(Deriv_Var_interm,"Deriv_Var_interm");
 execstr(Table_Deriv_Var_interm);
+
 
 /////////////////////////////////////////////////////////////////////////
 ///// Extra calculation

@@ -79,6 +79,7 @@ end
 // Initial values for variables
 // Default value = 1)
 [calib] = OnesValue4variables ( Index_Imaclim_VarCalib, list_calib);
+
 // If some values are known in loaded intial_value, change 1 by the value and delete variable from initial_value structure
 [initial_value,common_list]=CompStructDelete(initial_value,calib);
 // Create X vector column for solver from all parameters to calibrate
