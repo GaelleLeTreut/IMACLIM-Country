@@ -18,13 +18,5 @@ parameters.CarbonCap = 0.2 ;
 // CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
 parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
 CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
+[i_Emis,j_Emis]=find(CO2Emis_IC);
 
- //////////Same reduction cap for each sectors and HH classes
-// parameters.CarbonCap_Diff_HH = ones(1, nb_Households);
-// parameters.CarbonCap_Diff_sect = ones(1, nb_Sectors);
-
-// Adj_Tax_C = ones(1, nb_Households);
-// Adj_Tax_IC = ones(nb_Sectors,1);
-
-// CarbonCap_HH = ones(1, nb_Households);
-// CarbonCap_sect = ones(1,nb_Sectors);

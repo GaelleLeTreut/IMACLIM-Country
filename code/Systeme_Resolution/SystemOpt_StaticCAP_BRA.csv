@@ -16,7 +16,7 @@ Corp_Direct_Tax;OthDirTax_rate_Val_1;Labour_income, Corp_Direct_Tax_rate;
 p;Mean_price_Val_1;pY, pM, Y, M;
 pM;pM_price_Val_2;;// check const_1
 ;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate,ClimPolCompensbySect, Y;
-pIC;pIC_price_Val_2;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p;
+;pIC_price_Const_3;pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate, Theta, Phi, aIC, sigma, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
 pC;pC_price_Val_2;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate;
 pG;pG_price_Val_2;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, Cons_Tax_rate;
 pI;pI_price_Val_2;Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, Cons_Tax_rate;
@@ -100,14 +100,14 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
-alpha, lambda, kappa;Technical_Coef_Val_1;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
+alpha, lambda, kappa;Technical_Coef_Val_3;IC, Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
 ////// International trade;;;
 M;Imports_Val_1;pM, pY, Y, sigma_M, delta_M_parameter;// check const_1, const_3 & const_4
 X;Exports_Val_1;pM, pX, sigma_X, delta_X_parameter;// const 3 : homothetic projection et const_2 static projection
 ;;;
 ////////////////////// Market balances;;;
 ////// Good Market;;;
-IC;IC_Val_1;Y, alpha;
+IC;IC_Val_2;Y, alpha, CO2Emis_IC;
 Y;MarketBalance_Val_1;IC, C, G, I, X, M;
 ////// Labour market;;;
 Labour;Employment_Val_1;lambda, Y;
@@ -123,7 +123,8 @@ Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_1;Betta, kappa, Y;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;;;
 ////////////////////// Carbon tax policies;;;
-Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;
+;CTax_rate_IC_Const_2;Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC;
+Carbon_Tax_rate_IC;CTax_rate_pIC_Val_1;Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, Cons_Tax_rate, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC;
 Carbon_Tax_rate_C;CTax_rate_C_Val_1;Carbon_Tax_rate, CarbonTax_Diff_C;
 delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT;Recycling_Option_Val_1;Carbon_Tax_IC, Carbon_Tax_C;
 //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL);;;
@@ -136,10 +137,6 @@ ClimPolCompensbySect;S_ClimCompensat_Val_3;GDP, delta_LS_S, Carbon_Tax_IC, Carbo
 // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL);;;
 ;RevenueRecycling_Const_3;Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP;
 Labour_Tax_rate;Labour_Taxe_rate_Val_1;LabTaxRate_BeforeCut, Labour_Tax_Cut;
-;;;
-CO2Emis_IC;CO2_intensity_IC_Val_1;Emission_Coef_IC , IC;
-;;;
-;;;
 ;;;
 //////////////////////  Commercial balance;;;
 //;Trade_Balance_Const_1;pM, pX, X, M, GDP;"//  1-évolution proportionnelle au PIB ""réel"" (GDP/CPI) / 2-... au PIB nominal"

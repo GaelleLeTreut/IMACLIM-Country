@@ -1165,28 +1165,39 @@ function Carbon_Tax_rate_IC = CTax_rate_IC_Val_1(Carbon_Tax_rate, CarbonTax_Diff
 
 endfunction
 
-
-function Carbon_Tax_rate_IC = CTax_rate_IC_Val_2(Carbon_Tax_rate, CarbonTax_Diff_IC, CO2Emis_IC)
-
-    // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
-    // Unique carbon tax
+// Carbon cap
+function y = CTax_rate_IC_Const_2(Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC)
 	
-	CarbonTax_Diff_IC = (CO2Emis_IC<>0).*CarbonTax_Diff_IC;
-    Carbon_Tax_rate_IC = Carbon_Tax_rate * CarbonTax_Diff_IC;
+	CarbonTax_Diff_IC = abs(CarbonTax_Diff_IC);
+	// CarbonTax_Diff_IC = (CO2Emis_IC==0).*0;
+	// CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate;
+	
+	y1 = CarbonTax_Diff_IC - (( CO2Emis_IC==0).*0 + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate )   ;
+	
+	  y = matrix(y1, -1 , 1) ;
+
+endfunction
+
+// Carbon cap
+function CarbonTax_Diff_IC = CTax_rate_IC_Val_2(Carbon_Tax_rate, Carbon_Tax_rate_IC, CO2Emis_IC)
+	
+	Carbon_Tax_rate_IC = abs(Carbon_Tax_rate_IC);
+	CarbonTax_Diff_IC = (CO2Emis_IC==0).*0;
+	CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate
 
 endfunction
 
 /// for [1,sectors] dimensions used for Carbon Cap by sectors - CarbonTax_Diff_IC[1
 
-function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
+// function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
 
     // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
-	CarbonTax_Diff_IC= repmat(Adj_Tax_IC,nb_Commodities, 1);	
+	// CarbonTax_Diff_IC= repmat(Adj_Tax_IC,nb_Commodities, 1);	
 	
-    y1 = Carbon_Tax_rate_IC - Carbon_Tax_rate * CarbonTax_Diff_IC ;
+    // y1 = Carbon_Tax_rate_IC - Carbon_Tax_rate * CarbonTax_Diff_IC ;
 
-    y = matrix(y1, -1 , 1) ;
-endfunction
+    // y = matrix(y1, -1 , 1) ;
+// endfunction
 
 
 /// Carbon tax on households (final energy consumptions)
@@ -1852,7 +1863,7 @@ endfunction
 
 
 //	Fixed technical coefficients
-function [alpha, lambda, kappa] = Technical_Coef_Const_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
+function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
     alpha 	=  BY.alpha ;
     lambda = BY.lambda ;
     kappa 	= BY.kappa ;
@@ -1861,6 +1872,40 @@ function [alpha, lambda, kappa] = Technical_Coef_Const_2( aIC, sigma, pIC, aL, p
         alpha = apply_proj_val(alpha, 'alpha');
     end
     
+endfunction
+
+/// function for assessing carbon tax resulting of a carbon cap
+function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+
+    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+    (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (CO2Emis_IC == 0).*((ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) );
+	alpha = alpha + (CO2Emis_IC <> 0).* divide(IC,ones(nb_Commodities, 1).*.Y',0);
+	
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+    //lambda(test_pL|test_FPI) = 0;
+
+    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+    ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+
 endfunction
 
 
@@ -2251,14 +2296,7 @@ endfunction
 // Total intermediate consumptions in quantities: IC (Sm_index, Sm_index)
 function [y] = IC_Const_1(IC, Y, alpha) ;
 
-    // y1 = IC - ( alpha .* repmat(Y', nb_Commodities, 1) ) ;
-
     y1 = IC - ( alpha .* (ones(nb_Commodities, 1).*.Y') ) ;
-
-    //If IC= 0 => alpha = 0
-    // y1_1 = (IC==0).*(alpha) ;
-    // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
-    // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
 
     if is_projected('IC') then
         y1 = apply_proj_eq(y1, IC, 'IC');
@@ -2269,20 +2307,21 @@ endfunction
 
 function IC = IC_Val_1(Y, alpha)
 
-    // y1 = IC - ( alpha .* repmat(Y', nb_Commodities, 1) ) ;
-
     IC = ( alpha .* (ones(nb_Commodities, 1).*.Y') ) ;
-
-    //If IC= 0 => alpha = 0
-    // y1_1 = (IC==0).*(alpha) ;
-    // y1_2 = (IC<>0).*(IC - (alpha .* repmat(Y', nb_Commodities, 1)) )
-    // y1 = (IC==0).*y1_1 + (IC<>0).*y1_2
 
     if is_projected('IC') then
         IC = apply_proj_val(IC, 'IC');
     end
 
 endfunction
+
+function IC = IC_Val_2(Y, alpha, CO2Emis_IC)
+
+    IC =  (CO2Emis_IC == 0).*( alpha .* (ones(nb_Commodities, 1).*.Y') );
+	IC = IC + (CO2Emis_IC <> 0).* divide(CO2Emis_IC, Emission_Coef_IC, 0);
+
+endfunction
+
 
 
 // Imports function
@@ -2507,6 +2546,21 @@ function pIC = pIC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMa
 endfunction
 
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
+function y = pIC_price_Const_2(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
+
+    //  Trade, transport and specific margins for energy
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+    // Indirect tax
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
+    // Intermediate consumption price: pIC (Sm_index, Sm_index)
+   y1 = pIC - ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') );
+    y =matrix(y1, -1 , 1);
+endfunction
+
+
+// Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
 function pIC = pIC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
 
     //  Trade, transport and specific margins for energy
@@ -2520,6 +2574,45 @@ function pIC = pIC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMa
     
 endfunction
 
+
+
+//  Carbon CAP - Purchase price (Intermediate consumptions) after trade, transport and energy margins, and tax on consumption (Brazil)
+function y = pIC_price_Const_3(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate, Theta, Phi, aIC, sigma, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+	
+	test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+ //  Trade, transport and specific margins for energy
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+    // Indirect tax
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
+    // Intermediate consumption price: pIC (Sm_index, Sm_index)
+    y1 = pIC - ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates ) ;
+	
+	/// pIC that matches the alpha of cap emissions
+	pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+
+    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+    (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    	
+	y2 = alpha - ((ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) );
+	
+	y3 = ( CO2Emis_IC== 0) .* y1 + (CO2Emis_IC <> 0) .* y2;
+	
+    y = matrix(y3, -1 , 1);
+endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
 function [y] = pC_price_Const_1(pC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
@@ -3409,15 +3502,23 @@ function y = CarbonCap_C_Const_1(CarbonCap_C, CarbonCap, CarbonCap_Diff_C) ;
 endfunction
 
 
-// Emissions at the level of the energy transition law
-function [y] = ExogCO2_IC_2030( CO2Emis_IC, CO2Emis_IC_2030)
-    y1 = CO2Emis_IC - CO2Emis_IC_2030;
-    y = matrix(y1,-1 , 1) ;
+/// Closure carbon cap
+
+
+function Carbon_Tax_rate_IC = CTax_rate_pIC_Val_1(Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, Cons_Tax_rate, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC)
+
+	//  Trade, transport and specific margins for energy
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+
+	Carbon_Tax_rate_IC = zeros(nb_Sectors,nb_Sectors);
+    Carbon_Tax_rate_IC = (CO2Emis_IC==0).*0
+	Carbon_Tax_rate_IC = Carbon_Tax_rate_IC + (CO2Emis_IC<>0).* divide(((pIC./(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate'))) - ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )) -  (ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate'))),Emission_Coef_IC,0);
+	
+	// Carbon_Tax_rate_IC = abs(Carbon_Tax_rate_IC);
 endfunction
 
-// Emissions at the level of the energy transition law
-function [y] = ExogCO2_C_2030( CO2Emis_C, CO2Emis_C_2030)
-    y1 = CO2Emis_C - CO2Emis_C_2030;
 
-    y = matrix(y1, -1 , 1) ;
-endfunction
+
+
+
