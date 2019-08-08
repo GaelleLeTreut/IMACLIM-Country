@@ -1168,7 +1168,7 @@ endfunction
 // Carbon cap
 function y = CTax_rate_IC_Const_2(Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC)
 	
-	CarbonTax_Diff_IC = abs(CarbonTax_Diff_IC);
+	// CarbonTax_Diff_IC = abs(CarbonTax_Diff_IC);
 	// CarbonTax_Diff_IC = (CO2Emis_IC==0).*0;
 	// CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate;
 	
@@ -2591,7 +2591,7 @@ function y = pIC_price_Const_3(pIC, Transp_margins_rates, Trade_margins_rates, S
     Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
 
     // Intermediate consumption price: pIC (Sm_index, Sm_index)
-    y1 = pIC - ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates ) ;
+    y1 = pIC - ( ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') )) ;
 	
 	/// pIC that matches the alpha of cap emissions
 	pL = abs(pL);
