@@ -266,6 +266,8 @@ for i = 1:size(fun_val_not_sorted)
     is_kept = %T;
     for var = fun.output'
         if find(computed_output == var) <> [] then
+            disp("""" + var + """" + ' is computed by an other Val function : ' ..
+            + """" + fun.name + """" + ' is moved to resolution.')
             fun_resolution_val($+1) = fun;
             fun_val_kept(i) = null();
             is_kept = %F;

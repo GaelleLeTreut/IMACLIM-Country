@@ -13,10 +13,10 @@ parameters.u_param = BY.u_tot;
 
 
 ////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-parameters.CarbonCap = 0.2 ;
+//parameters.CarbonCap = 0.2 ;
 // parameters.CarbonCap_C = parameters.CarbonCap.* ones(nb_Sectors,nb_Households);
 // CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
-parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
-CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
-[i_Emis,j_Emis]=find(CO2Emis_IC);
+//parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
+//CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
+//[i_Emis,j_Emis]=find(CO2Emis_IC);
 
