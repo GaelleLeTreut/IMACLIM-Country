@@ -5,8 +5,17 @@ Carbon_Tax_rate1 = 2e5;
 Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 
+if time_step = 1 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
+// goal_reduc = 0.05 * ones(nb_Sectors,nb_Sectors);
+end 
+
+
+if time_step = 2 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2;
+// goal_reduc = 0.15 * ones(nb_Sectors,nb_Sectors;
+end 
 
 // u_param a clarifier
 parameters.u_param = BY.u_tot;

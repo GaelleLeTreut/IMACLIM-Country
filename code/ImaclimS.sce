@@ -205,7 +205,20 @@ for time_step=1:Nb_Iter
             mkdir(SAVEDIR);
         end
     end
-
+	
+	// Loading different carbon tax diff for each time step
+	if isdef("CarbonTaxDiff")
+		if AGG_type == ""
+			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC"+string(AGG_type)+"_"+time_step+".csv",";");
+		else
+			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+"_"+time_step+".csv",";");
+		end
+		parameters.CarbonTax_Diff_IC (1,:) = [];
+		parameters.CarbonTax_Diff_IC (:,1) = [];
+		parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);	
+		
+	end
+pause
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
         exec("Macro_Framework.sce");
@@ -245,6 +258,7 @@ for time_step=1:Nb_Iter
     if Scenario <> '' then
         exec("Check_Proj_Vol.sce");
     end
+
 
     ////////////////////////////////////////////////////////////
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY

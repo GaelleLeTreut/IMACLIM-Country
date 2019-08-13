@@ -147,3 +147,8 @@ else
     Optimization_Resol = %F;
 end
 
+if isdef("CarbonTaxDiff") then
+    CarbonTaxDiff = eval(CarbonTaxDiff);
+else
+    CarbonTaxDiff = %F;
+end
