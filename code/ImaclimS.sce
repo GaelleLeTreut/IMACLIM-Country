@@ -207,7 +207,7 @@ for time_step=1:Nb_Iter
     end
 	
 	// Loading different carbon tax diff for each time step
-	if isdef("CarbonTaxDiff")
+	if CarbonTaxDiff
 		if AGG_type == ""
 			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC"+string(AGG_type)+"_"+time_step+".csv",";");
 		else
@@ -218,7 +218,7 @@ for time_step=1:Nb_Iter
 		parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);	
 		
 	end
-pause
+
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
         exec("Macro_Framework.sce");

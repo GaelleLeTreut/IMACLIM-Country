@@ -26,12 +26,9 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
     testing.debug_mode = %F;
     exec('ImaclimS.sce');
     
-    CarbonTax_Diff_IC_found = CarbonTax_Diff_IC;
-    CarbonTax_Diff_C_found = CarbonTax_Diff_C;
-    
     // Réduction d'émission à atteindre
     goal_reduc_IC = 0.2 * ones(nb_sectors, nb_sectors);
-    sensib_IC = 0.01 * ones(nb_sectors, nb_sectors);
+    sensib_IC = 0.003 * ones(nb_sectors, nb_sectors);
     
     goal_reduc_C = 0.2 * ones(nb_sectors, H_size);
     sensib_C = 0.01 * ones(nb_sectors, H_size);
@@ -122,7 +119,34 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
     
     continue_adj_IC = ( ( (Emission_Coef_IC <> 0) .* (current_reduc_IC > goal_reduc_IC + sensib_IC) ) | ( (Emission_Coef_IC <> 0) .* (current_reduc_IC < goal_reduc_IC - sensib_IC) ) ) & (CarbonTax_Diff_IC > 10e-5);
     continue_adj_C = ( ( (Emission_Coef_C <> 0) .* (current_reduc_C > goal_reduc_C + sensib_C) ) | ( (Emission_Coef_C <> 0) .* (current_reduc_C < goal_reduc_C - sensib_C) ) ) & (CarbonTax_Diff_C > 10e-5);
+
+
+    interval_min = 1e-3;
+    dimin = 0.1;
+
+    for i = 1:size(CarbonTax_Diff_IC,1)
+        for j = 1:size(CarbonTax_Diff_IC,2)
+            if continue_adj_IC(i,j) then
+                if abs(Diff_sup_IC(i,j) - Diff_inf_IC(i,j)) < interval_min then
+                    Diff_inf_IC(i,j) = Diff_inf_IC(i,j) * (1 - dimin);
+                    Diff_sup_IC(i,j) = Diff_sup_IC(i,j) * (1 + dimin);
+                end
+            end
+        end
+    end
     
+    
+    for i = 1:size(CarbonTax_Diff_C,1)
+        for j = 1:size(CarbonTax_Diff_C,2)
+            if continue_adj_C(i,j) then
+                if abs(Diff_sup_C(i,j) - Diff_inf_C(i,j)) < interval_min then
+                    Diff_inf_C(i,j) = 0;
+                    Diff_sup_C(i,j) = -1;
+                end
+            end
+        end
+    end
+
 endfunction
 
 Diff_inf_IC = 0 * ones(nb_sectors, nb_sectors);
@@ -138,7 +162,14 @@ while(or(continue_adj_IC) | or(continue_adj_C))
     
     nb_exec = nb_exec + 1;
     
+    disp('');
+    printf('------------\n');
+    printf('- EXEC N°' + string(nb_exec) + ' -\n');
+    printf('------------\n');
+    
     [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C, Diff_sup_C] = adjust_Diff (Diff_inf_IC, Diff_sup_IC, Diff_inf_C, Diff_sup_C);
+     
+     
      
 end
 
