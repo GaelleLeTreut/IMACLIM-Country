@@ -35,11 +35,18 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
     sensib_C = 0.01 * ones(nb_sectors, H_size);
     
     // Réduction d'émission atteinte
-    CO2Emis_IC_ini = Emission_Coef_IC .* ini.IC;
+    
+    if Nb_Iter == 1 then
+        CO2Emis_IC_ini = Emission_Coef_IC .* ini.IC;
+        CO2Emis_C_ini = Emission_Coef_C .* ini.C;
+    else
+        execstr('CO2Emis_IC_ini = Emission_Coef_IC .* data_' + (Nb_Iter-1) + '.IC;');
+        execstr('CO2Emis_C_ini = Emission_Coef_C .* data_' + (Nb_Iter-1) + '.C;');
+    end
+    
     CO2Emis_IC = Emission_Coef_IC .* IC;
     current_reduc_IC = divide((CO2Emis_IC_ini - CO2Emis_IC) , CO2Emis_IC_ini, 0);
     
-    CO2Emis_C_ini = Emission_Coef_C .* ini.C;
     CO2Emis_C = Emission_Coef_C .* C;
     current_reduc_C = divide((CO2Emis_C_ini - CO2Emis_C) , CO2Emis_C_ini, 0);
 
@@ -77,6 +84,7 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
                     // Réduction des émission trop faible -> augmenter la taxe
                     Diff_inf_C(i,j) = CarbonTax_Diff_C(i,j);
                     if Diff_sup_C(i,j) == -1 then
+                        pause;
                         CarbonTax_Diff_C(i,j) = CarbonTax_Diff_C(i,j) * 2;
                     else
                         CarbonTax_Diff_C(i,j) = (Diff_sup_C(i,j) + Diff_inf_C(i,j)) / 2;
