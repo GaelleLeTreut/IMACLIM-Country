@@ -206,18 +206,25 @@ for time_step=1:Nb_Iter
         end
     end
 	
-	// Loading different carbon tax diff for each time step
+	// Loading different carbon tax diff for each time step ( to be informed in dashboard)
 	if CarbonTaxDiff
 		if AGG_type == ""
 			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC"+string(AGG_type)+"_"+time_step+".csv",";");
+			parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+"_"+time_step+".csv",";");
 		else
 			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+"_"+time_step+".csv",";");
+			parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+"_"+time_step+".csv",";");
 		end
 		parameters.CarbonTax_Diff_IC (1,:) = [];
 		parameters.CarbonTax_Diff_IC (:,1) = [];
-		parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);	
+		parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);
+
+		parameters.CarbonTax_Diff_C (1,:) = [];
+		parameters.CarbonTax_Diff_C (:,1) = [];
+		parameters.CarbonTax_Diff_C=evstr(parameters.CarbonTax_Diff_C);
 		
 	end
+
 
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
