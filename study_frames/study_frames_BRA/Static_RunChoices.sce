@@ -8,13 +8,15 @@ Carbon_Tax_rate3 = 5e5;
 
 if time_step == 1 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-// goal_reduc = 0.05 * ones(nb_Sectors,nb_Sectors);
+goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);
+goal_reduc_C = 0.05 * ones(nb_Sectors, nb_Households);
 end 
 
 
 if time_step == 2 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate2;
-// goal_reduc = 0.15 * ones(nb_Sectors,nb_Sectors;
+goal_reduc_IC = 0.15 * ones(nb_Sectors,nb_Sectors);
+goal_reduc_C = 0.15 * ones(nb_Sectors, nb_Households);
 end 
 
 // u_param a clarifier
