@@ -1,14 +1,16 @@
 exec('Load_file_structure.sce');
 
+num_run = 2;
+
 // CarbonTax_Diff_IC_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_IC_AGG_PMR19.csv';
-CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_1"+".csv";
+CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_" + string(num_run) + ".csv";
 nb_sectors = 19;
 
 H_desag = 'H4';
 H_size = 4;
 
 // CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag + '.csv';
-CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_1"+ '.csv';
+CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_" + string(num_run) + '.csv';
 
 function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C, Diff_sup_C] = adjust_Diff (Diff_inf_IC, Diff_sup_IC, Diff_inf_C, Diff_sup_C)
 
@@ -29,7 +31,7 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
     
     // Réduction d'émission à atteindre
     // goal_reduc_IC = 0.2 * ones(nb_sectors, nb_sectors);
-    sensib_IC = 0.003 * ones(nb_sectors, nb_sectors);
+    sensib_IC = 0.001 * ones(nb_sectors, nb_sectors);
     
     // goal_reduc_C = 0.2 * ones(nb_sectors, H_size);
     sensib_C = 0.01 * ones(nb_sectors, H_size);
@@ -129,7 +131,7 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
     continue_adj_C = ( ( (Emission_Coef_C <> 0) .* (current_reduc_C > goal_reduc_C + sensib_C) ) | ( (Emission_Coef_C <> 0) .* (current_reduc_C < goal_reduc_C - sensib_C) ) ) & (CarbonTax_Diff_C > 10e-5);
 
 
-    interval_min = 1e-3;
+    interval_min = 1e-4;
     dimin = 0.1;
 
     for i = 1:size(CarbonTax_Diff_IC,1)
