@@ -279,7 +279,9 @@ d.Y_value = value(d.pY,d.Y)';
 //Calcul Emissions
 
 d.CO2Emis_C = d.Emission_Coef_C .*d.C;
+d.CO2Emis_C_tot = sum(d.CO2Emis_C);
 d.CO2Emis_IC = d.Emission_Coef_IC .*d.IC;
+d.CO2Emis_IC_tot = sum(d.CO2Emis_IC);
 
 // Matrix
 

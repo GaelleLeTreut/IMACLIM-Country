@@ -1,14 +1,14 @@
 exec('Load_file_structure.sce');
 
 // CarbonTax_Diff_IC_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_IC_AGG_PMR19.csv';
-CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_2"+".csv";
+CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_1"+".csv";
 nb_sectors = 19;
 
 H_desag = 'H4';
 H_size = 4;
 
-CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag + '.csv';
-
+// CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag + '.csv';
+CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_1"+ '.csv';
 
 function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C, Diff_sup_C] = adjust_Diff (Diff_inf_IC, Diff_sup_IC, Diff_inf_C, Diff_sup_C)
 
