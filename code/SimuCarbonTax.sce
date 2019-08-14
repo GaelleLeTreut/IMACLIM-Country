@@ -84,7 +84,6 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
                     // Réduction des émission trop faible -> augmenter la taxe
                     Diff_inf_C(i,j) = CarbonTax_Diff_C(i,j);
                     if Diff_sup_C(i,j) == -1 then
-                        pause;
                         CarbonTax_Diff_C(i,j) = CarbonTax_Diff_C(i,j) * 2;
                     else
                         CarbonTax_Diff_C(i,j) = (Diff_sup_C(i,j) + Diff_inf_C(i,j)) / 2;
