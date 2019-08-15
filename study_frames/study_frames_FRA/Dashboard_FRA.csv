@@ -6,6 +6,10 @@ System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
 // System_Resol;Systeme_Static_recalib
 // System_Resol;Systeme_StatRed
+// * If Optimization_Resol == %T, System_Resol is ignored *;
+Optimization_Resol;%F
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
