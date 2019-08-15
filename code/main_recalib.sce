@@ -39,21 +39,35 @@ exec("Load_file_structure.sce");
 exec("preambule.sce");
 exec("Dashboard.sce");
 
-if Output_files=='True'
+if Output_files
 
-//	runName = study + "_" + mydate();
-//	SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep();
-	runName = Recycling_Option;
-	SAVEDIR = OUTPUT+runName + filesep();
-	mkdir(SAVEDIR);
-	diary(SAVEDIR+"summary.log");
+    simu_name = '';
+    if SIMU_MODE then
+        simu_name = Current_Simu_Name;
+    end
 
-	SAVEDIR_IOA = OUTPUT+runName + filesep()+ "outputs_IOA"+filesep();
-	mkdir(SAVEDIR_IOA);	
-	
-	// Save Dashbord.csv & System_Resol.csv in output
-	copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
-	copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    syst_name = '';
+    if Optimization_Resol then
+        syst_name = SystemOpt_Resol;
+    else
+        syst_name = System_Resol;
+    end
+    
+    runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+    SAVEDIR = OUTPUT + runName + filesep();
+    mkdir(SAVEDIR);
+    diary(SAVEDIR+"summary.log");
+
+    SAVEDIR_IOA = SAVEDIR + "outputs_IOA" + filesep();
+    mkdir(SAVEDIR_IOA);	
+
+    // Save Dashbord.csv & System_Resol.csv in output
+    copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+    if Optimization_Resol then
+        copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
+    else
+        copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    end
 end
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +123,7 @@ time_step=1;
 
 // Creation of a new output subdirectory for each time step in case of several time steps calculation
 if Nb_Iter<>1
-	if Output_files=='True'
+	if Output_files
 		SAVEDIR = OUTPUT+runName + filesep() + time_step + filesep();
 		mkdir(SAVEDIR);
 	end
@@ -182,14 +196,19 @@ end
 // 	STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016
 ////////////////////////////////////////////////////////////
 print(out,"STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
-if Output_files=='True'
+
 	print(out,"STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY...");
 	exec(CODE+"outputs.sce");
 	if time_step == 1
 		BY = ini; // Carbon_Tax absent de BY mais pas de ini et nécessaire pour outputs_indic.sce
 	end
 	exec(CODE+"outputs_indic.sce");
-end
+	
+			
+	if Output_prints
+		exec(CODE+"output_prints.sce");
+	end
+
 
 Test_1 = "False";
 if Test_1 == "True"
@@ -258,13 +277,14 @@ end
 // 	STEP 9: RESOLUTION - EQUILIBRIUM 2018
 ////////////////////////////////////////////////////////////
 print(out,"STEP 9: RESOLUTION AND EQUILIBRIUM 2018");
-// Creation of a new output subdirectory for each time step in case of several time steps calculation
-if Nb_Iter<>1
-	if Output_files=='True'
-		SAVEDIR = OUTPUT+runName + filesep() + time_step + filesep();
-		mkdir(SAVEDIR);
-	end
-end
+    // Creation of a new output subdirectory for each time step in case of several time steps calculation
+    if Nb_Iter<>1
+        if Output_files
+            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
+            mkdir(SAVEDIR);
+        end
+    end
+	
 
 // Loading macro framework (common feature for each country) 
 if Macro_nb <> ""
@@ -331,7 +351,7 @@ end
 // 	STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2018
 ////////////////////////////////////////////////////////////
 print(out,"STEP 10: OUTPUT EXTRACTION AND RESULTS DISPLAY 2019");
-if Output_files=='True'
+if Output_files
 	exec(CODE+"outputs.sce");
 	exec(CODE+"outputs_indic.sce");
 end
@@ -422,17 +442,17 @@ for CTax_elt=1:size(Loop_elements.Carbon_Tax_rate,2)
 				parameters.sigma_X = BY.sigma_X * Loop_elements.sigma_Trade_coef(SigTrade_elt);
 				parameters.sigma_M = BY.sigma_M *Loop_elements.sigma_Trade_coef(SigTrade_elt);
 
-				if Output_files=='True'
+				if Output_files
 					SAVEDIR = OUTPUT+runName + filesep() + Current_Simu + filesep();
 					mkdir(SAVEDIR);
 				end
 
 				exec(System_Resol+".sce");
 
-				if Output_files=='True'
+				
 					exec(CODE+"outputs.sce");
 					exec(CODE+"outputs_indic.sce");
-				end
+				
 			
 				exec(CODE+"Variable_Storage.sce");
 
@@ -445,6 +465,6 @@ end
 ////////////////////////////////////////////////////////////
 // 	STEP Final: SHUT DOWN THE DIARY
 ////////////////////////////////////////////////////////////
-if Output_files=='True'
+if Output_files
 diary(0)
 end

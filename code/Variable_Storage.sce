@@ -3,7 +3,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 // Put back some variables to "equation" from EcoT formats due to "outputs.sce"
-if Output_files=="True"
 
 	if Country == 'France' then
 		BY.GFCF_byAgent(Indice_RestOfWorld)=[];
@@ -71,8 +70,7 @@ if Output_files=="True"
 	Corp_Direct_Tax= - Corp_Direct_Tax(Indice_Households);
 	
 	end
-	
-end
+
 
 // stockage des outputs dans data_"time_step"
 execstr("data_"+time_step+" = d;")
@@ -91,7 +89,7 @@ if Resol_Mode == "Dynamic_projection"
 end
 
 // SAVE Data in a .sav file
-if Output_files=='True'
+if Output_files
     execstr("data = data_"+time_step+";")
     data.Indice_EnerSect=Indice_EnerSect;
     data.Indice_NonEnerSect=Indice_NonEnerSect;

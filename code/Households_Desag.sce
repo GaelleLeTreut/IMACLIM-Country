@@ -189,7 +189,7 @@ Index_InstitAgents_DISAG( Indice_Households+size(Indice_HouseholdsTEMP,2):nb_Ins
 
 DataAccountTable_DISAG = [["", Index_InstitAgents_DISAG'];[Index_DataAccount; "Thousand of euros"], value_DISAG.DataAccountTable];
 
-if Output_files=='True'
+if Output_files
     csvWrite(DataAccountTable_DISAG,SAVEDIR+"DataAccountTable_DISAG.csv");
 end 
 
@@ -450,13 +450,13 @@ end
 IOT_Prices_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "euro_per_tep_euro_per_tons"], value_DISAG.IOT_Prices] ;
 
 
-if Output_files=='True'
+if Output_files
     csvWrite(IOT_Prices_DISAG,SAVEDIR+"IOT_Prices_DISAG.csv") ;
 end
 //	IOT in quantities
 IOT_Qtities_DISAG = [["", Index_Sectors', Index_FC_DISAG', "Tot_uses", "Y", "M"];[Index_Sectors; "ktoe_ktons"], value_DISAG.IOT_Qtities] ;
 
-if Output_files=='True'
+if Output_files
     csvWrite(IOT_Qtities_DISAG,SAVEDIR+"IOT_Qtities_DISAG.csv") ;
 end
 
@@ -467,27 +467,27 @@ Index_Row_IOT_DISAG = [Index_IOTvalue(2:Location3-1 , 2); Index_IOTvalue(Locatio
 
 IOT_Val_DISAG = [ ["", Index_Sectors', Index_FC_DISAG', "Tot_uses"]; [Index_Row_IOT_DISAG; "Tot_ressources"; "Thousand_of_euros"], value_DISAG.IOT_Val ] ;
 
-if Output_files=='True'
+if Output_files
     csvWrite(IOT_Val_DISAG,SAVEDIR+"IOT_Val_DISAG.csv") ;
 end
 
 //	IOT in CO2 Emissions
 IOT_CO2Emis_DISAG = [ ["", Index_Sectors', "C_"+Index_HouseholdsTEMP', "X"] ; [Index_Sectors; "MtCO2"], value_DISAG.IOT_CO2Emis ] ;
 
-if Output_files=='True'
+if Output_files
     csvWrite(IOT_CO2Emis_DISAG,SAVEDIR+"IOT_CO2Emis_DISAG.csv") ;
 end
 
 //	IOT - Imported proportions
 IOT_Import_rate_DISAG = [ ["", Index_Sectors', Index_FC_DISAG'] ; [Index_Sectors; "Proportion (Without unit)"], [value_DISAG.IOT_Import_rate; zeros(1, size(value_DISAG.IOT_Import_rate, 2)) ] ] ;
 
-if Output_files=='True'
+if Output_files
     csvWrite(IOT_Import_rate_DISAG,SAVEDIR+"IOT_Import_rate_DISAG.csv") ;
 end
 //	Demographic Table
 Demography_DISAG = [ ["Socio demograhic variables", Index_HouseholdsTEMP', "units"] ; [ValueNamesDISAG, Disagg_Values, ["Thousands of people"; "Thousands of people"; "Thousands of people"; "Thousands of people"; "Consumption units per household"; "Thousands of people"] ] ] ;
 
-if Output_files=='True'
+if Output_files
     csvWrite(Demography_DISAG,SAVEDIR+"Demography_DISAG.csv") ;
 end
 

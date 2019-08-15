@@ -119,8 +119,18 @@ if (size(CO2_footprint,"r")<>[1]| size(CO2_footprint,"r")<>[1])
     error ( "You have to choose whether or not you want to realise an Input-Output Analysis about carbon footprint.");
 end
 
-if (size(Output_files,"r")<>[1]| size(Output_files,"r")<>[1])
-    error ( "You have to choose whether or not you want to print outputs in external files.");
+if  isdef("Output_files") then
+Output_files = eval(Output_files);
+else 	
+    warning("No information about if you want to create output files : by default, output files are created")
+    Output_files = %T;
+end
+
+if  isdef("Output_prints") then
+Output_prints = eval(Output_prints);
+else 	
+    warning("No information about if you want to print outputs: by default, there are no prints")
+    Output_prints = %F;
 end
 
 if isdef("Invest_matrix") then

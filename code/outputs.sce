@@ -33,14 +33,6 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
-print(out,"===============================================\n");
-print(out,"===== OUTPUTS =================================\n");
-print(out,"===============================================\n");
-
-// print(out,"\n ====== Changes in this study ==================");
-// exec(STUDY+study+".sce")
-
-
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";
@@ -61,10 +53,6 @@ d.Carbon_Tax_rate_IC=(CO2Emis_IC <> 0) .* (d.Carbon_Tax_rate_IC) +(CO2Emis_IC ==
 d.CarbonTax_Diff_C = (CO2Emis_C <> 0) .* d.CarbonTax_Diff_C +(CO2Emis_C == 0).*BY.CarbonTax_Diff_C;
 d.CarbonTax_Diff_IC = (CO2Emis_IC <> 0) .* d.CarbonTax_Diff_IC +(CO2Emis_IC == 0).*BY.CarbonTax_Diff_IC;
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ PARAMETERS ================")
-print(out,"==========================================")
 
 param_table_sec= [ "setting", "", "", Index_Sectors'];
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$t_{CARB_{IC}}$"];
@@ -213,12 +201,20 @@ param_table_sec($+1,1) = ["$Retired$"];
 param_table_sec($:$,2:3) = ["Thousands of people"];
 param_table_sec($,4) = string(sum(Retired));
 
+if Output_files
 csvWrite(param_table_sec,SAVEDIR+"param_table_sec_"+time_step+".csv", ';');
+end
+
+if Output_prints
+
+print(out,"===============================================\n");
+print(out,"===== OUTPUTS =================================\n");
+print(out,"===============================================\n");
 
 
+//// Printing decomposition
 print(out,"== Households consumption variation ===========");
 print(out,[ "Sector" "Initial Value" "Run" "Growth";[Index_Sectors sum(ini.C,"c") sum(C,"c") sum(round(100*(divide(C,ini.C,%nan)-1)),"c")]]);
-
 
 if  Country<>"Brasil" then
     print(out,"===== Households ==============================");
@@ -265,6 +261,9 @@ print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 print(out,"===== Decomposition pY Ratio ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; divide(sum(d.pK .* d.kappa, "r"),sum(ini.pK .* ini.kappa, "r"),%nan) ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
+end
+
+
 
 /// Calcul keuros/kreais/etc.
 d.IC_value = value(d.pIC,d.IC);
@@ -378,52 +377,19 @@ evol.pY (isnan(evol.pY )) = d.pY   (isnan(evol.pY   )) *%i;
 evol.pM (isnan(evol.pM )) = d.pM   (isnan(evol.pM   )) *%i;
 evol.p (isnan(evol.p )) = d.p   (isnan(evol.p   )) *%i;
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ UNITARY PRICE ====================")
-print(out,"==========================================")
 
-function Prices = buildPriceT( pIC , pFC, w, pL, pK, pY, pM, p, fact , decimals )
+/////////////////////////////////////////////////
+//// Prices
 
-    indexCommo = part(Index_Commodities,1:5);
-
-    pIC = round( pIC * fact * 10^decimals ) / 10^decimals;
-    pFC = round( pFC * fact * 10^decimals ) / 10^decimals;
-    w = round( w * fact * 10^decimals ) / 10^decimals;
-    pL = round( pL * fact * 10^decimals ) / 10^decimals;
-    pK = round( pK * fact * 10^decimals ) / 10^decimals;
-    pY = round( pY * fact * 10^decimals ) / 10^decimals;
-    pM = round( pM * fact * 10^decimals ) / 10^decimals;
-    p = round( p * fact * 10^decimals ) / 10^decimals;
-
-
-    nCommo = size(indexCommo,1);
-    Prices = emptystr(nCommo+10,nCommo+1+nb_FC+1);
-    Prices( 1:nCommo+1 , 1:nCommo+1) = [ ["IC prices CO2"; indexCommo ] , [indexCommo'; pIC ] ] ; 
-    Prices( 1:nCommo+1 , nCommo+2:nCommo+1+nb_FC ) =  [Index_FC';pFC]  ;
-
-    Prices( nCommo+3: nCommo+8,   1:nCommo+1) =  [["w";"pL";"pK";"pY";"pM";"p" ],[ w;pL;pK;pY';pM';p ]];
-
-    Prices(nCommo+10,1:2) = [ "Units",1/fact+money+"/tep,"+money+"/tons" ];
-
-endfunction
-
-
-print(out," * Initial table - Unitary prices");
 Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , 1);
-print(out,Prices.ini);
-
-print(out," * Run table - Unitary prices");
 Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , 1);
-print(out,Prices.run);
-
-print(out," * Evolution table - Unitary prices");
 Prices.evo = buildPriceT( evol.pIC , evol.pFC, evol.w, evol.pL, evol.pK, evol.pY, evol.pM, evol.p, 100 , 1);
-print(out,Prices.evo);
 
+if Output_files
 csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+time_step+".csv", ';');
 csvWrite(Prices.run,SAVEDIR+"Prices-run_"+time_step+".csv", ';');
 csvWrite(Prices.evo,SAVEDIR+"Prices-evo_"+time_step+".csv", ';');
+end
 
 
 /////////////////////////////////////////////////
@@ -438,45 +404,17 @@ evol.alpha (isnan(evol.alpha )) = d.alpha   (isnan(evol.alpha   )) *%i;
 evol.lambda (isnan(evol.lambda )) = d.alpha   (isnan(evol.lambda   )) *%i;
 evol.kappa (isnan(evol.kappa )) = d.kappa   (isnan(evol.kappa   )) *%i;
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ TECHNICAL COEFFICIENT ====================")
-print(out,"==========================================")
 
-function TechCOef = buildTechCoefT( alpha, lambda, kappa, fact , decimals )
-
-    indexCommo = part(Index_Commodities,1:5);
-
-    alpha = round( alpha * fact * 10^decimals ) / 10^decimals;
-    lambda = round( lambda * fact * 10^decimals ) / 10^decimals;
-    kappa = round( kappa * fact * 10^decimals ) / 10^decimals;
-
-
-    nCommo = size(indexCommo,1);
-    TechCOef = emptystr(nCommo+4,nCommo+1);
-    TechCOef( 1:nCommo+1 , 1:nCommo+1) = [ ["alpha"; indexCommo ] , [indexCommo'; alpha ] ] ; 
-
-    TechCOef( nCommo+3: nCommo+4,   1:nCommo+1) =  [["lambda";"kappa" ],[ lambda;kappa ]];	
-    TechCOef(nCommo+6,1:2) = [ "Units","nan" ];
-
-endfunction
-
-
-print(out," * Initial table - Technical Coefficient");
 TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , 1);
-print(out,TechCOef.ini);
-
-print(out," * Run table - Technical Coefficient");
 TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , 1);
-print(out,TechCOef.run);
-
-print(out," * Evolution table - Technical Coefficient");
 TechCOef.evo = buildTechCoefT( evol.alpha, evol.lambda, evol.kappa, 100 , 1);
-print(out,TechCOef.evo);
 
+
+if Output_files
 csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini_"+time_step+".csv", ';');
 csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run_"+time_step+".csv", ';');
 csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo_"+time_step+".csv", ';');
+end
 
 
 /////////////////////////////////////////////////
@@ -522,55 +460,17 @@ evol.Tot_CO2Emis_C (isnan(evol.Tot_CO2Emis_C)) = d.Tot_CO2Emis_C   (isnan(evol.T
 evol.DOM_CO2(isnan(evol.DOM_CO2)) = d.DOM_CO2   (isnan(evol.DOM_CO2   )) *%i;
 
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ CO2 EMISSIONS ====================")
-print(out,"==========================================")
 
-function CO2Emis = buildEmisT( CO2Emis_IC , CO2Emis_C , CO2Emis_X, CO2Emis_Sec,Tot_CO2Emis_IC,Tot_CO2Emis_C,DOM_CO2, fact , decimals )
-
-    indexCommo = part(Index_Commodities,1:5);
-
-    CO2Emis_IC = round( CO2Emis_IC * fact * 10^decimals ) / 10^decimals;
-    CO2Emis_C = round( CO2Emis_C * fact * 10^decimals ) / 10^decimals;
-    CO2Emis_X = round( CO2Emis_X * fact * 10^decimals ) / 10^decimals;
-
-    CO2Emis_Sec = round( CO2Emis_Sec * fact * 10^decimals ) / 10^decimals;
-    Tot_CO2Emis_IC = round( Tot_CO2Emis_IC * fact * 10^decimals ) / 10^decimals;
-    Tot_CO2Emis_C = round( Tot_CO2Emis_C * fact * 10^decimals ) / 10^decimals;
-    DOM_CO2 = round( DOM_CO2 * fact * 10^decimals ) / 10^decimals;
-
-    nCommo = size(indexCommo,1);
-    CO2Emis = emptystr(nCommo+5,nCommo+1+size(CO2Emis_C,2)+1);
-    CO2Emis( 1:nCommo+1 , 1:nCommo+1) = [ ["Emission CO2"; indexCommo ] , [indexCommo'; CO2Emis_IC ] ] ;
-    if H_DISAGG <> "HH1"
-        CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_"+Index_Households';CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
-    else
-        CO2Emis( 1:nCommo+1 , nCommo+1+1:nCommo+1+size(CO2Emis_C,2)+1 ) = [["CO2Emis_C";CO2Emis_C],["CO2Emis_X";CO2Emis_X]];
-    end
-    CO2Emis( nCommo+2,  1:nCommo+1) =  ["CO2Emis_Sec", CO2Emis_Sec ];
-
-    CO2Emis( nCommo+3: nCommo+5,  1:2) =  [["Tot_CO2Emis_IC";"Tot_CO2Emis_C";"DOM_CO2" ],[ Tot_CO2Emis_IC;Tot_CO2Emis_C;DOM_CO2 ]];
-    CO2Emis($+1,1:2) = [ "Units",1/fact+" MtCO2" ];
-
-endfunction
-
-print(out," * Initial table - CO2 Emissions");
 CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,1);
-print(out,CO2Emis.ini);
-
-print(out," * Run table - CO2 Emissions");
 CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , 1);
-print(out,CO2Emis.run);
-
-print(out," * Evolution table - CO2 Emissions");
 CO2Emis.evo = buildEmisT( evol.CO2Emis_IC , evol.CO2Emis_C, evol.CO2Emis_X , evol.CO2Emis_Sec,evol.Tot_CO2Emis_IC,evol.Tot_CO2Emis_C,evol.DOM_CO2,100 , 1);
-print(out,CO2Emis.evo);
 
+
+if Output_files
 csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini_"+time_step+".csv", ';');
 csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run_"+time_step+".csv", ';');
 csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo_"+time_step+".csv", ';');
-
+end
 
 /////////////////////////////////////////////////
 // IOT in value
@@ -606,52 +506,16 @@ evol.Supply(isnan(evol.Supply)) = d.Supply(isnan(evol.Supply)) *%i;
 evol.Uses(isnan(evol.Uses)) = d.Uses(isnan(evol.Uses)) *%i;
 
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ IO TABLE VALUE ====================")
-print(out,"==========================================")
-
-function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, Uses, fact , decimals )
-
-    indexCommo = part(Index_Commodities,1:5);
-
-    IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
-    FC_value = round( FC_value * fact * 10^decimals ) / 10^decimals;
-    OthPart_IOT = round( OthPart_IOT * fact * 10^decimals ) / 10^decimals;
-    Carbon_Tax = round( Carbon_Tax * fact * 10^decimals ) / 10^decimals;
-    Supply = round( Supply * fact * 10^decimals ) / 10^decimals
-    Uses = round( Uses * fact * 10^decimals ) / 10^decimals;
-
-    nCommo = size(indexCommo,1);
-    iot = emptystr(nCommo+2+size(OthPart_IOT,1)+2, nCommo+2+nb_FC+1);
-    iot( 1:nCommo+1 , 1:nCommo+1) = [ ["IC_value"; indexCommo ] , [indexCommo'; IC_value ] ] ;
-    iot( 1:nCommo+1 , nCommo+2:nCommo+1+nb_FC ) =  [Index_FC';FC_value]  ;
-    iot( 1:nCommo+1 , nCommo+2+nb_FC ) =  ["Uses";Uses];
-
-    iot( nCommo+2:nCommo+1+size(OthPart_IOT,1),1:nCommo+1) = [Index_OthPart_IOT,OthPart_IOT ];
-    iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
-    iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
-
-    iot($+2,1:2) = ["Units",1/fact+"k"+money ]
-
-endfunction
-
-
-print(out," * Initial table");
 io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,1e-6 , 1);
-print(out,io.ini);
-
-print(out," * Run table");
 io.run = buildIot(   d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, 1e-6 , 1);
-print(out,io.run);
-
-print(out," * Evolution table");
 io.evo = buildIot(   evol.IC_value ,   evol.FC_value ,   evol.OthPart_IOT ,evol.Carbon_Tax,evol.Supply, evol.Uses, 100 , 1);
-print(out,io.evo);
 
+
+if Output_files
 csvWrite(io.ini,SAVEDIR+"io-ini_"+time_step+".csv", ';');
 csvWrite(io.run,SAVEDIR+"io-run_"+time_step+".csv", ';');
 csvWrite(io.evo,SAVEDIR+"io-evo_"+time_step+".csv", ';');
+end
 
 /////////////////////////////////////////////////
 // IO in quantities table
@@ -683,45 +547,16 @@ evol.FC  (isnan(evol.FC  )) = d.FC  (isnan(evol.FC  )) *%i;
 evol.Y  (isnan(evol.Y  )) = d.Y  (isnan(evol.Y  )) *%i;
 evol.OthQ(isnan(evol.OthQ)) = d.OthQ(isnan(evol.OthQ)) *%i;
 
-print(out," ");
-print(out,"==========================================")
-print(out,"============ IO TABLE QUANTITIES ====================")
-print(out,"==========================================")
 
-function iot = buildIotQ( ic , fc , oth_io, fact , decimals )
-
-    indexCommo = part(Index_Commodities,1:5);
-
-    IC = round( ic * fact * 10^decimals ) / 10^decimals;
-    FC = round( fc * fact * 10^decimals ) / 10^decimals;
-    oth_io = round( oth_io * fact * 10^decimals ) / 10^decimals;
-
-    nCommo = size(indexCommo,1);
-    iot = emptystr(nCommo+1+size(oth_io,1)+1,nCommo+1+size(FC,2));
-    iot( 1:nCommo+1 , 1:nCommo+1) = [ ["IC_Q"; indexCommo ] , [indexCommo'; IC ] ] ;
-    iot( 1:nCommo+1 , nCommo+1+1:nCommo+1+1+nb_FC  ) = [ ["FC_Q"; indexCommo ] , [Index_FC';FC] ] ;
-    iot( nCommo+2:nCommo+2+ size(oth_io,1), 1:nCommo+1 ) = [ ["OthQ";OthQ] , [indexCommo';oth_io ] ];
-
-    iot($+2,1:2) = [ "Units",1/fact+" ktoe / ktons" ];
-
-endfunction
-
-print(out," * Initial table - QUANTITIES");
 ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , 1);
-print(out,ioQ.ini);
-
-print(out," * Run table - QUANTITIES");
 ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , 1);
-print(out,ioQ.run);
-
-print(out," * Evolution table - QUANTITIES");
 ioQ.evo = buildIotQ(   evol.IC ,   evol.FC ,   evol.OthQ , 100 , 1);
-print(out,ioQ.evo);
 
+if Output_files
 csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini_"+time_step+".csv", ';');
 csvWrite(ioQ.run,SAVEDIR+"ioQ-run_"+time_step+".csv", ';');
 csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo_"+time_step+".csv", ';');
-
+end
 
 /////////////////////////////////////////////////
 // Economic account table
@@ -888,72 +723,22 @@ evol.Ecotable    = divide(d.Ecotable   , ini.Ecotable   , %nan ) -1;
 evol.Ecotable(isnan(evol.Ecotable  )) = d.Ecotable  (isnan(evol.Ecotable  )) *%i;
 
 
-
-print(out," ");
-print(out,"==========================================")
-print(out,"============ ECONOMIC ACCOUNT TABLE================")
-print(out,"==========================================")
-
-function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
-    Ecotable = round( Ecotable * fact * 10^decimals ) / 10^decimals;
-
-    EcoAccountT = emptystr(nb_DataAccount+1,nb_InstitAgents + 1);
-    EcoAccountT (1:nb_DataAccount+1,1:nb_InstitAgents + 1) = [["Economic Table";Index_DataAccount],[Index_InstitAgents';Ecotable]];
-
-    EcoAccountT($+2,1:2) = [ "Units",1/fact+" k"+money ];
-
-endfunction
-
-
-print(out," * Initial table - Economic Account table");
 ecoT.ini = buildEcoTabl(ini.Ecotable , 1e-6 , 1);
-print(out,ecoT.ini);
-
-print(out," * Run table - Economic Account table");
 ecoT.run = buildEcoTabl(d.Ecotable , 1e-6 , 1);
-print(out,ecoT.run);
-
-print(out," * Evolution table - Economic Account table");
 ecoT.evo = buildEcoTabl(evol.Ecotable ,100 , 1);
-print(out,ecoT.evo);
 
+if Output_files
 csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini_"+time_step+".csv", ';');
 csvWrite(ecoT.run,SAVEDIR+"ecoT-run_"+time_step+".csv", ';');
 csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+time_step+".csv", ';');
-
-// Revert some data format for economic account table
-
-// ini.Unemployment_transfers = abs(ini.Unemployment_transfers);
-// ini.Pensions = abs(ini.Pensions);
-// ini.Pensions = ini.Pensions(Indice_Households);
-// ini.Unemployment_transfers = ini.Unemployment_transfers(Indice_Households);
-// ini.Other_social_transfers = ini.Other_social_transfers(Indice_Households);
-// ini.Other_social_transfers = abs(ini.Other_social_transfers);
-// ini.Income_Tax = ini.Income_Tax(Indice_Households);
-// ini.Income_Tax = abs(ini.Income_Tax);
-// ini.Other_Direct_Tax = ini.Other_Direct_Tax(Indice_Households);
-// ini.Other_Direct_Tax = abs(ini.Other_Direct_Tax);
-// ini.Corporate_Tax = ini.Corporate_Tax(Indice_Corporations);
-// ini.Corporate_Tax = abs(ini.Corporate_Tax);
-// ini.GFCF_byAgent(Indice_RestOfWorld) = [];
-
-// d.Unemployment_transfers = abs(d.Unemployment_transfers);
-// d.Pensions = abs(d.Pensions);
-// d.Pensions = d.Pensions(Indice_Households);
-// d.Unemployment_transfers = d.Unemployment_transfers(Indice_Households);
-// d.Other_social_transfers = d.Other_social_transfers(Indice_Households);
-// d.Other_social_transfers = abs(d.Other_social_transfers);
-// d.Income_Tax = d.Income_Tax(Indice_Households);
-// d.Income_Tax = abs(d.Income_Tax);
-// d.Other_Direct_Tax = d.Other_Direct_Tax(Indice_Households);
-// d.Other_Direct_Tax = abs(d.Other_Direct_Tax);
-// d.Corporate_Tax = d.Corporate_Tax(Indice_Corporations);
-// d.Corporate_Tax = abs(d.Corporate_Tax);
-// d.GFCF_byAgent(Indice_RestOfWorld) = [];
+end
 
 
 // Affectation de toutes les valeurs finales aux noms de variables contenu dans la structure d. ( eviter des confusions entre une variable hors structure ; ini ou final)
 execstr(fieldnames(d)+"= d." + fieldnames(d));
+
+
+
 
 
 

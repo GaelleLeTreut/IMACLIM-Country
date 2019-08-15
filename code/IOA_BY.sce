@@ -236,7 +236,7 @@ ioa_ini.IOA_OUTPUT_APP = [AGGprofil,Index_Sectors';"Fact Emiss",ioa_ini.Emis_fac
 ioa_ini.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2","Emis_Sec","Consist check 3";AGGprofil,ioa_ini.Emiss_IOA_tot,ioa_ini.Prod_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_APROX_tot,ioa_ini.ImpNet_Emis_IOA_tot,ioa_ini.Imp_Emis_IOA_tot, ioa_ini.Imp_Emis_IOA_APROX_tot - ( ioa_ini.Emiss_IOA_tot-ioa_ini.Prod_Emis_IOA_tot),ioa_ini.Imp_Emis_IOA_APROX_tot, ioa_ini.Imp_Emis_IOA_bis_tot,ioa_ini.Imp_Emis_IOA_APROX_tot- ioa_ini.Imp_Emis_IOA_bis_tot,sum(ioa_ini.Emis_Sect), sum(ioa_ini.Emis_Sect)-ioa_ini.Prod_Emis_IOA_tot];
 
 // Print external files IOA_DECOMP
-if Output_files=='True'
+if Output_files
     csvWrite(ioa_ini.IOA_DECOMP, SAVEDIR_IOA + 'IOA_DECOMP_ini_'+"_"+AGGprofil+'.csv', ';');
 
     if	H_DISAGG <> "HH1"

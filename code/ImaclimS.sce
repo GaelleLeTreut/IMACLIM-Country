@@ -81,7 +81,7 @@ exec ("preambule.sce");
 exec("Dashboard.sce");
 
 
-if Output_files=='True'
+if Output_files
 
     simu_name = '';
     if SIMU_MODE then
@@ -126,8 +126,8 @@ print(out,"======= using various iterations:" + string(Nb_Iter));
 print(out,"======= under the scenario nammed:"+Scenario);
 print(out,"======= under the macro framework number:"+Macro_nb);
 //print(out,"======= Recycling option of carbon tax:"+Recycling_Option);
-if Output_files=='False'
-    print(out,"======= You choose not to print outputs in external files");
+if ~Output_files
+    print(out,"======= You choose not to save outputs in external files");
 end
 if CO2_footprint=='False'
     print(out,"======= You choose not to realise a Carbon footprint analysis");
@@ -200,8 +200,8 @@ for time_step=1:Nb_Iter
 
     // Creation of a new output subdirectory for each time step in case of several time steps calculation
     if Nb_Iter<>1
-        if Output_files=='True'
-            SAVEDIR = OUTPUT+Country_ISO+"_" +runName + filesep() + "Time_" + time_step + filesep();
+        if Output_files
+            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
             mkdir(SAVEDIR);
         end
     end
@@ -270,16 +270,18 @@ for time_step=1:Nb_Iter
     ////////////////////////////////////////////////////////////
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
-    if Output_files=='True'
-        printf("STEP 6: RECORDING THE OUTPUTS... \n");
+    printf("STEP 6: RECORDING THE OUTPUTS... \n");
         exec(CODE+"outputs.sce");
         if time_step == 1
             BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
         end
 
         exec(CODE+"outputs_indic.sce");
-
-    end
+		
+		if Output_prints
+			exec(CODE+"output_prints.sce");
+		end
+		
 
     ////////////////////////////////////////////////////////////
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
@@ -302,7 +304,7 @@ for time_step=1:Nb_Iter
 end // Loop ending for for various time step calculation
 
 //shut down the diary
-if Output_files=='True'
+if Output_files
     diary(0);
 end
 

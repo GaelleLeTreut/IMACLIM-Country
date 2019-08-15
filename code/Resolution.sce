@@ -328,6 +328,9 @@ if %f
     );
 end
 
+if Nb_Iter<>1
+printf("\n\n Time Step:"+time_step+"\n\n");
+end
 printf("\n\n   count      vBest   info       toc\n");
 while (count<countMax)&(vBest>sensib)
     count = count + 1;

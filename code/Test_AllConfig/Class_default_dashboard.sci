@@ -26,7 +26,9 @@ function default_dashboard = new_default_dashboard()
     'Invest_matrix', '%F', ..
     'Scenario', '', ..
     'CO2_footprint', 'False', ..
-    'Output_files', 'False', ..
+    'Output_files', '%F', ..
+	'Output_prints', '%F', ..
+	'CarbonTaxDiff','%F',..
     'Recycling_Option', '');
     
 endfunction

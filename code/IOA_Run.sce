@@ -172,14 +172,12 @@ if norm(d.ERE_M_value)>= Err_balance_tol then
     end
 end
 
-if Output_files == "True"
-    d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
-end 
-if Output_files == "False"
+
+//// TO check 
+    // d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
+	warning(" check the calculation of the output before continuing any studies on IOA")
+	pause
     d.Output = sum(d.IC_value,"r") + sum(d.Value_Added,"r") + sum(d.MarginsDOM,"r")+sum(d.SpeMarg_IC,"r")+ sum(d.SpeMarg_FC,"r")+sum(d.TaxesDOM,"r") +  sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r") - d.ClimPolCompensbySect ;
-end 
-
-
 
 // d.TEST=[AGGprofil,Index_Sectors';["Emis_Sect_"+Index_Sectors,d.CO2Emis_IC];"Emis_Fact_DOM",divide( sum(d.CO2Emis_IC,"r"), d.Output, 0);["Leon_DOM_"+Index_Sectors,inv(eye (nb_Sectors,nb_Sectors)-divide( d.IC_valueDOM, ones(nb_Sectors,1).*.d.Output, 0))];["FC_valueDOM_"+Index_Sectors,diag(sum(d.FC_valueDOM,"c"))'];["Output",d.Output]];
 
@@ -196,19 +194,20 @@ if	H_DISAGG <> "HH1"
 end
 
 // Print external files IOA_DECOMP
-if Output_files=='True'
+if Output_files
     csvWrite(ioa_run.IOA_DECOMP, SAVEDIR_IOA  + 'IOA_DECOMP_run_'+"_"+AGGprofil+'.csv', ';');
 
     if	H_DISAGG <> "HH1"
         csvWrite(ioa_run.IOA_DECOMP_HH, SAVEDIR_IOA  + 'IOA_DECOMP_HH_run'+"_"+AGGprofil+'.csv', ';');
     end
-
+end
 
     // Recap emissions 
     ioa_run.Recap_Emiss = ["Profil AGG", "Emiss_IOA","Prod_Emis_IOA","Emiss_avoided","Emiss_NetImp","Emiss_Imp","Consist check","Imp_Emis_IOA_APROX", "Emiss_Imp_Emis_IOA_bis","Consist check 2 ","Emis_Sec","Consist check 3";AGGprofil,ioa_run.Emiss_IOA_tot,ioa_run.Prod_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_APROX_tot,ioa_run.ImpNet_Emis_IOA_tot,ioa_run.Imp_Emis_IOA_tot, ioa_run.Imp_Emis_IOA_APROX_tot - ( ioa_run.Emiss_IOA_tot-ioa_run.Prod_Emis_IOA_tot),ioa_run.Imp_Emis_IOA_APROX_tot, ioa_run.Imp_Emis_IOA_bis_tot,ioa_run.Imp_Emis_IOA_APROX_tot- ioa_run.Imp_Emis_IOA_bis_tot,sum(ioa_run.Emis_Sect), sum(ioa_run.Emis_Sect)-ioa_run.Prod_Emis_IOA_tot ];
 
+if Output_files
     csvWrite(ioa_run.Recap_Emiss, SAVEDIR_IOA  + 'Recap_Emis_Run'+"_"+AGGprofil+'.csv', ';');
-
+end
 
     // csvWrite(Prices.evo,SAVEDIR_IOA+"Prices-evo.csv");
 
@@ -241,6 +240,6 @@ if Output_files=='True'
     // csvWrite(Output./sum(Output), SAVEDIR_IOA + 'Output_Ratio'+AGG_type+'.csv', ';');
     // csvWrite(tot_ress_valIMP, SAVEDIR_IOA + 'tot_ress_valIMP'+AGG_type+'.csv', ';');
     // csvWrite(tot_ress_valIMP./sum(tot_ress_valIMP), SAVEDIR_IOA + 'tot_ress_valIMP_Ratio'+AGG_type+'.csv', ';');
-end
+
 
 

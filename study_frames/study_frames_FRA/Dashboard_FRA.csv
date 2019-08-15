@@ -59,6 +59,6 @@ Recycling_Option;LabTax_LumpSumHH
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
-// TELL if you want output file;
-// Output_files;True
-Output_files;False
+// TELL if you want to create output files or prints in scilab console;
+Output_prints;%F
+Output_files;%F

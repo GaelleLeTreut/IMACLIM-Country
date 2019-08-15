@@ -111,7 +111,7 @@ test_fra_homo.System_Resol = ['Systeme_ProjHomothetic'];
 test_fra_homo.Optimization_Resol = ['%T'];
 test_fra_homo.SystemOpt_Resol = ['SystemOpt_ProjHomo'];
 test_fra_homo.study = ['Recursive_RunChoices'];
-test_fra_homo.AGG_type = ['', 'AGG_SNBC2','AGG_IndEner', ..
+test_fra_homo.AGG_type = ['AGG_SNBC2','AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_homo.H_DISAGG = ['HH1', 'H10'];
 test_fra_homo.Macro_nb = ['NDC','2deg'];
@@ -148,6 +148,6 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
 //countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
-countries = list(brasil_stat, brasil_homo, brasil_scen,france_stat, france_scen, argentina_scen);
+countries = list(brasil_stat, brasil_homo, brasil_scen,france_stat, france_homo, france_scen, argentina_homo, argentina_scen);
 // TO DO
 // countries = list(argentina_homo,france_homo,france_recalib);

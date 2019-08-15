@@ -44,8 +44,8 @@ Recycling_Option;to_fill
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want output file;
-Output_files;True
-// Output_files;False
+Output_files;%T
+// Output_files;%F
 "// TELL if you want to call ""terminate_resolution""";
 //Term_Resol;True
 Term_Resol;False

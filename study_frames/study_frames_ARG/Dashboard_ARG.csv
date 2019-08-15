@@ -39,7 +39,7 @@ Scenario;
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
-// TELL if you want output file;
-Output_files;True
-// Output_files;False
+// TELL if you want to create output files or prints in scilab console;
+Output_files;%F
+Output_prints;%F
 Recycling_Option;

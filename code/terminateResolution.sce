@@ -33,7 +33,7 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
-if Output_files=='True'
+if Output_files
     save(SAVEDIR+"result_"+time_step+".sav","result");
 end
 
@@ -45,7 +45,7 @@ end
 
 printf("Time for solving=" + string(toc()) + "seconds \n");
 
-if Output_files=='True'
+if Output_files
     driver("PDF");
     xinit(SAVEDIR+"resolution_"+time_step+".pdf");
     subplot(2,1,1);
