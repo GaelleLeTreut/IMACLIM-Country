@@ -668,6 +668,8 @@ if  Country<>"Brasil" then
     d.Other_Direct_Tax= matrix(d.Other_Direct_Tax,1,-1);
 else
 
+	d.Cons_Tax_byAgent = (sum(d.Cons_Tax))*(Index_InstitAgents' == "Government");
+		
     d.InsuranceContrib_byAgent = zeros(1,nb_InstitAgents);
     d.InsuranceContrib_byAgent(Indice_Government) = sum(d.Labour_Tax) ;
     d.InsuranceContrib_byAgent(Indice_Corporations) = sum(d.Labour_Corp_Tax);
