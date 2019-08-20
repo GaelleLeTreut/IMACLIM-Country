@@ -29,6 +29,7 @@ function default_dashboard = new_default_dashboard()
     'Output_files', '%F', ..
 	'Output_prints', '%F', ..
 	'CarbonTaxDiff','%F',..
+	'Carbon_BTA','%F',..
     'Recycling_Option', '');
     
 endfunction

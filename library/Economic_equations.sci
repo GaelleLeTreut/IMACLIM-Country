@@ -342,10 +342,7 @@ endfunction
 function [y] = BudgetShares_Const_1(Budget_Shares, Consumption_budget, C_value) ;
 
     /// Consumption budget by consumption item by household class: Household_Budget (nb_Commodities, nb_Households)
-    // y1 = C_value - ( Budget_Shares .* repmat(Consumption_budget, nb_Commodities, 1) ) ;
-
     y1 = C_value - ( Budget_Shares .* (ones(nb_Commodities, 1).*.Consumption_budget) ) ;
-
     y  = matrix(y1, -1 , 1) ;
 
 endfunction
@@ -355,7 +352,6 @@ function [y] = ConsumExpend_Const_1(C_value, C, pC) ;
 
     /// Consumption expenditures (in monetary unit)
     y1 = C_value - ( C .* pC ) ;
-
     y  = matrix(y1, -1 , 1) ;
 
 endfunction
@@ -618,17 +614,19 @@ endfunction
 
 /// Government_income_1 :
 
-function y = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect) ;
+function y = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M) ;
 
     // For one government. Distribution among different government must otherwise be specified.
 
     // Income by sources, redistribution and tax revenue
-    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) ;
+    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)+sum(Carbon_Tax_M);
+
     G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
     G_Other_Income      =  Other_Transfers (Indice_Government) ;
     G_Property_income   =  Property_income(Indice_Government) ;
     G_Social_Transfers  =  sum(Pensions + Unemployment_transfers + Other_social_transfers) ;
-    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations));
+	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect);
 
     // After tax disposable income constraint (H_disposable_income)
     y1 = G_disposable_income - (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
@@ -636,17 +634,19 @@ function y = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax,
 	y=y1';
 endfunction
 
-function G_disposable_income = G_income_Val_1(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
+function G_disposable_income = G_income_Val_1(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
 
     // For one government. Distribution among different government must otherwise be specified.
 
     // Income by sources, redistribution and tax revenue
-    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) ;
+    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
+
     G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
     G_Other_Income      =  Other_Transfers (Indice_Government) ;
     G_Property_income   =  Property_income(Indice_Government) ;
     G_Social_Transfers  =  sum(Pensions + Unemployment_transfers + Other_social_transfers) ;
-    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
+	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
 
     // After tax disposable income constraint (H_disposable_income)
     G_disposable_income = (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
@@ -655,17 +655,18 @@ endfunction
 
 /// Government_income_2 :
 
-function y = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect) ;
+function y = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect,Carbon_Tax_M) ;
 
     // For one government. Distribution among different government must otherwise be specified.
 
     // Income by sources, redistribution and tax revenue
-    G_Tax_revenue   = sum(Income_Tax + Gov_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) ;
+    G_Tax_revenue   = sum(Income_Tax + Gov_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
     G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
     G_Other_Income      =  Other_Transfers (Indice_Government) ;
     G_Property_income   =  Property_income(Indice_Government) ;
     G_Social_Transfers  =  sum(Gov_social_transfers) ;
-    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
+	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
 
     // After tax disposable income constraint (H_disposable_income)
     y1 = G_disposable_income - (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
@@ -673,17 +674,19 @@ function y = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, C
 	y=y1';
 endfunction
 
-function G_disposable_income = G_income_Val_2(Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect)
+function G_disposable_income = G_income_Val_2(Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
 
     // For one government. Distribution among different government must otherwise be specified.
 
     // Income by sources, redistribution and tax revenue
-    G_Tax_revenue   = sum(Income_Tax + Gov_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) ;
+    G_Tax_revenue   = sum(Income_Tax + Gov_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M);
+	
     G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
     G_Other_Income      =  Other_Transfers (Indice_Government) ;
     G_Property_income   =  Property_income(Indice_Government) ;
     G_Social_Transfers  =  sum(Gov_social_transfers) ;
-    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
+	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect);
 
     // After tax disposable income constraint (H_disposable_income)
     G_disposable_income = (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
@@ -808,28 +811,18 @@ function Corporate_Tax = Corporate_Tax_Val_1(Corporate_Tax_rate, GOS_byAgent)
 endfunction
 
 /// Production Tax (by productive sector)
-
 function y = Production_Tax_Const_1(Production_Tax, Production_Tax_rate, pY, Y);
+	
 	pY= abs(pY);
-    // Production Tax ( Production_Tax(1:nb_Commodities) )
     y = Production_Tax - Production_Tax_rate .* (pY .* Y)' ;
     y=y';
 
-    //if Y=0 Production_tax_rate =0
-    // y1_1 = (Y'==0).*(Production_Tax_rate);
-    // y1_2 = (Y'<>0).*(Production_Tax - (Production_Tax_rate .* pY' .* Y'));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
 endfunction
 
 function Production_Tax = Production_Tax_Val_1(Production_Tax_rate, pY, Y)
 	pY= abs(pY);
-    // Production Tax ( Production_Tax(1:nb_Commodities) )
     Production_Tax = Production_Tax_rate .* (pY .* Y)';
 
-    //if Y=0 Production_tax_rate =0
-    // y1_1 = (Y'==0).*(Production_Tax_rate);
-    // y1_2 = (Y'<>0).*(Production_Tax - (Production_Tax_rate .* pY' .* Y'));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
 endfunction
 
 /// Labour Tax (by productive sector)
@@ -838,22 +831,14 @@ function y = Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y);
 
     // Labour Tax ( Labour_Tax(nb_Sectors) )
     y1 = Labour_Tax - (Labour_Tax_rate .* w .* lambda .* Y') ;
-
-    // y1_1 = (Y'==0).*(Labour_Tax_rate);
-    // y1_2 = (Y'<>0).*(Labour_Tax - (Labour_Tax_rate .* w .* lambda .* Y'));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
-
     y=y1';
+
 endfunction
 
 function Labour_Tax = Labour_Tax_Val_1(Labour_Tax_rate, w, lambda, Y)
 
     // Labour Tax ( Labour_Tax(nb_Sectors) )
     Labour_Tax = (Labour_Tax_rate .* w .* lambda .* Y');
-
-    // y1_1 = (Y'==0).*(Labour_Tax_rate);
-    // y1_2 = (Y'<>0).*(Labour_Tax - (Labour_Tax_rate .* w .* lambda .* Y'));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
 
 endfunction
 
@@ -863,7 +848,6 @@ endfunction
 function y = Energy_Tax_IC_Const_1(Energy_Tax_IC, Energy_Tax_rate_IC, alpha, Y);
 
     // Same rate for all sectors
-    // y = Energy_Tax_IC' - Energy_Tax_rate_IC' .* sum( alpha .* repmat(Y', nb_Commodities, 1), "c") ;
     y = Energy_Tax_IC' - Energy_Tax_rate_IC' .* sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") ;
 
 endfunction
@@ -871,7 +855,6 @@ endfunction
 function Energy_Tax_IC = Energy_Tax_IC_Val_1(Energy_Tax_rate_IC, alpha, Y)
 
     // Same rate for all sectors
-    // y = Energy_Tax_IC' - Energy_Tax_rate_IC' .* sum( alpha .* repmat(Y', nb_Commodities, 1), "c") ;
     Energy_Tax_IC = ( Energy_Tax_rate_IC' .* sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") )';
 
 endfunction
@@ -882,10 +865,6 @@ endfunction
 function y = Energy_Tax_FC_Const_1(Energy_Tax_FC, Energy_Tax_rate_FC, C);
 
     // Same rates for all household classes
-    // Energy_Tax_rate = repmat(Energy_Tax_rate_FC',1, nb_Households);
-    // Energy_Tax_rate = ones(1, nb_Households).*.Energy_Tax_rate_FC';
-
-    // Energy Tax paid by final energy consumers: Energy_Tax_FC (nb_Sectors, nb_Households)
     y = Energy_Tax_FC' - Energy_Tax_rate_FC'.* sum( C , "c" ) ;
 
 endfunction
@@ -893,10 +872,6 @@ endfunction
 function Energy_Tax_FC = Energy_Tax_FC_Val_1(Energy_Tax_rate_FC, C)
 
     // Same rates for all household classes
-    // Energy_Tax_rate = repmat(Energy_Tax_rate_FC',1, nb_Households);
-    // Energy_Tax_rate = ones(1, nb_Households).*.Energy_Tax_rate_FC';
-
-    // Energy Tax paid by final energy consumers: Energy_Tax_FC (nb_Sectors, nb_Households)
     Energy_Tax_FC = ( Energy_Tax_rate_FC'.* sum( C , "c" ) )';
 
 endfunction
@@ -906,8 +881,6 @@ endfunction
 function y = OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I);
 
     // Same rates for all sectors
-
-    // y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha.*repmat(Y', nb_Commodities, 1),"c")+sum( C,"c")+sum(G,"c")+I) ;
     y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha .*(ones(nb_Commodities, 1).*.Y'),"c")+sum( C,"c")+sum(G,"c")+sum(I, "c")) ;
 
 endfunction
@@ -915,8 +888,6 @@ endfunction
 function OtherIndirTax = OtherIndirTax_Val_1(OtherIndirTax_rate, alpha, Y, C, G, I)
 
     // Same rates for all sectors
-
-    // y = OtherIndirTax' - OtherIndirTax_rate' .* (sum(alpha.*repmat(Y', nb_Commodities, 1),"c")+sum( C,"c")+sum(G,"c")+I) ;
     OtherIndirTax = ( OtherIndirTax_rate' .* (sum(alpha .*(ones(nb_Commodities, 1).*.Y'),"c")+sum( C,"c")+sum(G,"c")+sum(I, "c")) )';
 
 endfunction
@@ -928,22 +899,12 @@ function y = VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I);
     // Same rate for all items of domestic final demand
     y = VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) ) ;
 
-    //if VA_Tax =0 => VA_Tax_rate=0
-    // y_1 = (VA_Tax' ==0).*VA_Tax_rate';
-    // y_2 = (VA_Tax' <>0).*( VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* I)));
-    // y =(VA_Tax' ==0).*y_1 +  (VA_Tax' <>0).*y_2;
-
 endfunction
 
 function VA_Tax = VA_Tax_Val_1(VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Same rate for all items of domestic final demand
     VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
-
-    //if VA_Tax =0 => VA_Tax_rate=0
-    // y_1 = (VA_Tax' ==0).*VA_Tax_rate';
-    // y_2 = (VA_Tax' <>0).*( VA_Tax' - ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* I)));
-    // y =(VA_Tax' ==0).*y_1 +  (VA_Tax' <>0).*y_2;
 
 endfunction
 
@@ -969,31 +930,13 @@ endfunction
 function y = Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC) ;
 
     // Tax rates potentially differs across sectors
-    // y1 = Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ) ;
-
     y1 = Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .*(ones(nb_Commodities, 1).*.Y') ) ;
-
-    //if  Emission_Coef_IC = 0 => Carbon_Tax_rate_IC = 0
-    // y1_1 = (Emission_Coef_IC==0).*(Carbon_Tax_rate_IC);
-    // y1_2 =(Emission_Coef_IC<>0).*(Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ));
-
-    // y1 = (Emission_Coef_IC==0).*y1_1 + (Emission_Coef_IC<>0).*y1_2 ;
-
     y = matrix(y1, -1 , 1) ;
 endfunction
 
 function Carbon_Tax_IC = Carbon_Tax_IC_Val_1(Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
 
-    // Tax rates potentially differs across sectors
-    // y1 = Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ) ;
-
     Carbon_Tax_IC = ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .*(ones(nb_Commodities, 1).*.Y') );
-
-    //if  Emission_Coef_IC = 0 => Carbon_Tax_rate_IC = 0
-    // y1_1 = (Emission_Coef_IC==0).*(Carbon_Tax_rate_IC);
-    // y1_2 =(Emission_Coef_IC<>0).*(Carbon_Tax_IC - ( Carbon_Tax_rate_IC .* Emission_Coef_IC .* alpha .* repmat(Y', nb_Commodities, 1) ));
-
-    // y1 = (Emission_Coef_IC==0).*y1_1 + (Emission_Coef_IC<>0).*y1_2 ;
 
 endfunction
 
@@ -1006,12 +949,6 @@ function [y] = Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission
     // Tax rates potentially differs across household classes
     y1 = Carbon_Tax_C - ( Carbon_Tax_rate_C .* Emission_Coef_C .* C ) ;
 
-    //if  Emission_Coef_C = 0 => Carbon_Tax_rate_C = 0
-    // y1_1 = (Emission_Coef_C==0).*(Carbon_Tax_rate_C);
-    // y1_2 =(Emission_Coef_C<>0).*(Carbon_Tax_C - ( Carbon_Tax_rate_C .* Emission_Coef_C .* C ));
-
-    // y1 = (Emission_Coef_C==0).*y1_1 + (Emission_Coef_C<>0).*y1_2 ;
-
     y = matrix(y1, -1 , 1) ;
 endfunction
 
@@ -1020,11 +957,23 @@ function Carbon_Tax_C = Carbon_Tax_C_Val_1(Carbon_Tax_rate_C, C, Emission_Coef_C
     // Tax rates potentially differs across household classes
     Carbon_Tax_C = ( Carbon_Tax_rate_C .* Emission_Coef_C .* C );
 
-    //if  Emission_Coef_C = 0 => Carbon_Tax_rate_C = 0
-    // y1_1 = (Emission_Coef_C==0).*(Carbon_Tax_rate_C);
-    // y1_2 =(Emission_Coef_C<>0).*(Carbon_Tax_C - ( Carbon_Tax_rate_C .* Emission_Coef_C .* C ));
+endfunction
 
-    // y1 = (Emission_Coef_C==0).*y1_1 + (Emission_Coef_C<>0).*y1_2 ;
+/// Border Carbon Tax
+/// Identical or differentiated rates by sectors
+
+function [y] = Carbon_Tax_M_Const_1(Carbon_Tax_M, Carbon_Tax_rate_M, M, Emission_Coef_M) ;
+
+    // Tax rates potentially differs across sectors
+    y1 = Carbon_Tax_M - ( Carbon_Tax_rate_M .* Emission_Coef_M .* M' ) ;
+    y = matrix(y1, -1 , 1) ;
+	
+endfunction
+
+function Carbon_Tax_M = Carbon_Tax_M_Val_1(Carbon_Tax_rate_M, M, Emission_Coef_M)
+
+    // Tax rates potentially differs across sectors
+    Carbon_Tax_M = ( Carbon_Tax_rate_M .* Emission_Coef_M .* M' );
 
 endfunction
 
@@ -1168,13 +1117,8 @@ endfunction
 // Carbon cap
 function y = CTax_rate_IC_Const_2(Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC)
 	
-	// CarbonTax_Diff_IC = abs(CarbonTax_Diff_IC);
-	// CarbonTax_Diff_IC = (CO2Emis_IC==0).*0;
-	// CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate;
-	
 	y1 = CarbonTax_Diff_IC - (( CO2Emis_IC==0).*0 + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate )   ;
-	
-	  y = matrix(y1, -1 , 1) ;
+    y = matrix(y1, -1 , 1) ;
 
 endfunction
 
@@ -1187,19 +1131,6 @@ function CarbonTax_Diff_IC = CTax_rate_IC_Val_2(Carbon_Tax_rate, Carbon_Tax_rate
 
 endfunction
 
-/// for [1,sectors] dimensions used for Carbon Cap by sectors - CarbonTax_Diff_IC[1
-
-// function y = CTax_rate_IC_Const_2(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC, Adj_Tax_IC) ;
-
-    // Matrix of carbon tax rates (intermediates consumption of energy, sectors)
-	// CarbonTax_Diff_IC= repmat(Adj_Tax_IC,nb_Commodities, 1);	
-	
-    // y1 = Carbon_Tax_rate_IC - Carbon_Tax_rate * CarbonTax_Diff_IC ;
-
-    // y = matrix(y1, -1 , 1) ;
-// endfunction
-
-
 /// Carbon tax on households (final energy consumptions)
 
 function [y] = CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C) ;
@@ -1207,8 +1138,8 @@ function [y] = CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax
     // Matrix of carbon tax rates (final consumption of energy, household classes)
     // Unique carbon tax
     y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
-
     y = matrix(y1, -1 , 1) ;
+	
 endfunction
 
 function Carbon_Tax_rate_C = CTax_rate_C_Val_1(Carbon_Tax_rate, CarbonTax_Diff_C)
@@ -1222,16 +1153,108 @@ endfunction
 function [y] =  CTax_rate_C_Const_2(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C, Adj_Tax_C) ;
 
     // Matrix of carbon tax rates (final consumption of energy, household classes)
-
 	CarbonTax_Diff_C= repmat(Adj_Tax_C,nb_Sectors,1);	
     y1 = Carbon_Tax_rate_C - Carbon_Tax_rate * CarbonTax_Diff_C ;
-
     y = matrix(y1, -1 , 1) ;
+	
 endfunction
+
+/// Border tax adjustment for imports
+function y = CTax_rate_M_Const_1(Carbon_Tax_rate_M, Carbon_Tax_rate, CarbonTax_Diff_M)
+
+    // Matrix of carbon tax rates (final consumption of energy, household classes)
+    // Unique carbon tax
+    y1 = Carbon_Tax_rate_M - Carbon_Tax_rate * CarbonTax_Diff_M;
+	
+	if ~Carbon_BTA
+		y1 = Carbon_Tax_rate_M  - zeros (1 , nb_Sectors);
+	end
+	
+	y = y1';
+	
+
+endfunction
+
+function Carbon_Tax_rate_M = CTax_rate_M_Val_1(Carbon_Tax_rate, CarbonTax_Diff_M)
+
+    // Matrix of carbon tax rates (final consumption of energy, household classes)
+    // Unique carbon tax
+    Carbon_Tax_rate_M = Carbon_Tax_rate * CarbonTax_Diff_M;
+	
+	if ~Carbon_BTA
+	Carbon_Tax_rate_M = zeros ( 1 , nb_Sectors);
+	end
+
+endfunction
+
+
 
 /////////////////////
 /// CLIMATE POLICIES COMPENSATION
 /////////////////////
+
+
+/// Transfers and compensation according to Dashboard selection
+function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Val_1(Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M); 
+
+Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
+	
+	if Recycling_Option=="PublicDeficit"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 0;
+	
+	elseif Recycling_Option=="GreenInvest"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 1;
+		delta_LS_LT = 0;
+	
+	elseif Recycling_Option=="LumpSumHH"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = divide(Consumption_Units.*Nb_Households,sum(Consumption_Units.*Nb_Households),1);
+		delta_LS_I = 0;
+		delta_LS_LT = 0;
+	
+	elseif Recycling_Option=="LabTax"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 1;
+			
+	elseif Recycling_Option=="ExactRestitution"
+		delta_LS_S = ones(1,nb_Sectors);
+		delta_LS_H = ones(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 0;
+		
+	elseif Recycling_Option=="LabTax_PublicDeficit"
+		delta_LS_S = zeros(1, nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 1;
+		
+	elseif Recycling_Option=="LabTax_GreenInvest"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = divide(sum(Carbon_Tax_C),Tax_Base_Carbon,0);
+		delta_LS_LT = 1 - delta_LS_I ;
+			
+	elseif Recycling_Option=="LabTax_LumpSumHH"
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = divide(sum(Carbon_Tax_C,"r"),Tax_Base_Carbon,0)
+		delta_LS_I = 0;
+		delta_LS_LT = 1 ; 
+		
+	elseif Recycling_Option==""
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 0;
+	end 
+endfunction
+
 
 ///////////////
 ////// LUMP SUM TRANSFERT -Compensation to institutional agents
@@ -1240,7 +1263,7 @@ endfunction
 
 /// Transfert to institutional agents // A REVOIR : Un transfert sur les agents HH devrait être suffisant! Le transfert sur les sociétés se fait dans une autre fonction
 
-function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C);
+function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect);
     // /// No new direct compensations to institutional agents
 	
    y1 = zeros(1,nb_InstitAgents); 
@@ -1260,7 +1283,7 @@ function ClimPolicyCompens = ClimCompensat_Val_1()
 endfunction
 
 /// proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
     // y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
@@ -1276,7 +1299,7 @@ function [y] = ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, delta_L
     y=y1';
 endfunction
 
-function [ClimPolicyCompens] = ClimCompensat_Val_2(GDP, delta_LS_H, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [ClimPolicyCompens] = ClimCompensat_Val_2(GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect) ;
 
     // No compensations ( H_ClimatePolicy_Compens(nb_Households)=0 )
     // y1 = ClimPolicyCompens - (GDP/BY.GDP) * BY.ClimPolicyCompens ;
@@ -1292,37 +1315,40 @@ function [ClimPolicyCompens] = ClimCompensat_Val_2(GDP, delta_LS_H, delta_LS_S, 
 endfunction
 
 
-function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C);
+function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect);
 // /// Compensations to institutional agents consistent with the LUMP SUM options selected in dashboard
-    delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
-    Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
 
+	Tax_Base_LS_HH = Carbon_Tax_C;
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
+	// Carbon_Tax_C_withTVA = Carbon_Tax_C.*(1+ones(1,nb_Households).*.VA_Tax_rate') / /put VA_Tax_rate everywhere + add it in Ctot (also in recycling rvenus equations)
+	// Tax_Base_LS_HH = Carbon_Tax_C_withTVA;
+	
     y1 = zeros(1,nb_InstitAgents);
     y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
-    y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   + delta_LS * Ctot * ones(Indice_Government);
     y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
 	// y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - sum(ClimPolCompensbySect); 
+    y1(Indice_Households)   = ClimPolicyCompens(Indice_Households) - ((delta_LS_H==1).*sum(Tax_Base_LS_HH,"r") + (delta_LS_H<>1).*delta_LS_H.* sum(Tax_Base_Carbon));
 	
-	/// Probablement un probleme sur plusieurs classes de ménages
-    y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - delta_LS_H * Ctot;
+	y1(Indice_Government) = ClimPolicyCompens(Indice_Government) + (sum(y1(Indice_Households))+y1(Indice_Corporations));
 
     y=y1';
 
 endfunction
 
-function ClimPolicyCompens = ClimCompensat_Val_3(GDP, delta_LS_H, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)
+function ClimPolicyCompens = ClimCompensat_Val_3(GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect)
 // /// Compensations to institutional agents consistent with the LUMP SUM options selected in dashboard
-    delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
-    Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
+	
+	Tax_Base_LS_HH = Carbon_Tax_C;
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
+	// Carbon_Tax_C_withTVA = Carbon_Tax_C.*(1+ones(1,nb_Households).*.VA_Tax_rate') / /put VA_Tax_rate everywhere + add it in Ctot (also in recycling rvenus equations)
+	// Tax_Base_LS_HH = Carbon_Tax_C_withTVA;
     
     ClimPolicyCompens = zeros(1,nb_InstitAgents);
-    
     ClimPolicyCompens(Indice_RestOfWorld) = BY.ClimPolicyCompens(Indice_RestOfWorld);
-    ClimPolicyCompens(Indice_Government) = - delta_LS * Ctot * ones(Indice_Government);
-    ClimPolicyCompens(Indice_Corporations) = BY.ClimPolicyCompens(Indice_Corporations);
-
-	/// Probablement un probleme sur plusieurs classes de ménages
-    ClimPolicyCompens(Indice_Households) = delta_LS_H * Ctot;
+    // ClimPolicyCompens(Indice_Corporations) = BY.ClimPolicyCompens(Indice_Corporations);
+	ClimPolicyCompens(Indice_Corporations) = sum(ClimPolCompensbySect);
+    ClimPolicyCompens(Indice_Households) = ((delta_LS_H==1).*sum(Tax_Base_LS_HH,"r") + (delta_LS_H<>1).*delta_LS_H.* sum(Tax_Base_Carbon));
+	ClimPolicyCompens(Indice_Government) = - (sum(ClimPolicyCompens(Indice_Households))+ClimPolicyCompens(Indice_Corporations));
 
     ClimPolicyCompens = matrix(ClimPolicyCompens,1,-1);
 
@@ -1331,19 +1357,13 @@ endfunction
 
 /// Transfert to productive sectors : A VERIFIER:  Doublon avec les équations du dessus pour Corporations
 
-function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
+function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C,Carbon_Tax_M)  ;
     /// No new direct compensations to sectors
     y1 = ClimPolCompensbySect - BY.ClimPolCompensbySect ;
-
     y=y1';
+	
 endfunction
 
-function ClimPolCompensbySect = S_ClimCompensat_Val_3(GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)
-
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    ClimPolCompensbySect = delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C));
-
-endfunction
 
 function ClimPolCompensbySect = S_ClimCompensat_Val_1()
     
@@ -1353,27 +1373,36 @@ function ClimPolCompensbySect = S_ClimCompensat_Val_1()
 endfunction
 
 /// proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
+function [y] = S_ClimCompensat_Const_2(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M)  ;
 
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
     y1 = ClimPolCompensbySect - (GDP/BY.GDP) * BY.ClimPolCompensbySect ;
-
     y=y1';
+	
 endfunction
 
 
-function [ClimPolCompensbySect] = S_ClimCompensat_Val_2(GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
+function [ClimPolCompensbySect] = S_ClimCompensat_Val_2(GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C,Carbon_Tax_M)  ;
+
     ClimPolCompensbySect = (GDP/BY.GDP) * BY.ClimPolCompensbySect ;
 
 endfunction
 
-function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M) ;
 
-    // No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    y1 = ClimPolCompensbySect - delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)) ;
-
+	Tax_Base_LS_S = Carbon_Tax_IC;
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
+    y1 = ClimPolCompensbySect - ((delta_LS_S==1).*sum(Tax_Base_LS_S,"r") + (delta_LS_S<>1).*delta_LS_S.*sum(Tax_Base_Carbon)) ;
     y=y1';
+	
+endfunction
+
+
+function ClimPolCompensbySect = S_ClimCompensat_Val_3(GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M)
+
+    Tax_Base_LS_S = Carbon_Tax_IC;
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
+    ClimPolCompensbySect = (delta_LS_S==1).*sum(Tax_Base_LS_S,"r") + (delta_LS_S<>1).*delta_LS_S.*sum(Tax_Base_Carbon);
+
 endfunction
 
 
@@ -1381,7 +1410,7 @@ endfunction
 /// CARBON REVENUE RECYCLING OPTIONS (use of the carbon tax revenue after direct compensations)
 
 // No recycling revenues in labour tax
-function [y] = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP)  ;
+function [y] = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M)  ;
 
     // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
     // Same rebate for all sectors.
@@ -1399,31 +1428,30 @@ function Labour_Tax_Cut = RevenueRecycling_Val_1()
 endfunction
 
 // Reduction in social security contributions (Labour_Tax_Cut)
-function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
+function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
 
     // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
     // Same rebate for all sectors.
-    y1 = sum(Labour_Tax) - ( sum( (Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y' ) - ( sum(Carbon_Tax_IC) + sum(Carbon_Tax_C) - sum(ClimPolCompensbySect) - sum(ClimPolicyCompens) ) ) ;
-
+	y1 = sum(Labour_Tax) - ( sum( (Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y' ) - ( sum(Carbon_Tax_IC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) ) ) ;
+ 
     y=y1';
 endfunction
 
 // Public deficit constant
-function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
-
-
+function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
 
      y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
     
 	y  = y1' ;
 endfunction
 
-function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
-
+function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
+	
+	//Remaining tax base after climate compensation ( for HH or sectors)
     y1 = sum(Labour_Tax) - (..
          sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
-         delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C))..
-         ) ;
+         delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government))..
+         ) ;	
 
     y=y1';
 endfunction
@@ -1432,16 +1460,12 @@ endfunction
 
 // Ex-post labour tax rate
 function [y] = Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut) ;
-
     y1 = LabTaxRate_BeforeCut - ( Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors) ) ;
-
     y=y1';
 endfunction
 
 function Labour_Tax_rate = Labour_Taxe_rate_Val_1(LabTaxRate_BeforeCut, Labour_Tax_Cut)
-
     Labour_Tax_rate = LabTaxRate_BeforeCut - Labour_Tax_Cut * ones(1, nb_Sectors);
-    
 endfunction
 
 // Government savings and consumption budgets
@@ -1770,8 +1794,8 @@ endfunction
 
 function y =  TechnicProgress_Const_1(Phi, Capital_consumption, sigma_Phi)
     y1 = Phi - ones(1, nb_Sectors);
-
     y=y1';
+	
 endfunction
 
 function Phi =  TechnicProgress_Val_1()
@@ -1783,15 +1807,15 @@ endfunction
 function y =  TechnicProgress_Const_2(Phi, Capital_consumption, sigma_Phi)
 
     y1 = (Phi.^(1 ./sigma_Phi)).*BY.Capital_consumption - Capital_consumption;
-
     y=y1';
+	
 endfunction
 
 function y =  TechnicProgress_Const_3(Phi, Capital_consumption, sigma_Phi)
 	
     y1 = Phi - Coef_Phi_Sec*ones(1, nb_Sectors);
-
     y=y1';
+	
 endfunction
 
 
@@ -1800,16 +1824,16 @@ endfunction
 function [y] =  DecreasingReturn_Const_2(Theta, Y, sigma_Theta) ;
 
     y1 =(Theta.^ (1 ./sigma_Theta)).*BY.Y' - Y' ;
-
     y=y1';
+	
 endfunction
 
 /// General decreasing return
 function [y] =  DecreasingReturn_Const_1(Theta, Y, sigma_Theta) ;
 
     y1 = Theta -  ones(1, nb_Sectors);
-
     y=y1';
+	
 endfunction
 
 function Theta =  DecreasingReturn_Val_1()
@@ -2001,16 +2025,12 @@ endfunction
 // Transport margins
 function [y] =  Transp_margins_Const_1(Transp_margins, Transp_margins_rates, p, alpha, Y, C, G, I, X) ;
 
-    // y1 = Transp_margins - Transp_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
-
     y1 = Transp_margins - Transp_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )' ;
-
     y=y1';
+	
 endfunction
 
 function Transp_margins =  Transp_margins_Val_1(Transp_margins_rates, p, alpha, Y, C, G, I, X)
-
-    // y1 = Transp_margins - Transp_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
 
     Transp_margins = Transp_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )';
 
@@ -2022,8 +2042,8 @@ endfunction
 function [y] =  Trade_MargRates_Const_1(Trade_margins, Trade_margins_rates)
 
     y1 = (BY.Trade_margins_rates >= 0) .* (Trade_margins_rates - BY.Trade_margins_rates) + (BY.Trade_margins_rates < 0) .* sum(Trade_margins) ;
-
     y=y1';
+	
 endfunction
 
 function [y] =  Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delta_TradeMargins_rate)
@@ -2054,16 +2074,12 @@ endfunction
 // Trade margins
 function [y] =  Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X);
 
-    // y1 = Trade_margins - Trade_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
-
     y1 = Trade_margins - Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )' ;
-
     y=y1';
+
 endfunction
 
 function Trade_margins =  Trade_margins_Val_1(Trade_margins_rates, p, alpha, Y, C, G, I, X)
-
-    // y1 = Trade_margins - Trade_margins_rates .* p.* ( sum(alpha .* repmat(Y', nb_Commodities, 1),"c") + sum(C, "c") + sum(G, "c") + I + X )' ;
 
     Trade_margins = Trade_margins_rates .* p.* ( sum( alpha .*(ones(nb_Commodities, 1).*.Y'), "c") + sum(C, "c") + sum(G, "c") + sum(I, "c") + X )';
 
@@ -2086,12 +2102,6 @@ function [y] = SpeMarg_rates_Const_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_
     y4 = matrix(y4, -1 , 1);
 
     y = [y1;y2;y3;y3];
-
-    // y =  zeros(length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X)+ length(SpeMarg_rates_I), 1) ;
-    // y (1: length(SpeMarg_rates_IC), 1) =  matrix(y1, length(SpeMarg_rates_IC), 1) ;
-    // y (length(SpeMarg_rates_IC)+1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C), 1) =  matrix(y2, length(SpeMarg_rates_C), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X), 1) =  matrix(y3, length(SpeMarg_rates_X), 1) ;
-    // y (length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + 1 : length(SpeMarg_rates_IC) + length(SpeMarg_rates_C) + length(SpeMarg_rates_X) + length(SpeMarg_rates_I), 1) =  matrix(y4, length(SpeMarg_rates_I), 1) ;
 
 endfunction
 
@@ -2325,21 +2335,18 @@ endfunction
 
 
 // Imports function
-function [y] = Imports_Const_1(M, pM, pY, Y, sigma_M, delta_M_parameter);
-	pY=abs(pY);
-    // y1 = M' - ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M ) ;
-    y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y' ) ).^(1 ./sigma_M)  .*  (BY.pM' ./ BY.pY') .* (pY' ./ pM') );
+function [y] = Imports_Const_1(M, pM, pY, Y, sigma_M, delta_M_parameter)
 
+	pY=abs(pY);
+    y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y' ) ).^(1 ./sigma_M)  .*  (BY.pM' ./ BY.pY') .* (pY' ./ pM') );
     y=y1';
 
 endfunction
 
 // Imports function
 function M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter);
-	pY=abs(pY);
-    // y1 = M' - ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M ) ;
-    // y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y' ) ).^(1 ./sigma_M)  .*  (BY.pM' ./ BY.pY') .* (pY' ./ pM') );
 
+	pY=abs(pY);
 	M = ( (1 + delta_M_parameter).^(time_since_BY) .* Y' .* (BY.M' ./ BY.Y') .* ( (BY.pM' ./ BY.pY') .* (pY' ./ pM') ) .^ sigma_M )';
 
     if is_projected('M') then
@@ -2371,7 +2378,6 @@ function X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter);
 
     pX = abs(pX);
     pM = abs(pM);
-
     X = ( (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X' )
     
     if is_projected('X') then
@@ -2387,7 +2393,6 @@ function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP);
     delta_X_parameter = abs(delta_X_parameter);
     pX = abs(pX);
     pM = abs(pM);
-
     X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
 
 endfunction
@@ -2496,9 +2501,14 @@ function [pM] = pM_price_Val_1(pY);
 endfunction 
 
 // Import price : forcing from macro context
-function [pM] = pM_price_Val_2();
+function [pM] = pM_price_Val_2(Carbon_Tax_rate_M, Emission_Coef_M);
     
     pM = ini.pM .* (1+delta_pM_parameter').^time_since_ini
+	
+	if Carbon_BTA
+	pM = ini.pM .* (1+delta_pM_parameter').^time_since_ini + (Carbon_Tax_rate_M .* Emission_Coef_M)'
+	end 
+	
 
 endfunction 
 
@@ -2507,11 +2517,9 @@ endfunction
 // NOT A VARIABLE FOR THE SOLVER
 function [p] = Mean_price_Val_1(pY, pM, Y, M ,p) ;
 	pY=abs(pY);
-    // Mean resource price ( p (Sm_index) )
-    // y1 = p - ( pY' .* Y' + pM' .* M') ./ (Y' + M') ;
+    // Mean resource price 
     p = ( pY' .* Y' + pM' .* M') ./ (Y' + M') ;
 
-    // y=y1';
 endfunction
 
 
@@ -2753,19 +2761,25 @@ endfunction
 
 // Consumer price index (CPI) - Fisher Index
 function y = CPI_Const_1(CPI, pC, C)
+
     y = CPI^2 -  sum(pC .* C) ./ sum(BY.pC .* C) .* sum(pC .* BY.C) ./ sum(BY.pC .* BY.C)
+	
 endfunction
 
 
 // Consumer price index (CPI) - Fisher Index - Uniquement pour calibration
 function y = CPI_Const_2(CPI, pC, C)
+
     y = CPI^2 -  1
+	
 endfunction
 
 // Consumer price index (CPI) - Fisher Index
 function CPI = CPI_Val_1( pC, C)
+
 	C=abs(C);
 	CPI = sqrt( sum(pC .* C) ./ sum(BY.pC .* C) .* sum(pC .* BY.C) ./ sum(BY.pC .* BY.C) );
+	
 endfunction
 
 
@@ -2813,6 +2827,7 @@ endfunction
 function [y] = MarketBalValue_Const_1(Y_value, Trade_margins, Transp_margins, SpeMarg_IC, SpeMarg_C, SpeMarg_G, SpeMarg_I, SpeMarg_X, VA_Tax, Energy_Tax_IC, Energy_Tax_FC, ClimPolCompensbySect, OtherIndirTax, Carbon_Tax_IC, Carbon_Tax_C, IC_value, C_value, G_value, I_value, X_value, M_value) ;
 
     y = (Y_value + Trade_margins + Transp_margins + sum(SpeMarg_IC,"r") + sum(SpeMarg_C,"r") + sum(SpeMarg_G,"r") + sum(SpeMarg_I,"r") + sum(SpeMarg_X,"r") + VA_Tax + Energy_Tax_IC + Energy_Tax_FC - ClimPolCompensbySect + OtherIndirTax + sum(Carbon_Tax_IC',"r") + sum(Carbon_Tax_C',"r") )' - ( sum( IC_value,"c") + sum(C_value, "c") + G_value + I_value + X_value - M_value' ) ;
+	
 endfunction
 
 // For calibration
@@ -2826,6 +2841,7 @@ function [y] = Y_value_Const_1(Y_value, Y, pY) ;
 
     y1 = Y_value - ( Y' .* pY' ) ;
     y=y1';
+	
 endfunction
 
 // For calibration
@@ -2834,6 +2850,7 @@ function [y] = IC_value_Const_1(IC_value, IC,  pIC) ;
 
     y1  = IC_value - ( IC .* pIC ) ;
     y = matrix(y1, -1 , 1) ;
+	
 endfunction
 
 
@@ -2842,8 +2859,8 @@ endfunction
 function [y] = G_value_Const_1(G_value, G, pG) ;
 
     y1 = G_value - ( G .* pG ) ;
-
     y = matrix(y1, -1 , 1);
+	
 endfunction
 
 //  For Calibration
@@ -2852,6 +2869,7 @@ function [y] = I_value_Const_1(I_value, I, pI) ;
 
     y1 = I_value - ( I .* (pI*ones(1,nb_size_I)) ) ;
     y = matrix(y1, -1, 1);
+	
 endfunction
 
 //  For Calibration
@@ -2860,6 +2878,7 @@ function [y] = M_value_Const_1(M_value, M, pM) ;
 
     y1 = M_value - ( M' .* pM' ) ;
     y  = y1';
+	
 endfunction
 
 //  For Calibration
@@ -3095,8 +3114,8 @@ endfunction
 function [y] = MacroClosure_Const_1(GFCF_byAgent, pI, I) ;
 
     y1 = ( sum(GFCF_byAgent(Indice_Households)) + sum(GFCF_byAgent(Indice_Corporations)) + sum(GFCF_byAgent(Indice_Government)) ) - sum (pI .* sum(I,"c")) ;
-
     y=y1';
+	
 endfunction
 
 // new equation Antoine pour passer GFCF_byAgent en variable intermédiaire
@@ -3116,8 +3135,8 @@ function [y] = Interest_rate_Const_1(interest_rate, delta_interest_rate) ;
     // interest_rate for each national institutional agents (household classes, businesses and government)
     // delta_interest_rate stands for the variation of the mean interest rate
     y1 = interest_rate - delta_interest_rate * BY.interest_rate ;
-
     y=y1';
+	
 endfunction
 
 
@@ -3201,23 +3220,13 @@ endfunction
 function [y] = Labour_income_Const_1(Labour_income, Labour, w) ;
 
     y1 = Labour_income - ( Labour .* w ) ;
-
-    // if Labour =0 => w=0
-    // y1_1 = (Labour==0).*(w);
-    // y1_2 = (Labour<>0).*( Labour_income - ( Labour .* w ));
-    // y1 = (Labour==0).*y1_1  + (Labour<>0).*y1_2;
-
     y  = y1';
+
 endfunction
 
 function Labour_income = Labour_income_Val_1(Labour, w)
 
     Labour_income = ( Labour .* w );
-
-    // if Labour =0 => w=0
-    // y1_1 = (Labour==0).*(w);
-    // y1_2 = (Labour<>0).*( Labour_income - ( Labour .* w ));
-    // y1 = (Labour==0).*y1_1  + (Labour<>0).*y1_2;
 
 endfunction
 
@@ -3226,49 +3235,30 @@ endfunction
 function [y] = Profit_income_Const_1(Profit_margin, markup_rate, pY, Y) ;
 
     y1 = Profit_margin - ( markup_rate .* pY' .* Y' ) ;
-
-    // if Profit_margin = 0 => markup_rate = 0
-    // y1_1 = (Profit_margin==0).*markup_rate;
-    // y1_2 = (Profit_margin<>0).* ( Profit_margin - ( markup_rate .* pY' .* Y' ) ) ;
-    // y1 = (Profit_margin==0).*y1_1 + (Profit_margin<>0).*y1_2 ;
-
     y  = y1';
+
 endfunction
 
 function Profit_margin = Profit_income_Val_1(markup_rate, pY, Y)
 
     Profit_margin = ( markup_rate .* pY' .* Y' );
 
-    // if Profit_margin = 0 => markup_rate = 0
-    // y1_1 = (Profit_margin==0).*markup_rate;
-    // y1_2 = (Profit_margin<>0).* ( Profit_margin - ( markup_rate .* pY' .* Y' ) ) ;
-    // y1 = (Profit_margin==0).*y1_1 + (Profit_margin<>0).*y1_2 ;
-
 endfunction
 
 // For calibration
 // Capital income (valuation of fixed capital consumption)
 function [y] = Capital_income_Const_1(Capital_income, pK, kappa, Y) ;
+	
 	pK=abs(pK);
     y1 = Capital_income - ( sum(pK .* kappa .* Y', "r") ) ;
-
-    // if Y =0 => kappa=0
-    // y1_1 = (Y'==0).*(kappa);
-    // y1_2 = (Y'<>0).*(  Capital_income - ( sum(pK .* kappa .* Y', "r") ));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
-
     y  = y1';
+
 endfunction
 
 function Capital_income = Capital_income_Val_1(pK, kappa, Y)
     
 	pK=abs(pK);
     Capital_income = ( sum(pK .* kappa .* Y', "r") );
-
-    // if Y =0 => kappa=0
-    // y1_1 = (Y'==0).*(kappa);
-    // y1_2 = (Y'<>0).*(  Capital_income - ( sum(pK .* kappa .* Y', "r") ));
-    // y1 = (Y'==0).*y1_1  + (Y'<>0).*y1_2;
 
 endfunction
 
@@ -3359,11 +3349,6 @@ function [y] = IncomeDistrib_Const_1(NetCompWages_byAgent, GOS_byAgent, Other_Tr
 
     y = [y1;y2;y3];
 
-    // y  = zeros(length(Distribution_Shares), 1) ;
-    // y (1: length(NetCompWages_byAgent), 1) =  matrix(y1, length(NetCompWages_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+1 : length(NetCompWages_byAgent)+length(GOS_byAgent)) = matrix(y2, length(GOS_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
-
 endfunction
 
 function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Val_1(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
@@ -3397,11 +3382,6 @@ function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Tr
 
     y = [y1;y2;y3];
 
-    // y  = zeros(length(Distribution_Shares), 1) ;
-    // y (1: length(NetCompWages_byAgent), 1) =  matrix(y1, length(NetCompWages_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+1 : length(NetCompWages_byAgent)+length(GOS_byAgent)) = matrix(y2, length(GOS_byAgent), 1) ;
-    // y (length(NetCompWages_byAgent)+length(GOS_byAgent)+1 : length(Distribution_Shares)) = matrix(y3, length(Other_Transfers), 1) ;
-
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3432,6 +3412,14 @@ function CO2Emis_C = CO2_intensity_C_Val_1(  Emission_Coef_C , C)
     CO2Emis_C = Emission_Coef_C .* C ;
 
 endfunction
+
+/////////// CO2 intensity applied for BORDER TAX ADJUSMENT
+// First case, Emiss Coef given to M are those of domestic intermediate consumption ( co2/tep)
+function Emission_Coef_M = CO2_intensity_M_Val_1(  CO2Emis_IC , IC)
+    Emission_Coef_M =  divide(sum(CO2Emis_IC,"r") ,sum(IC(Indice_Sectors,:),"r"),0);
+
+endfunction
+
 
 
 ///// Exogenous emissions
@@ -3503,8 +3491,6 @@ endfunction
 
 
 /// Closure carbon cap
-
-
 function Carbon_Tax_rate_IC = CTax_rate_pIC_Val_1(Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, Cons_Tax_rate, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC)
 
 	//  Trade, transport and specific margins for energy

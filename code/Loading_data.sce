@@ -561,6 +561,8 @@ initial_value.FC_valueIMP = initial_value.FC_value .* initial_value.FC_Import_ra
 
 initial_value.Carbon_Tax_IC = zeros(nb_Commodities,nb_Sectors);
 initial_value.Carbon_Tax_C = zeros(nb_Commodities,nb_Households);
+initial_value.Carbon_Tax_M = zeros(1,nb_Sectors);
+
 
 
 //////////////////////////////////////////////////////////////////

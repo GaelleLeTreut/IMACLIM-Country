@@ -162,3 +162,10 @@ if isdef("CarbonTaxDiff") then
 else
     CarbonTaxDiff = %F;
 end
+
+
+if isdef("Carbon_BTA") then
+    Carbon_BTA = eval(Carbon_BTA);
+else
+    Carbon_BTA = %F;
+end

@@ -201,7 +201,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
     Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
-    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
+    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
 
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
     Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
@@ -212,7 +212,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     OtherIndirTax_Const_1(OtherIndirTax, OtherIndirTax_rate, alpha, Y, C, G, I)
     VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
-    Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C) 
+    Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C)
+	Carbon_Tax_M_Const_1(Carbon_Tax_M, Carbon_Tax_rate_M, M, Emission_Coef_M)
 
     // Retraite/chômage indexé sur les salaires Const_1 ou sur le PIB Const_2 
     Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
@@ -221,10 +222,11 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
+	CTax_rate_M_Const_1(Carbon_Tax_rate_M, Carbon_Tax_rate, CarbonTax_Diff_M)
 
     //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
-    ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C)
-    S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) 
+    ClimCompensat_Const_2(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect)
+    S_ClimCompensat_Const_2(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M) 
 
     // Recycling options : 1 et 2 could be deleted  
     // RevenueRecycling_Const_1 for no labour tax cut 
@@ -232,7 +234,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation) 
     // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
 																												   
-    RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP)
+    RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M)
 
     Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 

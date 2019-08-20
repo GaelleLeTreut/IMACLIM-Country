@@ -188,7 +188,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // fonction de demande des ménage : 1-la part des biens non-énergétiques dans la facture évolue proprotionnellement / 2-évolution différenciée 
     H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
     Corp_income_Const_1(Corp_disposable_income, GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax) 
-    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect)
+    G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
 
     Income_Tax_Const_1(Income_Tax, Income_Tax_rate, H_disposable_income, Other_Direct_Tax)
     Corporate_Tax_Const_1(Corporate_Tax, Corporate_Tax_rate, GOS_byAgent)
@@ -214,11 +214,11 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
 
     //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
-    ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C)
-    S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C) 
+    ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect)
+    S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C,Carbon_Tax_M) 
 
     // Recycling options : RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
-    //RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP) 
+    //RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) 
     //Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 
     //G_ConsumpBudget_Const_1 :Use of consumption budget - Consumption expenditures //// G_ConsumpBudget_Const_2 : Public consumption budget - Proportion of GDP

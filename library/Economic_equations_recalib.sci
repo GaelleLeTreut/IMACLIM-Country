@@ -103,102 +103,22 @@ function [y] = G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP, G_pFish
 
 endfunction
 
-function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M) ;
 
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M) ;
     y = I.*pI- BY.I.*BY.pI.*I_pFish;
 
-    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
-	
+    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(Tax_Base_Carbon, sum(I.*pI),1.0));
 	// (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))
 
 endfunction
 warning( "Invest_demand_Const_3 avec recyclage de la taxe à généraliser")
 
-function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C)
+function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M)
+	
+	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M) ;
 
-    value_I = BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C), sum(I.*pI),1.0));
+    value_I = BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(Tax_Base_Carbon, sum(I.*pI),1.0));
     I = (pI <> 0) .* divide(value_I,pI,1);
 
 endfunction
-
-
-function [delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Val_1(Carbon_Tax_IC, Carbon_Tax_C); 
- 
-    Ctot = (sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)); 
- 
-    delta_LS_S =    (Recycling_Option=="PublicDeficit")*zeros(Indice_Sectors)+.. 
-                    (Recycling_Option=="GreenInvest")*zeros(Indice_Sectors)+.. 
-                    (Recycling_Option=="LumpSumHH")*zeros(Indice_Sectors)+.. 
-                    (Recycling_Option=="LabTax")*zeros(Indice_Sectors)+.. 
-                    (Recycling_Option=="ExactRestitution")*sum(Carbon_Tax_IC,"r")/((Ctot<>0)*Ctot + (Ctot==0))+.. 
-                    (Recycling_Option=="LabTax_PublicDeficit")*0 +..
-                    (Recycling_Option=="LabTax_GreenInvest")*0 +..
-                    (Recycling_Option=="LabTax_LumpSumHH")*zeros(Indice_Sectors).. 
-                    ; 
- 
-    delta_LS_H =    (Recycling_Option=="PublicDeficit")*zeros(Indice_Households)+.. 
-                    (Recycling_Option=="GreenInvest")*zeros(Indice_Households)+.. 
-                    (Recycling_Option=="LumpSumHH")*divide(Consumption_Units.*Nb_Households,sum(Consumption_Units.*Nb_Households),1)+.. 
-                    (Recycling_Option=="LabTax")*zeros(Indice_Households)+.. 
-                    (Recycling_Option=="ExactRestitution")*sum(Carbon_Tax_C,"r")/((Ctot<>0)*Ctot + (Ctot==0))+.. 
-                    (Recycling_Option=="LabTax_PublicDeficit")*0 +..
-                    (Recycling_Option=="LabTax_GreenInvest")*0 +..
-                    (Recycling_Option=="LabTax_LumpSumHH")*sum(Carbon_Tax_C,"r")/((Ctot<>0)*Ctot + (Ctot==0)).. 
-                    ;
-
-    delta_LS_I =    (Recycling_Option=="PublicDeficit")*0+.. 
-                    (Recycling_Option=="GreenInvest")*1+.. 
-                    (Recycling_Option=="LumpSumHH")*0+.. 
-                    (Recycling_Option=="LabTax")*0+.. 
-                    (Recycling_Option=="ExactRestitution")*0+... 
-                    (Recycling_Option=="LabTax_PublicDeficit")*0 +..
-                    (Recycling_Option=="LabTax_GreenInvest")*sum(Carbon_Tax_C)/((Ctot<>0)*Ctot + (Ctot==0)) +..
-                    (Recycling_Option=="LabTax_LumpSumHH")*0.. 
-                    ; 
-
-    delta_LS_LT =   (Recycling_Option=="PublicDeficit")*0+.. 
-                    (Recycling_Option=="GreenInvest")*0+.. 
-                    (Recycling_Option=="LumpSumHH")*0+.. 
-                    (Recycling_Option=="LabTax")*1+.. 
-                    (Recycling_Option=="ExactRestitution")*0+... 
-                    (Recycling_Option=="LabTax_PublicDeficit")*sum(Carbon_Tax_IC)/((Ctot<>0)*Ctot + (Ctot==0))+.. 
-                    (Recycling_Option=="LabTax_GreenInvest")*sum(Carbon_Tax_IC)/((Ctot<>0)*Ctot + (Ctot==0))+.. 
-                    (Recycling_Option=="LabTax_LumpSumHH")*sum(Carbon_Tax_IC)/((Ctot<>0)*Ctot + (Ctot==0)).. 
-                    ; 
-
-endfunction
-
-
-// function [y] = ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, delta_LS_S, delta_LS_I, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C) ;
-
-    // delta_LS = sum (delta_LS_H) + sum(delta_LS_S);
-    // Ctot = sum(Carbon_Tax_IC) + sum(Carbon_Tax_C);
-
-    // y1 = zeros(1,nb_InstitAgents);
-
-    // y1(Indice_RestOfWorld)  = ClimPolicyCompens(Indice_RestOfWorld)  - BY.ClimPolicyCompens(Indice_RestOfWorld);
-    // y1(Indice_Government)   = ClimPolicyCompens(Indice_Government)   + delta_LS * Ctot * ones(Indice_Government);
-    // y1(Indice_Corporations) = ClimPolicyCompens(Indice_Corporations) - BY.ClimPolicyCompens(Indice_Corporations);
-    // y1(Indice_Households)   = ClimPolicyCompens(Indice_Households)   - delta_LS_H * Ctot;
-
-    // y=y1';
-
-// endfunction
-
-// function [y] = S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C)  ;
-
-   ///// No compensations ( ClimPolCompensbySect(nb_Households)=0 )
-    // y1 = ClimPolCompensbySect - delta_LS_S.*(sum(Carbon_Tax_IC)+sum(Carbon_Tax_C)) ;
-
-    // y=y1';
-// endfunction
-
-// function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings,GDP) ;
-
-    // y1 = sum(Labour_Tax) - (..
-         // sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
-         // delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C))..
-         // ) ;
-
-    // y=y1';
-// endfunction

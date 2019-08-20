@@ -54,7 +54,7 @@ fun1;;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_
 3;;G_investment_Const_2;
 5;I;Invest_demand_Val_1;
 6;;G_investment_Const_3;GFCF_byAgent, I, pI, GDP, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C
-8;;Invest_demand_Const_3;Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C
+8;;Invest_demand_Const_3;Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M
 ;;;
 ;;;
 **********;;;

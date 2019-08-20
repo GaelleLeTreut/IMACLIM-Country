@@ -204,6 +204,7 @@ end
 
 for column = 1:nb_SectorsAGG
 
+	initial_valueAGG.Carbon_Tax_M(:,column) = sum(initial_value.Carbon_Tax_M(:,all_IND(column)));
     initial_valueAGG.M_value(:,column) = sum(initial_value.M_value(:,all_IND(column)));
     initial_valueAGG.Y_value(:,column) = sum(initial_value.Y_value(:,all_IND(column)));
     initial_valueAGG.Output(:,column) = sum(initial_value.Output(:,all_IND(column)));

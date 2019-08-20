@@ -698,6 +698,10 @@ end
 
 
 d.Carbon_Tax_byAgent(Indice_Government)= sum(d.Carbon_Tax);
+if Carbon_BTA
+d.Carbon_Tax_byAgent(Indice_Government)= d.Carbon_Tax_byAgent(Indice_Government)+sum(d.Carbon_Tax_M);
+end 
+
 d.Carbon_Tax_byAgent([Indice_Corporations,Indice_Households,Indice_RestOfWorld]) = 0;
 d.Carbon_Tax_byAgent= matrix(d.Carbon_Tax_byAgent,1,-1);
 

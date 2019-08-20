@@ -1126,11 +1126,11 @@ end
 // Start Difference between France (1) and Brasil (2)
 /////////////////////////////////////////////////////
 if Country=="Brasil" then
-    function [const_G_dispo_income] =fcal_G_income_Const_2(x_G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Imaclim_VarCalib)
+    function [const_G_dispo_income] =fcal_G_income_Const_2(x_G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M, Imaclim_VarCalib)
 
         G_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_G_disposable_income");
 
-        const_G_dispo_income = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect);
+        const_G_dispo_income = G_income_Const_2(G_disposable_income, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M);
 
     endfunction
 
@@ -1140,16 +1140,16 @@ if Country=="Brasil" then
             error("review calib_G_disposable_income")
         end
         count = count + 1;
-        [x_G_disposable_income, const_G_dispo_income, info_calib_G_dispoIncome] = fsolve(x_G_disposable_income, list(fcal_G_income_Const_2, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Index_Imaclim_VarCalib));
+        [x_G_disposable_income, const_G_dispo_income, info_calib_G_dispoIncome] = fsolve(x_G_disposable_income, list(fcal_G_income_Const_2, Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M, Index_Imaclim_VarCalib));
         G_disposable_income= indiv_x2variable(Index_Imaclim_VarCalib, "x_G_disposable_income");
     end
     count=0;
 else
-    function [const_G_dispo_income] =fcal_G_income_Const_1(x_G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Imaclim_VarCalib)
+    function [const_G_dispo_income] =fcal_G_income_Const_1(x_G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M, Imaclim_VarCalib)
 
         G_disposable_income= indiv_x2variable(Imaclim_VarCalib, "x_G_disposable_income");
 
-        const_G_dispo_income = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect);
+        const_G_dispo_income = G_income_Const_1(G_disposable_income, Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M);
 
     endfunction
 
@@ -1159,7 +1159,7 @@ else
             error("review calib_G_disposable_income")
         end
         count = count + 1;
-        [x_G_disposable_income, const_G_dispo_income, info_calib_G_dispoIncome] = fsolve(x_G_disposable_income, list(fcal_G_income_Const_1,  Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Index_Imaclim_VarCalib));
+        [x_G_disposable_income, const_G_dispo_income, info_calib_G_dispoIncome] = fsolve(x_G_disposable_income, list(fcal_G_income_Const_1,  Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M, Index_Imaclim_VarCalib));
         G_disposable_income= indiv_x2variable(Index_Imaclim_VarCalib, "x_G_disposable_income");
     end
     count=0;
@@ -1539,12 +1539,12 @@ end
 // Start - Not Applied to Brasil
 ///////////////////////////
 // if Country<>"Brasil" then
-function [const_Labour_Tax_Cut] =fcalRevRecycling_Const_1(x_Labour_Tax_Cut, Labour_Tax, Labour_Tax_rate, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, Imaclim_VarCalib)
+function [const_Labour_Tax_Cut] =fcalRevRecycling_Const_1(x_Labour_Tax_Cut, Labour_Tax, Labour_Tax_rate,  w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M, Imaclim_VarCalib)
     Labour_Tax_Cut= indiv_x2variable(Imaclim_VarCalib, "x_Labour_Tax_Cut");
-    const_Labour_Tax_Cut = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP)
+    const_Labour_Tax_Cut = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M)
 endfunction
 
-[x_Labour_Tax_Cut, const_Labour_Tax_Cut, infCal_Labour_Tax_Cut] = fsolve(x_Labour_Tax_Cut, list(fcalRevRecycling_Const_1,  Labour_Tax, Labour_Tax_rate, w, lambda, Y, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, Index_Imaclim_VarCalib));
+[x_Labour_Tax_Cut, const_Labour_Tax_Cut, infCal_Labour_Tax_Cut] = fsolve(x_Labour_Tax_Cut, list(fcalRevRecycling_Const_1,  Labour_Tax, Labour_Tax_rate,  w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M, Index_Imaclim_VarCalib));
 
 if norm(const_Labour_Tax_Cut) > sensib
     error( "review calib_Labour_Tax_Cut")
@@ -1799,6 +1799,38 @@ x_aL = matrix(aL,nb_Sectors, 1);
 x_aK = matrix(aK,nb_Sectors, 1);
 
 x_TechniCoef = [x_aIC;x_aL;x_aK];
+
+
+
+
+/////////// BORDER TAX ADJUSMENT
+    Emission_Coef_M =  CO2_intensity_M_Val_1(  CO2Emis_IC , IC);
+
+function [const_Carbon_Tax_rate_M] =fcalibCarbonTaxM_Const_1(x_Carbon_Tax_rate_M, Carbon_Tax_M, C,Emission_Coef_M, Imaclim_VarCalib)
+    Carbon_Tax_rate_M= indiv_x2variable(Imaclim_VarCalib, "x_Carbon_Tax_rate_M");
+
+    const_Carbon_Tax_rate_M = Carbon_Tax_M_Const_1(Carbon_Tax_M, Carbon_Tax_rate_M, M, Emission_Coef_M)
+    const_Carbon_Tax_rate_M =  matrix(const_Carbon_Tax_rate_M, 1,nb_Sectors);
+
+    y1_1 = (Emission_Coef_M==0).*(Carbon_Tax_rate_M);
+    y1_2 =(Emission_Coef_M<>0).*const_Carbon_Tax_rate_M;
+
+    y1 = (Emission_Coef_M==0).*y1_1 + (Emission_Coef_M<>0).*y1_2 ;
+
+    const_Carbon_Tax_rate_C = matrix(y1, nb_Sectors, 1);
+
+endfunction
+
+[x_Carbon_Tax_rate_M, const_Carbon_Tax_rate_M, info_calib_CarbTaxRateM] = fsolve(x_Carbon_Tax_rate_M, list(fcalibCarbonTaxM_Const_1, Carbon_Tax_M, M, Emission_Coef_M, Index_Imaclim_VarCalib));
+
+if norm(const_Carbon_Tax_rate_M) > sensib
+    error( "review calib_Carbon_Tax_rate_M")
+else
+    Carbon_Tax_rate_M = indiv_x2variable (Index_Imaclim_VarCalib, "x_Carbon_Tax_rate_M");
+    Carbon_Tax_rate_M = (abs(Carbon_Tax_rate_M) > %eps).*Carbon_Tax_rate_M;
+end
+
+
 
 
 /// Replace all calibrated variables by correct value into calib structure
