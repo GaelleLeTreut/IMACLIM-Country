@@ -35,6 +35,8 @@
 
 // main executable script
 
+
+
 // test mode
 if ~isdef('TEST_MODE') then
     TEST_MODE = %F;
@@ -54,9 +56,12 @@ end
 
 // output of print
 if debug_mode then
+	//out2 =0;
+	// out2 = %io(2);
     out = %io(2);
     warning('on');
 else
+	// out2 = 0;
     out = 0;
     warning('off');
 end

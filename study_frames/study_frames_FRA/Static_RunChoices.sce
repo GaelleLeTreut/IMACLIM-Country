@@ -5,7 +5,7 @@ Carbon_Tax_rate1 = 1e5;
 Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
+parameters.Carbon_Tax_rate = Carbon_Tax_rate3;
 
 
 	
@@ -20,7 +20,9 @@ parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 
 /// Wage indexation
 // Deriv_Exogenous.Coef_real_wage_sect = parameters.Coef_real_wage_sect ;
-// Deriv_Exogenous.Coef_real_wage_sect = ones(1,nb_Sectors);
+// Deriv_Exogenous.Coef_real_wage_sect = zeros(1,nb_Sectors);
+// Deriv_Exogenous.Coef_real_wage_sect(Indice_NonEnerSect) = 1;
+
  // Deriv_Exogenous.Coef_real_wage_sect =[0,0,0,0,0,0,0.4,0,0.8,0.4,0,0,0.8];
 // Deriv_Exogenous.Coef_real_wage_sect =[1,1,1,1,1,0,1,1,1,1,1,1,1];
 // Deriv_Exogenous.Coef_real_wage_sect =[0,0,0,0,0,0,1,1,1,1,1,1,1];
