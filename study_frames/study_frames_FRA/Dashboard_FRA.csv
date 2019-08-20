@@ -1,11 +1,9 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
 // System_Resol;Systeme_ProjHomothetic
-// System_Resol;Systeme_ProjEcopa
 System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
 // System_Resol;Systeme_Static_recalib
-// System_Resol;Systeme_StatRed
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%F
 SystemOpt_Resol;SystemOpt_Static
