@@ -1,13 +1,12 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-// System_Resol;Systeme_ProjHomot_BRA
+System_Resol;Systeme_ProjHomot_BRA
 // System_Resol;Systeme_Static_BRA
-System_Resol;Systeme_StaCap_BRA
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
-// SystemOpt_Resol;SystemOpt_StaticCAP_BRA
-// SystemOpt_Resol;SystemOpt_ProjHomo_BRA
 SystemOpt_Resol;SystemOpt_Static_BRA
+// SystemOpt_Resol;SystemOpt_ProjHomo_BRA
+// SystemOpt_Resol;SystemOpt_StaticCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
 study;Static_RunChoices
 // study;Projection_evolution
@@ -27,8 +26,8 @@ Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;2
 // SELECT a Macro framework to run;
-// Macro_nb;
-Macro_nb;NDC
+Macro_nb;
+// Macro_nb;NDC
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
@@ -43,9 +42,12 @@ Scenario;
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%F
-Output_prints;%F
+Output_prints;%T
 // SELECT the uses of carbon tax revenues;
 // Recycling_Option;
-// Recycling_Option;LabTax
-Recycling_Option;PublicDeficit
+Recycling_Option;LabTax
+// Recycling_Option;LumpSumHH
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_LumpSumHH
+Carbon_BTA;%F
 CarbonTaxDiff;%F

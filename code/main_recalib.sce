@@ -131,7 +131,7 @@ end
 
     // Loading macro framework (common feature for each country) 
     if Macro_nb <> ""
-        exec(STUDY + "Macro_Framework.sce");
+        exec("Macro_Framework.sce");
     end
 
     // Loading other study changes (specific feature) except for homothetic projections
