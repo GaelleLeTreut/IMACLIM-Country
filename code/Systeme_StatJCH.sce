@@ -212,8 +212,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 	CTax_rate_M_Const_1(Carbon_Tax_rate_M, Carbon_Tax_rate, CarbonTax_Diff_M)
 	
     //LUMP SUM
-    ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect)
-    S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M) 
+    ClimCompensat_Const_3(ClimPolicyCompens, GDP, delta_LS_H, ClimPolCompensbySect)
+    S_ClimCompensat_Const_3(ClimPolCompensbySect,GDP, delta_LS_S) 
 
     // Recycling options : 1 et 2 could be deleted  
     // RevenueRecycling_Const_1 for no labour tax cut 
@@ -250,7 +250,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 
     // 1-standard / 2-investment matrix / 3-Real total invest const + carbon tax revenu (option dashboard)
-    Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M)
+    Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I)
     Capital_Cost_Const_1(pK, pI, I)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)

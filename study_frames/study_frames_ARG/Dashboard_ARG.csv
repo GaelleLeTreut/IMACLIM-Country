@@ -42,4 +42,9 @@ CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%F
 Output_prints;%F
+// SELECT the uses of carbon tax revenues;
 Recycling_Option;
+// Recycling_Option;LabTax
+// Select a closure of public finance while recycling carbon revenues;
+ClosCarbRev_CstNetLend;%T
+ClosCarbRev_AllLabTax;%F

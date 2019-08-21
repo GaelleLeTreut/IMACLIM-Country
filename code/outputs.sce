@@ -726,7 +726,7 @@ end
 
 // Evolution
 evol.Ecotable    = divide(d.Ecotable   , ini.Ecotable   , %nan ) -1;
-evol.Ecotable(isnan(evol.Ecotable  )) = d.Ecotable  (isnan(evol.Ecotable  )) *%i;
+// evol.Ecotable(isnan(evol.Ecotable  )) = d.Ecotable  (isnan(evol.Ecotable  )) *%i;
 
 
 ecoT.ini = buildEcoTabl(ini.Ecotable , 1e-6 , 1);

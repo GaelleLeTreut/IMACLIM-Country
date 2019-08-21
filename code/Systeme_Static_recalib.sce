@@ -214,8 +214,8 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)
 
     //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL)
-    ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M, ClimPolCompensbySect)
-    S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S, Carbon_Tax_IC, Carbon_Tax_C,Carbon_Tax_M) 
+    ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, ClimPolCompensbySect)
+    S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S) 
 
     // Recycling options : RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
     //RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) 

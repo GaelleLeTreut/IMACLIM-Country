@@ -49,5 +49,8 @@ Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
+// Select a closure of public finance while recycling carbon revenues;
+ClosCarbRev_CstNetLend;%T
+ClosCarbRev_AllLabTax;%F
 Carbon_BTA;%F
 CarbonTaxDiff;%F

@@ -103,22 +103,20 @@ function [y] = G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP, G_pFish
 
 endfunction
 
-function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M) ;
+function [y] = Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I) ;
 
-	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M) ;
     y = I.*pI- BY.I.*BY.pI.*I_pFish;
 
-    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(Tax_Base_Carbon, sum(I.*pI),1.0));
+    // y = I.*pI - BY.I.*BY.pI.*I_pFish.*(1 + divide(delta_LS_I, sum(I.*pI),1.0));
 	// (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))
 
 endfunction
 warning( "Invest_demand_Const_3 avec recyclage de la taxe à généraliser")
 
-function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I, Carbon_Tax_IC, Carbon_Tax_C, Carbon_Tax_M)
+function I = Invest_demand_Val_3(Betta, pI, kappa, Y, I_pFish, delta_LS_I)
 	
-	Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M) ;
 
-    value_I = BY.I.*BY.pI.*I_pFish.*(1 + delta_LS_I*divide(Tax_Base_Carbon, sum(I.*pI),1.0));
+    value_I = BY.I.*BY.pI.*I_pFish.*(1 + divide(delta_LS_I, sum(I.*pI),1.0));
     I = (pI <> 0) .* divide(value_I,pI,1);
 
 endfunction

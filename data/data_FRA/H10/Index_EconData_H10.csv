@@ -4,6 +4,7 @@ Row;NetCompWages_byAgent;DataAccount;H_Income;-
 Row;InsuranceContrib_byAgent;DataAccount;-;-
 Row;Production_Tax_byAgent;DataAccount;-;-
 Row;Energ_Tax_byAgent;DataAccount;-;-
+Row;Carbon_Tax_byAgent;DataAccount;-;-
 Row;OtherIndirTax_byAgent;DataAccount;-;-
 Row;VA_Tax_byAgent;DataAccount;-;-
 Row;Property_income;DataAccount;H_Income;-

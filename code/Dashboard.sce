@@ -163,9 +163,30 @@ else
     CarbonTaxDiff = %F;
 end
 
-
+////  Border tax adjustment
 if isdef("Carbon_BTA") then
     Carbon_BTA = eval(Carbon_BTA);
 else
     Carbon_BTA = %F;
 end
+
+////  Public finance 
+if isdef("ClosCarbRev_AllLabTax") then
+   ClosCarbRev_AllLabTax= eval(ClosCarbRev_AllLabTax);
+end   
+
+if isdef("ClosCarbRev_CstNetLend") then
+   ClosCarbRev_CstNetLend= eval(ClosCarbRev_CstNetLend);
+end
+
+if isdef("ClosCarbRev_AllLabTax")& isdef("ClosCarbRev_CstNetLend") 
+	if (ClosCarbRev_AllLabTax&ClosCarbRev_CstNetLend)|(~ClosCarbRev_AllLabTax&~ClosCarbRev_CstNetLend)
+	error( "You have to choose one condition for the closure of public finance");
+	end
+end 
+
+// if nothing informe -> net lending const
+if ~isdef("ClosCarbRev_AllLabTax")& ~isdef("ClosCarbRev_CstNetLend") 
+ClosCarbRev_CstNetLend= %T;
+ClosCarbRev_AllLabTax = %F; 
+end 
