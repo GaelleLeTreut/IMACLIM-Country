@@ -1405,8 +1405,8 @@ endfunction
 
 //////////////////
 /// CARBON REVENUE RECYCLING OPTIONS (use of the carbon tax revenue after direct compensations)
-
-// No recycling revenues in labour tax
+// Used for calibration
+// No recycling revenues in labour tax /// 
 function [y] = RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M)  ;
 
     // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
@@ -1424,37 +1424,8 @@ function Labour_Tax_Cut = RevenueRecycling_Val_1()
     
 endfunction
 
-// Reduction in social security contributions (Labour_Tax_Cut)
+
 function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
-
-    // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
-    // Same rebate for all sectors.
-	y1 = sum(Labour_Tax) - ( sum( (Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y' ) - ( sum(Carbon_Tax_IC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) ) ) ;
- 
-    y=y1';
-endfunction
-
-// Public deficit constant
-function [y] = RevenueRecycling_Const_3(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
-
-     y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
-    
-	y  = y1' ;
-endfunction
-
-function [y] = RevenueRecycling_Const_4(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
-	
-	//Remaining tax base after climate compensation ( for HH or sectors)
-    y1 = sum(Labour_Tax) - (..
-         sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
-         delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government))..
-         ) ;	
-
-    y=y1';
-endfunction
-
-
-function [y] = RevenueRecycling_Const_5(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
 		
 	 if ClosCarbRev_AllLabTax
 	//All tax base after climate compensation ( for HH or sectors) for labour tax reduction
