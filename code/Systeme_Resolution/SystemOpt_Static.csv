@@ -13,7 +13,7 @@ Other_social_transfers;OtherSoc_Transf_Val_1;Other_SocioBenef, Population;
 ;;;
 ////////////////////// Price formation;;;
 p;Mean_price_Val_1;pY, pM, Y, M;
-pM;pM_price_Val_2;;// check const_1
+pM;pM_price_Val_2;Carbon_Tax_rate_M, Emission_Coef_M;// check const_1
 ;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y;
 pIC;pIC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p;
 pC;pC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate;
@@ -138,7 +138,7 @@ ClimPolCompensbySect;S_ClimCompensat_Val_3;GDP, delta_LS_S, Carbon_Tax_IC, Carbo
 // RevenueRecycling_Const_2 for all carb tax into labour tax cut;;;
 // RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation) ;;;
 // RevenueRecycling_Const_4 in line with the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL);;;
-;RevenueRecycling_Const_4;Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M;
+;RevenueRecycling_Const_3;Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M;
 Labour_Tax_rate;Labour_Taxe_rate_Val_1;LabTaxRate_BeforeCut, Labour_Tax_Cut;
 ;;;
 //////////////////////  Commercial balance;;;

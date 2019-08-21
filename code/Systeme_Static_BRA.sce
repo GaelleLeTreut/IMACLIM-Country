@@ -100,7 +100,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 
 function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
     // Ajout d'une variable pour forçage
-    pM = pM_price_Val_2();
+    pM = pM_price_Val_2(Carbon_Tax_rate_M, Emission_Coef_M);
     M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter)
     p = Mean_price_Val_1(pY, pM, Y, M );
     X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter);

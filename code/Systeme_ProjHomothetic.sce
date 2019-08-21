@@ -117,7 +117,7 @@ NonFinEn_BudgShare_ref = (ini.pC(Indice_NonEnerSect, :) .* ini.C(Indice_NonEnerS
 /////////////////////////////////////////////////////////////////////////
 
 function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda, kappa,GrossOpSurplus,Other_Direct_Tax, delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT]= f_resol_interm(Deriv_variables)
-    pM = pM_price_Val_2(); // check const_1
+    pM = pM_price_Val_2(Carbon_Tax_rate_M, Emission_Coef_M); // check const_1
     M = Imports_Val_1(pM, pY, Y, sigma_M, delta_M_parameter) // check const_1, const_3 & const_4
     p = Mean_price_Val_1(pY, pM, Y, M );
     // const 3 : homothetic projection et const_2 static projection

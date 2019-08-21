@@ -13,7 +13,7 @@ Other_social_transfers;OtherSoc_Transf_Val_1;Other_SocioBenef, Population;
 ;;;
 ////////////////////// Price formation;;;
 p;Mean_price_Val_1;pY, pM, Y, M;
-pM;pM_price_Val_2;;// check const_1
+pM;pM_price_Val_2;Carbon_Tax_rate_M, Emission_Coef_M;// check const_1
 ;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y;
 pIC;pIC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p;
 pC;pC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate;

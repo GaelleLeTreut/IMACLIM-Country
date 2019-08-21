@@ -29,6 +29,7 @@ test_arg_scen.AGG_type = ['AGG_EnComp', ''];
 test_arg_scen.Macro_nb = ['Current'];
 test_arg_scen.Scenario = ['', 'NDC', 'CCS'];
 test_arg_scen.Invest_matrix = ['%T', '%F'];
+test_arg_scen.Carbon_BTA = ['%T', '%F'];
 
 argentina_scen = new_country(name_arg, iso_arg, test_arg_scen);
 
@@ -49,13 +50,14 @@ test_bra_stat.study = ['Static_RunChoices'];
 test_bra_stat.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_stat.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
+test_bra_stat.Carbon_BTA = ['%T', '%F'];
 
 brasil_stat = new_country(name_bra, iso_bra, test_bra_stat);
 
 //// homothetic projection tests
 test_bra_homo.System_Resol = ['Systeme_ProjHomot_BRA'];
 test_bra_homo.Optimization_Resol = ['%T'];
-test_bra_homo.SystemOpt_Resol=['SystemOpt_ProjHomo_BRA']
+test_bra_homo.SystemOpt_Resol=['SystemOpt_ProjHomo_BRA'];
 test_bra_homo.study = ['Recursive_RunChoices'];
 test_bra_homo.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_homo.H_DISAGG = ['HH1', 'H3', 'H4'];
@@ -73,6 +75,7 @@ test_bra_scen.Scenario = ['PMR_Ref_Disag'];
 test_bra_scen.Macro_nb = ['NDC'];
 test_bra_scen.World_prices = ['True','False'];
 // test_bra_scen.Recycling_Option = ['PublicDeficit', 'LabTax'];
+test_bra_scen.Carbon_BTA = ['%T', '%F'];
 
 brasil_scen = new_country(name_bra, iso_bra, test_bra_scen);
 
@@ -83,6 +86,7 @@ test_bra_scenPMR.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_scenPMR.Scenario = ['PMR_Ref'];
 test_bra_scenPMR.Macro_nb = ['NDC'];
 test_bra_scenPMR.World_prices = ['True','False'];
+test_bra_scenPMR.Carbon_BTA = ['%T', '%F'];
 // test_bra_scenPMR.Recycling_Option = ['PublicDeficit', 'LabTax'];
 
 brasil_scenPMR = new_country(name_bra, iso_bra, test_bra_scenPMR);
@@ -103,6 +107,7 @@ test_fra_stat.AGG_type = ['AGG_SNBC2', 'AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_stat.H_DISAGG = ['HH1', 'H10'];
 test_fra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
+// test_fra_stat.Carbon_BTA = ['%T', '%F'];
 
 france_stat = new_country(name_fra, iso_fra, test_fra_stat);
 
@@ -128,6 +133,7 @@ test_fra_scen.Macro_nb = ['NDC','2deg'];
 test_fra_scen.World_prices = ['True','False'];
 test_fra_scen.X_nonEnerg = ['True','False'];
 test_fra_scen.Recycling_Option = ['PublicDeficit', 'LabTax'];
+// test_fra_scen.Carbon_BTA = ['%T', '%F'];
 
 france_scen = new_country(name_fra, iso_fra, test_fra_scen);
 
@@ -148,6 +154,6 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
 //countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
-countries = list(brasil_stat, brasil_homo, brasil_scen,france_stat, france_homo, france_scen, argentina_homo, argentina_scen);
+ countries = list(france_stat, france_homo, france_scen);
 // TO DO
 // countries = list(argentina_homo,france_homo,france_recalib);
