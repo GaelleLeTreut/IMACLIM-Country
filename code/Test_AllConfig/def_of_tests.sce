@@ -153,7 +153,6 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 // ------------------------- * 
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
-//countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
- countries = list(france_stat, france_homo, france_scen);
+countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, france_recalib, brasil_stat, brasil_homo, brasil_scen, brasil_scenPMR ); 
 // TO DO
 // countries = list(argentina_homo,france_homo,france_recalib);
