@@ -203,14 +203,6 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
 
-    // Creation of a new output subdirectory for each time step in case of several time steps calculation
-    if Nb_Iter<>1
-        if Output_files
-            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
-            mkdir(SAVEDIR);
-        end
-    end
-	
 	// Loading different carbon tax diff for each time step ( to be informed in dashboard)
 	if CarbonTaxDiff
 		if AGG_type == ""
@@ -256,7 +248,24 @@ for time_step=1:Nb_Iter
             exec(STUDY_Country+study+".sce");
         end 
     end
-
+	
+	
+	// Creation of a new output subdirectory for each time step in case of several time steps calculation
+    if Nb_Iter<>1
+        if Output_files
+		
+			if isdef("Proj_Macro")
+            SAVEDIR = OUTPUT +runName + filesep() + "Time_" +  Proj_Macro.current_year(time_step) + filesep();
+            mkdir(SAVEDIR);
+			else
+			SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
+            mkdir(SAVEDIR);
+			end
+			
+        end
+    end
+	
+	/// RESOLUTION
     if Optimization_Resol then
         exec('Order_resolution.sce');
         exec('Resolution.sce');
