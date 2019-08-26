@@ -1,0 +1,39 @@
+;NDC;NDC;CCS;CCS;NoScen;NoScen
+;Time_1;Time_2;Time_1;Time_2;Time_1;Time_2
+Carbon Tax rate;0million pesos/tCO2;0million pesos/tCO2;0million pesos/tCO2;0million pesos/tCO2;0million pesos/tCO2;0million pesos/tCO2
+Labour Tax cut;No recycling revenues;No recycling revenues;No recycling revenues;No recycling revenues;No recycling revenues;No recycling revenues
+Real GDP (Laspeyres);34.126055;83.508231;34.06093;82.787422;17.858388;47.085262
+Households consumption in GDP;22.139407;57.402789;22.075424;56.842048;12.738523;34.258052
+Public consumption in GDP;5.4545688;13.938798;5.4354838;13.782822;3.0781398;8.113413
+Investment in GDP;5.5232148;13.748282;5.5035887;13.591278;2.6078518;6.8456162
+Exports in GDP;1.6321673;3.0445989;1.6120148;3.0647309;0.5422335;0.9724962
+Imports in GDP;0.6233026;4.6262366;0.5655815;4.4934569;1.10836;3.1043161
+Imports/Domestic production ratio;-42.874873;-39.849978;-43.62748;-40.571016;-2.1303125;-3.7071495
+Imports of Non Energy goods in volume;25.42664;66.353292;25.269098;65.34582;10.72879;30.451222
+Exports of Non Energy goods in volume;1.3074606;2.0108725;1.3502485;2.1657345;3.2556766;5.8390583
+Total Employment;0.7324995;2.0022574;0.6524748;1.57683;-9.5980355;-17.725369
+Unemployment rate (% points);0.0090507;0.0153110;0.0097196;0.0187964;0.0953932;0.1769311
+Net-of-tax wages;30.568622;77.572707;30.509777;77.172721;24.478677;64.719237
+Labour Intensity (Laspeyres);-23.586244;-44.284715;-23.586163;-44.277999;-23.212923;-43.924608
+Labour tax rate (% points);3.683e-24;-4.128e-39;-1.501e-24;1.190e-38;-5.376e-26;-1.278e-39
+Energy Input Price (Laspeyres);-7.6922349;-7.4429324;-7.8888551;-7.7467408;-3.3849087;-5.9019994
+Energy Intensity (Laspeyres);38.76551;115.02336;38.732258;114.09004;12.322448;32.305387
+Energy cost share for non-energetic sector;-9.216113;-1.3565592;-8.7517372;-1.0794091;-0.7120384;-1.6463951
+Production Price (Laspeyres);-1.3909975;-2.2121692;-1.4411957;-2.3858522;-3.6571882;-6.3764367
+Production Price Energy goods (Laspeyres);-2.9097838;-3.5465105;-3.0210959;-3.7711178;-3.4847012;-6.0761937
+Production Price Non Energy goods (Laspeyres);-1.2558304;-2.0934171;-1.3005897;-2.262568;-3.6725389;-6.4031573
+Consumption Price for HH of Non Energy goods (Laspeyres);-1.0822909;-1.8411328;-1.1209639;-1.9924712;-3.3200055;-5.7967405
+Real Households consumption (Laspeyres);38.393353;99.545825;38.282397;98.573408;22.090682;59.409066
+Energy in Households consumption;1.2198064;2.7780934;1.2670354;2.7780934;0;0
+Non Energy goods in Households consumption;37.173547;96.767732;37.015361;95.795315;22.090682;59.409066
+Public Deficits;-410.62914;279.9597;-410.35783;279.08127;-370.49984;232.59287
+Country Deficits /GDP;-213.20045;-770.22992;-206.49314;-752.39515;-325.80316;-728.55318
+Total Emissions;17.770091;75.562689;15.892669;68.967341;10.257164;15.07922
+Total Taxes;33.205634;79.355036;33.060036;78.194148;17.732762;48.228202
+Households Energy Bills;20.336307;59.870799;21.424407;59.285542;-3.8877864;-6.780051
+Firms Energy Bills;6.4513937;51.472557;5.6339836;49.351289;9.685003;27.408566
+Households Energy Conso;28.491971;75.550294;29.9486;75.550294;0;0
+Firms Energy Conso;39.432376;138.53534;38.618833;129.27764;12.322448;32.305387
+Most sensitif import Elasticity for NonEner;1.2;1.2;1.2;1.2;1.2;1.2
+Most sensitif export Elasticity for NonEner ;1;1;1;1;1;1
+Global mean wage/Unemployment Elasticity;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1

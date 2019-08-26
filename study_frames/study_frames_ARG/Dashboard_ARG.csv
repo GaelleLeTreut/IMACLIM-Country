@@ -3,9 +3,9 @@ Component;Name
 System_Resol;Systeme_ProjHomothetic
 // System_Resol;Systeme_Static
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%F
-// SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_ProjHomo
+Optimization_Resol;%T
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
@@ -19,7 +19,7 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;2
 // SELECT a Macro framework to run;
 // Macro_nb;
 Macro_nb;Current
@@ -40,7 +40,7 @@ Scenario;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
-Output_files;%F
+Output_files;%T
 Output_prints;%F
 // SELECT the uses of carbon tax revenues;
 Recycling_Option;

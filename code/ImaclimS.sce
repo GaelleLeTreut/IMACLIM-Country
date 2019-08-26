@@ -115,6 +115,20 @@ if Output_files
     else
         copyfile(CODE + System_Resol + ".sce", SAVEDIR);
     end
+    
+    // Record the name of the simulation
+    fd = mopen(SAVEDIR + 'name.txt','wt');
+    if SIMU_MODE then
+        mputl(simu_name,fd);
+    else
+        if Scenario == '' then
+            mputl('NoScen',fd);
+        else
+            mputl(Scenario,fd);
+        end
+    end
+    mclose(fd);
+    
 end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
@@ -204,12 +218,12 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 for time_step=1:Nb_Iter
 
     // Creation of a new output subdirectory for each time step in case of several time steps calculation
-    if Nb_Iter<>1
+//    if Nb_Iter<>1
         if Output_files
             SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
             mkdir(SAVEDIR);
         end
-    end
+//    end
 	
 	// Loading different carbon tax diff for each time step ( to be informed in dashboard)
 	if CarbonTaxDiff
