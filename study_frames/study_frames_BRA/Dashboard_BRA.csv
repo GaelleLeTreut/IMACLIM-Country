@@ -26,17 +26,17 @@ Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;2
 // SELECT a Macro framework to run;
-Macro_nb;
-// Macro_nb;NDC
+// Macro_nb;
+Macro_nb;NDC
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
 // Scenario;PMR_Ref_Disag
-// Scenario;PMR_Ref
+Scenario;PMR_Ref
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
@@ -44,8 +44,8 @@ CO2_footprint;False
 Output_files;%F
 Output_prints;%T
 // SELECT the uses of carbon tax revenues;
-// Recycling_Option;
-Recycling_Option;LabTax
+Recycling_Option;
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH

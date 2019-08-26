@@ -6,6 +6,7 @@ Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
 
 
+/// Info  reduction goal
 if time_step == 1 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
 goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);

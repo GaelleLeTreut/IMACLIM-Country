@@ -49,15 +49,14 @@ Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;PublicDeficit
-// Recycling_Option;GreenInvest
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
-// Recycling_Option;LabTax
-// Recycling_Option;ExactRestitution
-// Recycling_Option;LabTax_PublicDeficit
-// Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_LumpSumHH
+// Recycling_Option;ExactRestitution
+// Recycling_Option;GreenInvest
+// Recycling_Option;LabTax_GreenInvest
+// Recycling_Option;LabTax_PublicDeficit
 // Select a closure of public finance while recycling carbon revenues;
 ClosCarbRev_CstNetLend;%T
 ClosCarbRev_AllLabTax;%F

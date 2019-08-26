@@ -217,7 +217,7 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, ClimPolCompensbySect)
     S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S) 
 
-    // Recycling options : RevenueRecycling_Const_1 for no labour tax cut // RevenueRecycling_Const_2 for all carb tax into labour tax cut RevenueRecycling_Const_3 for labour tax reduction while maintaining netlending constant (with gdp variation)
+    
     //RevenueRecycling_Const_1(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) 
     //Labour_Taxe_rate_Const_1(LabTaxRate_BeforeCut, Labour_Tax_rate, Labour_Tax_Cut)
 

@@ -1204,55 +1204,27 @@ Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
 
 /// WARNING : all recycling options that involve delta_LS_I can only work with a Invest_demand_Val_3
 	
-	if Recycling_Option=="PublicDeficit"
+	if Recycling_Option=="PublicDeficit"|Recycling_Option==""
 		delta_LS_S = zeros(1,nb_Sectors);
 		delta_LS_H = zeros(1,nb_Households);
 		delta_LS_I = 0;
 		delta_LS_LT = 0;
-	
-	elseif Recycling_Option=="GreenInvest" // CHECK
-		// All carbon tax revenues invested 
-		delta_LS_S = zeros(1,nb_Sectors);
-		delta_LS_H = zeros(1,nb_Households);
-		delta_LS_I = Tax_Base_Carbon ;
-		delta_LS_LT = 0;
-	
-	elseif Recycling_Option=="LumpSumHH"
-		// All carbon tax revenues return to HH  with identical amount per Consumption units
-		delta_LS_S = zeros(1,nb_Sectors);
-		delta_LS_H = divide(Consumption_Units.*Nb_Households,sum(Consumption_Units.*Nb_Households),1)* Tax_Base_Carbon
-		delta_LS_I = 0;
-		delta_LS_LT = 0;
-	
+		
 	elseif Recycling_Option=="LabTax"
 		// No transfers for HH and Sect, only labour cut
 		delta_LS_S = zeros(1,nb_Sectors);
 		delta_LS_H = zeros(1,nb_Households);
 		delta_LS_I = 0;
 		delta_LS_LT = 1;
-			
-	elseif Recycling_Option=="ExactRestitution"
-		// All payments are returned ( in case of BTA, revenues from border goes to public finance
-		delta_LS_S = sum(Carbon_Tax_IC,"r")
-		delta_LS_H = sum(Carbon_Tax_C,"r");
+
+	elseif Recycling_Option=="LumpSumHH"
+		// All carbon tax revenues return to HH  with identical amount per Consumption units
+		// Check if all carbon tax revenues or just the one from HH -> If  only HH  + ConstNetLend ==  Labour_Tax_LumpSum + ConstNetLend 
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = divide(Consumption_Units.*Nb_Households,sum(Consumption_Units.*Nb_Households),1)* Tax_Base_Carbon;
 		delta_LS_I = 0;
 		delta_LS_LT = 0;
 		
-	elseif Recycling_Option=="LabTax_PublicDeficit" // PAS COMPRIS : Pour l'instant revient au meme que labour tax
-		delta_LS_S = zeros(1, nb_Sectors);
-		delta_LS_H = zeros(1,nb_Households);
-		delta_LS_I = 0;
-		delta_LS_LT = 1;
-		
-	elseif Recycling_Option=="LabTax_GreenInvest"
-	// Carbon tax revenues from HH invested, what remains are used for labour tax cut 
-		delta_LS_S = zeros(1,nb_Sectors);
-		delta_LS_H = zeros(1,nb_Households);
-		delta_LS_I = sum(Carbon_Tax_C) ; 
-		delta_LS_LT = 1 ;
-		//  mettre dans l'équation de labtax - delta_LS_I comme pour climpens? 
-		
-			
 	elseif Recycling_Option=="LabTax_LumpSumHH"
 	// Carbon tax revenues from HH return to HH  with identical amount per Consumption units, what remains are for labour cut
 		delta_LS_S = zeros(1,nb_Sectors);
@@ -1260,12 +1232,47 @@ Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
 		delta_LS_I = 0;
 		delta_LS_LT = 1 ; 
 		
-	elseif Recycling_Option==""
-		delta_LS_S = zeros(1,nb_Sectors);
-		delta_LS_H = zeros(1,nb_Households);
+	elseif Recycling_Option=="ExactRestitution"
+		// All payments are returned ( in case of BTA, revenues from border goes to public finance
+		delta_LS_S = sum(Carbon_Tax_IC,"r")
+		delta_LS_H = sum(Carbon_Tax_C,"r");
 		delta_LS_I = 0;
 		delta_LS_LT = 0;
+
+	elseif Recycling_Option=="GreenInvest" 
+	// All carbon tax revenues invested 
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = Tax_Base_Carbon ;
+		delta_LS_LT = 0;
+
 		
+	elseif Recycling_Option=="LabTax_GreenInvest"
+	// Carbon tax revenues from HH invested, what remains are used for labour tax cut 
+		delta_LS_S = zeros(1,nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = sum(Carbon_Tax_C) ; 
+		delta_LS_LT = 1 ;
+
+	// elseif Recycling_Option=="LSBasicNeed" // IN progress
+		//////// Basic Need  in ktep/UC
+		// BasicNeed = zeros(nb_Sectors,1);
+		// BasicNeed(Indice_PrimEnerSect) = 1.98232460003744E-04;
+		// BasicNeed(Indice_FinEnerSect) = 3.7891394E-04 ; 
+		//////// exemptions money/UC - (Sec,HH) dimension
+		// ExempHH = BasicNeed .*.ones(1,nb_Households).* Carbon_Tax_rate_C .* Emission_Coef_C,"r");
+	
+		// delta_LS_S = zeros(1, nb_Sectors);
+		// delta_LS_H = Nb_Households .* Consumption_Units .*sum(ExempHH,"r");
+		// delta_LS_I = 0;
+		// delta_LS_LT = 1;
+		
+	elseif Recycling_Option=="LabTax_PublicDeficit" // PAS COMPRIS : to delete? Pour l'instant revient au meme que labour tax
+		delta_LS_S = zeros(1, nb_Sectors);
+		delta_LS_H = zeros(1,nb_Households);
+		delta_LS_I = 0;
+		delta_LS_LT = 1;
+				
 	else
 		error("Recycling option selected is not defined") 
 	end 
