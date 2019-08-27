@@ -245,7 +245,7 @@ for time_step=1:Nb_Iter
     // Load the projections for forcing
     if Scenario <> '' then
         if time_step == 1 then
-            exec("Import_Proj_Volume.sce");
+            exec("Load_Proj_files.sce");
         end
         exec('Load_Proj_Vol.sce');
     end

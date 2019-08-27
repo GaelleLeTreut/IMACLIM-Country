@@ -1878,6 +1878,14 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
         alpha = apply_proj_val(alpha, 'alpha');
     end
 
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+
 endfunction
 
 
@@ -1889,6 +1897,14 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL,
     
     if is_projected('alpha') then
         alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
     end
     
 endfunction

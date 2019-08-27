@@ -1,14 +1,15 @@
 // error max
 err = 1E-3;
 
-function test_proj(var_name , proj_ind)
+function test_proj(var_name)
 
     difference = d(var_name) - Proj_Vol(var_name).val;
 
     for ind = Proj_Vol(var_name).ind_of_proj
         zero = difference(ind(1),ind(2));
+        zero = matrix(zero,1,-1);
 
-        for z = zero'
+        for z = zero
             if abs(z) > err then
                 error("The projection of " + var_name + " did not go well");
             end

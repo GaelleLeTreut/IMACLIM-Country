@@ -125,19 +125,24 @@ for var = fieldnames(Proj_Vol)'
     end
 end
 
-
 // ------------------------------------ *
 // If needed, aggregate the projections *
 // ------------------------------------ *
 
 if AGG_type <> '' & proj_desaggregated then
 
+    nb_Sectors_ini = size(Index_CommoInit,1);
+
     for var = fieldnames(Proj_Vol)'
         if Proj_Vol(var).apply_proj then
             if var == 'IC' then
                 Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, all_IND);
-            elseif size(Proj_Vol(var).val,2) == 1 then
+            elseif size(Proj_Vol(var).val,1) == nb_Sectors_ini ..
+                & size(Proj_Vol(var).val,2) == 1 then
                 Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, list(1));
+            elseif size(Proj_Vol(var).val,1) == 1 ..
+                & size(Proj_Vol(var).val,2) == nb_Sectors_ini then
+                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, list(1), all_IND);
             else
                 error('Projection of ' + var + ' needs a rule to aggregate the columns');
             end
@@ -150,7 +155,7 @@ function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
 
     warning(var_intens_name + ' est calculé à partir de Y initial : il faut la projection de Y.'),
     Proj_Vol(var_intens_name) = Proj_Vol(var_name);
-    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Y';
+    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * (1.1 * Y');
     Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
     Proj_Vol(var_name).apply_proj = %F;
 
@@ -163,12 +168,12 @@ end
 
 // Labour intensity projection
 if Proj_Vol.Labour.intens then
-	warning('DEF INTENS PROJ Labour');
+	Proj_Vol = proj_intens(Proj_Vol, 'Labour', 'lambda');
 end
 
 // Capital_consumption intensity projection
 if Proj_Vol.Capital_consumption.intens then
-	warning('DEF INTENS PROJ Capital_consumption');
+	Proj_Vol = proj_intens(Proj_Vol, 'Capital_consumption', 'kappa');
 end
 // Don't project Y
 Proj_Vol.Y = null();
