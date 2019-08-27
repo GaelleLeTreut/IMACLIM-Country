@@ -2462,12 +2462,20 @@ function [y] = Capital_Consump_Const_1(Capital_consumption, Y, kappa) ;
 
     y1 = Capital_consumption - ( kappa .* Y' ) ;
 
+    if is_projected('Capital_consumption') then
+        y1 = apply_proj_val(y1,Capital_consumption,'Capital_consumption');
+    end
+
     y=y1';
 endfunction
 
 function Capital_consumption = Capital_Consump_Val_1(Y, kappa)
 
     Capital_consumption = ( kappa .* Y' );
+
+    if is_projected('Capital_consumption') then
+        Capital_consumption = apply_proj_val(Capital_consumption,'Capital_consumption');
+    end
 
 endfunction
 
@@ -2894,12 +2902,20 @@ function [y] = Employment_Const_1(Labour, lambda, Y) ;
 
     y1 = Labour - ( lambda .* Y' );
 
+    if is_projected('Labour') then
+        y1 = apply_proj_eq(y1,Labour,'Labour');
+    end
+
     y = y1';
 endfunction
 
 function Labour = Employment_Val_1(lambda, Y)
 
     Labour = ( lambda .* Y' );
+
+    if is_projected('Labour') then
+        Labour = apply_proj_val(Labour,'Labour');
+    end
 
 endfunction
 

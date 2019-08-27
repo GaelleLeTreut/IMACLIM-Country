@@ -25,26 +25,32 @@ for elt=1:size(listCSVfiles)
     // Read all Index csv files and gives them the name of the file itself
 	if strstr(listCSVfiles(elt),"IOT_") <> ""
 
-            listIOTfiles($+1)= listCSVfiles(elt);
+        listIOTfiles($+1)= listCSVfiles(elt);
 
-            [IndexRow,IndexCol,IOT] = read_table(STUDY_Country+Scenario+sep+listCSVfiles(elt),";");
-            varname = strsubst(listCSVfiles(elt),".csv","");
-            if isdef(varname)
-                warning(varname+" is already defined. please choose a sufix ")
-            end
-            IOT=evstr(IOT);
-            execstr(varname +"=IOT;");
-
-            //Just read all other CSV file
-
-        else
-            varname = strsubst(listCSVfiles(elt),".csv","");
-            matStr = read_csv(STUDY_Country+Scenario+sep+listCSVfiles(elt),";");
-            if isdef(varname)
-                warning(varname+" is already defined. please choose a sufix ")
-            end
-            execstr(varname +"=strtod(matStr);");
+        [IndexRow,IndexCol,IOT] = read_table(STUDY_Country+Scenario+sep+listCSVfiles(elt),";");
+        varname = strsubst(listCSVfiles(elt),".csv","");
+        if isdef(varname)
+            warning(varname+" is already defined. please choose a sufix ")
         end
+        IOT=evstr(IOT);
+        execstr(varname +"=IOT;");
+
+        //Just read all other CSV file
+
+    else
+        varname = strsubst(listCSVfiles(elt),".csv","");
+        matStr = read_csv(STUDY_Country+Scenario+sep+listCSVfiles(elt),";");
+        if isdef(varname)
+            warning(varname+" is already defined. please choose a sufix ")
+        end
+        // Record first line and first column of file
+        execstr(varname + '_hline = matStr(1,2:$);');
+        execstr(varname + '_hcol = matStr(2:$,1);');
+        // Delete them from the data
+        matStr(1,:) = [];
+        matStr(:,1) = [];
+        execstr(varname +"=strtod(matStr);");
+    end
 end
 
 // Feature to fill and aggregate IOT in projected quantities (which will be delaited later)

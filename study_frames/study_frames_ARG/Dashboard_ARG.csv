@@ -33,9 +33,9 @@ X_nonEnerg;False
 // Invest_matrix;%F
 Invest_matrix;%T
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
 // Scenario;NDC
-// Scenario;CCS
+Scenario;CCS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

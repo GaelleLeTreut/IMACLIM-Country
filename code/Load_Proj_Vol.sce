@@ -2,20 +2,22 @@
 // Load projection data *
 // -------------------- *
 
-// load IOT_Qtities_TimeStep
-execstr('iot_qtities = IOT_Qtities' + '_' + string(time_step));
+iot_qtities = eval('IOT_Qtities_' + string(time_step));
+prod_factors = eval('prod_factors_' + string(time_step));
+prod_factors_hline = eval('prod_factors_' + string(time_step) + '_hline');
+prod_factors_hcol = eval('prod_factors_' + string(time_step) + '_hcol');
 
 // Check IOT_Qtities_TimeStep's aggregation
 proj_desaggregated = ..
-prod(IndexRow == IndRow_IOT_Qtities) & prod(IndexCol == IndCol_IOT_Qtities);
+and(IndexRow == IndRow_IOT_Qtities) & and(IndexCol == IndCol_IOT_Qtities);
 
 proj_well_aggregated = ..
-prod(IndexRow(1:nb_Sectors,:) == Index_Commodities) & prod(IndexCol(:,1:nb_Sectors) == Index_Commodities');
+and(IndexRow(1:nb_Sectors,:) == Index_Commodities) & and(IndexCol(:,1:nb_Sectors) == Index_Commodities');
 
 
-// -------------- *
-// Headers for IC *
-// -------------- *
+// ------- *
+// Headers *
+// ------- *
 
 if proj_desaggregated then
     Index_Sectors_IC = Index_SectInit;
@@ -77,12 +79,11 @@ end
 // Fill projection's data *
 // ---------------------- *
 
-// if proj intens, load Y
-if Proj_Vol.IC.intens then
-    Proj_Vol.Y.file = Proj_Vol.IC.file;
-    Proj_Vol.Y.headers = 'Y';
-    Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
-end
+
+// load Y, may be needed for proj intens
+Proj_Vol.Y.file = Proj_Vol.IC.file;
+Proj_Vol.Y.headers = 'Y';
+Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
 
 for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
@@ -106,8 +107,20 @@ for var = fieldnames(Proj_Vol)'
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
             end
+        elseif Proj_Vol(var).file == 'prod_factors' then
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(prod_factors, prod_factors_hcol, prod_factors_hline, ..
+                                                var, Proj_Vol(var).headers);
+            else
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(prod_factors, prod_factors_hcol, prod_factors_hline, ..
+                                                    var, Proj_Vol(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
         else
-            error('You need to define how to read the projection file ' + Proj_Vol(var).file + 'for projection of ' + var)
+            error('You need to define how to read the projection file ' + Proj_Vol(var).file + ' for projection of ' + var)
         end
     end
 end
@@ -133,13 +146,29 @@ if AGG_type <> '' & proj_desaggregated then
 
 end
 
+function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
+
+    warning(var_intens_name + ' est calculé à partir de Y initial : il faut la projection de Y.'),
+    Proj_Vol(var_intens_name) = Proj_Vol(var_name);
+    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Y';
+    Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
+    Proj_Vol(var_name).apply_proj = %F;
+
+endfunction
 
 // IC intensity projection
 if Proj_Vol.IC.intens then
-	warning("alpha est calculé à partir de Y initial : il faut la projection de Y");
-    Proj_Vol.alpha = Proj_Vol.IC;
-	// Proj_Vol.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Proj.Y.val');
-    Proj_Vol.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
-    Proj_Vol.IC.apply_proj = %F;
-    Proj_Vol.Y = null();
+	Proj_Vol = proj_intens(Proj_Vol, 'IC', 'alpha');
 end
+
+// Labour intensity projection
+if Proj_Vol.Labour.intens then
+	warning('DEF INTENS PROJ Labour');
+end
+
+// Capital_consumption intensity projection
+if Proj_Vol.Capital_consumption.intens then
+	warning('DEF INTENS PROJ Capital_consumption');
+end
+// Don't project Y
+Proj_Vol.Y = null();

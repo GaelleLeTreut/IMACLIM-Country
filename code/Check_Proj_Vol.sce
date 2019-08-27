@@ -5,7 +5,7 @@ function test_proj(var_name , proj_ind)
 
     difference = d(var_name) - Proj_Vol(var_name).val;
 
-    for ind = Proj_Vol(var_name).ind_of_proj;
+    for ind = Proj_Vol(var_name).ind_of_proj
         zero = difference(ind(1),ind(2));
 
         for z = zero'
