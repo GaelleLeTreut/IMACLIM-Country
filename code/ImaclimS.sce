@@ -119,7 +119,7 @@ if Output_files
     // Record the name of the current run
     if SIMU_MODE then
         current_run_name = simu_name;
-    elseif Scenario == '' then
+    elseif Scenario <> '' then
         current_run_name = Scenario;
     else
         current_run_name = 'NoScen';

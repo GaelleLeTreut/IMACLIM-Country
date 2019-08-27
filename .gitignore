@@ -1,5 +1,12 @@
 # ignore the directory outputs and all its content
 outputs
 study_frames/Country_Selection.csv
+
 code/Test_FullCode/Saved_data
 code/Test_FullCode/Not_working_dashboards
+
+outputs_display/.*
+outputs_display/_*
+outputs_display/MacroBarChart
+outputs_display/MacroTables
+outputs_display/MacroRadarChart

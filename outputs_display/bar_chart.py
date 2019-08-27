@@ -1,74 +1,108 @@
 # -*- coding: utf-8 -*-
 
-from read_outputs import read_outputs_files
+import read_outputs as ro
 import matplotlib.pyplot as plt
 import numpy as np
 import os 
 
-# Créer dossier pour résultat
-barchart_dir = 'MacroBarChart/'
-if not os.path.exists(barchart_dir):
-    os.makedirs(barchart_dir)
+def build_charts(file_name, lines_to_draw, save_path):
 
-# Fichiers à lire
-macro_csv = 'TableMacroOutputExtended'
-files_to_read = [macro_csv]
+    # Load data of files to read
+    outputs = ro.read_output_file(file_name)
 
-# Récupérer ces fichiers dans les outputs
-outputs = read_outputs_files(files_to_read)
+    # TODO : fonction car besoin dans radar_chart
+    # Keep the selected lines
+    for fold in outputs.keys():
+        for time in outputs[fold].keys():
+            file = []
+            cpt = 0
+            for line in outputs[fold][time]:
+                kept_lines = [l for sublist in lines_to_draw \
+                    for l in sublist]
+                if line[0] in kept_lines:
+                    file.append(line)
+                else:
+                    cpt += 1
+            if not (cpt + len(file) == len(outputs[fold][time])):
+                raise Exception('A line to draw is not consistent with \
+                    files headers.')
+            
+            outputs[fold][time] = file
 
-# Garder les lignes qui ont des chiffres
-macros_val = dict()
-for d in outputs.keys():
-    macros_val[d] = dict()
-    for time in outputs[d].keys():
-        rows_val = []
-        for row in outputs[d][time][macro_csv]:
-            r_val = [row[0]]
+    # TODO : fonction car besoin dans radar_chart
+    # Convert the lines into numbers
+    for fold in outputs.keys():
+        for time in outputs[fold].keys():
             try:
-                r_val.append(float(row[1]))
-                rows_val.append(r_val)
+                file_str = outputs[fold][time]
+                file_numbers = [[row[0], float(row[1])] for row in file_str]
+                outputs[fold][time] = file_numbers
             except ValueError:
-                pass
-                #print(row[0] + ' is not a value row')
-        macros_val[d][time] = rows_val
+                raise Exception('Some elements are not numbers \
+                    in the lines to draw selected.')
+            
+    # Enregistrer la liste des bar chart à créer
+    first_col = ro.record_first_col(outputs, file_name)
+
+    time_steps = ro.record_time_steps(outputs)
+    #list(macros_val[d0].keys())
+
+    bar_chart_name = ''
+    x=[]
+    height=[]
+
+    # Créer les bar chart
+    for i in range(len(first_col)):
+        bar_chart_name = first_col[i]
+        cpt = 0
+        x = []
+        height = []
+        width = 1.0
+        for time in time_steps:
+            for fold in outputs.keys():
+                line = outputs[fold][time][i]
+                cpt += 1
+                x.append(cpt)
+                height.append(line[1])
+        fig = plt.figure()
+        plt.bar(x, height, width, color='b')
+        try:
+            plt.savefig(save_path + bar_chart_name + '.png')
+        except:
+            print('ERROR with bar chart : ' + bar_chart_name)
+        #plt.show()
+        plt.close(fig)
         
-# Enregistrer la liste des bar chart à créer
-first_col = []
-d0 = list(macros_val.keys())[0]
-time0 = list(macros_val[d0].keys())[0]
-for row in macros_val[d0][time0]:
-    first_col.append(row[0])
-    
-# TODO : TESTER que les colonnes sont cohérentes entre elles
+def data_macro():
 
-time_steps = ['Time_1', 'Time_2']
+    macro_csv_name = 'TableMacroOutputExtended'
 
-bar_chart_name = ''
-x=[]
-height=[]
+    lines_to_draw = [
+        [
+            'Real GDP (Laspeyres)', 
+            'Households consumption in GDP', 
+            'Public consumption in GDP'
+        ],
+        [
+            'Exports in GDP',
+            'Imports in GDP',
+            'Imports/Domestic production ratio',
+            'Imports of Non Energy goods in volume'
+        ],
+        [
+            'Labour Intensity (Laspeyres)',
+            'Labour tax rate (% points)'
+        ]
+    ]
 
-# Créer les bar chart
-for i in range(len(first_col)):
-    bar_chart_name = first_col[i]
-    cpt = 0
-    x = []
-    height = []
-    width = 1.0
-    for time in time_steps:
-        for d in macros_val.keys():
-            line = macros_val[d][time][i]
-            cpt += 1
-            x.append(cpt)
-            height.append(line[1])
-    fig = plt.figure()
-    plt.bar(x, height, width, color='b')
-    try:
-        plt.savefig(barchart_dir + bar_chart_name + '.png')
-    except:
-        print('ERROR with bar chart : ' + bar_chart_name)
-    #plt.show()
-    plt.close(fig)
-    
-    
+    # Folder for results
+    barchart_fold = 'MacroBarChart/'
+    if not os.path.exists(barchart_fold):
+        os.makedirs(barchart_fold)
+
+    return macro_csv_name, lines_to_draw, barchart_fold
+
+if __name__ == "__main__":
+    work_file, lines_to_draw, save_path = data_macro()
+    build_charts(work_file, lines_to_draw, save_path)
     

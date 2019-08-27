@@ -3,88 +3,157 @@
 import os
 import csv
 
-outputs_dir = '../outputs/'
+# String data
 
-def read_outputs_files(files_to_read):
+outputs_fold = '../outputs/'
+time_prefix = 'Time_'
+
+def read_output_file(file_to_read):
+    """Load the data of files to read from every *time* subfolder of 
+    each output foldectory.
     
-    outputs = dict()
-    recorded_csv = dict()
-    
-    # liste des dossiers dans outputs
-    list_outputs = os.listdir(outputs_dir)
-    # enregistrer le chemin complet des dossiers
-    list_outputs = [outputs_dir + dir + '/' for dir in list_outputs]
-    
-    # enregistrer les fichiers de ces dossiers
-    for dir in list_outputs:
-        if not os.path.isdir(dir):
-            print('Warning : ' + dir + ' is not a directory')   
+    file_to_read : *prefix* of a file to load."""
+
+    def fold_name(out_fold):
+        """Record the name of the output out_foldectory."""
+        name = ''
+        if 'name.txt' in os.listdir(out_fold):
+            fichier = open(out_fold + 'name.txt', 'r')
+            name = fichier.read()
+            name = name.strip()
+            fichier.close() 
         else:
-            # Enregistrer le nom du dossier 
-            name = ''
-            if 'name.txt' in os.listdir(dir):
-                fichier = open(dir + 'name.txt', 'r')
-                name = fichier.read()
-                name = name.strip()
-                fichier.close() 
-            else:
-                raise Exception('No field name.txt found')
-                
-            # enregistrer le dossier
+            raise Exception('No field name.txt found')
+        return name
+    
+    def is_time_out_folder(time):
+        """Check if time begins with time_prefix."""
+        return time[:len(time_prefix)] == time_prefix
+
+    def load_data(file_to_read, time_path):
+        """Return a dict of data contained in files of file_to_read."""
+        
+        def file_path(file_name, folder_path):
+            """Path of the file beginning with file_name."""
+            folder_files = os.listdir(folder_path)
+            len_fname = len(file_name)
+            for f in folder_files:
+                if f[:len_fname] == file_name:
+                   return folder_path + f
+            raise Exception(file_name + ' is not a prefix of a file of ' \
+                            + folder_path)
+
+        def is_csv(file):
+            """Check if file is a csv file."""
+            csv_suffix = '.csv'
+            return file[-len(csv_suffix):] == csv_suffix
+
+        def remove_empty_line(csv_file):
+            """Remove the empty line of csv_files."""
+            non_empty = []
+            for r in csv_file:
+                # Check if r is empty
+                is_empty = True
+                for elt in r:
+                    if len(elt) != 0:
+                        is_empty = False
+                        break
+
+                if not is_empty:
+                    non_empty.append(r)
+
+            return non_empty
+            
+        # Record the content
+        csv_path = file_path(file_to_read, time_path)
+        if not is_csv(csv_path):
+            raise Exception('For now, only csv files can be read.')
+
+        # Read the file
+        file = []
+        with open(csv_path, 'r') as csvFile:
+            file = csv.reader(csvFile, delimiter = ';', \
+                                skipinitialspace=True)
+            file = remove_empty_line(file)            
+        csvFile.close()
+        return file
+
+    # paths of outputs foldectories
+    list_outputs = os.listdir(outputs_fold)
+    list_outputs = [outputs_fold + out_fold + '/' for out_fold in list_outputs]
+
+    # Fill the data structure
+
+    outputs = dict()
+
+    for out_fold in list_outputs:
+
+        if not os.path.isdir(out_fold):
+            print('Warning : ' + out_fold + ' is not a out_foldectory')   
+
+        else:
+            # Name of the out_foldectory
+            name = fold_name(out_fold)
+            
+            # Data structure
             outputs[name] = dict()
-            recorded_csv[name] = dict()
                 
-            # Sous-dossier Time_
-            for time in os.listdir(dir):
-                if time[:5] == 'Time_':
-                    
-                    # Enregistrer le sous dossier Time_
-                    outputs[name][time] = dict()
-                    recorded_csv[name][time] = dict()
-                    
-                    # enregistrer le chemin d'accès
-                    time_path = dir + time + '/'
-                    outputs[name][time]['path'] = time_path
-                    
-                    # enregistrer le nom des fichiers recherchés
-                    files_of_time = os.listdir(time_path)
-                    
-                    for file_name in files_to_read:
-                        len_file_name = len(file_name)
-                        file_found = False
-                        for f in files_of_time:
-                            if f[:len_file_name] == file_name:
-                                if not f[-4:] == '.csv':
-                                    raise Exception(file_name + 'is not a .csv \
-                                                    file, if you want to read \
-                                                    it, write a specific code')
-                                else:
-                                    recorded_csv[name][time][file_name] = f
-                                    file_found = True
-                        
-                        if not file_found:
-                            raise Exception(file_name + ' is not a prefix of \
-                                            a file of ' + time_path)
-                        
-                    # enregistrer leur contenu
-                    for file_name in recorded_csv[name][time].keys():
-                        csv_file = recorded_csv[name][time][file_name]
-                        csv_path = time_path + csv_file
-                        with open(csv_path, 'r') as csvFile:
-                            file = csv.reader(csvFile, delimiter = ';', \
-                                              skipinitialspace=True)
-                            rows = []
-                            for r in file:
-                                # supprimer les lignes vides
-                                is_empty = True
-                                for elt in r:
-                                    if len(elt) != 0:
-                                        is_empty = False
-                                        break
-                                if not is_empty:
-                                    rows.append(r)
-                            outputs[name][time][file_name] = rows
-                        csvFile.close()
-                            
+            # Read time sub-out_folders
+            for time in os.listdir(out_fold):
+                if is_time_out_folder(time):
+
+                    # Path of time sub out_folder
+                    time_path = out_fold + time + '/'
+
+                    # Load the data
+                    outputs[name][time] = load_data(file_to_read, 
+                                                    time_path)        
             
     return outputs
+
+
+def record_first_col(outputs, file_name):
+    """Return the first column of file_name.
+       Return an error if the first columns are not consistent."""
+    
+    # First column of one file
+    fold0 = list(outputs.keys())[0]
+    time0 = list(outputs[fold0].keys())[0]
+
+    file0 = outputs[fold0][time0]
+    first_col = [row[0] for row in file0]
+        
+    # Check that the first column is the same for every file
+    for fold in outputs.keys():
+        for time in outputs[fold].keys():
+
+            file = outputs[fold][time]
+            file_first_col = [row[0] for row in file]
+
+            if file_first_col != first_col:
+                raise Exception('Different first column in outputs of : ' \
+                                 + file_name)
+
+    return first_col
+
+def record_time_steps(outputs):
+    """Return the list of time step used.
+       Return an error if some output folders have different time steps."""
+
+    fold0 = list(outputs.keys())[0]
+    time_steps = list(outputs[fold0].keys())
+    err = Exception('The time steps of the outputs are not consistent.')
+
+    for fold in outputs.keys():
+        
+        time = list(outputs[fold].keys())
+
+        if len(time) != len(time_steps):
+            raise err
+
+        for t in time:
+            if not t in time_steps:
+                raise err
+
+    return time_steps
+    

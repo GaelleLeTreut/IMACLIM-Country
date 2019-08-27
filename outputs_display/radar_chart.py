@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from test_radar_chart2 import *
-
+from test_radar_chart2 import radar_factory
 from read_outputs import read_outputs_files
 import os 
+import matplotlib.pyplot as plt
 
 radarchart_name = 'macro_radar'
 
 # Créer dossier pour résultat
-radarchart_dir = 'MacroRadarChart/'
-if not os.path.exists(radarchart_dir):
-    os.makedirs(radarchart_dir)
+radarchart_fold = 'MacroRadarChart/'
+if not os.path.exists(radarchart_fold):
+    os.makedirs(radarchart_fold)
 
 # Fichiers à lire
 macro_csv = 'TableMacroOutputExtended'
@@ -52,7 +52,7 @@ for d in outputs.keys():
         for i in range(len(norm_list[t])):
             macro_prop[d][time][i] = current_list[i] / norm_list[t][i]
 
-time_steps = ['Time_1', 'Time_2']
+time_steps = list(macro_prop[ref].keys())
 
 data = [properties]
 
@@ -64,17 +64,6 @@ for time in time_steps:
     
     data.append((time,data_time))
     
-
-"""for time in time_steps:
-    fig, t, axes = new_radar()
-    
-    for d in macro_prop.keys():
-        values = macro_prop[d][time]
-        draw_values(values, t, axes)
-        
-    # Done
-    plt.savefig(radarchart_dir + time + '.png', facecolor='white')
-    plt.show()"""
     
 # Build the radar chart
 N = len(properties)
@@ -84,6 +73,8 @@ spoke_labels = data.pop(0)
 
 fig, axes = plt.subplots(figsize=(9, 9), nrows=2, ncols=1,
                          subplot_kw=dict(projection='radar'))
+                         #facecolor = 'white')
+
 fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
 
 colors = ['b', 'r', 'g']#, 'm', 'y']
@@ -96,6 +87,7 @@ for ax, (title, case_data) in zip(axes.flatten(), data):
         ax.plot(theta, d, color=color)
         #ax.fill(theta, d, facecolor=color, alpha=0.25)
     ax.set_varlabels(spoke_labels)
+    #ax.set_facecolor('white')
 
 # add legend relative to top-left plot
 #ax = axes[0, 0]
@@ -108,5 +100,5 @@ fig.text(0.5, 0.965, 'Titre',
          horizontalalignment='center', color='black', weight='bold',
          size='large')
 
-plt.savefig(radarchart_dir + radarchart_name + '.png')
+plt.savefig(radarchart_fold + radarchart_name + '.png')
 plt.show()
