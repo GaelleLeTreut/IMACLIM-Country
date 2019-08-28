@@ -156,4 +156,13 @@ def record_time_steps(outputs):
                 raise err
 
     return time_steps
+
+def get_line(file, line_name):
+    """Return the line of the file whose header is line_name."""
+    
+    for line in file:
+        if line[0] == line_name:
+            return line
+    
+    raise Exception(line_name + ' has not been found in the file.')
     
