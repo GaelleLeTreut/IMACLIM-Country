@@ -831,7 +831,7 @@ OutputTable.GDP_decomBIS = [["Variable", "Nominal 0 (G€)", "Nominal 1 (G€)",
 
 // OutputTable.MacroT = [ ["Macro results", "in %"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Trade balance", (((sum(d.X_value) - sum(d.M_value))/(sum(BY.X_value) - sum(BY.M_value)))-1)*100];["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour cost share", (evol.LabourShareMacro-1)*100];["Labour tax rate (% points)", - Labour_Tax_Cut];  ["Net-of-tax wages", (NetWage_variation-1)*100]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100];  ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Households Consumption Price (Laspeyres)", (C_pLasp-1)*100];["	Energy Consumption Price for HH(Laspeyres", (C_En_pLasp-1)*100];["	Non Energy Consumption Price for HH(Laspeyres)", (C_NonEn_pLasp-1)*100]; ["Public Deficits", evol.Ecotable(Indice_NetLending, Indice_Government)*100]; ["Total Emissions", evol.DOM_CO2*100];["",""];["Import Elasticity for Non Energy goods",unique(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
 
-OutputTable.MacroT = [ ["Macro results", "in %"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Net-of-tax wages", (d.NetWage_variation-1)*100];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour tax rate (% points)", - d.Labour_Tax_Cut];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100]; ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Energy cost share for non-energetic sector", (evol.ENshareNONEner-1)*100 ]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Public Deficits", evol.Ecotable(Indice_NetLending, Indice_Government)*100]; ["Total Emissions", evol.DOM_CO2*100];["",""];["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
+OutputTable.MacroT = [ ["Macro results", "in %/BY"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Net-of-tax wages", (d.NetWage_variation-1)*100];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour tax rate (% points)", - d.Labour_Tax_Cut];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100]; ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Energy cost share for non-energetic sector", (evol.ENshareNONEner-1)*100 ]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Public Deficits", evol.Ecotable(Indice_NetLending, Indice_Government)*100]; ["Total Emissions", evol.DOM_CO2*100];["",""];["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
 
 // additional calculation
 BY.Total_taxes = sum(BY.Taxes)+sum(BY.Carbon_Tax_C)+sum(BY.Carbon_Tax_IC);
@@ -845,7 +845,81 @@ evol.HH_EnConso = sum(d.C(Indice_EnerSect))./sum(BY.C(Indice_EnerSect));
 evol.Corp_EnConso = sum(d.IC(Indice_EnerSect,:))./sum(BY.IC(Indice_EnerSect,:)); 
 evol.NetLendingRoW_GDP = (d. NetLending(Indice_RestOfWorld)./d.GDP) / (BY.NetLending(Indice_RestOfWorld)./BY.GDP);
 
-OutputTable.MacroTExtended = [ ["Macro results", "in %"];["Carbon Tax rate", d.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Net-of-tax wages", (d.NetWage_variation-1)*100];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour tax rate (% points)", - Labour_Tax_Cut];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100]; ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Energy cost share for non-energetic sector", (evol.ENshareNONEner-1)*100 ]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];["Consumption Price for HH of Non Energy goods (Laspeyres)", (C_NonEn_pLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Public Deficits", evol.Ecotable(Indice_NetLending, Indice_Government)*100];["Country Deficits /GDP", (evol.NetLendingRoW_GDP-1)*100]; ["Total Emissions", evol.DOM_CO2*100];["Total Taxes", (evol.Total_taxes-1)*100];["Households Energy Bills", (evol.HH_EnBill-1)*100];["Firms Energy Bills", (evol.Corp_EnBill-1)*100];["Households Energy Conso", (evol.HH_EnConso-1)*100];["Firms Energy Conso", (evol.Corp_EnConso-1)*100];["",""];["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
+OutputTable.MacroTExtended_evolBY = [ 
+["Macro results", "in %/BY"];.. 
+["Carbon Tax rate", d.Carbon_Tax_rate / 10^3 + money+"/tCO2"];.. 
+["Labour Tax cut", DispLabTabl];.. 
+["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];.. 
+["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100];.. 
+["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100];.. 
+["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100];.. 
+["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100];.. 
+["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100];.. 
+["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100];.. 
+["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
+["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
+["Total Employment", (evol.Labour_tot-1)*100];.. 
+["Unemployment rate (% points)", d.u_tot - BY.u_tot];.. 
+["Net-of-tax wages", (d.NetWage_variation-1)*100];.. 
+["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];.. 
+["Labour tax rate (% points)", - Labour_Tax_Cut];.. 
+["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100];.. 
+["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100];.. 
+["Energy cost share for non-energetic sector", (evol.ENshareNONEner-1)*100 ];.. 
+["Production Price (Laspeyres)", (Y_pLasp-1)*100];.. 
+["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100];.. 
+["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];.. 
+["Consumption Price for HH of Non Energy goods (Laspeyres)", (C_NonEn_pLasp-1)*100];.. 
+["Real Households consumption (Laspeyres)", (C_qLasp-1)*100];.. 
+["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
+["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];.. 
+["Public Deficits", evol.Ecotable(Indice_NetLending, Indice_Government)*100];.. 
+["Country Deficits /GDP", (evol.NetLendingRoW_GDP-1)*100];.. 
+["Total Emissions", evol.DOM_CO2*100];.. 
+["Total Taxes", (evol.Total_taxes-1)*100];.. 
+["Households Energy Bills", (evol.HH_EnBill-1)*100];.. 
+["Firms Energy Bills", (evol.Corp_EnBill-1)*100];.. 
+["Households Energy Conso", (evol.HH_EnConso-1)*100];.. 
+["Firms Energy Conso", (evol.Corp_EnConso-1)*100];.. 
+["",""];.. 
+["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];.. 
+[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];.. 
+[" Global mean wage/Unemployment Elasticity",sigma_omegaU]
+]; 
+
+OutputTable.MacroTExtended_Ratio = [
+["Macro results", "Ratio/BY"];..
+["GDP (Laspeyres)", GDP_qLasp];.. 
+["Households consumption in GDP",C_qLasp];.. 
+["Investment in GDP",I_qLasp];.. 
+["Public consumption in GDP", G_qLasp];.. 
+["Exports in GDP", X_qLasp];.. 
+["Imports in GDP", M_qLasp];.. 
+["Imports/Domestic production ratio",M_Y_Ratio_qLasp];.. 
+["Imports of Non Energy goods in volume", divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan )];.. 
+["Exports of Non Energy goods in volume", divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan )];.. 
+["Total Employment", divide(d.Labour_tot, BY.Labour_tot, %nan)];.. 
+["Unemployment rate", d.u_tot/BY.u_tot ];.. 
+["Labour Intensity (Laspeyres)",lambda_pLasp];..  
+["Energy Input Price (Laspeyres)", IC_Ener_pLasp];.. 
+["Energy Intensity (Laspeyres)", alpha_Ener_qLasp];.. 
+["Energy cost share for non-energetic sector", d.ENshareNONEner/BY.ENshareNONEner];.. 
+["Production Price (Laspeyres)", Y_pLasp];.. 
+["Production Price Energy goods (Laspeyres)", Y_En_pLasp];.. 
+["Production Price Non Energy goods (Laspeyres)", Y_NonEn_pLasp];.. 
+["Consumption Price for HH of Non Energy goods (Laspeyres)", C_NonEn_pLasp];.. 
+["Real Households consumption (Laspeyres)", C_qLasp];.. 
+[" Energy in Households consumption", C_En_qLasp];.. 
+[" Non Energy goods in Households consumption", C_NonEn_qLasp];.. 
+["Public Deficits", d.Ecotable(Indice_NetLending, Indice_Government)/ BY.Ecotable(Indice_NetLending, Indice_Government)];.. 
+["Country Deficits /GDP", (d. NetLending(Indice_RestOfWorld)./d.GDP) / (BY.NetLending(Indice_RestOfWorld)./BY.GDP)];.. 
+["Total Emissions", d.DOM_CO2/BY.DOM_CO2];.. 
+["Total Taxes", d.Total_taxes/BY.Total_taxes];.. 
+["Households Energy Bills", sum(d.C_value(Indice_EnerSect))./sum(BY.C_value(Indice_EnerSect))];.. 
+["Firms Energy Bills", sum(d.IC_value(Indice_EnerSect,:))./sum(BY.IC_value(Indice_EnerSect,:))];.. 
+["Households Energy Conso", sum(d.C(Indice_EnerSect))./sum(BY.C(Indice_EnerSect))];.. 
+["Firms Energy Conso", sum(d.IC(Indice_EnerSect,:))./sum(BY.IC(Indice_EnerSect,:))];.. 
+];
 
 
 OutputTable.CompSectTable = [["Variation (%)", Index_Sectors']; ["Production Price", ((divide(d.pY , BY.pY , %nan )-1)*100)']; ["Real Households consumption_"+Index_Households , ((divide(d.C , BY.C , %nan )-1)*100)']; ["Exports in volume", ((divide(d.X , BY.X , %nan )-1)*100)'];["Imports in volume", ((divide(d.M , BY.M, %nan )-1)*100)'];["Trade balance ",((divide((d.X_value' - d.M_value),(BY.X_value' - BY.M_value),%nan))-1)*100]; ["Energy Cost share variation", (evol.ENshare-1)*100 ]; [ " Energy/Labour cost variation" , (evol.ShareEN_Lab-1)*100]; ["Labour", (divide(d.Labour , BY.Labour, %nan )-1)*100]; ["Unitary Labour Cost variation", (evol.Unit_Labcost-1)*100]; ["Net nominal wages", (divide(d.w , BY.w, %nan )-1)*100]; ["Net real wages (Consumer Price Index)", (((d.w./CPI)./(BY.w./BY.CPI))-1)*100];["Purchasing power of wages_"+Index_Households, divide((ones(nb_Households,1).*.d.w)./d.pC' , (ones(nb_Households,1).*.BY.w)./BY.pC', %nan )]];
@@ -892,7 +966,8 @@ end
 
 if Output_files
 csvWrite(OutputTable.MacroT,SAVEDIR+"TableMacroOutput_"+time_step+".csv", ';');
-csvWrite(OutputTable.MacroTExtended,SAVEDIR+"TableMacroOutputExtended_"+time_step+".csv", ';');
+csvWrite(OutputTable.MacroTExtended_evolBY,SAVEDIR+"TableMacroOutputExtended_"+time_step+".csv", ';');
+csvWrite(OutputTable.MacroTExtended_Ratio,SAVEDIR+"TableMacroOutputRatioBY_"+time_step+".csv", ';');
 csvWrite(OutputTable.CompSectTable,SAVEDIR+"TableSectOutput_"+time_step+".csv", ';');
 csvWrite(OutputTable.EnerNonEnTable,SAVEDIR+"TableENnonEnOutput_"+time_step+".csv", ';');
 // csvWrite(OutputTable.Elasticities,SAVEDIR+"TableElasticities_"+time_step+".csv", ';');
