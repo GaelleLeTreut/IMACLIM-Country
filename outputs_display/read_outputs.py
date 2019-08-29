@@ -78,7 +78,7 @@ def read_output_file(file_to_read):
         csvFile.close()
         return file
 
-    # paths of outputs foldectories
+    # paths of outputs folds
     list_outputs = os.listdir(outputs_fold)
     list_outputs = [outputs_fold + out_fold + '/' for out_fold in list_outputs]
 

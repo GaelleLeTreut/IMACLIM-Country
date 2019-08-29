@@ -14,7 +14,7 @@ def output_table(file_name, lines_to_remove, save_path):
     # Load data of file_name
     outputs = ro.read_output_file(file_name)
 
-    # Delete first lines
+    # Remove lines
     for out_fold in outputs.keys():
         for time in outputs[out_fold].keys():
             file = []
