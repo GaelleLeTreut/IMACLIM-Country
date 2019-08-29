@@ -1,6 +1,6 @@
 ;Corporations;Government;Households;RestOfWorld
 Trade_Balance;0;0;0;-184546
-GOS_byAgent;689738.3948;45734.46718;227076.0987;0
+GOS_byAgent;194902.773;45734.46718;721911.7205;0
 NetCompWages_byAgent;0;0;767765.9035;0
 InsuranceContrib_byAgent;0;227438.8288;0;0
 Production_Tax_byAgent;0;0;0;0
@@ -8,12 +8,12 @@ Energ_Tax_byAgent;0;0;0;0
 Carbon_Tax_byAgent;0;0;0;0
 OtherIndirTax_byAgent;0;164988.2119;0;0
 VA_Tax_byAgent;0;189934.2102;0;0
-Property_income;62185.37351;54449;-94321.05259;-22313.32093
-Unemployment_transfers;0;-18501.40892;18501.40892;0
+Property_income;-62185.37351;-54449;94321.05259;22313.32093
+Unemployment_transfers;0;-1850.140892;1850.140892;0
 Pensions;0;-232423.9496;232423.9496;0
-Other_social_transfers;0;-74689.64151;74689.64151;0
+Other_social_transfers;0;-91340.90953;91340.90953;0
 ClimPolicyCompens;0;0;0;0
-Other_Transfers;2446.305288;-361910.1258;162838.4996;196625.3209
+Other_Transfers;621652.6741;-253012.1258;-520639.2273;151998.6791
 Income_Tax;0;54660;-54660;0
 Corporate_Tax;-415023;415023;0;0
 Other_Direct_Tax;0;0;0;0
