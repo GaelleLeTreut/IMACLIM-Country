@@ -1,7 +1,7 @@
 Socio demograhic variables;value;units
-Population;41733.271;Thousands of people
-Retired;5352.255;Thousands of people
-Unemployed;2879.595699;Thousands of people
-Labour_force;19322.50447;Thousands of people
-Consumption_Units;0;0
-Nb_Households;12453.61797;Thousands of people
+Population;41733.271;thousand of people
+Retired;5352.255;thousand of people
+Unemployed;2879.595699;thousand of people
+Labour_force;19322.50447;thousand of people
+Consumption_Units;%nan;to define
+Nb_Households;12747.90495;Thousands of households
