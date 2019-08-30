@@ -1,11 +1,3 @@
-// -------------------- *
-// Load projection data *
-// -------------------- *
-
-iot_qtities = eval('IOT_Qtities_' + string(time_step));
-prod_factors = eval('prod_factors_' + string(time_step));
-prod_factors_hline = eval('prod_factors_' + string(time_step) + '_hline');
-prod_factors_hcol = eval('prod_factors_' + string(time_step) + '_hcol');
 
 // Check IOT_Qtities_TimeStep's aggregation
 proj_desaggregated = ..
@@ -79,11 +71,32 @@ end
 // Fill projection's data *
 // ---------------------- *
 
+// Load data files
+loaded_iot = %F;
+loaded_prod = %F;
+
+for var = fieldnames(Proj_Vol)'
+    if Proj_Vol(var).file == 'IOT_Qtities' & ..
+        Proj_Vol(var).apply_proj & ..
+        ~loaded_iot then
+        iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
+        loaded_iot = %T;
+    elseif Proj_Vol(var).file == 'prod_factors' & ..
+        Proj_Vol(var).apply_proj & ..
+        ~loaded_prod then
+        prod_factors = eval('prod_factors_' + string(time_step));
+        prod_factors_hline = eval('prod_factors_' + string(time_step) + '_hline');
+        prod_factors_hcol = eval('prod_factors_' + string(time_step) + '_hcol');
+        loaded_prod = %T;
+    elseif Proj_Vol(var).file <> 'IOT_Qtities' & Proj_Vol(var).file <> 'prod_factors'
+        error('File name not known, please write code to treat it.');
+    end
+end
 
 // load Y, may be needed for proj intens
 Proj_Vol.Y.file = Proj_Vol.IC.file;
 Proj_Vol.Y.headers = 'Y';
-Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
+Proj_Vol.Y.apply_proj = %T;
 
 for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
@@ -162,17 +175,17 @@ function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
 endfunction
 
 // IC intensity projection
-if Proj_Vol.IC.intens then
+if Proj_Vol.IC.apply_proj & Proj_Vol.IC.intens then
 	Proj_Vol = proj_intens(Proj_Vol, 'IC', 'alpha');
 end
 
 // Labour intensity projection
-if Proj_Vol.Labour.intens then
+if Proj_Vol.Labour.apply_proj & Proj_Vol.Labour.intens then
 	Proj_Vol = proj_intens(Proj_Vol, 'Labour', 'lambda');
 end
 
 // Capital_consumption intensity projection
-if Proj_Vol.Capital_consumption.intens then
+if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens then
 	Proj_Vol = proj_intens(Proj_Vol, 'Capital_consumption', 'kappa');
 end
 // Don't project Y
