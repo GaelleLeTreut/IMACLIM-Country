@@ -9,12 +9,12 @@ I_ratio_str = I_ratio_str(2:$,2:$);
 I_ratio = evstr(I_ratio_str);
 
 // Check data
-sensib = 1D-4;
-for line = 1:nb_Sectors
-    if ( abs( sum(I_ratio(line,:)) - 1 ) > sensib ) then
-        error("Line " + (line+1) + " of Investment ratios matrix is not balanced to 1 : " + DATA_Country + "Invest_Desag.csv");
-    end 
-end
+// sensib = 1D-4;
+// for line = 1:nb_Sectors
+    // if ( abs( sum(I_ratio(line,:)) - 1 ) > sensib )
+			// error("Line " + (line+1) + " of Investment ratios matrix is not balanced to 1 : " + DATA_Country + "Invest_Desag.csv");
+    // end 
+// end
 
 // Desaggregate I_value
 for line = 1:nb_Sectors
@@ -23,9 +23,18 @@ for line = 1:nb_Sectors
     end
 end
 
+// Check data
+sensib = 1D-4;
+for line = 1:nb_Sectors
+    if ( abs( sum(I_value_DESAG(line,:)) - initial_value.I_value(line) ) > sensib ) then
+        error("Line " + (line) + " of Investment  matrix. Check if ratio sum 1 : " + DATA_Country + "Invest_Desag.csv");
+    end 
+end
+
 // replace I_value and I by its disaggregations
 initial_value.I_value = I_value_DESAG;
 initial_value.I = I_value_DESAG ./ (initial_value.pI*ones(1,nb_Sectors));
+
 
 
 // clear the intermediate variables
