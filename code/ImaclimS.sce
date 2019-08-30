@@ -56,12 +56,12 @@ end
 
 // output of print
 if debug_mode then
-    //out2 =0;
-    // out2 = %io(2);
+	//out2 =0;
+	// out2 = %io(2);
     out = %io(2);
     warning('on');
 else
-    // out2 = 0;
+	// out2 = 0;
     out = 0;
     warning('off');
 end
@@ -99,7 +99,7 @@ if Output_files
     else
         syst_name = System_Resol;
     end
-
+    
     runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
     SAVEDIR = OUTPUT + runName + filesep();
     mkdir(SAVEDIR);
@@ -115,20 +115,6 @@ if Output_files
     else
         copyfile(CODE + System_Resol + ".sce", SAVEDIR);
     end
-
-    // Record the name of the current run
-    if SIMU_MODE then
-        current_run_name = simu_name;
-    elseif Scenario <> '' then
-        current_run_name = Scenario;
-    else
-        current_run_name = 'NoScen';
-    end
-
-    fd = mopen(SAVEDIR + 'name.txt','wt');
-    mputl(current_run_name,fd);
-    mclose(fd);
-
 end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
@@ -217,24 +203,24 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
 
-    // Loading different carbon tax diff for each time step ( to be informed in dashboard)
-    if CarbonTaxDiff
-        if AGG_type == ""
-            parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC"+string(AGG_type)+"_"+time_step+".csv",";");
-            parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+"_"+time_step+".csv",";");
-        else
-            parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+"_"+time_step+".csv",";");
-            parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+"_"+time_step+".csv",";");
-        end
-        parameters.CarbonTax_Diff_IC (1,:) = [];
-        parameters.CarbonTax_Diff_IC (:,1) = [];
-        parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);
+	// Loading different carbon tax diff for each time step ( to be informed in dashboard)
+	if CarbonTaxDiff
+		if AGG_type == ""
+			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC"+string(AGG_type)+"_"+time_step+".csv",";");
+			parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+string(H_DISAGG)+"_"+time_step+".csv",";");
+		else
+			parameters.CarbonTax_Diff_IC=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+string(AGG_type)+"_"+time_step+".csv",";");
+			parameters.CarbonTax_Diff_C=read_csv(PARAMS_Country+string(AGG_type)+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+string(AGG_type)+"_"+string(H_DISAGG)+"_"+time_step+".csv",";");
+		end
+		parameters.CarbonTax_Diff_IC (1,:) = [];
+		parameters.CarbonTax_Diff_IC (:,1) = [];
+		parameters.CarbonTax_Diff_IC=evstr(parameters.CarbonTax_Diff_IC);
 
-        parameters.CarbonTax_Diff_C (1,:) = [];
-        parameters.CarbonTax_Diff_C (:,1) = [];
-        parameters.CarbonTax_Diff_C=evstr(parameters.CarbonTax_Diff_C);
-
-    end
+		parameters.CarbonTax_Diff_C (1,:) = [];
+		parameters.CarbonTax_Diff_C (:,1) = [];
+		parameters.CarbonTax_Diff_C=evstr(parameters.CarbonTax_Diff_C);
+		
+	end
 
 
     // Loading macro framework (common feature for each country) 
@@ -245,7 +231,7 @@ for time_step=1:Nb_Iter
     // Load the projections for forcing
     if Scenario <> '' then
         if time_step == 1 then
-            exec("Load_Proj_files.sce");
+            exec("Import_Proj_Volume.sce");
         end
         exec('Load_Proj_Vol.sce');
     end
@@ -262,24 +248,24 @@ for time_step=1:Nb_Iter
             exec(STUDY_Country+study+".sce");
         end 
     end
-
-
-    // Creation of a new output subdirectory for each time step
-    //if Nb_Iter<>1
-    if Output_files
-
-        if isdef("Proj_Macro")
+	
+	
+	// Creation of a new output subdirectory for each time step in case of several time steps calculation
+    if Nb_Iter<>1
+        if Output_files
+		
+			if isdef("Proj_Macro")
             SAVEDIR = OUTPUT +runName + filesep() + "Time_" +  Proj_Macro.current_year(time_step) + filesep();
             mkdir(SAVEDIR);
-        else
-            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
+			else
+			SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
             mkdir(SAVEDIR);
+			end
+			
         end
-
     end
-    //end
-
-    /// RESOLUTION
+	
+	/// RESOLUTION
     if Optimization_Resol then
         exec('Order_resolution.sce');
         exec('Resolution.sce');
@@ -299,17 +285,17 @@ for time_step=1:Nb_Iter
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
     printf("STEP 6: RECORDING THE OUTPUTS... \n");
-    exec(CODE+"outputs.sce");
-    if time_step == 1
-        BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
-    end
+        exec(CODE+"outputs.sce");
+        if time_step == 1
+            BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
+        end
 
-    exec(CODE+"outputs_indic.sce");
-
-    if Output_prints
-        exec(CODE+"output_prints.sce");
-    end
-
+        exec(CODE+"outputs_indic.sce");
+		
+		if Output_prints
+			exec(CODE+"output_prints.sce");
+		end
+		
 
     ////////////////////////////////////////////////////////////
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
