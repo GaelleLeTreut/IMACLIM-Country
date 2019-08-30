@@ -72,24 +72,38 @@ end
 // ---------------------- *
 
 // Load data files
-loaded_iot = %F;
-loaded_prod = %F;
 
 for var = fieldnames(Proj_Vol)'
+
     if Proj_Vol(var).file == 'IOT_Qtities' & ..
-        Proj_Vol(var).apply_proj & ..
-        ~loaded_iot then
+        Proj_Vol(var).apply_proj then
+
         iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
-        loaded_iot = %T;
+
     elseif Proj_Vol(var).file == 'prod_factors' & ..
-        Proj_Vol(var).apply_proj & ..
-        ~loaded_prod then
+        Proj_Vol(var).apply_proj then
+
         prod_factors = eval('prod_factors_' + string(time_step));
         prod_factors_hline = eval('prod_factors_' + string(time_step) + '_hline');
         prod_factors_hcol = eval('prod_factors_' + string(time_step) + '_hcol');
-        loaded_prod = %T;
-    elseif Proj_Vol(var).file <> 'IOT_Qtities' & Proj_Vol(var).file <> 'prod_factors'
+
+    elseif Proj_Vol(var).file == "Invest_Elec" & ..
+        Proj_Vol(var).apply_proj then
+
+        invest_elec = eval('Invest_Elec_' + Scenario);
+        invest_elec_hline = eval('Invest_Elec_' + Scenario + '_hline');
+        invest_elec_hcol = eval('Invest_Elec_' + Scenario + '_hcol');
+
+        if or(invest_elec_hline <> Proj_Vol(var).headers) then
+            error('Years of Invest_Elec are not consistent with current working years.')
+        end
+
+    elseif Proj_Vol(var).file <> 'IOT_Qtities' & ..
+        Proj_Vol(var).file <> 'prod_factors' & ..
+        Proj_Vol(var).file <> "Invest_Elec" then
+
         error('File name not known, please write code to treat it.');
+        
     end
 end
 
@@ -128,6 +142,18 @@ for var = fieldnames(Proj_Vol)'
                 if proj_well_aggregated then
                     Proj_Vol(var).val = fill_table(prod_factors, prod_factors_hcol, prod_factors_hline, ..
                                                     var, Proj_Vol(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
+        elseif Proj_Vol(var).file == 'Invest_Elec' then
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(invest_elec, invest_elec_hcol, invest_elec_hline, ..
+                Index_CommoInit, Proj_Vol(var).headers(time_step+1));
+            else
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(invest_elec, invest_elec_hcol, invest_elec_hline, ..
+                    Index_Commodities, Proj_Vol(var).headers(time_step+1));
                 else
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
