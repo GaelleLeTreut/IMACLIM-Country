@@ -36,6 +36,7 @@ Invest_matrix;%T
 // Scenario;
 // Scenario;NDC
 Scenario;CCS
+// Scenario;HydNuc
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
