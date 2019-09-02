@@ -5,7 +5,7 @@ import csv
 
 # String data
 
-outputs_fold = '../outputs/'
+outputs_fold = 'To_Display/'
 time_prefix = 'Time_'
 
 def read_output_file(file_to_read):
