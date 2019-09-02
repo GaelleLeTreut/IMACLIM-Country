@@ -19,7 +19,7 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;6
+Nb_Iter;1
 // SELECT a Macro framework to run;
 // Macro_nb;
 Macro_nb;Current
@@ -34,8 +34,8 @@ X_nonEnerg;False
 Invest_matrix;%T
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-// Scenario;NDC
-Scenario;CCS
+Scenario;NDC
+// Scenario;CCS
 // Scenario;HydNuc
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
