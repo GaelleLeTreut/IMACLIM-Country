@@ -143,7 +143,7 @@ for var = fieldnames(Proj_Vol)'
 
         elseif find(proj_files == Proj_Vol(var).file) <> [] then
             Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).headline, Proj_Vol(var).headcol, ..
-                Index_CommoInit, Proj_Vol(var).headers(time_step+1));
+                Index_CommoInit, Proj_Vol(var).headers(time_step));
 
             if find(to_transpose == Proj_Vol(var).file) <> [] then
                 Proj_Vol(var).val = Proj_Vol(var).val';
