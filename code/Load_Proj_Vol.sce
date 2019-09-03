@@ -74,13 +74,13 @@ end
 // Load data files
 
 proj_files = [
-    'Capital_Income_' + Scenario, ..
+    'Capital_Consumption_' + Scenario, ..
     'Invest_Elec_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
 to_transpose = [
-    'Capital_Income_' + Scenario, ..
+    'Capital_Consumption_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
@@ -97,10 +97,10 @@ for var = fieldnames(Proj_Vol)'
         if Proj_Vol(var).apply_proj then
             
             Proj_Vol(var).data = eval(Proj_Vol(var).file);
-            Proj_Vol(var).hline = eval(Proj_Vol(var).file + '_hline');
-            Proj_Vol(var).hcol = eval(Proj_Vol(var).file + '_hcol');
+            Proj_Vol(var).headline = eval('headline(""' + Proj_Vol(var).file + '"")');
+            Proj_Vol(var).headcol = eval('headcol(""' + Proj_Vol(var).file + '"")');
 
-            if or(Proj_Vol(var).hline <> Proj_Vol(var).headers) then
+            if or(Proj_Vol(var).headcol <> Proj_Vol(var).headers) then
                 error('Years of ' + Proj_Vol(var).file + ' are not consistent with current working years.')
             end
 
@@ -142,7 +142,7 @@ for var = fieldnames(Proj_Vol)'
             end
 
         elseif find(proj_files == Proj_Vol(var).file) <> [] then
-            Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).hcol, Proj_Vol(var).hline, ..
+            Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).headline, Proj_Vol(var).headcol, ..
                 Index_CommoInit, Proj_Vol(var).headers(time_step+1));
 
             if find(to_transpose == Proj_Vol(var).file) <> [] then

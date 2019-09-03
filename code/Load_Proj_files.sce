@@ -44,8 +44,8 @@ for elt=1:size(listCSVfiles)
             warning(varname+" is already defined. please choose a sufix ")
         end
         // Record first line and first column of file
-        execstr(varname + '_hline = matStr(1,2:$);');
-        execstr(varname + '_hcol = matStr(2:$,1);');
+        execstr('headline(""'+varname+'"")' + '= matStr(2:$,1);');
+        execstr('headcol(""'+varname+'"")' + '= matStr(1,2:$);');
         // Delete them from the data
         matStr(1,:) = [];
         matStr(:,1) = [];
