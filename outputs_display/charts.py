@@ -7,12 +7,11 @@ from math import sqrt, pi
 from radar_class import radar_factory
 import numpy as np
 
-def red_name(line_name):
-    name_size_max = 20
+def red_name(line_name, size_max):
     name_red = ''
     cpt_char = 0
     for c in line_name:
-        if cpt_char == name_size_max:
+        if cpt_char == size_max:
             name_red += '\n'
             cpt_char = 0
         name_red += c
@@ -51,7 +50,7 @@ def create_bar_charts(time_steps, values, gen_title, legend, nb_folds):
                 for k in range(nb_folds):
                      ax.bar(index + k*width/nb_folds, list_rect[k], width/nb_folds)   
 
-                line_name_red = red_name(line)
+                line_name_red = red_name(line,20)
                 ax.set_title(line_name_red)
 
                 lab = []
@@ -79,51 +78,60 @@ def create_bar_charts(time_steps, values, gen_title, legend, nb_folds):
 
 def create_radar_charts(values, time_steps, title, colors, legend, nb_folds):
 
-    # TODO : si 1 seul élément, mettre un warning et ne rien faire
-
     lines_to_draw = list(values.keys())
+    # carré supérieur
+    nb_lines = int(sqrt(len(time_steps))) + 1 
+    # nombre de col qui complète le nombre de lignes
+    nb_col = ((len(time_steps)-1) // nb_lines +1)
 
     # Build the radar chart
     N = len(lines_to_draw)
     theta = radar_factory(N, frame='polygon')
 
-    spoke_labels = [red_name(line) for line in lines_to_draw]
+    spoke_labels = [red_name(line,15) for line in lines_to_draw]
 
-    fig, axes = plt.subplots(figsize=(9, 9), nrows=2, ncols=1,
+    fig, axes = plt.subplots(figsize=(9, 9), nrows=nb_lines, ncols=nb_col,
                             subplot_kw=dict(projection='radar'))
 
-    fig.subplots_adjust(wspace=0.25, hspace=0.4, top=0.85, bottom=0.05)
+    for i, ax_row in enumerate(axes):
+        for j, ax in enumerate(ax_row):
 
-    for k in range(len(axes.flatten())):
-        ax = axes.flatten()[k]
-        ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
-        ax.set_title(time_steps[k], weight='bold', size='medium', position=(0.5, 1.1),
-                    horizontalalignment='center', verticalalignment='center')
-        
-        val_data = dict()
-        for time in time_steps:
-            val_data[time] = [[] for i in range(nb_folds)]
+            ax_ind = i*nb_col + j
 
-        for i in range(nb_folds):
-            for line in values.keys():
-                for time in values[line].keys():
-                     val_data[time][i].append(values[line][time][i])
+            if i*nb_col + j < len(time_steps):
 
+                ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
+                ax.set_title(time_steps[ax_ind][-4:], weight='bold', size='medium', position=(0.5, 1.25),
+                            horizontalalignment='center', verticalalignment='center')
+                
+                val_data = dict()
+                for time in time_steps:
+                    val_data[time] = [[] for k in range(nb_folds)]
 
-            ax.plot(theta, val_data[time][i])
-            
-            ax.set_varlabels(spoke_labels)
+                for k in range(nb_folds):
+                    for line in values.keys():
+                        for time in values[line].keys():
+                            val_data[time][k].append(values[line][time][k])
 
-            for lbl, angle in zip(ax.get_xticklabels(), theta):
-                if angle in (0, pi):
-                    lbl.set_horizontalalignment('center')
-                elif 0 < angle < pi:
-                    lbl.set_horizontalalignment('right')
-                else:
-                    lbl.set_horizontalalignment('left')
+                    ax.plot(theta, val_data[time][k])
+                    
+                    ax.set_varlabels(spoke_labels)
+
+                    for lbl, angle in zip(ax.get_xticklabels(), theta):
+                        if angle in (0, pi):
+                            lbl.set_horizontalalignment('center')
+                        elif 0 < angle < pi:
+                            lbl.set_horizontalalignment('right')
+                        else:
+                            lbl.set_horizontalalignment('left')
+
+            else:
+                ax.axis('off')
+
+    fig.subplots_adjust(wspace=1.5, hspace=0.7, top=0.85, bottom=0.05)
 
     fig.suptitle(title)
-    fig.legend(legend, loc='right')
+    fig.legend(legend, loc='upper right')
 
     plt.savefig(save_path + 'radar_' + title + '.png')
 
@@ -226,7 +234,6 @@ def data_macro():
         ],
         'Chart Titre 2' :
         [
-            'Exports in GDP',
             'Imports in GDP',
             'Imports/Domestic production ratio',
             'Imports of Non Energy goods in volume',
