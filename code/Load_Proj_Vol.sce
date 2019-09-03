@@ -73,36 +73,42 @@ end
 
 // Load data files
 
+proj_files = [
+    'Capital_Income_' + Scenario, ..
+    'Invest_Elec_' + Scenario, ..
+    'Labour_' + Scenario
+];
+
+to_transpose = [
+    'Capital_Income_' + Scenario, ..
+    'Labour_' + Scenario
+];
+
 for var = fieldnames(Proj_Vol)'
 
-    if Proj_Vol(var).file == 'IOT_Qtities' & ..
-        Proj_Vol(var).apply_proj then
-
-        iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
-
-    elseif Proj_Vol(var).file == 'prod_factors' & ..
-        Proj_Vol(var).apply_proj then
-
-        prod_factors = eval('prod_factors_' + string(time_step));
-        prod_factors_hline = eval('prod_factors_' + string(time_step) + '_hline');
-        prod_factors_hcol = eval('prod_factors_' + string(time_step) + '_hcol');
-
-    elseif Proj_Vol(var).file == "Invest_Elec" & ..
-        Proj_Vol(var).apply_proj then
-
-        invest_elec = eval('Invest_Elec_' + Scenario);
-        invest_elec_hline = eval('Invest_Elec_' + Scenario + '_hline');
-        invest_elec_hcol = eval('Invest_Elec_' + Scenario + '_hcol');
-
-        if or(invest_elec_hline <> Proj_Vol(var).headers) then
-            error('Years of Invest_Elec are not consistent with current working years.')
+    if Proj_Vol(var).file == 'IOT_Qtities' then
+        
+        if Proj_Vol(var).apply_proj then
+            iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
         end
 
-    elseif Proj_Vol(var).file <> 'IOT_Qtities' & ..
-        Proj_Vol(var).file <> 'prod_factors' & ..
-        Proj_Vol(var).file <> "Invest_Elec" then
+    elseif find(proj_files == Proj_Vol(var).file) then
+    
+        if Proj_Vol(var).apply_proj then
+            
+            Proj_Vol(var).data = eval(Proj_Vol(var).file);
+            Proj_Vol(var).hline = eval(Proj_Vol(var).file + '_hline');
+            Proj_Vol(var).hcol = eval(Proj_Vol(var).file + '_hcol');
 
-        error('File name not known, please write code to treat it.');
+            if or(Proj_Vol(var).hline <> Proj_Vol(var).headers) then
+                error('Years of ' + Proj_Vol(var).file + ' are not consistent with current working years.')
+            end
+
+        end
+
+    else 
+
+        warning('File name not known, please write code to treat it : ' + Proj_Vol(var).file);
         
     end
 end
@@ -134,30 +140,19 @@ for var = fieldnames(Proj_Vol)'
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
             end
-        elseif Proj_Vol(var).file == 'prod_factors' then
-            if proj_desaggregated then
-                Proj_Vol(var).val = fill_table(prod_factors, prod_factors_hcol, prod_factors_hline, ..
-                                                var, Proj_Vol(var).headers);
-            else
-                if proj_well_aggregated then
-                    Proj_Vol(var).val = fill_table(prod_factors, prod_factors_hcol, prod_factors_hline, ..
-                                                    var, Proj_Vol(var).headers);
-                else
-                    error('Scenario aggregation is not consistent with working aggregation.');
-                end
-            end
-        elseif Proj_Vol(var).file == 'Invest_Elec' then
-            if proj_desaggregated then
-                Proj_Vol(var).val = fill_table(invest_elec, invest_elec_hcol, invest_elec_hline, ..
+
+        elseif find(proj_files == Proj_Vol(var).file) <> [] then
+            Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).hcol, Proj_Vol(var).hline, ..
                 Index_CommoInit, Proj_Vol(var).headers(time_step+1));
-            else
-                if proj_well_aggregated then
-                    Proj_Vol(var).val = fill_table(invest_elec, invest_elec_hcol, invest_elec_hline, ..
-                    Index_Commodities, Proj_Vol(var).headers(time_step+1));
-                else
-                    error('Scenario aggregation is not consistent with working aggregation.');
-                end
+
+            if find(to_transpose == Proj_Vol(var).file) <> [] then
+                Proj_Vol(var).val = Proj_Vol(var).val';
             end
+
+            if ~proj_desaggregated then
+                warning('Desaggregated projection.')
+            end
+        
         else
             error('You need to define how to read the projection file ' + Proj_Vol(var).file + ' for projection of ' + var)
         end
@@ -216,3 +211,21 @@ if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens
 end
 // Don't project Y
 Proj_Vol.Y = null();
+
+// Clear unuseful Proj_Vol entries
+
+unuseful = [
+    'file', ..
+    'headers', ..
+    'data', ..
+    'hline', ..
+    'hcol'
+];
+
+for var = fieldnames(Proj_Vol)'
+    for elt = unuseful
+        if find(fieldnames(Proj_Vol(var)) == elt) <> [] then
+            Proj_Vol(var)(elt) = null();
+        end
+    end
+end
