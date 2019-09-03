@@ -3,7 +3,7 @@ err = 1E-3;
 
 function test_proj(var_name)
 
-    if var_name <> 'I_value' then
+    if var_name <> 'I' then
         difference = d(var_name) - Proj_Vol(var_name).val;
     else
         difference = d(var_name)(:,Indice_Elec) - Proj_Vol(var_name).val;

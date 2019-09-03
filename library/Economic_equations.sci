@@ -2222,8 +2222,13 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y)
 
     if Invest_matrix then
         y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-        y = matrix(y1, -1 , 1)
         
+        if is_projected('I') then
+            y1(:,Indice_Elec) = apply_proj_eq(y1(:,Indice_Elec), I(:,Indice_Elec), 'I(:,Indice_Elec)');
+        end
+
+        y = matrix(y1, -1 , 1)
+
     else
         y = I - Betta * sum( kappa .* Y' ) ;
     end
@@ -2236,6 +2241,10 @@ function I = Invest_demand_Val_1(Betta, kappa, Y)
 
     if Invest_matrix then
         I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+
+        if is_projected('I') then
+            I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+        end
     else
         I = Betta * sum( kappa .* Y' );
     end
