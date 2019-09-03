@@ -74,13 +74,13 @@ end
 // Load data files
 
 proj_files = [
-    'Capital_Income_' + Scenario, ..
+    'Capital_Consumption_' + Scenario, ..
     'Invest_Elec_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
 to_transpose = [
-    'Capital_Income_' + Scenario, ..
+    'Capital_Consumption_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
