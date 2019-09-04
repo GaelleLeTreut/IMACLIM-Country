@@ -76,14 +76,17 @@ def create_bar_charts(time_steps, values, gen_title, legend, nb_folds):
     plt.close(fig)
 
 
-def create_radar_charts(values, time_steps, title, colors, legend, nb_folds):
-
+def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext=''):
+    
     lines_to_draw = list(values.keys())
     # carré supérieur
     nb_lines = int(sqrt(len(time_steps))) + 1 
     # nombre de col qui complète le nombre de lignes
     nb_col = ((len(time_steps)-1) // nb_lines +1)
-
+    print('---')
+    print(time_steps)
+    print(nb_lines)
+    print(nb_col)
     # Build the radar chart
     N = len(lines_to_draw)
     theta = radar_factory(N, frame='polygon')
@@ -92,7 +95,9 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds):
 
     fig, axes = plt.subplots(figsize=(9, 9), nrows=nb_lines, ncols=nb_col,
                             subplot_kw=dict(projection='radar'))
-
+    if type(axes[0]) != type(axes):
+        axes = [[ax] for ax in axes]
+    print(axes)
     for i, ax_row in enumerate(axes):
         for j, ax in enumerate(ax_row):
 
@@ -110,7 +115,7 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds):
 
                 for k in range(nb_folds):
                     for line in values.keys():
-                        for time in values[line].keys():
+                        for time in time_steps:
                             val_data[time][k].append(values[line][time][k])
 
                     ax.plot(theta, val_data[time][k])
@@ -133,7 +138,7 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds):
     fig.suptitle(title)
     fig.legend(legend, loc='upper right')
 
-    plt.savefig(save_path + 'radar_' + title + '.png')
+    plt.savefig(save_path + 'radar_' + title + ext + '.png')
 
     plt.close(fig)
 
@@ -215,8 +220,14 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
         # RADAR CHARTS
 
         elif type_chart == 'radar':
-            create_radar_charts(values_chart, time_steps, chart, colors, list(outputs.keys()), nb_folds)
-
+            nb_max = 4
+            ext = 1
+            for i in range(0,len(time_steps),nb_max):
+                deb = i
+                end = min(len(time_steps)-1, (i+1)*nb_max)
+                time_steps_part = time_steps[deb:end]
+                create_radar_charts(values_chart, time_steps_part, chart, colors, list(outputs.keys()), nb_folds,ext='_'+str(ext))
+                ext += 1
         else:
             raise Exception('type_chart unknown')
 
