@@ -1,6 +1,6 @@
 Aggregation_type;-;-;-;-;-;-;AGG_EnComp
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;-;AllEnergy
-Row;Gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;-;AllEnergy
+Row;Gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;Gas;AllEnergy
 Row;Fossil_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;-;AllEnergy
 Row;Biofuels;Commodities;EnerSect;HybridCommod;FinEnerSect;-;AllEnergy
 Row;Elec;Commodities;EnerSect;HybridCommod;FinEnerSect;Elec;AllEnergy
