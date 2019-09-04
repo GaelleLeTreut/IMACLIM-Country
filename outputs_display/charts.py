@@ -120,7 +120,7 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext
                         for time in time_steps:
                             val_data[time][k].append(values[line][time][k])
 
-                    ax.plot(theta, val_data[time][k])
+                    ax.plot(theta, val_data[time_steps[ax_ind]][k])
                     
                     ax.set_varlabels(spoke_labels)
 
