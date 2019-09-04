@@ -79,25 +79,27 @@ def create_bar_charts(time_steps, values, gen_title, legend, nb_folds):
 def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext=''):
     
     lines_to_draw = list(values.keys())
+    
+    sq = sqrt(len(time_steps))
+    nb_lines = int(sq)
     # carré supérieur
-    nb_lines = int(sqrt(len(time_steps))) + 1 
+    if int(sq) != sq:
+        nb_lines += 1
+
     # nombre de col qui complète le nombre de lignes
     nb_col = ((len(time_steps)-1) // nb_lines +1)
-    print('---')
-    print(time_steps)
-    print(nb_lines)
-    print(nb_col)
     # Build the radar chart
     N = len(lines_to_draw)
     theta = radar_factory(N, frame='polygon')
 
-    spoke_labels = [red_name(line,15) for line in lines_to_draw]
+    spoke_labels = [red_name(line,13) for line in lines_to_draw]
 
-    fig, axes = plt.subplots(figsize=(9, 9), nrows=nb_lines, ncols=nb_col,
+    fig, axes = plt.subplots(figsize=(10, 10), nrows=nb_lines, ncols=nb_col,
                             subplot_kw=dict(projection='radar'))
+
     if type(axes[0]) != type(axes):
         axes = [[ax] for ax in axes]
-    print(axes)
+
     for i, ax_row in enumerate(axes):
         for j, ax in enumerate(ax_row):
 
@@ -133,7 +135,7 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext
             else:
                 ax.axis('off')
 
-    fig.subplots_adjust(wspace=1.5, hspace=0.7, top=0.85, bottom=0.05)
+    fig.subplots_adjust(wspace=1.1, hspace=0.2, top=0.85, bottom=0.05)
 
     fig.suptitle(title)
     fig.legend(legend, loc='upper right')
@@ -224,8 +226,9 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
             ext = 1
             for i in range(0,len(time_steps),nb_max):
                 deb = i
-                end = min(len(time_steps)-1, (i+1)*nb_max)
+                end = min(len(time_steps), i+nb_max)
                 time_steps_part = time_steps[deb:end]
+                
                 create_radar_charts(values_chart, time_steps_part, chart, colors, list(outputs.keys()), nb_folds,ext='_'+str(ext))
                 ext += 1
         else:
