@@ -33,19 +33,6 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
-// Give the year into file name instead of the time step
-	if isdef("Proj_Macro")
-	Name_time=	Proj_Macro.current_year(time_step);
-		if time_step > 1
-		YearBef = Proj_Macro.reference_year(time_step)
-		elseif time_step==1
-		YearBef = Proj_Macro.reference_year(1)
-		end
-	else
-	Name_time = time_step;
-	YearBef = "StepBef";
-	end
-
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";

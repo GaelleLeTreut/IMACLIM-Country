@@ -263,19 +263,25 @@ for time_step=1:Nb_Iter
         end 
     end
 
-
+	
+	// Give the year into file name instead of the time step
+	if isdef("Proj_Macro")
+	Name_time=	Proj_Macro.current_year(time_step);
+		if time_step > 1
+		YearBef = Proj_Macro.reference_year(time_step);
+		elseif time_step==1
+		YearBef = Proj_Macro.reference_year(1);
+		end
+	else
+	Name_time = time_step;
+	YearBef = "StepBef";
+	end
+	
     // Creation of a new output subdirectory for each time step
     //if Nb_Iter<>1
     if Output_files
-
-        if isdef("Proj_Macro")
-            SAVEDIR = OUTPUT +runName + filesep() + "Time_" +  Proj_Macro.current_year(time_step) + filesep();
-            mkdir(SAVEDIR);
-        else
-            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + time_step + filesep();
-            mkdir(SAVEDIR);
-        end
-
+            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + Name_time + filesep();
+            mkdir(SAVEDIR);   
     end
     //end
 

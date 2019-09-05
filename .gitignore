@@ -2,8 +2,11 @@
 outputs
 study_frames/Country_Selection.csv
 
-code/Test_FullCode/Saved_data
-code/Test_FullCode/Not_working_dashboards
+code/Test_AllConfig/Saved_Data/*
+code/Test_AllConfig/Not_working_dashboards/*
+
+code/Simulations/Save_Var_Resol/*
+code/Simulations/Save_System_Resol/*
 
 outputs_display/.*
 outputs_display/_*
@@ -12,6 +15,5 @@ outputs_display/To_Display/*
 outputs_display/MacroBarChart
 outputs_display/MacroTables
 outputs_display/MacroRadarChart
-code/Simulations/Save_Var_Resol/Index_Imaclim_VarResol.csv
-code/Simulations/Save_System_Resol/SystemOpt_Static.csv
-code/Test_AllConfig/Saved_Data/Dashboard_ARG.csv
+
+
