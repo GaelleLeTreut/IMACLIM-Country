@@ -34,7 +34,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 if Output_files
-    save(SAVEDIR+"result_"+time_step+".sav","result");
+    save(SAVEDIR+"result_"+Name_time+".sav","result");
 end
 
 if count==countMax&vBest>sensib
@@ -47,7 +47,7 @@ printf("Time for solving=" + string(toc()) + "seconds \n");
 
 if Output_files
     driver("PDF");
-    xinit(SAVEDIR+"resolution_"+time_step+".pdf");
+    xinit(SAVEDIR+"resolution_"+Name_time+".pdf");
     subplot(2,1,1);
     plot(list2vec(result.count),[log10(%eps+list2vec(result.vbest)),log10(%eps+list2vec(result.vmax))],"-*","Linewidth",2);
     ylabel("log10");

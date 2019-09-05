@@ -10,7 +10,7 @@ print(out," * Initial table - Unitary prices");
 print(out,Prices.ini);
 print(out," * Run table - Unitary prices");
 print(out,Prices.run);
-print(out," * Evolution table - Unitary prices");
+print(out," * Evolution table / run/ini - Unitary prices");
 print(out,Prices.evo);
 
 
@@ -23,7 +23,7 @@ print(out," * Initial table - Technical Coefficient");
 print(out,TechCOef.ini);
 print(out," * Run table - Technical Coefficient");
 print(out,TechCOef.run);
-print(out," * Evolution table - Technical Coefficient");
+print(out," * Evolution table / run/ini - Technical Coefficient");
 print(out,TechCOef.evo);
 
 
@@ -37,7 +37,7 @@ print(out," * Initial table - CO2 Emissions");
 print(out,CO2Emis.ini);
 print(out," * Run table - CO2 Emissions");
 print(out,CO2Emis.run);
-print(out," * Evolution table - CO2 Emissions");
+print(out," * Evolution table / run/ini  - CO2 Emissions");
 print(out,CO2Emis.evo);
 
 
@@ -50,7 +50,7 @@ print(out," * Initial table");
 print(out,io.ini);
 print(out," * Run table");
 print(out,io.run);
-print(out," * Evolution table");
+print(out," * Evolution table / run/ini ");
 print(out,io.evo);
 
 
@@ -63,7 +63,7 @@ print(out," * Initial table - QUANTITIES");
 print(out,ioQ.ini);
 print(out," * Run table - QUANTITIES");
 print(out,ioQ.run);
-print(out," * Evolution table - QUANTITIES");
+print(out," * Evolution table / run/ini  - QUANTITIES");
 print(out,ioQ.evo);
 
 
@@ -76,7 +76,7 @@ print(out," * Initial table - Economic Account table");
 print(out,ecoT.ini);
 print(out," * Run table - Economic Account table");
 print(out,ecoT.run);
-print(out," * Evolution table - Economic Account table");
+print(out," * Evolution table / run/ini  - Economic Account table");
 print(out,ecoT.evo);
 
 

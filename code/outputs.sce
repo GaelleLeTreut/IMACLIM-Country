@@ -33,6 +33,19 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
+// Give the year into file name instead of the time step
+	if isdef("Proj_Macro")
+	Name_time=	Proj_Macro.current_year(time_step);
+		if time_step > 1
+		YearBef = Proj_Macro.reference_year(time_step)
+		elseif time_step==1
+		YearBef = Proj_Macro.reference_year(1)
+		end
+	else
+	Name_time = time_step;
+	YearBef = "StepBef";
+	end
+
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";
@@ -191,18 +204,18 @@ param_table_sec($+1,1) = ["$t_{ini}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4) = string(time_since_ini);
 
-param_table_sec($+1,1) = ["$Population$"];
-param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(sum(Population));
-param_table_sec($+1,1) = ["$Labour_force$"];
-param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(sum(Labour_force));
-param_table_sec($+1,1) = ["$Retired$"];
-param_table_sec($:$,2:3) = ["Thousands of people"];
-param_table_sec($,4) = string(sum(Retired));
+// param_table_sec($+1,1) = ["$Population$"];
+// param_table_sec($:$,2:3) = ["Thousands of people"];
+// param_table_sec($,4) = string(sum(Population));
+// param_table_sec($+1,1) = ["$Labour_force$"];
+// param_table_sec($:$,2:3) = ["Thousands of people"];
+// param_table_sec($,4) = string(sum(Labour_force));
+// param_table_sec($+1,1) = ["$Retired$"];
+// param_table_sec($:$,2:3) = ["Thousands of people"];
+// param_table_sec($,4) = string(sum(Retired));
 
 if Output_files
-csvWrite(param_table_sec,SAVEDIR+"param_table_sec_"+time_step+".csv", ';');
+csvWrite(param_table_sec,SAVEDIR+"param_table_sec_"+Name_time+".csv", ';');
 end
 
 if Output_prints
@@ -258,14 +271,15 @@ print(out,"===== Decomposition pY Run ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  round([ d.pY' ; sum(d.pIC .* d.alpha,"r") ; sum(d.pL .* d.lambda,"r") ; sum(d.pK .* d.kappa, "r") ;d.Production_Tax_rate .* d.pY' ; d.markup_rate .* d.pY' ])]']);
 
-print(out,"===== Decomposition pY Ratio ========================");
+print(out,"===== Decomposition pY Ratio/ initial value ========================");
 print(out,[ ["Sector" "pY" "IC" "L" "K" "Prod tax" "Markup"] ;
 [Index_Sectors';  [ d.pY'./ini.pY' ; sum(d.pIC .* d.alpha,"r")./sum(ini.pIC .* ini.alpha,"r") ; sum(d.pL .* d.lambda,"r")./sum(ini.pL .* ini.lambda,"r") ; divide(sum(d.pK .* d.kappa, "r"),sum(ini.pK .* ini.kappa, "r"),%nan) ;divide((d.Production_Tax_rate .* d.pY'),(ini.Production_Tax_rate .* ini.pY'),%nan) ; divide((d.markup_rate .* d.pY'),(ini.markup_rate .* ini.pY'),%nan) ]]']);
 end
 
 
-
+///////////////////////
 /// Calcul keuros/kreais/etc.
+///////////////////////
 d.IC_value = value(d.pIC,d.IC);
 d.C_value =value( d.pC, d.C);
 d.G_value = value(d.pG,d.G);
@@ -275,15 +289,37 @@ d.M_value = value(d.pM',d.M');
 d.Y_value = value(d.pY,d.Y)';
 
 
+///////////////////////
 //Calcul Emissions
+///////////////////////
 
+//Initial value
+CO2_IC_Initval =  [["CO2_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.CO2Emis_IC]];
+CO2_FC_Initval = [["CO2_C_Initval"; Index_Commodities ] ,["C"  ;sum(ini.CO2Emis_C,"c") ]];
+ini.CO2Emis_Sec = sum(ini.CO2Emis_IC,"r");
+ini.Tot_CO2Emis_IC =  sum(ini.CO2Emis_IC);
+ini.Tot_CO2Emis_C = sum(ini.CO2Emis_C);
+ini.DOM_CO2 = ini.Tot_CO2Emis_IC + ini.Tot_CO2Emis_C; 
+ini.CO2Emis_X = ini.CO2Emis_X ; 
+ini.Tot_CO2Emis =ini.Tot_CO2Emis_IC + ini.Tot_CO2Emis_C;
+// Run
 d.CO2Emis_C = d.Emission_Coef_C .*d.C;
 d.CO2Emis_C_tot = sum(d.CO2Emis_C);
 d.CO2Emis_IC = d.Emission_Coef_IC .*d.IC;
 d.CO2Emis_IC_tot = sum(d.CO2Emis_IC);
+CO2_IC_Run=  [["CO2_IC_Run"; Index_Commodities ],[Index_Sectors';d.CO2Emis_IC]];
+CO2_C_Run = [["CO2_C_Run"; Index_Commodities ] ,["C" ;sum(d.CO2Emis_C,"c") ]];
+d.CO2Emis_Sec = sum(d.CO2Emis_IC,"r");
+d.Tot_CO2Emis_IC =  sum(d.CO2Emis_IC);
+d.Tot_CO2Emis_C = sum(d.CO2Emis_C);
+d.DOM_CO2 = d.Tot_CO2Emis_IC + d.Tot_CO2Emis_C; 
+d.CO2Emis_X = ini.CO2Emis_X ; 
+d.Tot_CO2Emis =d.Tot_CO2Emis_IC + d.Tot_CO2Emis_C;
 
-// Matrix
 
+///////////////////////
+// Matrix IOT - Values
+///////////////////////
 // Households
 if	H_DISAGG <> "HH1"
     for elt=1:nb_Households
@@ -348,177 +384,41 @@ d.tot_FC = sum(d.FC,"c");
 d.tot_IC_col = sum(d.IC , "c");
 d.tot_supply = sum (d.M+d.Y, "c");
 
-
-/////////////////////////////////////////////////
-// Price table
-//Initial value
-price_IC_Initval =  [["price_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.pIC]];
-price_FC_Initval = [["price_FC_Initval"; Index_Commodities ] ,["p"+Index_FC';ini.pFC]];
-// Run
-price_IC_Run =  [["price_IC_Run"; Index_Commodities ],[Index_Sectors';d.pIC]];
-price_FC_Run = [["price_FC_Run"; Index_Commodities ],["p"+Index_FC';d.pFC]];
-
-// Evolution
-evol.pIC = divide(d.pIC , ini.pIC , %nan ) -1;
-evol.pFC = divide(d.pFC , ini.pFC , %nan ) -1;
-evol.w = divide(d.w , ini.w , %nan ) -1;
-evol.pL = divide(d.pL , ini.pL , %nan ) -1;
-evol.pK = divide(d.pK , ini.pK , %nan ) -1;
-evol.pY = divide(d.pY , ini.pY , %nan ) -1;
-evol.pM = divide(d.pM , ini.pM , %nan ) -1;
-evol.p = divide(d.p , ini.p , %nan ) -1;
-
-evol.pIC (isnan(evol.pIC )) = d.pIC   (isnan(evol.pIC   )) *%i;
-evol.pFC (isnan(evol.pFC )) = d.pFC   (isnan(evol.pFC   )) *%i;
-evol.w (isnan(evol.w )) = d.w   (isnan(evol.w   )) *%i;
-evol.pL (isnan(evol.pL )) = d.pL   (isnan(evol.pL   )) *%i;
-evol.pK (isnan(evol.pK )) = d.pK   (isnan(evol.pK   )) *%i;
-evol.pY (isnan(evol.pY )) = d.pY   (isnan(evol.pY   )) *%i;
-evol.pM (isnan(evol.pM )) = d.pM   (isnan(evol.pM   )) *%i;
-evol.p (isnan(evol.p )) = d.p   (isnan(evol.p   )) *%i;
-
-
-/////////////////////////////////////////////////
-//// Prices
-
-Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , 1);
-Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , 1);
-Prices.evo = buildPriceT( evol.pIC , evol.pFC, evol.w, evol.pL, evol.pK, evol.pY, evol.pM, evol.p, 100 , 1);
-
-if Output_files
-csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+time_step+".csv", ';');
-csvWrite(Prices.run,SAVEDIR+"Prices-run_"+time_step+".csv", ';');
-csvWrite(Prices.evo,SAVEDIR+"Prices-evo_"+time_step+".csv", ';');
-end
-
-
-/////////////////////////////////////////////////
-// Technical Coefficient
-
-// Evolution
-evol.alpha = divide(d.alpha , ini.alpha , %nan ) -1;
-evol.lambda = divide(d.lambda , ini.lambda , %nan ) -1;
-evol.kappa = divide(d.kappa , ini.kappa , %nan ) -1;
-
-evol.alpha (isnan(evol.alpha )) = d.alpha   (isnan(evol.alpha   )) *%i;
-evol.lambda (isnan(evol.lambda )) = d.alpha   (isnan(evol.lambda   )) *%i;
-evol.kappa (isnan(evol.kappa )) = d.kappa   (isnan(evol.kappa   )) *%i;
-
-
-TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , 1);
-TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , 1);
-TechCOef.evo = buildTechCoefT( evol.alpha, evol.lambda, evol.kappa, 100 , 1);
-
-
-if Output_files
-csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini_"+time_step+".csv", ';');
-csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run_"+time_step+".csv", ';');
-csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo_"+time_step+".csv", ';');
-end
-
-
-/////////////////////////////////////////////////
-// Emissions table
-//Initial value
-CO2_IC_Initval =  [["CO2_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.CO2Emis_IC]];
-CO2_FC_Initval = [["CO2_C_Initval"; Index_Commodities ] ,["C"  ;sum(ini.CO2Emis_C,"c") ]];
-ini.CO2Emis_Sec = sum(ini.CO2Emis_IC,"r");
-ini.Tot_CO2Emis_IC =  sum(ini.CO2Emis_IC);
-ini.Tot_CO2Emis_C = sum(ini.CO2Emis_C);
-ini.DOM_CO2 = ini.Tot_CO2Emis_IC + ini.Tot_CO2Emis_C; 
-ini.CO2Emis_X = ini.CO2Emis_X ; 
-ini.Tot_CO2Emis =ini.Tot_CO2Emis_IC + ini.Tot_CO2Emis_C;
-
-// Run
-CO2_IC_Run=  [["CO2_IC_Run"; Index_Commodities ],[Index_Sectors';d.CO2Emis_IC]];
-CO2_C_Run = [["CO2_C_Run"; Index_Commodities ] ,["C" ;sum(d.CO2Emis_C,"c") ]];
-d.CO2Emis_Sec = sum(d.CO2Emis_IC,"r");
-d.Tot_CO2Emis_IC =  sum(d.CO2Emis_IC);
-d.Tot_CO2Emis_C = sum(d.CO2Emis_C);
-d.DOM_CO2 = d.Tot_CO2Emis_IC + d.Tot_CO2Emis_C; 
-d.CO2Emis_X = ini.CO2Emis_X ; 
-d.Tot_CO2Emis =d.Tot_CO2Emis_IC + d.Tot_CO2Emis_C;
-
-
-// Evolution
-evol.CO2Emis_IC = divide(d.CO2Emis_IC , ini.CO2Emis_IC , %nan ) -1;
-evol.CO2Emis_C = divide(d.CO2Emis_C , ini.CO2Emis_C , %nan ) -1;
-evol.CO2Emis_X = divide(d.CO2Emis_X , ini.CO2Emis_X , %nan ) -1;
-
-evol.CO2Emis_Sec = divide(d.CO2Emis_Sec , ini.CO2Emis_Sec , %nan ) -1;
-evol.Tot_CO2Emis_IC =  divide(d.Tot_CO2Emis_IC , ini.Tot_CO2Emis_IC , %nan ) -1;
-evol.Tot_CO2Emis_C =  divide(d.Tot_CO2Emis_C , ini.Tot_CO2Emis_C , %nan ) -1;
-evol.DOM_CO2 =  divide(d.DOM_CO2 , ini.DOM_CO2 , %nan ) -1;
-
-evol.CO2Emis_IC (isnan(evol.CO2Emis_IC )) = d.CO2Emis_IC   (isnan(evol.CO2Emis_IC   )) *%i;
-evol.CO2Emis_C (isnan(evol.CO2Emis_C )) = d.CO2Emis_C   (isnan(evol.CO2Emis_C   )) *%i;
-evol.CO2Emis_X (isnan(evol.CO2Emis_X )) = d.CO2Emis_X   (isnan(evol.CO2Emis_X   )) *%i;
-
-evol.CO2Emis_Sec(isnan(evol.CO2Emis_Sec)) = d.CO2Emis_Sec   (isnan(evol.CO2Emis_Sec   )) *%i;
-evol.Tot_CO2Emis_IC (isnan(evol.Tot_CO2Emis_IC)) = d.Tot_CO2Emis_IC   (isnan(evol.Tot_CO2Emis_IC   )) *%i;
-evol.Tot_CO2Emis_C (isnan(evol.Tot_CO2Emis_C)) = d.Tot_CO2Emis_C   (isnan(evol.Tot_CO2Emis_C   )) *%i;
-evol.DOM_CO2(isnan(evol.DOM_CO2)) = d.DOM_CO2   (isnan(evol.DOM_CO2   )) *%i;
-
-
-
-CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,1);
-CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , 1);
-CO2Emis.evo = buildEmisT( evol.CO2Emis_IC , evol.CO2Emis_C, evol.CO2Emis_X , evol.CO2Emis_Sec,evol.Tot_CO2Emis_IC,evol.Tot_CO2Emis_C,evol.DOM_CO2,100 , 1);
-
-
-if Output_files
-csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini_"+time_step+".csv", ';');
-csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run_"+time_step+".csv", ';');
-csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo_"+time_step+".csv", ';');
-end
-
-/////////////////////////////////////////////////
-// IOT in value
 // Initial value
 IC_value_Initval =  [ ["IC_value_Initval"; Index_Commodities ] , [Index_Sectors';ini.IC_value] ] ;
 FC_value_Initval =  [ ["FC_value_Initval"; Index_Commodities ] , [Index_FC';ini.FC_value] ] ;
 OthPart_IOT_Initval = [ ["OthPart_IOT_Initval";Index_OthPart_IOT] , [Index_Sectors';ini.OthPart_IOT] ];
-ini.Carbon_Tax = sum(ini.Carbon_Tax_IC',"r") + sum(ini.Carbon_Tax_C',"r");
+ini.Carbon_Tax = sum(ini.Carbon_Tax_IC',"r") + sum(ini.Carbon_Tax_C',"r")+sum(ini.Carbon_Tax_M);
 ini.Supply = (sum(ini.IC_value,"r")+sum(ini.OthPart_IOT,"r")+ini.Carbon_Tax);
 ini.Uses = sum(ini.IC_value,"c")+sum(ini.FC_value,"c");
+
+ini.Total_taxes = sum(ini.Taxes)+sum(ini.Carbon_Tax_C)+sum(ini.Carbon_Tax_IC)+sum(ini.Carbon_Tax_M);
+ini.HH_EnBill = sum(ini.C_value(Indice_EnerSect));
+ini.Corp_EnBill = sum(ini.IC_value(Indice_EnerSect,:));
+ini.HH_EnConso = sum(ini.C(Indice_EnerSect));
+ini.Corp_EnConso = sum(ini.IC(Indice_EnerSect,:));
+
 
 // Run
 IC_value_Run =  [ ["IC_value_Run"; Index_Commodities ] , [Index_Sectors';d.IC_value] ] ;
 FC_value_Run =  [ ["FC_value_Run"; Index_Commodities ] , [Index_FC';d.FC_value] ] ;
 OthPart_IOT_Run = [ ["OthPart_IOT_Run";Index_OthPart_IOT] , [Index_Sectors';d.OthPart_IOT] ];
-d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
+d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r")+sum(d.Carbon_Tax_M);
 d.Supply = (sum(d.IC_value,"r")+sum(d.OthPart_IOT,"r")+d.Carbon_Tax);
 d.Uses = sum(d.IC_value,"c")+sum(d.FC_value,"c");
 
-// Evolution
-evol.IC_value    = divide(d.IC_value    , ini.IC_value   , %nan ) -1;
-evol.FC_value    = divide(d.FC_value    , ini.FC_value   , %nan ) -1;
-evol.OthPart_IOT = divide(d.OthPart_IOT , ini.OthPart_IOT, %nan ) -1;
-evol.Carbon_Tax = divide(d.Carbon_Tax , ini.Carbon_Tax, %nan ) -1;
-evol.Supply = divide(d.Supply , ini.Supply, %nan ) -1;
-evol.Uses = divide(d.Uses , ini.Uses, %nan ) -1;
-
-evol.IC_value   (isnan(evol.IC_value   )) = d.IC_value   (isnan(evol.IC_value   )) *%i;
-evol.FC_value   (isnan(evol.FC_value   )) = d.FC_value   (isnan(evol.FC_value   )) *%i;
-evol.OthPart_IOT(isnan(evol.OthPart_IOT)) = d.OthPart_IOT(isnan(evol.OthPart_IOT)) *%i;
-// evol.Carbon_Tax(isnan(evol.Carbon_Tax)) = d.Carbon_Tax(isnan(evol.Carbon_Tax)) *%i;
-evol.Supply(isnan(evol.Supply)) = d.Supply(isnan(evol.Supply)) *%i;
-evol.Uses(isnan(evol.Uses)) = d.Uses(isnan(evol.Uses)) *%i;
+d.Total_taxes = sum(d.Taxes)+sum(d.Carbon_Tax_C)+sum(d.Carbon_Tax_IC)+sum(ini.Carbon_Tax_M);
+d.HH_EnBill = sum(d.C_value(Indice_EnerSect));
+d.Corp_EnBill = sum(d.IC_value(Indice_EnerSect,:));
+d.HH_EnConso = sum(d.C(Indice_EnerSect));
+d.Corp_EnConso = sum(d.IC(Indice_EnerSect,:));
 
 
-io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,1e-6 , 1);
-io.run = buildIot(   d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, 1e-6 , 1);
-io.evo = buildIot(   evol.IC_value ,   evol.FC_value ,   evol.OthPart_IOT ,evol.Carbon_Tax,evol.Supply, evol.Uses, 100 , 1);
 
+///////////////////////
+// Matrix IOT - Quantities
+///////////////////////
 
-if Output_files
-csvWrite(io.ini,SAVEDIR+"io-ini_"+time_step+".csv", ';');
-csvWrite(io.run,SAVEDIR+"io-run_"+time_step+".csv", ';');
-csvWrite(io.evo,SAVEDIR+"io-evo_"+time_step+".csv", ';');
-end
-
-/////////////////////////////////////////////////
-// IO in quantities table
 //Initial value
 Q_IC_Initval =  [["Q_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.IC]];
 Q_FC_Initval = [["Q_FC_Initval"; Index_Commodities ] ,[Index_FC';ini.FC]];
@@ -536,30 +436,9 @@ Q_M_Run = [["Q_M_Run"; Index_Commodities ] ,["M";d.M]];
 d.OthQ = [d.Y';d.M';d.Labour;d.Capital_consumption];
 OthQ_Run = [["OthQ_Run";OthQ],[Index_Commodities';d.OthQ ]];
 
-// Evolution
-evol.IC    = divide(d.IC   , ini.IC   , %nan ) -1;
-evol.FC    = divide(d.FC   , ini.FC  , %nan ) -1;
-evol.Y    = divide(d.Y   , ini.Y  , %nan ) -1;
-evol.OthQ = divide(d.OthQ , ini.OthQ, %nan ) -1;
-
-evol.IC  (isnan(evol.IC  )) = d.IC  (isnan(evol.IC  )) *%i;
-evol.FC  (isnan(evol.FC  )) = d.FC  (isnan(evol.FC  )) *%i;
-evol.Y  (isnan(evol.Y  )) = d.Y  (isnan(evol.Y  )) *%i;
-evol.OthQ(isnan(evol.OthQ)) = d.OthQ(isnan(evol.OthQ)) *%i;
-
-
-ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , 1);
-ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , 1);
-ioQ.evo = buildIotQ(   evol.IC ,   evol.FC ,   evol.OthQ , 100 , 1);
-
-if Output_files
-csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini_"+time_step+".csv", ';');
-csvWrite(ioQ.run,SAVEDIR+"ioQ-run_"+time_step+".csv", ';');
-csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo_"+time_step+".csv", ';');
-end
-
-/////////////////////////////////////////////////
-// Economic account table
+///////////////////////
+// Economic table
+///////////////////////
 
 //Initial value
 ini.Income_Tax(Indice_Households)= - ini.Income_Tax;
@@ -624,6 +503,7 @@ for elt=1:nb_DataAccount
     execstr ("ini.Ecotable(elt,:)"+"="+"ini."+varname+";");
 end
 
+ini.NetLendingRoW_GDP = (ini. NetLending(Indice_RestOfWorld)./ini.GDP);
 
 // Run
 d.Trade_Balance =(sum(d.M_value) - sum(d.X_value))*(Index_InstitAgents' == "RestOfWorld");
@@ -723,21 +603,215 @@ for elt=1:nb_DataAccount
     execstr ("d.Ecotable(elt,:)"+"="+"d."+varname+";");
 end
 
+d.NetLendingRoW_GDP = (d. NetLending(Indice_RestOfWorld)./d.GDP);
 
-// Evolution
-evol.Ecotable    = divide(d.Ecotable   , ini.Ecotable   , %nan ) -1;
-// evol.Ecotable(isnan(evol.Ecotable  )) = d.Ecotable  (isnan(evol.Ecotable  )) *%i;
+/////////////////
+// Price table
+///////////////////
+//Initial value
+price_IC_Initval =  [["price_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.pIC]];
+price_FC_Initval = [["price_FC_Initval"; Index_Commodities ] ,["p"+Index_FC';ini.pFC]];
+// Run
+price_IC_Run =  [["price_IC_Run"; Index_Commodities ],[Index_Sectors';d.pIC]];
+price_FC_Run = [["price_FC_Run"; Index_Commodities ],["p"+Index_FC';d.pFC]];
 
+
+
+///////////////////////
+// Evolution : run / ini ( step before current year) or BY /  in ratio 
+///////////////////////
+
+// Stock all calculation of extra calculation of ini within BY at first step
+if time_step ==1
+execstr("BY." + fieldnames(ini) +" = ini." + fieldnames(ini) + ";");
+end
+
+evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP');
+
+for ind=1:size(evol_list)
+	varname = evol_list(ind);
+	execstr("evol_BY."+varname+"=divide(d."+varname+",BY."+varname+",%nan)");
+	
+		if time_step>1
+			execstr("evol."+varname+"=divide(d."+varname+",ini."+varname+",%nan)");
+			/// Specific case for argentina to compare with 2015 : step 1 of the resolution
+			execstr("evol_2015."+varname+"=divide(d."+varname+",data_1."+varname+",%nan)")
+		end
+
+end
+
+
+//////////////////////
+/////////////////////////////////// BUILDING TABLES FOR outputs////////////////////////////////////////
+/////////////////////////////////////////////////
+//// Prices
+Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , 1);
+Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , 1);
+Prices.evoBY = buildPriceT( evol_BY.pIC-1 , evol_BY.pFC-1, evol_BY.w-1, evol_BY.pL-1, evol_BY.pK-1, evol_BY.pY-1, evol_BY.pM-1, evol_BY.p-1, 100 , 1);
+
+if time_step ==1
+	Prices.evo = Prices.evoBY ;
+
+elseif time_step >1 
+
+	Prices.evo = buildPriceT( evol.pIC-1 , evol.pFC-1, evol.w-1, evol.pL-1, evol.pK-1, evol.pY-1, evol.pM-1, evol.p-1, 100 , 1);
+	if  Country== 'Argentina'
+		Prices.evo15 = buildPriceT( evol_2015.pIC-1 , evol_2015.pFC-1, evol_2015.w-1, evol_2015.pL-1, evol_2015.pK-1, evol_2015.pY-1, evol_2015.pM-1, 	evol_2015.p-1, 100 , 1);
+	end
+end
+
+
+/////////////////////////////////////////////////
+// Technical Coefficient
+
+TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , 1);
+TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , 1);
+TechCOef.evoBY = buildTechCoefT( evol_BY.alpha-1, evol_BY.lambda-1, evol_BY.kappa-1, 100 , 1);
+
+if time_step ==1
+	TechCOef.evo = TechCOef.evoBY ;
+
+elseif time_step >1 
+
+	TechCOef.evo = buildTechCoefT( evol.alpha-1, evol.lambda-1, evol.kappa-1, 100 , 1);
+	if Country== 'Argentina'
+		TechCOef.evo15 = buildTechCoefT( evol_2015.alpha-1, evol_2015.lambda-1, evol_2015.kappa-1, 100 , 1);
+	end
+end
+
+
+
+/////////////////////////////////////////////////
+// Emissions table
+
+CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,1);
+CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , 1);
+CO2Emis.evoBY = buildEmisT( evol_BY.CO2Emis_IC-1 , evol_BY.CO2Emis_C-1, evol_BY.CO2Emis_X-1 , evol_BY.CO2Emis_Sec-1 ,evol_BY.Tot_CO2Emis_IC - 1,evol_BY.Tot_CO2Emis_C-1,evol_BY.DOM_CO2-1,100 , 1);
+
+if time_step ==1
+	CO2Emis.evo = CO2Emis.evoBY ;
+
+elseif time_step >1 
+
+	CO2Emis.evo = buildEmisT( evol.CO2Emis_IC-1 , evol.CO2Emis_C-1, evol.CO2Emis_X-1 , evol.CO2Emis_Sec-1 ,evol.Tot_CO2Emis_IC - 1,evol.Tot_CO2Emis_C-1,evol.DOM_CO2-1,100 , 1);
+	if Country== 'Argentina'
+		CO2Emis.evo15 = buildEmisT( evol_2015.CO2Emis_IC-1 , evol_2015.CO2Emis_C-1, evol_2015.CO2Emis_X-1 , evol_2015.CO2Emis_Sec-1 ,evol_2015.Tot_CO2Emis_IC - 1,evol_2015.Tot_CO2Emis_C-1,evol_2015.DOM_CO2-1,100 , 1);
+	end
+end
+
+
+/////////////////////////////////////////////////
+// IOT in value
+
+io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,1e-6 , 1);
+io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, 1e-6 , 1);
+io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , 1);
+
+if time_step ==1
+	io.evo = io.evoBY ;
+
+elseif time_step >1 
+
+	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax -1, evol.Supply-1, evol.Uses-1, 100 , 1);
+	if Country== 'Argentina'
+		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , 1);
+	end
+end
+
+
+/////////////////////////////////////////////////
+// IO in quantities table
+
+ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , 1);
+ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , 1);
+ioQ.evoBY = buildIotQ(   evol_BY.IC-1 ,   evol_BY.FC-1 ,   evol_BY.OthQ-1 , 100 , 1);
+
+if time_step ==1
+	ioQ.evo = ioQ.evoBY ;
+
+elseif time_step >1 
+
+	ioQ.evo = buildIotQ(   evol.IC-1 ,   evol.FC-1 ,   evol.OthQ-1 , 100 , 1);
+
+		if Country== 'Argentina'
+			ioQ.evo15 = buildIotQ(   evol_2015.IC-1 ,   evol_2015.FC-1 ,   evol_2015.OthQ-1 , 100 , 1);
+		end
+end
+
+
+/////////////////////////////////////////////////
+// Economic account table
 
 ecoT.ini = buildEcoTabl(ini.Ecotable , 1e-6 , 1);
 ecoT.run = buildEcoTabl(d.Ecotable , 1e-6 , 1);
-ecoT.evo = buildEcoTabl(evol.Ecotable ,100 , 1);
+ecoT.evoBY = buildEcoTabl(evol_BY.Ecotable-1 ,100 , 1);
+
+if time_step ==1
+	ecoT.evo = ecoT.evoBY ;
+
+elseif time_step >1 
+ecoT.evo = buildEcoTabl(evol.Ecotable-1 ,100 , 1);
+
+	if Country== 'Argentina'
+		ecoT.evo15 = buildEcoTabl(evol_2015.Ecotable-1 ,100 , 1);
+	end
+end
+
+
+
+///// SAVING IN CSV FILES ALL TABLES
 
 if Output_files
-csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini_"+time_step+".csv", ';');
-csvWrite(ecoT.run,SAVEDIR+"ecoT-run_"+time_step+".csv", ';');
-csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+time_step+".csv", ';');
+	
+	csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+Name_time+".csv", ';');
+	csvWrite(Prices.run,SAVEDIR+"Prices-run_"+Name_time+".csv", ';');
+	csvWrite(Prices.evoBY,SAVEDIR+"Prices-evo_BY_"+Name_time+".csv", ';');
+	
+	csvWrite(TechCOef.ini,SAVEDIR+"TechCOef-ini_"+Name_time+".csv", ';');
+	csvWrite(TechCOef.run,SAVEDIR+"TechCOef-run_"+Name_time+".csv", ';');
+	csvWrite(TechCOef.evoBY,SAVEDIR+"TechCOef-evo_BY_"+Name_time+".csv", ';');
+	
+	csvWrite(CO2Emis.ini,SAVEDIR+"CO2Emis-ini_"+Name_time+".csv", ';');
+	csvWrite(CO2Emis.run,SAVEDIR+"CO2Emis-run_"+Name_time+".csv", ';');
+	csvWrite(CO2Emis.evoBY,SAVEDIR+"CO2Emis-evo_BY_"+Name_time+".csv", ';');
+	
+	csvWrite(io.ini,SAVEDIR+"io-ini_"+Name_time+".csv", ';');
+	csvWrite(io.run,SAVEDIR+"io-run_"+Name_time+".csv", ';');
+	csvWrite(io.evoBY,SAVEDIR+"io-evo_BY_"+Name_time+".csv", ';');
+	
+	csvWrite(ioQ.ini,SAVEDIR+"ioQ-ini_"+Name_time+".csv", ';');
+	csvWrite(ioQ.run,SAVEDIR+"ioQ-run_"+Name_time+".csv", ';');
+	csvWrite(ioQ.evoBY,SAVEDIR+"ioQ-evo_BY_"+Name_time+".csv", ';');
+	
+	csvWrite(ecoT.ini,SAVEDIR+"ecoT-ini_"+Name_time+".csv", ';');
+	csvWrite(ecoT.run,SAVEDIR+"ecoT-run_"+Name_time+".csv", ';');
+	csvWrite(ecoT.evoBY,SAVEDIR+"ecoT-evo_BY_"+Name_time+".csv", ';');
+	
+			/// Comparison with the current year with the step before
+			if time_step >1
+				csvWrite(Prices.evo,SAVEDIR+"Prices-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				csvWrite(TechCOef.evo,SAVEDIR+"TechCOef-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				csvWrite(CO2Emis.evo,SAVEDIR+"CO2Emis-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				csvWrite(io.evo,SAVEDIR+"io-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+YearBef+"_"+Name_time+".csv", ';');
+				
+					/// Comparison with 2015 for Argentina
+					if Country== 'Argentina'
+						csvWrite(Prices.evo15,SAVEDIR+"Prices-evo15_"+Name_time+".csv", ';');
+						csvWrite(TechCOef.evo15,SAVEDIR+"TechCOef-evo15_"+Name_time+".csv", ';');
+						csvWrite(CO2Emis.evo15,SAVEDIR+"CO2Emis-evo15_"+Name_time+".csv", ';');
+						csvWrite(io.evo15,SAVEDIR+"io-evo15_"+Name_time+".csv", ';');
+						csvWrite(ioQ.evo15,SAVEDIR+"ioQ-evo15_"+Name_time+".csv", ';');
+						csvWrite(ecoT.evo15,SAVEDIR+"ecoT-evo15_"+Name_time+".csv", ';');
+			end
+					end
 end
+
+// to be used in outputs_indic
+// if time_step== 1
+// evol_BY = evol;
+// end
 
 
 // Affectation de toutes les valeurs finales aux noms de variables contenu dans la structure d. ( eviter des confusions entre une variable hors structure ; ini ou final)
