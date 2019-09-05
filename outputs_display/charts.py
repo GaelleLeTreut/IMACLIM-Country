@@ -234,13 +234,42 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
         else:
             raise Exception('type_chart unknown')
 
+def data_macro_2015():
+
+    macro_csv_name = 'TableMacroOutputExtended'
+
+    charts_to_draw = {
+        'Macro' :
+        [
+            'Real GDP (Laspeyres)', 
+            'Households consumption in GDP',
+            'Public consumption in GDP'
+        ],
+        'Chart Titre 2' :
+        [
+            'Imports in GDP',
+            'Imports/Domestic production ratio',
+            'Imports of Non Energy goods in volume',
+            'Real GDP (Laspeyres)', 
+            'Households consumption in GDP',
+            'Labour Intensity (Laspeyres)',
+            'Energy Intensity (Laspeyres)'
+        ]
+    }
+
+    # Folder for results
+    barchart_fold = 'MacroBarChart/'
+    if not os.path.exists(barchart_fold):
+        os.makedirs(barchart_fold)
+
+    return macro_csv_name, charts_to_draw, barchart_fold
         
 def data_macro():
 
     macro_csv_name = 'TableMacroOutputExtended'
 
     charts_to_draw = {
-        'Chart Titre 1' :
+        'Macro' :
         [
             'Real GDP (Laspeyres)', 
             'Households consumption in GDP', 
@@ -273,5 +302,7 @@ if __name__ == "__main__":
 
     work_file, charts_to_draw, save_path = data_macro()
     build_charts(work_file, charts_to_draw, save_path, type_chart='bar')
-    build_charts(work_file, charts_to_draw, save_path, type_chart='radar', norm_ref='NDC')
+    
+    work_file2, charts_to_draw2, save_path2 = data_macro_2015()
+    build_charts(work_file2, charts_to_draw2, save_path2, type_chart='radar', norm_ref='NDC')
     

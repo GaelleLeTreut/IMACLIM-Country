@@ -56,6 +56,23 @@ def output_table(file_name, lines_to_remove, save_path):
         for row in table:
             spamwriter.writerow(row)
 
+def data_macro_2015():
+
+    macro_csv_name = 'TableMacroOutputExtended'
+
+    lines_to_remove = [
+        'Labour Tax cut',
+        'Global mean wage/Unemployment Elasticity'
+    ]
+    
+    # Path to record the created table
+    table_fold = 'MacroTables/'
+    if not os.path.exists(table_fold):
+        os.makedirs(table_fold)
+    table_name = 'macro_data_2015.csv'
+    table_path = table_fold + table_name
+
+    return macro_csv_name, lines_to_remove, table_path
 
 def data_macro():
 
@@ -79,3 +96,5 @@ if __name__ == '__main__':
     working_file, lines_to_remove, save_path = data_macro()
     output_table(working_file, lines_to_remove, save_path)
 
+    working_file2, lines_to_remove2, save_path2 = data_macro_2015()
+    output_table(working_file2, lines_to_remove2, save_path2)
