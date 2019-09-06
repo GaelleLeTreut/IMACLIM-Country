@@ -117,7 +117,7 @@ end
 // load Y, may be needed for proj intens
 Proj_Vol.Y.file = Proj_Vol.IC.file;
 Proj_Vol.Y.headers = 'Y';
-Proj_Vol.Y.apply_proj = %T;
+Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
 
 for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
