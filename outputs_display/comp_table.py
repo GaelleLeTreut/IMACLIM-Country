@@ -73,6 +73,41 @@ def output_table(file_name, lines_to_remove, save_path):
 #    table_path = table_fold + table_name
 #
 #    return macro_csv_name, lines_to_remove, table_path
+            
+            
+
+def data_macro_abs():
+
+    macro_csv_name = 'TableMacro_Abs'
+    
+    lines_to_remove = [
+    ]
+
+    # Path to record the created table
+    table_fold = 'MacroTables/'
+    if not os.path.exists(table_fold):
+        os.makedirs(table_fold)
+    table_name = 'macro_data_abs.csv'
+    table_path = table_fold + table_name
+
+    return macro_csv_name
+
+def data_macro_ratio():
+
+    macro_csv_name = 'TableMacroRatioBY'
+    
+    lines_to_remove = [
+    ]
+
+    # Path to record the created table
+    table_fold = 'MacroTables/'
+    if not os.path.exists(table_fold):
+        os.makedirs(table_fold)
+    table_name = 'macro_data_ratio.csv'
+    table_path = table_fold + table_name
+
+    return macro_csv_name
+
 
 def data_macro():
 
@@ -95,6 +130,12 @@ def data_macro():
 if __name__ == '__main__':
     working_file, lines_to_remove, save_path = data_macro()
     output_table(working_file, lines_to_remove, save_path)
-
+#
+#    working_file2, lines_to_remove2, save_path2 = data_macro_ratio()
+#    output_table(working_file2, lines_to_remove2, save_path2)
+    
+#    working_file3, lines_to_remove3, save_path3 = data_macro_abs()
+#    output_table(working_file3, lines_to_remove3, save_path3)
+    
 #    working_file2, lines_to_remove2, save_path2 = data_macro_2015()
 #    output_table(working_file2, lines_to_remove2, save_path2)
