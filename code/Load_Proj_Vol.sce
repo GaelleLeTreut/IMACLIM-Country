@@ -87,16 +87,13 @@ to_transpose = [
 
 for var = fieldnames(Proj_Vol)'
 
-    if Proj_Vol(var).file == 'IOT_Qtities' then
-        
-        if Proj_Vol(var).apply_proj then
-            iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
-        end
+    if Proj_Vol(var).apply_proj then
 
-    elseif find(proj_files == Proj_Vol(var).file) then
-    
-        if Proj_Vol(var).apply_proj then
-            
+        if Proj_Vol(var).file == 'IOT_Qtities' then
+            iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
+
+        elseif find(proj_files == Proj_Vol(var).file) then
+                
             Proj_Vol(var).data = eval(Proj_Vol(var).file);
             Proj_Vol(var).headline = eval('headline(""' + Proj_Vol(var).file + '"")');
             Proj_Vol(var).headcol = eval('headcol(""' + Proj_Vol(var).file + '"")');
@@ -105,12 +102,12 @@ for var = fieldnames(Proj_Vol)'
                 error('Years of ' + Proj_Vol(var).file + ' are not consistent with current working years.')
             end
 
+        else 
+
+            error('File name of ' + var + ' not known : ' + Proj_Vol(var).file);
+            
         end
 
-    else 
-
-        warning('File name not known, please write code to treat it : ' + Proj_Vol(var).file);
-        
     end
 end
 
