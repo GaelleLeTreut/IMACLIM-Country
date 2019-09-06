@@ -613,7 +613,7 @@ if time_step ==1
 execstr("BY." + fieldnames(ini) +" = ini." + fieldnames(ini) + ";");
 end
 
-evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP');
+evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP','I');
 
 for ind=1:size(evol_list)
 	varname = evol_list(ind);
@@ -744,6 +744,27 @@ ecoT.evo = buildEcoTabl(evol.Ecotable-1 ,100 , 1);
 	end
 end
 
+/////////////////////////////////////////////////
+//Invesment Matrix
+if Invest_matrix
+
+InvestMat.ini = [["Invest Matrix in Vol",Index_Sectors'];[Index_Sectors,ini.I]];
+InvestMat.run = [["Invest Matrix in Vol",Index_Sectors'];[Index_Sectors,d.I]];
+InvestMat.evoBY = [["Invest Matrix in Vol",Index_Sectors'];[Index_Sectors,evol_BY.I]];
+
+if time_step ==1
+	InvestMat.evo = InvestMat.evoBY ;
+
+elseif time_step >1 
+InvestMat.evo = [["Invest Matrix in Vol",Index_Sectors'];[Index_Sectors,evol.I]];
+
+	if Country== 'Argentina'
+		InvestMat.evo15 = [["Invest Matrix in Vol",Index_Sectors'];[Index_Sectors,evol_2015.I]];
+	end
+end
+
+
+end
 
 
 ///// SAVING IN CSV FILES ALL TABLES
@@ -774,6 +795,13 @@ if Output_files
 	csvWrite(ecoT.run,SAVEDIR+"ecoT-run_"+Name_time+"_"+simu_name+".csv", ';');
 	csvWrite(ecoT.evoBY,SAVEDIR+"ecoT-evo_BY_"+Name_time+"_"+simu_name+".csv", ';');
 	
+	if Invest_matrix
+		csvWrite(InvestMat.ini,SAVEDIR+"InvestMat-ini_"+Name_time+"_"+simu_name+".csv", ';');
+		csvWrite(InvestMat.run,SAVEDIR+"InvestMat-run_"+Name_time+"_"+simu_name+".csv", ';');
+		csvWrite(InvestMat.evoBY,SAVEDIR+"InvestMat-evo_BY_"+Name_time+"_"+simu_name+".csv", ';');
+	end
+	
+	
 			/// Comparison with the current year with the step before
 			if time_step >1
 				csvWrite(Prices.evo,SAVEDIR+"Prices-evo_"+YearBef+"_"+Name_time+"_"+simu_name+".csv", ';');
@@ -783,6 +811,10 @@ if Output_files
 				csvWrite(ioQ.evo,SAVEDIR+"ioQ-evo_"+YearBef+"_"+Name_time+"_"+simu_name+".csv", ';');
 				csvWrite(ecoT.evo,SAVEDIR+"ecoT-evo_"+YearBef+"_"+Name_time+"_"+simu_name+".csv", ';');
 				
+						if Invest_matrix
+							csvWrite(InvestMat.evo,SAVEDIR+"InvestMat-evo_"+YearBef+"_"+Name_time+"_"+simu_name+".csv", ';');
+						end
+				
 					/// Comparison with 2015 for Argentina
 					if Country== 'Argentina'
 						csvWrite(Prices.evo15,SAVEDIR+"Prices-evo15_"+Name_time+"_"+simu_name+".csv", ';');
@@ -791,8 +823,11 @@ if Output_files
 						csvWrite(io.evo15,SAVEDIR+"ioV-evo15_"+Name_time+"_"+simu_name+".csv", ';');
 						csvWrite(ioQ.evo15,SAVEDIR+"ioQ-evo15_"+Name_time+"_"+simu_name+".csv", ';');
 						csvWrite(ecoT.evo15,SAVEDIR+"ecoT-evo15_"+Name_time+"_"+simu_name+".csv", ';');
-			end
+								if Invest_matrix
+									csvWrite(InvestMat.evo15,SAVEDIR+"InvestMat-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+								end		
 					end
+			end
 end
 
 // to be used in outputs_indic
