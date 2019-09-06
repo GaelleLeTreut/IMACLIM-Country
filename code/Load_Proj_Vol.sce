@@ -75,13 +75,13 @@ end
 // Load data files
 
 proj_files = [
-    'Capital_Consumption_' + Scenario, ..
+    'Capital_Cons_' + Scenario, ..
     'Invest_Elec_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
 to_transpose = [
-    'Capital_Consumption_' + Scenario, ..
+    'Capital_Cons_' + Scenario, ..
     'Labour_' + Scenario
 ];
 
@@ -218,19 +218,26 @@ function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
 endfunction
 
 // IC intensity projection
-if Proj_Vol.IC.apply_proj & Proj_Vol.IC.intens then
-	Proj_Vol = proj_intens(Proj_Vol, 'IC', 'alpha');
+if find(fieldnames(Proj_Vol) == 'IC') <> [] then
+    if Proj_Vol.IC.apply_proj & Proj_Vol.IC.intens then
+        Proj_Vol = proj_intens(Proj_Vol, 'IC', 'alpha');
+    end
 end
 
 // Labour intensity projection
-if Proj_Vol.Labour.apply_proj & Proj_Vol.Labour.intens then
-	Proj_Vol = proj_intens(Proj_Vol, 'Labour', 'lambda');
+if find(fieldnames(Proj_Vol) == 'Labour') <> [] then
+    if Proj_Vol.Labour.apply_proj & Proj_Vol.Labour.intens then
+        Proj_Vol = proj_intens(Proj_Vol, 'Labour', 'lambda');
+    end
 end
 
 // Capital_consumption intensity projection
-if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens then
-	Proj_Vol = proj_intens(Proj_Vol, 'Capital_consumption', 'kappa');
+if find(fieldnames(Proj_Vol) == 'Capital_consumption') <> [] then
+ if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens then
+        Proj_Vol = proj_intens(Proj_Vol, 'Capital_consumption', 'kappa');
+    end
 end
+    
 // Don't project Y
 Proj_Vol.Y = null();
 

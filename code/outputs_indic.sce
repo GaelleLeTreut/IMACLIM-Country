@@ -33,12 +33,13 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
+
 // For if there is desaggregation of investment
 d.pI = d.pI * ones(1,nb_size_I);
-BY.pI = BY.pI * ones(1,nb_size_I);
+ref.pI = ref.pI * ones(1,nb_size_I);
 // Put back to normal before the end of the file, with :
 // d.pI = d.pI(:,1);
-// BY.pI = BY.pI(:,1);
+// ref.pI = ref.pI(:,1);
 
 // Creer une structure output avec tous les indicateurs qu'on regarde ? 
 
@@ -59,147 +60,147 @@ end
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Production
-Y_pLasp = PInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, :, :);
-Y_pPaas = PInd_Paas( BY.pY, BY.Y, d.pY, d.Y, :, :);
-Y_pFish = PInd_Fish( BY.pY, BY.Y, d.pY, d.Y, :, :);
+Y_pLasp = PInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, :, :);
+Y_pPaas = PInd_Paas( ref.pY, ref.Y, d.pY, d.Y, :, :);
+Y_pFish = PInd_Fish( ref.pY, ref.Y, d.pY, d.Y, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Energy - Production
-Y_En_pLasp = PInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, Indice_EnerSect, :);
-Y_En_pPaas = PInd_Paas( BY.pY, BY.Y, d.pY, d.Y, Indice_EnerSect, :);
-Y_En_pFish = PInd_Fish( BY.pY, BY.Y, d.pY, d.Y, Indice_EnerSect, :);
+Y_En_pLasp = PInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, Indice_EnerSect, :);
+Y_En_pPaas = PInd_Paas( ref.pY, ref.Y, d.pY, d.Y, Indice_EnerSect, :);
+Y_En_pFish = PInd_Fish( ref.pY, ref.Y, d.pY, d.Y, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Primary Energy - Production
-Y_PrimEn_pLasp = PInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
-Y_PrimEn_pPaas = PInd_Paas( BY.pY, BY.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
-Y_PrimEn_pFish = PInd_Fish( BY.pY, BY.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
+Y_PrimEn_pLasp = PInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
+Y_PrimEn_pPaas = PInd_Paas( ref.pY, ref.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
+Y_PrimEn_pFish = PInd_Fish( ref.pY, ref.Y, d.pY, d.Y, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Final Energy - Production
-Y_FinEn_pLasp = PInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, Indice_FinEnerSect, :);
-Y_FinEn_pPaas = PInd_Paas( BY.pY, BY.Y, d.pY, d.Y, Indice_FinEnerSect, :);
-Y_FinEn_pFish = PInd_Fish( BY.pY, BY.Y, d.pY, d.Y, Indice_FinEnerSect, :);
+Y_FinEn_pLasp = PInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, Indice_FinEnerSect, :);
+Y_FinEn_pPaas = PInd_Paas( ref.pY, ref.Y, d.pY, d.Y, Indice_FinEnerSect, :);
+Y_FinEn_pFish = PInd_Fish( ref.pY, ref.Y, d.pY, d.Y, Indice_FinEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Non Energy Products - Production
-Y_NonEn_pLasp = PInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, Indice_NonEnerSect, :);
-Y_NonEn_pPaas = PInd_Paas( BY.pY, BY.Y, d.pY, d.Y, Indice_NonEnerSect, :);
-Y_NonEn_pFish = PInd_Fish( BY.pY, BY.Y, d.pY, d.Y, Indice_NonEnerSect, :);
+Y_NonEn_pLasp = PInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, Indice_NonEnerSect, :);
+Y_NonEn_pPaas = PInd_Paas( ref.pY, ref.Y, d.pY, d.Y, Indice_NonEnerSect, :);
+Y_NonEn_pFish = PInd_Fish( ref.pY, ref.Y, d.pY, d.Y, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Production
-Y_qLasp = QInd_Lasp( BY.pY, BY.Y, d.pY, d.Y, :, :);
-Y_qPaas = QInd_Paas( BY.pY, BY.Y, d.pY, d.Y, :, :);
-Y_qFish = QInd_Fish( BY.pY, BY.Y, d.pY, d.Y, :, :);
+Y_qLasp = QInd_Lasp( ref.pY, ref.Y, d.pY, d.Y, :, :);
+Y_qPaas = QInd_Paas( ref.pY, ref.Y, d.pY, d.Y, :, :);
+Y_qFish = QInd_Fish( ref.pY, ref.Y, d.pY, d.Y, :, :);
 
 ////////////////////////
 ////////////Intermediate consumption
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Intermediate consumption
-IC_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
+IC_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption
-IC_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
+IC_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (inputs) - Primary Energy
-IC_input_PrimEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
-IC_input_PrimEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
-IC_input_PrimEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
+IC_input_PrimEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
+IC_input_PrimEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
+IC_input_PrimEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_PrimEnerSect);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (inputs) - Final Energy
-IC_input_FinEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
-IC_input_FinEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
-IC_input_FinEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
+IC_input_FinEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
+IC_input_FinEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
+IC_input_FinEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_FinEnerSect);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (inputs) - Non Energy Products
-IC_input_NonEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
-IC_input_NonEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
-IC_input_NonEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
+IC_input_NonEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
+IC_input_NonEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
+IC_input_NonEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, Indice_NonEnerSect);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (uses) - Primary Energy
-IC_uses_PrimEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
-IC_uses_PrimEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
-IC_uses_PrimEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
+IC_uses_PrimEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
+IC_uses_PrimEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
+IC_uses_PrimEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, : );
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (uses) - Final Energy
-IC_uses_FinEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
-IC_uses_FinEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
-IC_uses_FinEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
+IC_uses_FinEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
+IC_uses_FinEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
+IC_uses_FinEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, : );
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Intermediate consumption (uses) - Non Energy Products
-IC_uses_NonEn_qLasp = QInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
-IC_uses_NonEn_qPaas = QInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
-IC_uses_NonEn_qFish = QInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
+IC_uses_NonEn_qLasp = QInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
+IC_uses_NonEn_qPaas = QInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
+IC_uses_NonEn_qFish = QInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, : );
 
 ////////////////////////	
 ////////////GDP
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - GDP
-GDP_pLasp = (sum(d.pC.*BY.C)+sum(d.pG.*BY.G)+sum(d.pI.*BY.I)+sum(d.pX.*BY.X)-sum(d.pM.*BY.M))/BY.GDP ;
-GDP_pPaas = d.GDP / (sum(BY.pC.*d.C)+sum(BY.pG.*d.G)+sum(BY.pI.*d.I)+sum(BY.pX.*d.X)-sum(BY.pM.*d.M)); 
+GDP_pLasp = (sum(d.pC.*ref.C)+sum(d.pG.*ref.G)+sum(d.pI.*ref.I)+sum(d.pX.*ref.X)-sum(d.pM.*ref.M))/ref.GDP ;
+GDP_pPaas = d.GDP / (sum(ref.pC.*d.C)+sum(ref.pG.*d.G)+sum(ref.pI.*d.I)+sum(ref.pX.*d.X)-sum(ref.pM.*d.M)); 
 GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas);
 
 // Approximation Real_GDP (Nominal GDP / GDP Fisher Price Index )
 GDP_qFish_app = d.GDP / GDP_pFish;
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - GDP
-GDP_qLasp = (sum(BY.pC.*d.C)+sum(BY.pG.*d.G)+sum(BY.pI.*d.I)+sum(BY.pX.*d.X)-sum(BY.pM.*d.M))/BY.GDP ;
-GDP_qPaas = d.GDP / (sum(d.pC.*BY.C)+sum(d.pG.*BY.G)+sum(d.pI.*BY.I)+sum(d.pX.*BY.X)-sum(d.pM.*BY.M)); 
+GDP_qLasp = (sum(ref.pC.*d.C)+sum(ref.pG.*d.G)+sum(ref.pI.*d.I)+sum(ref.pX.*d.X)-sum(ref.pM.*d.M))/ref.GDP ;
+GDP_qPaas = d.GDP / (sum(d.pC.*ref.C)+sum(d.pG.*ref.G)+sum(d.pI.*ref.I)+sum(d.pX.*ref.X)-sum(d.pM.*ref.M)); 
 GDP_qFish = sqrt(GDP_qLasp*GDP_qPaas);
 
 ////////////////////////
 ////////////Output
 ////////////////////////
 
-// BY and final value for output
-BY.Output_value = BY.Y_value + BY.Trade_margins + BY.Transp_margins + sum(BY.SpeMarg_IC, "r") + sum(BY.SpeMarg_C, "r") + BY.SpeMarg_X + BY.SpeMarg_I + sum(BY.Taxes, "r") + sum(BY.Carbon_Tax_IC, "c")' + sum(BY.Carbon_Tax_C, "c")' ;
+// ref and final value for output
+ref.Output_value = ref.Y_value + ref.Trade_margins + ref.Transp_margins + sum(ref.SpeMarg_IC, "r") + sum(ref.SpeMarg_C, "r") + ref.SpeMarg_X + ref.SpeMarg_I + sum(ref.Taxes, "r") + sum(ref.Carbon_Tax_IC, "c")' + sum(ref.Carbon_Tax_C, "c")' ;
 
 d.Output_value = d.Y_value + d.Trade_margins + d.Transp_margins + sum(d.SpeMarg_IC, "r") + sum(d.SpeMarg_C, "r") + d.SpeMarg_X + d.SpeMarg_I + sum(d.Taxes, "r") + sum(d.Carbon_Tax_IC, "c")' + sum(d.Carbon_Tax_C, "c")' ;	
 
-//	BY and final value for Total Margins
-BY.TotMargins = BY.Trade_margins + BY.Transp_margins + sum(BY.SpeMarg_IC, "r") + sum(BY.SpeMarg_C, "r") + BY.SpeMarg_X + BY.SpeMarg_I + BY.Profit_margin;
+//	ref and final value for Total Margins
+ref.TotMargins = ref.Trade_margins + ref.Transp_margins + sum(ref.SpeMarg_IC, "r") + sum(ref.SpeMarg_C, "r") + ref.SpeMarg_X + ref.SpeMarg_I + ref.Profit_margin;
 d.TotMargins = d.Trade_margins + d.Transp_margins + sum(d.SpeMarg_IC, "r") + sum(d.SpeMarg_C, "r") + d.SpeMarg_X + d.SpeMarg_I + d.Profit_margin;
 
 // Price indices (Laspeyres, Paasche and Fisher) - Total Output
-Output_pLasp = (sum(d.pIC.*BY.IC)+sum(d.pC.*BY.C)+sum(d.pG.*BY.G)+sum(d.pI.*BY.I)+sum(d.pX.*BY.X)-sum(d.pM.*BY.M))/sum(BY.Output_value) ;
-Output_pPaas = sum(d.Output_value) / (sum(BY.pIC.*d.IC)+sum(BY.pC.*d.C)+sum(BY.pG.*d.G)+sum(BY.pI.*d.I)+sum(BY.pX.*d.X)-sum(BY.pM.*d.M)); 
+Output_pLasp = (sum(d.pIC.*ref.IC)+sum(d.pC.*ref.C)+sum(d.pG.*ref.G)+sum(d.pI.*ref.I)+sum(d.pX.*ref.X)-sum(d.pM.*ref.M))/sum(ref.Output_value) ;
+Output_pPaas = sum(d.Output_value) / (sum(ref.pIC.*d.IC)+sum(ref.pC.*d.C)+sum(ref.pG.*d.G)+sum(ref.pI.*d.I)+sum(ref.pX.*d.X)-sum(ref.pM.*d.M)); 
 Output_pFish = sqrt(Output_pLasp*Output_pPaas);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Total Output
-Output_qLasp = (sum(BY.pIC.*d.IC)+sum(BY.pC.*d.C)+sum(BY.pG.*d.G)+sum(BY.pI.*d.I)+sum(BY.pX.*d.X)-sum(BY.pM.*d.M))/sum(BY.Output_value) ;
-Output_qPaas = sum(d.Output_value) / (sum(d.pIC.*BY.IC)+sum(d.pC.*BY.C)+sum(d.pG.*BY.G)+sum(d.pI.*BY.I)+sum(d.pX.*BY.X)-sum(d.pM.*BY.M)); 
+Output_qLasp = (sum(ref.pIC.*d.IC)+sum(ref.pC.*d.C)+sum(ref.pG.*d.G)+sum(ref.pI.*d.I)+sum(ref.pX.*d.X)-sum(ref.pM.*d.M))/sum(ref.Output_value) ;
+Output_qPaas = sum(d.Output_value) / (sum(d.pIC.*ref.IC)+sum(d.pC.*ref.C)+sum(d.pG.*ref.G)+sum(d.pI.*ref.I)+sum(d.pX.*ref.X)-sum(d.pM.*ref.M)); 
 Output_qFish = sqrt(Output_qLasp*Output_qPaas);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Primary Energy
-Output_PrimEn_pLasp = (sum(d.pIC(Indice_PrimEnerSect,:).*BY.IC(Indice_PrimEnerSect,:))+sum(d.pC(Indice_PrimEnerSect,:).*BY.C(Indice_PrimEnerSect,:))+sum(d.pG(Indice_PrimEnerSect).*BY.G(Indice_PrimEnerSect))+sum(d.pI(Indice_PrimEnerSect).*BY.I(Indice_PrimEnerSect))+sum(d.pX(Indice_PrimEnerSect).*BY.X(Indice_PrimEnerSect))-sum(d.pM(Indice_PrimEnerSect).*BY.M(Indice_PrimEnerSect)))/sum(BY.Output_value(Indice_PrimEnerSect)) ;
-Output_PrimEn_pPaas = sum(d.Output_value(Indice_PrimEnerSect)) / (sum(BY.pIC(Indice_PrimEnerSect,:).*d.IC(Indice_PrimEnerSect,:))+sum(BY.pC(Indice_PrimEnerSect,:).*d.C(Indice_PrimEnerSect,:))+sum(BY.pG(Indice_PrimEnerSect).*d.G(Indice_PrimEnerSect))+sum(BY.pI(Indice_PrimEnerSect).*d.I(Indice_PrimEnerSect))+sum(BY.pX(Indice_PrimEnerSect).*d.X(Indice_PrimEnerSect))-sum(BY.pM(Indice_PrimEnerSect).*d.M(Indice_PrimEnerSect))); 
+Output_PrimEn_pLasp = (sum(d.pIC(Indice_PrimEnerSect,:).*ref.IC(Indice_PrimEnerSect,:))+sum(d.pC(Indice_PrimEnerSect,:).*ref.C(Indice_PrimEnerSect,:))+sum(d.pG(Indice_PrimEnerSect).*ref.G(Indice_PrimEnerSect))+sum(d.pI(Indice_PrimEnerSect).*ref.I(Indice_PrimEnerSect))+sum(d.pX(Indice_PrimEnerSect).*ref.X(Indice_PrimEnerSect))-sum(d.pM(Indice_PrimEnerSect).*ref.M(Indice_PrimEnerSect)))/sum(ref.Output_value(Indice_PrimEnerSect)) ;
+Output_PrimEn_pPaas = sum(d.Output_value(Indice_PrimEnerSect)) / (sum(ref.pIC(Indice_PrimEnerSect,:).*d.IC(Indice_PrimEnerSect,:))+sum(ref.pC(Indice_PrimEnerSect,:).*d.C(Indice_PrimEnerSect,:))+sum(ref.pG(Indice_PrimEnerSect).*d.G(Indice_PrimEnerSect))+sum(ref.pI(Indice_PrimEnerSect).*d.I(Indice_PrimEnerSect))+sum(ref.pX(Indice_PrimEnerSect).*d.X(Indice_PrimEnerSect))-sum(ref.pM(Indice_PrimEnerSect).*d.M(Indice_PrimEnerSect))); 
 Output_PrimEn_pFish = sqrt(Output_PrimEn_pLasp*Output_PrimEn_pPaas);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Primary Energy
-Output_PrimEn_qLasp = (sum(BY.pIC(Indice_PrimEnerSect,:).*d.IC(Indice_PrimEnerSect,:))+sum(BY.pC(Indice_PrimEnerSect,:).*d.C(Indice_PrimEnerSect,:))+sum(BY.pG(Indice_PrimEnerSect).*d.G(Indice_PrimEnerSect))+sum(BY.pI(Indice_PrimEnerSect).*d.I(Indice_PrimEnerSect))+sum(BY.pX(Indice_PrimEnerSect).*d.X(Indice_PrimEnerSect))-sum(BY.pM(Indice_PrimEnerSect).*d.M(Indice_PrimEnerSect)))/sum(BY.Output_value(Indice_PrimEnerSect)) ;
-Output_PrimEn_qPaas = sum(d.Output_value(Indice_PrimEnerSect)) / (sum(d.pIC(Indice_PrimEnerSect,:).*BY.IC(Indice_PrimEnerSect,:))+sum(d.pC(Indice_PrimEnerSect,:).*BY.C(Indice_PrimEnerSect,:))+sum(d.pG(Indice_PrimEnerSect).*BY.G(Indice_PrimEnerSect))+sum(d.pI(Indice_PrimEnerSect).*BY.I(Indice_PrimEnerSect))+sum(d.pX(Indice_PrimEnerSect).*BY.X(Indice_PrimEnerSect))-sum(d.pM(Indice_PrimEnerSect).*BY.M(Indice_PrimEnerSect))); 
+Output_PrimEn_qLasp = (sum(ref.pIC(Indice_PrimEnerSect,:).*d.IC(Indice_PrimEnerSect,:))+sum(ref.pC(Indice_PrimEnerSect,:).*d.C(Indice_PrimEnerSect,:))+sum(ref.pG(Indice_PrimEnerSect).*d.G(Indice_PrimEnerSect))+sum(ref.pI(Indice_PrimEnerSect).*d.I(Indice_PrimEnerSect))+sum(ref.pX(Indice_PrimEnerSect).*d.X(Indice_PrimEnerSect))-sum(ref.pM(Indice_PrimEnerSect).*d.M(Indice_PrimEnerSect)))/sum(ref.Output_value(Indice_PrimEnerSect)) ;
+Output_PrimEn_qPaas = sum(d.Output_value(Indice_PrimEnerSect)) / (sum(d.pIC(Indice_PrimEnerSect,:).*ref.IC(Indice_PrimEnerSect,:))+sum(d.pC(Indice_PrimEnerSect,:).*ref.C(Indice_PrimEnerSect,:))+sum(d.pG(Indice_PrimEnerSect).*ref.G(Indice_PrimEnerSect))+sum(d.pI(Indice_PrimEnerSect).*ref.I(Indice_PrimEnerSect))+sum(d.pX(Indice_PrimEnerSect).*ref.X(Indice_PrimEnerSect))-sum(d.pM(Indice_PrimEnerSect).*ref.M(Indice_PrimEnerSect))); 
 Output_qFish = sqrt(Output_PrimEn_qLasp*Output_PrimEn_qPaas);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Final Energy
-Output_FinEn_pLasp = (sum(d.pIC(Indice_FinEnerSect,:).*BY.IC(Indice_FinEnerSect,:))+sum(d.pC(Indice_FinEnerSect,:).*BY.C(Indice_FinEnerSect,:))+sum(d.pG(Indice_FinEnerSect).*BY.G(Indice_FinEnerSect))+sum(d.pI(Indice_FinEnerSect).*BY.I(Indice_FinEnerSect))+sum(d.pX(Indice_FinEnerSect).*BY.X(Indice_FinEnerSect))-sum(d.pM(Indice_FinEnerSect).*BY.M(Indice_FinEnerSect)))/sum(BY.Output_value(Indice_FinEnerSect)) ;
-Output_FinEn_pPaas = sum(d.Output_value(Indice_FinEnerSect)) / (sum(BY.pIC(Indice_FinEnerSect,:).*d.IC(Indice_FinEnerSect,:))+sum(BY.pC(Indice_FinEnerSect,:).*d.C(Indice_FinEnerSect,:))+sum(BY.pG(Indice_FinEnerSect).*d.G(Indice_FinEnerSect))+sum(BY.pI(Indice_FinEnerSect).*d.I(Indice_FinEnerSect))+sum(BY.pX(Indice_FinEnerSect).*d.X(Indice_FinEnerSect))-sum(BY.pM(Indice_FinEnerSect).*d.M(Indice_FinEnerSect))); 
+Output_FinEn_pLasp = (sum(d.pIC(Indice_FinEnerSect,:).*ref.IC(Indice_FinEnerSect,:))+sum(d.pC(Indice_FinEnerSect,:).*ref.C(Indice_FinEnerSect,:))+sum(d.pG(Indice_FinEnerSect).*ref.G(Indice_FinEnerSect))+sum(d.pI(Indice_FinEnerSect).*ref.I(Indice_FinEnerSect))+sum(d.pX(Indice_FinEnerSect).*ref.X(Indice_FinEnerSect))-sum(d.pM(Indice_FinEnerSect).*ref.M(Indice_FinEnerSect)))/sum(ref.Output_value(Indice_FinEnerSect)) ;
+Output_FinEn_pPaas = sum(d.Output_value(Indice_FinEnerSect)) / (sum(ref.pIC(Indice_FinEnerSect,:).*d.IC(Indice_FinEnerSect,:))+sum(ref.pC(Indice_FinEnerSect,:).*d.C(Indice_FinEnerSect,:))+sum(ref.pG(Indice_FinEnerSect).*d.G(Indice_FinEnerSect))+sum(ref.pI(Indice_FinEnerSect).*d.I(Indice_FinEnerSect))+sum(ref.pX(Indice_FinEnerSect).*d.X(Indice_FinEnerSect))-sum(ref.pM(Indice_FinEnerSect).*d.M(Indice_FinEnerSect))); 
 Output_PrimEn_pFish = sqrt(Output_FinEn_pLasp*Output_FinEn_pPaas);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Final Energy
-Output_FinEn_qLasp = (sum(BY.pIC(Indice_FinEnerSect,:).*d.IC(Indice_FinEnerSect,:))+sum(BY.pC(Indice_FinEnerSect,:).*d.C(Indice_FinEnerSect,:))+sum(BY.pG(Indice_FinEnerSect).*d.G(Indice_FinEnerSect))+sum(BY.pI(Indice_FinEnerSect).*d.I(Indice_FinEnerSect))+sum(BY.pX(Indice_FinEnerSect).*d.X(Indice_FinEnerSect))-sum(BY.pM(Indice_FinEnerSect).*d.M(Indice_FinEnerSect)))/sum(BY.Output_value(Indice_FinEnerSect)) ;
-Output_FinEn_qPaas = sum(d.Output_value(Indice_FinEnerSect)) / (sum(d.pIC(Indice_FinEnerSect,:).*BY.IC(Indice_FinEnerSect,:))+sum(d.pC(Indice_FinEnerSect,:).*BY.C(Indice_FinEnerSect,:))+sum(d.pG(Indice_FinEnerSect).*BY.G(Indice_FinEnerSect))+sum(d.pI(Indice_FinEnerSect).*BY.I(Indice_FinEnerSect))+sum(d.pX(Indice_FinEnerSect).*BY.X(Indice_FinEnerSect))-sum(d.pM(Indice_FinEnerSect).*BY.M(Indice_FinEnerSect))); 
+Output_FinEn_qLasp = (sum(ref.pIC(Indice_FinEnerSect,:).*d.IC(Indice_FinEnerSect,:))+sum(ref.pC(Indice_FinEnerSect,:).*d.C(Indice_FinEnerSect,:))+sum(ref.pG(Indice_FinEnerSect).*d.G(Indice_FinEnerSect))+sum(ref.pI(Indice_FinEnerSect).*d.I(Indice_FinEnerSect))+sum(ref.pX(Indice_FinEnerSect).*d.X(Indice_FinEnerSect))-sum(ref.pM(Indice_FinEnerSect).*d.M(Indice_FinEnerSect)))/sum(ref.Output_value(Indice_FinEnerSect)) ;
+Output_FinEn_qPaas = sum(d.Output_value(Indice_FinEnerSect)) / (sum(d.pIC(Indice_FinEnerSect,:).*ref.IC(Indice_FinEnerSect,:))+sum(d.pC(Indice_FinEnerSect,:).*ref.C(Indice_FinEnerSect,:))+sum(d.pG(Indice_FinEnerSect).*ref.G(Indice_FinEnerSect))+sum(d.pI(Indice_FinEnerSect).*ref.I(Indice_FinEnerSect))+sum(d.pX(Indice_FinEnerSect).*ref.X(Indice_FinEnerSect))-sum(d.pM(Indice_FinEnerSect).*ref.M(Indice_FinEnerSect))); 
 Output_qFish = sqrt(Output_FinEn_qLasp*Output_FinEn_qPaas);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Non Energy Products
-Output_NonEn_pLasp = (sum(d.pIC(Indice_NonEnerSect,:).*BY.IC(Indice_NonEnerSect,:))+sum(d.pC(Indice_NonEnerSect,:).*BY.C(Indice_NonEnerSect,:))+sum(d.pG(Indice_NonEnerSect).*BY.G(Indice_NonEnerSect))+sum(d.pI(Indice_NonEnerSect).*BY.I(Indice_NonEnerSect))+sum(d.pX(Indice_NonEnerSect).*BY.X(Indice_NonEnerSect))-sum(d.pM(Indice_NonEnerSect).*BY.M(Indice_NonEnerSect)))/sum(BY.Output_value(Indice_NonEnerSect)) ;
-Output_NonEn_pPaas = sum(d.Output_value(Indice_NonEnerSect)) / (sum(BY.pIC(Indice_NonEnerSect,:).*d.IC(Indice_NonEnerSect,:))+sum(BY.pC(Indice_NonEnerSect,:).*d.C(Indice_NonEnerSect,:))+sum(BY.pG(Indice_NonEnerSect).*d.G(Indice_NonEnerSect))+sum(BY.pI(Indice_NonEnerSect).*d.I(Indice_NonEnerSect))+sum(BY.pX(Indice_NonEnerSect).*d.X(Indice_NonEnerSect))-sum(BY.pM(Indice_NonEnerSect).*d.M(Indice_NonEnerSect))); 
+Output_NonEn_pLasp = (sum(d.pIC(Indice_NonEnerSect,:).*ref.IC(Indice_NonEnerSect,:))+sum(d.pC(Indice_NonEnerSect,:).*ref.C(Indice_NonEnerSect,:))+sum(d.pG(Indice_NonEnerSect).*ref.G(Indice_NonEnerSect))+sum(d.pI(Indice_NonEnerSect).*ref.I(Indice_NonEnerSect))+sum(d.pX(Indice_NonEnerSect).*ref.X(Indice_NonEnerSect))-sum(d.pM(Indice_NonEnerSect).*ref.M(Indice_NonEnerSect)))/sum(ref.Output_value(Indice_NonEnerSect)) ;
+Output_NonEn_pPaas = sum(d.Output_value(Indice_NonEnerSect)) / (sum(ref.pIC(Indice_NonEnerSect,:).*d.IC(Indice_NonEnerSect,:))+sum(ref.pC(Indice_NonEnerSect,:).*d.C(Indice_NonEnerSect,:))+sum(ref.pG(Indice_NonEnerSect).*d.G(Indice_NonEnerSect))+sum(ref.pI(Indice_NonEnerSect).*d.I(Indice_NonEnerSect))+sum(ref.pX(Indice_NonEnerSect).*d.X(Indice_NonEnerSect))-sum(ref.pM(Indice_NonEnerSect).*d.M(Indice_NonEnerSect))); 
 Output_PrimEn_pFish = sqrt(Output_NonEn_pLasp*Output_NonEn_pPaas);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Non Energy Products
-Output_NonEn_qLasp = (sum(BY.pIC(Indice_NonEnerSect,:).*d.IC(Indice_NonEnerSect,:))+sum(BY.pC(Indice_NonEnerSect,:).*d.C(Indice_NonEnerSect,:))+sum(BY.pG(Indice_NonEnerSect).*d.G(Indice_NonEnerSect))+sum(BY.pI(Indice_NonEnerSect).*d.I(Indice_NonEnerSect))+sum(BY.pX(Indice_NonEnerSect).*d.X(Indice_NonEnerSect))-sum(BY.pM(Indice_NonEnerSect).*d.M(Indice_NonEnerSect)))/sum(BY.Output_value(Indice_NonEnerSect)) ;
-Output_NonEn_qPaas = sum(d.Output_value(Indice_NonEnerSect)) / (sum(d.pIC(Indice_NonEnerSect,:).*BY.IC(Indice_NonEnerSect,:))+sum(d.pC(Indice_NonEnerSect,:).*BY.C(Indice_NonEnerSect,:))+sum(d.pG(Indice_NonEnerSect).*BY.G(Indice_NonEnerSect))+sum(d.pI(Indice_NonEnerSect).*BY.I(Indice_NonEnerSect))+sum(d.pX(Indice_NonEnerSect).*BY.X(Indice_NonEnerSect))-sum(d.pM(Indice_NonEnerSect).*BY.M(Indice_NonEnerSect))); 
+Output_NonEn_qLasp = (sum(ref.pIC(Indice_NonEnerSect,:).*d.IC(Indice_NonEnerSect,:))+sum(ref.pC(Indice_NonEnerSect,:).*d.C(Indice_NonEnerSect,:))+sum(ref.pG(Indice_NonEnerSect).*d.G(Indice_NonEnerSect))+sum(ref.pI(Indice_NonEnerSect).*d.I(Indice_NonEnerSect))+sum(ref.pX(Indice_NonEnerSect).*d.X(Indice_NonEnerSect))-sum(ref.pM(Indice_NonEnerSect).*d.M(Indice_NonEnerSect)))/sum(ref.Output_value(Indice_NonEnerSect)) ;
+Output_NonEn_qPaas = sum(d.Output_value(Indice_NonEnerSect)) / (sum(d.pIC(Indice_NonEnerSect,:).*ref.IC(Indice_NonEnerSect,:))+sum(d.pC(Indice_NonEnerSect,:).*ref.C(Indice_NonEnerSect,:))+sum(d.pG(Indice_NonEnerSect).*ref.G(Indice_NonEnerSect))+sum(d.pI(Indice_NonEnerSect).*ref.I(Indice_NonEnerSect))+sum(d.pX(Indice_NonEnerSect).*ref.X(Indice_NonEnerSect))-sum(d.pM(Indice_NonEnerSect).*ref.M(Indice_NonEnerSect))); 
 Output_qFish = sqrt(Output_NonEn_qLasp*Output_NonEn_qPaas);
 
 ////////////////////////
@@ -207,256 +208,256 @@ Output_qFish = sqrt(Output_NonEn_qLasp*Output_NonEn_qPaas);
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption
-C_pLasp = PInd_Lasp( BY.pC, BY.C, d.pC, d.C, :, :);
-C_pPaas = PInd_Paas( BY.pC, BY.C, d.pC, d.C, :, :);
-C_pFish = PInd_Fish( BY.pC, BY.C, d.pC, d.C, :, :);
+C_pLasp = PInd_Lasp( ref.pC, ref.C, d.pC, d.C, :, :);
+C_pPaas = PInd_Paas( ref.pC, ref.C, d.pC, d.C, :, :);
+C_pFish = PInd_Fish( ref.pC, ref.C, d.pC, d.C, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Households consumption
-C_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, :, :);
-C_qPaas = QInd_Paas( BY.pC, BY.C, d.pC, d.C, :, :);
-C_qFish = QInd_Fish( BY.pC, BY.C, d.pC, d.C, :, :);
+C_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, :, :);
+C_qPaas = QInd_Paas( ref.pC, ref.C, d.pC, d.C, :, :);
+C_qFish = QInd_Fish( ref.pC, ref.C, d.pC, d.C, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption - non energy goods
-C_NonEn_pLasp = PInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
-C_NonEn_pPaas = PInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
-C_NonEn_pFish = PInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_pLasp = PInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_pPaas = PInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_pFish = PInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Households consumption - non energy goods
-C_NonEn_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
-C_NonEn_qPaas = QInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
-C_NonEn_qFish = QInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_qPaas = QInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
+C_NonEn_qFish = QInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_NonEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption - Energy goods
-C_En_pLasp = PInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
-C_En_pPaas = PInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
-C_En_pFish = PInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_pLasp = PInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_pPaas = PInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_pFish = PInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Households consumption - Energy goods
-C_En_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
-C_En_qPaas = QInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
-C_En_qFish = QInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_qPaas = QInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
+C_En_qFish = QInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption - Primary goods
-C_PrimEn_pLasp = PInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
-C_PrimEn_pPaas = PInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
-C_PrimEn_pFish = PInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_pLasp = PInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_pPaas = PInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_pFish = PInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Households consumption - Primary goods
-C_PrimEn_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
-C_PrimEn_qPaas = QInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
-C_PrimEn_qFish = QInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_qPaas = QInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
+C_PrimEn_qFish = QInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption - Final goods
-C_FinEn_pLasp = PInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
-C_FinEn_pPaas = PInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
-C_FinEn_pFish = PInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_pLasp = PInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_pPaas = PInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_pFish = PInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Households consumption - Final goods
-C_FinEn_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
-C_FinEn_qPaas = QInd_Paas( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
-C_FinEn_qFish = QInd_Fish( BY.pC, BY.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_qPaas = QInd_Paas( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
+C_FinEn_qFish = QInd_Fish( ref.pC, ref.C, d.pC, d.C, Indice_FinEnerSect, :);
 
 // Approximation real Households consumption (Nominal Households consumption / Fisher Price Index for Households consumption)
-C_qFish = QInd_Fish( BY.pC,BY.C, d.pC, d.C, :, :) ;
+C_qFish = QInd_Fish( ref.pC,ref.C, d.pC, d.C, :, :) ;
 
 // Approximation real Households consumption - non energy goods
-C_NonEn_qFish_app = QInd_Fish_app( BY.pC,BY.C, d.pC, d.C, Indice_NonEnerSect, :) ;
+C_NonEn_qFish_app = QInd_Fish_app( ref.pC,ref.C, d.pC, d.C, Indice_NonEnerSect, :) ;
 
 ////////////////////////
 ////////////Public Consumption
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Public consumption
-G_pLasp = PInd_Lasp( BY.pG, BY.G, d.pG, d.G, :, :);
-G_pPaas = PInd_Paas( BY.pG, BY.G, d.pG, d.G, :, :);
-G_pFish = PInd_Fish( BY.pG, BY.G, d.pG, d.G, :, :);
+G_pLasp = PInd_Lasp( ref.pG, ref.G, d.pG, d.G, :, :);
+G_pPaas = PInd_Paas( ref.pG, ref.G, d.pG, d.G, :, :);
+G_pFish = PInd_Fish( ref.pG, ref.G, d.pG, d.G, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Public consumption
-G_qLasp = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, :, :);
-G_qPaas = QInd_Paas( BY.pG, BY.G, d.pG, d.G, :, :);
-G_qFish = QInd_Fish( BY.pG, BY.G, d.pG, d.G, :, :);
+G_qLasp = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, :, :);
+G_qPaas = QInd_Paas( ref.pG, ref.G, d.pG, d.G, :, :);
+G_qFish = QInd_Fish( ref.pG, ref.G, d.pG, d.G, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Public consumption - non energy goods
-G_NonEn_pLasp = PInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
-G_NonEn_pPaas = PInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
-G_NonEn_pFish = PInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_pLasp = PInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_pPaas = PInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_pFish = PInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Public consumption - non energy goods
-G_NonEn_qLasp = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
-G_NonEn_qPaas = QInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
-G_NonEn_qFish = QInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_qLasp = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_qPaas = QInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
+G_NonEn_qFish = QInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_NonEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Public  consumption - Energy goods
-G_En_pLasp = PInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
-G_En_pPaas = PInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
-G_En_pFish = PInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_pLasp = PInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_pPaas = PInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_pFish = PInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Public consumption - Energy goods
-G_En_qLasp = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
-G_En_qPaas = QInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
-G_En_qFish = QInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_qLasp = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_qPaas = QInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
+G_En_qFish = QInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Public consumption - Primary goods
-G_PrimEn_pLasp = PInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
-G_PrimEn_pPaas = PInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
-G_PrimEn_pFish = PInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_pLasp = PInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_pPaas = PInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_pFish = PInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Public consumption - Primary goods
-G_PrimEn_qLasp = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
-G_PrimEn_qPaas = QInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
-G_PrimEn_qFish = QInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_qLasp = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_qPaas = QInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
+G_PrimEn_qFish = QInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Public consumption - Final goods
-G_FinEn_pLasp = PInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
-G_FinEn_pPaas = PInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
-G_FinEn_pFish = PInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_pLasp = PInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_pPaas = PInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_pFish = PInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Public consumption - Final goods
-G_FinEn_qLasp = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
-G_FinEn_qPaas = QInd_Paas( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
-G_FinEn_qFish = QInd_Fish( BY.pG, BY.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_qLasp = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_qPaas = QInd_Paas( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
+G_FinEn_qFish = QInd_Fish( ref.pG, ref.G, d.pG, d.G, Indice_FinEnerSect, :);
 
 ////////////////////////	
 ////////////Investment
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Investment
-I_pLasp = PInd_Lasp( BY.pI, BY.I, d.pI, d.I, :, :);
-I_pPaas = PInd_Paas( BY.pI, BY.I, d.pI, d.I, :, :);
-I_pFish = PInd_Fish( BY.pI, BY.I, d.pI, d.I, :, :);
+I_pLasp = PInd_Lasp( ref.pI, ref.I, d.pI, d.I, :, :);
+I_pPaas = PInd_Paas( ref.pI, ref.I, d.pI, d.I, :, :);
+I_pFish = PInd_Fish( ref.pI, ref.I, d.pI, d.I, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Investment
-I_qLasp = QInd_Lasp( BY.pI, BY.I, d.pI, d.I, :, :);
-I_qPaas = QInd_Paas( BY.pI, BY.I, d.pI, d.I, :, :);
-I_qFish = QInd_Fish( BY.pI, BY.I, d.pI, d.I, :, :);
+I_qLasp = QInd_Lasp( ref.pI, ref.I, d.pI, d.I, :, :);
+I_qPaas = QInd_Paas( ref.pI, ref.I, d.pI, d.I, :, :);
+I_qFish = QInd_Fish( ref.pI, ref.I, d.pI, d.I, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Investment - non energy goods
-I_NonEn_pLasp = PInd_Lasp( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
-I_NonEn_pPaas = PInd_Paas( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
-I_NonEn_pFish = PInd_Fish( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_pLasp = PInd_Lasp( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_pPaas = PInd_Paas( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_pFish = PInd_Fish( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Investment - non energy goods
-I_NonEn_qLasp = QInd_Lasp( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
-I_NonEn_qPaas = QInd_Paas( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
-I_NonEn_qFish = QInd_Fish( BY.pI, BY.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_qLasp = QInd_Lasp( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_qPaas = QInd_Paas( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
+I_NonEn_qFish = QInd_Fish( ref.pI, ref.I, d.pI, d.I, Indice_NonEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Investment - Energy goods
-I_En_pLasp = PInd_Lasp( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
-I_En_pPaas = PInd_Paas( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
-I_En_pFish = PInd_Fish( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_pLasp = PInd_Lasp( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_pPaas = PInd_Paas( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_pFish = PInd_Fish( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Investment - Energy goods
-I_En_qLasp = QInd_Lasp( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
-I_En_qPaas = QInd_Paas( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
-I_En_qFish = QInd_Fish( BY.pI, BY.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_qLasp = QInd_Lasp( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_qPaas = QInd_Paas( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
+I_En_qFish = QInd_Fish( ref.pI, ref.I, d.pI, d.I, Indice_EnerSect, :);
 
 ////////////////////////
 //////////// Exports
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Exports
-X_pLasp = PInd_Lasp( BY.pX, BY.X, d.pX, d.X, :, :);
-X_pPaas = PInd_Paas( BY.pX, BY.X, d.pX, d.X, :, :);
-X_pFish = PInd_Fish( BY.pX, BY.X, d.pX, d.X, :, :);
+X_pLasp = PInd_Lasp( ref.pX, ref.X, d.pX, d.X, :, :);
+X_pPaas = PInd_Paas( ref.pX, ref.X, d.pX, d.X, :, :);
+X_pFish = PInd_Fish( ref.pX, ref.X, d.pX, d.X, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Energy - Exports
-X_En_pLasp = PInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
-X_En_pPaas = PInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
-X_En_pFish = PInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_pLasp = PInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_pPaas = PInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_pFish = PInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - non Energy Products - Exports
-X_NonEn_pLasp = PInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
-X_NonEn_pPaas = PInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
-X_NonEn_pFish = PInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_pLasp = PInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_pPaas = PInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_pFish = PInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Primary Energy - Exports
-X_PrimEn_pLasp = PInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
-X_PrimEn_pPaas = PInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
-X_PrimEn_pFish = PInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_pLasp = PInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_pPaas = PInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_pFish = PInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Final Energy - Exports
-X_FinEn_pLasp = PInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
-X_FinEn_pPaas = PInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
-X_FinEn_pFish = PInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_pLasp = PInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_pPaas = PInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_pFish = PInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Exports
-X_qLasp = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, :, :);
-X_qPaas = QInd_Paas( BY.pX, BY.X, d.pX, d.X, :, :);
-X_qFish = QInd_Fish( BY.pX, BY.X, d.pX, d.X, :, :);
+X_qLasp = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, :, :);
+X_qPaas = QInd_Paas( ref.pX, ref.X, d.pX, d.X, :, :);
+X_qFish = QInd_Fish( ref.pX, ref.X, d.pX, d.X, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Energy - Exports
-X_En_qLasp = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
-X_En_qPaas = QInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
-X_En_qFish = QInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_qLasp = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_qPaas = QInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
+X_En_qFish = QInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_EnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - non Energy Products - Exports
-X_NonEn_qLasp = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
-X_NonEn_qPaas = QInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
-X_NonEn_qFish = QInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_qLasp = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_qPaas = QInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
+X_NonEn_qFish = QInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Primary Energy - Exports
-X_PrimEn_qLasp = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
-X_PrimEn_qPaas = QInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
-X_PrimEn_qFish = QInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_qLasp = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_qPaas = QInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
+X_PrimEn_qFish = QInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_PrimEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Final Energy - Exports
-X_FinEn_qLasp = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
-X_FinEn_qPaas = QInd_Paas( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
-X_FinEn_qFish = QInd_Fish( BY.pX, BY.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_qLasp = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_qPaas = QInd_Paas( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
+X_FinEn_qFish = QInd_Fish( ref.pX, ref.X, d.pX, d.X, Indice_FinEnerSect, :);
 
 ////////////////////////
 //////////// Imports
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Imports
-M_pLasp = PInd_Lasp( BY.pM, BY.M, d.pM, d.M, :, :);
-M_pPaas = PInd_Paas( BY.pM, BY.M, d.pM, d.M, :, :);
-M_pFish = PInd_Fish( BY.pM, BY.M, d.pM, d.M, :, :);
+M_pLasp = PInd_Lasp( ref.pM, ref.M, d.pM, d.M, :, :);
+M_pPaas = PInd_Paas( ref.pM, ref.M, d.pM, d.M, :, :);
+M_pFish = PInd_Fish( ref.pM, ref.M, d.pM, d.M, :, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Energy - Imports
-M_En_pLasp = PInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
-M_En_pPaas = PInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
-M_En_pFish = PInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_pLasp = PInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_pPaas = PInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_pFish = PInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Primary Energy - Imports
-M_PrimEn_pLasp = PInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
-M_PrimEn_pPaas = PInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
-M_PrimEn_pFish = PInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_pLasp = PInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_pPaas = PInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_pFish = PInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Final Energy - Imports
-M_FinEn_pLasp = PInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
-M_FinEn_pPaas = PInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
-M_FinEn_pFish = PInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_pLasp = PInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_pPaas = PInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_pFish = PInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Non Energy Products - Imports
-M_NonEn_pLasp = PInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
-M_NonEn_pPaas = PInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
-M_NonEn_pFish = PInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_pLasp = PInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_pPaas = PInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_pFish = PInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Imports
-M_qLasp = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, :, :);
-M_qPaas = QInd_Paas( BY.pM, BY.M, d.pM, d.M, :, :);
-M_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, :, :);
+M_qLasp = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, :, :);
+M_qPaas = QInd_Paas( ref.pM, ref.M, d.pM, d.M, :, :);
+M_qFish = QInd_Fish( ref.pM, ref.M, d.pM, d.M, :, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Energy - Imports
-M_En_qLasp = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
-M_En_qPaas = QInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
-M_En_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_qLasp = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_qPaas = QInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
+M_En_qFish = QInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_EnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - non Energy Products - Imports
-M_NonEn_qLasp = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
-M_NonEn_qPaas = QInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
-M_NonEn_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_qLasp = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_qPaas = QInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
+M_NonEn_qFish = QInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_NonEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Primary Energy - Imports
-M_PrimEn_qLasp = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
-M_PrimEn_qPaas = QInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
-M_PrimEn_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_qLasp = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_qPaas = QInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
+M_PrimEn_qFish = QInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_PrimEnerSect, :);
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Final Energy - Imports
-M_FinEn_qLasp = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
-M_FinEn_qPaas = QInd_Paas( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
-M_FinEn_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_qLasp = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_qPaas = QInd_Paas( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
+M_FinEn_qFish = QInd_Fish( ref.pM, ref.M, d.pM, d.M, Indice_FinEnerSect, :);
 
 
 ////////////////////////////////////////////////////////////
@@ -474,26 +475,26 @@ M_FinEn_qFish = QInd_Fish( BY.pM, BY.M, d.pM, d.M, Indice_FinEnerSect, :);
 ////////////////////////
 
 // Initial value shares for each components of Output 
-BY.IC_output_ValueShare 	= sum(BY.IC_value)/ sum(BY.Output_value);
-BY.GDP_output_ValueShare 	= sum(BY.GDP)/ sum(BY.Output_value);
+ref.IC_output_ValueShare 	= sum(ref.IC_value)/ sum(ref.Output_value);
+ref.GDP_output_ValueShare 	= sum(ref.GDP)/ sum(ref.Output_value);
 
 d.IC_output_ValueShare 	= sum(d.IC_value)/ sum(d.Output_value);
 d.GDP_output_ValueShare 	= sum(d.GDP)/ sum(d.Output_value);
 
 // Decomposition of variations for the first level macroeconomic identity
-IC_Output_qLasp 	= BY.IC_output_ValueShare * IC_qLasp ;
-GDP_Output_qLasp 	= BY.GDP_output_ValueShare * GDP_qLasp ;
+IC_Output_qLasp 	= ref.IC_output_ValueShare * IC_qLasp ;
+GDP_Output_qLasp 	= ref.GDP_output_ValueShare * GDP_qLasp ;
 
 ////////////////////////
 //////////// Second level macroeconomic identity: GDP = Households Consumption + Public Consumption + Investment + Exports - Imports
 ////////////////////////
 
 // Initial value shares (in output) for each components of GDP
-BY.C_Output_ValueShare	= sum(BY.C_value)/ sum(BY.Output_value); 
-BY.G_Output_ValueShare	= sum(BY.G_value)/ sum(BY.Output_value); 
-BY.I_Output_ValueShare	= sum(BY.I_value)/ sum(BY.Output_value); 
-BY.X_Output_ValueShare	= sum(BY.X_value)/ sum(BY.Output_value); 
-BY.M_Output_ValueShare	= -sum(BY.M_value)/ sum(BY.Output_value);
+ref.C_Output_ValueShare	= sum(ref.C_value)/ sum(ref.Output_value); 
+ref.G_Output_ValueShare	= sum(ref.G_value)/ sum(ref.Output_value); 
+ref.I_Output_ValueShare	= sum(ref.I_value)/ sum(ref.Output_value); 
+ref.X_Output_ValueShare	= sum(ref.X_value)/ sum(ref.Output_value); 
+ref.M_Output_ValueShare	= -sum(ref.M_value)/ sum(ref.Output_value);
 
 // Final value shares (in output) for each components of GDP
 	// added to have the same number of variables in output in input data list
@@ -504,32 +505,32 @@ d.X_Output_ValueShare	= sum(d.X_value)/ sum(d.Output_value);
 d.M_Output_ValueShare	= -sum(d.M_value)/ sum(d.Output_value);
 
 // Decomposition of variations for the second level macroeconomic identity
-C_GDP_qLasp = BY.C_Output_ValueShare * C_qLasp ;
-G_GDP_qLasp = BY.G_Output_ValueShare * G_qLasp ;
-I_GDP_qLasp = BY.I_Output_ValueShare * I_qLasp ;
-X_GDP_qLasp = BY.X_Output_ValueShare * X_qLasp ;
-M_GDP_qLasp = BY.M_Output_ValueShare * M_qLasp ;
+C_GDP_qLasp = ref.C_Output_ValueShare * C_qLasp ;
+G_GDP_qLasp = ref.G_Output_ValueShare * G_qLasp ;
+I_GDP_qLasp = ref.I_Output_ValueShare * I_qLasp ;
+X_GDP_qLasp = ref.X_Output_ValueShare * X_qLasp ;
+M_GDP_qLasp = ref.M_Output_ValueShare * M_qLasp ;
 
 ////////////////////////
 //////////// Households Consumption = Households Non Energy consumption + Households Energy Consumption	
 ////////////////////////
 
 // Initial value shares for each components of Households Consumption
-BY.Ener_C_ValueShare		= sum(BY.C_value(Indice_EnerSect, :))/sum(BY.C_value) ;
-BY.NonEner_C_ValueShare	= sum(BY.C_value(Indice_NonEnerSect, :))/sum(BY.C_value) ;
+ref.Ener_C_ValueShare		= sum(ref.C_value(Indice_EnerSect, :))/sum(ref.C_value) ;
+ref.NonEner_C_ValueShare	= sum(ref.C_value(Indice_NonEnerSect, :))/sum(ref.C_value) ;
 
 d.Ener_C_ValueShare		= sum(d.C_value(Indice_EnerSect, :))/sum(d.C_value) ;
 d.NonEner_C_ValueShare	= sum(d.C_value(Indice_NonEnerSect, :))/sum(d.C_value) ;
 
-BY.Ener_C_ValueShareFish		= BY.Ener_C_ValueShare; 
-BY.NonEner_C_ValueShareFish	= BY.NonEner_C_ValueShare; 
+ref.Ener_C_ValueShareFish		= ref.Ener_C_ValueShare; 
+ref.NonEner_C_ValueShareFish	= ref.NonEner_C_ValueShare; 
 
 d.Ener_C_ValueShareFish		= (sum(d.C_value(Indice_EnerSect, :)) / C_En_pFish ) /(sum(d.C_value)/C_pFish) ;
 d.NonEner_C_ValueShareFish	= (sum(d.C_value(Indice_NonEnerSect, :))/C_NonEn_pFish)/(sum(d.C_value)/C_pFish);
 
 // Decomposition of variations - Households consumption
-CEner_C_qLasp 	= BY.Ener_C_ValueShare * C_En_qLasp ;
-CNonEner_C_qLasp 	= BY.NonEner_C_ValueShare * C_NonEn_qLasp ;
+CEner_C_qLasp 	= ref.Ener_C_ValueShare * C_En_qLasp ;
+CNonEner_C_qLasp 	= ref.NonEner_C_ValueShare * C_NonEn_qLasp ;
 
 
 ////////////////////////////////////////////////////////////
@@ -541,18 +542,18 @@ CNonEner_C_qLasp 	= BY.NonEner_C_ValueShare * C_NonEn_qLasp ;
 ////////////////////////
 
 //Laspeyres, Paasche and Fisher indices for labour intensity (lambda treated as price)
-lambda_pLasp = PInd_Lasp( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
-lambda_pPaas = PInd_Paas( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
-lambda_pFish = PInd_Fish( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
+lambda_pLasp = PInd_Lasp( ref.lambda, ref.Y', d.lambda, d.Y', :, :);
+lambda_pPaas = PInd_Paas( ref.lambda, ref.Y', d.lambda, d.Y', :, :);
+lambda_pFish = PInd_Fish( ref.lambda, ref.Y', d.lambda, d.Y', :, :);
 
 ////////////////////////
 //////////// Energy intensity
 ////////////////////////
 
 //Laspeyres, Paasche and Fisher indices for energy intensity (alpha treated as price)
-alpha_Ener_qLasp = QInd_Lasp( BY.alpha, ones(nb_Commodities, 1).*.BY.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
-alpha_Ener_qPaas = QInd_Paas( BY.alpha, ones(nb_Commodities, 1).*.BY.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
-alpha_Ener_qFish = QInd_Fish( BY.alpha, ones(nb_Commodities, 1).*.BY.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
+alpha_Ener_qLasp = QInd_Lasp( ref.alpha, ones(nb_Commodities, 1).*.ref.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
+alpha_Ener_qPaas = QInd_Paas( ref.alpha, ones(nb_Commodities, 1).*.ref.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
+alpha_Ener_qFish = QInd_Fish( ref.alpha, ones(nb_Commodities, 1).*.ref.Y', d.alpha, ones(nb_Commodities, 1).*.d.Y', Indice_EnerSect, :);
 
 ////////////////////////////////////////////////////////////
 ////// Trade Indicators
@@ -563,53 +564,53 @@ alpha_Ener_qFish = QInd_Fish( BY.alpha, ones(nb_Commodities, 1).*.BY.Y', d.alpha
 ////////////////////////
 
 //////// By sectors
-BY.TradeInt = TradeIntens(BY.M_value, BY.X_value', BY.Y_value);
+ref.TradeInt = TradeIntens(ref.M_value, ref.X_value', ref.Y_value);
 d.TradeInt = TradeIntens(d.M_value, d.X_value', d.Y_value);
-evol_BY.TradeInt =  (divide(d.TradeInt , BY.TradeInt , %nan ) );
+evol_ref.TradeInt =  (divide(d.TradeInt , ref.TradeInt , %nan ) );
 
 //////// Global
-BY.TradeInt_tot = TradeIntens(sum(BY.M_value), sum(BY.X_value), sum(BY.Y_value));
+ref.TradeInt_tot = TradeIntens(sum(ref.M_value), sum(ref.X_value), sum(ref.Y_value));
 d.TradeInt_tot = TradeIntens(sum(d.M_value), sum(d.X_value), sum(d.Y_value));
-evol_BY.TradeInt_tot =  (divide(d.TradeInt_tot , BY.TradeInt_tot , %nan ));
+evol_ref.TradeInt_tot =  (divide(d.TradeInt_tot , ref.TradeInt_tot , %nan ));
 
 ////////////////////////
 //////Import penetration ratios :  ratio between the value of imports as a percentage of total domestic demand. The import penetration rate shows to what degree domestic demand D is satisfied by imports M
 ////////////////////////
 
 //////// By sectors
-BY.M_penetRat = M_penetRat(BY.M_value, BY.Y_value, BY.X_value');
+ref.M_penetRat = M_penetRat(ref.M_value, ref.Y_value, ref.X_value');
 d.M_penetRat = M_penetRat(d.M_value, d.Y_value, d.X_value');
-evol_BY.M_penetRat =  (divide(d.M_penetRat , BY.M_penetRat , %nan )); 
+evol_ref.M_penetRat =  (divide(d.M_penetRat , ref.M_penetRat , %nan )); 
 
 //////// Global
-BY.M_penetRat_tot = M_penetRat(sum(BY.M_value), sum(BY.Y_value), sum(BY.X_value));
+ref.M_penetRat_tot = M_penetRat(sum(ref.M_value), sum(ref.Y_value), sum(ref.X_value));
 d.M_penetRat_tot = M_penetRat(sum(d.M_value), sum(d.Y_value), sum(d.X_value));
-evol_BY.M_penetRat_tot =  (divide(d.M_penetRat_tot , BY.M_penetRat_tot , %nan )); 
+evol_ref.M_penetRat_tot =  (divide(d.M_penetRat_tot , ref.M_penetRat_tot , %nan )); 
 
 ////// Price and Quantity Indices for the imports/domestic production ratio in quantities (M/Y)
-M_Y_Ratio_pLasp = PInd_Lasp( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
-M_Y_Ratio_pPaas = PInd_Paas( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
-M_Y_Ratio_pFish = PInd_Fish( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_pLasp = PInd_Lasp( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_pPaas = PInd_Paas( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_pFish = PInd_Fish( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
 
-M_Y_Ratio_qLasp = QInd_Lasp( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
-M_Y_Ratio_qPaas = QInd_Paas( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
-M_Y_Ratio_qFish = QInd_Fish( BY.pM./BY.pY, BY.M./BY.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_qLasp = QInd_Lasp( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_qPaas = QInd_Paas( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
+M_Y_Ratio_qFish = QInd_Fish( ref.pM./ref.pY, ref.M./ref.Y, d.pM./d.pY, d.M./d.Y, :, :);
 
 ////////////////////////////////////////////////////////////
 ////// 	Total Labour (Full-time equivalent)
 ////////////////////////////////////////////////////////////
 
-BY.Labour_tot = sum(BY.Labour);
+ref.Labour_tot = sum(ref.Labour);
 d.Labour_tot = sum(d.Labour);
-evol_BY.Labour_tot = divide(d.Labour_tot, BY.Labour_tot, %nan);
+evol_ref.Labour_tot = divide(d.Labour_tot, ref.Labour_tot, %nan);
 
-BY.Unit_Labcost = BY.pL.*BY.lambda;
+ref.Unit_Labcost = ref.pL.*ref.lambda;
 d.Unit_Labcost = d.pL.*d.lambda;
-evol_BY.Unit_Labcost = (divide(d.Unit_Labcost,BY.Unit_Labcost,%nan))  ;
+evol_ref.Unit_Labcost = (divide(d.Unit_Labcost,ref.Unit_Labcost,%nan))  ;
 
 // Quantity indices (Laspeyres, Paasche and Fisher) - Production in Labour
 // For decomposition: Labour Variation = Index lambda (Paashes) * Index Y_Labour (Laspeyres)
-Y_Labour_qLasp = QInd_Lasp( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
+Y_Labour_qLasp = QInd_Lasp( ref.lambda, ref.Y', d.lambda, d.Y', :, :);
 
 
 ////////////////////////////////////////////////////////////
@@ -621,37 +622,37 @@ Y_Labour_qLasp = QInd_Lasp( BY.lambda, BY.Y', d.lambda, d.Y', :, :);
 ////////////////////////
 
 // Energy Cost Share - By sectors
-BY.ENshare = Cost_Share( BY.IC_value(Indice_EnerSect,:)  , BY.Y_value(:)') ;
+ref.ENshare = Cost_Share( ref.IC_value(Indice_EnerSect,:)  , ref.Y_value(:)') ;
 d.ENshare = Cost_Share( d.IC_value(Indice_EnerSect,:)  , d.Y_value(:)') ;
-evol_BY.ENshare =  ( divide(d.ENshare , BY.ENshare , %nan ) ) ;
+evol_ref.ENshare =  ( divide(d.ENshare , ref.ENshare , %nan ) ) ;
 
 //  Energy Cost Share - For non energetic sectors
-BY.ENshareNONEner = Cost_Share( sum(BY.IC_value(Indice_EnerSect,Indice_NonEnerSect))  ,sum( BY.Y_value(Indice_NonEnerSect))) ;
+ref.ENshareNONEner = Cost_Share( sum(ref.IC_value(Indice_EnerSect,Indice_NonEnerSect))  ,sum( ref.Y_value(Indice_NonEnerSect))) ;
 d.ENshareNONEner = Cost_Share( sum(d.IC_value(Indice_EnerSect,Indice_NonEnerSect))  , sum(d.Y_value(Indice_NonEnerSect))) ;
-evol_BY.ENshareNONEner =  ( divide(d.ENshareNONEner , BY.ENshareNONEner , %nan ) ) ;
+evol_ref.ENshareNONEner =  ( divide(d.ENshareNONEner , ref.ENshareNONEner , %nan ) ) ;
 
 
 //	Energy Cost Share - All sectors (Macro level)
-BY.ENshareMacro = sum(BY.IC_value(Indice_EnerSect,:)) / sum(BY.Y_value(:));
+ref.ENshareMacro = sum(ref.IC_value(Indice_EnerSect,:)) / sum(ref.Y_value(:));
 d.ENshareMacro =  sum(d.IC_value(Indice_EnerSect,:)) / sum(d.Y_value(:));
-evol_BY.ENshareMacro = divide(d.ENshareMacro , BY.ENshareMacro , %nan ) ; 
+evol_ref.ENshareMacro = divide(d.ENshareMacro , ref.ENshareMacro , %nan ) ; 
 
 /////////////////////////
 //////////// Labour Cost share - All sectors (Macro level)	
 /////////////////////////
 // Plutôt que recalculer voir comment utiliser Labour_income déjà calculé dans iot pour le niveau d'agrégation donné
 
-BY.LabourShareMacro = sum(BY.Labour .* BY.pL) / sum(BY.Y_value(:));
+ref.LabourShareMacro = sum(ref.Labour .* ref.pL) / sum(ref.Y_value(:));
 d.LabourShareMacro   = sum(d.Labour .* d.pL) / sum(d.Y_value(:));
-evol_BY.LabourShareMacro = divide(d.LabourShareMacro , BY.LabourShareMacro , %nan ) ; 	
+evol_ref.LabourShareMacro = divide(d.LabourShareMacro , ref.LabourShareMacro , %nan ) ; 	
 
 ////////////////////////
 //////////// Energy cost/ Labour cost RATIO
 ////////////////////////
 
-BY.ShareEN_Lab = divide(( sum(BY.pIC(Indice_EnerSect,:).*BY.alpha(Indice_EnerSect,:),"r") ), BY.Unit_Labcost,%nan) ; 
+ref.ShareEN_Lab = divide(( sum(ref.pIC(Indice_EnerSect,:).*ref.alpha(Indice_EnerSect,:),"r") ), ref.Unit_Labcost,%nan) ; 
 d.ShareEN_Lab = ( sum(d.pIC(Indice_EnerSect,:).*d.alpha(Indice_EnerSect,:),"r") ) ./ d.Unit_Labcost  ;
-evol_BY.ShareEN_Lab = (divide(d.ShareEN_Lab, BY.ShareEN_Lab, %nan)) ;
+evol_ref.ShareEN_Lab = (divide(d.ShareEN_Lab, ref.ShareEN_Lab, %nan)) ;
 
 ////////////////////////////////////////////////////////////
 ////// Input Prices
@@ -661,57 +662,57 @@ evol_BY.ShareEN_Lab = (divide(d.ShareEN_Lab, BY.ShareEN_Lab, %nan)) ;
 //////////// Mean wage
 ////////////////////////
 
-BY.omega 	= sum (BY.w .* BY.Labour) / sum(BY.Labour) ;
+ref.omega 	= sum (ref.w .* ref.Labour) / sum(ref.Labour) ;
 d.omega 	= sum (d.w .* d.Labour) / sum(d.Labour) ;
-evol_BY.omega	= divide(d.omega , BY.omega , %nan ) ;
+evol_ref.omega	= divide(d.omega , ref.omega , %nan ) ;
 
 ////////////////////////
 //////////// Energy input price - All sectors (Macro) - Price indices (Laspeyres, Paasche and Fisher)
 ////////////////////////
 
 // Price indices (Laspeyres, Paasche and Fisher) - Energy - Intermediate Consumption
-IC_Ener_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_EnerSect, :);
-IC_Ener_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_EnerSect, :);
-IC_Ener_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_EnerSect, :);
+IC_Ener_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_EnerSect, :);
+IC_Ener_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_EnerSect, :);
+IC_Ener_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_EnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Primary Energy - Intermediate Consumption
-IC_PrimEn_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
-IC_PrimEn_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
-IC_PrimEn_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
+IC_PrimEn_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
+IC_PrimEn_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
+IC_PrimEn_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_PrimEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Final Energy - Intermediate Consumption
-IC_FinEn_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
-IC_FinEn_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
-IC_FinEn_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
+IC_FinEn_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
+IC_FinEn_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
+IC_FinEn_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_FinEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - Non Energy Products - Intermediate Consumption
-IC_NonEn_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
-IC_NonEn_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
-IC_NonEn_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
+IC_NonEn_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
+IC_NonEn_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
+IC_NonEn_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, Indice_NonEnerSect, :);
 
 // Price indices (Laspeyres, Paasche and Fisher) - All - Intermediate Consumption
-IC_pLasp = PInd_Lasp( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_pPaas = PInd_Paas( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
-IC_pFish = PInd_Fish( BY.pIC, BY.IC, d.pIC, d.IC, :, :);
+IC_pLasp = PInd_Lasp( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_pPaas = PInd_Paas( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
+IC_pFish = PInd_Fish( ref.pIC, ref.IC, d.pIC, d.IC, :, :);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////  COMPARAISON TABLE FOR OUTPUT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// CompT.BY = [["CompT_BY", "pY", "Y vol","Y val", "pM", "M vol","M val","pX",Index_FC' + " vol",Index_FC' + " val", "Unit Labour cost", "Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors, BY.pY,  BY.Y, BY.Y_value', BY.pM,  BY.M ,BY.M_value',BY.pX, BY.FC, BY.FC_value,BY.Unit_Labcost', BY.ENshare'.*100,BY.ShareEN_Lab',BY.TradeInt',BY.M_penetRat' ]];
-// CompT.run = [["CompT_run", "pY", "Y vol","Y val","pM", "M vol","M val","pX", Index_FC' + " vol", Index_FC' + " val","Unit Labour cost","Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors, d.pY,  d.Y,d.Y_value',d.pM,  d.M ,d.M_value',d.pX, d.FC,d.FC_value, d.Unit_Labcost', d.ENshare'.*100,d.ShareEN_Lab',d.TradeInt',d.M_penetRat']];
-// CompT.evol_BY = [["CompT%", "pY", "Y vol","Y val","pM", "M vol","M val", "pX",Index_FC' + " vol" ,Index_FC' + " val","Unit Labour cost", "Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors,(divide(d.pY , BY.pY , %nan )-1).*100,  (divide(d.Y , BY.Y , %nan )-1).*100, (divide(d.Y_value' , BY.Y_value' , %nan )-1).*100,(divide(d.pM , BY.pM , %nan )-1).*100,  (divide(d.M , BY.M , %nan )-1).*100,(divide(d.M_value' , BY.M_value' , %nan )-1).*100,(divide(d.pX , BY.pX , %nan )-1).*100, (divide(d.FC , BY.FC , %nan )-1).*100,(divide(d.FC_value , BY.FC_value , %nan )),(evol_BY.Unit_Labcost'-1).*100, d.ENshare'.*100-BY.ENshare'.*100, (evol_BY.TradeInt' - 1).*100,(evol_BY.M_penetRat'-1).*100]];
+// TableTrade.ref = [["TableTrade_"+ref_name, "pY", "Y vol","Y val", "pM", "M vol","M val","pX",Index_FC' + " vol",Index_FC' + " val", "Unit Labour cost", "Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors, ref.pY,  ref.Y, ref.Y_value', ref.pM,  ref.M ,ref.M_value',ref.pX, ref.FC, ref.FC_value,ref.Unit_Labcost', ref.ENshare'.*100,ref.ShareEN_Lab',ref.TradeInt',ref.M_penetRat' ]];
+// TableTrade.run = [["TableTrade_run", "pY", "Y vol","Y val","pM", "M vol","M val","pX", Index_FC' + " vol", Index_FC' + " val","Unit Labour cost","Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors, d.pY,  d.Y,d.Y_value',d.pM,  d.M ,d.M_value',d.pX, d.FC,d.FC_value, d.Unit_Labcost', d.ENshare'.*100,d.ShareEN_Lab',d.TradeInt',d.M_penetRat']];
+// TableTrade.evol_ref = [["TableTrade%", "pY", "Y vol","Y val","pM", "M vol","M val", "pX",Index_FC' + " vol" ,Index_FC' + " val","Unit Labour cost", "Ener Cost Share","Ener/Labour cost", "Trade Intens", "Import Penet Rate"];[Index_Sectors,(divide(d.pY , ref.pY , %nan )-1).*100,  (divide(d.Y , ref.Y , %nan )-1).*100, (divide(d.Y_value' , ref.Y_value' , %nan )-1).*100,(divide(d.pM , ref.pM , %nan )-1).*100,  (divide(d.M , ref.M , %nan )-1).*100,(divide(d.M_value' , ref.M_value' , %nan )-1).*100,(divide(d.pX , ref.pX , %nan )-1).*100, (divide(d.FC , ref.FC , %nan )-1).*100,(divide(d.FC_value , ref.FC_value , %nan )),(evol_ref.Unit_Labcost'-1).*100, d.ENshare'.*100-ref.ENshare'.*100, (evol_ref.TradeInt' - 1).*100,(evol_ref.M_penetRat'-1).*100]];
 
-CompT.BY = [["CompT_BY", "pY", "Y vol", "pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors, BY.pY,  BY.Y,BY.pM,  BY.M , BY.FC,  BY.ENshare'.*100,BY.TradeInt',BY.M_penetRat' ]];
-CompT.run = [["CompT_run",  "pY", "Y vol", "pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors, d.pY,  d.Y,d.pM,  d.M , d.FC, d.ENshare'.*100,d.TradeInt',d.M_penetRat']];
-CompT.evol_BY = [["CompT%",  "pY", "Y vol","pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors,(divide(d.pY , BY.pY , %nan )-1).*100,  (divide(d.Y , BY.Y , %nan )-1).*100,(divide(d.pM , BY.pM , %nan )-1).*100,  (divide(d.M , BY.M , %nan )-1).*100, (divide((abs(d.FC) > %eps).*d.FC, (abs(BY.FC) > %eps).*BY.FC , %nan )-1).*100, d.ENshare'.*100-BY.ENshare'.*100,(evol_BY.TradeInt' - 1).*100,(evol_BY.M_penetRat'-1).*100]];
+TableTrade(ref_name) = [["TableTrade_"+ref_name, "pY", "Y vol", "pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors, ref.pY,  ref.Y,ref.pM,  ref.M , ref.FC,  ref.ENshare'.*100,ref.TradeInt',ref.M_penetRat' ]];
+TableTrade.run = [["TableTrade_run",  "pY", "Y vol", "pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors, d.pY,  d.Y,d.pM,  d.M , d.FC, d.ENshare'.*100,d.TradeInt',d.M_penetRat']];
+TableTrade.evol_ref = [["TableTrade%",  "pY", "Y vol","pM", "M vol",Index_FC' + " vol", "Ener Cost Share","Trade Intens", "Import Penet Rate"];[Index_Sectors,(divide(d.pY , ref.pY , %nan )-1).*100,  (divide(d.Y , ref.Y , %nan )-1).*100,(divide(d.pM , ref.pM , %nan )-1).*100,  (divide(d.M , ref.M , %nan )-1).*100, (divide((abs(d.FC) > %eps).*d.FC, (abs(ref.FC) > %eps).*ref.FC , %nan )-1).*100, d.ENshare'.*100-ref.ENshare'.*100,(evol_ref.TradeInt' - 1).*100,(evol_ref.M_penetRat'-1).*100]];
 
 
 if Output_files
-csvWrite(CompT.BY,SAVEDIR+"CompT-BY_"+Name_time+".csv", ';');
-csvWrite(CompT.run,SAVEDIR+"CompT-run_"+Name_time+".csv", ';');
-csvWrite(CompT.evol_BY,SAVEDIR+"CompT-evol_BY_"+Name_time+".csv", ';');
+csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(TableTrade.run,SAVEDIR+"TableTrade-run_"+Name_time+".csv", ';');
+csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade-evol_"+ref_name+"_"+Name_time+".csv", ';');
 end
 
 
@@ -720,86 +721,86 @@ end
 // Variations of Macroeconomic Quantity Index Numbers
 Indice_NetLending = find(Index_DataAccount=="NetLending");
 
-evol_BY.MacroT1 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Nominal Output", "1", sum(d.Output_value)./ sum(BY.Output_value), (sum(d.Output_value)./ sum(BY.Output_value)-1)*100]; ["Real Output", "1", Output_qLasp, "nan"]; ["Output price index", "1", Output_pPaas, "nan"]; ["Contribution of Nominal Intermediate consumptions to Nominal Output variation", sum(BY.IC_value) / sum(BY.Output_value), (sum(BY.IC_value)/ sum(BY.Output_value))*sum(d.IC_value)./ sum(BY.IC_value), (sum(BY.IC_value)/sum(BY.Output_value))*( sum(d.IC_value)./ sum(BY.IC_value)-1)*100]; ["Contribution of Nominal GDP to Nominal Output variation", BY.GDP/ sum(BY.Output_value), ( BY.GDP/ sum(BY.Output_value))*(d.GDP / sum(BY.GDP)), (BY.GDP/sum(BY.Output_value))*( d.GDP / BY.GDP -1 )*100]; ["Contribution of Labour income to Nominal Output variation", sum(BY.Labour_income)/sum(BY.Output_value), (sum(BY.Labour_income)/sum(BY.Output_value))*sum(d.Labour_income)./ sum(BY.Labour_income), (sum(BY.Labour_income)/sum(BY.Output_value))*( sum(d.Labour_income)./ sum(BY.Labour_income)-1)*100]; ["Contribution of Labour tax to Nominal Output variation", sum(BY.Labour_Tax)/sum(BY.Output_value), (sum(BY.Labour_Tax)/sum(BY.Output_value))*sum(d.Labour_Tax)./ sum(BY.Labour_Tax), (sum(BY.Labour_Tax)/sum(BY.Output_value))*( sum(d.Labour_Tax)./ sum(BY.Labour_Tax)-1)*100]; ["Contribution of Production taxes to Nominal Output variation", divide(sum(BY.Production_Tax),sum(BY.Output_value),%nan), (sum(BY.Production_Tax)/sum(BY.Output_value))*(divide(sum(d.Production_Tax),sum(BY.Production_Tax),%nan)), (sum(BY.Production_Tax)/sum(BY.Output_value))*( divide(sum(d.Production_Tax), sum(BY.Production_Tax),%nan)-1)*100]; ["Contribution of Consumption Taxes to Nominal Output variation", (sum(BY.Taxes)+sum(BY.Carbon_Tax)) / sum(BY.Output_value), ( (sum(BY.Taxes)+sum(BY.Carbon_Tax))/sum(BY.Output_value))*(sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(BY.Taxes)+sum(BY.Carbon_Tax)), ( (sum(BY.Taxes)+sum(BY.Carbon_Tax))/sum(BY.Output_value))*((sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(BY.Taxes)+sum(BY.Carbon_Tax))-1)*100]; ["Contribution of Capital income to Nominal Output variation", sum(BY.Capital_income) / sum(BY.Output_value), (sum(BY.Capital_income)/sum(BY.Output_value))*sum(d.Capital_income)./ sum(BY.Capital_income), (sum(BY.Capital_income)/sum(BY.Output_value))*( sum(d.Capital_income)./ sum(BY.Capital_income)-1)*100]; ["Contribution of Margins to Nominal Output variation", sum(BY.TotMargins)/sum(BY.Output_value), (sum(BY.TotMargins)/sum(BY.Output_value))*sum(d.TotMargins)./ sum(BY.TotMargins), (sum(BY.TotMargins)/sum(BY.Output_value))*( sum(d.TotMargins)./ sum(BY.TotMargins)-1)*100]];
+evol_ref.MacroT1 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Nominal Output", "1", sum(d.Output_value)./ sum(ref.Output_value), (sum(d.Output_value)./ sum(ref.Output_value)-1)*100]; ["Real Output", "1", Output_qLasp, "nan"]; ["Output price index", "1", Output_pPaas, "nan"]; ["Contribution of Nominal Intermediate consumptions to Nominal Output variation", sum(ref.IC_value) / sum(ref.Output_value), (sum(ref.IC_value)/ sum(ref.Output_value))*sum(d.IC_value)./ sum(ref.IC_value), (sum(ref.IC_value)/sum(ref.Output_value))*( sum(d.IC_value)./ sum(ref.IC_value)-1)*100]; ["Contribution of Nominal GDP to Nominal Output variation", ref.GDP/ sum(ref.Output_value), ( ref.GDP/ sum(ref.Output_value))*(d.GDP / sum(ref.GDP)), (ref.GDP/sum(ref.Output_value))*( d.GDP / ref.GDP -1 )*100]; ["Contribution of Labour income to Nominal Output variation", sum(ref.Labour_income)/sum(ref.Output_value), (sum(ref.Labour_income)/sum(ref.Output_value))*sum(d.Labour_income)./ sum(ref.Labour_income), (sum(ref.Labour_income)/sum(ref.Output_value))*( sum(d.Labour_income)./ sum(ref.Labour_income)-1)*100]; ["Contribution of Labour tax to Nominal Output variation", sum(ref.Labour_Tax)/sum(ref.Output_value), (sum(ref.Labour_Tax)/sum(ref.Output_value))*sum(d.Labour_Tax)./ sum(ref.Labour_Tax), (sum(ref.Labour_Tax)/sum(ref.Output_value))*( sum(d.Labour_Tax)./ sum(ref.Labour_Tax)-1)*100]; ["Contribution of Production taxes to Nominal Output variation", divide(sum(ref.Production_Tax),sum(ref.Output_value),%nan), (sum(ref.Production_Tax)/sum(ref.Output_value))*(divide(sum(d.Production_Tax),sum(ref.Production_Tax),%nan)), (sum(ref.Production_Tax)/sum(ref.Output_value))*( divide(sum(d.Production_Tax), sum(ref.Production_Tax),%nan)-1)*100]; ["Contribution of Consumption Taxes to Nominal Output variation", (sum(ref.Taxes)+sum(ref.Carbon_Tax)) / sum(ref.Output_value), ( (sum(ref.Taxes)+sum(ref.Carbon_Tax))/sum(ref.Output_value))*(sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(ref.Taxes)+sum(ref.Carbon_Tax)), ( (sum(ref.Taxes)+sum(ref.Carbon_Tax))/sum(ref.Output_value))*((sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(ref.Taxes)+sum(ref.Carbon_Tax))-1)*100]; ["Contribution of Capital income to Nominal Output variation", sum(ref.Capital_income) / sum(ref.Output_value), (sum(ref.Capital_income)/sum(ref.Output_value))*sum(d.Capital_income)./ sum(ref.Capital_income), (sum(ref.Capital_income)/sum(ref.Output_value))*( sum(d.Capital_income)./ sum(ref.Capital_income)-1)*100]; ["Contribution of Margins to Nominal Output variation", sum(ref.TotMargins)/sum(ref.Output_value), (sum(ref.TotMargins)/sum(ref.Output_value))*sum(d.TotMargins)./ sum(ref.TotMargins), (sum(ref.TotMargins)/sum(ref.Output_value))*( sum(d.TotMargins)./ sum(ref.TotMargins)-1)*100]];
 
-evol_BY.MacroT2 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Corporations disposable income to Nominal Output variation", sum(BY.Disposable_Income(Indice_Corporations))/  sum(BY.Output_value), (sum(BY.Disposable_Income(Indice_Corporations))/sum(BY.Output_value))*sum(d.Disposable_Income(Indice_Corporations))./ sum(BY.Disposable_Income(Indice_Corporations)), (sum(BY.Disposable_Income(Indice_Corporations))/sum(BY.Output_value))*( sum(d.Disposable_Income(Indice_Corporations))./ sum(BY.Disposable_Income(Indice_Corporations))-1)*100]; ["Contribution of Households disposable income to Nominal Output variation", sum(BY.Disposable_Income(Indice_Households))/sum(BY.Output_value), (sum(BY.Disposable_Income(Indice_Households))/sum(BY.Output_value))*sum(d.Disposable_Income(Indice_Households))./ sum(BY.Disposable_Income(Indice_Households)), (sum(BY.Disposable_Income(Indice_Households))/sum(BY.Output_value))*( sum(d.Disposable_Income(Indice_Households))./ sum(BY.Disposable_Income(Indice_Households))-1)*100]; ["Contribution of Government disposable income to Nominal Output variation", sum(BY.Disposable_Income(Indice_Government))/sum(BY.Output_value), (sum(BY.Disposable_Income(Indice_Government))/sum(BY.Output_value))*sum(d.Disposable_Income(Indice_Government))./ sum(BY.Disposable_Income(Indice_Government)), (sum(BY.Disposable_Income(Indice_Government))/sum(BY.Output_value))*( sum(d.Disposable_Income(Indice_Government))./ sum(BY.Disposable_Income(Indice_Government))-1)*100]; ["Contribution of Income transfers to the Rest-of-the-world to Nominal Output variation", (BY.Property_income(Indice_RestOfWorld) + BY.Other_Transfers(Indice_RestOfWorld))/sum(BY.Output_value), ((BY.Property_income(Indice_RestOfWorld) + BY.Other_Transfers(Indice_RestOfWorld))/sum(BY.Output_value))*(d.Property_income(Indice_RestOfWorld) + d.Other_Transfers(Indice_RestOfWorld))./ (BY.Property_income(Indice_RestOfWorld) + BY.Other_Transfers(Indice_RestOfWorld)), ((BY.Property_income(Indice_RestOfWorld) + BY.Other_Transfers(Indice_RestOfWorld))/sum(BY.Output_value))*( (d.Property_income(Indice_RestOfWorld) + d.Other_Transfers(Indice_RestOfWorld))./ (BY.Property_income(Indice_RestOfWorld) + BY.Other_Transfers(Indice_RestOfWorld)) -1 )*100]; ["Contribution of Domestic demand to Nominal Output variation", (sum(BY.pC.*BY.C)+sum(BY.pG.*BY.G)+sum(BY.pI.*BY.I)) / sum(BY.Output_value), ((sum(BY.pC.*BY.C)+sum(BY.pG.*BY.G)+sum(BY.pI.*BY.I)) / sum(BY.Output_value))*(sum(d.pC.*d.C)+sum(d.pG.*d.G)+sum(d.pI.*d.I))./(sum(BY.pC.*BY.C)+sum(BY.pG.*BY.G)+sum(BY.pI.*BY.I)), ((sum(BY.pC.*BY.C)+sum(BY.pG.*BY.G)+sum(BY.pI.*BY.I)) / sum(BY.Output_value))*((sum(d.pC.*d.C)+sum(d.pG.*d.G)+sum(d.pI.*d.I))./(sum(BY.pC.*BY.C)+sum(BY.pG.*BY.G)+sum(BY.pI.*BY.I))-1)*100]; ["Contribution of capital flows to Nominal Output variation", -BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(BY.Output_value), (-BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(BY.Output_value))*(d.Ecotable(Indice_NetLending, Indice_RestOfWorld)./BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)), (-BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(BY.Output_value))*(d.Ecotable(Indice_NetLending, Indice_RestOfWorld)./BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)-1)*100]];
+evol_ref.MacroT2 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Corporations disposable income to Nominal Output variation", sum(ref.Disposable_Income(Indice_Corporations))/  sum(ref.Output_value), (sum(ref.Disposable_Income(Indice_Corporations))/sum(ref.Output_value))*sum(d.Disposable_Income(Indice_Corporations))./ sum(ref.Disposable_Income(Indice_Corporations)), (sum(ref.Disposable_Income(Indice_Corporations))/sum(ref.Output_value))*( sum(d.Disposable_Income(Indice_Corporations))./ sum(ref.Disposable_Income(Indice_Corporations))-1)*100]; ["Contribution of Households disposable income to Nominal Output variation", sum(ref.Disposable_Income(Indice_Households))/sum(ref.Output_value), (sum(ref.Disposable_Income(Indice_Households))/sum(ref.Output_value))*sum(d.Disposable_Income(Indice_Households))./ sum(ref.Disposable_Income(Indice_Households)), (sum(ref.Disposable_Income(Indice_Households))/sum(ref.Output_value))*( sum(d.Disposable_Income(Indice_Households))./ sum(ref.Disposable_Income(Indice_Households))-1)*100]; ["Contribution of Government disposable income to Nominal Output variation", sum(ref.Disposable_Income(Indice_Government))/sum(ref.Output_value), (sum(ref.Disposable_Income(Indice_Government))/sum(ref.Output_value))*sum(d.Disposable_Income(Indice_Government))./ sum(ref.Disposable_Income(Indice_Government)), (sum(ref.Disposable_Income(Indice_Government))/sum(ref.Output_value))*( sum(d.Disposable_Income(Indice_Government))./ sum(ref.Disposable_Income(Indice_Government))-1)*100]; ["Contribution of Income transfers to the Rest-of-the-world to Nominal Output variation", (ref.Property_income(Indice_RestOfWorld) + ref.Other_Transfers(Indice_RestOfWorld))/sum(ref.Output_value), ((ref.Property_income(Indice_RestOfWorld) + ref.Other_Transfers(Indice_RestOfWorld))/sum(ref.Output_value))*(d.Property_income(Indice_RestOfWorld) + d.Other_Transfers(Indice_RestOfWorld))./ (ref.Property_income(Indice_RestOfWorld) + ref.Other_Transfers(Indice_RestOfWorld)), ((ref.Property_income(Indice_RestOfWorld) + ref.Other_Transfers(Indice_RestOfWorld))/sum(ref.Output_value))*( (d.Property_income(Indice_RestOfWorld) + d.Other_Transfers(Indice_RestOfWorld))./ (ref.Property_income(Indice_RestOfWorld) + ref.Other_Transfers(Indice_RestOfWorld)) -1 )*100]; ["Contribution of Domestic demand to Nominal Output variation", (sum(ref.pC.*ref.C)+sum(ref.pG.*ref.G)+sum(ref.pI.*ref.I)) / sum(ref.Output_value), ((sum(ref.pC.*ref.C)+sum(ref.pG.*ref.G)+sum(ref.pI.*ref.I)) / sum(ref.Output_value))*(sum(d.pC.*d.C)+sum(d.pG.*d.G)+sum(d.pI.*d.I))./(sum(ref.pC.*ref.C)+sum(ref.pG.*ref.G)+sum(ref.pI.*ref.I)), ((sum(ref.pC.*ref.C)+sum(ref.pG.*ref.G)+sum(ref.pI.*ref.I)) / sum(ref.Output_value))*((sum(d.pC.*d.C)+sum(d.pG.*d.G)+sum(d.pI.*d.I))./(sum(ref.pC.*ref.C)+sum(ref.pG.*ref.G)+sum(ref.pI.*ref.I))-1)*100]; ["Contribution of capital flows to Nominal Output variation", -ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(ref.Output_value), (-ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(ref.Output_value))*(d.Ecotable(Indice_NetLending, Indice_RestOfWorld)./ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)), (-ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)/ sum(ref.Output_value))*(d.Ecotable(Indice_NetLending, Indice_RestOfWorld)./ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)-1)*100]];
 
-evol_BY.MacroT3 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Households consumption to Nominal Output variation", sum(BY.C_value)/sum(BY.Output_value), (sum(BY.C_value)/sum(BY.Output_value))*sum(d.C_value)./ sum(BY.C_value), (sum(BY.C_value)/sum(BY.Output_value))*( sum(d.C_value)./ sum(BY.C_value)-1)*100]; ["Contribution of Public consumption to Nominal Output variation", sum(BY.G_value) / sum(BY.Output_value), (sum(BY.G_value) / sum(BY.Output_value))*sum(d.G_value)./ sum(BY.G_value), (sum(BY.G_value)/sum(BY.Output_value))*( sum(d.G_value)./ sum(BY.G_value)-1)*100]; ["Contribution of Investment to Nominal Output variation", sum(BY.I_value) / sum(BY.Output_value), (sum(BY.I_value) / sum(BY.Output_value))*sum(d.I_value)./ sum(BY.I_value), (sum(BY.I_value)/sum(BY.Output_value))*( sum(d.I_value)./ sum(BY.I_value)-1)*100]; ["Contribution of Exports to Nominal Output variation", sum(BY.X_value)/ sum(BY.Output_value), (sum(BY.X_value)/sum(BY.Output_value))*sum(d.X_value)./ sum(BY.X_value), (sum(BY.X_value)/sum(BY.Output_value))*( sum(d.X_value)./ sum(BY.X_value)-1)*100]; ["Contribution of Imports to Nominal Output variation", sum(-BY.M_value)/sum(BY.Output_value), (sum(-BY.M_value)/sum(BY.Output_value))*sum(-d.M_value)./ sum(-BY.M_value), (sum(-BY.M_value)/sum(BY.Output_value))*( sum(-d.M_value)./ sum(-BY.M_value)-1)*100]];
+evol_ref.MacroT3 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Households consumption to Nominal Output variation", sum(ref.C_value)/sum(ref.Output_value), (sum(ref.C_value)/sum(ref.Output_value))*sum(d.C_value)./ sum(ref.C_value), (sum(ref.C_value)/sum(ref.Output_value))*( sum(d.C_value)./ sum(ref.C_value)-1)*100]; ["Contribution of Public consumption to Nominal Output variation", sum(ref.G_value) / sum(ref.Output_value), (sum(ref.G_value) / sum(ref.Output_value))*sum(d.G_value)./ sum(ref.G_value), (sum(ref.G_value)/sum(ref.Output_value))*( sum(d.G_value)./ sum(ref.G_value)-1)*100]; ["Contribution of Investment to Nominal Output variation", sum(ref.I_value) / sum(ref.Output_value), (sum(ref.I_value) / sum(ref.Output_value))*sum(d.I_value)./ sum(ref.I_value), (sum(ref.I_value)/sum(ref.Output_value))*( sum(d.I_value)./ sum(ref.I_value)-1)*100]; ["Contribution of Exports to Nominal Output variation", sum(ref.X_value)/ sum(ref.Output_value), (sum(ref.X_value)/sum(ref.Output_value))*sum(d.X_value)./ sum(ref.X_value), (sum(ref.X_value)/sum(ref.Output_value))*( sum(d.X_value)./ sum(ref.X_value)-1)*100]; ["Contribution of Imports to Nominal Output variation", sum(-ref.M_value)/sum(ref.Output_value), (sum(-ref.M_value)/sum(ref.Output_value))*sum(-d.M_value)./ sum(-ref.M_value), (sum(-ref.M_value)/sum(ref.Output_value))*( sum(-d.M_value)./ sum(-ref.M_value)-1)*100]];
 
-evol_BY.MacroT4 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Intermediate consumption to Real Output variation", BY.IC_output_ValueShare, BY.IC_output_ValueShare*IC_qLasp, "nan"]; ["Contribution of GDP to Real Output variation", BY.GDP_output_ValueShare, BY.GDP_output_ValueShare*GDP_qLasp, "nan"]; ["Contribution of Households consumption to real Output variation", BY.C_Output_ValueShare, BY.C_Output_ValueShare*C_qLasp, "nan"]; ["Contribution of Public consumption to real Output variation", BY.G_Output_ValueShare, BY.G_Output_ValueShare*G_qLasp, "nan"]; ["Contribution of Investment to real Output variation", BY.I_Output_ValueShare, BY.I_Output_ValueShare*I_qLasp, "nan"]; ["Contribution of Exports to real Output variation", BY.X_Output_ValueShare, BY.X_Output_ValueShare*X_qLasp, "nan"]; ["Contribution of Imports to real Output variation", BY.M_Output_ValueShare, BY.M_Output_ValueShare*M_qLasp, "nan"]];
+evol_ref.MacroT4 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Intermediate consumption to Real Output variation", ref.IC_output_ValueShare, ref.IC_output_ValueShare*IC_qLasp, "nan"]; ["Contribution of GDP to Real Output variation", ref.GDP_output_ValueShare, ref.GDP_output_ValueShare*GDP_qLasp, "nan"]; ["Contribution of Households consumption to real Output variation", ref.C_Output_ValueShare, ref.C_Output_ValueShare*C_qLasp, "nan"]; ["Contribution of Public consumption to real Output variation", ref.G_Output_ValueShare, ref.G_Output_ValueShare*G_qLasp, "nan"]; ["Contribution of Investment to real Output variation", ref.I_Output_ValueShare, ref.I_Output_ValueShare*I_qLasp, "nan"]; ["Contribution of Exports to real Output variation", ref.X_Output_ValueShare, ref.X_Output_ValueShare*X_qLasp, "nan"]; ["Contribution of Imports to real Output variation", ref.M_Output_ValueShare, ref.M_Output_ValueShare*M_qLasp, "nan"]];
 
-evol_BY.MacroT5 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Labour income to Real Output variation", sum(BY.Labour_income) / sum(BY.Output_value), (sum(BY.Labour_income)/ sum(BY.Output_value))*(sum(d.Labour_income)./ sum(BY.Labour_income))/GDP_pPaas, "nan"]; ["Contribution of Labour tax to Real Output variation", sum(BY.Labour_Tax) / sum(BY.Output_value), (sum(BY.Labour_Tax) / sum(BY.Output_value))*(sum(d.Labour_Tax)./ sum(BY.Labour_Tax))/GDP_pPaas, "nan"]; ["Contribution of Production taxes to Real Output variation", sum(BY.Production_Tax) / sum(BY.Output_value), (sum(BY.Production_Tax) / sum(BY.Output_value))*(divide(sum(d.Production_Tax),sum(BY.Production_Tax),%nan))/GDP_pPaas, "nan"]; ["Contribution of Consumption Taxes to Real Output variation", (sum(BY.Taxes)+sum(BY.Carbon_Tax))/ sum(BY.Output_value), ((sum(BY.Taxes)+sum(BY.Carbon_Tax)) / sum(BY.Output_value))*((sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(BY.Taxes)+sum(BY.Carbon_Tax)))/GDP_pPaas, "nan"]; ["Contribution of Capital income to Real Output variation", sum(BY.Capital_income) / sum(BY.Output_value), (sum(BY.Capital_income) / sum(BY.Output_value))*(sum(d.Capital_income)./ sum(BY.Capital_income))/GDP_pPaas, "nan"]; ["Contribution of Margins to Real Output variation", sum(BY.TotMargins) / sum(BY.Output_value), (sum(BY.TotMargins) / sum(BY.Output_value))*(sum(d.TotMargins)./ sum(BY.TotMargins))/GDP_pPaas, "nan"]; ["GDP price index", "1", GDP_pPaas, (GDP_pPaas-1)*100]];
+evol_ref.MacroT5 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Labour income to Real Output variation", sum(ref.Labour_income) / sum(ref.Output_value), (sum(ref.Labour_income)/ sum(ref.Output_value))*(sum(d.Labour_income)./ sum(ref.Labour_income))/GDP_pPaas, "nan"]; ["Contribution of Labour tax to Real Output variation", sum(ref.Labour_Tax) / sum(ref.Output_value), (sum(ref.Labour_Tax) / sum(ref.Output_value))*(sum(d.Labour_Tax)./ sum(ref.Labour_Tax))/GDP_pPaas, "nan"]; ["Contribution of Production taxes to Real Output variation", sum(ref.Production_Tax) / sum(ref.Output_value), (sum(ref.Production_Tax) / sum(ref.Output_value))*(divide(sum(d.Production_Tax),sum(ref.Production_Tax),%nan))/GDP_pPaas, "nan"]; ["Contribution of Consumption Taxes to Real Output variation", (sum(ref.Taxes)+sum(ref.Carbon_Tax))/ sum(ref.Output_value), ((sum(ref.Taxes)+sum(ref.Carbon_Tax)) / sum(ref.Output_value))*((sum(d.Taxes)+sum(d.Carbon_Tax))./ (sum(ref.Taxes)+sum(ref.Carbon_Tax)))/GDP_pPaas, "nan"]; ["Contribution of Capital income to Real Output variation", sum(ref.Capital_income) / sum(ref.Output_value), (sum(ref.Capital_income) / sum(ref.Output_value))*(sum(d.Capital_income)./ sum(ref.Capital_income))/GDP_pPaas, "nan"]; ["Contribution of Margins to Real Output variation", sum(ref.TotMargins) / sum(ref.Output_value), (sum(ref.TotMargins) / sum(ref.Output_value))*(sum(d.TotMargins)./ sum(ref.TotMargins))/GDP_pPaas, "nan"]; ["GDP price index", "1", GDP_pPaas, (GDP_pPaas-1)*100]];
 
-evol_BY.MacroT6 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Production Price (Paashes)", "1", Y_pPaas, (Y_pPaas-1)*100]; ["Intermediate Consumption Price (Paashes)", "1", IC_pPaas, (IC_pPaas-1)*100]; ["Households Consumption Price (Paashes)", "1", C_pPaas, (C_pPaas-1)*100]; ["Public Consumption Price (Paashes)", "1", G_pPaas, (G_pPaas-1)*100]; ["Investment Price (Paashes)", "1", I_pPaas, (I_pPaas-1)*100]; ["Exports Price (Paashes)", "1", X_pPaas, (X_pPaas-1)*100]; ["Imports Price (Paashes)", "1", M_pPaas, (M_pPaas-1)*100]];
+evol_ref.MacroT6 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Production Price (Paashes)", "1", Y_pPaas, (Y_pPaas-1)*100]; ["Intermediate Consumption Price (Paashes)", "1", IC_pPaas, (IC_pPaas-1)*100]; ["Households Consumption Price (Paashes)", "1", C_pPaas, (C_pPaas-1)*100]; ["Public Consumption Price (Paashes)", "1", G_pPaas, (G_pPaas-1)*100]; ["Investment Price (Paashes)", "1", I_pPaas, (I_pPaas-1)*100]; ["Exports Price (Paashes)", "1", X_pPaas, (X_pPaas-1)*100]; ["Imports Price (Paashes)", "1", M_pPaas, (M_pPaas-1)*100]];
 
 //	Sector Disaggregation (Primary Energy, Final Energy, Non Energy Products)
 
-evol_BY.MacroT7 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Nominal Output Primary Energy", sum(BY.Output_value(Indice_PrimEnerSect))./ sum(BY.Output_value), sum(d.Output_value(Indice_PrimEnerSect))./ sum(BY.Output_value), 100*(sum(d.Output_value(Indice_PrimEnerSect))- sum(BY.Output_value(Indice_PrimEnerSect)))./ sum(BY.Output_value)] ; ["Nominal Output Final Energy ", sum(BY.Output_value(Indice_FinEnerSect))./ sum(BY.Output_value), sum(d.Output_value(Indice_FinEnerSect))./ sum(BY.Output_value), 100*(sum(d.Output_value(Indice_FinEnerSect))- sum(BY.Output_value(Indice_FinEnerSect)))./ sum(BY.Output_value)] ; ["Nominal Output Non Energy Products", sum(BY.Output_value(Indice_NonEnerSect))./ sum(BY.Output_value), sum(d.Output_value(Indice_NonEnerSect))./ sum(BY.Output_value), 100*(sum(d.Output_value(Indice_NonEnerSect))- sum(BY.Output_value(Indice_NonEnerSect)))./ sum(BY.Output_value)] ; ["Output Real Index - Primary Energy", sum(BY.Output_value(Indice_PrimEnerSect))/sum(BY.Output_value), Output_PrimEn_qLasp*sum(BY.Output_value(Indice_PrimEnerSect))/sum(BY.Output_value), "nan"] ; ["Output Real Index - Energy Products", sum(BY.Output_value(Indice_FinEnerSect))/sum(BY.Output_value), Output_FinEn_qLasp*sum(BY.Output_value(Indice_FinEnerSect))/sum(BY.Output_value), "nan"] ; ["Output Real Index - Non Energy Products", sum(BY.Output_value(Indice_NonEnerSect))/sum(BY.Output_value), Output_NonEn_qLasp*sum(BY.Output_value(Indice_NonEnerSect))/sum(BY.Output_value), "nan"] ; ["Output Price Index - Primary Energy", "1", Output_PrimEn_pPaas, (Output_PrimEn_pPaas-1)*100] ; ["Output Price Index - Energy Products", "1", Output_FinEn_pPaas, (Output_FinEn_pPaas-1)*100] ; ["Output Price Index - Non Energy Products", "1", Output_NonEn_pPaas, (Output_NonEn_pPaas-1)*100]]; 
+evol_ref.MacroT7 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Nominal Output Primary Energy", sum(ref.Output_value(Indice_PrimEnerSect))./ sum(ref.Output_value), sum(d.Output_value(Indice_PrimEnerSect))./ sum(ref.Output_value), 100*(sum(d.Output_value(Indice_PrimEnerSect))- sum(ref.Output_value(Indice_PrimEnerSect)))./ sum(ref.Output_value)] ; ["Nominal Output Final Energy ", sum(ref.Output_value(Indice_FinEnerSect))./ sum(ref.Output_value), sum(d.Output_value(Indice_FinEnerSect))./ sum(ref.Output_value), 100*(sum(d.Output_value(Indice_FinEnerSect))- sum(ref.Output_value(Indice_FinEnerSect)))./ sum(ref.Output_value)] ; ["Nominal Output Non Energy Products", sum(ref.Output_value(Indice_NonEnerSect))./ sum(ref.Output_value), sum(d.Output_value(Indice_NonEnerSect))./ sum(ref.Output_value), 100*(sum(d.Output_value(Indice_NonEnerSect))- sum(ref.Output_value(Indice_NonEnerSect)))./ sum(ref.Output_value)] ; ["Output Real Index - Primary Energy", sum(ref.Output_value(Indice_PrimEnerSect))/sum(ref.Output_value), Output_PrimEn_qLasp*sum(ref.Output_value(Indice_PrimEnerSect))/sum(ref.Output_value), "nan"] ; ["Output Real Index - Energy Products", sum(ref.Output_value(Indice_FinEnerSect))/sum(ref.Output_value), Output_FinEn_qLasp*sum(ref.Output_value(Indice_FinEnerSect))/sum(ref.Output_value), "nan"] ; ["Output Real Index - Non Energy Products", sum(ref.Output_value(Indice_NonEnerSect))/sum(ref.Output_value), Output_NonEn_qLasp*sum(ref.Output_value(Indice_NonEnerSect))/sum(ref.Output_value), "nan"] ; ["Output Price Index - Primary Energy", "1", Output_PrimEn_pPaas, (Output_PrimEn_pPaas-1)*100] ; ["Output Price Index - Energy Products", "1", Output_FinEn_pPaas, (Output_FinEn_pPaas-1)*100] ; ["Output Price Index - Non Energy Products", "1", Output_NonEn_pPaas, (Output_NonEn_pPaas-1)*100]]; 
 
-evol_BY.MacroT8 = [["Contribution of Nominal Intermediate consumptions (inputs) of Primary Energy to Nominal Output variation", sum(BY.IC_value(:,Indice_PrimEnerSect)) / sum(BY.Output_value), sum(d.IC_value(:,Indice_PrimEnerSect))/sum(BY.Output_value), 100*(sum(d.IC_value(:,Indice_PrimEnerSect))-sum(BY.IC_value(:,Indice_PrimEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Nominal Intermediate consumptions (inputs) of Final Energy to Nominal Output variation", sum(BY.IC_value(:,Indice_FinEnerSect)) / sum(BY.Output_value), sum(d.IC_value(:,Indice_FinEnerSect))/sum(BY.Output_value), 100*(sum(d.IC_value(:,Indice_FinEnerSect))-sum(BY.IC_value(:,Indice_FinEnerSect)))/sum(BY.Output_value)]; ["Contribution of Nominal Intermediate consumptions (inputs) of Non Energy Products to Nominal Output variation", sum(BY.IC_value(:,Indice_NonEnerSect)) / sum(BY.Output_value), sum(d.IC_value(:,Indice_NonEnerSect))/sum(BY.Output_value), 100*(sum(d.IC_value(:,Indice_NonEnerSect))-sum(BY.IC_value(:,Indice_NonEnerSect)))/sum(BY.Output_value)] ; ["Contribution of the Value Added of Primary Energy to Nominal Output variation", (sum(BY.Output_value(Indice_PrimEnerSect))- sum(BY.IC_value(:,Indice_PrimEnerSect))) / sum(BY.Output_value), (sum(d.Output_value(Indice_PrimEnerSect))- sum(d.IC_value(:,Indice_PrimEnerSect)))/ sum(BY.Output_value), 100*((sum(d.Output_value(Indice_PrimEnerSect))- sum(d.IC_value(:,Indice_PrimEnerSect)))-(sum(BY.Output_value(Indice_PrimEnerSect))- sum(BY.IC_value(:,Indice_PrimEnerSect))))/ sum(BY.Output_value)] ; ["Contribution of the Value Added of Final Energy to Nominal Output variation", (sum(BY.Output_value(Indice_FinEnerSect))- sum(BY.IC_value(:,Indice_FinEnerSect))) / sum(BY.Output_value), (sum(d.Output_value(Indice_FinEnerSect))- sum(d.IC_value(:,Indice_FinEnerSect)))/ sum(BY.Output_value), 100*((sum(d.Output_value(Indice_FinEnerSect))- sum(d.IC_value(:,Indice_FinEnerSect)))-(sum(BY.Output_value(Indice_FinEnerSect))- sum(BY.IC_value(:,Indice_FinEnerSect))))/ sum(BY.Output_value)] ; ["Contribution of the Value Added of Non Energy Products to Nominal Output variation", (sum(BY.Output_value(Indice_NonEnerSect))- sum(BY.IC_value(:,Indice_NonEnerSect))) / sum(BY.Output_value), (sum(d.Output_value(Indice_NonEnerSect))- sum(d.IC_value(:,Indice_NonEnerSect)))/ sum(BY.Output_value), 100*((sum(d.Output_value(Indice_NonEnerSect))- sum(d.IC_value(:,Indice_NonEnerSect)))-(sum(BY.Output_value(Indice_NonEnerSect))- sum(BY.IC_value(:,Indice_NonEnerSect))))/ sum(BY.Output_value)]];
+evol_ref.MacroT8 = [["Contribution of Nominal Intermediate consumptions (inputs) of Primary Energy to Nominal Output variation", sum(ref.IC_value(:,Indice_PrimEnerSect)) / sum(ref.Output_value), sum(d.IC_value(:,Indice_PrimEnerSect))/sum(ref.Output_value), 100*(sum(d.IC_value(:,Indice_PrimEnerSect))-sum(ref.IC_value(:,Indice_PrimEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Nominal Intermediate consumptions (inputs) of Final Energy to Nominal Output variation", sum(ref.IC_value(:,Indice_FinEnerSect)) / sum(ref.Output_value), sum(d.IC_value(:,Indice_FinEnerSect))/sum(ref.Output_value), 100*(sum(d.IC_value(:,Indice_FinEnerSect))-sum(ref.IC_value(:,Indice_FinEnerSect)))/sum(ref.Output_value)]; ["Contribution of Nominal Intermediate consumptions (inputs) of Non Energy Products to Nominal Output variation", sum(ref.IC_value(:,Indice_NonEnerSect)) / sum(ref.Output_value), sum(d.IC_value(:,Indice_NonEnerSect))/sum(ref.Output_value), 100*(sum(d.IC_value(:,Indice_NonEnerSect))-sum(ref.IC_value(:,Indice_NonEnerSect)))/sum(ref.Output_value)] ; ["Contribution of the Value Added of Primary Energy to Nominal Output variation", (sum(ref.Output_value(Indice_PrimEnerSect))- sum(ref.IC_value(:,Indice_PrimEnerSect))) / sum(ref.Output_value), (sum(d.Output_value(Indice_PrimEnerSect))- sum(d.IC_value(:,Indice_PrimEnerSect)))/ sum(ref.Output_value), 100*((sum(d.Output_value(Indice_PrimEnerSect))- sum(d.IC_value(:,Indice_PrimEnerSect)))-(sum(ref.Output_value(Indice_PrimEnerSect))- sum(ref.IC_value(:,Indice_PrimEnerSect))))/ sum(ref.Output_value)] ; ["Contribution of the Value Added of Final Energy to Nominal Output variation", (sum(ref.Output_value(Indice_FinEnerSect))- sum(ref.IC_value(:,Indice_FinEnerSect))) / sum(ref.Output_value), (sum(d.Output_value(Indice_FinEnerSect))- sum(d.IC_value(:,Indice_FinEnerSect)))/ sum(ref.Output_value), 100*((sum(d.Output_value(Indice_FinEnerSect))- sum(d.IC_value(:,Indice_FinEnerSect)))-(sum(ref.Output_value(Indice_FinEnerSect))- sum(ref.IC_value(:,Indice_FinEnerSect))))/ sum(ref.Output_value)] ; ["Contribution of the Value Added of Non Energy Products to Nominal Output variation", (sum(ref.Output_value(Indice_NonEnerSect))- sum(ref.IC_value(:,Indice_NonEnerSect))) / sum(ref.Output_value), (sum(d.Output_value(Indice_NonEnerSect))- sum(d.IC_value(:,Indice_NonEnerSect)))/ sum(ref.Output_value), 100*((sum(d.Output_value(Indice_NonEnerSect))- sum(d.IC_value(:,Indice_NonEnerSect)))-(sum(ref.Output_value(Indice_NonEnerSect))- sum(ref.IC_value(:,Indice_NonEnerSect))))/ sum(ref.Output_value)]];
 
-evol_BY.MacroT9 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Households consumption of Primary Energy to Nominal Output variation", sum(BY.C_value(Indice_PrimEnerSect,:))/sum(BY.Output_value), sum(d.C_value(Indice_PrimEnerSect,:))/ sum(BY.Output_value), 100*(sum(d.C_value(Indice_PrimEnerSect,:))-sum(BY.C_value(Indice_PrimEnerSect,:)))/sum(BY.Output_value)] ; ["Contribution of Households consumption of Final Energy to Nominal Output variation", sum(BY.C_value(Indice_FinEnerSect,:))/sum(BY.Output_value), sum(d.C_value(Indice_FinEnerSect,:))/ sum(BY.Output_value), 100*(sum(d.C_value(Indice_FinEnerSect,:))-sum(BY.C_value(Indice_FinEnerSect,:)))/sum(BY.Output_value)] ; ["Contribution of Households consumption of Non Energy Products to Nominal Output variation", sum(BY.C_value(Indice_NonEnerSect,:))/sum(BY.Output_value), sum(d.C_value(Indice_NonEnerSect,:))/ sum(BY.Output_value), 100*(sum(d.C_value(Indice_NonEnerSect,:))-sum(BY.C_value(Indice_NonEnerSect,:)))/sum(BY.Output_value)] ; ["Contribution of Public consumption of Primary Energy to Nominal Output variation", sum(BY.G_value(Indice_PrimEnerSect))/sum(BY.Output_value), sum(d.G_value(Indice_PrimEnerSect))/ sum(BY.Output_value), 100*(sum(d.G_value(Indice_PrimEnerSect))-sum(BY.G_value(Indice_PrimEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Public Consumption of Final Energy to Nominal Output variation", sum(BY.G_value(Indice_FinEnerSect))/sum(BY.Output_value), sum(d.G_value(Indice_FinEnerSect))/ sum(BY.Output_value), 100*(sum(d.G_value(Indice_FinEnerSect))-sum(BY.G_value(Indice_FinEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Public Consumption of Non Energy Products to Nominal Output variation", sum(BY.G_value(Indice_NonEnerSect))/sum(BY.Output_value), sum(d.G_value(Indice_NonEnerSect))/ sum(BY.Output_value), 100*(sum(d.G_value(Indice_NonEnerSect))-sum(BY.G_value(Indice_NonEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Investment of Primary Energy to Nominal Output variation", sum(BY.I_value(Indice_PrimEnerSect))/sum(BY.Output_value), sum(d.I_value(Indice_PrimEnerSect))/ sum(BY.Output_value), 100*(sum(d.I_value(Indice_PrimEnerSect))-sum(BY.I_value(Indice_PrimEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Investment of Final Energy to Nominal Output variation", sum(BY.I_value(Indice_FinEnerSect))/sum(BY.Output_value), sum(d.I_value(Indice_FinEnerSect))/ sum(BY.Output_value), 100*(sum(d.I_value(Indice_FinEnerSect))-sum(BY.I_value(Indice_FinEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Investment of Non Energy Products to Nominal Output variation", sum(BY.I_value(Indice_NonEnerSect))/sum(BY.Output_value), sum(d.I_value(Indice_NonEnerSect))/ sum(BY.Output_value), 100*(sum(d.I_value(Indice_NonEnerSect))- sum(BY.I_value(Indice_NonEnerSect)))/sum(BY.Output_value)]];
+evol_ref.MacroT9 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Contribution of Households consumption of Primary Energy to Nominal Output variation", sum(ref.C_value(Indice_PrimEnerSect,:))/sum(ref.Output_value), sum(d.C_value(Indice_PrimEnerSect,:))/ sum(ref.Output_value), 100*(sum(d.C_value(Indice_PrimEnerSect,:))-sum(ref.C_value(Indice_PrimEnerSect,:)))/sum(ref.Output_value)] ; ["Contribution of Households consumption of Final Energy to Nominal Output variation", sum(ref.C_value(Indice_FinEnerSect,:))/sum(ref.Output_value), sum(d.C_value(Indice_FinEnerSect,:))/ sum(ref.Output_value), 100*(sum(d.C_value(Indice_FinEnerSect,:))-sum(ref.C_value(Indice_FinEnerSect,:)))/sum(ref.Output_value)] ; ["Contribution of Households consumption of Non Energy Products to Nominal Output variation", sum(ref.C_value(Indice_NonEnerSect,:))/sum(ref.Output_value), sum(d.C_value(Indice_NonEnerSect,:))/ sum(ref.Output_value), 100*(sum(d.C_value(Indice_NonEnerSect,:))-sum(ref.C_value(Indice_NonEnerSect,:)))/sum(ref.Output_value)] ; ["Contribution of Public consumption of Primary Energy to Nominal Output variation", sum(ref.G_value(Indice_PrimEnerSect))/sum(ref.Output_value), sum(d.G_value(Indice_PrimEnerSect))/ sum(ref.Output_value), 100*(sum(d.G_value(Indice_PrimEnerSect))-sum(ref.G_value(Indice_PrimEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Public Consumption of Final Energy to Nominal Output variation", sum(ref.G_value(Indice_FinEnerSect))/sum(ref.Output_value), sum(d.G_value(Indice_FinEnerSect))/ sum(ref.Output_value), 100*(sum(d.G_value(Indice_FinEnerSect))-sum(ref.G_value(Indice_FinEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Public Consumption of Non Energy Products to Nominal Output variation", sum(ref.G_value(Indice_NonEnerSect))/sum(ref.Output_value), sum(d.G_value(Indice_NonEnerSect))/ sum(ref.Output_value), 100*(sum(d.G_value(Indice_NonEnerSect))-sum(ref.G_value(Indice_NonEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Investment of Primary Energy to Nominal Output variation", sum(ref.I_value(Indice_PrimEnerSect))/sum(ref.Output_value), sum(d.I_value(Indice_PrimEnerSect))/ sum(ref.Output_value), 100*(sum(d.I_value(Indice_PrimEnerSect))-sum(ref.I_value(Indice_PrimEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Investment of Final Energy to Nominal Output variation", sum(ref.I_value(Indice_FinEnerSect))/sum(ref.Output_value), sum(d.I_value(Indice_FinEnerSect))/ sum(ref.Output_value), 100*(sum(d.I_value(Indice_FinEnerSect))-sum(ref.I_value(Indice_FinEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Investment of Non Energy Products to Nominal Output variation", sum(ref.I_value(Indice_NonEnerSect))/sum(ref.Output_value), sum(d.I_value(Indice_NonEnerSect))/ sum(ref.Output_value), 100*(sum(d.I_value(Indice_NonEnerSect))- sum(ref.I_value(Indice_NonEnerSect)))/sum(ref.Output_value)]];
 
-evol_BY.MacroT10 = [["Contribution of Exports of Primary Energy to Nominal Output variation", sum(BY.X_value(Indice_PrimEnerSect))/sum(BY.Output_value), sum(d.X_value(Indice_PrimEnerSect))/ sum(BY.Output_value), 100*(sum(d.X_value(Indice_PrimEnerSect))-sum(BY.X_value(Indice_PrimEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Exports of Final Energy to Nominal Output variation", sum(BY.X_value(Indice_FinEnerSect))/sum(BY.Output_value), sum(d.X_value(Indice_FinEnerSect))/ sum(BY.Output_value), 100*(sum(d.X_value(Indice_FinEnerSect))-sum(BY.X_value(Indice_FinEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Exports of Non Energy Products to Nominal Output variation", sum(BY.X_value(Indice_NonEnerSect))/sum(BY.Output_value), sum(d.X_value(Indice_NonEnerSect))/ sum(BY.Output_value), 100*(sum(d.X_value(Indice_NonEnerSect))-sum(BY.X_value(Indice_NonEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Imports of Primary Energy to Nominal Output variation", sum(-BY.M_value(Indice_PrimEnerSect))/sum(BY.Output_value), sum(-d.M_value(Indice_PrimEnerSect))/ sum(BY.Output_value), 100*(sum(BY.M_value(Indice_PrimEnerSect))-sum(d.M_value(Indice_PrimEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Imports of Final Energy to Nominal Output variation", sum(-BY.M_value(Indice_FinEnerSect))/sum(BY.Output_value), sum(-d.M_value(Indice_FinEnerSect))/ sum(BY.Output_value), 100*(sum(BY.M_value(Indice_FinEnerSect))-sum(d.M_value(Indice_FinEnerSect)))/sum(BY.Output_value)] ; ["Contribution of Imports of Non Energy Products to Nominal Output variation", sum(-BY.M_value(Indice_NonEnerSect))/sum(BY.Output_value), sum(-d.M_value(Indice_NonEnerSect))/ sum(BY.Output_value), 100*(sum(BY.M_value(Indice_NonEnerSect))-sum(d.M_value(Indice_NonEnerSect)))/sum(BY.Output_value)]] ;
+evol_ref.MacroT10 = [["Contribution of Exports of Primary Energy to Nominal Output variation", sum(ref.X_value(Indice_PrimEnerSect))/sum(ref.Output_value), sum(d.X_value(Indice_PrimEnerSect))/ sum(ref.Output_value), 100*(sum(d.X_value(Indice_PrimEnerSect))-sum(ref.X_value(Indice_PrimEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Exports of Final Energy to Nominal Output variation", sum(ref.X_value(Indice_FinEnerSect))/sum(ref.Output_value), sum(d.X_value(Indice_FinEnerSect))/ sum(ref.Output_value), 100*(sum(d.X_value(Indice_FinEnerSect))-sum(ref.X_value(Indice_FinEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Exports of Non Energy Products to Nominal Output variation", sum(ref.X_value(Indice_NonEnerSect))/sum(ref.Output_value), sum(d.X_value(Indice_NonEnerSect))/ sum(ref.Output_value), 100*(sum(d.X_value(Indice_NonEnerSect))-sum(ref.X_value(Indice_NonEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Imports of Primary Energy to Nominal Output variation", sum(-ref.M_value(Indice_PrimEnerSect))/sum(ref.Output_value), sum(-d.M_value(Indice_PrimEnerSect))/ sum(ref.Output_value), 100*(sum(ref.M_value(Indice_PrimEnerSect))-sum(d.M_value(Indice_PrimEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Imports of Final Energy to Nominal Output variation", sum(-ref.M_value(Indice_FinEnerSect))/sum(ref.Output_value), sum(-d.M_value(Indice_FinEnerSect))/ sum(ref.Output_value), 100*(sum(ref.M_value(Indice_FinEnerSect))-sum(d.M_value(Indice_FinEnerSect)))/sum(ref.Output_value)] ; ["Contribution of Imports of Non Energy Products to Nominal Output variation", sum(-ref.M_value(Indice_NonEnerSect))/sum(ref.Output_value), sum(-d.M_value(Indice_NonEnerSect))/ sum(ref.Output_value), 100*(sum(ref.M_value(Indice_NonEnerSect))-sum(d.M_value(Indice_NonEnerSect)))/sum(ref.Output_value)]] ;
 
-evol_BY.MacroT11 = [["Variable", "Indice 0", "Indice 1", "% variation"] ; ["Contribution of Intermediate consumption (inputs) of Primary Energy to Real Output variation", sum(BY.IC_value(:,Indice_PrimEnerSect))/ sum(BY.Output_value), IC_input_PrimEn_qLasp*sum(BY.IC_value(:,Indice_PrimEnerSect))/ sum(BY.Output_value), "nan"]; ["Contribution of Intermediate consumption (inputs) of Final Energy to Real Output variation", sum(BY.IC_value(:,Indice_FinEnerSect))/ sum(BY.Output_value), IC_input_FinEn_qLasp*sum(BY.IC_value(:,Indice_FinEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Intermediate consumption (inputs) of Non Energy Products to Real Output variation", sum(BY.IC_value(:,Indice_NonEnerSect))/ sum(BY.Output_value), IC_input_NonEn_qLasp*sum(BY.IC_value(:,Indice_NonEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Intermediate consumption (uses) of Primary Energy to Real Output variation", sum(BY.IC_value(Indice_PrimEnerSect,:))/ sum(BY.Output_value), IC_uses_PrimEn_qLasp*sum(BY.IC_value(Indice_PrimEnerSect,:))/ sum(BY.Output_value), "nan"]; ["Contribution of Intermediate consumption (uses) of Final Energy to Real Output variation", sum(BY.IC_value(Indice_FinEnerSect,:))/ sum(BY.Output_value), IC_uses_FinEn_qLasp*sum(BY.IC_value(Indice_FinEnerSect,:))/ sum(BY.Output_value), "nan"] ; ["Contribution of Intermediate consumption (uses) of Non Energy Products to Real Output variation", sum(BY.IC_value(Indice_NonEnerSect,:))/ sum(BY.Output_value), IC_uses_NonEn_qLasp*sum(BY.IC_value(Indice_NonEnerSect,:))/ sum(BY.Output_value), "nan"]];
+evol_ref.MacroT11 = [["Variable", "Indice 0", "Indice 1", "% variation"] ; ["Contribution of Intermediate consumption (inputs) of Primary Energy to Real Output variation", sum(ref.IC_value(:,Indice_PrimEnerSect))/ sum(ref.Output_value), IC_input_PrimEn_qLasp*sum(ref.IC_value(:,Indice_PrimEnerSect))/ sum(ref.Output_value), "nan"]; ["Contribution of Intermediate consumption (inputs) of Final Energy to Real Output variation", sum(ref.IC_value(:,Indice_FinEnerSect))/ sum(ref.Output_value), IC_input_FinEn_qLasp*sum(ref.IC_value(:,Indice_FinEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Intermediate consumption (inputs) of Non Energy Products to Real Output variation", sum(ref.IC_value(:,Indice_NonEnerSect))/ sum(ref.Output_value), IC_input_NonEn_qLasp*sum(ref.IC_value(:,Indice_NonEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Intermediate consumption (uses) of Primary Energy to Real Output variation", sum(ref.IC_value(Indice_PrimEnerSect,:))/ sum(ref.Output_value), IC_uses_PrimEn_qLasp*sum(ref.IC_value(Indice_PrimEnerSect,:))/ sum(ref.Output_value), "nan"]; ["Contribution of Intermediate consumption (uses) of Final Energy to Real Output variation", sum(ref.IC_value(Indice_FinEnerSect,:))/ sum(ref.Output_value), IC_uses_FinEn_qLasp*sum(ref.IC_value(Indice_FinEnerSect,:))/ sum(ref.Output_value), "nan"] ; ["Contribution of Intermediate consumption (uses) of Non Energy Products to Real Output variation", sum(ref.IC_value(Indice_NonEnerSect,:))/ sum(ref.Output_value), IC_uses_NonEn_qLasp*sum(ref.IC_value(Indice_NonEnerSect,:))/ sum(ref.Output_value), "nan"]];
 
-evol_BY.MacroT12 = [["Contribution of Households consumption of Primary Energy to real Output variation", sum(BY.C_value(Indice_PrimEnerSect,:))/ sum(BY.Output_value), C_PrimEn_qLasp*sum(BY.C_value(Indice_PrimEnerSect,:))/ sum(BY.Output_value), "nan"]; ["Contribution of Households consumption of Final Energy to real Output variation", sum(BY.C_value(Indice_FinEnerSect,:))/ sum(BY.Output_value), C_FinEn_qLasp*sum(BY.C_value(Indice_FinEnerSect,:))/ sum(BY.Output_value), "nan"] ; ["Contribution of Households consumption of Non Energy Products to real Output variation", sum(BY.C_value(Indice_NonEnerSect,:))/ sum(BY.Output_value), C_NonEn_qLasp*sum(BY.C_value(Indice_NonEnerSect,:))/ sum(BY.Output_value), "nan"] ; ["Contribution of Public consumption of Primary Energy to real Output variation", sum(BY.G_value(Indice_PrimEnerSect))/ sum(BY.Output_value), G_PrimEn_qLasp*sum(BY.G_value(Indice_PrimEnerSect))/ sum(BY.Output_value), "nan"]; ["Contribution of Public Consumption of Final Energy to real Output variation", sum(BY.G_value(Indice_FinEnerSect))/ sum(BY.Output_value), G_FinEn_qLasp*sum(BY.G_value(Indice_FinEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Public Consumption of Non Energy Products to real Output variation", sum(BY.G_value(Indice_NonEnerSect))/ sum(BY.Output_value), G_NonEn_qLasp*sum(BY.G_value(Indice_NonEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Investment of Non Energy Products to real Output variation", sum(BY.I_value(Indice_NonEnerSect))/ sum(BY.Output_value), I_NonEn_qLasp*sum(BY.I_value(Indice_NonEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Exports of Primary Energy to real Output variation", sum(BY.X_value(Indice_PrimEnerSect))/ sum(BY.Output_value), X_PrimEn_qLasp*sum(BY.X_value(Indice_PrimEnerSect))/ sum(BY.Output_value), "nan"]; ["Contribution of Exports of Final Energy to real Output variation", sum(BY.X_value(Indice_FinEnerSect))/ sum(BY.Output_value), X_FinEn_qLasp*sum(BY.X_value(Indice_FinEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Exports of Non Energy Products to real Output variation", sum(BY.X_value(Indice_NonEnerSect))/ sum(BY.Output_value), X_NonEn_qLasp*sum(BY.X_value(Indice_NonEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Imports of Primary Energy to real Output variation", sum(-BY.M_value(Indice_PrimEnerSect))/ sum(BY.Output_value), M_PrimEn_qLasp*sum(-BY.M_value(Indice_PrimEnerSect))/ sum(BY.Output_value), "nan"]; ["Contribution of Imports of Final Energy to real Output variation", sum(-BY.M_value(Indice_FinEnerSect))/ sum(BY.Output_value), M_FinEn_qLasp*sum(-BY.M_value(Indice_FinEnerSect))/ sum(BY.Output_value), "nan"] ; ["Contribution of Imports of Non Energy Products to real Output variation", sum(-BY.M_value(Indice_NonEnerSect))/ sum(BY.Output_value), M_NonEn_qLasp*sum(-BY.M_value(Indice_NonEnerSect))/ sum(BY.Output_value), "nan"]];
+evol_ref.MacroT12 = [["Contribution of Households consumption of Primary Energy to real Output variation", sum(ref.C_value(Indice_PrimEnerSect,:))/ sum(ref.Output_value), C_PrimEn_qLasp*sum(ref.C_value(Indice_PrimEnerSect,:))/ sum(ref.Output_value), "nan"]; ["Contribution of Households consumption of Final Energy to real Output variation", sum(ref.C_value(Indice_FinEnerSect,:))/ sum(ref.Output_value), C_FinEn_qLasp*sum(ref.C_value(Indice_FinEnerSect,:))/ sum(ref.Output_value), "nan"] ; ["Contribution of Households consumption of Non Energy Products to real Output variation", sum(ref.C_value(Indice_NonEnerSect,:))/ sum(ref.Output_value), C_NonEn_qLasp*sum(ref.C_value(Indice_NonEnerSect,:))/ sum(ref.Output_value), "nan"] ; ["Contribution of Public consumption of Primary Energy to real Output variation", sum(ref.G_value(Indice_PrimEnerSect))/ sum(ref.Output_value), G_PrimEn_qLasp*sum(ref.G_value(Indice_PrimEnerSect))/ sum(ref.Output_value), "nan"]; ["Contribution of Public Consumption of Final Energy to real Output variation", sum(ref.G_value(Indice_FinEnerSect))/ sum(ref.Output_value), G_FinEn_qLasp*sum(ref.G_value(Indice_FinEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Public Consumption of Non Energy Products to real Output variation", sum(ref.G_value(Indice_NonEnerSect))/ sum(ref.Output_value), G_NonEn_qLasp*sum(ref.G_value(Indice_NonEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Investment of Non Energy Products to real Output variation", sum(ref.I_value(Indice_NonEnerSect))/ sum(ref.Output_value), I_NonEn_qLasp*sum(ref.I_value(Indice_NonEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Exports of Primary Energy to real Output variation", sum(ref.X_value(Indice_PrimEnerSect))/ sum(ref.Output_value), X_PrimEn_qLasp*sum(ref.X_value(Indice_PrimEnerSect))/ sum(ref.Output_value), "nan"]; ["Contribution of Exports of Final Energy to real Output variation", sum(ref.X_value(Indice_FinEnerSect))/ sum(ref.Output_value), X_FinEn_qLasp*sum(ref.X_value(Indice_FinEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Exports of Non Energy Products to real Output variation", sum(ref.X_value(Indice_NonEnerSect))/ sum(ref.Output_value), X_NonEn_qLasp*sum(ref.X_value(Indice_NonEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Imports of Primary Energy to real Output variation", sum(-ref.M_value(Indice_PrimEnerSect))/ sum(ref.Output_value), M_PrimEn_qLasp*sum(-ref.M_value(Indice_PrimEnerSect))/ sum(ref.Output_value), "nan"]; ["Contribution of Imports of Final Energy to real Output variation", sum(-ref.M_value(Indice_FinEnerSect))/ sum(ref.Output_value), M_FinEn_qLasp*sum(-ref.M_value(Indice_FinEnerSect))/ sum(ref.Output_value), "nan"] ; ["Contribution of Imports of Non Energy Products to real Output variation", sum(-ref.M_value(Indice_NonEnerSect))/ sum(ref.Output_value), M_NonEn_qLasp*sum(-ref.M_value(Indice_NonEnerSect))/ sum(ref.Output_value), "nan"]];
 
-evol_BY.MacroT13 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Total Energy", (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))/(sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.Y(Indice_EnerSect))+sum(d.M(Indice_EnerSect)))/(sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), ((sum(d.Y(Indice_EnerSect))+sum(d.M(Indice_EnerSect)))/(sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))-1)*100]; ["Domestic production Primary Energy (Crude Oil, Gas, Coal)", sum(BY.Y(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.Y(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.Y(Indice_PrimEnerSect)) - sum(BY.Y(Indice_PrimEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Imports Primary Energy (Crude Oil, Gas, Coal)", sum(BY.M(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.M(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.M(Indice_PrimEnerSect))- sum(BY.M(Indice_PrimEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Exports Primary Energy (Crude Oil, Gas, Coal)", sum(BY.X(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.X(Indice_PrimEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.X(Indice_PrimEnerSect))- sum(BY.X(Indice_PrimEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Domestic production Final Energy", sum(BY.Y(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.Y(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.Y(Indice_FinEnerSect))- sum(BY.Y(Indice_FinEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Imports Final Energy", sum(BY.M(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.M(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.M(Indice_FinEnerSect))- sum(BY.M(Indice_FinEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Exports Final Energy", sum(BY.X(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.X(Indice_FinEnerSect)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.X(Indice_FinEnerSect))- sum(BY.X(Indice_FinEnerSect)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Intermediate Energy Consumptions", sum(BY.IC(Indice_EnerSect,:)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.IC(Indice_EnerSect,:)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.IC(Indice_EnerSect,:))- sum(BY.IC(Indice_EnerSect,:)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]; ["Final Energy Consumptions", sum(BY.C(Indice_EnerSect,:)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), sum(d.C(Indice_EnerSect,:)) / (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect))), (sum(d.C(Indice_EnerSect,:))- sum(BY.C(Indice_EnerSect,:)))/ (sum(BY.Y(Indice_EnerSect))+sum(BY.M(Indice_EnerSect)))*100]] ;
+evol_ref.MacroT13 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Total Energy", (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))/(sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.Y(Indice_EnerSect))+sum(d.M(Indice_EnerSect)))/(sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), ((sum(d.Y(Indice_EnerSect))+sum(d.M(Indice_EnerSect)))/(sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))-1)*100]; ["Domestic production Primary Energy (Crude Oil, Gas, Coal)", sum(ref.Y(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.Y(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.Y(Indice_PrimEnerSect)) - sum(ref.Y(Indice_PrimEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Imports Primary Energy (Crude Oil, Gas, Coal)", sum(ref.M(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.M(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.M(Indice_PrimEnerSect))- sum(ref.M(Indice_PrimEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Exports Primary Energy (Crude Oil, Gas, Coal)", sum(ref.X(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.X(Indice_PrimEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.X(Indice_PrimEnerSect))- sum(ref.X(Indice_PrimEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Domestic production Final Energy", sum(ref.Y(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.Y(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.Y(Indice_FinEnerSect))- sum(ref.Y(Indice_FinEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Imports Final Energy", sum(ref.M(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.M(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.M(Indice_FinEnerSect))- sum(ref.M(Indice_FinEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Exports Final Energy", sum(ref.X(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.X(Indice_FinEnerSect)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.X(Indice_FinEnerSect))- sum(ref.X(Indice_FinEnerSect)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Intermediate Energy Consumptions", sum(ref.IC(Indice_EnerSect,:)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.IC(Indice_EnerSect,:)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.IC(Indice_EnerSect,:))- sum(ref.IC(Indice_EnerSect,:)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]; ["Final Energy Consumptions", sum(ref.C(Indice_EnerSect,:)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), sum(d.C(Indice_EnerSect,:)) / (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect))), (sum(d.C(Indice_EnerSect,:))- sum(ref.C(Indice_EnerSect,:)))/ (sum(ref.Y(Indice_EnerSect))+sum(ref.M(Indice_EnerSect)))*100]] ;
 
-evol_BY.MacroT14 = [["Production Price Primary Energy (Crude Oil, Gas, Coal)", "1", Y_PrimEn_pPaas, (Y_PrimEn_pPaas-1)*100]; ["Production Price Final Energy", "1", Y_FinEn_pPaas, (Y_FinEn_pPaas-1)*100]; ["Production Price Non Energy Products", "1", Y_NonEn_pPaas, (Y_NonEn_pPaas-1)*100] ; ["Imports Price for Primary Energy (Crude Oil, Gas, Coal)", "1", M_PrimEn_pPaas, (M_PrimEn_pPaas-1)*100]; ["Exports Price for Primary Energy (Crude Oil, Gas, Coal)", "1", X_PrimEn_pPaas, (X_PrimEn_pPaas-1)*100]; ["Imports Price for Final Energy", "1", M_FinEn_pPaas, (M_FinEn_pPaas-1)*100]; ["Exports Price for Final Energy", "1", X_FinEn_pPaas, (X_FinEn_pPaas-1)*100]; ["Imports Price for Non Energy Products", "1", M_NonEn_pPaas, (M_NonEn_pPaas-1)*100]; ["Exports Price for Non Energy Products", "1", X_NonEn_pPaas, (X_NonEn_pPaas-1)*100] ; ["Primary Energy Consumption Price (Paashes)", "1", C_PrimEn_pPaas, (C_PrimEn_pPaas-1)*100]; ["Final Energy Consumption Price (Paashes)", "1", C_FinEn_pPaas, (C_FinEn_pPaas-1)*100] ; ["Non Energy Products Consumption Price (Paashes)", "1", C_NonEn_pPaas, (C_NonEn_pPaas-1)*100] ; ["Primary Energy Public Consumption Price (Paashes)", "1", G_PrimEn_pPaas, (G_PrimEn_pPaas-1)*100]; ["Final Energy Public Consumption Price (Paashes)", "1", G_FinEn_pPaas, (G_FinEn_pPaas-1)*100] ; ["Non Energy Products Public Consumption Price (Paashes)", "1", G_NonEn_pPaas, (G_NonEn_pPaas-1)*100] ; ["Non Energy Products Investment Price (Paashes)", "1", I_NonEn_pPaas, (I_NonEn_pPaas-1)*100] ; ["Intermediate Primary Energy Consumption Price (Paashes)", "1", IC_PrimEn_pPaas, (IC_PrimEn_pPaas-1)*100]; ["Intermediate Final Energy Consumption Price (Paashes)", "1", IC_FinEn_pPaas, (IC_FinEn_pPaas-1)*100] ; ["Intermediate Non Energy Products Consumption Price (Paashes)", "1", IC_NonEn_pPaas, (IC_NonEn_pPaas-1)*100] ; ["Nominal Investment in the Energy Sector", "1", sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI)/sum(BY.Betta * sum(BY.kappa(Indice_EnerSect).*BY.Y(Indice_EnerSect)').*BY.pI), (sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI)/sum(BY.Betta * sum(BY.kappa(Indice_EnerSect).*BY.Y(Indice_EnerSect)').*BY.pI)-1)*100]; ["Investment share in the Energy Sector", "1", (sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI) / sum(d.Betta * sum(d.kappa.*d.Y').*d.pI))/(sum(BY.Betta * sum(BY.kappa(Indice_EnerSect).*BY.Y(Indice_EnerSect)').*BY.pI) / sum(BY.Betta * sum(BY.kappa.*BY.Y').*BY.pI)), ((sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI) / sum(d.Betta * sum(d.kappa.*d.Y').*d.pI))/(sum(BY.Betta * sum(BY.kappa(Indice_EnerSect).*BY.Y(Indice_EnerSect)').*BY.pI) / sum(BY.Betta * sum(BY.kappa.*BY.Y').*BY.pI))-1)*100]];
+evol_ref.MacroT14 = [["Production Price Primary Energy (Crude Oil, Gas, Coal)", "1", Y_PrimEn_pPaas, (Y_PrimEn_pPaas-1)*100]; ["Production Price Final Energy", "1", Y_FinEn_pPaas, (Y_FinEn_pPaas-1)*100]; ["Production Price Non Energy Products", "1", Y_NonEn_pPaas, (Y_NonEn_pPaas-1)*100] ; ["Imports Price for Primary Energy (Crude Oil, Gas, Coal)", "1", M_PrimEn_pPaas, (M_PrimEn_pPaas-1)*100]; ["Exports Price for Primary Energy (Crude Oil, Gas, Coal)", "1", X_PrimEn_pPaas, (X_PrimEn_pPaas-1)*100]; ["Imports Price for Final Energy", "1", M_FinEn_pPaas, (M_FinEn_pPaas-1)*100]; ["Exports Price for Final Energy", "1", X_FinEn_pPaas, (X_FinEn_pPaas-1)*100]; ["Imports Price for Non Energy Products", "1", M_NonEn_pPaas, (M_NonEn_pPaas-1)*100]; ["Exports Price for Non Energy Products", "1", X_NonEn_pPaas, (X_NonEn_pPaas-1)*100] ; ["Primary Energy Consumption Price (Paashes)", "1", C_PrimEn_pPaas, (C_PrimEn_pPaas-1)*100]; ["Final Energy Consumption Price (Paashes)", "1", C_FinEn_pPaas, (C_FinEn_pPaas-1)*100] ; ["Non Energy Products Consumption Price (Paashes)", "1", C_NonEn_pPaas, (C_NonEn_pPaas-1)*100] ; ["Primary Energy Public Consumption Price (Paashes)", "1", G_PrimEn_pPaas, (G_PrimEn_pPaas-1)*100]; ["Final Energy Public Consumption Price (Paashes)", "1", G_FinEn_pPaas, (G_FinEn_pPaas-1)*100] ; ["Non Energy Products Public Consumption Price (Paashes)", "1", G_NonEn_pPaas, (G_NonEn_pPaas-1)*100] ; ["Non Energy Products Investment Price (Paashes)", "1", I_NonEn_pPaas, (I_NonEn_pPaas-1)*100] ; ["Intermediate Primary Energy Consumption Price (Paashes)", "1", IC_PrimEn_pPaas, (IC_PrimEn_pPaas-1)*100]; ["Intermediate Final Energy Consumption Price (Paashes)", "1", IC_FinEn_pPaas, (IC_FinEn_pPaas-1)*100] ; ["Intermediate Non Energy Products Consumption Price (Paashes)", "1", IC_NonEn_pPaas, (IC_NonEn_pPaas-1)*100] ; ["Nominal Investment in the Energy Sector", "1", sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI)/sum(ref.Betta * sum(ref.kappa(Indice_EnerSect).*ref.Y(Indice_EnerSect)').*ref.pI), (sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI)/sum(ref.Betta * sum(ref.kappa(Indice_EnerSect).*ref.Y(Indice_EnerSect)').*ref.pI)-1)*100]; ["Investment share in the Energy Sector", "1", (sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI) / sum(d.Betta * sum(d.kappa.*d.Y').*d.pI))/(sum(ref.Betta * sum(ref.kappa(Indice_EnerSect).*ref.Y(Indice_EnerSect)').*ref.pI) / sum(ref.Betta * sum(ref.kappa.*ref.Y').*ref.pI)), ((sum(d.Betta * sum(d.kappa(Indice_EnerSect).*d.Y(Indice_EnerSect)').*d.pI) / sum(d.Betta * sum(d.kappa.*d.Y').*d.pI))/(sum(ref.Betta * sum(ref.kappa(Indice_EnerSect).*ref.Y(Indice_EnerSect)').*ref.pI) / sum(ref.Betta * sum(ref.kappa.*ref.Y').*ref.pI))-1)*100]];
 
 // Simulated Values
 
 // Aggregated 
-evol_BY.MacroT15 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Total Output", sum(BY.Output_value)/10^6, sum(d.Output_value)/10^6, "billion"+money]; ["Total Intermediate Consumptions", sum(BY.IC_value)/10^6, sum(d.IC_value)/10^6, "billion"+money]; ["Total Value-Added (GDP)", sum(BY.GDP)/10^6, sum(d.GDP)/10^6, "billion"+money]; ["Total Labour Income", sum(BY.Labour_income)/10^6, sum(d.Labour_income)/10^6, "billion"+money]; ["Total Labour Tax", sum(BY.Labour_Tax)/10^6, sum(d.Labour_Tax)/10^6, "billion"+money]; ["Total Production Tax", sum(BY.Production_Tax)/10^6, sum(d.Production_Tax)/10^6, "billion"+money]; ["Total Consumption Tax", (sum(BY.Taxes)+sum(BY.Carbon_Tax))/10^6, (sum(d.Taxes)+sum(d.Carbon_Tax))/10^6, "billion"+money]; ["Total Capital income", sum(BY.Capital_income)/10^6, sum(d.Capital_income)/10^6, "billion"+money]; ["Total Margins", sum(BY.TotMargins)/10^6, sum(d.TotMargins)/10^6, "billion"+money]; ["Total Private Consumption", sum(BY.C_value)/10^6, sum(d.C_value)/10^6, "billion"+money]; ["Total Public Consumption", sum(BY.G_value)/10^6, sum(d.G_value)/10^6, "billion"+money]; ["Total Gross fixed Capital Formation", sum(BY.I_value)/10^6, sum(d.I_value)/10^6, "billion"+money]; ["Total Exports", sum(BY.X_value)/10^6, sum(d.X_value)/10^6, "billion"+money]; ["Total Imports", -sum(BY.M_value)/10^6, -sum(d.M_value)/10^6, "billion"+money]; ["Net Income Transfers to the rest-of-the-world", BY.Property_income(Indice_RestOfWorld)/10^6 + BY.Other_Transfers(Indice_RestOfWorld)/10^6, d.Property_income(Indice_RestOfWorld)/10^6 + d.Other_Transfers(Indice_RestOfWorld)/10^6, "billion"+money]; ["Corporations Disposable Income", sum(BY.Disposable_Income(Indice_Corporations))/10^6, sum(d.Disposable_Income(Indice_Corporations))/10^6, "billion"+money]; ["Private Disposable Income", sum(BY.Disposable_Income(Indice_Households))/10^6, sum(d.Disposable_Income(Indice_Households))/10^6, "billion"+money]; ["Public Disposable Income", sum(BY.Disposable_Income(Indice_Government))/10^6, sum(d.Disposable_Income(Indice_Government))/10^6, "billion"+money]; ["Domestic Demand",  (sum(BY.C_value)+sum(BY.G_value)+sum(BY.I_value))/10^6, (sum(d.C_value)+sum(d.G_value)+sum(d.I_value))/10^6, "billion"+money]; ["Capital Flows",  -BY.Ecotable(Indice_NetLending, Indice_RestOfWorld)/10^6, -d.Ecotable(Indice_NetLending, Indice_RestOfWorld)/10^6, "billion"+money] ];
+evol_ref.MacroT15 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Total Output", sum(ref.Output_value)/10^6, sum(d.Output_value)/10^6, "billion"+money]; ["Total Intermediate Consumptions", sum(ref.IC_value)/10^6, sum(d.IC_value)/10^6, "billion"+money]; ["Total Value-Added (GDP)", sum(ref.GDP)/10^6, sum(d.GDP)/10^6, "billion"+money]; ["Total Labour Income", sum(ref.Labour_income)/10^6, sum(d.Labour_income)/10^6, "billion"+money]; ["Total Labour Tax", sum(ref.Labour_Tax)/10^6, sum(d.Labour_Tax)/10^6, "billion"+money]; ["Total Production Tax", sum(ref.Production_Tax)/10^6, sum(d.Production_Tax)/10^6, "billion"+money]; ["Total Consumption Tax", (sum(ref.Taxes)+sum(ref.Carbon_Tax))/10^6, (sum(d.Taxes)+sum(d.Carbon_Tax))/10^6, "billion"+money]; ["Total Capital income", sum(ref.Capital_income)/10^6, sum(d.Capital_income)/10^6, "billion"+money]; ["Total Margins", sum(ref.TotMargins)/10^6, sum(d.TotMargins)/10^6, "billion"+money]; ["Total Private Consumption", sum(ref.C_value)/10^6, sum(d.C_value)/10^6, "billion"+money]; ["Total Public Consumption", sum(ref.G_value)/10^6, sum(d.G_value)/10^6, "billion"+money]; ["Total Gross fixed Capital Formation", sum(ref.I_value)/10^6, sum(d.I_value)/10^6, "billion"+money]; ["Total Exports", sum(ref.X_value)/10^6, sum(d.X_value)/10^6, "billion"+money]; ["Total Imports", -sum(ref.M_value)/10^6, -sum(d.M_value)/10^6, "billion"+money]; ["Net Income Transfers to the rest-of-the-world", ref.Property_income(Indice_RestOfWorld)/10^6 + ref.Other_Transfers(Indice_RestOfWorld)/10^6, d.Property_income(Indice_RestOfWorld)/10^6 + d.Other_Transfers(Indice_RestOfWorld)/10^6, "billion"+money]; ["Corporations Disposable Income", sum(ref.Disposable_Income(Indice_Corporations))/10^6, sum(d.Disposable_Income(Indice_Corporations))/10^6, "billion"+money]; ["Private Disposable Income", sum(ref.Disposable_Income(Indice_Households))/10^6, sum(d.Disposable_Income(Indice_Households))/10^6, "billion"+money]; ["Public Disposable Income", sum(ref.Disposable_Income(Indice_Government))/10^6, sum(d.Disposable_Income(Indice_Government))/10^6, "billion"+money]; ["Domestic Demand",  (sum(ref.C_value)+sum(ref.G_value)+sum(ref.I_value))/10^6, (sum(d.C_value)+sum(d.G_value)+sum(d.I_value))/10^6, "billion"+money]; ["Capital Flows",  -ref.Ecotable(Indice_NetLending, Indice_RestOfWorld)/10^6, -d.Ecotable(Indice_NetLending, Indice_RestOfWorld)/10^6, "billion"+money] ];
 
 // Primary Energies
-evol_BY.MacroT16 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Primary Energies - Output", sum(BY.Output_value(Indice_PrimEnerSect))/10^6, sum(d.Output_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Intermediate Consumptions (Inputs)", sum(BY.IC_value(:, Indice_PrimEnerSect))/10^6, sum(d.IC_value(:, Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Intermediate Consumptions (Outputs)", sum(BY.IC_value(Indice_PrimEnerSect,:))/10^6, sum(d.IC_value(Indice_PrimEnerSect,:))/10^6, "billion"+money]; ["Primary Energies - Value-Added", sum(BY.Output_value(Indice_PrimEnerSect))/10^6- sum(BY.IC_value(:,Indice_PrimEnerSect))/10^6, sum(d.Output_value(Indice_PrimEnerSect))/10^6- sum(d.IC_value(:,Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Labour Income", sum(BY.Labour_income(Indice_PrimEnerSect))/10^6, sum(d.Labour_income(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Labour Tax", sum(BY.Labour_Tax(Indice_PrimEnerSect))/10^6, sum(d.Labour_Tax(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Production Tax", sum(BY.Production_Tax(Indice_PrimEnerSect))/10^6, sum(d.Production_Tax(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Consumption Tax", sum(BY.Taxes(:,Indice_PrimEnerSect))/10^6+sum(BY.Carbon_Tax(:,Indice_PrimEnerSect))/10^6, sum(d.Taxes(:,Indice_PrimEnerSect))/10^6+sum(d.Carbon_Tax(:,Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Capital income", sum(BY.Capital_income(Indice_PrimEnerSect))/10^6, sum(d.Capital_income(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Margins", sum(BY.TotMargins(Indice_PrimEnerSect))/10^6, sum(d.TotMargins(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Private Consumption", sum(BY.C_value(Indice_PrimEnerSect))/10^6, sum(d.C_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Public Consumption", sum(BY.G_value(Indice_PrimEnerSect))/10^6, sum(d.G_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Gross fixed Capital Formation", sum(BY.I_value(Indice_PrimEnerSect))/10^6, sum(d.I_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Exports", sum(BY.X_value(Indice_PrimEnerSect))/10^6, sum(d.X_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Imports", -sum(BY.M_value(Indice_PrimEnerSect))/10^6, -sum(d.M_value(Indice_PrimEnerSect))/10^6, "billion"+money] ];
+evol_ref.MacroT16 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Primary Energies - Output", sum(ref.Output_value(Indice_PrimEnerSect))/10^6, sum(d.Output_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Intermediate Consumptions (Inputs)", sum(ref.IC_value(:, Indice_PrimEnerSect))/10^6, sum(d.IC_value(:, Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Intermediate Consumptions (Outputs)", sum(ref.IC_value(Indice_PrimEnerSect,:))/10^6, sum(d.IC_value(Indice_PrimEnerSect,:))/10^6, "billion"+money]; ["Primary Energies - Value-Added", sum(ref.Output_value(Indice_PrimEnerSect))/10^6- sum(ref.IC_value(:,Indice_PrimEnerSect))/10^6, sum(d.Output_value(Indice_PrimEnerSect))/10^6- sum(d.IC_value(:,Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Labour Income", sum(ref.Labour_income(Indice_PrimEnerSect))/10^6, sum(d.Labour_income(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Labour Tax", sum(ref.Labour_Tax(Indice_PrimEnerSect))/10^6, sum(d.Labour_Tax(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Production Tax", sum(ref.Production_Tax(Indice_PrimEnerSect))/10^6, sum(d.Production_Tax(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Consumption Tax", sum(ref.Taxes(:,Indice_PrimEnerSect))/10^6+sum(ref.Carbon_Tax(:,Indice_PrimEnerSect))/10^6, sum(d.Taxes(:,Indice_PrimEnerSect))/10^6+sum(d.Carbon_Tax(:,Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Capital income", sum(ref.Capital_income(Indice_PrimEnerSect))/10^6, sum(d.Capital_income(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Margins", sum(ref.TotMargins(Indice_PrimEnerSect))/10^6, sum(d.TotMargins(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Private Consumption", sum(ref.C_value(Indice_PrimEnerSect))/10^6, sum(d.C_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Public Consumption", sum(ref.G_value(Indice_PrimEnerSect))/10^6, sum(d.G_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Gross fixed Capital Formation", sum(ref.I_value(Indice_PrimEnerSect))/10^6, sum(d.I_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Exports", sum(ref.X_value(Indice_PrimEnerSect))/10^6, sum(d.X_value(Indice_PrimEnerSect))/10^6, "billion"+money]; ["Primary Energies - Imports", -sum(ref.M_value(Indice_PrimEnerSect))/10^6, -sum(d.M_value(Indice_PrimEnerSect))/10^6, "billion"+money] ];
 
 // Final Energies
-evol_BY.MacroT17 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Final Energies - Output", sum(BY.Output_value(Indice_FinEnerSect))/10^6, sum(d.Output_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Intermediate Consumptions (Inputs)", sum(BY.IC_value(:, Indice_FinEnerSect))/10^6, sum(d.IC_value(:, Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Intermediate Consumptions (Outputs)", sum(BY.IC_value(Indice_FinEnerSect,:))/10^6, sum(d.IC_value(Indice_FinEnerSect,:))/10^6, "billion"+money]; ["Final Energies - Value-Added", sum(BY.Output_value(Indice_FinEnerSect))/10^6 - sum(BY.IC_value(:,Indice_FinEnerSect))/10^6, sum(d.Output_value(Indice_FinEnerSect))/10^6 - sum(d.IC_value(:,Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Labour Income", sum(BY.Labour_income(Indice_FinEnerSect))/10^6, sum(d.Labour_income(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Labour Tax", sum(BY.Labour_Tax(Indice_FinEnerSect))/10^6, sum(d.Labour_Tax(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Production Tax", sum(BY.Production_Tax(Indice_FinEnerSect)/10^6), sum(d.Production_Tax(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Consumption Tax", sum(BY.Taxes(:,Indice_FinEnerSect))/10^6 + sum(BY.Carbon_Tax(:,Indice_FinEnerSect))/10^6, sum(d.Taxes(:,Indice_FinEnerSect))/10^6 + sum(d.Carbon_Tax(:,Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Capital income", sum(BY.Capital_income(Indice_FinEnerSect))/10^6, sum(d.Capital_income(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Margins", sum(BY.TotMargins(Indice_FinEnerSect))/10^6, sum(d.TotMargins(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Private Consumption", sum(BY.C_value(Indice_FinEnerSect))/10^6, sum(d.C_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Public Consumption", sum(BY.G_value(Indice_FinEnerSect))/10^6, sum(d.G_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Gross fixed Capital Formation", sum(BY.I_value(Indice_FinEnerSect))/10^6, sum(d.I_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Exports", sum(BY.X_value(Indice_FinEnerSect))/10^6, sum(d.X_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Imports", -sum(BY.M_value(Indice_FinEnerSect))/10^6, -sum(d.M_value(Indice_FinEnerSect))/10^6, "billion"+money] ];
+evol_ref.MacroT17 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Final Energies - Output", sum(ref.Output_value(Indice_FinEnerSect))/10^6, sum(d.Output_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Intermediate Consumptions (Inputs)", sum(ref.IC_value(:, Indice_FinEnerSect))/10^6, sum(d.IC_value(:, Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Intermediate Consumptions (Outputs)", sum(ref.IC_value(Indice_FinEnerSect,:))/10^6, sum(d.IC_value(Indice_FinEnerSect,:))/10^6, "billion"+money]; ["Final Energies - Value-Added", sum(ref.Output_value(Indice_FinEnerSect))/10^6 - sum(ref.IC_value(:,Indice_FinEnerSect))/10^6, sum(d.Output_value(Indice_FinEnerSect))/10^6 - sum(d.IC_value(:,Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Labour Income", sum(ref.Labour_income(Indice_FinEnerSect))/10^6, sum(d.Labour_income(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Labour Tax", sum(ref.Labour_Tax(Indice_FinEnerSect))/10^6, sum(d.Labour_Tax(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Production Tax", sum(ref.Production_Tax(Indice_FinEnerSect)/10^6), sum(d.Production_Tax(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Consumption Tax", sum(ref.Taxes(:,Indice_FinEnerSect))/10^6 + sum(ref.Carbon_Tax(:,Indice_FinEnerSect))/10^6, sum(d.Taxes(:,Indice_FinEnerSect))/10^6 + sum(d.Carbon_Tax(:,Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Capital income", sum(ref.Capital_income(Indice_FinEnerSect))/10^6, sum(d.Capital_income(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Margins", sum(ref.TotMargins(Indice_FinEnerSect))/10^6, sum(d.TotMargins(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Private Consumption", sum(ref.C_value(Indice_FinEnerSect))/10^6, sum(d.C_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Public Consumption", sum(ref.G_value(Indice_FinEnerSect))/10^6, sum(d.G_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Gross fixed Capital Formation", sum(ref.I_value(Indice_FinEnerSect))/10^6, sum(d.I_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Exports", sum(ref.X_value(Indice_FinEnerSect))/10^6, sum(d.X_value(Indice_FinEnerSect))/10^6, "billion"+money]; ["Final Energies - Imports", -sum(ref.M_value(Indice_FinEnerSect))/10^6, -sum(d.M_value(Indice_FinEnerSect))/10^6, "billion"+money] ];
 
 // Non Energy Products
-evol_BY.MacroT18 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Non Energy Products - Output", sum(BY.Output_value(Indice_NonEnerSect))/10^6, sum(d.Output_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Intermediate Consumptions (Inputs)", sum(BY.IC_value(:, Indice_NonEnerSect))/10^6, sum(d.IC_value(:, Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Intermediate Consumptions (Outputs)", sum(BY.IC_value(Indice_NonEnerSect,:))/10^6, sum(d.IC_value(Indice_NonEnerSect,:))/10^6, "billion"+money]; ["Non Energy Products - Value-Added", sum(BY.Output_value(Indice_NonEnerSect))/10^6 - sum(BY.IC_value(:,Indice_NonEnerSect))/10^6, sum(d.Output_value(Indice_NonEnerSect))/10^6 - sum(d.IC_value(:,Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Labour Income", sum(BY.Labour_income(Indice_NonEnerSect))/10^6, sum(d.Labour_income(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Labour Tax", sum(BY.Labour_Tax(Indice_NonEnerSect))/10^6, sum(d.Labour_Tax(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Production Tax", sum(BY.Production_Tax(Indice_NonEnerSect))/10^6, sum(d.Production_Tax(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Consumption Tax", sum(BY.Taxes(:,Indice_NonEnerSect))/10^6 + sum(BY.Carbon_Tax(:,Indice_NonEnerSect))/10^6, sum(d.Taxes(:,Indice_NonEnerSect))/10^6 + sum(d.Carbon_Tax(:,Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Capital income", sum(BY.Capital_income(Indice_NonEnerSect))/10^6, sum(d.Capital_income(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Margins", sum(BY.TotMargins(Indice_NonEnerSect))/10^6, sum(d.TotMargins(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Private Consumption", sum(BY.C_value(Indice_NonEnerSect))/10^6, sum(d.C_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Public Consumption", sum(BY.G_value(Indice_NonEnerSect))/10^6, sum(d.G_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Gross fixed Capital Formation", sum(BY.I_value(Indice_NonEnerSect))/10^6, sum(d.I_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Exports", sum(BY.X_value(Indice_NonEnerSect))/10^6, sum(d.X_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Imports", -sum(BY.M_value(Indice_NonEnerSect))/10^6, -sum(d.M_value(Indice_NonEnerSect))/10^6, "billion"+money] ];
+evol_ref.MacroT18 = [["Variable", "Value 0", "Value 1", "Unit"]; ["Non Energy Products - Output", sum(ref.Output_value(Indice_NonEnerSect))/10^6, sum(d.Output_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Intermediate Consumptions (Inputs)", sum(ref.IC_value(:, Indice_NonEnerSect))/10^6, sum(d.IC_value(:, Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Intermediate Consumptions (Outputs)", sum(ref.IC_value(Indice_NonEnerSect,:))/10^6, sum(d.IC_value(Indice_NonEnerSect,:))/10^6, "billion"+money]; ["Non Energy Products - Value-Added", sum(ref.Output_value(Indice_NonEnerSect))/10^6 - sum(ref.IC_value(:,Indice_NonEnerSect))/10^6, sum(d.Output_value(Indice_NonEnerSect))/10^6 - sum(d.IC_value(:,Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Labour Income", sum(ref.Labour_income(Indice_NonEnerSect))/10^6, sum(d.Labour_income(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Labour Tax", sum(ref.Labour_Tax(Indice_NonEnerSect))/10^6, sum(d.Labour_Tax(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Production Tax", sum(ref.Production_Tax(Indice_NonEnerSect))/10^6, sum(d.Production_Tax(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Consumption Tax", sum(ref.Taxes(:,Indice_NonEnerSect))/10^6 + sum(ref.Carbon_Tax(:,Indice_NonEnerSect))/10^6, sum(d.Taxes(:,Indice_NonEnerSect))/10^6 + sum(d.Carbon_Tax(:,Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Capital income", sum(ref.Capital_income(Indice_NonEnerSect))/10^6, sum(d.Capital_income(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Margins", sum(ref.TotMargins(Indice_NonEnerSect))/10^6, sum(d.TotMargins(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Private Consumption", sum(ref.C_value(Indice_NonEnerSect))/10^6, sum(d.C_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Public Consumption", sum(ref.G_value(Indice_NonEnerSect))/10^6, sum(d.G_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Gross fixed Capital Formation", sum(ref.I_value(Indice_NonEnerSect))/10^6, sum(d.I_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Exports", sum(ref.X_value(Indice_NonEnerSect))/10^6, sum(d.X_value(Indice_NonEnerSect))/10^6, "billion"+money]; ["Non Energy Products - Imports", -sum(ref.M_value(Indice_NonEnerSect))/10^6, -sum(d.M_value(Indice_NonEnerSect))/10^6, "billion"+money] ];
 
 //	Demography
-evol_BY.MacroT19 = [ ["Variable", "Value 0", "Value 1", "Unit"]; ["Total population ", sum(BY.Population), sum(d.Population), "Thousands of people"]; ["Active Population", sum(BY.Labour_force), sum(d.Labour_force), "Thousands of people"]; ["Inactive Population", sum(BY.Population) - sum(BY.Labour_force), sum(d.Population) - sum(d.Labour_force), "Thousands of people"]; ["Working Population", (1-BY.u_tot)*sum(BY.Labour_force), (1-d.u_tot)*sum(d.Labour_force), "Thousands of people"]; ["Unemployed", BY.u_tot*sum(BY.Labour_force), d.u_tot*sum(d.Labour_force), "Thousands of people"]; ["Formal Labour", sum(BY.Labour), sum(d.Labour), "Full Time equivalents"];  ["Formal Labour - Primary Energies", sum(BY.Labour(Indice_PrimEnerSect) ), sum(d.Labour(Indice_PrimEnerSect)), "Full Time equivalents"]; ["Formal Labour", sum(BY.Labour(Indice_FinEnerSect)), sum(d.Labour(Indice_FinEnerSect)), "Full Time equivalents"]; ["Formal Labour", sum(BY.Labour(Indice_NonEnerSect)), sum(d.Labour(Indice_NonEnerSect)), "Full Time equivalents"]] ;
+evol_ref.MacroT19 = [ ["Variable", "Value 0", "Value 1", "Unit"]; ["Total population ", sum(ref.Population), sum(d.Population), "Thousands of people"]; ["Active Population", sum(ref.Labour_force), sum(d.Labour_force), "Thousands of people"]; ["Inactive Population", sum(ref.Population) - sum(ref.Labour_force), sum(d.Population) - sum(d.Labour_force), "Thousands of people"]; ["Working Population", (1-ref.u_tot)*sum(ref.Labour_force), (1-d.u_tot)*sum(d.Labour_force), "Thousands of people"]; ["Unemployed", ref.u_tot*sum(ref.Labour_force), d.u_tot*sum(d.Labour_force), "Thousands of people"]; ["Formal Labour", sum(ref.Labour), sum(d.Labour), "Full Time equivalents"];  ["Formal Labour - Primary Energies", sum(ref.Labour(Indice_PrimEnerSect) ), sum(d.Labour(Indice_PrimEnerSect)), "Full Time equivalents"]; ["Formal Labour", sum(ref.Labour(Indice_FinEnerSect)), sum(d.Labour(Indice_FinEnerSect)), "Full Time equivalents"]; ["Formal Labour", sum(ref.Labour(Indice_NonEnerSect)), sum(d.Labour(Indice_NonEnerSect)), "Full Time equivalents"]] ;
 
 //	Energy - Physical Quantities
 
 // Total Energy
-evol_BY.MacroT20 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Energy", sum(BY.Y(Indice_EnerSect)) + sum(BY.M(Indice_EnerSect)), sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Energy Output", sum(BY.Y(Indice_EnerSect)), sum(d.Y(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Inputs)", sum(BY.IC(:,Indice_EnerSect)), sum(d.IC(:,Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Energy Imports", sum(BY.M(Indice_EnerSect)), sum(d.M(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Demand)", sum(BY.IC(Indice_EnerSect,:)), sum(d.IC(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand", sum(BY.C(Indice_EnerSect,:)) + sum(BY.X(Indice_EnerSect)), sum(d.X(Indice_EnerSect)) + sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Energy Consumption", sum(BY.C(Indice_EnerSect,:)), sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Energy Exports", sum(BY.X(Indice_EnerSect)), sum(d.X(Indice_EnerSect)), "kTons Oil Equivalent"]];
+evol_ref.MacroT20 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Energy", sum(ref.Y(Indice_EnerSect)) + sum(ref.M(Indice_EnerSect)), sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Energy Output", sum(ref.Y(Indice_EnerSect)), sum(d.Y(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Inputs)", sum(ref.IC(:,Indice_EnerSect)), sum(d.IC(:,Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Energy Imports", sum(ref.M(Indice_EnerSect)), sum(d.M(Indice_EnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Demand)", sum(ref.IC(Indice_EnerSect,:)), sum(d.IC(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand", sum(ref.C(Indice_EnerSect,:)) + sum(ref.X(Indice_EnerSect)), sum(d.X(Indice_EnerSect)) + sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Energy Consumption", sum(ref.C(Indice_EnerSect,:)), sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Energy Exports", sum(ref.X(Indice_EnerSect)), sum(d.X(Indice_EnerSect)), "kTons Oil Equivalent"]];
 
 // Primary Energy
-evol_BY.MacroT21 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Primary Energy", sum(BY.Y(Indice_PrimEnerSect)) + sum(BY.M(Indice_PrimEnerSect)), sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Primary Energy Output", sum(BY.Y(Indice_PrimEnerSect)), sum(d.Y(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Inputs)", sum(BY.IC(:,Indice_PrimEnerSect)), sum(d.IC(:,Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Primary Energy Imports", sum(BY.M(Indice_PrimEnerSect)), sum(d.M(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Demand)", sum(BY.IC(Indice_PrimEnerSect,:)), sum(d.IC(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand - Primary Energy", sum(BY.C(Indice_PrimEnerSect,:)) + sum(BY.X(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)) + sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Primary Energy Consumption", sum(BY.C(Indice_PrimEnerSect,:)), sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Primary Energy Exports", sum(BY.X(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)), "kTons Oil Equivalent"]];
+evol_ref.MacroT21 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Primary Energy", sum(ref.Y(Indice_PrimEnerSect)) + sum(ref.M(Indice_PrimEnerSect)), sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Primary Energy Output", sum(ref.Y(Indice_PrimEnerSect)), sum(d.Y(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Inputs)", sum(ref.IC(:,Indice_PrimEnerSect)), sum(d.IC(:,Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Primary Energy Imports", sum(ref.M(Indice_PrimEnerSect)), sum(d.M(Indice_PrimEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Demand)", sum(ref.IC(Indice_PrimEnerSect,:)), sum(d.IC(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand - Primary Energy", sum(ref.C(Indice_PrimEnerSect,:)) + sum(ref.X(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)) + sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Primary Energy Consumption", sum(ref.C(Indice_PrimEnerSect,:)), sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Primary Energy Exports", sum(ref.X(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)), "kTons Oil Equivalent"]];
 
 // Final Energy
-evol_BY.MacroT22 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Final Energy", sum(BY.Y(Indice_FinEnerSect)) + sum(BY.M(Indice_FinEnerSect)), sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Final Energy Output", sum(BY.Y(Indice_FinEnerSect)), sum(d.Y(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Inputs)", sum(BY.IC(:,Indice_FinEnerSect)), sum(d.IC(:,Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Final Energy Imports", sum(BY.M(Indice_FinEnerSect)), sum(d.M(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Demand)", sum(BY.IC(Indice_FinEnerSect,:)), sum(d.IC(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand - Final Energies ", sum(BY.C(Indice_FinEnerSect,:)) + sum(BY.X(Indice_FinEnerSect)), sum(d.X(Indice_FinEnerSect)) + sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Final Energy Consumption", sum(BY.C(Indice_FinEnerSect,:)), sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Exports", sum(BY.X(Indice_FinEnerSect)), sum(d.X(Indice_FinEnerSect)), "kTons Oil Equivalent"]];
+evol_ref.MacroT22 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Final Energy", sum(ref.Y(Indice_FinEnerSect)) + sum(ref.M(Indice_FinEnerSect)), sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Final Energy Output", sum(ref.Y(Indice_FinEnerSect)), sum(d.Y(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Inputs)", sum(ref.IC(:,Indice_FinEnerSect)), sum(d.IC(:,Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Final Energy Imports", sum(ref.M(Indice_FinEnerSect)), sum(d.M(Indice_FinEnerSect)), "kTons Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Demand)", sum(ref.IC(Indice_FinEnerSect,:)), sum(d.IC(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Demand - Final Energies ", sum(ref.C(Indice_FinEnerSect,:)) + sum(ref.X(Indice_FinEnerSect)), sum(d.X(Indice_FinEnerSect)) + sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Private Final Energy Consumption", sum(ref.C(Indice_FinEnerSect,:)), sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Exports", sum(ref.X(Indice_FinEnerSect)), sum(d.X(Indice_FinEnerSect)), "kTons Oil Equivalent"]];
 
 //	Energy - Physical Prices
 
 // Total Energy 
-evol_BY.MacroT23 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Energy (Pre-tax price)", (sum(BY.Y_value(Indice_EnerSect))+sum(BY.M_value(Indice_EnerSect)))/(sum(BY.Y(Indice_EnerSect)) + sum(BY.M(Indice_EnerSect))), (sum(d.Y_value(Indice_EnerSect))+sum(d.M_value(Indice_EnerSect)))/(sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ;["Total Energy (After-tax Price)", (sum(BY.Output_value(Indice_EnerSect))+sum(BY.M_value(Indice_EnerSect)))/(sum(BY.Y(Indice_EnerSect)) + sum(BY.M(Indice_EnerSect))), (sum(d.Output_value(Indice_EnerSect))+sum(d.M_value(Indice_EnerSect)))/(sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Energy Output", sum(BY.Y_value(Indice_EnerSect)) / sum(BY.Y(Indice_EnerSect)), sum(d.Y_value(Indice_EnerSect)) / sum(d.Y(Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Inputs)", sum(BY.IC_value(Indice_EnerSect,Indice_EnerSect)) / sum(BY.IC(Indice_EnerSect,Indice_EnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_EnerSect)) / sum(d.IC(Indice_EnerSect,Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Energy Imports", sum(BY.M_value(Indice_EnerSect)) / sum(BY.M(Indice_EnerSect)), sum(d.M_value(Indice_EnerSect)) / sum(d.M(Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Demand)", sum(BY.IC_value(Indice_EnerSect,:)) / sum(BY.IC(Indice_EnerSect,:)), sum(d.IC_value(Indice_EnerSect,:)) / sum(d.IC(Indice_EnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Demand", (sum(BY.C_value(Indice_EnerSect,:)) + sum(BY.X_value(Indice_EnerSect))) / (sum(BY.C(Indice_EnerSect,:)) + sum(BY.X(Indice_EnerSect))), (sum(d.C_value(Indice_EnerSect,:)) + sum(d.X_value(Indice_EnerSect))) / (sum(d.C(Indice_EnerSect,:)) + sum(d.X(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Energy Consumption", sum(BY.C_value(Indice_EnerSect,:)) / sum(BY.C(Indice_EnerSect,:)), sum(d.C_value(Indice_EnerSect,:)) / sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Energy Exports", sum(BY.X_value(Indice_EnerSect)) / sum(BY.X(Indice_EnerSect)), sum(d.X_value(Indice_EnerSect)) / sum(d.X(Indice_EnerSect)), money+" per Ton Oil Equivalent"]];
+evol_ref.MacroT23 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Energy (Pre-tax price)", (sum(ref.Y_value(Indice_EnerSect))+sum(ref.M_value(Indice_EnerSect)))/(sum(ref.Y(Indice_EnerSect)) + sum(ref.M(Indice_EnerSect))), (sum(d.Y_value(Indice_EnerSect))+sum(d.M_value(Indice_EnerSect)))/(sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ;["Total Energy (After-tax Price)", (sum(ref.Output_value(Indice_EnerSect))+sum(ref.M_value(Indice_EnerSect)))/(sum(ref.Y(Indice_EnerSect)) + sum(ref.M(Indice_EnerSect))), (sum(d.Output_value(Indice_EnerSect))+sum(d.M_value(Indice_EnerSect)))/(sum(d.Y(Indice_EnerSect)) + sum(d.M(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Energy Output", sum(ref.Y_value(Indice_EnerSect)) / sum(ref.Y(Indice_EnerSect)), sum(d.Y_value(Indice_EnerSect)) / sum(d.Y(Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Inputs)", sum(ref.IC_value(Indice_EnerSect,Indice_EnerSect)) / sum(ref.IC(Indice_EnerSect,Indice_EnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_EnerSect)) / sum(d.IC(Indice_EnerSect,Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Energy Imports", sum(ref.M_value(Indice_EnerSect)) / sum(ref.M(Indice_EnerSect)), sum(d.M_value(Indice_EnerSect)) / sum(d.M(Indice_EnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption (Demand)", sum(ref.IC_value(Indice_EnerSect,:)) / sum(ref.IC(Indice_EnerSect,:)), sum(d.IC_value(Indice_EnerSect,:)) / sum(d.IC(Indice_EnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Demand", (sum(ref.C_value(Indice_EnerSect,:)) + sum(ref.X_value(Indice_EnerSect))) / (sum(ref.C(Indice_EnerSect,:)) + sum(ref.X(Indice_EnerSect))), (sum(d.C_value(Indice_EnerSect,:)) + sum(d.X_value(Indice_EnerSect))) / (sum(d.C(Indice_EnerSect,:)) + sum(d.X(Indice_EnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Energy Consumption", sum(ref.C_value(Indice_EnerSect,:)) / sum(ref.C(Indice_EnerSect,:)), sum(d.C_value(Indice_EnerSect,:)) / sum(d.C(Indice_EnerSect,:)), "kTons Oil Equivalent"] ; ["Total Energy Exports", sum(ref.X_value(Indice_EnerSect)) / sum(ref.X(Indice_EnerSect)), sum(d.X_value(Indice_EnerSect)) / sum(d.X(Indice_EnerSect)), money+" per Ton Oil Equivalent"]];
 
 // Primary Energy
-evol_BY.MacroT24 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Primary Energy (Pre-tax price)", (sum(BY.Y_value(Indice_PrimEnerSect))+sum(BY.M_value(Indice_PrimEnerSect)))/(sum(BY.Y(Indice_PrimEnerSect)) + sum(BY.M(Indice_PrimEnerSect))), (sum(d.Y_value(Indice_PrimEnerSect))+sum(d.M_value(Indice_PrimEnerSect)))/(sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ;["Total primary Energy (After-tax Price)", (sum(BY.Output_value(Indice_PrimEnerSect))+sum(BY.M_value(Indice_PrimEnerSect)))/(sum(BY.Y(Indice_PrimEnerSect)) + sum(BY.M(Indice_PrimEnerSect))), (sum(d.Output_value(Indice_PrimEnerSect))+sum(d.M_value(Indice_PrimEnerSect)))/(sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Primary Energy Output", sum(BY.Y_value(Indice_PrimEnerSect)) / sum(BY.Y(Indice_PrimEnerSect)), sum(d.Y_value(Indice_PrimEnerSect)) / sum(d.Y(Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Inputs)", sum(BY.IC_value(Indice_EnerSect,Indice_PrimEnerSect)) / sum(BY.IC(Indice_EnerSect,Indice_PrimEnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_PrimEnerSect)) / sum(d.IC(Indice_EnerSect,Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Primary Energy Imports", sum(BY.M_value(Indice_PrimEnerSect)) / sum(BY.M(Indice_PrimEnerSect)), sum(d.M_value(Indice_PrimEnerSect)) / sum(d.M(Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Demand)", sum(BY.IC_value(Indice_PrimEnerSect,:)) / sum(BY.IC(Indice_PrimEnerSect,:)), sum(d.IC_value(Indice_PrimEnerSect,:)) / sum(d.IC(Indice_PrimEnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Primary Energy Demand", (sum(BY.C_value(Indice_PrimEnerSect,:)) + sum(BY.X_value(Indice_PrimEnerSect))) / (sum(BY.C(Indice_PrimEnerSect,:)) + sum(BY.X(Indice_PrimEnerSect))), (sum(d.C_value(Indice_PrimEnerSect,:)) + sum(d.X_value(Indice_PrimEnerSect))) / (sum(d.C(Indice_PrimEnerSect,:)) + sum(d.X(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Primary Energy Consumption", sum(BY.C_value(Indice_PrimEnerSect,:)) / sum(BY.C(Indice_PrimEnerSect,:)), sum(d.C_value(Indice_PrimEnerSect,:)) / sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Primary Energy Exports", divide(sum(BY.X_value(Indice_PrimEnerSect)),sum(BY.X(Indice_PrimEnerSect)),%nan), divide(sum(d.X_value(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)),%nan), money+" per Ton Oil Equivalent"]];
+evol_ref.MacroT24 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Primary Energy (Pre-tax price)", (sum(ref.Y_value(Indice_PrimEnerSect))+sum(ref.M_value(Indice_PrimEnerSect)))/(sum(ref.Y(Indice_PrimEnerSect)) + sum(ref.M(Indice_PrimEnerSect))), (sum(d.Y_value(Indice_PrimEnerSect))+sum(d.M_value(Indice_PrimEnerSect)))/(sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ;["Total primary Energy (After-tax Price)", (sum(ref.Output_value(Indice_PrimEnerSect))+sum(ref.M_value(Indice_PrimEnerSect)))/(sum(ref.Y(Indice_PrimEnerSect)) + sum(ref.M(Indice_PrimEnerSect))), (sum(d.Output_value(Indice_PrimEnerSect))+sum(d.M_value(Indice_PrimEnerSect)))/(sum(d.Y(Indice_PrimEnerSect)) + sum(d.M(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Primary Energy Output", sum(ref.Y_value(Indice_PrimEnerSect)) / sum(ref.Y(Indice_PrimEnerSect)), sum(d.Y_value(Indice_PrimEnerSect)) / sum(d.Y(Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Inputs)", sum(ref.IC_value(Indice_EnerSect,Indice_PrimEnerSect)) / sum(ref.IC(Indice_EnerSect,Indice_PrimEnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_PrimEnerSect)) / sum(d.IC(Indice_EnerSect,Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Primary Energy Imports", sum(ref.M_value(Indice_PrimEnerSect)) / sum(ref.M(Indice_PrimEnerSect)), sum(d.M_value(Indice_PrimEnerSect)) / sum(d.M(Indice_PrimEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Primary Energy (Demand)", sum(ref.IC_value(Indice_PrimEnerSect,:)) / sum(ref.IC(Indice_PrimEnerSect,:)), sum(d.IC_value(Indice_PrimEnerSect,:)) / sum(d.IC(Indice_PrimEnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Primary Energy Demand", (sum(ref.C_value(Indice_PrimEnerSect,:)) + sum(ref.X_value(Indice_PrimEnerSect))) / (sum(ref.C(Indice_PrimEnerSect,:)) + sum(ref.X(Indice_PrimEnerSect))), (sum(d.C_value(Indice_PrimEnerSect,:)) + sum(d.X_value(Indice_PrimEnerSect))) / (sum(d.C(Indice_PrimEnerSect,:)) + sum(d.X(Indice_PrimEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Primary Energy Consumption", sum(ref.C_value(Indice_PrimEnerSect,:)) / sum(ref.C(Indice_PrimEnerSect,:)), sum(d.C_value(Indice_PrimEnerSect,:)) / sum(d.C(Indice_PrimEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Primary Energy Exports", divide(sum(ref.X_value(Indice_PrimEnerSect)),sum(ref.X(Indice_PrimEnerSect)),%nan), divide(sum(d.X_value(Indice_PrimEnerSect)), sum(d.X(Indice_PrimEnerSect)),%nan), money+" per Ton Oil Equivalent"]];
 
 // Final Energy Products
-evol_BY.MacroT25 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Final Energy (Pre-tax price)", (sum(BY.Y_value(Indice_FinEnerSect))+sum(BY.M_value(Indice_FinEnerSect)))/(sum(BY.Y(Indice_FinEnerSect)) + sum(BY.M(Indice_FinEnerSect))), (sum(d.Y_value(Indice_FinEnerSect))+sum(d.M_value(Indice_FinEnerSect)))/(sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ;["Total Final Energy (After-tax Price)", (sum(BY.Output_value(Indice_FinEnerSect))+sum(BY.M_value(Indice_FinEnerSect)))/(sum(BY.Y(Indice_FinEnerSect)) + sum(BY.M(Indice_FinEnerSect))), (sum(d.Output_value(Indice_FinEnerSect))+sum(d.M_value(Indice_FinEnerSect)))/(sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Energy Output", sum(BY.Y_value(Indice_FinEnerSect)) / sum(BY.Y(Indice_FinEnerSect)), sum(d.Y_value(Indice_FinEnerSect)) / sum(d.Y(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Inputs)", sum(BY.IC_value(Indice_EnerSect,Indice_FinEnerSect)) / sum(BY.IC(Indice_EnerSect,Indice_FinEnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_FinEnerSect)) / sum(d.IC(Indice_EnerSect,Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Imports", sum(BY.M_value(Indice_FinEnerSect)) / sum(BY.M(Indice_FinEnerSect)), sum(d.M_value(Indice_FinEnerSect)) / sum(d.M(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Demand)", sum(BY.IC_value(Indice_FinEnerSect,:)) / sum(BY.IC(Indice_FinEnerSect,:)), sum(d.IC_value(Indice_FinEnerSect,:)) / sum(d.IC(Indice_FinEnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Demand - Final Energies ", (sum(BY.C_value(Indice_FinEnerSect,:)) + sum(BY.X_value(Indice_FinEnerSect))) / (sum(BY.C(Indice_FinEnerSect,:)) + sum(BY.X(Indice_FinEnerSect))), (sum(d.C_value(Indice_FinEnerSect,:)) + sum(d.X_value(Indice_FinEnerSect))) / (sum(d.C(Indice_FinEnerSect,:)) + sum(d.X(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Final Energy Consumption", sum(BY.C_value(Indice_FinEnerSect,:)) / sum(BY.C(Indice_FinEnerSect,:)), sum(d.C_value(Indice_FinEnerSect,:)) / sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Exports", sum(BY.X_value(Indice_FinEnerSect)) / sum(BY.X(Indice_FinEnerSect)), sum(d.X_value(Indice_FinEnerSect)) / sum(d.X(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"]];
+evol_ref.MacroT25 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Final Energy (Pre-tax price)", (sum(ref.Y_value(Indice_FinEnerSect))+sum(ref.M_value(Indice_FinEnerSect)))/(sum(ref.Y(Indice_FinEnerSect)) + sum(ref.M(Indice_FinEnerSect))), (sum(d.Y_value(Indice_FinEnerSect))+sum(d.M_value(Indice_FinEnerSect)))/(sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ;["Total Final Energy (After-tax Price)", (sum(ref.Output_value(Indice_FinEnerSect))+sum(ref.M_value(Indice_FinEnerSect)))/(sum(ref.Y(Indice_FinEnerSect)) + sum(ref.M(Indice_FinEnerSect))), (sum(d.Output_value(Indice_FinEnerSect))+sum(d.M_value(Indice_FinEnerSect)))/(sum(d.Y(Indice_FinEnerSect)) + sum(d.M(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Energy Output", sum(ref.Y_value(Indice_FinEnerSect)) / sum(ref.Y(Indice_FinEnerSect)), sum(d.Y_value(Indice_FinEnerSect)) / sum(d.Y(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Inputs)", sum(ref.IC_value(Indice_EnerSect,Indice_FinEnerSect)) / sum(ref.IC(Indice_EnerSect,Indice_FinEnerSect)), sum(d.IC_value(Indice_EnerSect,Indice_FinEnerSect)) / sum(d.IC(Indice_EnerSect,Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Imports", sum(ref.M_value(Indice_FinEnerSect)) / sum(ref.M(Indice_FinEnerSect)), sum(d.M_value(Indice_FinEnerSect)) / sum(d.M(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"] ; ["Total Intermediate Energy Consumption - Final Energies (Demand)", sum(ref.IC_value(Indice_FinEnerSect,:)) / sum(ref.IC(Indice_FinEnerSect,:)), sum(d.IC_value(Indice_FinEnerSect,:)) / sum(d.IC(Indice_FinEnerSect,:)), money+" per Ton Oil Equivalent"] ; ["Total Final Energy Demand - Final Energies ", (sum(ref.C_value(Indice_FinEnerSect,:)) + sum(ref.X_value(Indice_FinEnerSect))) / (sum(ref.C(Indice_FinEnerSect,:)) + sum(ref.X(Indice_FinEnerSect))), (sum(d.C_value(Indice_FinEnerSect,:)) + sum(d.X_value(Indice_FinEnerSect))) / (sum(d.C(Indice_FinEnerSect,:)) + sum(d.X(Indice_FinEnerSect))), money+" per Ton Oil Equivalent"] ; ["Total Private Final Energy Consumption", sum(ref.C_value(Indice_FinEnerSect,:)) / sum(ref.C(Indice_FinEnerSect,:)), sum(d.C_value(Indice_FinEnerSect,:)) / sum(d.C(Indice_FinEnerSect,:)), "kTons Oil Equivalent"] ; ["Total Final Energy Exports", sum(ref.X_value(Indice_FinEnerSect)) / sum(ref.X(Indice_FinEnerSect)), sum(d.X_value(Indice_FinEnerSect)) / sum(d.X(Indice_FinEnerSect)), money+" per Ton Oil Equivalent"]];
 
 //	CO2 Emissions
 
-evol_BY.MacroT27 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Emissions", BY.DOM_CO2, d.DOM_CO2, "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions", sum(BY.CO2Emis_IC), sum(d.CO2Emis_IC), "Mega Ton CO2"] ; ["Emissions from Private Consumption", sum(BY.CO2Emis_C), sum(d.CO2Emis_C), "Mega Ton CO2"] ; ["Total Emissions - Primary Energies", sum(BY.CO2Emis_IC(Indice_PrimEnerSect,:)) + sum(BY.CO2Emis_C(Indice_PrimEnerSect,:)), sum(d.CO2Emis_IC(Indice_PrimEnerSect,:)) + sum(d.CO2Emis_C(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions - Primary energies", sum(BY.CO2Emis_IC(Indice_PrimEnerSect,:)), sum(d.CO2Emis_IC(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from Private Consumption - Primary energies", sum(BY.CO2Emis_C(Indice_PrimEnerSect,:)), sum(d.CO2Emis_C(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Total Emissions - Final Energies", sum(BY.CO2Emis_IC(Indice_FinEnerSect,:)) + sum(BY.CO2Emis_C(Indice_FinEnerSect,:)), sum(d.CO2Emis_IC(Indice_FinEnerSect,:)) + sum(d.CO2Emis_C(Indice_FinEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions - Final energies", sum(BY.CO2Emis_IC(Indice_FinEnerSect,:)), sum(d.CO2Emis_IC(Indice_FinEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from Private Consumption - Final energies", sum(BY.CO2Emis_C(Indice_FinEnerSect,:)), sum(d.CO2Emis_C(Indice_FinEnerSect,:)), "Mega Ton CO2"]];
+evol_ref.MacroT27 = [["Variable", "Value 0", "Value 1", "Unit"] ; ["Total Emissions", ref.DOM_CO2, d.DOM_CO2, "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions", sum(ref.CO2Emis_IC), sum(d.CO2Emis_IC), "Mega Ton CO2"] ; ["Emissions from Private Consumption", sum(ref.CO2Emis_C), sum(d.CO2Emis_C), "Mega Ton CO2"] ; ["Total Emissions - Primary Energies", sum(ref.CO2Emis_IC(Indice_PrimEnerSect,:)) + sum(ref.CO2Emis_C(Indice_PrimEnerSect,:)), sum(d.CO2Emis_IC(Indice_PrimEnerSect,:)) + sum(d.CO2Emis_C(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions - Primary energies", sum(ref.CO2Emis_IC(Indice_PrimEnerSect,:)), sum(d.CO2Emis_IC(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from Private Consumption - Primary energies", sum(ref.CO2Emis_C(Indice_PrimEnerSect,:)), sum(d.CO2Emis_C(Indice_PrimEnerSect,:)), "Mega Ton CO2"] ; ["Total Emissions - Final Energies", sum(ref.CO2Emis_IC(Indice_FinEnerSect,:)) + sum(ref.CO2Emis_C(Indice_FinEnerSect,:)), sum(d.CO2Emis_IC(Indice_FinEnerSect,:)) + sum(d.CO2Emis_C(Indice_FinEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from intermediate Consumptions - Final energies", sum(ref.CO2Emis_IC(Indice_FinEnerSect,:)), sum(d.CO2Emis_IC(Indice_FinEnerSect,:)), "Mega Ton CO2"] ; ["Emissions from Private Consumption - Final energies", sum(ref.CO2Emis_C(Indice_FinEnerSect,:)), sum(d.CO2Emis_C(Indice_FinEnerSect,:)), "Mega Ton CO2"]];
 
 // Other 
 
-evol_BY.MacroT28 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Real Households consumption", "1", C_qLasp, (C_qLasp-1)*100]; ["Energy in real Households consumption", BY.Ener_C_ValueShare, BY.Ener_C_ValueShare*C_En_qLasp, BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["Non energy goods in real Households consumption", BY.NonEner_C_ValueShare, BY.NonEner_C_ValueShare*C_NonEn_qLasp, BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100]; ["Real Imports/Domestic production ratio","1", M_Y_Ratio_qLasp, (M_Y_Ratio_qLasp-1)*100];["Unemployment rate (indice, % points)", "1", d.u_tot/BY.u_tot, d.u_tot - BY.u_tot]; ["Total Employment", "1", d.Labour_tot/BY.Labour_tot, (evol_BY.Labour_tot-1)*100]; ["Production contribution to labour variation (Laspeyres)", "1", Y_Labour_qLasp, (Y_Labour_qLasp-1)*100]; ["Labour Intensity (Paashes)","1", lambda_pPaas, (lambda_pPaas-1)*100]; ["Production Price (Laspeyres)", "1", Y_pLasp, (Y_pLasp-1)*100]; ["Production Price (Paashes)", "1", Y_pPaas, (Y_pPaas-1)*100]; ["Energy Intensity (Paashes)", "1", alpha_Ener_qPaas, (alpha_Ener_qPaas-1)*100]; ["Energy cost share", "1", d.ENshareMacro/BY.ENshareMacro, (evol_BY.ENshareMacro - 1)*100]; ["Labour cost share", "1", d.LabourShareMacro/BY.LabourShareMacro, (evol_BY.LabourShareMacro - 1)*100]; ["Energy Input Price (Laspeyres)", "1", IC_Ener_pLasp, (IC_Ener_pLasp-1)*100]; ["Energy Input Price (Paashes)", "1", IC_Ener_pPaas, (IC_Ener_pPaas-1)*100]; ["Mean Labour Cost", "1", d.omega/BY.omega, (evol_BY.omega - 1)*100]; ["Net-of-tax wages", "1", d.NetWage_variation, (d.NetWage_variation-1)*100]; ["Labour tax rate (% points)", "0", "nan",- d.Labour_Tax_Cut]; ["Total Emissions", "1", d.DOM_CO2/BY.DOM_CO2, (evol_BY.DOM_CO2-1)*100]; ["Households Consumption Price (Laspeyres)", "1", C_pLasp, (C_pLasp-1)*100]; ["Households Consumption Price (Paashes)", "1", C_pPaas, (C_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_En_pLasp, (C_En_pLasp-1)*100]; ["Households Energy Consumption Price (Paashes)", "1", C_En_pPaas, (C_En_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_NonEn_pLasp, (C_NonEn_pLasp-1)*100]; ["Households Non Energy Consumption Price (Paashes)", "1", C_NonEn_pPaas, (C_NonEn_pPaas-1)*100]; ["Public Deficits", "1", d.Ecotable(Indice_NetLending, Indice_Government)/BY.Ecotable(Indice_NetLending, Indice_Government), (evol_BY.Ecotable(Indice_NetLending, Indice_Government)-1)*100]];
+evol_ref.MacroT28 = [["Variable", "Indice 0", "Indice 1", "% variation"]; ["Real Households consumption", "1", C_qLasp, (C_qLasp-1)*100]; ["Energy in real Households consumption", ref.Ener_C_ValueShare, ref.Ener_C_ValueShare*C_En_qLasp, ref.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["Non energy goods in real Households consumption", ref.NonEner_C_ValueShare, ref.NonEner_C_ValueShare*C_NonEn_qLasp, ref.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100]; ["Real Imports/Domestic production ratio","1", M_Y_Ratio_qLasp, (M_Y_Ratio_qLasp-1)*100];["Unemployment rate (indice, % points)", "1", d.u_tot/ref.u_tot, d.u_tot - ref.u_tot]; ["Total Employment", "1", d.Labour_tot/ref.Labour_tot, (evol_ref.Labour_tot-1)*100]; ["Production contribution to labour variation (Laspeyres)", "1", Y_Labour_qLasp, (Y_Labour_qLasp-1)*100]; ["Labour Intensity (Paashes)","1", lambda_pPaas, (lambda_pPaas-1)*100]; ["Production Price (Laspeyres)", "1", Y_pLasp, (Y_pLasp-1)*100]; ["Production Price (Paashes)", "1", Y_pPaas, (Y_pPaas-1)*100]; ["Energy Intensity (Paashes)", "1", alpha_Ener_qPaas, (alpha_Ener_qPaas-1)*100]; ["Energy cost share", "1", d.ENshareMacro/ref.ENshareMacro, (evol_ref.ENshareMacro - 1)*100]; ["Labour cost share", "1", d.LabourShareMacro/ref.LabourShareMacro, (evol_ref.LabourShareMacro - 1)*100]; ["Energy Input Price (Laspeyres)", "1", IC_Ener_pLasp, (IC_Ener_pLasp-1)*100]; ["Energy Input Price (Paashes)", "1", IC_Ener_pPaas, (IC_Ener_pPaas-1)*100]; ["Mean Labour Cost", "1", d.omega/ref.omega, (evol_ref.omega - 1)*100]; ["Net-of-tax wages", "1", d.NetWage_variation, (d.NetWage_variation-1)*100]; ["Labour tax rate (% points)", "0", "nan",- d.Labour_Tax_Cut]; ["Total Emissions", "1", d.DOM_CO2/ref.DOM_CO2, (evol_ref.DOM_CO2-1)*100]; ["Households Consumption Price (Laspeyres)", "1", C_pLasp, (C_pLasp-1)*100]; ["Households Consumption Price (Paashes)", "1", C_pPaas, (C_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_En_pLasp, (C_En_pLasp-1)*100]; ["Households Energy Consumption Price (Paashes)", "1", C_En_pPaas, (C_En_pPaas-1)*100]; ["Households energy Consumption Price (Laspeyres)", "1", C_NonEn_pLasp, (C_NonEn_pLasp-1)*100]; ["Households Non Energy Consumption Price (Paashes)", "1", C_NonEn_pPaas, (C_NonEn_pPaas-1)*100]; ["Public Deficits", "1", d.Ecotable(Indice_NetLending, Indice_Government)/ref.Ecotable(Indice_NetLending, Indice_Government), (evol_ref.Ecotable(Indice_NetLending, Indice_Government)-1)*100]];
 
 // Put pI back to normal (cf change at the beginning of the file)
 d.pI = d.pI(:,1);
-BY.pI = BY.pI(:,1);
+ref.pI = ref.pI(:,1);
 
 //// GLT TABLE - JANUARY 2017
 if abs(d.Labour_Tax_Cut)> %eps
@@ -822,77 +823,77 @@ else
 end
 
 
-OutputTable.GDP_decomBIS = [["Variable", "Nominal 0 (G€)", "Nominal 1 (G€)", "Price Index (Paasche)", "Real 1 (G€)", "Real term ratio"]; ["GDP", round(BY.GDP/10^5)/10, round(d.GDP/10^5)/10, GDP_pPaas, round((d.GDP/GDP_pPaas)/10^5)/10, GDP_qLasp];["Households consumption", round(sum(d.C_value)/10^5)/10, round(sum(d.C_value)/10^5)/10, C_pPaas, round((sum(d.C_value)/C_pPaas)/10^5)/10, C_qLasp]; ["Households consumption - Non-energy goods", round(sum(d.C_value(Indice_NonEnerSect,:))/10^5)/10, round(sum(d.C_value(Indice_NonEnerSect,:))/10^5)/10, C_NonEn_pPaas, round((sum(d.C_value(Indice_NonEnerSect,:))/C_NonEn_pPaas)/10^5)/10, C_NonEn_qLasp];["Households consumption - Energy goods", round(sum(d.C_value(Indice_EnerSect,:))/10^5)/10, round(sum(d.C_value(Indice_EnerSect,:))/10^5)/10, C_En_pPaas, round((sum(d.C_value(Indice_EnerSect,:))/C_En_pPaas)/10^5)/10, C_En_qLasp]; ["Government consumption", round(sum(d.G_value)/10^5)/10, round(sum(d.G_value)/10^5)/10, G_pPaas, round((sum(d.G_value)/G_pPaas)/10^5)/10, G_qLasp];["Government consumption - Non-energy goods", round(sum(d.G_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.G_value(Indice_NonEnerSect))/10^5)/10, G_NonEn_pPaas, round((sum(d.G_value(Indice_NonEnerSect,:))/G_NonEn_pPaas)/10^5)/10, G_NonEn_qLasp]; ["Government consumption - Energy goods", round(sum(d.G_value(Indice_EnerSect))/10^5)/10, round(sum(d.G_value(Indice_EnerSect))/10^5)/10, G_En_pPaas, round((sum(d.G_value(Indice_EnerSect))/G_En_pPaas)/10^5)/10, G_En_qLasp];["Investment", round(sum(d.I_value)/10^5)/10, round(sum(d.I_value)/10^5)/10, I_pPaas, round((sum(d.I_value)/I_pPaas)/10^5)/10, I_qLasp];["Investment - Non-energy goods", round(sum(d.I_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.I_value(Indice_NonEnerSect))/10^5)/10, I_NonEn_pPaas, round((sum(d.I_value(Indice_NonEnerSect,:))/I_NonEn_pPaas)/10^5)/10, I_NonEn_qLasp]; ["Investment - Energy goods", round(sum(d.I_value(Indice_EnerSect))/10^5)/10, round(sum(d.I_value(Indice_EnerSect))/10^5)/10, I_En_pPaas, round((sum(d.I_value(Indice_EnerSect))/I_En_pPaas)/10^5)/10, I_En_qLasp];["Exports", round(sum(d.X_value)/10^5)/10, round(sum(d.X_value)/10^5)/10, X_pPaas, round((sum(d.X_value)/X_pPaas)/10^5)/10, X_qLasp];["Exports - Non-energy goods", round(sum(d.X_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.X_value(Indice_NonEnerSect))/10^5)/10, X_NonEn_pPaas, round((sum(d.X_value(Indice_NonEnerSect,:))/X_NonEn_pPaas)/10^5)/10, X_NonEn_qLasp]; ["Exports - Energy goods", round(sum(d.X_value(Indice_EnerSect))/10^5)/10, round(sum(d.X_value(Indice_EnerSect))/10^5)/10, X_En_pPaas, round((sum(d.X_value(Indice_EnerSect))/X_En_pPaas)/10^5)/10, X_En_qLasp];["Imports", round(sum(d.M_value)/10^5)/10, round(sum(d.M_value)/10^5)/10, M_pPaas, round((sum(d.M_value)/M_pPaas)/10^5)/10, M_qLasp];["Imports - Non-energy goods", round(sum(d.M_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.M_value(Indice_NonEnerSect))/10^5)/10, M_NonEn_pPaas, round((sum(d.M_value(Indice_NonEnerSect))/M_NonEn_pPaas)/10^5)/10, M_NonEn_qLasp];["Imports - Energy goods", round(sum(d.M_value(Indice_EnerSect))/10^5)/10, round(sum(d.M_value(Indice_EnerSect))/10^5)/10, M_En_pPaas, round((sum(d.M_value(Indice_EnerSect))/M_En_pPaas)/10^5)/10, M_En_qLasp]; ["Net-of-tax wages", "-" , "-" ,"-" , "for nominal ratio:" ,d.NetWage_variation] ;["Total Employment", "-" , "-" ,"-" , "Abs ratio:" ,evol_BY.Labour_tot]];
+OutputTable.GDP_decomBIS = [["Variable", "Nominal 0 (G€)", "Nominal 1 (G€)", "Price Index (Paasche)", "Real 1 (G€)", "Real term ratio"]; ["GDP", round(ref.GDP/10^5)/10, round(d.GDP/10^5)/10, GDP_pPaas, round((d.GDP/GDP_pPaas)/10^5)/10, GDP_qLasp];["Households consumption", round(sum(d.C_value)/10^5)/10, round(sum(d.C_value)/10^5)/10, C_pPaas, round((sum(d.C_value)/C_pPaas)/10^5)/10, C_qLasp]; ["Households consumption - Non-energy goods", round(sum(d.C_value(Indice_NonEnerSect,:))/10^5)/10, round(sum(d.C_value(Indice_NonEnerSect,:))/10^5)/10, C_NonEn_pPaas, round((sum(d.C_value(Indice_NonEnerSect,:))/C_NonEn_pPaas)/10^5)/10, C_NonEn_qLasp];["Households consumption - Energy goods", round(sum(d.C_value(Indice_EnerSect,:))/10^5)/10, round(sum(d.C_value(Indice_EnerSect,:))/10^5)/10, C_En_pPaas, round((sum(d.C_value(Indice_EnerSect,:))/C_En_pPaas)/10^5)/10, C_En_qLasp]; ["Government consumption", round(sum(d.G_value)/10^5)/10, round(sum(d.G_value)/10^5)/10, G_pPaas, round((sum(d.G_value)/G_pPaas)/10^5)/10, G_qLasp];["Government consumption - Non-energy goods", round(sum(d.G_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.G_value(Indice_NonEnerSect))/10^5)/10, G_NonEn_pPaas, round((sum(d.G_value(Indice_NonEnerSect,:))/G_NonEn_pPaas)/10^5)/10, G_NonEn_qLasp]; ["Government consumption - Energy goods", round(sum(d.G_value(Indice_EnerSect))/10^5)/10, round(sum(d.G_value(Indice_EnerSect))/10^5)/10, G_En_pPaas, round((sum(d.G_value(Indice_EnerSect))/G_En_pPaas)/10^5)/10, G_En_qLasp];["Investment", round(sum(d.I_value)/10^5)/10, round(sum(d.I_value)/10^5)/10, I_pPaas, round((sum(d.I_value)/I_pPaas)/10^5)/10, I_qLasp];["Investment - Non-energy goods", round(sum(d.I_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.I_value(Indice_NonEnerSect))/10^5)/10, I_NonEn_pPaas, round((sum(d.I_value(Indice_NonEnerSect,:))/I_NonEn_pPaas)/10^5)/10, I_NonEn_qLasp]; ["Investment - Energy goods", round(sum(d.I_value(Indice_EnerSect))/10^5)/10, round(sum(d.I_value(Indice_EnerSect))/10^5)/10, I_En_pPaas, round((sum(d.I_value(Indice_EnerSect))/I_En_pPaas)/10^5)/10, I_En_qLasp];["Exports", round(sum(d.X_value)/10^5)/10, round(sum(d.X_value)/10^5)/10, X_pPaas, round((sum(d.X_value)/X_pPaas)/10^5)/10, X_qLasp];["Exports - Non-energy goods", round(sum(d.X_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.X_value(Indice_NonEnerSect))/10^5)/10, X_NonEn_pPaas, round((sum(d.X_value(Indice_NonEnerSect,:))/X_NonEn_pPaas)/10^5)/10, X_NonEn_qLasp]; ["Exports - Energy goods", round(sum(d.X_value(Indice_EnerSect))/10^5)/10, round(sum(d.X_value(Indice_EnerSect))/10^5)/10, X_En_pPaas, round((sum(d.X_value(Indice_EnerSect))/X_En_pPaas)/10^5)/10, X_En_qLasp];["Imports", round(sum(d.M_value)/10^5)/10, round(sum(d.M_value)/10^5)/10, M_pPaas, round((sum(d.M_value)/M_pPaas)/10^5)/10, M_qLasp];["Imports - Non-energy goods", round(sum(d.M_value(Indice_NonEnerSect))/10^5)/10, round(sum(d.M_value(Indice_NonEnerSect))/10^5)/10, M_NonEn_pPaas, round((sum(d.M_value(Indice_NonEnerSect))/M_NonEn_pPaas)/10^5)/10, M_NonEn_qLasp];["Imports - Energy goods", round(sum(d.M_value(Indice_EnerSect))/10^5)/10, round(sum(d.M_value(Indice_EnerSect))/10^5)/10, M_En_pPaas, round((sum(d.M_value(Indice_EnerSect))/M_En_pPaas)/10^5)/10, M_En_qLasp]; ["Net-of-tax wages", "-" , "-" ,"-" , "for nominal ratio:" ,d.NetWage_variation] ;["Total Employment", "-" , "-" ,"-" , "Abs ratio:" ,evol_ref.Labour_tot]];
 
-// OutputTable.GDP_decom = [[ ["Real Macro results", "in Ratio"];["Real GDP (Laspeyres)", (GDP_qLasp)];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp)]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp)]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp)]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp)]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp)]],[ ["Nominal Macro results", "in Ratio"];["Nominal GDP", (d.GDP/BY.GDP)];["Households consumption in GDP",(sum(d.C_value)/BY.GDP) ]; ["Public consumption in GDP", (sum(d.G_value)/BY.GDP)]; ["Investment in GDP",(sum(d.I_value)/BY.GDP)]; ["Exports in GDP", (sum(d.X_value)/BY.GDP)]; ["Imports in GDP", (sum(d.M_value)/BY.GDP)]]];
-
-
-// Test_quantity= [["variable", " ratio quantity"];["GDP", (d.GDP/GDP_pPaas)/BY.GDP];["Households consumption", (sum(d.C_value)/C_pPaas)/sum(BY.C_value)];["Households consumption - Non-energy goods", (sum(d.C_value(Indice_NonEnerSect,:))/C_NonEn_pPaas)/sum(BY.C_value(Indice_NonEnerSect,:))];["Households consumption - Energy goods", (sum(d.C_value(Indice_EnerSect,:))/C_En_pPaas)/sum(BY.C_value(Indice_EnerSect,:))];["Government consumption", (sum(d.G_value)/G_pPaas)/sum(BY.G_value)];["Government consumption - Non-energy goods", (sum(d.G_value(Indice_NonEnerSect))/G_NonEn_pPaas)/sum(BY.G_value(Indice_NonEnerSect))];["Government consumption - Energy goods", divide(sum(d.G_value(Indice_EnerSect,:))/G_En_pPaas,sum(BY.G_value(Indice_EnerSect,:)),%nan)];["Investment", (sum(d.I_value)/I_pPaas)/sum(BY.I_value)];["Investment - Non-energy goods", (sum(d.I_value(Indice_NonEnerSect))/C_NonEn_pPaas)/sum(BY.I_value(Indice_NonEnerSect))];["Investment - Energy goods", divide(sum(d.I_value(Indice_EnerSect,:))/I_En_pPaas,sum(BY.I_value(Indice_EnerSect,:)),%nan)]; ["Exports", (sum(d.X_value)/X_pPaas)/sum(BY.X_value)];["Exports - Non-energy goods", (sum(d.X_value(Indice_NonEnerSect))/X_NonEn_pPaas)/sum(BY.X_value(Indice_NonEnerSect))];["Exports - Energy goods", divide(sum(d.X_value(Indice_EnerSect,:))/X_En_pPaas,sum(BY.X_value(Indice_EnerSect,:)),%nan)]; ["Imports", (sum(d.M_value)/M_pPaas)/sum(BY.M_value)];["Imports - Non-energy goods", (sum(d.M_value(Indice_NonEnerSect))/M_NonEn_pPaas)/sum(BY.M_value(Indice_NonEnerSect))];["Imports - Energy goods", divide(sum(d.M_value(Indice_EnerSect))/M_En_pPaas,sum(BY.M_value(Indice_EnerSect)),%nan)]];
-
-// OutputTable.MacroT = [ ["Macro results", "in %"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Trade balance", (((sum(d.X_value) - sum(d.M_value))/(sum(BY.X_value) - sum(BY.M_value)))-1)*100];["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol_BY.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour cost share", (evol_BY.LabourShareMacro-1)*100];["Labour tax rate (% points)", - Labour_Tax_Cut];  ["Net-of-tax wages", (NetWage_variation-1)*100]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100];  ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Households Consumption Price (Laspeyres)", (C_pLasp-1)*100];["	Energy Consumption Price for HH(Laspeyres", (C_En_pLasp-1)*100];["	Non Energy Consumption Price for HH(Laspeyres)", (C_NonEn_pLasp-1)*100]; ["Public Deficits", (evol_BY.Ecotable(Indice_NetLending, Indice_Government)-&)*100]; ["Total Emissions", (evol_BY.DOM_CO2-1)*100];["",""];["Import Elasticity for Non Energy goods",unique(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
-
-OutputTable.MacroT = [ ["Macro results", "in %/BY"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol_BY.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - BY.u_tot];["Net-of-tax wages", (d.NetWage_variation-1)*100];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour tax rate (% points)", - d.Labour_Tax_Cut];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100]; ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Energy cost share for non-energetic sector", (evol_BY.ENshareNONEner-1)*100 ]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Public Deficits", (evol_BY.Ecotable(Indice_NetLending, Indice_Government)-1)*100]; ["Total Emissions", (evol_BY.DOM_CO2-1)*100];["",""];["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
+// OutputTable.GDP_decom = [[ ["Real Macro results", "in Ratio"];["Real GDP (Laspeyres)", (GDP_qLasp)];["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) *(C_qLasp)]; ["Public consumption in GDP", (sum(ref.G_value)/ref.GDP)*(G_qLasp)]; ["Investment in GDP",(sum(ref.I_value)/ref.GDP)*(I_qLasp)]; ["Exports in GDP", (sum(ref.X_value)/ref.GDP)*(X_qLasp)]; ["Imports in GDP", (sum(ref.M_value)/ref.GDP)*(M_qLasp)]],[ ["Nominal Macro results", "in Ratio"];["Nominal GDP", (d.GDP/ref.GDP)];["Households consumption in GDP",(sum(d.C_value)/ref.GDP) ]; ["Public consumption in GDP", (sum(d.G_value)/ref.GDP)]; ["Investment in GDP",(sum(d.I_value)/ref.GDP)]; ["Exports in GDP", (sum(d.X_value)/ref.GDP)]; ["Imports in GDP", (sum(d.M_value)/ref.GDP)]]];
 
 
-OutputTable.MacroTExtended_evolBY = [ 
-["Macro results", "in %/BY"];.. 
+// Test_quantity= [["variable", " ratio quantity"];["GDP", (d.GDP/GDP_pPaas)/ref.GDP];["Households consumption", (sum(d.C_value)/C_pPaas)/sum(ref.C_value)];["Households consumption - Non-energy goods", (sum(d.C_value(Indice_NonEnerSect,:))/C_NonEn_pPaas)/sum(ref.C_value(Indice_NonEnerSect,:))];["Households consumption - Energy goods", (sum(d.C_value(Indice_EnerSect,:))/C_En_pPaas)/sum(ref.C_value(Indice_EnerSect,:))];["Government consumption", (sum(d.G_value)/G_pPaas)/sum(ref.G_value)];["Government consumption - Non-energy goods", (sum(d.G_value(Indice_NonEnerSect))/G_NonEn_pPaas)/sum(ref.G_value(Indice_NonEnerSect))];["Government consumption - Energy goods", divide(sum(d.G_value(Indice_EnerSect,:))/G_En_pPaas,sum(ref.G_value(Indice_EnerSect,:)),%nan)];["Investment", (sum(d.I_value)/I_pPaas)/sum(ref.I_value)];["Investment - Non-energy goods", (sum(d.I_value(Indice_NonEnerSect))/C_NonEn_pPaas)/sum(ref.I_value(Indice_NonEnerSect))];["Investment - Energy goods", divide(sum(d.I_value(Indice_EnerSect,:))/I_En_pPaas,sum(ref.I_value(Indice_EnerSect,:)),%nan)]; ["Exports", (sum(d.X_value)/X_pPaas)/sum(ref.X_value)];["Exports - Non-energy goods", (sum(d.X_value(Indice_NonEnerSect))/X_NonEn_pPaas)/sum(ref.X_value(Indice_NonEnerSect))];["Exports - Energy goods", divide(sum(d.X_value(Indice_EnerSect,:))/X_En_pPaas,sum(ref.X_value(Indice_EnerSect,:)),%nan)]; ["Imports", (sum(d.M_value)/M_pPaas)/sum(ref.M_value)];["Imports - Non-energy goods", (sum(d.M_value(Indice_NonEnerSect))/M_NonEn_pPaas)/sum(ref.M_value(Indice_NonEnerSect))];["Imports - Energy goods", divide(sum(d.M_value(Indice_EnerSect))/M_En_pPaas,sum(ref.M_value(Indice_EnerSect)),%nan)]];
+
+// OutputTable.MacroT = [ ["Macro results", "in %"];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(ref.G_value)/ref.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(ref.I_value)/ref.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(ref.X_value)/ref.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(ref.M_value)/ref.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Trade balance", (((sum(d.X_value) - sum(d.M_value))/(sum(ref.X_value) - sum(ref.M_value)))-1)*100];["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol_ref.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - ref.u_tot];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour cost share", (evol_ref.LabourShareMacro-1)*100];["Labour tax rate (% points)", - Labour_Tax_Cut];  ["Net-of-tax wages", (NetWage_variation-1)*100]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100];  ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", ref.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Households Consumption Price (Laspeyres)", (C_pLasp-1)*100];["	Energy Consumption Price for HH(Laspeyres", (C_En_pLasp-1)*100];["	Non Energy Consumption Price for HH(Laspeyres)", (C_NonEn_pLasp-1)*100]; ["Public Deficits", (evol_ref.Ecotable(Indice_NetLending, Indice_Government)-&)*100]; ["Total Emissions", (evol_ref.DOM_CO2-1)*100];["",""];["Import Elasticity for Non Energy goods",unique(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
+
+OutputTable("MacroT_"+ref_name) = [ ["Macro results", "in %/"+ref_name];["Carbon Tax rate", parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];["Labour Tax cut", DispLabTabl];["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) *(C_qLasp-1)*100]; ["Public consumption in GDP", (sum(ref.G_value)/ref.GDP)*(G_qLasp-1)*100]; ["Investment in GDP",(sum(ref.I_value)/ref.GDP)*(I_qLasp-1)*100]; ["Exports in GDP", (sum(ref.X_value)/ref.GDP)*(X_qLasp-1)*100]; ["Imports in GDP", (sum(ref.M_value)/ref.GDP)*(M_qLasp-1)*100]; ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100]; ["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Total Employment", (evol_ref.Labour_tot-1)*100];["Unemployment rate (% points)", d.u_tot - ref.u_tot];["Net-of-tax wages", (d.NetWage_variation-1)*100];["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];["Labour tax rate (% points)", - d.Labour_Tax_Cut];  ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100]; ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100]; ["Energy cost share for non-energetic sector", (evol_ref.ENshareNONEner-1)*100 ]; ["Production Price (Laspeyres)", (Y_pLasp-1)*100]; ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100]; ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100]; ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100]; ["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100]; ["	Non Energy goods in Households consumption", ref.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];["Public Deficits", (evol_ref.Ecotable(Indice_NetLending, Indice_Government)-1)*100]; ["Total Emissions", (evol_ref.DOM_CO2-1)*100];["",""];["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];[" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];[" Global mean wage/Unemployment Elasticity",sigma_omegaU]];
+
+
+OutputTable("MacroTExtend_evol_"+ref_name) = [ 
+["Macro results", "in %/"+ref_name];.. 
 ["Carbon Tax rate", d.Carbon_Tax_rate / 10^3 + money+"/tCO2"];.. 
 ["Labour Tax cut", DispLabTabl];.. 
 ["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];.. 
-["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) *(C_qLasp-1)*100];.. 
-["Public consumption in GDP", (sum(BY.G_value)/BY.GDP)*(G_qLasp-1)*100];.. 
-["Investment in GDP",(sum(BY.I_value)/BY.GDP)*(I_qLasp-1)*100];.. 
-["Exports in GDP", (sum(BY.X_value)/BY.GDP)*(X_qLasp-1)*100];.. 
-["Imports in GDP", (sum(BY.M_value)/BY.GDP)*(M_qLasp-1)*100];.. 
+["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) *(C_qLasp-1)*100];.. 
+["Public consumption in GDP", (sum(ref.G_value)/ref.GDP)*(G_qLasp-1)*100];.. 
+["Investment in GDP",(sum(ref.I_value)/ref.GDP)*(I_qLasp-1)*100];.. 
+["Exports in GDP", (sum(ref.X_value)/ref.GDP)*(X_qLasp-1)*100];.. 
+["Imports in GDP", (sum(ref.M_value)/ref.GDP)*(M_qLasp-1)*100];.. 
 ["Imports/Domestic production ratio",(M_Y_Ratio_qLasp-1)*100];.. 
-["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
-["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
-["Total Employment", (evol_BY.Labour_tot-1)*100];.. 
-["Unemployment rate (% points)", d.u_tot - BY.u_tot];.. 
+["Imports of Non Energy goods in volume", (divide(sum(d.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
+["Exports of Non Energy goods in volume", (divide(sum(d.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];.. 
+["Total Employment", (evol_ref.Labour_tot-1)*100];.. 
+["Unemployment rate (% points)", d.u_tot - ref.u_tot];.. 
 ["Net-of-tax wages", (d.NetWage_variation-1)*100];.. 
 ["Labour Intensity (Laspeyres)",(lambda_pLasp-1)*100];.. 
 ["Labour tax rate (% points)", - Labour_Tax_Cut];.. 
 ["Energy Input Price (Laspeyres)", (IC_Ener_pLasp-1)*100];.. 
 ["Energy Intensity (Laspeyres)", (alpha_Ener_qLasp-1)*100];.. 
-["Energy cost share for non-energetic sector", (evol_BY.ENshareNONEner-1)*100 ];.. 
+["Energy cost share for non-energetic sector", (evol_ref.ENshareNONEner-1)*100 ];.. 
 ["Production Price (Laspeyres)", (Y_pLasp-1)*100];.. 
 ["Production Price Energy goods (Laspeyres)", (Y_En_pLasp-1)*100];.. 
 ["Production Price Non Energy goods (Laspeyres)", (Y_NonEn_pLasp-1)*100];.. 
 ["Consumption Price for HH of Non Energy goods (Laspeyres)", (C_NonEn_pLasp-1)*100];.. 
 ["Real Households consumption (Laspeyres)", (C_qLasp-1)*100];.. 
-["	Energy in Households consumption", BY.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
-["	Non Energy goods in Households consumption", BY.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];.. 
-["Public Deficits", (evol_BY.Ecotable(Indice_NetLending, Indice_Government)-1)*100];.. 
-["Country Deficits /GDP", (evol_BY.NetLendingRoW_GDP-1)*100];.. 
-["Total Emissions", (evol_BY.DOM_CO2-1)*100];.. 
-["Total Taxes", (evol_BY.Total_taxes-1)*100];.. 
-["Households Energy Bills", (evol_BY.HH_EnBill-1)*100];.. 
-["Firms Energy Bills", (evol_BY.Corp_EnBill-1)*100];.. 
-["Households Energy Conso", (evol_BY.HH_EnConso-1)*100];.. 
-["Firms Energy Conso", (evol_BY.Corp_EnConso-1)*100];.. 
+["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
+["	Non Energy goods in Households consumption", ref.NonEner_C_ValueShare*(C_NonEn_qLasp-1)*100];.. 
+["Public Deficits", (evol_ref.Ecotable(Indice_NetLending, Indice_Government)-1)*100];.. 
+["Country Deficits /GDP", (evol_ref.NetLendingRoW_GDP-1)*100];.. 
+["Total Emissions", (evol_ref.DOM_CO2-1)*100];.. 
+["Total Taxes", (evol_ref.Total_taxes-1)*100];.. 
+["Households Energy Bills", (evol_ref.HH_EnBill-1)*100];.. 
+["Firms Energy Bills", (evol_ref.Corp_EnBill-1)*100];.. 
+["Households Energy Conso", (evol_ref.HH_EnConso-1)*100];.. 
+["Firms Energy Conso", (evol_ref.Corp_EnConso-1)*100];.. 
 ["",""];.. 
 ["Most sensitif import Elasticity for NonEner",max(sigma_M(Indice_NonEnerSect))];.. 
 [" Most sensitif export Elasticity for NonEner ",max(sigma_X(Indice_NonEnerSect))];.. 
 [" Global mean wage/Unemployment Elasticity",sigma_omegaU]
 ]; 
 
-OutputTable.MacroTExtended_Ratio = [
-["Macro results", "Ratio/BY"];..
+OutputTable("MacroTExtended_Ratio_"+ref_name) = [
+["Macro results", "Ratio/"+ref_name];..
 ["GDP (Laspeyres)", GDP_qLasp];.. 
-["Households consumption in GDP",(sum(BY.C_value)/BY.GDP) * C_qLasp];.. 
-["Investment in GDP",(sum(BY.I_value)/BY.GDP) * I_qLasp];.. 
-["Public consumption in GDP", (sum(BY.G_value)/BY.GDP) * G_qLasp];.. 
-["Exports in GDP", (sum(BY.X_value)/BY.GDP) * X_qLasp];.. 
-["Imports in GDP", (sum(BY.M_value)/BY.GDP) * M_qLasp];.. 
+["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) * C_qLasp];.. 
+["Investment in GDP",(sum(ref.I_value)/ref.GDP) * I_qLasp];.. 
+["Public consumption in GDP", (sum(ref.G_value)/ref.GDP) * G_qLasp];.. 
+["Exports in GDP", (sum(ref.X_value)/ref.GDP) * X_qLasp];.. 
+["Imports in GDP", (sum(ref.M_value)/ref.GDP) * M_qLasp];.. 
 ["Imports/Domestic production ratio",M_Y_Ratio_qLasp];.. 
-["Imports of Non Energy goods in volume", divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan )];.. 
-["Exports of Non Energy goods in volume", divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan )];.. 
-["Total Employment", divide(d.Labour_tot, BY.Labour_tot, %nan)];.. 
-["Unemployment rate", d.u_tot/BY.u_tot ];.. 
+["Imports of Non Energy goods in volume", divide(sum(d.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan )];.. 
+["Exports of Non Energy goods in volume", divide(sum(d.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan )];.. 
+["Total Employment", divide(d.Labour_tot, ref.Labour_tot, %nan)];.. 
+["Unemployment rate", d.u_tot/ref.u_tot ];.. 
 ["Labour Intensity (Laspeyres)",lambda_pLasp];..  
 ["Energy Input Price (Laspeyres)", IC_Ener_pLasp];.. 
 ["Energy Intensity (Laspeyres)", alpha_Ener_qLasp];.. 
-["Energy cost share for non-energetic sector", evol_BY.ENshareNONEner];.. 
+["Energy cost share for non-energetic sector", evol_ref.ENshareNONEner];.. 
 ["Production Price (Laspeyres)", Y_pLasp];.. 
 ["Production Price Energy goods (Laspeyres)", Y_En_pLasp];.. 
 ["Production Price Non Energy goods (Laspeyres)", Y_NonEn_pLasp];.. 
@@ -900,18 +901,18 @@ OutputTable.MacroTExtended_Ratio = [
 ["Real Households consumption (Laspeyres)", C_qLasp];.. 
 [" Energy in Households consumption", C_En_qLasp];.. 
 [" Non Energy goods in Households consumption", C_NonEn_qLasp];.. 
-["Public Deficits", evol_BY.Ecotable(Indice_NetLending, Indice_Government)];.. 
-["Country Deficits /GDP", evol_BY.NetLendingRoW_GDP];.. 
-["Total Emissions", evol_BY.DOM_CO2];.. 
-["Total Taxes", evol_BY.Total_taxes];.. 
-["Households Energy Bills", evol_BY.HH_EnBill];.. 
-["Firms Energy Bills", evol_BY.Corp_EnBill];.. 
-["Households Energy Conso", evol_BY.HH_EnConso];.. 
-["Firms Energy Conso", evol_BY.Corp_EnConso];.. 
+["Public Deficits", evol_ref.Ecotable(Indice_NetLending, Indice_Government)];.. 
+["Country Deficits /GDP", evol_ref.NetLendingRoW_GDP];.. 
+["Total Emissions", evol_ref.DOM_CO2];.. 
+["Total Taxes", evol_ref.Total_taxes];.. 
+["Households Energy Bills", evol_ref.HH_EnBill];.. 
+["Firms Energy Bills", evol_ref.Corp_EnBill];.. 
+["Households Energy Conso", evol_ref.HH_EnConso];.. 
+["Firms Energy Conso", evol_ref.Corp_EnConso];.. 
 ];
 
 
-OutputTable.CompSectTable = [["Variation (%)", Index_Sectors']; ["Production Price", ((divide(d.pY , BY.pY , %nan )-1)*100)']; ["Real Households consumption_"+Index_Households , ((divide(d.C , BY.C , %nan )-1)*100)']; ["Exports in volume", ((divide(d.X , BY.X , %nan )-1)*100)'];["Imports in volume", ((divide(d.M , BY.M, %nan )-1)*100)'];["Trade balance ",((divide((d.X_value' - d.M_value),(BY.X_value' - BY.M_value),%nan))-1)*100]; ["Energy Cost share variation", (evol_BY.ENshare-1)*100 ]; [ " Energy/Labour cost variation" , (evol_BY.ShareEN_Lab-1)*100]; ["Labour", (divide(d.Labour , BY.Labour, %nan )-1)*100]; ["Unitary Labour Cost variation", (evol_BY.Unit_Labcost-1)*100]; ["Net nominal wages", (divide(d.w , BY.w, %nan )-1)*100]; ["Net real wages (Consumer Price Index)", (((d.w./CPI)./(BY.w./BY.CPI))-1)*100];["Purchasing power of wages_"+Index_Households, divide((ones(nb_Households,1).*.d.w)./d.pC' , (ones(nb_Households,1).*.BY.w)./BY.pC', %nan )]];
+OutputTable("CompSectTable_"+ref_name) = [["Variation (%)", Index_Sectors']; ["Production Price", ((divide(d.pY , ref.pY , %nan )-1)*100)']; ["Real Households consumption_"+Index_Households , ((divide(d.C , ref.C , %nan )-1)*100)']; ["Exports in volume", ((divide(d.X , ref.X , %nan )-1)*100)'];["Imports in volume", ((divide(d.M , ref.M, %nan )-1)*100)'];["Trade balance ",((divide((d.X_value' - d.M_value),(ref.X_value' - ref.M_value),%nan))-1)*100]; ["Energy Cost share variation", (evol_ref.ENshare-1)*100 ]; [ " Energy/Labour cost variation" , (evol_ref.ShareEN_Lab-1)*100]; ["Labour", (divide(d.Labour , ref.Labour, %nan )-1)*100]; ["Unitary Labour Cost variation", (evol_ref.Unit_Labcost-1)*100]; ["Net nominal wages", (divide(d.w , ref.w, %nan )-1)*100]; ["Net real wages (Consumer Price Index)", (((d.w./CPI)./(ref.w./ref.CPI))-1)*100];["Purchasing power of wages_"+Index_Households, divide((ones(nb_Households,1).*.d.w)./d.pC' , (ones(nb_Households,1).*.ref.w)./ref.pC', %nan )]];
 
 OutputTable.CompSectTable($+1,1)=  "Carbon Taxe rate";
 OutputTable.CompSectTable($,2)=  [parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];
@@ -920,32 +921,32 @@ OutputTable.CompSectTable($,2)=  [DispLabTabl] ;
 
 
 //// Comparaison intersectorielle des echanges 
-// OutputTable.Trade_Sect =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0", round(sum(BY.C_value,"c")'/10^5)/10 ]; ["Households consumption Nominal 1", round(sum(d.C_value,"c")'/10^5)/10 ]; ["HPrice Index (Paasche)", (sum(d.C_value,"c")'./(BY.pC'.*d.C'))]; [ "Households consumption Real 1 (G€)",round((BY.pC'.*d.C')/10^5)./10];["Households consumption Nominal 0 %share", (round(sum(BY.C_value,"c")'/sum(BY.C_value')*10000)/100) ];["Households consumption Nominal 1 share(%)", (round(sum(d.C_value,"c")'/sum(d.C_value')*10000)/100) ];["Real Households consumption 1 share(%)", round(((BY.pC'.*d.C')./sum((BY.pC'.*d.C')))*10000)./100];
-// ["Government consumption Nominal 0", round(BY.G_value'/10^5)/10 ]; ["Government consumption Nominal 1", round(d.G_value'/10^5)/10 ];  ["G Price Index (Paasche)", (d.G_value'./(BY.pG'.*d.G'))]; [ "Government consumption Real 1 (G€)",round((BY.pG'.*d.G')/10^5)./10];["Government consumption Nominal 0 %share", (round(BY.G_value'/sum(BY.G_value')*10000)/100) ];["Government consumption Nominal 1 share(%)", (round(d.G_value'/sum(d.G_value')*10000)/100) ];["Real Government consumption 1 share(%)", round(((BY.pG'.*d.G')./sum((BY.pG'.*d.G')))*10000)./100];
-// ["Investment Nominal 0", round(BY.I_value'/10^5)/10 ]; ["Investment Nominal 1", round(d.I_value'/10^5)/10 ];  ["I Price Index (Paasche)", (d.I_value'./(BY.pI'.*d.I'))]; [ "Investment Real 1 (G€)",round((BY.pI'.*d.I')/10^5)./10];["Investment Nominal 0 %share", (round(BY.I_value'/sum(BY.I_value')*10000)/100) ];["Investment Nominal 1 share(%)", (round(d.I_value'/sum(d.I_value')*10000)/100) ];["Real Investment 1 share(%)", round(((BY.pI'.*d.I')./sum((BY.pI'.*d.I')))*10000)./100];
-// ["Exports Nominal 0", round(BY.X_value'/10^5)/10 ]; ["Exports Nominal 1", round(d.X_value'/10^5)/10 ];  ["X Price Index (Paasche)", (d.X_value'./(BY.pX'.*d.X'))]; [ "Exports Real 1 (G€)",round((BY.pX'.*d.X')/10^5)./10];["Exports Nominal 0 share(%)", (round(BY.X_value'/sum(BY.X_value')*10000)/100) ];["Exports Nominal 1 share(%)", (round(d.X_value'/sum(d.X_value')*10000)/100) ];["Real Exports 1 share(%)", round(((BY.pX'.*d.X')./sum((BY.pX'.*d.X')))*10000)./100];
-// ["Imports Nominal 0", round(BY.M_value/10^5)/10 ]; ["Imports Nominal 1", round(d.M_value/10^5)/10 ];  ["M Price Index (Paasche)", (d.M_value./(BY.pM'.*d.M'))]; [ "Imports Real 1 (G€)",round((BY.pM'.*d.M')/10^5)./10]; ["Imports Nominal 0 share(%)", (round(BY.M_value/sum(BY.M_value)*10000)/100) ];["Imports Nominal 1 share(%)", (round(d.M_value/sum(d.M_value)*10000)/100) ]] ; 
+// OutputTable("Trade_Sect_"+ref_name) =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0", round(sum(ref.C_value,"c")'/10^5)/10 ]; ["Households consumption Nominal 1", round(sum(d.C_value,"c")'/10^5)/10 ]; ["HPrice Index (Paasche)", (sum(d.C_value,"c")'./(ref.pC'.*d.C'))]; [ "Households consumption Real 1 (G€)",round((ref.pC'.*d.C')/10^5)./10];["Households consumption Nominal 0 %share", (round(sum(ref.C_value,"c")'/sum(ref.C_value')*10000)/100) ];["Households consumption Nominal 1 share(%)", (round(sum(d.C_value,"c")'/sum(d.C_value')*10000)/100) ];["Real Households consumption 1 share(%)", round(((ref.pC'.*d.C')./sum((ref.pC'.*d.C')))*10000)./100];
+// ["Government consumption Nominal 0", round(ref.G_value'/10^5)/10 ]; ["Government consumption Nominal 1", round(d.G_value'/10^5)/10 ];  ["G Price Index (Paasche)", (d.G_value'./(ref.pG'.*d.G'))]; [ "Government consumption Real 1 (G€)",round((ref.pG'.*d.G')/10^5)./10];["Government consumption Nominal 0 %share", (round(ref.G_value'/sum(ref.G_value')*10000)/100) ];["Government consumption Nominal 1 share(%)", (round(d.G_value'/sum(d.G_value')*10000)/100) ];["Real Government consumption 1 share(%)", round(((ref.pG'.*d.G')./sum((ref.pG'.*d.G')))*10000)./100];
+// ["Investment Nominal 0", round(ref.I_value'/10^5)/10 ]; ["Investment Nominal 1", round(d.I_value'/10^5)/10 ];  ["I Price Index (Paasche)", (d.I_value'./(ref.pI'.*d.I'))]; [ "Investment Real 1 (G€)",round((ref.pI'.*d.I')/10^5)./10];["Investment Nominal 0 %share", (round(ref.I_value'/sum(ref.I_value')*10000)/100) ];["Investment Nominal 1 share(%)", (round(d.I_value'/sum(d.I_value')*10000)/100) ];["Real Investment 1 share(%)", round(((ref.pI'.*d.I')./sum((ref.pI'.*d.I')))*10000)./100];
+// ["Exports Nominal 0", round(ref.X_value'/10^5)/10 ]; ["Exports Nominal 1", round(d.X_value'/10^5)/10 ];  ["X Price Index (Paasche)", (d.X_value'./(ref.pX'.*d.X'))]; [ "Exports Real 1 (G€)",round((ref.pX'.*d.X')/10^5)./10];["Exports Nominal 0 share(%)", (round(ref.X_value'/sum(ref.X_value')*10000)/100) ];["Exports Nominal 1 share(%)", (round(d.X_value'/sum(d.X_value')*10000)/100) ];["Real Exports 1 share(%)", round(((ref.pX'.*d.X')./sum((ref.pX'.*d.X')))*10000)./100];
+// ["Imports Nominal 0", round(ref.M_value/10^5)/10 ]; ["Imports Nominal 1", round(d.M_value/10^5)/10 ];  ["M Price Index (Paasche)", (d.M_value./(ref.pM'.*d.M'))]; [ "Imports Real 1 (G€)",round((ref.pM'.*d.M')/10^5)./10]; ["Imports Nominal 0 share(%)", (round(ref.M_value/sum(ref.M_value)*10000)/100) ];["Imports Nominal 1 share(%)", (round(d.M_value/sum(d.M_value)*10000)/100) ]] ; 
 
-OutputTable.Trade_Sect =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0", round(sum(BY.C_value,"c")'/10^5)/10 ]; ["Households consumption Nominal 1", round(sum(d.C_value,"c")'/10^5)/10 ]; ["HPrice Index (Paasche)", divide(sum(d.C_value,"c")',sum(BY.pC.*d.C,"c")',%nan)]; [ "Households consumption Real 1 (G€)",round(sum(BY.pC.*d.C,"c")'/10^5)./10];
-["Government consumption Nominal 0", round(BY.G_value'/10^5)/10 ]; ["Government consumption Nominal 1", round(d.G_value'/10^5)/10 ];  ["G Price Index (Paasche)", (divide(d.G_value',(BY.pG'.*d.G'),%nan))]; [ "Government consumption Real 1 (G€)",round((BY.pG'.*d.G')/10^5)./10];
-["Investment Nominal 0", round(sum(BY.I_value,"c")'/10^5)/10 ]; ["Investment Nominal 1", round(sum(d.I_value,"c")'/10^5)/10 ];  ["I Price Index (Paasche)", divide(sum(d.I_value,"c")',(BY.pI)'.*(sum(d.I,"c")'),%nan)]; [ "Investment Real 1 (G€)",round((BY.pI'.*sum(d.I,"c")')/10^5)./10];
-["Exports Nominal 0", round(BY.X_value'/10^5)/10 ]; ["Exports Nominal 1", round(d.X_value'/10^5)/10 ];  ["X Price Index (Paasche)", (d.X_value'./(((BY.pX'.*d.X')>%eps).*(BY.pX'.*d.X') + ((BY.pX'.*d.X')<%eps)))]; [ "Exports Real 1 (G€)",round((BY.pX'.*d.X')/10^5)./10];
-["Imports Nominal 0", round(BY.M_value/10^5)/10 ]; ["Imports Nominal 1", round(d.M_value/10^5)/10 ];  ["M Price Index (Paasche)", (d.M_value./(((BY.pM'.*d.M')>%eps).*(BY.pM'.*d.M') + ((BY.pM'.*d.M')<%eps)))]; [ "Imports Real 1 (G€)",round((BY.pM'.*d.M')/10^5)./10]] ; 
-
-
-
-OutputTable.Trade_Sect_Share  =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0 %share", (round(sum(BY.C_value,"c")'/sum(BY.C_value')*10000)/100) ];["Government consumption Nominal 0 %share", (round(BY.G_value'/sum(BY.G_value')*10000)/100) ];["Investment Nominal 0 %share", (round(sum(BY.I_value,"c")'/sum(BY.I_value')*10000)/100) ];["Exports Nominal 0 share(%)", (round(BY.X_value'/sum(BY.X_value')*10000)/100) ]; ["Imports Nominal 0 share(%)", (round(BY.M_value/sum(BY.M_value)*10000)/100) ];] ; 
+OutputTable("Trade_Sect_"+ref_name) =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0", round(sum(ref.C_value,"c")'/10^5)/10 ]; ["Households consumption Nominal 1", round(sum(d.C_value,"c")'/10^5)/10 ]; ["HPrice Index (Paasche)", divide(sum(d.C_value,"c")',sum(ref.pC.*d.C,"c")',%nan)]; [ "Households consumption Real 1 (G€)",round(sum(ref.pC.*d.C,"c")'/10^5)./10];
+["Government consumption Nominal 0", round(ref.G_value'/10^5)/10 ]; ["Government consumption Nominal 1", round(d.G_value'/10^5)/10 ];  ["G Price Index (Paasche)", (divide(d.G_value',(ref.pG'.*d.G'),%nan))]; [ "Government consumption Real 1 (G€)",round((ref.pG'.*d.G')/10^5)./10];
+["Investment Nominal 0", round(sum(ref.I_value,"c")'/10^5)/10 ]; ["Investment Nominal 1", round(sum(d.I_value,"c")'/10^5)/10 ];  ["I Price Index (Paasche)", divide(sum(d.I_value,"c")',(ref.pI)'.*(sum(d.I,"c")'),%nan)]; [ "Investment Real 1 (G€)",round((ref.pI'.*sum(d.I,"c")')/10^5)./10];
+["Exports Nominal 0", round(ref.X_value'/10^5)/10 ]; ["Exports Nominal 1", round(d.X_value'/10^5)/10 ];  ["X Price Index (Paasche)", (d.X_value'./(((ref.pX'.*d.X')>%eps).*(ref.pX'.*d.X') + ((ref.pX'.*d.X')<%eps)))]; [ "Exports Real 1 (G€)",round((ref.pX'.*d.X')/10^5)./10];
+["Imports Nominal 0", round(ref.M_value/10^5)/10 ]; ["Imports Nominal 1", round(d.M_value/10^5)/10 ];  ["M Price Index (Paasche)", (d.M_value./(((ref.pM'.*d.M')>%eps).*(ref.pM'.*d.M') + ((ref.pM'.*d.M')<%eps)))]; [ "Imports Real 1 (G€)",round((ref.pM'.*d.M')/10^5)./10]] ; 
 
 
-OutputTable.EnerNonEnTable = [["Ratio", "Primary Energy", "Final Energy", "Non-energy goods"];["Production Price (Laspeyres)", (Y_PrimEn_pLasp-1)*100, (Y_FinEn_pLasp-1)*100, (Y_NonEn_pLasp-1)*100 ]; ["Real Households consumption (Laspeyres)", (C_PrimEn_qLasp-1)*100, (C_FinEn_qLasp-1)*100, (C_NonEn_qLasp-1)*100 ]; ["Exports in volume", (divide(sum(d.X(Indice_PrimEnerSect,:)), sum(BY.X(Indice_PrimEnerSect,:)),%nan )-1)*100, (divide(sum(d.X(Indice_FinEnerSect,:)), sum(BY.X(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.X(Indice_NonEnerSect,:)), sum(BY.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Imports in volume", (divide(sum(d.M(Indice_PrimEnerSect,:)), sum(BY.M(Indice_PrimEnerSect,:)),%nan)-1)*100, (divide(sum(d.M(Indice_FinEnerSect,:)), sum(BY.M(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.M(Indice_NonEnerSect,:)), sum(BY.M(Indice_NonEnerSect,:)),%nan )-1)*100 ]];
+
+OutputTable("Trade_Sect_Share_"+ref_name)  =  [["Variable/Sectoral value", Index_Sectors']; ["Households consumption Nominal 0 %share", (round(sum(ref.C_value,"c")'/sum(ref.C_value')*10000)/100) ];["Government consumption Nominal 0 %share", (round(ref.G_value'/sum(ref.G_value')*10000)/100) ];["Investment Nominal 0 %share", (round(sum(ref.I_value,"c")'/sum(ref.I_value')*10000)/100) ];["Exports Nominal 0 share(%)", (round(ref.X_value'/sum(ref.X_value')*10000)/100) ]; ["Imports Nominal 0 share(%)", (round(ref.M_value/sum(ref.M_value)*10000)/100) ];] ; 
+
+
+OutputTable("EnerNonEnTable_"+ref_name) = [["Ratio", "Primary Energy", "Final Energy", "Non-energy goods"];["Production Price (Laspeyres)", (Y_PrimEn_pLasp-1)*100, (Y_FinEn_pLasp-1)*100, (Y_NonEn_pLasp-1)*100 ]; ["Real Households consumption (Laspeyres)", (C_PrimEn_qLasp-1)*100, (C_FinEn_qLasp-1)*100, (C_NonEn_qLasp-1)*100 ]; ["Exports in volume", (divide(sum(d.X(Indice_PrimEnerSect,:)), sum(ref.X(Indice_PrimEnerSect,:)),%nan )-1)*100, (divide(sum(d.X(Indice_FinEnerSect,:)), sum(ref.X(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Imports in volume", (divide(sum(d.M(Indice_PrimEnerSect,:)), sum(ref.M(Indice_PrimEnerSect,:)),%nan)-1)*100, (divide(sum(d.M(Indice_FinEnerSect,:)), sum(ref.M(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(d.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan )-1)*100 ]];
 
 OutputTable.EnerNonEnTable($+1,1)=  "Carbon Taxe rate";
 OutputTable.EnerNonEnTable($,2)=  [parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];
 OutputTable.EnerNonEnTable($+1,1)=  "Revenue-reclycling option";
 OutputTable.EnerNonEnTable($,2)=  [DispLabTabl] ;
 
-if (d.pX ./ BY.pX ) <> 1 
-    OutputTable.Elasticities = [ ["Elasticities" , Index_Sectors'];["Exports Price" , ((divide(d.X , BY.X, %nan) - 1) ./ ((d.pX ./ BY.pX) - 1))' ]; ["Exports - pX/pM ration" , ((divide(d.X , BY.X , %nan) - 1) ./ (((d.pX./d.pM) ./ (BY.pX./BY.pM) ) - 1))' ];["Import/Output ratio" ,((divide(d.M , d.Y , %nan) ./ divide(BY.M , BY.Y , %nan) - 1) ./ ((d.pM./d.pY) ./ (BY.pM./BY.pY) - 1))']];
+if (d.pX ./ ref.pX ) <> 1 
+    OutputTable("Elasticities"+ref_name) = [ ["Elasticities" , Index_Sectors'];["Exports Price" , ((divide(d.X , ref.X, %nan) - 1) ./ ((d.pX ./ ref.pX) - 1))' ]; ["Exports - pX/pM ration" , ((divide(d.X , ref.X , %nan) - 1) ./ (((d.pX./d.pM) ./ (ref.pX./ref.pM) ) - 1))' ];["Import/Output ratio" ,((divide(d.M , d.Y , %nan) ./ divide(ref.M , ref.Y , %nan) - 1) ./ ((d.pM./d.pY) ./ (ref.pM./ref.pY) - 1))']];
     OutputTable.Elasticities($+1,1)=  "Carbon Taxe rate";
     OutputTable.Elasticities($,2)=  [parameters.Carbon_Tax_rate / 10^3 + money+"/tCO2"];
     OutputTable.Elasticities($+1,1)=  "Revenue-reclycling option";
@@ -954,16 +955,16 @@ end
 
 
 if Output_files
-csvWrite(OutputTable.MacroT,SAVEDIR+"TableMacroOutput_BY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.MacroTExtended_evolBY,SAVEDIR+"TableMacroOutputExtended_BY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.MacroTExtended_Ratio,SAVEDIR+"TableMacroOutputRatioBY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.CompSectTable,SAVEDIR+"TableSectOutput_BY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.EnerNonEnTable,SAVEDIR+"TableENnonEnOutput_BY_"+Name_time+".csv", ';');
-// csvWrite(OutputTable.Elasticities,SAVEDIR+"TableElasticities_"+Name_time+".csv", ';');
-// csvWrite(OutputTable.GDP_decom,SAVEDIR+"GDP_decom_"+Name_time+".csv", ';');
-csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_BY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.Trade_Sect,SAVEDIR+"Trade_Sect_BY_"+Name_time+".csv", ';');
-csvWrite(OutputTable.Trade_Sect_Share,SAVEDIR+"Trade_Sect_Share_BY_"+Name_time+".csv", ';');
+csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR+"TableMacroExtended_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR+"TableMacroRatio"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("CompSectTable_"+ref_name),SAVEDIR+"TableSectOutput_"+ref_name+"_"++Name_time+".csv", ';');
+csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+ref_name+"_"+Name_time+".csv", ';');
+// csvWrite(OutputTable("Elasticities_"+ref_name),SAVEDIR+"TableElasticities_"+Name_time+".csv", ';');
+// csvWrite(OutputTable("GDP_decom_"+ref_name),SAVEDIR+"GDP_decom_"+Name_time+".csv", ';');
+csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("Trade_Sect_"+ref_name),SAVEDIR+"Trade_Sect_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("Trade_Sect_Share_"+ref_name),SAVEDIR+"Trade_Sect_Share_"+ref_name+"_"+Name_time+".csv", ';');
 end
 
 
@@ -990,130 +991,130 @@ if AGG_type == "AGG_IndEner"
 	end
 
     Met  = [ find( Index_Sectors== "Steel_Iron" ), find( Index_Sectors== "NonFerrousMetals" ) ];
-    C_Met_qFish = QInd_Fish( BY.pC,BY.C, d.pC, d.C, Met, :);
-    Y_Met_qFish = QInd_Fish( BY.pY,BY.Y, d.pY, d.Y, Met, :);
-    pY_Met_pFish = PInd_Fish( BY.pY,BY.Y, d.pY, d.Y, Met, :);
-    M_Met_qFish = QInd_Fish( BY.pM,BY.M, d.pM, d.M, Met, :);
-    pM_Met_pFish = PInd_Fish( BY.pM,BY.M, d.pM, d.M, Met, :);
-    X_Met_qFish = QInd_Fish( BY.pX,BY.X, d.pX, d.X, Met, :);
-    pX_Met_pFish = PInd_Fish( BY.pX,BY.X, d.pX, d.X, Met, :);
+    C_Met_qFish = QInd_Fish( ref.pC,ref.C, d.pC, d.C, Met, :);
+    Y_Met_qFish = QInd_Fish( ref.pY,ref.Y, d.pY, d.Y, Met, :);
+    pY_Met_pFish = PInd_Fish( ref.pY,ref.Y, d.pY, d.Y, Met, :);
+    M_Met_qFish = QInd_Fish( ref.pM,ref.M, d.pM, d.M, Met, :);
+    pM_Met_pFish = PInd_Fish( ref.pM,ref.M, d.pM, d.M, Met, :);
+    X_Met_qFish = QInd_Fish( ref.pX,ref.X, d.pX, d.X, Met, :);
+    pX_Met_pFish = PInd_Fish( ref.pX,ref.X, d.pX, d.X, Met, :);
 
     // Variations of macroeconomic identities in real terms at the aggregated level: Production = Private Consumption + Public Consumption + Investment + Exports - Imports
 
     // Initial value shares for each components of GDP
-    BY.IC_Met_Prod_ValueShare	=  sum(BY.IC_value(Met,:))./sum(BY.Output_value(Met)) ;
-    BY.C_Met_Prod_ValueShare	=  sum(BY.C_value(Met))   ./sum(BY.Output_value(Met)) ;
-    BY.G_Met_Prod_ValueShare	=  sum(BY.G_value(Met))   ./sum(BY.Output_value(Met)) ;
-    BY.I_Met_Prod_ValueShare	=  sum(BY.I_value(Met))   ./sum(BY.Output_value(Met)) ;
-    BY.X_Met_Prod_ValueShare	=  sum(BY.X_value(Met))   ./sum(BY.Output_value(Met)) ;
-    BY.M_Met_Prod_ValueShare	= -sum(BY.M_value(Met))   ./sum(BY.Output_value(Met)) ;
+    ref.IC_Met_Prod_ValueShare	=  sum(ref.IC_value(Met,:))./sum(ref.Output_value(Met)) ;
+    ref.C_Met_Prod_ValueShare	=  sum(ref.C_value(Met))   ./sum(ref.Output_value(Met)) ;
+    ref.G_Met_Prod_ValueShare	=  sum(ref.G_value(Met))   ./sum(ref.Output_value(Met)) ;
+    ref.I_Met_Prod_ValueShare	=  sum(ref.I_value(Met))   ./sum(ref.Output_value(Met)) ;
+    ref.X_Met_Prod_ValueShare	=  sum(ref.X_value(Met))   ./sum(ref.Output_value(Met)) ;
+    ref.M_Met_Prod_ValueShare	= -sum(ref.M_value(Met))   ./sum(ref.Output_value(Met)) ;
 
     // Laspeyres Quantity indices
-    Y_qLasp  = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Met, :);	
-    IC_Met_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Met, :);
-    G_Met_qLasp  = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Met, :);
-    C_Met_qLasp  = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Met, :);
-    I_Met_qLasp  = QInd_Lasp( BY.pI, BY.I, d.pI, d.I, Met, :);
-    X_Met_qLasp  = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Met, :);
-    M_Met_qLasp  = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Met, :);
+    Y_qLasp  = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Met, :);	
+    IC_Met_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Met, :);
+    G_Met_qLasp  = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Met, :);
+    C_Met_qLasp  = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Met, :);
+    I_Met_qLasp  = QInd_Lasp( ref.pI, ref.I, d.pI, d.I, Met, :);
+    X_Met_qLasp  = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Met, :);
+    M_Met_qLasp  = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Met, :);
 
     // Decomposition of variations for the second level macroeconomic identity
-    IC_Met_Prod_qLasp = BY.IC_Met_Prod_ValueShare  .* IC_Met_qLasp ;
-    C_Met_Prod_qLasp   = BY.C_Met_Prod_ValueShare  .*  C_Met_qLasp ;
-    G_Met_Prod_qLasp   = BY.G_Met_Prod_ValueShare  .*  G_Met_qLasp ;
-    I_Met_Prod_qLasp   = BY.I_Met_Prod_ValueShare  .*  I_Met_qLasp ;
-    X_Met_Prod_qLasp   = BY.X_Met_Prod_ValueShare  .*  X_Met_qLasp ;
-    M_Met_Prod_qLasp   = BY.M_Met_Prod_ValueShare  .*  M_Met_qLasp ;
+    IC_Met_Prod_qLasp = ref.IC_Met_Prod_ValueShare  .* IC_Met_qLasp ;
+    C_Met_Prod_qLasp   = ref.C_Met_Prod_ValueShare  .*  C_Met_qLasp ;
+    G_Met_Prod_qLasp   = ref.G_Met_Prod_ValueShare  .*  G_Met_qLasp ;
+    I_Met_Prod_qLasp   = ref.I_Met_Prod_ValueShare  .*  I_Met_qLasp ;
+    X_Met_Prod_qLasp   = ref.X_Met_Prod_ValueShare  .*  X_Met_qLasp ;
+    M_Met_Prod_qLasp   = ref.M_Met_Prod_ValueShare  .*  M_Met_qLasp ;
 
     /////////////////////////
     /// Aggregation of Minerals  (Cement + Other Minerals)
     /////////////////////////
 
     Miner  = [ find( Index_Sectors== "Cement" ), find( Index_Sectors== "OthMin" ) ];
-    C_Miner_qFish = QInd_Fish( BY.pC,BY.C, d.pC, d.C, Miner, :);
-    Y_Miner_qFish = QInd_Fish( BY.pY,BY.Y, d.pY, d.Y, Miner, :);
-    pY_Miner_pFish = PInd_Fish( BY.pY,BY.Y, d.pY, d.Y, Miner, :);
-    M_Miner_qFish = QInd_Fish( BY.pM,BY.M, d.pM, d.M, Miner, :);
-    pM_Miner_pFish = PInd_Fish( BY.pM,BY.M, d.pM, d.M, Miner, :);
-    X_Miner_qFish = QInd_Fish( BY.pX,BY.X, d.pX, d.X, Miner, :);
-    pX_Miner_pFish = PInd_Fish( BY.pX,BY.X, d.pX, d.X, Miner, :);
+    C_Miner_qFish = QInd_Fish( ref.pC,ref.C, d.pC, d.C, Miner, :);
+    Y_Miner_qFish = QInd_Fish( ref.pY,ref.Y, d.pY, d.Y, Miner, :);
+    pY_Miner_pFish = PInd_Fish( ref.pY,ref.Y, d.pY, d.Y, Miner, :);
+    M_Miner_qFish = QInd_Fish( ref.pM,ref.M, d.pM, d.M, Miner, :);
+    pM_Miner_pFish = PInd_Fish( ref.pM,ref.M, d.pM, d.M, Miner, :);
+    X_Miner_qFish = QInd_Fish( ref.pX,ref.X, d.pX, d.X, Miner, :);
+    pX_Miner_pFish = PInd_Fish( ref.pX,ref.X, d.pX, d.X, Miner, :);
 
     // Variations of macroeconomic identities in real terms at the aggregated level: Production = Private Consumption + Public Consumption + Investment + Exports - Imports
 
     // Initial value shares for each components of GDP
-    BY.IC_Miner_Prod_ValueShare	=  sum(BY.IC_value(Miner,:))./sum(BY.Output_value(Miner)) ;
-    BY.C_Miner_Prod_ValueShare	 =  sum(BY.C_value(Miner))  ./sum(BY.Output_value(Miner)) ;
-    BY.G_Miner_Prod_ValueShare	 =  sum(BY.G_value(Miner))  ./sum(BY.Output_value(Miner)) ;
-    BY.I_Miner_Prod_ValueShare	 =  sum(BY.I_value(Miner))  ./sum(BY.Output_value(Miner)) ;
-    BY.X_Miner_Prod_ValueShare	 =  sum(BY.X_value(Miner))  ./sum(BY.Output_value(Miner)) ;
-    BY.M_Miner_Prod_ValueShare	 = -sum(BY.M_value(Miner))  ./sum(BY.Output_value(Miner)) ;
+    ref.IC_Miner_Prod_ValueShare	=  sum(ref.IC_value(Miner,:))./sum(ref.Output_value(Miner)) ;
+    ref.C_Miner_Prod_ValueShare	 =  sum(ref.C_value(Miner))  ./sum(ref.Output_value(Miner)) ;
+    ref.G_Miner_Prod_ValueShare	 =  sum(ref.G_value(Miner))  ./sum(ref.Output_value(Miner)) ;
+    ref.I_Miner_Prod_ValueShare	 =  sum(ref.I_value(Miner))  ./sum(ref.Output_value(Miner)) ;
+    ref.X_Miner_Prod_ValueShare	 =  sum(ref.X_value(Miner))  ./sum(ref.Output_value(Miner)) ;
+    ref.M_Miner_Prod_ValueShare	 = -sum(ref.M_value(Miner))  ./sum(ref.Output_value(Miner)) ;
 
     // Laspeyres Quantity indices
-    Y_Miner_qLasp  = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Miner, :);
+    Y_Miner_qLasp  = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Miner, :);
 
-    IC_Miner_qLasp = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Miner, :);
-    C_Miner_qLasp  = QInd_Lasp( BY.pC, BY.C, d.pC, d.C, Miner, :);
-    G_Miner_qLasp  = QInd_Lasp( BY.pG, BY.G, d.pG, d.G, Miner, :);
-    I_Miner_qLasp  = QInd_Lasp( BY.pI, BY.I, d.pI, d.I, Miner, :);
-    X_Miner_qLasp  = QInd_Lasp( BY.pX, BY.X, d.pX, d.X, Miner, :);
-    M_Miner_qLasp  = QInd_Lasp( BY.pM, BY.M, d.pM, d.M, Miner, :);
+    IC_Miner_qLasp = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Miner, :);
+    C_Miner_qLasp  = QInd_Lasp( ref.pC, ref.C, d.pC, d.C, Miner, :);
+    G_Miner_qLasp  = QInd_Lasp( ref.pG, ref.G, d.pG, d.G, Miner, :);
+    I_Miner_qLasp  = QInd_Lasp( ref.pI, ref.I, d.pI, d.I, Miner, :);
+    X_Miner_qLasp  = QInd_Lasp( ref.pX, ref.X, d.pX, d.X, Miner, :);
+    M_Miner_qLasp  = QInd_Lasp( ref.pM, ref.M, d.pM, d.M, Miner, :);
 
     // Decomposition of variations for the second level macroeconomic identity
-    IC_Met_Prod_qLasp = BY.IC_Miner_Prod_ValueShare  .* IC_Miner_qLasp ;
-    C_Met_Prod_qLasp   = BY.C_Miner_Prod_ValueShare  .* C_Miner_qLasp ;
-    G_Met_Prod_qLasp   = BY.G_Miner_Prod_ValueShare  .* G_Miner_qLasp ;
-    I_Met_Prod_qLasp   = BY.I_Miner_Prod_ValueShare  .* I_Miner_qLasp ;
-    X_Met_Prod_qLasp   = BY.X_Miner_Prod_ValueShare  .* X_Miner_qLasp ;
-    M_Met_Prod_qLasp   = BY.M_Miner_Prod_ValueShare  .* M_Miner_qLasp ;
+    IC_Met_Prod_qLasp = ref.IC_Miner_Prod_ValueShare  .* IC_Miner_qLasp ;
+    C_Met_Prod_qLasp   = ref.C_Miner_Prod_ValueShare  .* C_Miner_qLasp ;
+    G_Met_Prod_qLasp   = ref.G_Miner_Prod_ValueShare  .* G_Miner_qLasp ;
+    I_Met_Prod_qLasp   = ref.I_Miner_Prod_ValueShare  .* I_Miner_qLasp ;
+    X_Met_Prod_qLasp   = ref.X_Miner_Prod_ValueShare  .* X_Miner_qLasp ;
+    M_Met_Prod_qLasp   = ref.M_Miner_Prod_ValueShare  .* M_Miner_qLasp ;
 
     /////////////////////////
     // Calcul des cost shares
     /////////////////////////
 
     ///// Energy cost share
-    BY.ENshareMET = Cost_Share( sum(BY.IC_value(Indice_EnerSect,Met))  , sum(BY.Y_value(Met))) * 100;
-    BY.ENshareMINER = Cost_Share( sum(BY.IC_value(Indice_EnerSect,Miner))  , sum(BY.Y_value(Miner))) * 100;
+    ref.ENshareMET = Cost_Share( sum(ref.IC_value(Indice_EnerSect,Met))  , sum(ref.Y_value(Met))) * 100;
+    ref.ENshareMINER = Cost_Share( sum(ref.IC_value(Indice_EnerSect,Miner))  , sum(ref.Y_value(Miner))) * 100;
     d.ENshareMET =  Cost_Share( sum(d.IC_value(Indice_EnerSect,Met))  , sum(d.Y_value(Met))) * 100;
     d.ENshareMINER = Cost_Share( sum(d.IC_value(Indice_EnerSect,Miner))  , sum(d.Y_value(Miner))) * 100;
-    evol_BY.ENshareMET = (divide(d.ENshareMET , BY.ENshareMET , %nan ) -1)*100 ;
-    evol_BY.ENshareMINER =(divide(d.ENshareMINER , BY.ENshareMINER , %nan ) -1)*100 ;
+    evol_ref.ENshareMET = (divide(d.ENshareMET , ref.ENshareMET , %nan ) -1)*100 ;
+    evol_ref.ENshareMINER =(divide(d.ENshareMINER , ref.ENshareMINER , %nan ) -1)*100 ;
 
     ///// Labour cost share
-    // BY.Unit_LabcostMET = BY.pL_MET.*BY.lambdaMET);// pL agrégé et lambda agrégé à calculer
+    // ref.Unit_LabcostMET = ref.pL_MET.*ref.lambdaMET);// pL agrégé et lambda agrégé à calculer
     // d.Unit_LabcostMET = sum(d.pL_MET.*d.lambdaMET); // pL agrégé et lambda agrégé à calculer
-    // evol_BY.Unit_LabcostMET = (divide(d.Unit_LabcostMET,BY.Unit_LabcostMET,%nan) - 1) * 100 ;
-    // BY.Unit_LabcostMINER = BY.pL_MINER.*BY.lambdaMINER  //pL agrégé et lambda agrégé à calculer
+    // evol_ref.Unit_LabcostMET = (divide(d.Unit_LabcostMET,ref.Unit_LabcostMET,%nan) - 1) * 100 ;
+    // ref.Unit_LabcostMINER = ref.pL_MINER.*ref.lambdaMINER  //pL agrégé et lambda agrégé à calculer
     // d.Unit_LabcostMINER = d.pL_MINER.*d.lambdalambdaMINER; // pL agrégé et lambda agrégé à calculer
-    // evol_BY.Unit_LabcostMINER = (divide(d.Unit_LabcostMINER,BY.Unit_LabcostMINER,%nan) - 1) * 100 ;
+    // evol_ref.Unit_LabcostMINER = (divide(d.Unit_LabcostMINER,ref.Unit_LabcostMINER,%nan) - 1) * 100 ;
 
     ///// Ratio Ener/Labour cost
-    // BY.ShareEN_LabMET = ( sum(BY.pIC_MET(Indice_EnerSect).*BY.alphaMET(Indice_EnerSect),"r") ) ./ BY.Unit_LabcostMET ; // pIC agrégé et alpha agrégé à calculer
+    // ref.ShareEN_LabMET = ( sum(ref.pIC_MET(Indice_EnerSect).*ref.alphaMET(Indice_EnerSect),"r") ) ./ ref.Unit_LabcostMET ; // pIC agrégé et alpha agrégé à calculer
     // d.ShareEN_LabMET = ( sum(d.pIC_MET(Indice_EnerSect).*d.alphaMET(Indice_EnerSect),"r") ) ./ d.Unit_LabcostMET  ;
-    // evol_BY.ShareEN_LabMET = (divide(d.ShareEN_LabMET, BY.ShareEN_LabMET, %nan)-1) * 100 ; 
-    // BY.ShareEN_LabMINER = ( sum(BY.pIC_MINER(Indice_EnerSect).*BY.alphaMINER(Indice_EnerSect),"r") ) ./ BY.Unit_LabcostMINER ; //// pIC agrégé et alpha agrégé à calculer
+    // evol_ref.ShareEN_LabMET = (divide(d.ShareEN_LabMET, ref.ShareEN_LabMET, %nan)-1) * 100 ; 
+    // ref.ShareEN_LabMINER = ( sum(ref.pIC_MINER(Indice_EnerSect).*ref.alphaMINER(Indice_EnerSect),"r") ) ./ ref.Unit_LabcostMINER ; //// pIC agrégé et alpha agrégé à calculer
     // d.ShareEN_LabMINER= ( sum(d.pIC_MINER(Indice_EnerSect).*d.alphaMINER(Indice_EnerSect),"r") ) ./ d.Unit_LabcostMINER  ; //// pIC agrégé et alpha agrégé à calculer
-    // evol_BY.ShareEN_LabMINER = (divide(d.ShareEN_LabMINER, BY.ShareEN_LabMINER, %nan)-1) * 100 ;
+    // evol_ref.ShareEN_LabMINER = (divide(d.ShareEN_LabMINER, ref.ShareEN_LabMINER, %nan)-1) * 100 ;
 
     /////////////////////////
     // Calcul Trade intensity
     /////////////////////////
 
-    BY.TradeIntMETMIN = TradeIntens([sum(BY.M_value(Met)),sum(BY.M_value(Miner))], [sum(BY.X_value(Met)),sum(BY.X_value(Miner))],[sum(BY.Y_value(Met)),sum(BY.Y_value(Miner))]);
+    ref.TradeIntMETMIN = TradeIntens([sum(ref.M_value(Met)),sum(ref.M_value(Miner))], [sum(ref.X_value(Met)),sum(ref.X_value(Miner))],[sum(ref.Y_value(Met)),sum(ref.Y_value(Miner))]);
     d.TradeIntMETMIN  = TradeIntens([sum(d.M_value(Met)),sum(d.M_value(Miner))], [sum(d.X_value(Met)),sum(d.X_value(Miner))],[sum(d.Y_value(Met)),sum(d.Y_value(Miner))]);
-    evol_BY.TradeIntMETMIN =  (divide(d.TradeIntMETMIN , BY.TradeIntMETMIN , %nan ) -1 )*100;
+    evol_ref.TradeIntMETMIN =  (divide(d.TradeIntMETMIN , ref.TradeIntMETMIN , %nan ) -1 )*100;
 
-    BY.M_penetRatMETMIN = M_penetRat([sum(BY.M_value(Met)),sum(BY.M_value(Miner))],[sum(BY.Y_value(Met)),sum(BY.Y_value(Miner))], [sum(BY.X_value(Met)),sum(BY.X_value(Miner))]);
+    ref.M_penetRatMETMIN = M_penetRat([sum(ref.M_value(Met)),sum(ref.M_value(Miner))],[sum(ref.Y_value(Met)),sum(ref.Y_value(Miner))], [sum(ref.X_value(Met)),sum(ref.X_value(Miner))]);
     d.M_penetRatMETMIN = M_penetRat([sum(d.M_value(Met)),sum(d.M_value(Miner))],[sum(d.Y_value(Met)),sum(d.Y_value(Miner))], [sum(d.X_value(Met)),sum(d.X_value(Miner))]);
-    evol_BY.M_penetRatMETMIN = ( divide(d.M_penetRatMETMIN , BY.M_penetRatMETMIN , %nan ) -1 )*100; 
+    evol_ref.M_penetRatMETMIN = ( divide(d.M_penetRatMETMIN , ref.M_penetRatMETMIN , %nan ) -1 )*100; 
 
-    CompAGG.BY = [["CompT_BY","Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"], [BY.ENshareMET;BY.ENshareMINER],BY.TradeIntMETMIN',BY.M_penetRatMETMIN' ]];
-    CompAGG.run = [["CompT_run", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"], [d.ENshareMET;d.ENshareMINER] ,d.TradeIntMETMIN',d.M_penetRatMETMIN']];
-    CompAGG.evol_BY = [["CompT%", "pY - p Fisher", "Y - qFisher","pM - p Fisher", "M - qFisher","pX - p Fisher","X - qFisher", "C- qFisher", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"],[ (pY_Met_pFish-1)*100;(pY_Miner_pFish-1)*100],  [ (Y_Met_qFish-1)*100;(Y_Miner_qFish-1)*100], [ (pM_Met_pFish-1)*100;(pM_Miner_pFish-1)*100],  [(M_Met_qFish-1)*100;(M_Miner_qFish-1)*100], [ (pX_Met_pFish-1)*100;(pX_Miner_pFish-1)*100],  [(X_Met_qFish-1)*100;(X_Miner_qFish-1)*100],[(C_Met_qFish-1)*100;(C_Miner_qFish-1)*100], [evol_BY.ENshareMET;evol_BY.ENshareMINER],evol_BY.TradeIntMETMIN',evol_BY.M_penetRatMETMIN']];
+    CompAGG.ref = [["TableTrade_"+ref_name,"Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"], [ref.ENshareMET;ref.ENshareMINER],ref.TradeIntMETMIN',ref.M_penetRatMETMIN' ]];
+    CompAGG.run = [["TableTrade_run", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"], [d.ENshareMET;d.ENshareMINER] ,d.TradeIntMETMIN',d.M_penetRatMETMIN']];
+    CompAGG.evol_ref = [["TableTrade%", "pY - p Fisher", "Y - qFisher","pM - p Fisher", "M - qFisher","pX - p Fisher","X - qFisher", "C- qFisher", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"],[ (pY_Met_pFish-1)*100;(pY_Miner_pFish-1)*100],  [ (Y_Met_qFish-1)*100;(Y_Miner_qFish-1)*100], [ (pM_Met_pFish-1)*100;(pM_Miner_pFish-1)*100],  [(M_Met_qFish-1)*100;(M_Miner_qFish-1)*100], [ (pX_Met_pFish-1)*100;(pX_Miner_pFish-1)*100],  [(X_Met_qFish-1)*100;(X_Miner_qFish-1)*100],[(C_Met_qFish-1)*100;(C_Miner_qFish-1)*100], [evol_ref.ENshareMET;evol_ref.ENshareMINER],evol_ref.TradeIntMETMIN',evol_ref.M_penetRatMETMIN']];
 	
 	if Output_files
-    csvWrite(CompAGG.BY,SAVEDIR+"CompAGG-BY_"+Name_time+".csv", ';');
+    csvWrite(CompAGG.ref,SAVEDIR+"CompAGG-"+ref_name+"_"+Name_time+".csv", ';');
     csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run_"+Name_time+".csv", ';');
-    csvWrite(CompAGG.evol_BY,SAVEDIR+"CompAGG-evol_BY_"+Name_time+".csv", ';');
+    csvWrite(CompAGG.evol_ref,SAVEDIR+"CompAGG-evol_"+ref_name"_"+Name_time+".csv", ';');
 	end
 
 

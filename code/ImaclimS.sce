@@ -309,13 +309,26 @@ for time_step=1:Nb_Iter
     if time_step == 1
         BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
     end
-
+	
+	// Reference year for results and indice prices
+	ref = BY;
+	evol_ref = evol_BY;
+	ref_name = "BY";
     exec(CODE+"outputs_indic.sce");
 
+	// Prints compare with year before
     if Output_prints
         exec(CODE+"output_prints.sce");
     end
-
+	
+	// Changing reference_year to compare results
+	if Country=="Argentina"& time_step>=2
+		ref = data_1;
+		evol_ref = evol_2015;
+		ref_name = "2015";
+		exec(CODE+"outputs_indic.sce");
+	end
+	
 
     ////////////////////////////////////////////////////////////
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN

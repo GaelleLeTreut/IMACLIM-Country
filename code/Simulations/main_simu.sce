@@ -101,7 +101,7 @@ mkdir(save_var_resol);
 TEST_MODE = %T;
 
 // Parameters of the simulations
-testing.countMax = 3;
+testing.countMax = 30;
 testing.debug_mode = %T;
 
 SIMU_MODE = %T;
