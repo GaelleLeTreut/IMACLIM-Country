@@ -710,9 +710,9 @@ TableTrade.evol_ref = [["TableTrade%",  "pY", "Y vol","pM", "M vol",Index_FC' + 
 
 
 if Output_files
-csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(TableTrade.run,SAVEDIR+"TableTrade-run_"+Name_time+".csv", ';');
-csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade-evol_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(TableTrade.run,SAVEDIR+"TableTrade-run_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(TableTrade(ref_name),SAVEDIR+"TableTrade-evol_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 end
 
 
@@ -980,17 +980,17 @@ end
 
 
 if Output_files
-csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR+"TableMacroExtended_"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR+"TableMacroRatio"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR+"TableMacro_Abs_"+Name_time+".csv", ';');
-csvWrite(OutputTable("CompSectTable_"+ref_name),SAVEDIR+"TableSectOutput_"+ref_name+"_"++Name_time+".csv", ';');
-csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+ref_name+"_"+Name_time+".csv", ';');
-// csvWrite(OutputTable("Elasticities_"+ref_name),SAVEDIR+"TableElasticities_"+Name_time+".csv", ';');
-// csvWrite(OutputTable("GDP_decom_"+ref_name),SAVEDIR+"GDP_decom_"+Name_time+".csv", ';');
-csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(OutputTable("Trade_Sect_"+ref_name),SAVEDIR+"Trade_Sect_"+ref_name+"_"+Name_time+".csv", ';');
-csvWrite(OutputTable("Trade_Sect_Share_"+ref_name),SAVEDIR+"Trade_Sect_Share_"+ref_name+"_"+Name_time+".csv", ';');
+csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR+"TableMacroExtended_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR+"TableMacro_Abs_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("CompSectTable_"+ref_name),SAVEDIR+"TableSectOutput_"+ref_name+"_"++Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+// csvWrite(OutputTable("Elasticities_"+ref_name),SAVEDIR+"TableElasticities_"+Name_time+"_"+simu_name+".csv", ';');
+// csvWrite(OutputTable("GDP_decom_"+ref_name),SAVEDIR+"GDP_decom_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Trade_Sect_"+ref_name),SAVEDIR+"Trade_Sect_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Trade_Sect_Share_"+ref_name),SAVEDIR+"Trade_Sect_Share_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 end
 
 
@@ -1011,9 +1011,9 @@ if AGG_type == "AGG_IndEner"
     evol.Synthese_CO2_EN_Tax = [["evol in/year before %","Energy sectors","Industries","Rest of the Economy","Households"]; ["Energy consumption (ktoe) without fuels",(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),sum(ini.IC(Indice_EnerSect_WithoutF,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.C(Indice_EnerSect_WithoutF,:)),sum(ini.C(Indice_EnerSect_WithoutF,:)),%nan)-1)*100];["Energy consumption (ktoe) of fuels",(divide(sum(d.IC(Indice_FuelProd,Indice_EnerSect)),sum(ini.IC(Indice_FuelProd,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.IC(Indice_FuelProd,Indice_IndustHeavy)),sum(ini.IC(Indice_FuelProd,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.IC(Indice_FuelProd,Indice_RestOfEconomy)),sum(ini.IC(Indice_FuelProd,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.C(Indice_FuelProd,:)),sum(ini.C(Indice_FuelProd,:)),%nan)-1)*100];["CO2 Emissions (MtCO2)",(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.CO2Emis_IC(Indice_EnerSect,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.CO2Emis_C(Indice_EnerSect,:)),sum(ini.CO2Emis_C(Indice_EnerSect,:)),%nan)-1)*100];["Carbon tax (k"+money+")",(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),sum(ini.Carbon_Tax_IC(Indice_EnerSect,Indice_RestOfEconomy)),%nan)-1)*100,(divide(sum(d.Carbon_Tax_C(Indice_EnerSect,:)),sum(ini.Carbon_Tax_C(Indice_EnerSect,:)),%nan)-1)*100];["Energy tax (k"+money+")", (divide(sum(d.Energy_Tax_IC(Indice_EnerSect))+sum(d.Energy_Tax_FC(Indice_EnerSect)),sum(ini.Energy_Tax_IC(Indice_EnerSect))+sum(ini.Energy_Tax_FC(Indice_EnerSect)),%nan)-1)*100,(divide(sum(d.Energy_Tax_IC(Indice_IndustHeavy))+sum(d.Energy_Tax_FC(Indice_IndustHeavy)),sum(ini.Energy_Tax_IC(Indice_IndustHeavy))+sum(ini.Energy_Tax_FC(Indice_IndustHeavy)),%nan)-1)*100,(divide(sum(d.Energy_Tax_IC(Indice_RestOfEconomy))+sum(d.Energy_Tax_FC(Indice_RestOfEconomy)),sum(ini.Energy_Tax_IC(Indice_RestOfEconomy))+sum(ini.Energy_Tax_FC(Indice_RestOfEconomy)),%nan)-1)*100,"-"]];
 
 	if Output_files
-	csvWrite(ini.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-ini_"+Name_time+".csv", ';');
-    csvWrite(d.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-run_"+Name_time+".csv", ';');
-    csvWrite(evol.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-evol_"+Name_time+".csv", ';');
+	csvWrite(ini.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-ini_"+Name_time+"_"+simu_name+".csv", ';');
+    csvWrite(d.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-run_"+Name_time+"_"+simu_name+".csv", ';');
+    csvWrite(evol.Synthese_CO2_EN_Tax,SAVEDIR+"Synthese_CO2_EN_Tax-evol_"+Name_time+"_"+simu_name+".csv", ';');
 	end
 
     Met  = [ find( Index_Sectors== "Steel_Iron" ), find( Index_Sectors== "NonFerrousMetals" ) ];
@@ -1138,9 +1138,9 @@ if AGG_type == "AGG_IndEner"
     CompAGG.evol_ref = [["TableTrade%", "pY - p Fisher", "Y - qFisher","pM - p Fisher", "M - qFisher","pX - p Fisher","X - qFisher", "C- qFisher", "Ener Cost Share", "Trade Intens", "Import Penet Rate"];[["Metals";"Non Metallic Minerals"],[ (pY_Met_pFish-1)*100;(pY_Miner_pFish-1)*100],  [ (Y_Met_qFish-1)*100;(Y_Miner_qFish-1)*100], [ (pM_Met_pFish-1)*100;(pM_Miner_pFish-1)*100],  [(M_Met_qFish-1)*100;(M_Miner_qFish-1)*100], [ (pX_Met_pFish-1)*100;(pX_Miner_pFish-1)*100],  [(X_Met_qFish-1)*100;(X_Miner_qFish-1)*100],[(C_Met_qFish-1)*100;(C_Miner_qFish-1)*100], [evol_ref.ENshareMET;evol_ref.ENshareMINER],evol_ref.TradeIntMETMIN',evol_ref.M_penetRatMETMIN']];
 	
 	if Output_files
-    csvWrite(CompAGG.ref,SAVEDIR+"CompAGG-"+ref_name+"_"+Name_time+".csv", ';');
-    csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run_"+Name_time+".csv", ';');
-    csvWrite(CompAGG.evol_ref,SAVEDIR+"CompAGG-evol_"+ref_name"_"+Name_time+".csv", ';');
+    csvWrite(CompAGG.ref,SAVEDIR+"CompAGG-"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+    csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run_"+Name_time+"_"+simu_name+".csv", ';');
+    csvWrite(CompAGG.evol_ref,SAVEDIR+"CompAGG-evol_"+ref_name"_"+Name_time+"_"+simu_name+".csv", ';');
 	end
 
 
