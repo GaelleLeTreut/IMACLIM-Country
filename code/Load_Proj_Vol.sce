@@ -42,6 +42,7 @@ head_col.headers = 'headers';
 head_col.ind_of_proj = 'indexes_of_proj';
 head_col.apply_proj = 'apply_the_proj';
 head_col.intens = 'Intens';
+head_col.can_be_agg = 'Can be agg';
 
 for param = fieldnames(head_col)'
     ind_of(param) = find(param_names == head_col(param));
@@ -163,23 +164,43 @@ end
 // If needed, aggregate the projections *
 // ------------------------------------ *
 
-if AGG_type <> '' & proj_desaggregated then
-
+if AGG_type <> '' & proj_desaggregated then  
+    
     nb_Sectors_ini = size(Index_CommoInit,1);
 
     for var = fieldnames(Proj_Vol)'
         if Proj_Vol(var).apply_proj then
+
+            // Check that the variable can be aggregated
+            if ~Proj_Vol(var).can_be_agg then
+                error('The variable ' + var + ' cannot be projected in an aggregated mode.')
+            end
+
+            // Indexes of aggregation
             if var == 'IC' then
-                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, all_IND);
+
+                agg_line = all_IND;
+                agg_col = all_IND;
+                
             elseif size(Proj_Vol(var).val,1) == nb_Sectors_ini ..
                 & size(Proj_Vol(var).val,2) == 1 then
-                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, all_IND, list(1));
+
+                agg_line = all_IND;
+                agg_col = list([1]);
+                
             elseif size(Proj_Vol(var).val,1) == 1 ..
                 & size(Proj_Vol(var).val,2) == nb_Sectors_ini then
-                Proj_Vol(var).val = aggregate(Proj_Vol(var).val, list(1), all_IND);
+
+                agg_line = list([1]);
+                agg_col = all_IND;
+                
             else
                 error('Projection of ' + var + ' needs a rule to aggregate the columns');
             end
+
+            // Apply the aggregation
+            Proj_Vol(var).val = aggregate(Proj_Vol(var).val, agg_line, agg_col);
+
         end
     end
 
@@ -189,7 +210,8 @@ function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
 
     warning(var_intens_name + ' est calculé à partir de Y initial : il faut la projection de Y.'),
     Proj_Vol(var_intens_name) = Proj_Vol(var_name);
-    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * (1.1 * Y');
+    warning('Proj_Vol.Y.val à la place de Y')
+    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Y';
     Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
     Proj_Vol(var_name).apply_proj = %F;
 
