@@ -91,6 +91,10 @@ if Output_files
     simu_name = '';
     if SIMU_MODE then
         simu_name = Current_Simu_Name;
+	elseif 	Scenario==""
+		simu_name='';
+	else
+		simu_name=Scenario;
     end
 
     syst_name = '';
