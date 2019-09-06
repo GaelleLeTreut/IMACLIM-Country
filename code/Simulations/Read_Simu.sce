@@ -143,6 +143,23 @@ for block = dash_simu_blocks
             end
             simu(simu_list_cat(i)) = block(ind_deb:ind_fin,1:col_kept);
         end
+
+        // Record the sensibilities to test
+        sensib_list = list();
+        current_sensib = [];
+        for line = simu(sensib)'
+            if line == sensib_sep then
+                sensib_list($+1) = current_sensib;
+                current_sensib = [];
+            else
+                current_sensib($+1) = line; 
+            end
+        end
+        if current_sensib <> [] then
+            sensib_list($+1) = current_sensib;
+        end
+        simu(sensib) = sensib_list;
+
         simulation_list($+1) = simu;
         
     else

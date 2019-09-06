@@ -27,18 +27,21 @@ functions_head = 'Functions';
 variables_head = 'Variables';
 simulation_head = 'Simulation';
 
+sensib_sep = '<<<';
+
 // Categories of the simulation
 remove_fun_head = 'Remove_Fun';
 add_fun_head = 'Add_Fun';
 dash_changes_head = 'Dash_changes';
 remove_var_head = 'Remove_Var';
 add_var_head = 'Add_Var';
+sensib = 'Sensib';
 
 simu_name_head = 'Name';
 
 // List of the categories
 simu_list_cat = list(remove_fun_head, add_fun_head, dash_changes_head, ..
-remove_var_head, add_var_head);
+remove_var_head, add_var_head, sensib);
 
 
 // -------------------- *
@@ -92,6 +95,10 @@ mkdir(save_sys);
 save_var_resol = 'Save_Var_Resol' + filesep();
 mkdir(save_var_resol);
 
+// Save Recursive runchoice
+save_rec_runchoice = 'Save_Rec_Runchoice' + filesep();
+mkdir(save_rec_runchoice);
+
 
 // --------------------------------- *
 // Parameters to launch ImaclimS.sce *
@@ -108,7 +115,7 @@ SIMU_MODE = %T;
 Current_Simu_Name = '';
 
 // -------------------------------- *
-// Launh each simulation one by one *
+// Launch each simulation one by one *
 // -------------------------------- *
 
 for simu = simulation_list
@@ -262,9 +269,46 @@ for simu = simulation_list
     // Launch ImaclimS.sce *
     // ------------------- *
 
-    cd('..');
-    launch_ImaclimS();
-    cd(SIMUS);
+    rec_runchoices = 'Recursive_RunChoices.sce';
+
+    // Do the sensibility tests
+    if length(simu(sensib)) > 0 then
+        for current_sensib = simu(sensib)
+
+            // Name of the sensibility test
+            sensib_name = current_sensib(1);
+            current_sensib(1) = [];
+
+            Current_Simu_Name = simu.Name + '_' + sensib_name;
+
+            // Save recursive runchoice
+            if listfiles(save_rec_runchoice) <> [] then
+                error('There is already a recurive_runchoice saved, please remove it from : ' ..
+                 + save_rec_runchoice)
+            else
+                copyfile(study_frames_country + rec_runchoices, save_rec_runchoice);
+            end
+            // Write the sensib
+            // open a file as text with write property
+            fd_w = mopen(study_frames_country + rec_runchoices,'wt');
+
+            for line = current_sensib'
+                // write a line in fd_w 
+                mputl(line, fd_w);
+            end
+            mclose(fd_w);
+            // Execute the code
+            cd('..');
+            launch_ImaclimS();
+            cd(SIMUS);
+            // Restore recursive runchoice
+            movefile(save_rec_runchoice + rec_runchoices, study_frames_country);
+        end
+    else
+        cd('..');
+        launch_ImaclimS();
+        cd(SIMUS);
+    end
 
 end
 
