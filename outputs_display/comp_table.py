@@ -12,7 +12,7 @@ import csv
 def output_table(file_name, lines_to_remove, save_path):
 
     # Load data of file_name
-    outputs = ro.read_output_file(file_name)
+    outputs, name_of = ro.read_output_file(file_name)
 
     # Remove lines
     for out_fold in outputs.keys():
@@ -43,8 +43,8 @@ def output_table(file_name, lines_to_remove, save_path):
             file = outputs[out_fold][time]
 
             # Legend for the column
-            table[0].append(out_fold)
-            table[1].append(time)
+            table[0].append(name_of[out_fold])
+            table[1].append(time[-4:])
 
             # Data of the column
             for i in range(len(file)):
