@@ -15,7 +15,7 @@ def read_output_file(file_to_read):
     file_to_read : *prefix* of a file to load."""
 
     def fold_name(out_fold):
-        """Record the name of the output out_foldectory."""
+        """Record the name of the output directory."""
         name = ''
         if 'name.txt' in os.listdir(out_fold):
             fichier = open(out_fold + 'name.txt', 'r')
@@ -85,18 +85,25 @@ def read_output_file(file_to_read):
     # Fill the data structure
 
     outputs = dict()
+    name_of = dict()
+    dir_id = 0
 
     for out_fold in list_outputs:
 
         if not os.path.isdir(out_fold):
-            print('Warning : ' + out_fold + ' is not a out_foldectory')   
+            print('Warning : ' + out_fold + ' is not a directory')   
 
         else:
-            # Name of the out_foldectory
+            # Name of the directory
             name = fold_name(out_fold)
+
+            # ID of directory
+            dir_id += 1
+            id = 'ID_' + str(dir_id)
             
             # Data structure
-            outputs[name] = dict()
+            outputs[id] = dict()
+            name_of[id] = name
                 
             # Read time sub-out_folders
             for time in os.listdir(out_fold):
@@ -106,10 +113,10 @@ def read_output_file(file_to_read):
                     time_path = out_fold + time + '/'
 
                     # Load the data
-                    outputs[name][time] = load_data(file_to_read, 
+                    outputs[id][time] = load_data(file_to_read, 
                                                     time_path)        
             
-    return outputs
+    return outputs, name_of
 
 
 def record_first_col(outputs, file_name):

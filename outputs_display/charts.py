@@ -97,7 +97,10 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext
     fig, axes = plt.subplots(figsize=(10, 10), nrows=nb_lines, ncols=nb_col,
                             subplot_kw=dict(projection='radar'))
 
-    if type(axes[0]) != type(axes):
+    if nb_lines == 1:
+        axes = [axes]
+
+    if nb_col == 1:
         axes = [[ax] for ax in axes]
 
     for i, ax_row in enumerate(axes):
@@ -147,7 +150,7 @@ def create_radar_charts(values, time_steps, title, colors, legend, nb_folds, ext
 def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm', 'y'], type_chart='bar', norm_ref=None):
 
     # Load data of files to read
-    outputs = ro.read_output_file(file_name)
+    outputs, name_of = ro.read_output_file(file_name)
 
     # lines kept
     lines_to_draw = []
@@ -214,10 +217,15 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
 
         nb_folds = len(list(outputs.keys()))
 
+        # Legend
+        ids = list(outputs.keys())
+        legend = [name_of[id] for id in ids]
+
         # BAR CHARTS
 
         if type_chart == 'bar':
-            create_bar_charts(time_steps, values_chart, chart, list(outputs.keys()), nb_folds)
+
+            create_bar_charts(time_steps, values_chart, chart, legend, nb_folds)
 
         # RADAR CHARTS
 
@@ -229,7 +237,7 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
                 end = min(len(time_steps), i+nb_max)
                 time_steps_part = time_steps[deb:end]
                 
-                create_radar_charts(values_chart, time_steps_part, chart, colors, list(outputs.keys()), nb_folds,ext='_'+str(ext))
+                create_radar_charts(values_chart, time_steps_part, chart, colors, legend, nb_folds,ext='_'+str(ext))
                 ext += 1
         else:
             raise Exception('type_chart unknown')
@@ -304,5 +312,5 @@ if __name__ == "__main__":
     build_charts(work_file, charts_to_draw, save_path, type_chart='bar')
     
     work_file, charts_to_draw2, save_path = data_macro()
-    build_charts(work_file, charts_to_draw, save_path, type_chart='radar', norm_ref='NDC')
+    build_charts(work_file, charts_to_draw, save_path, type_chart='radar')#, norm_ref='NDC')
     
