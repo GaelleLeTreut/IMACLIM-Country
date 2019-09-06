@@ -3,6 +3,10 @@
 
 function Prices = buildPriceT( pIC , pFC, w, pL, pK, pY, pM, p, fact , decimals )
 
+	if Country == "Argentina"
+		fact= 1;
+	end
+
     indexCommo = part(Index_Commodities,1:5);
 
     pIC = round( pIC * fact * 10^decimals ) / 10^decimals;
@@ -32,6 +36,10 @@ endfunction
 
 function TechCOef = buildTechCoefT( alpha, lambda, kappa, fact , decimals )
 
+	if Country == "Argentina"
+		fact= 1;
+	end
+
     indexCommo = part(Index_Commodities,1:5);
 
     alpha = round( alpha * fact * 10^decimals ) / 10^decimals;
@@ -52,6 +60,10 @@ endfunction
 // Emissions table
 
 function CO2Emis = buildEmisT( CO2Emis_IC , CO2Emis_C , CO2Emis_X, CO2Emis_Sec,Tot_CO2Emis_IC,Tot_CO2Emis_C,DOM_CO2, fact , decimals )
+
+	if Country == "Argentina"
+		fact= 1;
+	end
 
     indexCommo = part(Index_Commodities,1:5);
 
@@ -84,6 +96,10 @@ endfunction
 
 function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, Uses, fact , decimals )
 
+	if Country == "Argentina"
+		fact= 1;
+	end
+
     indexCommo = part(Index_Commodities,1:5);
 
     IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
@@ -113,6 +129,10 @@ endfunction
 
 function iot = buildIotQ( ic , fc , oth_io, fact , decimals )
 
+	if Country == "Argentina"
+		fact= 1;
+	end
+
     indexCommo = part(Index_Commodities,1:5);
 
     IC = round( ic * fact * 10^decimals ) / 10^decimals;
@@ -134,6 +154,11 @@ endfunction
 // Economic account table
 
 function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
+
+	if Country == "Argentina"
+		fact= 1;
+	end
+	
     Ecotable = round( Ecotable * fact * 10^decimals ) / 10^decimals;
 
     EcoAccountT = emptystr(nb_DataAccount+1,nb_InstitAgents + 1);
