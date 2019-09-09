@@ -24,7 +24,7 @@ function [Constraints_Deriv] = f_resolution(X_Deriv_Var_init, VarDimMat, RowNumC
             warning("nb imaginaires")
             // Constraints_Deriv = abs(Constraints_Deriv) * 1e5;
             print(out,find(imag(Constraints_Deriv)~=0))
-            print(out,bounds.name(find(imag(Constraints_Deriv)~=0))')
+            // print(out,bounds.name(find(imag(Constraints_Deriv)~=0))')
             error('nb imaginaires');
         else
             Constraints_Deriv = real(Constraints_Deriv);
