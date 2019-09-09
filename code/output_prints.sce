@@ -81,5 +81,5 @@ print(out,ecoT.evo);
 
 
 print(out,"===== MAIN MACRO OUTPUT ==============================");
-print(out,OutputTable.MacroT);
+print(out,OutputTable("MacroT_"+ref_name));
 
