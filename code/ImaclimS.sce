@@ -271,6 +271,7 @@ for time_step=1:Nb_Iter
 	// Give the year into file name instead of the time step
 	if isdef("Proj_Macro")
 	Name_time=	Proj_Macro.current_year(time_step);
+	Init_year = Proj_Macro.reference_year(1);
 		if time_step > 1
 		YearBef = Proj_Macro.reference_year(time_step);
 		elseif time_step==1
@@ -279,13 +280,18 @@ for time_step=1:Nb_Iter
 	else
 	Name_time = time_step;
 	YearBef = "StepBef";
+	Init_year = "Calib_Year";
 	end
 	
     // Creation of a new output subdirectory for each time step
     //if Nb_Iter<>1
     if Output_files
-            SAVEDIR = OUTPUT +runName + filesep() + "Time_" + Name_time + filesep();
-            mkdir(SAVEDIR);   
+        SAVEDIR = OUTPUT +runName + filesep() + "Time_" + Name_time + filesep();
+        mkdir(SAVEDIR);
+			if time_step==1
+			    SAVEDIR_INIT = OUTPUT +runName + filesep() + "Time_" +Init_year+ filesep();
+				mkdir(SAVEDIR_INIT);
+			end
     end
     //end
 
@@ -312,25 +318,57 @@ for time_step=1:Nb_Iter
     exec(CODE+"outputs.sce");
     if time_step == 1
         BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
-    end
+		//Save BY for full output template
+		ref = BY;
+		evol_ref = evol_init;
+		ref_name = "BY";
+		Out = BY ;
+		Name_time_temp = Name_time;
+		Name_time = Init_year;	
+	    OutputfilesBY =%F;
+		exec(CODE+"outputs_indic.sce");	
+		Name_time =Name_time_temp;
 	
+    end
+
 	// Reference year for results and indice prices
 	ref = BY;
 	evol_ref = evol_BY;
 	ref_name = "BY";
+	Out = d ;
+	OutputfilesBY =%T;
     exec(CODE+"outputs_indic.sce");
-
+	
 	// Prints compare with year before
     if Output_prints
         exec(CODE+"output_prints.sce");
     end
 	
 	// Changing reference_year to compare results
-	if Country=="Argentina"& time_step>=2
-		ref = data_1;
-		evol_ref = evol_2015;
-		ref_name = "2015";
-		exec(CODE+"outputs_indic.sce");
+	if Country=="Argentina"	
+		if time_step==1
+			ref = d;
+			evol_ref = evol_2015;
+			ref_name = "2015";
+			Out = d ;
+			OutputfilesBY =%F;
+				if Output_files
+					SAVEDIR_INIT_temp =SAVEDIR_INIT; 
+					SAVEDIR_INIT = SAVEDIR;
+				end
+			exec(CODE+"outputs_indic.sce");	
+			OutputfilesBY =%T;
+				if Output_files
+					SAVEDIR_INIT =SAVEDIR_INIT_temp;
+					clear SAVEDIR_INIT_temp 
+				end
+		elseif time_step>=2
+			ref = data_1;
+			evol_ref = evol_2015;
+			ref_name = "2015";
+			Out=d;
+			exec(CODE+"outputs_indic.sce");
+		end
 	end
 	
 

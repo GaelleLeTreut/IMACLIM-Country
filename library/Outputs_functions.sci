@@ -96,10 +96,6 @@ endfunction
 
 function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, Uses, fact , decimals )
 
-	if Country == "Argentina"
-		fact= 1;
-	end
-
     indexCommo = part(Index_Commodities,1:5);
 
     IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
@@ -119,7 +115,7 @@ function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, U
     iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
     iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
 
-    iot($+2,1:2) = ["Units",1/fact+"k"+money ]
+    iot($+2,1:2) = ["Units",money_disp_unit+money ]
 
 endfunction
 
@@ -154,16 +150,12 @@ endfunction
 // Economic account table
 
 function EcoAccountT = buildEcoTabl( Ecotable, fact , decimals )
-
-	if Country == "Argentina"
-		fact= 1;
-	end
 	
     Ecotable = round( Ecotable * fact * 10^decimals ) / 10^decimals;
 
     EcoAccountT = emptystr(nb_DataAccount+1,nb_InstitAgents + 1);
     EcoAccountT (1:nb_DataAccount+1,1:nb_InstitAgents + 1) = [["Economic Table";Index_DataAccount],[Index_InstitAgents';Ecotable]];
 
-    EcoAccountT($+2,1:2) = [ "Units",1/fact+" k"+money ];
+    EcoAccountT($+2,1:2) = [ "Units",money_disp_unit+money ];
 
 endfunction

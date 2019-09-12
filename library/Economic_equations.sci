@@ -2421,14 +2421,14 @@ endfunction
 /// Trade balance constant to GDP growth
 function y = Trade_Balance_Const_1( pM, pX, X, M, GDP);
 
-  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
+  y = (sum(pX.*X) - sum(pM.*M))/(GDP/CPI) - (sum(ini.pX.*ini.X) - sum(ini.pM.*ini.M))/ini.GDP
 
 endfunction
 
 /// Trade balance constant to GDP growth
 function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
-  y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(BY.pX.*BY.X) - sum(BY.pM.*BY.M))/BY.GDP
+  y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(ini.pX.*ini.X) - sum(ini.pM.*ini.M))/ini.GDP
 
 
 endfunction

@@ -36,15 +36,32 @@
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";
+	money_unit_data = "10^3;"
+	money_disp_unit ="Millions of ";
+	money_disp_adj = 10^-3;
+	Labour_unit = "ThousandFTE";
+	
 elseif Country=="France" then
     money="euro";
     moneyTex="\euro";
+	money_unit_data ="10^3";
+	money_disp_unit ="Millions of ";
+	money_disp_adj = 10^-3;
+	Labour_unit = "ThousandFTE";
+	
 elseif Country=="Argentina" then
-    money="million pesos";
-    moneyTex="million pesos";
+    money="pesos";
+    moneyTex="pesos";
+	money_unit_data ="10^6";
+	money_disp_unit ="Millions of ";
+	money_disp_adj = 1;
+	Labour_unit = "ThousandFTE";
 else
     money="current money";
-    moneyTex="Current money"
+    moneyTex="Current money ";
+	money_unit_data ="1";
+	money_disp_adj = 1;
+	Labour_unit = "ThousandFTE";
 end
 
 /// Deleting random values resulting from 0 
@@ -490,7 +507,8 @@ for elt=1:nb_DataAccount
     execstr ("ini.Ecotable(elt,:)"+"="+"ini."+varname+";");
 end
 
-ini.NetLendingRoW_GDP = (ini. NetLending(Indice_RestOfWorld)./ini.GDP);
+ini.NetLendingGov = ini.NetLending(Indice_Government);
+ini.NetLendingRoW_GDP = (ini.NetLending(Indice_RestOfWorld)./ini.GDP);
 
 // Run
 d.Trade_Balance =(sum(d.M_value) - sum(d.X_value))*(Index_InstitAgents' == "RestOfWorld");
@@ -590,7 +608,8 @@ for elt=1:nb_DataAccount
     execstr ("d.Ecotable(elt,:)"+"="+"d."+varname+";");
 end
 
-d.NetLendingRoW_GDP = (d. NetLending(Indice_RestOfWorld)./d.GDP);
+d.NetLendingGov= d.NetLending(Indice_Government);
+d.NetLendingRoW_GDP = (d.NetLending(Indice_RestOfWorld)./d.GDP);
 
 /////////////////
 // Price table
@@ -613,17 +632,26 @@ if time_step ==1
 execstr("BY." + fieldnames(ini) +" = ini." + fieldnames(ini) + ";");
 end
 
-evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP','I');
+evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP','NetLendingGov','I');
 
 for ind=1:size(evol_list)
 	varname = evol_list(ind);
 	execstr("evol_BY."+varname+"=divide(d."+varname+",BY."+varname+",%nan)");
 	
-		if time_step>1
-			execstr("evol."+varname+"=divide(d."+varname+",ini."+varname+",%nan)");
-			/// Specific case for argentina to compare with 2015 : step 1 of the resolution
-			execstr("evol_2015."+varname+"=divide(d."+varname+",data_1."+varname+",%nan)")
-		end
+	if time_step == 1
+		execstr("evol_init."+varname+"=divide(ini."+varname+",ini."+varname+",%nan)")
+	end
+	
+	if time_step>1
+		execstr("evol."+varname+"=divide(d."+varname+",ini."+varname+",%nan)");
+		/// Specific case for argentina to compare with 2015 : step 1 of the resolution
+		execstr("evol_2015."+varname+"=divide(d."+varname+",data_1."+varname+",%nan)")
+	end
+	
+	if Country=="Argentina"& time_step==1
+	/// Specific case for argentina to compare with 2015 : step 1 of the resolution
+	execstr("evol_2015."+varname+"=divide(d."+varname+",d."+varname+",%nan)")
+	end
 
 end
 
@@ -690,8 +718,8 @@ end
 /////////////////////////////////////////////////
 // IOT in value
 
-io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,1e-6 , 1);
-io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, 1e-6 , 1);
+io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,money_disp_adj , 1);
+io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, money_disp_adj , 1);
 io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , 1);
 
 if time_step ==1
@@ -729,8 +757,8 @@ end
 /////////////////////////////////////////////////
 // Economic account table
 
-ecoT.ini = buildEcoTabl(ini.Ecotable , 1e-6 , 1);
-ecoT.run = buildEcoTabl(d.Ecotable , 1e-6 , 1);
+ecoT.ini = buildEcoTabl(ini.Ecotable , money_disp_adj , 1);
+ecoT.run = buildEcoTabl(d.Ecotable , money_disp_adj , 1);
 ecoT.evoBY = buildEcoTabl(evol_BY.Ecotable-1 ,100 , 1);
 
 if time_step ==1

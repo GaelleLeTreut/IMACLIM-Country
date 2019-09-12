@@ -274,29 +274,32 @@ def build_charts(file_name, charts_to_draw, save_path, colors=['b', 'r', 'g', 'm
         
 def data_macro():
 
-    macro_csv_name = 'TableMacroExtended_BY'
+    macro_csv_name = 'TableMacroRatioBY_'
 
     charts_to_draw = {
         'Macro' :
         [
-            'Real GDP (Laspeyres)', 
-            'Households consumption in GDP', 
-            'Public consumption in GDP'
+            'GDP (Laspeyres)', 
+            'Kappa Intensity (Laspeyres)', 
+            'Real Households consumption (Laspeyres)',
+            'Total Emissions',
+            'Total Employment'
+            
         ],
-        'Chart Titre 2' :
-        [
-            'Imports in GDP',
-            'Imports/Domestic production ratio',
-            'Imports of Non Energy goods in volume',
-            'Real GDP (Laspeyres)', 
-            'Households consumption in GDP',
-            'Labour Intensity (Laspeyres)',
-            'Energy Intensity (Laspeyres)'
-        ],
-        'Chart Titre 3' :
-        [
-            'Labour Intensity (Laspeyres)'
-        ]
+#        'Chart Titre 2' :
+#        [
+#            'Imports in GDP',
+#            'Imports/Domestic production ratio',
+#            'Imports of Non Energy goods in volume',
+#            'Real GDP (Laspeyres)', 
+#            'Households consumption in GDP',
+#            'Labour Intensity (Laspeyres)',
+#            'Energy Intensity (Laspeyres)'
+#        ],
+#        'Chart Titre 3' :
+#        [
+#            'Labour Intensity (Laspeyres)'
+#        ]
     }
 
     # Folder for results
@@ -312,5 +315,5 @@ if __name__ == "__main__":
     build_charts(work_file, charts_to_draw, save_path, type_chart='bar')
     
     work_file, charts_to_draw2, save_path = data_macro()
-    build_charts(work_file, charts_to_draw, save_path, type_chart='radar')#, norm_ref='NDC')
+    build_charts(work_file, charts_to_draw, save_path, type_chart='radar')#, norm_ref='CCS')
     
