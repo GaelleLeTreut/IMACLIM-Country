@@ -36,7 +36,7 @@
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";
-	money_unit_data = "10^3;"
+	money_unit_data = "10^3";
 	money_disp_unit ="Millions of ";
 	money_disp_adj = 10^-3;
 	Labour_unit = "ThousandFTE";
