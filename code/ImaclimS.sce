@@ -280,7 +280,7 @@ for time_step=1:Nb_Iter
 	else
 	Name_time = time_step;
 	YearBef = "StepBef";
-	Init_year = "Calib_Year";
+	Init_year = "value_0";
 	end
 	
     // Creation of a new output subdirectory for each time step

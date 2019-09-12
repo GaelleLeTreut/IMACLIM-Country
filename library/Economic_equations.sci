@@ -1846,7 +1846,7 @@ endfunction
 ///		Prix pL remplacé par pL / (1+Mhu)^t dans les équations d'arbitrage : le salaire récupère les gains de productivité, ce qui ne change pas les arbitrages techniques dans la production
 ///		le calcul de la productivité du travail Labour_Product = (1+Mhu)^t est fait dans Homothetic_projection.sce
 
-function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, Labour, Capital_consumption, IC)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
@@ -1874,7 +1874,32 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
     
-    if is_projected('alpha') then
+	
+	//// Projection Volume
+    if is_projected('Labour') then
+		Labour_temp = apply_proj_val(Labour,'Labour');
+		ind_IC_r = Proj_Vol('Labour').ind_of_proj(1)(1);
+		ind_IC_c = Proj_Vol('Labour').ind_of_proj(1)(2);
+		lambda(ind_IC_r,ind_IC_c)  =  Labour_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
+    end
+	
+	if is_projected('Capital_consumption') then
+		CapitalCon_temp = apply_proj_val(Capital_consumption,'Capital_consumption');
+		ind_IC_r = Proj_Vol('Capital_consumption').ind_of_proj(1)(1);
+		ind_IC_c = Proj_Vol('Capital_consumption').ind_of_proj(1)(2);
+		kappa(ind_IC_r,ind_IC_c)  =  CapitalCon_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
+    end
+	
+	if is_projected('IC') then
+		IC_temp = apply_proj_val(IC,'IC');
+		ind_IC_r = Proj_Vol('IC').ind_of_proj(1)(1);
+		ind_IC_c = Proj_Vol('IC').ind_of_proj(1)(2);
+       alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
+    end
+
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
         alpha = apply_proj_val(alpha, 'alpha');
     end
 
@@ -1890,7 +1915,7 @@ endfunction
 
 
 //	Fixed technical coefficients
-function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital) ;
+function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital,Labour, Capital_consumption, IC) ;
     alpha 	=  BY.alpha ;
     lambda = BY.lambda ;
     kappa 	= BY.kappa ;
@@ -1910,7 +1935,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL,
 endfunction
 
 /// function for assessing carbon tax resulting of a carbon cap
-function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y,Labour, Capital_consumption, IC)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
@@ -2328,9 +2353,6 @@ function [y] = IC_Const_1(IC, Y, alpha) ;
 
     y1 = IC - ( alpha .* (ones(nb_Commodities, 1).*.Y') ) ;
 
-    if is_projected('IC') then
-        y1 = apply_proj_eq(y1, IC, 'IC');
-    end
 
     y = matrix(y1, -1 , 1);
 endfunction
@@ -2339,9 +2361,6 @@ function IC = IC_Val_1(Y, alpha)
 
     IC = ( alpha .* (ones(nb_Commodities, 1).*.Y') ) ;
 
-    if is_projected('IC') then
-        IC = apply_proj_val(IC, 'IC');
-    end
 
 endfunction
 
@@ -2487,20 +2506,12 @@ function [y] = Capital_Consump_Const_1(Capital_consumption, Y, kappa) ;
 
     y1 = Capital_consumption - ( kappa .* Y' ) ;
 
-    if is_projected('Capital_consumption') then
-        y1 = apply_proj_val(y1,Capital_consumption,'Capital_consumption');
-    end
-
     y=y1';
 endfunction
 
 function Capital_consumption = Capital_Consump_Val_1(Y, kappa)
 
     Capital_consumption = ( kappa .* Y' );
-
-    if is_projected('Capital_consumption') then
-        Capital_consumption = apply_proj_val(Capital_consumption,'Capital_consumption');
-    end
 
 endfunction
 
@@ -2927,20 +2938,12 @@ function [y] = Employment_Const_1(Labour, lambda, Y) ;
 
     y1 = Labour - ( lambda .* Y' );
 
-    if is_projected('Labour') then
-        y1 = apply_proj_eq(y1,Labour,'Labour');
-    end
-
     y = y1';
 endfunction
 
 function Labour = Employment_Val_1(lambda, Y)
 
     Labour = ( lambda .* Y' );
-
-    if is_projected('Labour') then
-        Labour = apply_proj_val(Labour,'Labour');
-    end
 
 endfunction
 

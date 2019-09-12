@@ -419,6 +419,8 @@ d.Corp_EnConso = sum(d.IC(Indice_EnerSect,:));
 
 
 
+
+
 ///////////////////////
 // Matrix IOT - Quantities
 ///////////////////////
@@ -868,6 +870,12 @@ end
 execstr(fieldnames(d)+"= d." + fieldnames(d));
 
 
+// Check after loading outputs
+for line  = 1:nb_Commodities
+    if abs(d.ERE_balance_val(line))>=Err_balance_tol then
+       error("The IOT output is not well balanced , something did not go well for the sector n°"+line+";Supply-Uses not balanced")
+    end
+end
 
 
 
