@@ -381,7 +381,7 @@ ini.OthPart_IOT = [ini.Value_Added;ini.M_value;ini.Margins;ini.SpeMarg_IC;ini.Sp
 IC_value_Initval =  [ ["IC_value_Initval"; Index_Commodities ] , [Index_Sectors';ini.IC_value] ] ;
 FC_value_Initval =  [ ["FC_value_Initval"; Index_Commodities ] , [Index_FC';ini.FC_value] ] ;
 OthPart_IOT_Initval = [ ["OthPart_IOT_Initval";Index_OthPart_IOT] , [Index_Sectors';ini.OthPart_IOT] ];
-ini.Carbon_Tax = sum(ini.Carbon_Tax_IC',"r") + sum(ini.Carbon_Tax_C',"r")+sum(ini.Carbon_Tax_M);
+ini.Carbon_Tax = sum(ini.Carbon_Tax_IC',"r") + sum(ini.Carbon_Tax_C',"r");
 ini.Supply = (sum(ini.IC_value,"r")+sum(ini.OthPart_IOT,"r")+ini.Carbon_Tax);
 ini.Uses = sum(ini.IC_value,"c")+sum(ini.FC_value,"c");
 
@@ -406,7 +406,7 @@ d.tot_IC_col = sum(d.IC , "c");
 d.tot_supply = sum (d.M+d.Y, "c");
 
 d.OthPart_IOT = [d.Value_Added;d.M_value;d.Margins;d.SpeMarg_IC;d.SpeMarg_FC;d.Taxes];
-d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r")+d.Carbon_Tax_M;
+d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r");
 d.Supply = (sum(d.IC_value,"r")+sum(d.OthPart_IOT,"r")+d.Carbon_Tax);
 d.Uses = sum(d.IC_value,"c")+sum(d.FC_value,"c");
 
@@ -414,7 +414,7 @@ d.Uses = sum(d.IC_value,"c")+sum(d.FC_value,"c");
 
 d.ERE_balance_val = d.Supply- d.Uses';
 
-d.Total_taxes = sum(d.Taxes)+sum(d.Carbon_Tax_C)+sum(d.Carbon_Tax_IC)+sum(ini.Carbon_Tax_M);
+d.Total_taxes = sum(d.Taxes)+sum(d.Carbon_Tax_C)+sum(d.Carbon_Tax_IC)+sum(d.Carbon_Tax_M);
 d.HH_EnBill = sum(d.C_value(Indice_EnerSect));
 d.Corp_EnBill = sum(d.IC_value(Indice_EnerSect,:));
 d.HH_EnConso = sum(d.C(Indice_EnerSect));
