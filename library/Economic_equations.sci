@@ -1894,7 +1894,8 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
 		IC_temp = apply_proj_val(IC,'IC');
 		ind_IC_r = Proj_Vol('IC').ind_of_proj(1)(1);
 		ind_IC_c = Proj_Vol('IC').ind_of_proj(1)(2);
-       alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
+       // alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
+	   alpha(Indice_EnerSect,:)  =  divide(IC_temp(Indice_EnerSect,:),(ones(Indice_EnerSect).*.Y(:))',0)
     end
 
 		
