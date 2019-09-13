@@ -1,16 +1,16 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
-System_Resol;Systeme_ProjHomot_BRA
-// System_Resol;Systeme_Static_BRA
+// System_Resol;Systeme_ProjHomot_BRA
+System_Resol;Systeme_Static_BRA
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static_BRA
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA
 // SystemOpt_Resol;SystemOpt_StaticCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
+// study;Static_RunChoices
 // study;Projection_evolution
-// study;Recursive_RunChoices
+study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_PMR19
@@ -41,7 +41,7 @@ Scenario;PMR_Ref
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
-Output_files;%F
+Output_files;%T
 Output_prints;%T
 // SELECT the uses of carbon tax revenues;
 Recycling_Option;
