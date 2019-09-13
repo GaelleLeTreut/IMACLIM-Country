@@ -1,6 +1,6 @@
 exec('Load_file_structure.sce');
 
-num_run = 2;
+num_run = 1;
 
 // CarbonTax_Diff_IC_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_IC_AGG_PMR19.csv';
 CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_" + string(num_run) + ".csv";

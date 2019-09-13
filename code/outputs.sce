@@ -406,7 +406,7 @@ d.tot_IC_col = sum(d.IC , "c");
 d.tot_supply = sum (d.M+d.Y, "c");
 
 d.OthPart_IOT = [d.Value_Added;d.M_value;d.Margins;d.SpeMarg_IC;d.SpeMarg_FC;d.Taxes];
-d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r")+sum(d.Carbon_Tax_M);
+d.Carbon_Tax = sum(d.Carbon_Tax_IC',"r") + sum(d.Carbon_Tax_C',"r")+d.Carbon_Tax_M;
 d.Supply = (sum(d.IC_value,"r")+sum(d.OthPart_IOT,"r")+d.Carbon_Tax);
 d.Uses = sum(d.IC_value,"c")+sum(d.FC_value,"c");
 

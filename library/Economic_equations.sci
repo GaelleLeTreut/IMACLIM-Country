@@ -2708,8 +2708,10 @@ function pC = pC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg
     Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* Emission_Coef_C  ;
 
     // Household consumption price: pC (nb_Commodities, nb_Households)
-    pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') ) + Indirect_tax_rates)  ;
-    
+    // pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') ) + Indirect_tax_rates)  ;
+    pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates )  + Indirect_tax_rates).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') )
+	
+	
 endfunction
 
 
