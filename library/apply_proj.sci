@@ -15,7 +15,7 @@ function y = apply_proj_eq(eq, var_value, var_name)
 
 endfunction
 
-function var_proj = apply_proj_val(var_value, var_name)
+function var_proj = apply_proj_val(var_value, var_name, Proj_Vol)
     
     // var_value : variable before projection
     // var_name : name of the variable

@@ -1874,28 +1874,39 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
     
-	
+    // Proj structure for parameters
+	Proj_param = struct();
+
 	//// Projection Volume
     if is_projected('Labour') then
-		Labour_temp = apply_proj_val(Labour,'Labour');
-		ind_IC_r = Proj_Vol('Labour').ind_of_proj(1)(1);
-		ind_IC_c = Proj_Vol('Labour').ind_of_proj(1)(2);
-		lambda(ind_IC_r,ind_IC_c)  =  Labour_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+		// Labour_temp = apply_proj_val(Labour,'Labour');
+		// ind_IC_r = Proj_Vol('Labour').ind_of_proj(1)(1);
+		// ind_IC_c = Proj_Vol('Labour').ind_of_proj(1)(2);
+		// lambda(ind_IC_r,ind_IC_c)  =  Labour_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
     end
 	
-	if is_projected('Capital_consumption') then
-		CapitalCon_temp = apply_proj_val(Capital_consumption,'Capital_consumption');
-		ind_IC_r = Proj_Vol('Capital_consumption').ind_of_proj(1)(1);
-		ind_IC_c = Proj_Vol('Capital_consumption').ind_of_proj(1)(2);
-		kappa(ind_IC_r,ind_IC_c)  =  CapitalCon_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+		// CapitalCon_temp = apply_proj_val(Capital_consumption,'Capital_consumption');
+		// ind_IC_r = Proj_Vol('Capital_consumption').ind_of_proj(1)(1);
+		// ind_IC_c = Proj_Vol('Capital_consumption').ind_of_proj(1)(2);
+		// kappa(ind_IC_r,ind_IC_c)  =  CapitalCon_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
     end
 	
-	if is_projected('IC') then
-		IC_temp = apply_proj_val(IC,'IC');
-		ind_IC_r = Proj_Vol('IC').ind_of_proj(1)(1);
-		ind_IC_c = Proj_Vol('IC').ind_of_proj(1)(2);
-       // alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
-	   alpha(Indice_EnerSect,:)  =  divide(IC_temp(Indice_EnerSect,:),(ones(Indice_EnerSect).*.Y(:))',0)
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+        // 	IC_temp = apply_proj_val(IC,'IC');
+        // 	ind_IC_r = Proj_Vol('IC').ind_of_proj(1)(1);
+        // 	ind_IC_c = Proj_Vol('IC').ind_of_proj(1)(2);
+        //    // alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
+        //    alpha(Indice_EnerSect,:)  =  divide(IC_temp(Indice_EnerSect,:),(ones(Indice_EnerSect).*.Y(:))',0)
     end
 
 		
@@ -2195,6 +2206,7 @@ function [y] =  SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg
     y5 =matrix (y5, -1, 1);
 
     y =[y1;y2;y3;y4;y5];
+
 
 endfunction
 
