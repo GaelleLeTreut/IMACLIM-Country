@@ -1846,7 +1846,7 @@ endfunction
 ///		Prix pL remplacé par pL / (1+Mhu)^t dans les équations d'arbitrage : le salaire récupère les gains de productivité, ce qui ne change pas les arbitrages techniques dans la production
 ///		le calcul de la productivité du travail Labour_Product = (1+Mhu)^t est fait dans Homothetic_projection.sce
 
-function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, Labour, Capital_consumption, IC)
+function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
