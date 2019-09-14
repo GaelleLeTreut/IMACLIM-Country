@@ -25,7 +25,7 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
 
     // Lance Imaclim
     TEST_MODE = %T;
-    testing.countMax = 3;
+    testing.countMax = 7;
     testing.debug_mode = %F;
     exec('ImaclimS.sce');
     
