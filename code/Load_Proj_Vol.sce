@@ -1,3 +1,5 @@
+// Remove all entries of Proj_Vol 
+clear Proj_Vol;
 
 // Check IOT_Qtities_TimeStep's aggregation
 proj_desaggregated = ..
