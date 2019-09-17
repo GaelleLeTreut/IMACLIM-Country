@@ -1249,7 +1249,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pX pFish/"+ref_name,											X_pFish															];..
 ["pY pFish/"+ref_name,											Y_pFish															];..
 ["pY Energy pLasp/"+ref_name,									Y_En_pLasp															];..
-["pY Non-Energy pLasp/"+ref_name,								Y_En_pLasp															];..
+["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp															];..
 ["pM pFish/"+ref_name,											M_pFish															];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
@@ -1268,6 +1268,10 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Energy - IC ktoe",												sum(Out.IC(Indice_EnerSect,:))									];..
 ["Energy - X ktoe",												sum(Out.X(Indice_EnerSect,:))										];..
 ["Energy - M ktoe",												sum(Out.M(Indice_EnerSect,:))										];..
+["---Quantities Index Laspeyres ---",								 ""																	];..
+["Real C qLasp",													C_qLasp										 					];..
+["Real C Energy qLasp",											C_En_qLasp										 					];..
+["Real C Non-Energy qLasp",										C_NonEn_qLasp										 					];..
 ["---Pseudo Quantities For Non-Energy ---",					 ""																	];..
 ["Y_"+Index_NonEnerSect,											money_disp_adj.*Out.Y(Indice_NonEnerSect)						];..
 ["M_"+Index_NonEnerSect,											money_disp_adj.*Out.M(Indice_NonEnerSect)						];..
