@@ -217,6 +217,15 @@ C_qLasp = QInd_Lasp( ref.pC, ref.C, Out.pC, Out.C, :, :);
 C_qPaas = QInd_Paas( ref.pC, ref.C, Out.pC, Out.C, :, :);
 C_qFish = QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, :);
 
+/// By Households classes if required
+if nb_Households <> 1
+	for ind=1:nb_Households
+		HH_qFish(1,ind) = QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, ind);
+		HH_pFish(1,ind) = PInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :,ind);
+	end
+end
+
+
 // Price indices (Laspeyres, Paasche and Fisher) - Households consumption - non energy goods
 C_NonEn_pLasp = PInd_Lasp( ref.pC, ref.C, Out.pC, Out.C, Indice_NonEnerSect, :);
 C_NonEn_pPaas = PInd_Paas( ref.pC, ref.C, Out.pC, Out.C, Indice_NonEnerSect, :);
@@ -262,6 +271,7 @@ C_qFish = QInd_Fish( ref.pC,ref.C, Out.pC, Out.C, :, :) ;
 
 // Approximation real Households consumption - non energy goods
 C_NonEn_qFish_app = QInd_Fish_app( ref.pC,ref.C, Out.pC, Out.C, Indice_NonEnerSect, :) ;
+
 
 ////////////////////////
 ////////////Public Consumption
@@ -563,6 +573,12 @@ kappa_pFish = PInd_Fish( ref.kappa, ref.Y', Out.kappa, Out.Y', :, :);
 lambda_pLasp = PInd_Lasp( ref.lambda, ref.Y', Out.lambda, Out.Y', :, :);
 lambda_pPaas = PInd_Paas( ref.lambda, ref.Y', Out.lambda, Out.Y', :, :);
 lambda_pFish = PInd_Fish( ref.lambda, ref.Y', Out.lambda, Out.Y', :, :);
+
+//Laspeyres, Paasche and Fisher indices for labour intensity of non energy goods (lambda treated as price)
+lambda_NonEn_pLasp = PInd_Lasp( ref.lambda, ref.Y', Out.lambda, Out.Y', :, Indice_NonEnerSect);
+lambda_NonEn_pPaas = PInd_Paas( ref.lambda, ref.Y', Out.lambda, Out.Y', :, Indice_NonEnerSect);
+lambda_NonEn_pFish = PInd_Fish( ref.lambda, ref.Y', Out.lambda, Out.Y', :, Indice_NonEnerSect);
+
 
 ////////////////////////
 //////////// Energy intensity
@@ -964,6 +980,64 @@ OutputTable("MacroT_Abs_"+Name_time) = [
 ["Firms Energy Conso", Out.Corp_EnConso];.. 
 ];
 
+//// Equity table at macro level
+OutputTable("Equity_"+Name_time) = [
+["Variables", 														"values_"+Name_time										];..
+["Total CO2 emissions %/"+ref_name, 							(evol_ref.DOM_CO2-1)*100											];..
+["GDP Decomposition Laspeyres Quantities", 					""																	];..
+["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
+["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
+["GDP Decomp - G",												(sum(ref.G_value)/ref.GDP) * G_qLasp							];..
+["GDP Decomp - I",												(sum(ref.I_value)/ref.GDP) * I_qLasp							];..
+["GDP Decomp - X",												(sum(ref.X_value)/ref.GDP) * X_qLasp							];..
+["GDP Decomp - M",												(sum(ref.M_value)/ref.GDP) * M_qLasp							];..
+["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																];..
+["Real C pFish",													money_disp_adj.*sum(Out.C_value)/C_pFish						];..
+["Real G pFish",													money_disp_adj.*sum(Out.G_value)/G_pFish						];..
+["Real I pFish",													money_disp_adj.*sum(Out.I_value)/I_pFish							];..
+["---Nominal values at "+money_disp_unit+money+"---",		 	""																];..
+["Nominal GDP",		  											money_disp_adj.*sum(Out.GDP)										];..
+["Nominal C",			  											money_disp_adj.*sum(Out.C_value)									];..
+["Nominal G",														money_disp_adj.*sum(Out.G_value)									];..
+["Labour "+Labour_unit+" ratio/"+ref_name,						evol_ref.Labour_tot												];..
+["Labour "+Labour_unit,											Out.Labour_tot														];..
+["Labour intensity of non-energy goods ratio/"+ref_name,			(lambda_NonEn_pLasp)                                       ];..
+["Production price of non-energy goods ratio/"+ref_name,			(Y_NonEn_pLasp)                                             ];..
+["---Households Quantities Fisher Index ---",					""																	];..
+["Total Consumption ratio/"+ref_name,							(C_qFish)                                                    ];..
+   ];
+
+if nb_Households == 10
+OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
+["Poor (F0-10)",												(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 1))];..
+["Lower class (F10-30)",										(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 2:3))];..
+["Middle class (F30-70)",									(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 4:7))];..
+["Upper class (F70-90)",										(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 8:9))];..
+["Rich (F95-100)",											(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 10))];..
+];
+end
+
+OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
+["Gini index HH consumption pFish in %",			(1 - sum(Gini_indicator(sum(Out.C_value,"r")./HH_pFish,Out.Population)))*100];..
+];
+
+if nb_Households == 10
+OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
+["Share of HH Disposable Income in %pts/"+ref_name,														" "];..
+["Poor (F0-10)",							100*(Out.H_disposable_income(1)/sum(Out.H_disposable_income)-ref.H_disposable_income(1)/sum(ref.H_disposable_income))];..
+["Lower class (F10-30)",				    100*(sum(Out.H_disposable_income(2:3))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(2:3))/sum(ref.H_disposable_income))];..
+["Middle class (F30-70)",				100*(sum(Out.H_disposable_income(4:7))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(4:7))/sum(ref.H_disposable_income))];..
+["Upper class (F70-90)",					100*(sum(Out.H_disposable_income(8:9))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(8:9))/sum(ref.H_disposable_income))];..
+["Rich (F95-100)",				100*(Out.H_disposable_income(10)/sum(Out.H_disposable_income)-ref.H_disposable_income(10)/sum(ref.H_disposable_income))];..
+ ];
+end
+
+OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
+["Gini index on HH Disposable Income",	(1 - sum(Gini_indicator(Out.H_disposable_income,Out.Population)))*100];..
+];
+ 
+
+/////////////Sectoral tables
 
 OutputTable("CompSectTable_"+ref_name) = [["Variation (%)", Index_Sectors']; ["Production Price", ((divide(Out.pY , ref.pY , %nan )-1)*100)']; ["Real Households consumption_"+Index_Households , ((divide(Out.C , ref.C , %nan )-1)*100)']; ["Exports in volume", ((divide(Out.X , ref.X , %nan )-1)*100)'];["Imports in volume", ((divide(Out.M , ref.M, %nan )-1)*100)'];["Trade balance ",((divide((Out.X_value' - Out.M_value),(ref.X_value' - ref.M_value),%nan))-1)*100]; ["Energy Cost share variation", (evol_ref.ENshare-1)*100 ]; [ " Energy/Labour cost variation" , (evol_ref.ShareEN_Lab-1)*100]; ["Labour", (divide(Out.Labour , ref.Labour, %nan )-1)*100]; ["Unitary Labour Cost variation", (evol_ref.Unit_Labcost-1)*100]; ["Net nominal wages", (divide(Out.w , ref.w, %nan )-1)*100]; ["Net real wages (Consumer Price Index)", (((Out.w./CPI)./(ref.w./ref.CPI))-1)*100];["Purchasing power of wages_"+Index_Households, divide((ones(nb_Households,1).*.Out.w)./Out.pC' , (ones(nb_Households,1).*.ref.w)./ref.pC', %nan )]];
 
@@ -1014,6 +1088,7 @@ csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name
 csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR+"TableMacroExtended_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR+"TableMacro_Abs_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR+"TableMacro_Equity_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("CompSectTable_"+ref_name),SAVEDIR+"TableSectOutput_"+ref_name+"_"++Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 // csvWrite(OutputTable("Elasticities_"+ref_name),SAVEDIR+"TableElasticities_"+Name_time+"_"+simu_name+".csv", ';');
@@ -1022,11 +1097,13 @@ csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+ref_name+"_"+Name_time
 csvWrite(OutputTable("Trade_Sect_"+ref_name),SAVEDIR+"Trade_Sect_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("Trade_Sect_Share_"+ref_name),SAVEDIR+"Trade_Sect_Share_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 
+
 elseif ~OutputfilesBY
 csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR_INIT+"TableMacro_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR_INIT+"TableMacroExtended_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR_INIT+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Abs_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Equity_"+Name_time+"_"+simu_name+".csv", ';');
 
 end
 end
