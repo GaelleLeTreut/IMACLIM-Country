@@ -878,6 +878,17 @@ for line  = 1:nb_Commodities
     if abs(d.ERE_balance_val(line))>=Err_balance_tol then
        error("The IOT output is not well balanced , something did not go well for the sector n°"+line+";Supply-Uses not balanced")
     end
+	
+	if d.pC(line) < 0
+		error("The consumption price pC for the sector n°"+line+" is negative, the resolution went wrong")
+	end
+	
+	for col= 1:nb_Commodities
+		if pIC(line,col)<0
+		error("The consumption price pIC of"+line+", "+col+" is negative, the resolution went wrong")
+		end
+	end
+		
 end
 
 
