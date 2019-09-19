@@ -880,6 +880,7 @@ OutputTable("MacroT_"+ref_name) = [ ["Macro results", "in %/"+ref_name];["Carbon
 OutputTable("MacroTExtend_evol_"+ref_name) = [ 
 ["Macro results", "in %/"+ref_name];.. 
 ["Carbon Tax rate", (Out.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2"];.. 
+["Recycling revenues options", Recycling_Option ];..
 ["Labour Tax cut", DispLabTabl];.. 
 ["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];.. 
 ["Households consumption in GDP",(sum(ref.C_value)/ref.GDP) *(C_qLasp-1)*100];.. 
@@ -982,7 +983,10 @@ OutputTable("MacroT_Abs_"+Name_time) = [
 
 //// Equity table at macro level
 OutputTable("Equity_"+Name_time) = [
-["Variables", 														"values_"+Name_time										];..
+["Variables", 														"values_"+Name_time												];..
+["Recycling revenues options", Recycling_Option 																					];..
+["Carbon Tax rate", (Out.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2" 											];..
+[ "Carbon Tax proceeds to lump-sum transfers in %", 100*divide(sum(Out.ClimPolicyCompens(Indice_Households)),sum(Out.Carbon_Tax),%nan)	];..
 ["Total CO2 emissions %/"+ref_name, 							(evol_ref.DOM_CO2-1)*100											];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
@@ -1017,9 +1021,11 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ];
 end
 
+if nb_Households <> 1
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Gini index HH consumption pFish in %",			(1 - sum(Gini_indicator(sum(Out.C_value,"r")./HH_pFish,Out.Population)))*100];..
 ];
+end
 
 if nb_Households == 10
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
@@ -1032,10 +1038,11 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
  ];
 end
 
+if nb_Households <> 1
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Gini index on HH Disposable Income",	(1 - sum(Gini_indicator(Out.H_disposable_income,Out.Population)))*100];..
 ];
- 
+ end
 
 /////////////Sectoral tables
 

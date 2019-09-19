@@ -5,9 +5,32 @@ Carbon_Tax_rate1 = 1e5;
 Carbon_Tax_rate2 = 3e5;
 Carbon_Tax_rate3 = 5e5;
 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate3;
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2;
 
 
+//////// Basic Need  in ktep/UC
+BasicNeed = zeros(nb_Sectors,1);
+BasicNeed(Indice_PrimEnerSect) = 1.98232460003744E-04;
+BasicNeed(Indice_FinEnerSect) = 3.7891394E-04 ; 
+BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
+// Data for Households are in thousand of people
+Coef_HH_unitpeople = 10^3;
+
+ if Recycling_Option=="LSBasicNeed_Exo" 
+
+// Only certain classes of HH are exempted 
+	if nb_Households==10
+	///No exemption for the 20% richer income classes
+		Exo_HH = ones(1,nb_Households);
+		Exo_HH(1,8:10)=0;
+	elseif nb_Households==1
+		Exo_HH = 1;
+		warning("The model is then running in a equivalent config to the LSBasicNeed options: no exemption for the unique HH")
+	else
+		Exo_HH = ones(1,nb_Households);
+		error("Define a profile of exemption for the LSBasicNeed_Exo recycling option for "+nb_Households+" classes")
+	end
+ end
 	
 // Deriv_Exogenous.ConstrainedShare_C(Indice_EnerSect, :) = 0;
 // Deriv_Exogenous.ConstrainedShare_C(Indice_EnerSect, :) = parameters.ConstrainedShare_C(Indice_EnerSect, :)./2;

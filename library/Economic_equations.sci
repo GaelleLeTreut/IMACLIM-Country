@@ -1254,18 +1254,31 @@ Tax_Base_Carbon = sum(Carbon_Tax_C) + sum(Carbon_Tax_IC) + sum(Carbon_Tax_M);
 		delta_LS_I = sum(Carbon_Tax_C) ; 
 		delta_LS_LT = 1 ;
 
-	// elseif Recycling_Option=="LSBasicNeed" // IN progress
-		//////// Basic Need  in ktep/UC
-		// BasicNeed = zeros(nb_Sectors,1);
-		// BasicNeed(Indice_PrimEnerSect) = 1.98232460003744E-04;
-		// BasicNeed(Indice_FinEnerSect) = 3.7891394E-04 ; 
-		//////// exemptions money/UC - (Sec,HH) dimension
-		// ExempHH = BasicNeed .*.ones(1,nb_Households).* Carbon_Tax_rate_C .* Emission_Coef_C,"r");
-	
-		// delta_LS_S = zeros(1, nb_Sectors);
-		// delta_LS_H = Nb_Households .* Consumption_Units .*sum(ExempHH,"r");
-		// delta_LS_I = 0;
-		// delta_LS_LT = 1;
+	elseif Recycling_Option=="LSBasicNeed" 
+		if ~ BasicNeed_HH
+		warning("Basic needs in Ktep/UC have to be define first; in your run choices or as parameters")
+		end
+		//// exemptions money/UC - (Sec,HH) dimension
+		BasicNeed_HH_Exemp = BasicNeed_HH.* Carbon_Tax_rate_C.* Emission_Coef_C;
+		ExempHH = (Nb_Households*Coef_HH_unitpeople) .* Consumption_Units .*.ones(size(BasicNeed_HH_Exemp,"r"),1).*BasicNeed_HH_Exemp;
+		
+		delta_LS_S = zeros(1, nb_Sectors);
+		delta_LS_H = sum(ExempHH,"r");
+		delta_LS_I = 0;
+		delta_LS_LT = 1;
+		
+		elseif Recycling_Option=="LSBasicNeed_Exo" 
+		if ~ BasicNeed_HH
+		warning("Basic needs in Ktep/UC have to be define first; in your run choices or as parameters")
+		end
+		//// exemptions money/UC - (Sec,HH) dimension
+		BasicNeed_HH_Exemp = BasicNeed_HH.* Carbon_Tax_rate_C.* Emission_Coef_C;
+		ExempHH = (Nb_Households*Coef_HH_unitpeople) .* Consumption_Units .*.ones(size(BasicNeed_HH_Exemp,"r"),1).*BasicNeed_HH_Exemp;
+		
+		delta_LS_S = zeros(1, nb_Sectors);
+		delta_LS_H = sum(ExempHH.*(Exo_HH.*.ones(size(ExempHH,"r"),1)),"r");
+		delta_LS_I = 0;
+		delta_LS_LT = 1;
 		
 	elseif Recycling_Option=="LabTax_PublicDeficit" // PAS COMPRIS : to delete? Pour l'instant revient au meme que labour tax
 		delta_LS_S = zeros(1, nb_Sectors);
