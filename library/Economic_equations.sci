@@ -910,17 +910,60 @@ endfunction
 
 /// Consumption Tax (by product-sector)
 
-function y = Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
+function y = Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I);
 	pIC = abs(pIC);
-    // Same rate for all items of domestic final demand
-    y = Cons_Tax' - ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) ;
+	
+	// margins_rates_C= (ones(nb_Households,1) .*. ( Transp_margins_rates + Trade_margins_rates ) + SpeMarg_rates_C )' ;
+	// Indirect_tax_rates_C =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )';
+	// pC_BT = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates_C )  + Indirect_tax_rates_C);
+		
+	// margins_rates_IC = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+	// Indirect_tax_rates_IC = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') ;
+	// pIC_BT = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates_IC )+ Indirect_tax_rates_IC) ;
+	
+	// margins_rates_G = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) + SpeMarg_rates_G';
+	// Indirect_tax_rates_G = (Energy_Tax_rate_FC' + OtherIndirTax_rate').*. ones(1, nb_Government) ;
+	// pG_BT = ( (p'.*.ones(1, nb_Government)) .* ( 1 + margins_rates_G ) + Indirect_tax_rates_G) ;
+	
+	// margins_rates_I = Transp_margins_rates' + Trade_margins_rates' + SpeMarg_rates_I'
+	// Indirect_tax_rates_I = OtherIndirTax_rate'+Energy_Tax_rate_FC' ;
+	// pI_BT = ( p' .* ( ones(nb_Commodities, 1) + margins_rates_I) + Indirect_tax_rates_I);
+   
+   //// Same rate for all items of domestic final demand
+    // y = Cons_Tax' - ( ( (Cons_Tax_rate' ) .* (sum( pC_BT .* C, "c") + sum(pG_BT .* G, "c") + sum(pIC_BT .* IC, "c")+ pI_BT .* sum(I,"c")) ) ) ;
 
+    ///// Same rate for all items of domestic final demand
+    y = Cons_Tax' - ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) ;
+    // y = Cons_Tax' - ( ( (Cons_Tax_rate' ) .* (sum( pC.* C, "c") + sum(pG.* G, "c") + sum(pIC.* IC, "c")+ pI .* sum(I,"c")) ) ) ;
+
+	
 endfunction
 
-function Cons_Tax = Cons_Tax_Val_1(Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I)
+function Cons_Tax = Cons_Tax_Val_1(Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I)
 	pIC = abs(pIC);
-    // Same rate for all items of domestic final demand
-    Cons_Tax = ( ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) )';
+	
+	// margins_rates_C= (ones(nb_Households,1) .*. ( Transp_margins_rates + Trade_margins_rates ) + SpeMarg_rates_C )' ;
+	// Indirect_tax_rates_C =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )';
+	// pC_BT = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates_C )  + Indirect_tax_rates_C);
+		
+	// margins_rates_IC = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+	// Indirect_tax_rates_IC = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') ;
+	// pIC_BT = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates_IC )+ Indirect_tax_rates_IC) ;
+	
+	// margins_rates_G = (Transp_margins_rates' + Trade_margins_rates').*. ones(1, nb_Government) + SpeMarg_rates_G';
+	// Indirect_tax_rates_G = (Energy_Tax_rate_FC' + OtherIndirTax_rate').*. ones(1, nb_Government) ;
+	// pG_BT = ( (p'.*.ones(1, nb_Government)) .* ( 1 + margins_rates_G ) + Indirect_tax_rates_G) ;
+	
+	// margins_rates_I = Transp_margins_rates' + Trade_margins_rates' + SpeMarg_rates_I'
+	// Indirect_tax_rates_I = OtherIndirTax_rate'+Energy_Tax_rate_FC' ;
+	// pI_BT = ( p' .* ( ones(nb_Commodities, 1) + margins_rates_I) + Indirect_tax_rates_I);
+	
+	///// Same rate for all items of domestic final demand
+	// Cons_Tax =( ( (Cons_Tax_rate' ) .* (sum( pC_BT .* C, "c") + sum(pG_BT .* G, "c") + sum(pIC_BT .* IC, "c")+ pI_BT .* sum(I,"c")) ) )';
+	
+	///// Same rate for all items of domestic final demand
+	Cons_Tax = ( ( (Cons_Tax_rate' ./ (1 + Cons_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) )';
+	// Cons_Tax =( ( (Cons_Tax_rate' ) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + sum(pIC .* IC, "c")+ pI .* sum(I,"c")) ) )';
 
 endfunction
 
@@ -2641,10 +2684,12 @@ function pIC = pIC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMa
 
     // Indirect tax
     Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+	// Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') ;
 
     // Intermediate consumption price: pIC (Sm_index, Sm_index)
-    pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') );
-    
+    pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') ) ;
+    // pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') ) + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
 endfunction
 
 
@@ -2731,10 +2776,11 @@ function pC = pC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg
 
     // Indirect tax
     Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* Emission_Coef_C  ;
-
+	// Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )';
+	
     // Household consumption price: pC (nb_Commodities, nb_Households)
-    // pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') ) + Indirect_tax_rates)  ;
-    pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates )  + Indirect_tax_rates).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') )
+    pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates )  + Indirect_tax_rates).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') ) ;
+    // pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates )  + Indirect_tax_rates).* (1 + (ones( 1, nb_Households).*.Cons_Tax_rate') )  + Carbon_Tax_rate_C .* Emission_Coef_C  ;
 	
 	
 endfunction

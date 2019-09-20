@@ -196,7 +196,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     VA_Tax_Const_1(VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Brasil: specific tax on sales
-    Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I)
+    Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I)
     Carbon_Tax_IC_Const_1(Carbon_Tax_IC, Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC)
     Carbon_Tax_C_Const_1(Carbon_Tax_C, Carbon_Tax_rate_C, C, Emission_Coef_C)
 	Carbon_Tax_M_Const_1(Carbon_Tax_M, Carbon_Tax_rate_M, M, Emission_Coef_M)

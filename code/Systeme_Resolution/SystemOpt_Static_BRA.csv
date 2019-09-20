@@ -72,7 +72,7 @@ Corporate_Tax;Corporate_Tax_Val_1;Corporate_Tax_rate, GOS_byAgent;
 Income_Tax;Income_Tax_Val_2;Income_Tax_rate, H_disposable_income, Gov_Direct_Tax, Corp_Direct_Tax;
 Energy_Tax_IC;Energy_Tax_IC_Val_1;Energy_Tax_rate_IC, alpha, Y;
 Energy_Tax_FC;Energy_Tax_FC_Val_1;Energy_Tax_rate_FC, C;
-Cons_Tax;Cons_Tax_Val_1;Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I;
+Cons_Tax;Cons_Tax_Val_1;Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I;
 Carbon_Tax_IC;Carbon_Tax_IC_Val_1;Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC;
 Carbon_Tax_C;Carbon_Tax_C_Val_1;Carbon_Tax_rate_C, C, Emission_Coef_C;
 Carbon_Tax_M;Carbon_Tax_M_Val_1;Carbon_Tax_rate_M, M, Emission_Coef_M;

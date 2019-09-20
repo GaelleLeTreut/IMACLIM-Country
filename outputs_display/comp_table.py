@@ -74,6 +74,21 @@ def output_table(file_name, lines_to_remove, save_path):
 #
 #    return macro_csv_name, lines_to_remove, table_path
             
+def data_equity():
+
+    macro_csv_name = 'TableMacro_Equity'
+    
+    lines_to_remove = [
+    ]
+
+    # Path to record the created table
+    table_fold = 'MacroTables/'
+    if not os.path.exists(table_fold):
+        os.makedirs(table_fold)
+    table_name = 'table_equity.csv'
+    table_path = table_fold + table_name
+
+    return macro_csv_name, lines_to_remove, table_path
             
 
 def data_macro_abs():
@@ -155,6 +170,9 @@ if __name__ == '__main__':
 
     working_file4, lines_to_remove4, save_path4 = data_template()
     output_table(working_file4, lines_to_remove4, save_path4) 
+    
+    working_file5, lines_to_remove5, save_path5 = data_equity()
+    output_table(working_file5, lines_to_remove5, save_path5) 
     
 #    working_file2, lines_to_remove2, save_path2 = data_macro_2015()
 #    output_table(working_file2, lines_to_remove2, save_path2)

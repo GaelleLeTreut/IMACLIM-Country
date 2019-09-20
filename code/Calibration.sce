@@ -769,11 +769,11 @@ count=0;
 // Start Specific to Brasil
 ///////////////////////////
 if Country=="Brasil" then
-    function [const_Cons_Tax_rate] =fcalib_Cons_Tax_Const_1(x_Cons_Tax_rate, Cons_Tax, pIC, IC, pC, C, pG, G, pI, I, Imaclim_VarCalib)
+    function [const_Cons_Tax_rate] =fcalib_Cons_Tax_Const_1(x_Cons_Tax_rate, Cons_Tax, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I, Imaclim_VarCalib)
         Cons_Tax_rate= indiv_x2variable(Imaclim_VarCalib, "x_Cons_Tax_rate");
 
         y_1 = (Cons_Tax' ==0).*Cons_Tax_rate';
-        y_2 = (Cons_Tax' <>0).*Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I);
+        y_2 = (Cons_Tax' <>0).*Cons_Tax_Const_1(Cons_Tax, Cons_Tax_rate, pIC, IC, pC, C, pG, G, pI, I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I);
         const_Cons_Tax_rate =(Cons_Tax' ==0).*y_1 +  (Cons_Tax' <>0).*y_2;
 
     endfunction
@@ -784,7 +784,7 @@ if Country=="Brasil" then
             error("review calib_Cons_Tax_rate")
         end
         count = count + 1;
-        [x_Cons_Tax_rate, const_Cons_Tax_rate, info_calib_Cons_Tax_rate] = fsolve(x_Cons_Tax_rate, list(fcalib_Cons_Tax_Const_1, Cons_Tax, pIC, IC, pC, C, pG, G, pI,I,Index_Imaclim_VarCalib));
+        [x_Cons_Tax_rate, const_Cons_Tax_rate, info_calib_Cons_Tax_rate] = fsolve(x_Cons_Tax_rate, list(fcalib_Cons_Tax_Const_1, Cons_Tax, pIC, IC, pC, C, pG, G, pI,I,Transp_margins_rates,Trade_margins_rates,SpeMarg_rates_C,SpeMarg_rates_IC,SpeMarg_rates_G,SpeMarg_rates_I,Index_Imaclim_VarCalib));
         Cons_Tax_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Cons_Tax_rate");
         Cons_Tax_rate = (abs(Cons_Tax_rate) > %eps).*Cons_Tax_rate;
 
