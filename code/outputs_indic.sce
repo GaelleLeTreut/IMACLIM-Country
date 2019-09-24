@@ -1282,8 +1282,9 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
-["Carbon Tax rate-"+money+"/tCO2", 		  					(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6  				];..
+["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
+["Labour productivity ",										parameters.Mu													];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
 ["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
