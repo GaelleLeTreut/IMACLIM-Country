@@ -1876,4 +1876,3 @@ execstr("BY."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";")
 // iter = 1 ==> BY = ini
 // iter = 2 ==> BY <> ini
 ini = BY;
-
