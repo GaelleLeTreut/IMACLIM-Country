@@ -76,7 +76,7 @@ def output_table(file_name, lines_to_remove, save_path):
             
 def data_equity():
 
-    macro_csv_name = 'TableMacro_Equity'
+    macro_csv_name = 'TableMacro_Equity_BY'
     
     lines_to_remove = [
     ]
@@ -93,7 +93,7 @@ def data_equity():
 
 def data_macro_abs():
 
-    macro_csv_name = 'TableMacro_Abs'
+    macro_csv_name = 'TableMacro_Abs_BY'
     
     lines_to_remove = [
     ]

@@ -1094,8 +1094,8 @@ if OutputfilesBY
 csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR+"TableMacroExtended_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
-csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR+"TableMacro_Abs_"+Name_time+"_"+simu_name+".csv", ';');
-csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR+"TableMacro_Equity_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR+"TableMacro_Abs_"+ref_name+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR+"TableMacro_Equity_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("CompSectTable_"+ref_name),SAVEDIR+"TableSectOutput_"+ref_name+"_"++Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 // csvWrite(OutputTable("Elasticities_"+ref_name),SAVEDIR+"TableElasticities_"+Name_time+"_"+simu_name+".csv", ';');
@@ -1109,8 +1109,8 @@ elseif ~OutputfilesBY
 csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR_INIT+"TableMacro_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR_INIT+"TableMacroExtended_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR_INIT+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
-csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Abs_"+Name_time+"_"+simu_name+".csv", ';');
-csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Equity_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Abs_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Equity_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 
 end
 end
