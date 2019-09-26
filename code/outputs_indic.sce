@@ -59,6 +59,18 @@ end
 //////////// Domestic production Y
 ////////////////////////
 
+// Price indices for all energy sectors
+for ind = 1:nb_Sectors
+Y_pLasp_temp(ind) = PInd_Lasp( ref.pY, ref.Y, Out.pY, Out.Y, ind, :);
+Y_pPaas_temp(ind) = PInd_Paas( ref.pY, ref.Y, Out.pY, Out.Y, ind, :);
+Y_pFish_temp(ind) = PInd_Fish( ref.pY, ref.Y, Out.pY, Out.Y, ind, :);
+end
+
+execstr ( "Y_"+Index_Sectors+"_pLasp = "+Y_pLasp_temp);
+execstr ( "Y_"+Index_Sectors+"_pPaas = "+Y_pPaas_temp);
+execstr ( "Y_"+Index_Sectors+"_pFish = "+Y_pFish_temp);
+clear Y_pFish_temp Y_pLasp_temp Y_pPaas_temp
+
 // Price indices (Laspeyres, Paasche and Fisher) - Production
 Y_pLasp = PInd_Lasp( ref.pY, ref.Y, Out.pY, Out.Y, :, :);
 Y_pPaas = PInd_Paas( ref.pY, ref.Y, Out.pY, Out.Y, :, :);
@@ -583,6 +595,7 @@ lambda_NonEn_pFish = PInd_Fish( ref.lambda, ref.Y', Out.lambda, Out.Y', :, Indic
 ////////////////////////
 //////////// Energy intensity
 ////////////////////////
+
 
 //Laspeyres, Paasche and Fisher indices for energy intensity (alpha treated as price)
 alpha_Ener_qLasp = QInd_Lasp( ref.alpha, ones(nb_Commodities, 1).*.ref.Y', Out.alpha, ones(nb_Commodities, 1).*.Out.Y', Indice_EnerSect, :);
@@ -1333,26 +1346,32 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pI pFish/"+ref_name,											I_pFish															];..
 ["pX pFish/"+ref_name,											X_pFish															];..
 ["pY pFish/"+ref_name,											Y_pFish															];..
-["pY Energy pLasp/"+ref_name,									Y_En_pLasp															];..
-["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp															];..
+["pY Energy pLasp/"+ref_name,									Y_En_pLasp														];..
+[string("pY "+Index_EnerSect +" pLasp/"+ref_name),				eval("Y_"+Index_EnerSect+"_pLasp")							];..
+["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp													];..
+[string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				eval("Y_"+Index_NonEnerSect+"_pLasp")							];..
 ["pM pFish/"+ref_name,											M_pFish															];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
 ["Energy price/"+ref_name,										IC_Ener_pFish														];..
 ["Non-energy price/"+ref_name,									IC_NonEn_pFish													];..
 ["---Intensity and rate---",									 ""																	];..
-["Labour intensity",												lambda_pFish														];..
-["Capital intensity",											kappa_pFish														];..
-["Energy intensity",												kappa_pFish														];..
+["Labour intensity",												lambda_pFish													];..
+["Capital intensity",												kappa_pFish													];..
+["Energy intensity",												alpha_Ener_qLasp												];..
 ["---Quantities ---",											 ""																	];..
 ["Unemployment % points/"+ref_name,							(Out.u_tot - ref.u_tot)*100										];..
 ["Labour "+Labour_unit,					     					Out.Labour_tot														];..
 ["Labour "+Labour_unit+" ratio/"+ref_name,						evol_ref.Labour_tot												];..
 ["Labour "+Index_Sectors+" "+Labour_unit,						Out.Labour'															];..
 ["Energy - C ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
-["Energy - IC ktoe",												sum(Out.IC(Indice_EnerSect,:))									];..
+[Index_EnerSect+" - C ktoe ",									Out.C(Indice_EnerSect,:)												];..
+["Energy - IC ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
+[string("Energy - IC ktoe "+Index_Sectors),						sum(Out.IC(Indice_EnerSect,:),"r")'									];..
 ["Energy - X ktoe",												sum(Out.X(Indice_EnerSect,:))										];..
+[Index_EnerSect+"- X ktoe",										Out.X(Indice_EnerSect,:)												];..
 ["Energy - M ktoe",												sum(Out.M(Indice_EnerSect,:))										];..
+[Index_EnerSect+" - M ktoe",										Out.M(Indice_EnerSect,:)												];..
 ["---Quantities Index Laspeyres ---",								 ""																	];..
 ["Real C qLasp",													C_qLasp										 					];..
 ["Real C Energy qLasp",											C_En_qLasp										 					];..
@@ -1361,12 +1380,13 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Y_"+Index_NonEnerSect,											money_disp_adj.*Out.Y(Indice_NonEnerSect)						];..
 ["M_"+Index_NonEnerSect,											money_disp_adj.*Out.M(Indice_NonEnerSect)						];..
 ["C_"+Index_NonEnerSect,											money_disp_adj.*sum(Out.C(Indice_NonEnerSect,:),"c")			];..
+["X_"+Index_NonEnerSect,											money_disp_adj.*sum(Out.X(Indice_NonEnerSect,:),"c")			];..
 ["---Quantities Index Fisher ---",								 ""																	];..
 ["M qFish",														M_qFish										 					];..
 ["Y qFish",														Y_qFish										 					];..
 ["X qFish",														X_qFish								 							];..
 ];
-
+pause
 
 ///Store BY
 if Output_files
