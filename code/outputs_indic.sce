@@ -1364,14 +1364,14 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Labour "+Labour_unit,					     					Out.Labour_tot														];..
 ["Labour "+Labour_unit+" ratio/"+ref_name,						evol_ref.Labour_tot												];..
 ["Labour "+Index_Sectors+" "+Labour_unit,						Out.Labour'															];..
-["Energy - C ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
-[Index_EnerSect+" - C ktoe ",									Out.C(Indice_EnerSect,:)												];..
-["Energy - IC ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
-[string("Energy - IC ktoe "+Index_Sectors),						sum(Out.IC(Indice_EnerSect,:),"r")'									];..
-["Energy - X ktoe",												sum(Out.X(Indice_EnerSect,:))										];..
-[Index_EnerSect+"- X ktoe",										Out.X(Indice_EnerSect,:)												];..
-["Energy - M ktoe",												sum(Out.M(Indice_EnerSect,:))										];..
-[Index_EnerSect+" - M ktoe",										Out.M(Indice_EnerSect,:)												];..
+["C - Energy - ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
+[string("C - "+ Index_EnerSect +" ktoe"),						sum(Out.C(Indice_EnerSect,:),"c")									];..
+["IC - Energy ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
+[string("IC Energy - "+Index_Sectors +" - ktoe "),					sum(Out.IC(Indice_EnerSect,:),"r")'									];..
+["X - Energy - ktoe",												sum(Out.X(Indice_EnerSect,:))										];..
+[string("X - "+ Index_EnerSect +" - ktoe"),						Out.X(Indice_EnerSect,:)												];..
+["M - Energy - ktoe",												sum(Out.M(Indice_EnerSect,:))										];..
+[string("M - "+ Index_EnerSect +" - ktoe"),								Out.M(Indice_EnerSect,:)												];..
 ["---Quantities Index Laspeyres ---",								 ""																	];..
 ["Real C qLasp",													C_qLasp										 					];..
 ["Real C Energy qLasp",											C_En_qLasp										 					];..
