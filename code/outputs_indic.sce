@@ -1386,7 +1386,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Y qFish",														Y_qFish										 					];..
 ["X qFish",														X_qFish								 							];..
 ];
-pause
+
 
 ///Store BY
 if Output_files
