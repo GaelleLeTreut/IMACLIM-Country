@@ -53,8 +53,8 @@ elseif Country=="Argentina" then
     money="pesos";
     moneyTex="pesos";
 	money_unit_data ="10^6";
-	money_disp_unit ="Millions of ";
-	money_disp_adj = 1;
+	money_disp_unit ="Milliard of ";
+	money_disp_adj = 10^-3;
 	Labour_unit = "ThousandFTE";
 else
     money="current money";

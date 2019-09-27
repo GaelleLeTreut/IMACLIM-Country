@@ -1314,7 +1314,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal M",														money_disp_adj.*sum(Out.M_value)									];..
 ["Nominal Trade Balance",										money_disp_adj.*sum(Out.X_value)-sum(Out.M_value)					];..
 ["Nominal M/Y ratio_"+Index_Sectors,							money_disp_adj.*divide(Out.M, Out.Y, %nan) 						];..
-["Nominal Net-of-tax wages",									Out.omega										   					];..
+["Nominal Net-of-tax wages",										Out.omega										   						];..
 ["Net-of-tax effective wages",									Out.omega/((1+Out.Mu)^Out.time_since_BY)								];..
 ["Nominal C_"+Index_Sectors,									money_disp_adj.*sum(Out.C_value,"c")										];..
 ["Nominal M_"+Index_Sectors,									money_disp_adj.*Out.M_value'										];..
@@ -1325,19 +1325,19 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Disposable income_"+Index_InstitAgents,						money_disp_adj.*Out.Disposable_Income'							];..
 ["Net Lending_"+Index_InstitAgents,							money_disp_adj.*Out.NetLending'									];..
 ["Country Deficit/GDP-ratio/"+ref_name, 					evol_ref.NetLendingRoW_GDP 										];..
-["Net Debt"+Index_InstitAgents,									money_disp_adj.*Out.NetFinancialDebt'							];..
-["HH saving % points/"+ref_name,	    						(sum(Out.Household_savings)/sum(Out.H_disposable_income))		];..
-["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																];..
+["Net Debt"+Index_InstitAgents,									money_disp_adj.*Out.NetFinancialDebt'								];..
+["HH saving - % "+ref_name,	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
+["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
-["Real C",															money_disp_adj.*sum(Out.C_value)/ref.CPI							];..
+["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
 ["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
 ["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
 ["Real Trade Balance",										    money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))/Trade_pFish	];..
-["Real Net-of-tax wages",										Out.omega/ref.CPI													];..
-["Real Net-of-tax effective wages",							(Out.omega/((1+Out.Mu)^Out.time_since_BY))/ref.CPI					];..
-["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'];..
+["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
+["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
+["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
 ["---Prices Index ratio/"+ref_name+"---",						 ""																	];..
 ["Price Fisher Index/"+ref_name, 								""																	];..
 ["GDP pFish/"+ref_name,											GDP_pFish							  								];..
