@@ -1404,13 +1404,13 @@ end
 
 if Country<>"Brasil"
 
-    function [const_PensBenef_param] =fcal_PensBenef_Const_1(x_Pension_Benefits_param, Pension_Benefits, NetWage_variation, Imaclim_VarCalib)
+    function [const_PensBenef_param] =fcal_PensBenef_Const_1(x_Pension_Benefits_param, Pension_Benefits, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
         Pension_Benefits_param= indiv_x2variable(Imaclim_VarCalib, "x_Pension_Benefits_param");
-        const_PensBenef_param = Pension_Benefits_Const_1(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP)
+        const_PensBenef_param = Pension_Benefits_Const_1(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population)
     endfunction
 
     x_Pension_Benefits_param = 1e6.*ones(1,nb_Households);
-    [x_Pension_Benefits_param, const_PensBenef_param, info_cal_PensBenef_param] = fsolve(x_Pension_Benefits_param, list(fcal_PensBenef_Const_1, Pension_Benefits, NetWage_variation, Index_Imaclim_VarCalib));
+    [x_Pension_Benefits_param, const_PensBenef_param, info_cal_PensBenef_param] = fsolve(x_Pension_Benefits_param, list(fcal_PensBenef_Const_1, Pension_Benefits, NetWage_variation, GDP, CPI, Population, Index_Imaclim_VarCalib));
     if norm(const_PensBenef_param) > sensib
         error("review calib_Pension_Benefits_param")
         [str,n,line,func]=lasterror(%f);
@@ -1418,12 +1418,12 @@ if Country<>"Brasil"
         Pension_Benefits_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Pension_Benefits_param");
     end
 
-    function [const_UnemplBenef_param] =fcal_UnemplBenef_Const_1(x_UnemployBenefits_param, UnemployBenefits, NetWage_variation, Imaclim_VarCalib)
+    function [const_UnemplBenef_param] =fcal_UnemplBenef_Const_1(x_UnemployBenefits_param, UnemployBenefits, NetWage_variation, GDP, Unemployed, Imaclim_VarCalib)
         UnemployBenefits_param= indiv_x2variable(Imaclim_VarCalib, "x_UnemployBenefits_param");
-        const_UnemplBenef_param = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param)
+        const_UnemplBenef_param = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param, GDP, Unemployed)
     endfunction
 
-    [x_UnemployBenefits_param, const_UnemplBenef_param, infoCal_UnemplBenefParam] = fsolve(x_UnemployBenefits_param, list(fcal_UnemplBenef_Const_1, UnemployBenefits, NetWage_variation, Index_Imaclim_VarCalib));
+    [x_UnemployBenefits_param, const_UnemplBenef_param, infoCal_UnemplBenefParam] = fsolve(x_UnemployBenefits_param, list(fcal_UnemplBenef_Const_1, UnemployBenefits, NetWage_variation, GDP, Unemployed, Index_Imaclim_VarCalib));
 
     if norm(const_UnemplBenef_param) > sensib
         error( "review calib_UnemployBenefits_param")
@@ -1431,12 +1431,12 @@ if Country<>"Brasil"
         UnemployBenefits_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_UnemployBenefits_param");
     end
 
-    function [const_OthSocioBenefParam] =fcalOthSocioBene_Const_1(x_Other_SocioBenef_param, Other_SocioBenef, NetWage_variation, Imaclim_VarCalib)
+    function [const_OthSocioBenefParam] =fcalOthSocioBene_Const_1(x_Other_SocioBenef_param, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , Imaclim_VarCalib)
         Other_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Other_SocioBenef_param");
-        const_OthSocioBenefParam =  Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+        const_OthSocioBenefParam =  Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
     endfunction
 
-    [x_Other_SocioBenef_param, const_OthSocioBenefParam, infCalOthSocioBene_param] = fsolve(x_Other_SocioBenef_param, list(fcalOthSocioBene_Const_1, Other_SocioBenef, NetWage_variation, Index_Imaclim_VarCalib));
+    [x_Other_SocioBenef_param, const_OthSocioBenefParam, infCalOthSocioBene_param] = fsolve(x_Other_SocioBenef_param, list(fcalOthSocioBene_Const_1, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , Index_Imaclim_VarCalib));
 
     if norm(const_OthSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")
@@ -1455,12 +1455,12 @@ end
 ///////////////////////////
 if Country=="Brasil" then
 
-    function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, Imaclim_VarCalib)
+    function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
         Gov_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Gov_SocioBenef_param");
-        const_GovSocioBenefParam =  Other_SocioBenef_Const_1(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population)
+        const_GovSocioBenefParam =  Other_SocioBenef_Const_1(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, CPI, Population)
     endfunction
 
-    [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, Index_Imaclim_VarCalib));
+    [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population, Index_Imaclim_VarCalib));
 
     if norm(const_GovSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")
@@ -1468,12 +1468,12 @@ if Country=="Brasil" then
         Gov_SocioBenef_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Gov_SocioBenef_param");
     end
 
-    function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, Imaclim_VarCalib)
+    function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
         Corp_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Corp_SocioBenef_param");
-        const_CorSocioBenefParam =  Other_SocioBenef_Const_1(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population)
+        const_CorSocioBenefParam =  Other_SocioBenef_Const_1(Corp_SocioBenef,NetWage_variation, Corp_SocioBenef_param, GDP, CPI, Population)
     endfunction
 
-    [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, Index_Imaclim_VarCalib));
+    [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population, Index_Imaclim_VarCalib));
 
     if norm(const_CorSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")

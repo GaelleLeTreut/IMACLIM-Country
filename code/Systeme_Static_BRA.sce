@@ -203,8 +203,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     //  Brasil: two equation take into account corp and gov / indexed on GDP (as homothetic projection)
     // Glt: valeur de Corp_SocioBenef_param et Corp_SocioBenef_param (anciennement ref??)... à revoir, calculé au calibrage??
-    Other_SocioBenef_Const_2(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, Population )
-    Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, Population )
+    Other_SocioBenef_Const_2(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, CPI, Population )
+    Other_SocioBenef_Const_2(Corp_SocioBenef, NetWage_variation, Corp_SocioBenef_param, GDP, CPI, Population )
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)

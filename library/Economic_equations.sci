@@ -1020,117 +1020,161 @@ function Carbon_Tax_M = Carbon_Tax_M_Val_1(Carbon_Tax_rate_M, M, Emission_Coef_M
 
 endfunction
 
+//////
 /// Social benefits
+//////
 
 /// Pension benefits (by household class)
+//// Opt 1 = function of net wage variation
+function [y] = Pension_Benefits_Const_1(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
-function [y] = Pension_Benefits_Const_1(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP) ;
-
-    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
     y1 = Pension_Benefits - NetWage_variation * Pension_Benefits_param ;
 
     y=y1';
 endfunction
 
-///	proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP) ;
+function [Pension_Benefits] = Pension_Benefits_Val_1(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
-    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
+    Pension_Benefits = NetWage_variation * Pension_Benefits_param ;
+
+endfunction
+
+//// Opt 2 = function of GDP variation - >  only for hometetic proj
+function [y] = Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+
     y1 = Pension_Benefits - (GDP/BY.GDP) * Pension_Benefits_param ;
 
     y=y1';
 endfunction
 
-function Pension_Benefits = Pension_Benefits_Val_2(Pension_Benefits_param, GDP)
+function Pension_Benefits = Pension_Benefits_Val_2(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population)
 
-    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
     Pension_Benefits = (GDP/BY.GDP) * Pension_Benefits_param;
 
 endfunction
 
-/// proj: il faut que ça varie comme le PIB pour homothétie
-function [y] = Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP) ;
+//// Opt 3 = constant
+function [y] = Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
-    // Pension benefits Constraint ( Pension_Benefits(h1_index:hn_index) )
     y1 = Pension_Benefits - BY.Pension_Benefits ;
 
     y=y1';
 endfunction
 
-/// Unemployment benefits (by household class)
-function [y] = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param) ;
+//// Opt 4 = function of CPI
+function [y] = Pension_Benefits_Const_4(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
-    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
+    y1 = Pension_Benefits - CPI .* Pension_Benefits_param ;
+
+    y=y1';
+endfunction
+
+function [Pension_Benefits] = Pension_Benefits_Val_4(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+
+    Pension_Benefits = CPI .* Pension_Benefits_param ;
+
+endfunction
+
+//// Opt 5 = function of GDP/Capita
+function [y] = Pension_Benefits_Const_5(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+
+    y1 = Pension_Benefits - (GDP / BY.GDP) * ( BY.Population ./ Population )  * Pension_Benefits_param ;
+    y=y1';
+	
+endfunction
+
+function [Pension_Benefits] = Pension_Benefits_Val_4(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+
+	Pension_Benefits = (GDP / BY.GDP) .* ( BY.Population ./ Population )  * Pension_Benefits_param ;
+
+endfunction
+
+/// Unemployment benefits (by household class)
+//// Opt 1 = function of net wage variation
+function [y] = UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param, GDP, Unemployed) ;
+
     y1 = UnemployBenefits - NetWage_variation * UnemployBenefits_param ;
 
     y=y1';
 endfunction
 
-function UnemployBenefits = UnemployBenefits_Val_1(NetWage_variation, UnemployBenefits_param)
+function UnemployBenefits = UnemployBenefits_Val_1(NetWage_variation, UnemployBenefits_param, GDP, Unemployed)
 
-    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
     UnemployBenefits = NetWage_variation * UnemployBenefits_param;
 
 endfunction
 
-///	///	proj: il faut que ça varie comme le PIB pour homothétie
-// peut être dimensionner avec l'évolution du nbre de chômeurs
-function [y] = UnemployBenefits_Const_2(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param) ;
+//// Opt 2 = function of GDP/unemployed variation - >  for hometetic proj
+function [y] = UnemployBenefits_Const_2(UnemployBenefits, NetWage_variation, UnemployBenefits_param, GDP, Unemployed) ;
 
-    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
     y1 = UnemployBenefits - (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
 
     y=y1';
 endfunction
 
-function UnemployBenefits = UnemployBenefits_Val_2(GDP, Unemployed, UnemployBenefits_param)
+function UnemployBenefits = UnemployBenefits_Val_2(NetWage_variation, UnemployBenefits_param, GDP, Unemployed)
 
     UnemployBenefits = (GDP / BY.GDP) * ( BY.Unemployed ./ Unemployed ) .* UnemployBenefits_param ;
 
 endfunction
 
+//// Opt 3 = constant
+function [y] = UnemployBenefits_Const_3(UnemployBenefits, NetWage_variation, UnemployBenefits_param, GDP, Unemployed) ;
 
-
-function [y] = UnemployBenefits_Const_3(UnemployBenefits, GDP, Unemployed, UnemployBenefits_param) ;
-
-    // Unemployment benefits Constraint ( UnemployBenefits(nb_Households) )
     y1 = UnemployBenefits - BY.UnemployBenefits;
 
     y=y1';
 endfunction
 
 /// Other social benefits (by household class)
+//// Opt 1 = function of net wage variation
+function [y] = Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population ) ;
 
-function [y] = Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population ) ;
-
-    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
     y1 = Other_SocioBenef - NetWage_variation * Other_SocioBenef_param ;
-
     y=y1';
+	
 endfunction
 
-///	proj: il faut que ça varie comme le PIB pour homothétie
-// peut être dimensionner avec l'évolution du nbre de chômeurs
-function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+function [Other_SocioBenef] = Other_SocioBenef_Val_1(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population) ;
 
-    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
+   Other_SocioBenef  = NetWage_variation * Other_SocioBenef_param ;
+
+endfunction
+
+//// Opt 2 = function of GDP/capita variation - > hometetic proj
+function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
+
     y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param ;
-
     y=y1';
+	
 endfunction
 
-function Other_SocioBenef = Other_SocioBenef_Val_2(Other_SocioBenef_param, GDP, Population)
+function Other_SocioBenef = Other_SocioBenef_Val_2(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
 
-    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
     Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param;
 
 endfunction
 
-function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, Population )
+//// Opt 3 = constant
+function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
 
-    // Other social benefits Constraint ( Other_SocioBenef(nb_Households) )
     y1 = Other_SocioBenef - BY.Other_SocioBenef;
     y=y1';
+	
+endfunction
+
+//// Opt 4 = function of CPI
+function [y] = Other_SocioBenef_Const_4(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population ) ;
+
+    y1 = Other_SocioBenef - CPI .* Other_SocioBenef ;
+    y=y1';
+	
+endfunction
+
+function [Other_SocioBenef] = Other_SocioBenef_Val_4(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population ) ;
+
+    Other_SocioBenef = CPI .* Other_SocioBenef ;
+
 endfunction
 
 // Climate policy

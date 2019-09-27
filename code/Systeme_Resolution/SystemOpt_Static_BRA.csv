@@ -77,8 +77,8 @@ Carbon_Tax_IC;Carbon_Tax_IC_Val_1;Carbon_Tax_rate_IC, alpha, Y, Emission_Coef_IC
 Carbon_Tax_C;Carbon_Tax_C_Val_1;Carbon_Tax_rate_C, C, Emission_Coef_C;
 Carbon_Tax_M;Carbon_Tax_M_Val_1;Carbon_Tax_rate_M, M, Emission_Coef_M;
 // Transfert;;;
-Gov_SocioBenef;Other_SocioBenef_Val_2;Gov_SocioBenef_param, GDP, Population;
-Corp_SocioBenef;Other_SocioBenef_Val_2;Corp_SocioBenef_param, GDP, Population;
+Gov_SocioBenef;Other_SocioBenef_Val_1;NetWage_variation, Gov_SocioBenef_param, GDP, CPI, Population; // Const_1 indexed on netwage var, Const_2 on GDP/Capita, Const_3 constant, Const_4 CPI
+Corp_SocioBenef;Other_SocioBenef_Val_1;NetWage_variation, Corp_SocioBenef_param, GDP, CPI, Population; // Const_1 indexed on netwage var, Const_2 on GDP/Capita, Const_3 constant, Const_4 CPI
 // Incomes;;;
 G_disposable_income;G_income_Val_2;Income_Tax, Gov_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, Cons_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Gov_social_transfers, Other_Transfers, Property_income, ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M;
 Government_savings;G_savings_Val_1;G_disposable_income, G_Consumption_budget;
