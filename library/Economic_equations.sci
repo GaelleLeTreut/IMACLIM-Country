@@ -1083,7 +1083,7 @@ function [y] = Pension_Benefits_Const_5(Pension_Benefits, NetWage_variation, Pen
 	
 endfunction
 
-function [Pension_Benefits] = Pension_Benefits_Val_4(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+function [Pension_Benefits] = Pension_Benefits_Val_5(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
 	Pension_Benefits = (GDP / BY.GDP) .* ( BY.Population ./ Population )  * Pension_Benefits_param ;
 
@@ -1173,7 +1173,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_4(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population ) ;
 
-    Other_SocioBenef = CPI .* Other_SocioBenef ;
+    Other_SocioBenef = CPI .* Other_SocioBenef_param ;
 
 endfunction
 
