@@ -28,7 +28,7 @@ Macro_nb;Current
 Demographic_shift;True
 Labour_product;True
 World_prices;False
-X_nonEnerg;False
+X_nonEnerg;True
 // SELECT an Capital Flow representation by uncomment it;
 // Invest_matrix;%F
 Invest_matrix;%T
