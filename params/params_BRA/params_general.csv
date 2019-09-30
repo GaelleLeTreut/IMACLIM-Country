@@ -15,6 +15,7 @@ u_param;0.0969597;0;1;value ofBY;
 //;;;;;
 //Capital;;;;;
 delta_interest_rate;1;0;1;;
+depreciation_rate;0.04;0;1;for capital market;
 //;;;;;
 //Other params;;;;;
 Mu;0;0;1;labour productivity growth rate;

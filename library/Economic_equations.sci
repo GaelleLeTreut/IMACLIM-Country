@@ -2389,6 +2389,24 @@ function I = Invest_demand_Val_1(Betta, kappa, Y)
 
 endfunction
 
+// If Capital Market - Investment is a share of GDP - Give the repartition of I
+// Used at BY to calibrate the shares
+/// 
+
+function [y] = Invest_demand_Const_2(Betta, I, kappa, Y, GDP, share_Ii)
+ 
+// Fred I  = ( calib.Share_Inv * GDP )./  pI   
+// Share Ii calibré 
+
+// share_Ii  = I. /sum(I);
+// share_I_GDP = sum(I)/GDP; 
+ 
+  y = I -(sum(I)/GDP).* BY.share_Ii;
+    
+endfunction	
+
+
+///////// 
 // Betta calculation function of K cost & pI
 // Index_Sectors : indice des colonnes de betta != betta_ref
 // dimension de Betta cohérente
@@ -2431,6 +2449,20 @@ function pK = Capital_Cost_Val_1(pI, I)
         pK = ( sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) )';
     end
     
+endfunction
+
+/// IF Capital Market - Introducing the rental price
+
+function y = Capital_Cost_Const_2(pK, pRental)
+
+y1  = pK - pRental*ones(1,nb_Sectors);
+y= y1;
+ 
+endfunction
+
+function pK = Capital_Cost_Val_2(pRental)
+
+pK = pRental.*ones(1,nb_Sectors);	
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3329,15 +3361,15 @@ function GDP = GDP_Val_1(Labour_income, GrossOpSurplus, Production_Tax, Labour_T
 
 endfunction
 
-function [y] = GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C) ;
+function [y] = GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect) ;
 
-    y = GDP - (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) + sum(Labour_Tax)+sum(Labour_Corp_Tax) + sum(OtherIndirTax) + sum(Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)) ;
+    y = GDP - (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) - sum(ClimPolCompensbySect) + sum(Labour_Tax)+sum(Labour_Corp_Tax) + sum(OtherIndirTax) + sum(Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C)) ;
 
 endfunction
 
-function GDP = GDP_Val_2(Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
-
-    GDP = (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) + sum(Labour_Tax)+sum(Labour_Corp_Tax) + sum(OtherIndirTax) + sum(Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C));
+function GDP = GDP_Val_2(Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
+	
+    GDP = (sum(Labour_income) + sum(GrossOpSurplus) + sum(Production_Tax) - sum(ClimPolCompensbySect) + sum(Labour_Tax)+sum(Labour_Corp_Tax) + sum(OtherIndirTax) + sum(Cons_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C));
 
 endfunction
 
@@ -3542,7 +3574,46 @@ function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Tr
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// C)  Environmental equations
+///////   D.2  Capital market
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///  Calibration of Capital Consumption according to Capital Stock endowment
+function Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment)
+
+Capital_consumption = Capital_endowment .* (Capital_income./sum(Capital_income));
+
+endfunction
+
+///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
+function Capital_endowment = Capital_Dynamic_Val_1 ( )
+
+Capital_endowment = ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I);
+
+endfunction
+
+
+//  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
+
+function y = Capital_Market_Const_1 ( Capital_endowment,kappa, I)
+	if Capital_Dynamics
+		y = Capital_endowment - sum (kappa.* Y');
+	else
+		y = Capital_endowment - Capital_endowment;
+	end
+endfunction
+
+function Capital_endowment = Capital_Market_Val_1 (kappa, I)
+	if Capital_Dynamics
+		Capital_endowment = sum (kappa.* Y);
+	else
+		Capital_endowment= BY.Capital_endowment;
+	end
+endfunction
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// E)  Environmental equations
 //////////////////////////////////////
 
 // CO2 intensity function for intermediate consumption

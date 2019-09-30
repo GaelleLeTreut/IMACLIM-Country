@@ -190,3 +190,11 @@ if ~isdef("ClosCarbRev_AllLabTax")& ~isdef("ClosCarbRev_CstNetLend")
 ClosCarbRev_CstNetLend= %T;
 ClosCarbRev_AllLabTax = %F; 
 end 
+
+
+////  Capital Dynamics
+if isdef("Capital_Dynamics") then
+    Capital_Dynamics = eval(Capital_Dynamics);
+else
+    Capital_Dynamics = %F;
+end

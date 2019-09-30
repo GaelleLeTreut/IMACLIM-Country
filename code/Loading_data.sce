@@ -532,9 +532,9 @@ for elt=1:size(list_demo_variable,"r");
     valtemp = evstr(Demography(indtemp,2));
     execstr("initial_value."+list_demo_variable(elt)+"=valtemp;")
 end
+clear list_demo_variable
 
 // Distribution share file
-
 Index_IncomeSources = Distribution_Shares_form (2:$,1);
 nb_IncomeSources = size(Distribution_Shares_form (2:$,1),"r");
 
@@ -542,6 +542,18 @@ for elt=1:nb_IncomeSources;
     execstr("Indice_"+Index_IncomeSources(elt)+"=elt;")
 end
 
+
+// Capital Dynamics if required
+if Capital_Dynamics 
+
+	DataCapDynamics(:, size(DataCapDynamics,"c")) = [];
+	list_demo_variable= DataCapDynamics(1:$,1);
+		for elt=1:size(list_demo_variable,"r");	
+			indtemp= find(DataCapDynamics(:,1)==list_demo_variable(elt));
+			valtemp = evstr(DataCapDynamics(indtemp,2));
+			execstr("initial_value."+list_demo_variable(elt)+"=valtemp;")
+		end
+end
 
 // IC Domestic and imports tables
 [initial_value.IC_Import_rate] = fill_table( IOT_Import_rate,IndRow_IOT_Import_rate,IndCol_IOT_Import_rate,Index_Commodities,Index_Sectors);

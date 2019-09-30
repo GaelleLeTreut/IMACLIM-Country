@@ -273,7 +273,7 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     HH_Employment_Const_1(Unemployed, u, Labour_force)
     Labour_Cost_Const_2(pL, w, Labour_Tax_rate, Labour_Corp_Tax_rate)
 
-    GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C)
+    GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect)
 
     Labour_income_Const_1(Labour_income, Labour, w) 
     Profit_income_Const_1(Profit_margin, markup_rate, pY, Y)

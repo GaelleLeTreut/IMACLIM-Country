@@ -141,7 +141,7 @@ Labour_Tax_rate;Labour_Taxe_rate_Val_1;LabTaxRate_BeforeCut, Labour_Tax_Cut;
 //;G_closure_Const_1;Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity;
 ;;;
 //////////////////////  Value-added breakdown;;;
-GDP;GDP_Val_2;Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C;
+GDP;GDP_Val_2;Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect;
 Labour_income;Labour_income_Val_1;Labour, w;
 Profit_margin;Profit_income_Val_1;markup_rate, pY, Y;
 Capital_income;Capital_income_Val_1;pK, kappa, Y;

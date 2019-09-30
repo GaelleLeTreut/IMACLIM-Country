@@ -1282,9 +1282,9 @@ end
 // Start Difference between France (1) and Brasil (2)
 /////////////////////////////////////////////////////
 if Country=="Brasil" then
-    function [const_GDP] =fcal_GDP_Const_1(x_GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, Imaclim_VarCalib)
+    function [const_GDP] =fcal_GDP_Const_1(x_GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, Imaclim_VarCalib)
         GDP= indiv_x2variable(Imaclim_VarCalib, "x_GDP");
-        const_GDP =  GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C);
+        const_GDP =  GDP_Const_2(GDP, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect);
     endfunction
 
     const_GDP = 10^5;
@@ -1293,7 +1293,7 @@ if Country=="Brasil" then
             error("review calib_GDP")
         end
         count = count + 1;
-        [x_GDP, const_GDP, info_cal_GDP] = fsolve(x_GDP, list(fcal_GDP_Const_1, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, Index_Imaclim_VarCalib));
+        [x_GDP, const_GDP, info_cal_GDP] = fsolve(x_GDP, list(fcal_GDP_Const_1, Labour_income, GrossOpSurplus, Production_Tax, Labour_Tax, Labour_Corp_Tax, OtherIndirTax, Cons_Tax, Energy_Tax_IC, Energy_Tax_FC, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, Index_Imaclim_VarCalib));
         GDP = indiv_x2variable (Index_Imaclim_VarCalib, "x_GDP");
 
     end
@@ -1323,19 +1323,27 @@ end
 // End Difference between France (1) and Brasil (2)
 /////////////////////////////////////////////////////
 
-function [const_pK] =fcal_CapitalCost_Const_1(x_pK, pI, I, Imaclim_VarCalib)
-    pK= indiv_x2variable(Imaclim_VarCalib, "x_pK");
-    const_pK =  Capital_Cost_Const_1(pK, pI, I)
-endfunction
 
-[x_pK, const_pK, info_cal_pK] = fsolve(x_pK, list(fcal_CapitalCost_Const_1,  pI, I, Index_Imaclim_VarCalib));
+/// Calibration of share at BY of I repartition across sectors: used for Capital Dynamics 
+	share_Ii = I./sum(I);
+	x_share_Ii = share_Ii ;
 
-if norm(const_pK) > sensib
-    error( "review calib_pK")
-else
-    pK = indiv_x2variable (Index_Imaclim_VarCalib, "x_pK");
+if ~Capital_Dynamics
+
+	function [const_pK] =fcal_CapitalCost_Const_1(x_pK, pI, I, Imaclim_VarCalib)
+		pK= indiv_x2variable(Imaclim_VarCalib, "x_pK");
+		const_pK =  Capital_Cost_Const_1(pK, pI, I)
+	endfunction
+	
+	[x_pK, const_pK, info_cal_pK] = fsolve(x_pK, list(fcal_CapitalCost_Const_1,  pI, I, Index_Imaclim_VarCalib));
+	
+	if norm(const_pK) > sensib
+		error( "review calib_pK")
+	else
+		pK = indiv_x2variable (Index_Imaclim_VarCalib, "x_pK");
+	end
 end
-
+ 
 
 function [const_LabourByWorkerCoef] =fcal_LabByWorker_Const_1(x_LabourByWorker_coef, u_tot, Labour_force, lambda, Y, Imaclim_VarCalib)
     LabourByWorker_coef= indiv_x2variable(Imaclim_VarCalib, "x_LabourByWorker_coef");
@@ -1484,6 +1492,7 @@ end
 ///////////////////////////
 // End Specific to Brasil
 ///////////////////////////
+if ~Capital_Dynamics
 
 function [const_kappa] =fcalCapIncome_Const_1(x_kappa, Capital_income, pK, Y, Imaclim_VarCalib)
     kappa= indiv_x2variable(Imaclim_VarCalib, "x_kappa");
@@ -1534,6 +1543,46 @@ else
     Betta = indiv_x2variable (Index_Imaclim_VarCalib, "x_Betta");
     Betta = (abs(Betta) > %eps).*Betta;
 end
+
+end
+
+// Capital Market
+
+if Capital_Dynamics 
+	
+	Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment);
+	x_Capital_consumption = Capital_consumption;
+	
+	pK = Capital_consumption ./ Capital_income ;
+	x_pK = pK; 
+	
+	for elt=2:nb_Sectors
+		if (round(pK(elt)*1000))/1000 <> (round(pK(elt-1)*1000))/1000
+			error ("problem in calibrating pK")		
+		end
+	end
+	
+	pRental = pK(1);
+	
+	function [const_kappa] =fcalCapIncome_Const_1(x_kappa, Capital_income, pK, Y, Imaclim_VarCalib)
+    kappa= indiv_x2variable(Imaclim_VarCalib, "x_kappa");
+    y1_1 = (Y==0).*(kappa');
+    y1_2 = (Y<>0).*Capital_income_Const_1(Capital_income, pK, kappa, Y);
+    const_kappa	= (Y==0).*y1_1  + (Y<>0).*y1_2;
+	endfunction
+
+	[x_kappa, const_kappa, infCal_Capital_income] = fsolve(x_kappa, list(fcalCapIncome_Const_1, Capital_income, pK, Y, Index_Imaclim_VarCalib));
+
+	if norm(const_kappa) > sensib
+		error( "review calib_kappa")
+	else
+		kappa = indiv_x2variable (Index_Imaclim_VarCalib, "x_kappa");
+		kappa = (abs(kappa) > %eps).*kappa;
+
+	end
+
+end
+ 
 
 ///////////////////////////
 // Start - Not Applied to Brasil
