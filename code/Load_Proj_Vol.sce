@@ -207,12 +207,17 @@ if AGG_type <> '' & proj_desaggregated then
 end
 
 function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
-
-    warning(var_intens_name + ' est calculé à partir de Y initial : il faut la projection de Y.'),
+		
     Proj_Vol(var_intens_name) = Proj_Vol(var_name);
-    warning('Proj_Vol.Y.val à la place de Y')
-    Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Y';
-    Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
+	Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
+	Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
+	
+	for elt=1:size(Proj_Vol(var_name).val,"c")
+		if 	Proj_Vol(var_name).val(elt) ./ Y_copy_lines(elt) <> 0 & Proj_Vol.Y.val(elt)==0
+			warning(var_intens_name +' of sector '+Index_Sectors(elt)+ ' evaluated using Y of last step: projection of Y required.')
+		end
+	end
+	
     Proj_Vol(var_name).apply_proj = %F;
 
 endfunction
