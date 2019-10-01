@@ -117,7 +117,7 @@ Labour;Employment_Val_1;lambda, Y;
 ;LabourByWorker_Const_1;LabourByWorker_coef, u_tot, Labour_force, lambda, Y;
 // For Mean wage curve: ;;;
 //;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
-//;Wage_Variation_Val_1;NetWage_variation;
+//w;Wage_Variation_Val_1;NetWage_variation;
 // For Sectoral wage curve:;;;
 w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
 ;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
