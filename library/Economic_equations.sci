@@ -1652,6 +1652,11 @@ function G = G_demand_Val_2(pG, G_Consumption_budget, BudgetShare_GConsump)
     value_G = BudgetShare_GConsump .* (ones( nb_Commodities, 1).*.G_Consumption_budget);
     
     G = (pG <> 0) .* divide(value_G, pG, 1);
+	
+	
+	if is_projected('G') then
+        G = apply_proj_val(G, 'G');
+    end
     
 endfunction
 
@@ -2402,6 +2407,7 @@ function [y] = Invest_demand_Const_2(Betta, I, kappa, Y, GDP, share_Ii)
 // share_I_GDP = sum(I)/GDP; 
  
   y = I -(sum(I)/GDP).* BY.share_Ii;
+  // y = I -I.* BY.share_Ii
     
 endfunction	
 
