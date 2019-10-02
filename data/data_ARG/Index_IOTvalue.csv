@@ -17,7 +17,7 @@ Row;TransRoadPass;Commodities;NonEnerSect;NonHybridCommod;-;-;AllComp
 Row;RestTrans;Commodities;NonEnerSect;NonHybridCommod;-;-;AllComp
 Row;CommerceServ;Commodities;NonEnerSect;NonHybridCommod;-;-;AllComp
 Row;Construction;Commodities;NonEnerSect;NonHybridCommod;-;-;AllComp
-Row;Composite;Commodities;NonEnerSect;NonHybridCommod;-;-;AllComp
+Row;Composite;Commodities;NonEnerSect;NonHybridCommod;-;Comp;AllComp
 Row;Labour_income;OthPart_IOT;Value_Added;-;-;-;-
 Row;Labour_Tax;OthPart_IOT;Value_Added;-;-;-;-
 Row;Capital_income;OthPart_IOT;Value_Added;-;-;-;-

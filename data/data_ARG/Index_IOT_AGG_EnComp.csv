@@ -1,5 +1,5 @@
 Row;AllEnergy;Commodities;EnerSect;PrimEnerSect;FinEnerSect;HybridCommod
-Row;AllComp;Commodities;NonEnerSect;-;-;NonHybridCommod
+Row;AllComp;Commodities;NonEnerSect;-;Comp;NonHybridCommod
 Row;Labour_income;OthPart_IOT_AGG;Value_Added;-;-;-
 Row;Labour_Tax;OthPart_IOT_AGG;Value_Added;-;-;-
 Row;Capital_income;OthPart_IOT_AGG;Value_Added;-;-;-
