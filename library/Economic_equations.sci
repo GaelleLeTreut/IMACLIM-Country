@@ -1987,31 +1987,18 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
         Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
         Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
         lambda = apply_proj_val(lambda, 'lambda', Proj_param);
-		// Labour_temp = apply_proj_val(Labour,'Labour');
-		// ind_IC_r = Proj_Vol('Labour').ind_of_proj(1)(1);
-		// ind_IC_c = Proj_Vol('Labour').ind_of_proj(1)(2);
-		// lambda(ind_IC_r,ind_IC_c)  =  Labour_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
     end
 	
     if is_projected('Capital_consumption') then
         Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
         Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
         kappa = apply_proj_val(kappa, 'kappa', Proj_param)
-		// CapitalCon_temp = apply_proj_val(Capital_consumption,'Capital_consumption');
-		// ind_IC_r = Proj_Vol('Capital_consumption').ind_of_proj(1)(1);
-		// ind_IC_c = Proj_Vol('Capital_consumption').ind_of_proj(1)(2);
-		// kappa(ind_IC_r,ind_IC_c)  =  CapitalCon_temp(ind_IC_r,ind_IC_c)./Y(ind_IC_c,ind_IC_r)';
     end
 	
     if is_projected('IC') then
         Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
         Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
         alpha = apply_proj_val(alpha, 'alpha', Proj_param);
-        // 	IC_temp = apply_proj_val(IC,'IC');
-        // 	ind_IC_r = Proj_Vol('IC').ind_of_proj(1)(1);
-        // 	ind_IC_c = Proj_Vol('IC').ind_of_proj(1)(2);
-        //    // alpha(ind_IC_r,ind_IC_c)  =  divide(IC_temp(ind_IC_r,ind_IC_c),(ones(ind_IC_r).*.Y(ind_IC_c))',0);
-        //    alpha(Indice_EnerSect,:)  =  divide(IC_temp(Indice_EnerSect,:),(ones(Indice_EnerSect).*.Y(:))',0)
     end
 
 		
@@ -2083,6 +2070,72 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigm
     (FPI .^(sigma./(1 - sigma)))) ;
 
 
+endfunction
+
+function [alpha, lambda, kappa] = Technical_Coef_Val_4(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pRental = abs(pRental);
+
+    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+    (aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+    //lambda(test_pL|test_FPI) = 0;
+
+    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+    ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+	
+	    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+    
 endfunction
 
 
@@ -2400,14 +2453,8 @@ endfunction
 
 function [y] = Invest_demand_Const_2(Betta, I, kappa, Y, GDP, share_Ii)
  
-// Fred I  = ( calib.Share_Inv * GDP )./  pI   
-// Share Ii calibré 
-
-// share_Ii  = I. /sum(I);
-// share_I_GDP = sum(I)/GDP; 
- 
-  y = I -(sum(I)/GDP).* BY.share_Ii;
-  // y = I -I.* BY.share_Ii
+  // BY.share_Ii : pour le partage entre secteur...  pas pour calculer le niveau de I / share_I_GDP : part de I_value dans le PIB a l'année de base
+  y = I -   BY.share_Ii.*(((shareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
     
 endfunction	
 
@@ -2462,7 +2509,7 @@ endfunction
 function y = Capital_Cost_Const_2(pK, pRental)
 
 y1  = pK - pRental*ones(1,nb_Sectors);
-y= y1;
+y= y1';
  
 endfunction
 
@@ -3601,9 +3648,10 @@ endfunction
 
 //  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
 
-function y = Capital_Market_Const_1 ( Capital_endowment,kappa, I)
+function y = Capital_Market_Const_1 ( Capital_endowment,Capital_consumption)
 	if Capital_Dynamics
-		y = Capital_endowment - sum (kappa.* Y');
+		// y = Capital_endowment - sum (kappa.* Y');
+		y = Capital_endowment - sum (Capital_consumption);
 	else
 		y = Capital_endowment - Capital_endowment;
 	end

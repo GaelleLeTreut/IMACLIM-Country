@@ -1342,6 +1342,8 @@ if ~Capital_Dynamics
 	else
 		pK = indiv_x2variable (Index_Imaclim_VarCalib, "x_pK");
 	end
+	
+	
 end
  
 
@@ -1553,7 +1555,8 @@ if Capital_Dynamics
 	Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment);
 	x_Capital_consumption = Capital_consumption;
 	
-	pK = Capital_consumption ./ Capital_income ;
+	//pK = Capital_consumption ./ Capital_income ;
+	pK = Capital_income ./ Capital_consumption ;
 	x_pK = pK; 
 	
 	for elt=2:nb_Sectors
@@ -1580,6 +1583,8 @@ if Capital_Dynamics
 		kappa = (abs(kappa) > %eps).*kappa;
 
 	end
+	
+	shareI_GDP = sum(I.*pI)/GDP;
 
 end
  

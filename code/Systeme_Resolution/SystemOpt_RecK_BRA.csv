@@ -33,7 +33,7 @@ Trade_margins_rates;Trade_MargRates_Val_2;delta_TradeMargins_rate;
 Trade_margins;Trade_margins_Val_1;Trade_margins_rates, p, alpha, Y, C, G, I, X;
 ;;;
 pL;Labour_Cost_Val_2;w, Labour_Tax_rate, Labour_Corp_Tax_rate;
-pK;Capital_Cost_Val_2;pRental;
+;Capital_Cost_Const_2;pK, pRental;
 ;;;
 GrossOpSurplus;GrossOpSurplus_Val_1;Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X;
 SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G, I;
@@ -55,8 +55,8 @@ Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate
 ////// Firms;;;
 Corp_disposable_income;Corp_income_Val_2;GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax;
 Corporations_savings;Corp_savings_Val_1;Corp_disposable_income;
-;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
-//;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
+//;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
+;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
 ;Corp_NetLending_Const_1;NetLending, GFCF_byAgent, Corporations_savings;
 ;Corp_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;Corp_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
@@ -101,7 +101,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
-alpha, lambda, kappa;Technical_Coef_Val_1;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
+alpha, lambda, kappa;Technical_Coef_Val_4;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
 ////// International trade;;;
 M;Imports_Val_1;pM, pY, Y, sigma_M, delta_M_parameter;// check const_1, const_3 & const_4
 X;Exports_Val_1;pM, pX, sigma_X, delta_X_parameter;// const 3 : homothetic projection et const_2 static projection
@@ -122,7 +122,7 @@ w;Wage_Variation_Val_1;NetWage_variation;
 ////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 ;Invest_demand_Const_2;Betta, I, kappa, Y, GDP, share_Ii;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
-pRental;Capital_Market_Const_1;Capital_endowment, kappa, I;
+;Capital_Market_Const_1;Capital_endowment, Capital_consumption;
 Capital_endowment;Capital_Dynamic_Val_1;;
 ;;;
 ////////////////////// Carbon tax policies;;;
