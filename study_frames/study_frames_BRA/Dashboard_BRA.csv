@@ -4,8 +4,8 @@ Component;Name
 System_Resol;Systeme_Static_BRA
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
-// SystemOpt_Resol;SystemOpt_Static_BRA
-SystemOpt_Resol;SystemOpt_RecK_BRA
+SystemOpt_Resol;SystemOpt_Static_BRA
+// SystemOpt_Resol;SystemOpt_RecK_BRA
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA
 // SystemOpt_Resol;SystemOpt_StaticCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
@@ -27,22 +27,22 @@ Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;2
 // SELECT a Macro framework to run;
-Macro_nb;
-// Macro_nb;NDC
+// Macro_nb;
+Macro_nb;NDC
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
 World_prices;False
 X_nonEnerg;False
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
 // Scenario;PMR_Ref_Disag
-// Scenario;PMR_Ref
+Scenario;PMR_Ref
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want a capital dynamics;
-Capital_Dynamics;%T
+Capital_Dynamics;%F
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%T
 Output_prints;%T
