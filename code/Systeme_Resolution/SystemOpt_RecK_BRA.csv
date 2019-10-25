@@ -55,8 +55,8 @@ Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate
 ////// Firms;;;
 Corp_disposable_income;Corp_income_Val_2;GOS_byAgent, Labour_Corp_Tax, Corp_Direct_Tax, Corp_social_transfers, Other_Transfers, Property_income , Corporate_Tax;
 Corporations_savings;Corp_savings_Val_1;Corp_disposable_income;
-//;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
-;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
+;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
+// ;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
 ;Corp_NetLending_Const_1;NetLending, GFCF_byAgent, Corporations_savings;
 ;Corp_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;Corp_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
@@ -124,6 +124,7 @@ Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 ;Invest_demand_Const_2;Betta, I, kappa, Y, GDP, share_Ii;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;Capital_Market_Const_1;Capital_endowment, Capital_consumption;
 Capital_endowment;Capital_Dynamic_Val_1;;
+ShareI_GDP;InvestShare_GDP_Val_1;GDP,I;
 ;;;
 ////////////////////// Carbon tax policies;;;
 Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;

@@ -2454,10 +2454,16 @@ endfunction
 function [y] = Invest_demand_Const_2(Betta, I, kappa, Y, GDP, share_Ii)
  
   // BY.share_Ii : pour le partage entre secteur...  pas pour calculer le niveau de I / share_I_GDP : part de I_value dans le PIB a l'année de base
-  y = I -   BY.share_Ii.*(((shareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
+  y = I -   BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
     
 endfunction	
 
+function ShareI_GDP = InvestShare_GDP_Val_1(GDP,I)
+
+ShareI_GDP =  BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value)) ;
+
+endfunction
+//// - > ajouter une variable et cette équation  : a chaque pas de de temps on réactualisé le share de BY en fonction de la croissance de I_value du pas d'avant?
 
 ///////// 
 // Betta calculation function of K cost & pI

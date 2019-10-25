@@ -1583,10 +1583,13 @@ if Capital_Dynamics
 		kappa = (abs(kappa) > %eps).*kappa;
 
 	end
-	
-	shareI_GDP = sum(I.*pI)/GDP;
+
 
 end
+
+	
+	ShareI_GDP = sum(I.*pI)/GDP;
+	x_ShareI_GDP = ShareI_GDP;
  
 
 ///////////////////////////
