@@ -1588,7 +1588,7 @@ if Capital_Dynamics
 end
 
 	
-	ShareI_GDP = sum(I.*pI)/GDP;
+	ShareI_GDP = sum(sum(I,"c").*pI)/GDP;
 	x_ShareI_GDP = ShareI_GDP;
  
 
