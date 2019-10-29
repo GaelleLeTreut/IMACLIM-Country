@@ -42,9 +42,9 @@ name_bra = 'Brasil';
 iso_bra = 'BRA';
 
 //// System static resolution test
-test_bra_stat.System_Resol = ['Systeme_Static_BRA'];
+test_bra_stat.System_Resol = ['Systeme_Ref_BRA'];
 test_bra_stat.Optimization_Resol = ['%T'];
-test_bra_stat.SystemOpt_Resol = ['SystemOpt_Static_BRA'];
+test_bra_stat.SystemOpt_Resol = ['SystemOpt_Ref_BRA'];
 
 test_bra_stat.study = ['Static_RunChoices'];
 test_bra_stat.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
@@ -66,9 +66,9 @@ test_bra_homo.Macro_nb = ['NDC'];
 brasil_homo = new_country(name_bra, iso_bra, test_bra_homo);
 
 //// Scenario projection tests
-test_bra_scen.System_Resol = ['Systeme_Static_BRA'];
+test_bra_scen.System_Resol = ['Systeme_Ref_BRA'];
 test_bra_scen.Optimization_Resol = ['%T'];
-test_bra_scen.SystemOpt_Resol = ['SystemOpt_Static_BRA'];
+test_bra_scen.SystemOpt_Resol = ['SystemOpt_Ref_BRA'];
 test_bra_scen.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_scen.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_scen.Scenario = ['PMR_Ref_Disag'];
@@ -80,9 +80,9 @@ test_bra_scen.Carbon_BTA = ['%T', '%F'];
 brasil_scen = new_country(name_bra, iso_bra, test_bra_scen);
 
 //// Specific scenario
-test_bra_scenPMR.System_Resol = ['Systeme_Static_BRA'];
+test_bra_scenPMR.System_Resol = ['Systeme_Ref_BRA'];
 test_bra_scenPMR.Optimization_Resol = ['%T'];
-test_bra_scenPMR.SystemOpt_Resol = ['SystemOpt_Static_BRA'];
+test_bra_scenPMR.SystemOpt_Resol = ['SystemOpt_Ref_BRA'];
 test_bra_scenPMR.AGG_type = ['AGG_PMR19'];
 test_bra_scenPMR.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_scenPMR.Scenario = ['PMR_Ref'];
