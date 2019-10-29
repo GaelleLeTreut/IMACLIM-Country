@@ -1565,6 +1565,7 @@ if Capital_Dynamics
 	end
 	
 	pRental = pK(1);
+	x_pRental = pRental;
 	
 	function [const_kappa] =fcalCapIncome_Const_1(x_kappa, Capital_income, pK, Y, Imaclim_VarCalib)
     kappa= indiv_x2variable(Imaclim_VarCalib, "x_kappa");

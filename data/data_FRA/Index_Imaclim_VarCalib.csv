@@ -150,3 +150,5 @@ Carbon_Tax_M;1;nb_Sectors;InitVal
 Emission_Coef_M;1;nb_Sectors;calib
 Carbon_Tax_rate_M;1;nb_Sectors;calib
 share_Ii;nb_Sectors;1;calib
+ShareI_GDP;1;1;calib
+pRental;1;1;calib

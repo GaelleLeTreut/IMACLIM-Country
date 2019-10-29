@@ -553,6 +553,12 @@ if Capital_Dynamics
 			valtemp = evstr(DataCapDynamics(indtemp,2));
 			execstr("initial_value."+list_demo_variable(elt)+"=valtemp;")
 		end
+		
+	if initial_value.Capital_endowment=="to define"
+		warning("inform a capital stock before running IMACLIM")
+		pause
+	end	
+	
 else 
 
 	// Variables created for flexibility but are not used in this case of Capital_Dynamics==%F
