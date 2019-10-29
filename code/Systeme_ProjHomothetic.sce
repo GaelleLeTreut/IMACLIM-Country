@@ -257,6 +257,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI) 
     Capital_Cost_Const_1(pK, pI, I, pRental)
+	// if Carbon market is modelled / if not, still in the system but not calculated
+	Capital_Market_Const_1(Capital_endowment, kappa, Y, pRental)
+	Capital_Dynamic_Const_1(Capital_endowment)
+	
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)

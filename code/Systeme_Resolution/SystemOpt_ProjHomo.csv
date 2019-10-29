@@ -121,9 +121,11 @@ w;Wage_Variation_Val_1;NetWage_variation;
 // For Sectoral wage curve:;;;
 // w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
 // ;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
-////// Investment and capital flows;;;
+////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_1;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
+;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
+Capital_endowment;Capital_Dynamic_Val_1;;
 ;;;
 ////////////////////// Carbon tax policies;;;
 Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;

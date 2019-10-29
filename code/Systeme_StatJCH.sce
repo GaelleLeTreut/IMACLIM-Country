@@ -247,6 +247,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // 1-standard / 2-investment matrix / 3-Real total invest const + carbon tax revenu (option dashboard)
     Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I)
     Capital_Cost_Const_1(pK, pI, I, pRental)
+	// if Carbon market is modelled / if not, still in the system but not calculated
+	Capital_Market_Const_1(Capital_endowment, kappa, Y, pRental)
+	Capital_Dynamic_Const_1(Capital_endowment)
+	
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
