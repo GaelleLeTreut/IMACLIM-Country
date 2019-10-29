@@ -249,17 +249,15 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI) 
     Capital_Cost_Const_1(pK, pI, I, pRental)
-
-    MarketBalance_Const_1(Y, IC, C, G, I, X, M)
-    IC_Const_1(IC, Y, alpha)
-
-    // Antoine : J'ai retiré la marketclosure sinon je ne peux pas forcer le commerce    
-    // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
-
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
 	// if Carbon market is modelled / if not, still in the system but not calculated
 	Capital_Market_Const_1(Capital_endowment, kappa, Y, pRental)
 	Capital_Dynamic_Const_1(Capital_endowment)
+	
+    MarketBalance_Const_1(Y, IC, C, G, I, X, M)
+    IC_Const_1(IC, Y, alpha)
+    // Antoine : J'ai retiré la marketclosure sinon je ne peux pas forcer le commerce    
+    // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
 
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
     Employment_Const_1(Labour, lambda, Y)
