@@ -152,6 +152,13 @@ if Optimization_Resol
 		Capital_Dynamics = %F;
 	end
 	
+	if part(SystemOpt_Resol,1:length(OptHomo_Shortname))== OptHomo_Shortname & ( World_prices=="True" | X_nonEnerg=="True")
+		warning("The boundaries conditions selected on world prices or exports in the dashboard has been cancelled: incompatible with homothetic projection");
+		World_prices = "False";
+		X_nonEnerg = "False";
+	end
+	
+	
 else
 	if part(System_Resol,1:length(Homo_Shortname))== Homo_Shortname & ( Scenario<>"")
 		warning("The scenario selected in the dashboard has been cancelled: incompatible with homothetic projection");
@@ -162,6 +169,13 @@ else
 		warning("Capital Market modelling has been cancelled: incompatible with homothetic projection");
 		Capital_Dynamics = %F;
 	end
+	
+	if part(System_Resol,1:length(Homo_Shortname))== Homo_Shortname &  ( World_prices=="True" | X_nonEnerg=="True")
+		warning("The boundaries conditions selected on world prices or exports in the dashboard has been cancelled: incompatible with homothetic projection");
+		World_prices = "False";
+		X_nonEnerg = "False";
+	end
+
 end
 
 if Optimization_Resol 
@@ -188,7 +202,7 @@ end
 if CO2_footprint=='False'
     print(out,"======= You chose not to realise a Carbon footprint analysis");
 end
-
+pause
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA
