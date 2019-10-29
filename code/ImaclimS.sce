@@ -202,7 +202,7 @@ end
 if CO2_footprint=='False'
     print(out,"======= You chose not to realise a Carbon footprint analysis");
 end
-pause
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 1: LOADING DATA

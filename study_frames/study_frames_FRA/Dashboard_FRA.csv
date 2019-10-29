@@ -5,19 +5,20 @@ System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
 // System_Resol;Systeme_Static_recalib
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%F
+Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
+study;Static_RunChoices
 // study;Projection_evolution
-study;Recursive_RunChoices
+// study;Recursive_RunChoices
 // study;Recalib_RunChoices_1
+Capital_Dynamics;%T
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_SNBC2
+// AGG_type;AGG_SNBC2
 // AGG_type;AGG_MetMin
-// AGG_type;AGG_IndEner
+AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
 // AGG_type;AGG_Ener1
 // AGG_type;AGG_Ener2
@@ -44,8 +45,8 @@ World_prices;True
 X_nonEnerg;False
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
-// Scenario;
-Scenario;Recalib
+Scenario;
+// Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
