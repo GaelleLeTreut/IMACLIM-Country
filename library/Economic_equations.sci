@@ -2388,10 +2388,10 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		// ShareI_GDP = BY.ShareI_GDP ;
 		// or
 		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
-		y1 = I - BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
+		y1 = I - ( (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I)) );
 		// share is corrected by ratio I that keep u_tot constant 
 		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
-		// y1 = I - BY.share_Ii.*(((s*GDP)*ones(nb_Sectors,1))./pI);
+		// y1 = I - ( (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I)) );
 			
 		y = matrix(y1, -1 , 1);
 		
@@ -2424,10 +2424,16 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// ShareI_GDP = BY.ShareI_GDP ;
 		// or
 		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
-		I = BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
+		I = (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I));
 		// share is corrected by ratio I that keep u_tot constant 
 		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
-		// I = BY.share_Ii.*(((s*GDP)*ones(nb_Sectors,1))./pI);
+		// I = (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I));
+		
+			// so far, only to inform the electric vector of investments
+			if is_projected('I') then
+				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+			end
+		
 	
 	end
 
