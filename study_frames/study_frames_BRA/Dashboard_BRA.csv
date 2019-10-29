@@ -6,7 +6,7 @@ System_Resol;Systeme_Ref_BRA
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Ref_BRA
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA
-// SystemOpt_Resol;SystemOpt_StaticCAP_BRA
+// SystemOpt_Resol;SystemOpt_RefCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution

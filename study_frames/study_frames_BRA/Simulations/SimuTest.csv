@@ -6,7 +6,7 @@ Component;Name;;
 System_Resol;Systeme_StaCap_BRA;;
 // * If Optimization_Resol == %T, System_Resol is ignored *;;;
 Optimization_Resol;%T;;
-// SystemOpt_Resol;SystemOpt_StaticCAP_BRA;;
+// SystemOpt_Resol;SystemOpt_RefCAP_BRA;;
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA;;
 SystemOpt_Resol;SystemOpt_Ref_BRA;;
 // SELECT a type of study (shock in parameters) by uncomment it;;;
