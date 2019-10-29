@@ -14,6 +14,7 @@ function default_dashboard = new_default_dashboard()
     'Optimization_Resol', '%T', ..
     'SystemOpt_Resol', 'SystemOpt_Static', ..
     'study', 'Recursive_RunChoices', ..
+	'Capital_Dynamics','%F',..
     'AGG_type', '', ..
     'H_DISAGG', 'HH1', ..
     'Resol_Mode', 'Dynamic_Projection', ..

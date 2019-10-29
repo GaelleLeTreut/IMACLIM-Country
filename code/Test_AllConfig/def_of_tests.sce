@@ -69,6 +69,7 @@ brasil_homo = new_country(name_bra, iso_bra, test_bra_homo);
 test_bra_scen.System_Resol = ['Systeme_Ref_BRA'];
 test_bra_scen.Optimization_Resol = ['%T'];
 test_bra_scen.SystemOpt_Resol = ['SystemOpt_Ref_BRA'];
+test_bra_scen.Capital_Dynamics = ['%T', '%F'];
 test_bra_scen.AGG_type = ['AGG_PMR19', 'AGG_EnComp'];
 test_bra_scen.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_scen.Scenario = ['PMR_Ref_Disag'];
@@ -83,6 +84,7 @@ brasil_scen = new_country(name_bra, iso_bra, test_bra_scen);
 test_bra_scenPMR.System_Resol = ['Systeme_Ref_BRA'];
 test_bra_scenPMR.Optimization_Resol = ['%T'];
 test_bra_scenPMR.SystemOpt_Resol = ['SystemOpt_Ref_BRA'];
+test_bra_scenPMR.Capital_Dynamics = ['%T', '%F'];
 test_bra_scenPMR.AGG_type = ['AGG_PMR19'];
 test_bra_scenPMR.H_DISAGG = ['HH1', 'H3', 'H4'];
 test_bra_scenPMR.Scenario = ['PMR_Ref'];
@@ -158,6 +160,7 @@ france_recalib = new_country(name_fra, iso_fra, test_fra_recalib);
 
 // countries = list(argentina, brasil); //, brasil_scenario, france, france_scenario);
 countries = list(argentina_scen, argentina_homo,  france_homo, france_stat, france_scen, brasil_stat, brasil_homo, brasil_scen,brasil_scenPMR ); 
+
 // brasil_scenPMR
 // TO DO
 // countries = list(france_stat);
