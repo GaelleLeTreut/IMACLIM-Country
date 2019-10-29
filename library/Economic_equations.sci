@@ -2392,6 +2392,12 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		// share is corrected by ratio I that keep u_tot constant 
 		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
 		// y1 = I - ( (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I)) );
+
+		// so far, only to inform the electric vector of investments
+		if is_projected('I') then
+				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+			end
+		
 			
 		y = matrix(y1, -1 , 1);
 		
