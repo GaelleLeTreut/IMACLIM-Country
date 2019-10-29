@@ -92,3 +92,5 @@ delta_LS_LT;1;1;Var_interm;0;1
 CarbonTax_Diff_IC;nb_Commodities;nb_Sectors;Var;0;%inf
 Carbon_Tax_M;1;nb_Sectors;Var;0;%inf
 Carbon_Tax_rate_M;1;nb_Sectors;Var;0;%inf
+pRental;1;1;Var;0;%inf
+Capital_endowment;1;1;Var;0;%inf

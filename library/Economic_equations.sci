@@ -1951,16 +1951,23 @@ endfunction
 ///		Prix pL remplacé par pL / (1+Mhu)^t dans les équations d'arbitrage : le salaire récupère les gains de productivité, ce qui ne change pas les arbitrages techniques dans la production
 ///		le calcul de la productivité du travail Labour_Product = (1+Mhu)^t est fait dans Homothetic_projection.sce
 
-function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
     pL(test_pL) = 1;
-    pK = abs(pK);
-
-    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
-    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
-    (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
 
     test_FPI = FPI == 0;
     FPI(test_pL|test_FPI) = 1;
@@ -1973,11 +1980,19 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
 
-    //lambda(test_pL|test_FPI) = 0;
+	if ~Capital_Dynamics
+		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+	
+	elseif Capital_Dynamics
+	// Unique price of capital
+	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
 
-    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
-    ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
-    (FPI .^(sigma./(1 - sigma)))) ;
+	end
+
     
     // Proj structure for parameters
 	Proj_param = struct();
@@ -2000,7 +2015,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
         Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
         alpha = apply_proj_val(alpha, 'alpha', Proj_param);
     end
-
 		
 	//// Projection Intensities
 	if is_projected('alpha') then
@@ -2070,72 +2084,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigm
     (FPI .^(sigma./(1 - sigma)))) ;
 
 
-endfunction
-
-function [alpha, lambda, kappa] = Technical_Coef_Val_4(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
-    test_pL = pL == 0;
-    pIC = abs(pIC);
-    pL = abs(pL);
-    pL(test_pL) = 1;
-    pRental = abs(pRental);
-
-    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
-    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
-    (aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
-
-    test_FPI = FPI == 0;
-    FPI(test_pL|test_FPI) = 1;
-    
-    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
-    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
-    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
-
-    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
-    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
-    (FPI .^(sigma./(1 - sigma)))) ;
-
-    //lambda(test_pL|test_FPI) = 0;
-
-    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
-    ( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
-    (FPI .^(sigma./(1 - sigma)))) ;
-	
-	    // Proj structure for parameters
-	Proj_param = struct();
-
-	//// Projection Volume
-    if is_projected('Labour') then
-        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
-        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
-        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
-    end
-	
-    if is_projected('Capital_consumption') then
-        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
-        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
-        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
-    end
-	
-    if is_projected('IC') then
-        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
-        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
-        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
-    end
-
-		
-	//// Projection Intensities
-	if is_projected('alpha') then
-        alpha = apply_proj_val(alpha, 'alpha');
-    end
-
-    if is_projected('lambda') then
-        lambda = apply_proj_val(lambda, 'lambda');
-    end
-
-    if is_projected('kappa') then
-        kappa = apply_proj_val(kappa, 'kappa');
-    end
-    
 endfunction
 
 
@@ -2412,58 +2360,79 @@ endfunction
 // Entrepreneurs' investment demand equals to an exogenous proportion of fixed capital depreciation
 // Constant composition in goods of capital
 
-function [y] = Invest_demand_Const_1(Betta, I, kappa, Y)
+function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
+
+	if ~Capital_Dynamics
+	// Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+		if Invest_matrix then
+		
+			y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+			
+				// so far, only to inform the electric vector of investments
+				if is_projected('I') then
+					y1(:,Indice_Elec) = apply_proj_eq(y1(:,Indice_Elec), I(:,Indice_Elec), 'I(:,Indice_Elec)');
+				end
+	
+			y = matrix(y1, -1 , 1)
+	
+		else
+			y = I - Betta * sum( kappa .* Y' ) ;
+		end
+		
+	elseif Capital_Dynamics
+	// If Capital Market - Investment is a share of GDP - Give the repartition of I
+	// Used at BY to calibrate the shares
+			
+		// CHECK
+		// ShareI_GDP = BY.ShareI_GDP ;
+		// or
+		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
+		y1 = I - BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
+		// share is corrected by ratio I that keep u_tot constant 
+		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
+		// y1 = I - BY.share_Ii.*(((s*GDP)*ones(nb_Sectors,1))./pI);
+			
+		y = matrix(y1, -1 , 1);
+		
+	end
+
+endfunction
+
+function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
-
-    if Invest_matrix then
-        y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-        
-        if is_projected('I') then
-            y1(:,Indice_Elec) = apply_proj_eq(y1(:,Indice_Elec), I(:,Indice_Elec), 'I(:,Indice_Elec)');
-        end
-
-        y = matrix(y1, -1 , 1)
-
-    else
-        y = I - Betta * sum( kappa .* Y' ) ;
-    end
-
-endfunction
-
-function I = Invest_demand_Val_1(Betta, kappa, Y)
+	if ~Capital_Dynamics
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
-
-    if Invest_matrix then
-        I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-
-        if is_projected('I') then
-            I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
-        end
-    else
-        I = Betta * sum( kappa .* Y' );
-    end
-
-endfunction
-
-// If Capital Market - Investment is a share of GDP - Give the repartition of I
-// Used at BY to calibrate the shares
-/// 
-
-function [y] = Invest_demand_Const_2(Betta, I, kappa, Y, GDP, share_Ii)
- 
-  // BY.share_Ii : pour le partage entre secteur...  pas pour calculer le niveau de I / share_I_GDP : part de I_value dans le PIB a l'année de base
-  y = I -   BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
-    
-endfunction	
-
-function ShareI_GDP = InvestShare_GDP_Val_1(GDP,I)
-
-ShareI_GDP =  BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value)) ;
+		if Invest_matrix then
+			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+	
+				// so far, only to inform the electric vector of investments
+				if is_projected('I') then
+					I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+				end
+		else
+			I = Betta * sum( kappa .* Y' );
+		end
+		
+	elseif Capital_Dynamics
+	// If Capital Market - Investment is a share of GDP - Give the repartition of I
+	// Used at BY to calibrate the shares
+			
+		// CHECK
+		// ShareI_GDP = BY.ShareI_GDP ;
+		// or
+		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
+		I = BY.share_Ii.*(((ShareI_GDP*GDP)*ones(nb_Sectors,1))./pI);
+		// share is corrected by ratio I that keep u_tot constant 
+		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
+		// I = BY.share_Ii.*(((s*GDP)*ones(nb_Sectors,1))./pI);
+	
+	end
 
 endfunction
-//// - > ajouter une variable et cette équation  : a chaque pas de de temps on réactualisé le share de BY en fonction de la croissance de I_value du pas d'avant?
+
 
 ///////// 
 // Betta calculation function of K cost & pI
@@ -2488,25 +2457,42 @@ endfunction
 
 // PAS POUR CALIBRAGE //
 // Capital cost (pK)
-function [y] = Capital_Cost_Const_1(pK, pI, I) ;
+function [y] = Capital_Cost_Const_1(pK, pI, I, pRental) ;
 	pK=abs(pK);
-    // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
-    if Invest_matrix then
-        y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
-    else 
-        y = pK' - sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) ;
-    end
+	
+	if ~Capital_Dynamics
+		if Invest_matrix then
+			y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
+		else 
+			y = pK' - sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) ;
+		end
+	
+	elseif Capital_Dynamics
+	// Unique rental price
+		y1  = pK - pRental*ones(1,nb_Sectors);
+		y= y1';
+	
+	end
+	
     
 endfunction
 
-function pK = Capital_Cost_Val_1(pI, I)
+function pK = Capital_Cost_Val_1(pI, I, pRental)
 
-    // y = pK' - sum(pI .* I) ./ repmat( sum(I), nb_Sectors, 1) ;
-    if Invest_matrix then
-        pK = sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r");
-    else 
-        pK = ( sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) )';
-    end
+	if ~Capital_Dynamics
+		
+		if Invest_matrix then
+			pK = sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r");
+		else 
+			pK = ( sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) )';
+		end
+		
+	elseif Capital_Dynamics
+	// Unique rental price
+	
+		pK = pRental.*ones(1,nb_Sectors);	
+		
+	end
     
 endfunction
 
@@ -3264,9 +3250,7 @@ function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
 	// Coef_real_wage = 0 => mean nominal wage curve
     // If no macroframework for projection =>  Mu = 0  
 	
-	// y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
-	
-	y = omega  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+	y = omega  - ( omega_ref * ((u_tot / BY.u_tot)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
       
 endfunction
 
@@ -3287,7 +3271,7 @@ function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
 	// Coef_real_wage defined in parameter
 	// Coef_real_wage = 1 => mean real wage curve 
 	// Coef_real_wage = 0 => mean nominal wage curve
-      // y = omega*(Coef_real_wage*BY.CPI + (1-Coef_real_wage))  - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
+
 	y = omega - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
 endfunction
 
@@ -3645,29 +3629,36 @@ Capital_consumption = Capital_endowment .* (Capital_income./sum(Capital_income))
 endfunction
 
 ///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
+function Capital_endowment = Capital_Dynamic_Const_1 (Capital_endowment )
+	
+	if Capital_Dynamics
+		y = Capital_endowment - (ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I));
+		// u_tot = BY.u_tot ;
+	else 	
+		y = Capital_endowment - BY.Capital_endowment ; 
+	end
+	
+endfunction
+
+///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
 function Capital_endowment = Capital_Dynamic_Val_1 ( )
-
-Capital_endowment = ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I);
-
+	
+	if Capital_Dynamics
+		Capital_endowment = ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I);
+		// u_tot = BY.u_tot ;
+	else 	
+		Capital_endowment = BY.Capital_endowment ; 
+	end
+	
 endfunction
 
 
 //  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
-
-function y = Capital_Market_Const_1 ( Capital_endowment,Capital_consumption)
+function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 	if Capital_Dynamics
-		// y = Capital_endowment - sum (kappa.* Y');
-		y = Capital_endowment - sum (Capital_consumption);
+		y = Capital_endowment - sum (kappa.*Y');
 	else
-		y = Capital_endowment - Capital_endowment;
-	end
-endfunction
-
-function Capital_endowment = Capital_Market_Val_1 (kappa, I)
-	if Capital_Dynamics
-		Capital_endowment = sum (kappa.* Y);
-	else
-		Capital_endowment= BY.Capital_endowment;
+		y = pRental - BY.pRental;
 	end
 endfunction
 

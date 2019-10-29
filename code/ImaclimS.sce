@@ -136,24 +136,57 @@ if Output_files
 end
 
 print(out," ======= IMACLIM-"+Country+" is running=============================");
-if Optimization_Resol then
+
+// Short name to identify homo proj
+Homo_Shortname = "Systeme_ProjHomo";
+OptHomo_Shortname ="SystemOpt_ProjHomo";
+// Forcing changes in dashboard if proj homo selected
+if Optimization_Resol
+	if part(SystemOpt_Resol,1:length(OptHomo_Shortname))== OptHomo_Shortname & ( Scenario<>"")
+		warning("The scenario selected in the dashboard has been cancelled: incompatible with homothetic projection");
+		Scenario = "";
+	end
+	
+	if part(SystemOpt_Resol,1:length(OptHomo_Shortname))== OptHomo_Shortname & ( Capital_Dynamics)
+		warning("The scenario selected in the dashboard has been cancelled: incompatible with homothetic projection");
+		Capital_Dynamics = %F;
+	end
+	
+else
+	if part(System_Resol,1:length(Homo_Shortname))== Homo_Shortname & ( Scenario<>"")
+		warning("The scenario selected in the dashboard has been cancelled: incompatible with homothetic projection");
+		Scenario = "";
+	end
+	
+	if part(System_Resol,1:length(Homo_Shortname))== Homo_Shortname & ( Capital_Dynamics)
+		warning("Capital Market modelling has been cancelled: incompatible with homothetic projection");
+		Capital_Dynamics = %F;
+	end
+end
+
+if Optimization_Resol 
     print(out," ======= for resolving the system: "+SystemOpt_Resol);
 else
     print(out," ======= for resolving the system: "+System_Resol);
 end
+if Capital_Dynamics
+print(out," ======= modelling Capital Market ");
+else 
+print(out," ======= not modelling Capital Market ");
+end 
 print(out," ======= using the study file: "+study);
 print(out,"======= with various class of households: "+H_DISAGG);
 print(out,"======= at aggregated level: "+AGG_type);
-print(out,"======= with the resolution mode: "+Resol_Mode);
-print(out,"======= using various iterations:" + string(Nb_Iter));
-print(out,"======= under the scenario nammed:"+Scenario);
+
+print(out,"======= number of resolution iterations:" + string(Nb_Iter));
+print(out,"======= under the scenario named:"+Scenario);
 print(out,"======= under the macro framework number:"+Macro_nb);
 //print(out,"======= Recycling option of carbon tax:"+Recycling_Option);
 if ~Output_files
-    print(out,"======= You choose not to save outputs in external files");
+    print(out,"======= You chose not to save outputs in external files");
 end
 if CO2_footprint=='False'
-    print(out,"======= You choose not to realise a Carbon footprint analysis");
+    print(out,"======= You chose not to realise a Carbon footprint analysis");
 end
 
 
@@ -255,8 +288,6 @@ for time_step=1:Nb_Iter
     end
 
     // Loading other study changes (specific feature) except for homothetic projections
-    Homo_Shortname = "Systeme_ProjHomo";
-    OptHomo_Shortname ="SystemOpt_ProjHomo";
     if Optimization_Resol then
         if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
             exec(STUDY_Country+study+".sce");

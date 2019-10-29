@@ -553,6 +553,12 @@ if Capital_Dynamics
 			valtemp = evstr(DataCapDynamics(indtemp,2));
 			execstr("initial_value."+list_demo_variable(elt)+"=valtemp;")
 		end
+else 
+
+	// Variables created for flexibility but are not used in this case of Capital_Dynamics==%F
+	initial_value.Capital_endowment = 0; 
+	initial_value.pRental =0 ;
+		
 end
 
 // IC Domestic and imports tables

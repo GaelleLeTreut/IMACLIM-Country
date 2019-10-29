@@ -117,7 +117,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
 	G_pFish = G_pFish_Val_1(pG, G);
 	I_pFish = I_pFish_Val_1(pI, I);
 
-	[alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+	[alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
 	GrossOpSurplus =  GrossOpSurplus_Val_1(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
@@ -244,10 +244,10 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     Trade_margins_Const_1(Trade_margins, Trade_margins_rates, p, alpha, Y, C, G, I, X)
     SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 
-    Invest_demand_Const_1(Betta, I, kappa, Y)
+    Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 Betta_Const_2(Betta, tau_Betta)
 I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI)
-    Capital_Cost_Const_1(pK, pI, I)
+    Capital_Cost_Const_1(pK, pI, I, pRental)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)

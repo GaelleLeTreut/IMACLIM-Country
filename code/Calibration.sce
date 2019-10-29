@@ -1330,19 +1330,18 @@ end
 
 if ~Capital_Dynamics
 
-	function [const_pK] =fcal_CapitalCost_Const_1(x_pK, pI, I, Imaclim_VarCalib)
+	function [const_pK] =fcal_CapitalCost_Const_1(x_pK, pI, I, pRental, Imaclim_VarCalib)
 		pK= indiv_x2variable(Imaclim_VarCalib, "x_pK");
-		const_pK =  Capital_Cost_Const_1(pK, pI, I)
+		const_pK =  Capital_Cost_Const_1(pK, pI, I, pRental)
 	endfunction
 	
-	[x_pK, const_pK, info_cal_pK] = fsolve(x_pK, list(fcal_CapitalCost_Const_1,  pI, I, Index_Imaclim_VarCalib));
+	[x_pK, const_pK, info_cal_pK] = fsolve(x_pK, list(fcal_CapitalCost_Const_1,  pI, I, pRental, Index_Imaclim_VarCalib));
 	
 	if norm(const_pK) > sensib
 		error( "review calib_pK")
 	else
 		pK = indiv_x2variable (Index_Imaclim_VarCalib, "x_pK");
 	end
-	
 	
 end
  
@@ -1532,12 +1531,12 @@ else
     Capital_consumption = (abs(Capital_consumption) > %eps).*Capital_consumption;
 end
 
-function [const_Betta] =fcalInvestDemand_Const_1(x_Betta, Y, kappa, Imaclim_VarCalib)
+function [const_Betta] =fcalInvestDemand_Const_1(x_Betta, Y, kappa,GDP,pI, Imaclim_VarCalib)
     Betta= indiv_x2variable(Imaclim_VarCalib, "x_Betta");
-    const_Betta = Invest_demand_Const_1(Betta, I, kappa, Y)
+    const_Betta = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 endfunction
 
-[x_Betta, const_Betta, infCal_Betta] = fsolve(x_Betta, list(fcalInvestDemand_Const_1, Y, kappa, Index_Imaclim_VarCalib));
+[x_Betta, const_Betta, infCal_Betta] = fsolve(x_Betta, list(fcalInvestDemand_Const_1, Y, kappa, GDP, pI, Index_Imaclim_VarCalib));
 
 if norm(const_Betta) > sensib
     error( "review calib_Betta")

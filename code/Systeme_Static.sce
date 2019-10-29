@@ -120,7 +120,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
     G_pFish = G_pFish_Val_1(pG, G);
     I_pFish = I_pFish_Val_1(pI, I);
 
-    [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+    [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 
     GrossOpSurplus =  GrossOpSurplus_Val_1(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I); 
 
@@ -249,8 +249,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     // 1-standard  / 3-Real total invest const + carbon tax revenu (option dashboard)
 	//  Invest_demand_Const_3(Betta, I, pI, kappa, Y, I_pFish, delta_LS_I)
-	Invest_demand_Const_1(Betta, I, kappa, Y)
-    Capital_Cost_Const_1(pK, pI, I)
+	Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
+    Capital_Cost_Const_1(pK, pI, I, pRental)
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)

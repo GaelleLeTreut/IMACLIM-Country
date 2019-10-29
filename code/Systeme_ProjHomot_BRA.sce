@@ -129,7 +129,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS
     // CPI defined in relation to BY	
     CPI = CPI_Val_1( pC, C);
     // 	Specific to any projection in relation to BY
-    [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
+    [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
     GrossOpSurplus =  GrossOpSurplus_Val_1(Capital_income, Profit_margin, Trade_margins, Transp_margins,  SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_X, SpeMarg_rates_I, SpeMarg_rates_G, p, alpha, Y, C, X, G, I);
 	[delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT] = Recycling_Option_Val_1(Carbon_Tax_IC, Carbon_Tax_C);
   
@@ -247,8 +247,8 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
 
     SpeMarg_Const_1(SpeMarg_IC, SpeMarg_rates_IC, SpeMarg_C, SpeMarg_rates_C, SpeMarg_G, SpeMarg_rates_G, SpeMarg_I, SpeMarg_rates_I, SpeMarg_X, SpeMarg_rates_X, p, alpha, Y, C, G, I, X)
 
-    Invest_demand_Const_1(Betta, I, kappa, Y) 
-    Capital_Cost_Const_1(pK, pI, I)
+    Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI) 
+    Capital_Cost_Const_1(pK, pI, I, pRental)
 
     MarketBalance_Const_1(Y, IC, C, G, I, X, M)
     IC_Const_1(IC, Y, alpha)
@@ -257,6 +257,9 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     // MarketClosure_Const_1(Y, delta_M_parameter, delta_X_parameter)
 
     Capital_Consump_Const_1(Capital_consumption, Y, kappa)
+	// if Carbon market is modelled / if not, still in the system but not calculated
+	Capital_Market_Const_1(Capital_endowment, kappa, Y, pRental)
+	Capital_Dynamic_Const_1(Capital_endowment)
 
     pX_price_Const_1(pX, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_X, p)
     Employment_Const_1(Labour, lambda, Y)
