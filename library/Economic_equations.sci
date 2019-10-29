@@ -3635,11 +3635,11 @@ Capital_consumption = Capital_endowment .* (Capital_income./sum(Capital_income))
 endfunction
 
 ///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
-function Capital_endowment = Capital_Dynamic_Const_1 (Capital_endowment )
+function y = Capital_Dynamic_Const_1 ( Capital_endowment )
 	
 	if Capital_Dynamics
 		y = Capital_endowment - (ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I));
-		// u_tot = BY.u_tot ;
+		// y = u_tot - BY.u_tot ;
 	else 	
 		y = Capital_endowment - BY.Capital_endowment ; 
 	end

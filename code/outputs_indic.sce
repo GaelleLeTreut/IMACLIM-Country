@@ -1334,7 +1334,9 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
 ["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
-["Real Trade Balance",										    money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))/Trade_pFish	];..
+["Real Trade Balance",											    money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))/Trade_pFish	];..
+["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
+["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./eval("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
 ["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
 ["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
