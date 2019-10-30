@@ -2,15 +2,24 @@ exec('Load_file_structure.sce');
 
 num_run = 1;
 
-// CarbonTax_Diff_IC_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_IC_AGG_PMR19.csv';
-CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_" + string(num_run) + ".csv";
+// BRASIL PMR AGG
+// CarbonTax_Diff_IC_path= PARAMS + 'params_BRA' +sep+'AGG_PMR19'+sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_"+'AGG_PMR19'+"_" + string(num_run) + ".csv";
+// nb_sectors = 19;
+
+// H_desag = 'H4';
+// H_size = 4;
+
+// CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_" + string(num_run) + '.csv';
+
+
+// ARGENTINA
+CarbonTax_Diff_IC_path= PARAMS + 'params_ARG' +sep+"Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_IC_" + string(num_run) + ".csv";
 nb_sectors = 19;
 
-H_desag = 'H4';
-H_size = 4;
+H_desag = 'HH1';
+H_size = 1;
+CarbonTax_Diff_C_path = PARAMS + 'params_ARG' + filesep() + "Simu_CarbonTaxDiff"+sep+"CarbonTax_Diff_C_"+ H_desag +"_" + string(num_run) + '.csv';
 
-// CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' + filesep() + 'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag + '.csv';
-CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_" + string(num_run) + '.csv';
 
 function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C, Diff_sup_C] = adjust_Diff (Diff_inf_IC, Diff_sup_IC, Diff_inf_C, Diff_sup_C)
 
@@ -96,7 +105,7 @@ function [continue_adj_IC, Diff_inf_IC, Diff_sup_IC, continue_adj_C, Diff_inf_C,
             end
         end
     end
-    
+   
     // écris le résultat pour la suite
     csv_to_write_IC = []
     for i = 1:(nb_sectors+1)

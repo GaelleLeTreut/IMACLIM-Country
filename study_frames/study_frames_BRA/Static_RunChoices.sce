@@ -9,8 +9,8 @@ Carbon_Tax_rate3 = 5e5;
 /// Info  reduction goal
 if time_step == 1 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-// goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);
-// goal_reduc_C = 0.05 * ones(nb_Sectors, nb_Households);
+goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);
+goal_reduc_C = 0.05 * ones(nb_Sectors, nb_Households);
 
 // Calcul indirect IC / direct C
 ////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
@@ -25,8 +25,8 @@ end
 
 if time_step == 2 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-// goal_reduc_IC = 0.15 * ones(nb_Sectors,nb_Sectors);
-// goal_reduc_C = 0.15 * ones(nb_Sectors, nb_Households);
+goal_reduc_IC = 0.15 * ones(nb_Sectors,nb_Sectors);
+goal_reduc_C = 0.15 * ones(nb_Sectors, nb_Households);
 
 // Calcul indirect IC / direct C
 ////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
