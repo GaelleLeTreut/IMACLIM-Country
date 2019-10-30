@@ -129,6 +129,7 @@ Capital_endowment;Capital_Dynamic_Val_1;;
 ;CTax_rate_IC_Const_2;Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC;
 Carbon_Tax_rate_IC;CTax_rate_pIC_Val_1;Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, Cons_Tax_rate, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC;
 Carbon_Tax_rate_C;CTax_rate_C_Val_1;Carbon_Tax_rate, CarbonTax_Diff_C;
+;CO2_intensity_C;CO2Emis_C, Emission_Coef_C , C;
 Carbon_Tax_rate_M;CTax_rate_M_Val_1;Carbon_Tax_rate, CarbonTax_Diff_M;
 delta_LS_S, delta_LS_H, delta_LS_I, delta_LS_LT;Recycling_Option_Val_1;Carbon_Tax_IC, Carbon_Tax_C;
 //LUMP SUM : Const_1 for NO Transfert Const_2 for transfert indexed on GDP Const 3 to apply the role incated in the Dashboard (delta_LS_S,delta_LS_H, delta_LS_I, delta_LS_TL);;;
