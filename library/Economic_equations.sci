@@ -2429,6 +2429,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// CHECK
 		// ShareI_GDP = BY.ShareI_GDP ;
 		// or
+		// I =BY.share_Ii.*( ini.Capital_endowment - Capital_endowment * ( 1- depreciation_rate ) )
+
 		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
 		I = (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I));
 		// share is corrected by ratio I that keep u_tot constant 
@@ -2791,7 +2793,7 @@ function pIC = pIC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMa
 
     // Intermediate consumption price: pIC (Sm_index, Sm_index)
     pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates ) ;
-
+	
 endfunction
 
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
@@ -2843,6 +2845,44 @@ function y = pIC_price_Const_3(pIC, Transp_margins_rates, Trade_margins_rates, S
 
     // Intermediate consumption price: pIC (Sm_index, Sm_index)
     y1 = pIC - ( ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates )+ Indirect_tax_rates).*(1 + (ones( 1, nb_Sectors).*.Cons_Tax_rate') )) ;
+	
+	/// pIC that matches the alpha of cap emissions
+	pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+
+    FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+    (aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+    (aK .^ sigma) .* (pK.^(1 - sigma)) ;
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    	
+	y2 = alpha - ((ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) );
+	
+	y3 = ( CO2Emis_IC== 0) .* y1 + (CO2Emis_IC <> 0) .* y2;
+	
+    y = matrix(y3, -1 , 1);
+endfunction
+
+//  Carbon CAP - Purchase price (Intermediate consumptions) after trade, transport and energy margins, and va tax
+function y = pIC_price_Const_4(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Theta, Phi, aIC, sigma, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+	
+	test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+    pK = abs(pK);
+    //  Trade, transport and specific margins for energy
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+    // Indirect tax
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
+    // Intermediate consumption price: pIC (Sm_index, Sm_index)
+    y1 = pIC -  ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates ) ;
 	
 	/// pIC that matches the alpha of cap emissions
 	pL = abs(pL);
@@ -3024,6 +3064,7 @@ endfunction
 function CPI = CPI_Val_1( pC, C)
 
 	C=abs(C);
+	pC=abs(pC);
 	CPI = sqrt( sum(pC .* C) ./ sum(BY.pC .* C) .* sum(pC .* BY.C) ./ sum(BY.pC .* BY.C) );
 	
 endfunction
@@ -3781,7 +3822,7 @@ function y = CarbonCap_C_Const_1(CarbonCap_C, CarbonCap, CarbonCap_Diff_C) ;
 endfunction
 
 
-/// Closure carbon cap
+/// Closure carbon cap (Brasil)
 function Carbon_Tax_rate_IC = CTax_rate_pIC_Val_1(Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, Cons_Tax_rate, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC)
 
 	//  Trade, transport and specific margins for energy
@@ -3794,6 +3835,20 @@ function Carbon_Tax_rate_IC = CTax_rate_pIC_Val_1(Transp_margins_rates, Trade_ma
 	
 	// Carbon_Tax_rate_IC = abs(Carbon_Tax_rate_IC);
 endfunction
+
+/// Closure carbon cap 
+function Carbon_Tax_rate_IC = CTax_rate_pIC_Val_2(Transp_margins_rates, Trade_margins_rates ,SpeMarg_rates_IC, pIC, p, Energy_Tax_rate_IC, OtherIndirTax_rate, Emission_Coef_IC, CO2Emis_IC)
+
+	//  Trade, transport and specific margins for energy
+    margins_rates = ones(1,nb_Sectors).*. (Transp_margins_rates' + Trade_margins_rates') + SpeMarg_rates_IC' ;
+
+
+	Carbon_Tax_rate_IC = zeros(nb_Sectors,nb_Sectors);
+    Carbon_Tax_rate_IC = (CO2Emis_IC==0).*0
+	Carbon_Tax_rate_IC = Carbon_Tax_rate_IC + (CO2Emis_IC<>0).* divide( pIC - ((ones(1, nb_Sectors).*.p').* ( 1 + margins_rates )) - (ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate')),Emission_Coef_IC,0);
+
+endfunction
+
 
 
 
