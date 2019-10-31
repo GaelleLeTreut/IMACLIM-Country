@@ -1,10 +1,10 @@
 ConstrainedShare_C;HH1
-Crude_oil;1
-Gas;1
-Fossil_fuels;1
-Biofuels;1
-Elec;1
-Renew;1
+Crude_oil;0.8
+Gas;0.8
+Fossil_fuels;0.8
+Biofuels;0.8
+Elec;0.8
+Renew;0.8
 Agri;0.5
 Cattle;0.5
 Cement;0.5
