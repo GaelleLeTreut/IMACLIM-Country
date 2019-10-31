@@ -75,11 +75,11 @@ param_table_sec= [ "setting", "", "", Index_Sectors'];
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$t_{CARB_{IC}}$"];
 param_table_sec(2:2+nb_Sectors-1,2) = ["$"+moneyTex+"/tCO_2$"];
 param_table_sec(2:2+nb_Sectors-1,3) = Index_Sectors;
-param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC/ 10^3);
+param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC*eval(money_unit_data)/10^6);
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$t_{CARB_{C}}$"];
 param_table_sec($-(nb_Households-1):$,2) = ["$"+moneyTex+"/tCO_2$ "];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
-param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'/ 10^3);
+param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'*eval(money_unit_data)/10^6);
 
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$EF_{CARB_{IC}}$"];
 param_table_sec($-nb_Sectors+1:$,2) = ["$tCO_2/toe$"];///////////////////////////////////
