@@ -91,6 +91,10 @@ if (size(System_Resol,"r")<>[1]| size(System_Resol,"r")<>[1])
     error ( "various types of resolution system have been selected in Dashboard.csv");
 end
 
+if (size(study,"r")<>[1]| size(study,"r")<>[1])
+    error ( "various studies have been selected in Dashboard.csv");
+end
+
 // Ci-dessous les ajouts suites au passage en mode itératif
 
 if (size(Resol_Mode,"r")<>[1]| size(Resol_Mode,"r")<>[1])
