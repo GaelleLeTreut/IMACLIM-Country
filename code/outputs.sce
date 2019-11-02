@@ -804,6 +804,14 @@ end
 ///// SAVING IN CSV FILES ALL TABLES
 
 if Output_files
+
+	// Synthesis file of Emission to use as an input in CAP studies
+	if time_step == 1
+	SAVEDIR_Emis = OUTPUT +runName + filesep() + "CO2Emis_Obj" + filesep();
+    mkdir(SAVEDIR_Emis);
+	end
+	IOT_CO2Emis_Obj = [[["CO2_Emis in MtCO2",Index_Sectors'];[Index_Sectors,d.CO2Emis_IC]],["C";d.CO2Emis_C]];
+	csvWrite(IOT_CO2Emis_Obj,SAVEDIR_Emis+"IOT_CO2Emis_Obj"+time_step+".csv", ';');
 	
 	csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+Name_time+"_"+simu_name+".csv", ';');
 	csvWrite(Prices.run,SAVEDIR+"Prices-run_"+Name_time+"_"+simu_name+".csv", ';');
