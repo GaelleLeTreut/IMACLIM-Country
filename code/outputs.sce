@@ -811,7 +811,7 @@ if Output_files
     mkdir(SAVEDIR_Emis);
 	end
 	IOT_CO2Emis_Obj = [[["CO2_Emis in MtCO2",Index_Sectors'];[Index_Sectors,d.CO2Emis_IC]],["C";d.CO2Emis_C]];
-	csvWrite(IOT_CO2Emis_Obj,SAVEDIR_Emis+"IOT_CO2Emis_Obj"+time_step+".csv", ';');
+	csvWrite(IOT_CO2Emis_Obj,SAVEDIR_Emis+"IOT_CO2Emis_Obj_"+time_step+".csv", ';');
 	
 	csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+Name_time+"_"+simu_name+".csv", ';');
 	csvWrite(Prices.run,SAVEDIR+"Prices-run_"+Name_time+"_"+simu_name+".csv", ';');
