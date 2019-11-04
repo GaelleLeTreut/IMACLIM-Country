@@ -2405,7 +2405,7 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 
 endfunction
 
-function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
+function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI,ShareI_GDP)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 	if ~Capital_Dynamics
@@ -2431,8 +2431,10 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// or
 		// I =BY.share_Ii.*( ini.Capital_endowment - Capital_endowment * ( 1- depreciation_rate ) )
 
-		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
-		I = (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I));
+		// ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
+		// I = (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I));
+		I = (ShareI_GDP*GDP)./(pI*ones(1,nb_size_I));
+		
 		// share is corrected by ratio I that keep u_tot constant 
 		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
 		// I = (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I));
@@ -2447,6 +2449,9 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 
 endfunction
 
+function [ShareI_GDP]=ShareI_GDP_Val_1()
+ShareI_GDP = BY.ShareI_GDP .* divide(ini.I_value,BY.I_value,0);
+endfunction
 
 ///////// 
 // Betta calculation function of K cost & pI
