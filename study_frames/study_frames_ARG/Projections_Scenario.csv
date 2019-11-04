@@ -1,11 +1,11 @@
 variable;file;headers;indexes_of_proj;apply_the_proj;Intens;Can be agg
-C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%F;;%T
-IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%F;%F;%T
-X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%F;;%T
-M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%F;;%T
+C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%T;;%T
+IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%F;%T
+X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%T;;%T
+M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;;%T
 G;"""IOT_Qtities""";"""G""";list(list(Indice_Comp,1));%F;;%T
-Labour;"""Labour_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_Elec));%F;%F;%F
-Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_Elec));%F;%F;%F
-I;"""Invest_Elec_""+Scenario";string(Proj_Macro.current_year);list(list(1:nb_Sectors,1));%F;;%T
-CO2Emis_IC;"""IOT_CO2Emis_Obj""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;;%T
-CO2Emis_C;"""IOT_CO2Emis_Obj""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%T;;%T
+Labour;"""Labour_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_Elec));%T;%F;%F
+Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_Elec));%T;%F;%F
+I;"""Invest_Elec_""+Scenario";string(Proj_Macro.current_year);list(list(1:nb_Sectors,1));%T;;%T
+CO2Emis_IC;"""IOT_CO2""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%F;;%T
+CO2Emis_C;"""IOT_CO2""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%F;;%T

@@ -3,10 +3,15 @@ err = 1E-3;
 
 function test_proj(var_name)
 
-    if var_name <> 'I' then
+    if (var_name <> 'I') & (var_name <> 'CO2Emis_C') & (var_name <> 'CO2Emis_IC') then
         difference = d(var_name) - Proj_Vol(var_name).val;
-    else
+    elseif var_name == 'I'
         difference = d(var_name)(:,Indice_Elec) - Proj_Vol(var_name).val;
+	elseif var_name == "CO2Emis_IC"
+	
+		difference = d.Emission_Coef_IC.*d.IC - Proj_Vol(var_name).val;
+	elseif  var_name == "CO2Emis_C"
+		difference = d.Emission_Coef_C .*d.C - Proj_Vol(var_name).val;
     end
 
     for ind = Proj_Vol(var_name).ind_of_proj

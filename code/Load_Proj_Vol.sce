@@ -1,9 +1,15 @@
 // Remove all entries of Proj_Vol 
 clear Proj_Vol;
 
-// Check IOT_Qtities_TimeStep's aggregation
-proj_desaggregated = ..
-and(IndexRow == IndRow_IOT_Qtities) & and(IndexCol == IndCol_IOT_Qtities);
+if part(Scenario,1:length("EmisObj"))=="EmisObj"
+	// Check IOT_CO2EMIS_TimeStep's aggregation
+	proj_desaggregated = ..
+	and(IndexRow == IndRow_IOT_CO2Emis) & and(IndexCol == IndCol_IOT_CO2Emis(1:$-1));
+else
+	// Check IOT_CO2EMIS_TimeStep's aggregation
+	proj_desaggregated = ..
+	and(IndexRow == IndRow_IOT_Qtities) & and(IndexCol == IndCol_IOT_Qtities);
+end
 
 proj_well_aggregated = ..
 and(IndexRow(1:nb_Sectors,:) == Index_Commodities) & and(IndexCol(:,1:nb_Sectors) == Index_Commodities');
@@ -93,6 +99,9 @@ for var = fieldnames(Proj_Vol)'
 
         if Proj_Vol(var).file == 'IOT_Qtities' then
             iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
+			
+		elseif Proj_Vol(var).file == 'IOT_CO2' then
+            iot_co2emis = eval('IOT_CO2_' + Scenario + '_' + string(time_step));
 
         elseif find(proj_files == Proj_Vol(var).file) then
                 
@@ -122,7 +131,7 @@ Proj_Vol.Y.can_be_agg =%T;
 for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
         // Read IOT_Qtities
-        if Proj_Vol(var).file == 'IOT_Qtities' then
+        if Proj_Vol(var).file == 'IOT_Qtities'
             
             // IndexRow / IndexCol : Index of IOT_Qtities_TimeStep
             // IndRow_IOT_Qtities / IndCol_IOT_Qtities : Index of desagregated IOT
@@ -137,6 +146,25 @@ for var = fieldnames(Proj_Vol)'
                 // Check that the aggregation is fine
                 if proj_well_aggregated then
                     Proj_Vol(var).val = fill_table(iot_qtities, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
+		elseif Proj_Vol(var).file == 'IOT_CO2'
+            
+            // IndexRow / IndexCol : Index of IOT_Qtities_TimeStep
+            // IndRow_IOT_Qtities / IndCol_IOT_Qtities : Index of desagregated IOT
+            // Index_Commodities : aggregated commodities
+            // Index_CommoInit : desagregated commodities
+
+            // If IOT_Qtities_TimeStep is not aggregated
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(iot_co2emis, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
+            // If IOT_Qtities_TimeStep is aggregated
+            else
+                // Check that the aggregation is fine
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(iot_co2emis, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
                 else
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
@@ -177,7 +205,7 @@ if AGG_type <> '' & proj_desaggregated then
             end
 
             // Indexes of aggregation
-            if var == 'IC' then
+            if (var == 'IC') | (var == "CO2Emis_IC") then
 
                 agg_line = all_IND;
                 agg_col = all_IND;

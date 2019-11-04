@@ -8,7 +8,6 @@ num_run = 1;
 
 // H_desag = 'H4';
 // H_size = 4;
-
 // CarbonTax_Diff_C_path = PARAMS + 'params_BRA' + filesep() + 'AGG_PMR19' +sep+"Simu_CarbonTaxDiff"+sep+'CarbonTax_Diff_C_AGG_PMR19_'+ H_desag +"_" + string(num_run) + '.csv';
 
 
