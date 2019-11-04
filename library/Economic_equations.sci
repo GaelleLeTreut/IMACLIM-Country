@@ -1203,7 +1203,7 @@ endfunction
 
 // Carbon cap
 function y = CTax_rate_IC_Const_2(Carbon_Tax_rate, Carbon_Tax_rate_IC, CarbonTax_Diff_IC, CO2Emis_IC)
-	
+	CarbonTax_Diff_IC = abs(CarbonTax_Diff_IC);	
 	y1 = CarbonTax_Diff_IC - (( CO2Emis_IC==0).*0 + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate )   ;
     y = matrix(y1, -1 , 1) ;
 
@@ -1230,7 +1230,7 @@ function [y] = CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax
 endfunction
 
 function Carbon_Tax_rate_C = CTax_rate_C_Val_1(Carbon_Tax_rate, CarbonTax_Diff_C)
-
+	CarbonTax_Diff_C = abs(CarbonTax_Diff_C); 
     // Matrix of carbon tax rates (final consumption of energy, household classes)
     // Unique carbon tax
     Carbon_Tax_rate_C = Carbon_Tax_rate * CarbonTax_Diff_C;
