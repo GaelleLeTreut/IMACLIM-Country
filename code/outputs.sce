@@ -810,7 +810,7 @@ if Output_files
 	SAVEDIR_Emis = OUTPUT +runName + filesep() + "EmisObj_" +Scenario + filesep();
     mkdir(SAVEDIR_Emis);
 	end
-	IOT_CO2Emis_Obj = [[["CO2_Emis in MtCO2",Index_Sectors'];[Index_Sectors,d.CO2Emis_IC]],["C";d.CO2Emis_C];["MtCO2",zeros(1,nb_Sectors+1)]];
+	IOT_CO2Emis_Obj = [[["CO2_Emis in MtCO2",Index_Sectors'];[Index_Sectors,d.CO2Emis_IC]],["C";sum(d.CO2Emis_C,"c")];["MtCO2",zeros(1,nb_Sectors+1)]];
 	csvWrite(IOT_CO2Emis_Obj,SAVEDIR_Emis+"IOT_CO2_EmisObj_"+ Scenario+"_"+time_step+".csv", ';');
 	
 	csvWrite(Prices.ini,SAVEDIR+"Prices-ini_"+Name_time+"_"+simu_name+".csv", ';');
