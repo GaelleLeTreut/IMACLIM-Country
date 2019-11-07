@@ -175,25 +175,14 @@ else
 end
 
 ////  Public finance 
-if isdef("ClosCarbRev_AllLabTax") then
-   ClosCarbRev_AllLabTax= eval(ClosCarbRev_AllLabTax);
-end   
-
-if isdef("ClosCarbRev_CstNetLend") then
-   ClosCarbRev_CstNetLend= eval(ClosCarbRev_CstNetLend);
-end
-
-if isdef("ClosCarbRev_AllLabTax")& isdef("ClosCarbRev_CstNetLend") 
-	if (ClosCarbRev_AllLabTax&ClosCarbRev_CstNetLend)|(~ClosCarbRev_AllLabTax&~ClosCarbRev_CstNetLend)
-	error( "You have to choose one condition for the closure of public finance");
-	end
+if ~isdef("ClosCarbRev")
+ClosCarbRev="CstNetLend";
 end 
 
-// if nothing informe -> net lending const
-if ~isdef("ClosCarbRev_AllLabTax")& ~isdef("ClosCarbRev_CstNetLend") 
-ClosCarbRev_CstNetLend= %T;
-ClosCarbRev_AllLabTax = %F; 
+if (size(ClosCarbRev,"r")<>[1]| size(ClosCarbRev,"r")<>[1]) 
+    error ( "You have to choose one condition for the closure of public finance by recycling carbon tax revenues"); 
 end 
+
 
 
 ////  Capital Dynamics

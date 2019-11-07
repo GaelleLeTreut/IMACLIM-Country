@@ -57,9 +57,12 @@ Recycling_Option;LabTax
 // Recycling_Option;GreenInvest
 // Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_PublicDeficit
+// Recycling_Option;LSBasicNeed
+// Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev_CstNetLend;%T
-ClosCarbRev_AllLabTax;%F
+ClosCarbRev;CstNetLend
+// ClosCarbRev;AllLabTax
+// ClosCarbRev;AdjTransf
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

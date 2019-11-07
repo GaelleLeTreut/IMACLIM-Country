@@ -1440,12 +1440,12 @@ if Country<>"Brasil"
         UnemployBenefits_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_UnemployBenefits_param");
     end
 
-    function [const_OthSocioBenefParam] =fcalOthSocioBene_Const_1(x_Other_SocioBenef_param, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , Imaclim_VarCalib)
+    function [const_OthSocioBenefParam] =fcalOthSocioBene_Const_1(x_Other_SocioBenef_param, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , AdjRecycle, Imaclim_VarCalib)
         Other_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Other_SocioBenef_param");
-        const_OthSocioBenefParam =  Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
+        const_OthSocioBenefParam =  Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
     endfunction
 
-    [x_Other_SocioBenef_param, const_OthSocioBenefParam, infCalOthSocioBene_param] = fsolve(x_Other_SocioBenef_param, list(fcalOthSocioBene_Const_1, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , Index_Imaclim_VarCalib));
+    [x_Other_SocioBenef_param, const_OthSocioBenefParam, infCalOthSocioBene_param] = fsolve(x_Other_SocioBenef_param, list(fcalOthSocioBene_Const_1, Other_SocioBenef, NetWage_variation, GDP, CPI, Population , AdjRecycle, Index_Imaclim_VarCalib));
 
     if norm(const_OthSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")
@@ -1464,12 +1464,12 @@ end
 ///////////////////////////
 if Country=="Brasil" then
 
-    function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
+    function [const_GovSocioBenefParam] =fcalGovSocioBene_Const_1(x_Gov_SocioBenef_param, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population,AdjRecycle, Imaclim_VarCalib)
         Gov_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Gov_SocioBenef_param");
-        const_GovSocioBenefParam =  Other_SocioBenef_Const_1(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, CPI, Population)
+        const_GovSocioBenefParam =  Other_SocioBenef_Const_1(Gov_SocioBenef, NetWage_variation, Gov_SocioBenef_param, GDP, CPI, Population, AdjRecycle)
     endfunction
 
-    [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population, Index_Imaclim_VarCalib));
+    [x_Gov_SocioBenef_param, const_GovSocioBenefParam, infCalGovSocioBene_param] = fsolve(x_Gov_SocioBenef_param, list(fcalGovSocioBene_Const_1, Gov_SocioBenef, NetWage_variation, GDP, CPI, Population, AdjRecycle, Index_Imaclim_VarCalib));
 
     if norm(const_GovSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")
@@ -1477,12 +1477,12 @@ if Country=="Brasil" then
         Gov_SocioBenef_param = indiv_x2variable (Index_Imaclim_VarCalib, "x_Gov_SocioBenef_param");
     end
 
-    function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
+    function [const_CorSocioBenefParam] =fcalCorSocioBene_Const_1(x_Corp_SocioBenef_param, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population, AdjRecycle, Imaclim_VarCalib)
         Corp_SocioBenef_param= indiv_x2variable(Imaclim_VarCalib, "x_Corp_SocioBenef_param");
-        const_CorSocioBenefParam =  Other_SocioBenef_Const_1(Corp_SocioBenef,NetWage_variation, Corp_SocioBenef_param, GDP, CPI, Population)
+        const_CorSocioBenefParam =  Other_SocioBenef_Const_1(Corp_SocioBenef,NetWage_variation, Corp_SocioBenef_param, GDP, CPI, Population, AdjRecycle)
     endfunction
 
-    [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population, Index_Imaclim_VarCalib));
+    [x_Corp_SocioBenef_param, const_CorSocioBenefParam, infCalCorSocioBene_param] = fsolve(x_Corp_SocioBenef_param, list(fcalCorSocioBene_Const_1, Corp_SocioBenef, NetWage_variation, GDP, CPI, Population,AdjRecycle, Index_Imaclim_VarCalib));
 
     if norm(const_CorSocioBenefParam) > sensib
         error( "review calib_Other_SocioBenef_param")
@@ -1588,7 +1588,7 @@ if Capital_Dynamics
 end
 
 	
-	ShareI_GDP = sum(sum(I,"c").*pI)/GDP;
+	ShareI_GDP = divide(sum(I,"c").*pI,GDP,0);
 	x_ShareI_GDP = ShareI_GDP;
  
 

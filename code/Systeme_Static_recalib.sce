@@ -208,7 +208,7 @@ Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
     // Retraite/chômage indexé sur les salaires Const_1 ou sur le PIB Const_2 
 //    Pension_Benefits_Const_2(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population)
 //    UnemployBenefits_Const_1(UnemployBenefits, NetWage_variation, UnemployBenefits_param, GDP, Unemployed)
-//    Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population )
+//    Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
 
     CTax_rate_IC_Const_1(Carbon_Tax_rate_IC, Carbon_Tax_rate, CarbonTax_Diff_IC) 
     CTax_rate_C_Const_1(Carbon_Tax_rate_C, Carbon_Tax_rate, CarbonTax_Diff_C)

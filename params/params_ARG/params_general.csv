@@ -4,6 +4,7 @@
 //;;;;;
 // Carbon tax;;;;;
 Carbon_Tax_rate;0;0;1;;
+AdjRecycle;0;0;1;variable to ajust other social transfer if the closure of public finance in recycling carbon tax scheme require it;
 delta_LS_H;0;0;1;scalaire on carbon tax revenue for lump sum transfert to HH;
 delta_LS_S;0;0;1;scalaire on carbon tax revenue for lump sum transfert to Sect;
 //;;;;;

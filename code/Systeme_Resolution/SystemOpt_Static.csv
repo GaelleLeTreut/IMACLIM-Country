@@ -80,7 +80,7 @@ Carbon_Tax_M;Carbon_Tax_M_Val_1;Carbon_Tax_rate_M, M, Emission_Coef_M;
 // Transfert;;;
 Pension_Benefits;Pension_Benefits_Val_1;NetWage_variation, Pension_Benefits_param, GDP, CPI, Population;// Const_1 for index on netwage var, Const_2 indexed on GDP, Const_3 constant, Const_4 indexed on CPI, Const_5 indexed on GDP/Capita
 UnemployBenefits;UnemployBenefits_Val_1; NetWage_variation, UnemployBenefits_param, GDP, Unemployed;//Const_1 Unemployment indexed on wages, Const_2 on GDP, Const_3 constant
-Other_SocioBenef;Other_SocioBenef_Val_2;NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population; //Const_1 indexed on netwage var, Const_2 on GDP/Capita, Const_3 constant, Const_4 CPI
+Other_SocioBenef;Other_SocioBenef_Val_2;NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle; //Const_1 indexed on netwage var, Const_2 on GDP/Capita, Const_3 constant, Const_4 CPI
 // Incomes;;;
 G_disposable_income;G_income_Val_1;Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M;
 Government_savings;G_savings_Val_1;G_disposable_income, G_Consumption_budget;
@@ -116,11 +116,11 @@ Y;MarketBalance_Val_1;IC, C, G, I, X, M;
 Labour;Employment_Val_1;lambda, Y;
 ;LabourByWorker_Const_1;LabourByWorker_coef, u_tot, Labour_force, lambda, Y;
 // For Mean wage curve: ;;;
-;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
-w;Wage_Variation_Val_1;NetWage_variation;
+// ;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
+// w;Wage_Variation_Val_1;NetWage_variation;
 // For Sectoral wage curve:;;;
-//w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
-//;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
+w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
+;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
 ////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_1;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)

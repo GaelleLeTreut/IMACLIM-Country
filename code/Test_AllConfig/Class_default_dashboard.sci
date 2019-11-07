@@ -32,7 +32,6 @@ function default_dashboard = new_default_dashboard()
 	'CarbonTaxDiff','%F',..
 	'Carbon_BTA','%F',..
     'Recycling_Option', '',..
-	'ClosCarbRev_CstNetLend','%T',..
-	'ClosCarbRev_AllLabTax','%F');
+	'ClosCarbRev','CstNetLend');
     
 endfunction
