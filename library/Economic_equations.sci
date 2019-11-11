@@ -2436,17 +2436,11 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
-	// Used at BY to calibrate the shares
+	//Ventilated by BY Shares
 			
-		// CHECK
-		// ShareI_GDP = BY.ShareI_GDP ;
-		// or
-		ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
-		y1 = I - ( (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I)) );
-		// share is corrected by ratio I that keep u_tot constant 
-		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
-		// y1 = I - ( (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I)) );
-
+		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+		y1 = I - ( ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I );
+		
 		// so far, only to inform the electric vector of investments
 		if is_projected('I') then
 				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
@@ -2459,7 +2453,7 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 
 endfunction
 
-function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI,ShareI_GDP)
+function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 	if ~Capital_Dynamics
@@ -2478,34 +2472,18 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI,ShareI_GDP)
 		
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
-	// Used at BY to calibrate the shares
-			
-		// CHECK
-		// ShareI_GDP = BY.ShareI_GDP ;
-		// or
-		// I =BY.share_Ii.*( ini.Capital_endowment - Capital_endowment * ( 1- depreciation_rate ) )
+	//Ventilated by BY Shares
+		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
-		// ShareI_GDP = BY.ShareI_GDP * (sum(ini.I_value)/sum(BY.I_value));
-		// I = (BY.share_Ii.*(ShareI_GDP*GDP))./(pI*ones(1,nb_size_I));
-		I = (ShareI_GDP*GDP)./(pI*ones(1,nb_size_I));
-		
-		// share is corrected by ratio I that keep u_tot constant 
-		// s = BY.ShareI_GDP.*Proj_Macro.Iobj_Ucst(time_step); 
-		// I = (BY.share_Ii.*(s*GDP))./(pI*ones(1,nb_size_I));
-		
 			// so far, only to inform the electric vector of investments
 			if is_projected('I') then
 				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
-			end
-		
-	
+			end	
 	end
 
 endfunction
 
-function [ShareI_GDP]=ShareI_GDP_Val_1()
-ShareI_GDP = BY.ShareI_GDP .* divide(ini.I_value,BY.I_value,0);
-endfunction
 
 ///////// 
 // Betta calculation function of K cost & pI
@@ -3757,7 +3735,6 @@ function Capital_endowment = Capital_Dynamic_Val_1 ( )
 	
 	if Capital_Dynamics
 		Capital_endowment = ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I);
-		// u_tot = BY.u_tot ;
 	else 	
 		Capital_endowment = BY.Capital_endowment ; 
 	end
@@ -3772,6 +3749,22 @@ function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 	else
 		y = pRental - BY.pRental;
 	end
+endfunction
+
+///  Used to calibrate a trajectory of Invesment that stabilise unemployment
+// - > substitute with the equation of capital  stock : capital endowment is caculated to maintain a unemployment constant
+function u_tot = Unemployment_Val_2 ( )
+	u_tot = BY.u_tot ;	
+endfunction
+
+function [I_obj,I_obj_value,shareI_GDP_obj] = Post_InvestTraj_Val_1 ()
+
+		I_obj = d.Capital_endowment - ( 1 - depreciation_rate)*ini.Capital_endowment;
+		Iobj_sect = share_Ii .* I_obj; 
+		// adapter a matrix invest
+		I_obj_value = sum(Iobj_sect .* pI);
+		shareI_GDP_obj = I_obj_value/GDP;
+
 endfunction
 
 

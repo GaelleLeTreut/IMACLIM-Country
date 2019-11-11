@@ -1325,7 +1325,7 @@ end
 
 
 /// Calibration of share at BY of I repartition across sectors: used for Capital Dynamics 
-	share_Ii = I./sum(I);
+	share_Ii = I./sum(I,"r");
 	x_share_Ii = share_Ii ;
 
 if ~Capital_Dynamics
@@ -1587,11 +1587,10 @@ if Capital_Dynamics
 
 end
 
-	
-	ShareI_GDP = divide(sum(I,"c").*pI,GDP,0);
+	//Scalar
+	ShareI_GDP = divide(sum(sum(I,"c").*pI),GDP,0);
 	x_ShareI_GDP = ShareI_GDP;
  
-
 ///////////////////////////
 // Start - Not Applied to Brasil
 ///////////////////////////

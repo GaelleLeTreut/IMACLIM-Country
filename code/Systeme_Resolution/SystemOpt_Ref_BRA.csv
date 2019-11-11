@@ -124,6 +124,7 @@ Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_1;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
 Capital_endowment;Capital_Dynamic_Val_1;;
+// u_tot;Unemployment_Val_2;; // Val_2- maintain constant unemployment and deduce capital stock
 ;;;
 ////////////////////// Carbon tax policies;;;
 Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;
