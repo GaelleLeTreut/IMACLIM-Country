@@ -1323,9 +1323,8 @@ end
 // End Difference between France (1) and Brasil (2)
 /////////////////////////////////////////////////////
 
-
 /// Calibration of share at BY of I repartition across sectors: used for Capital Dynamics 
-	share_Ii = I./sum(I,"r");
+	share_Ii = I./(sum(I,"r").*.ones(nb_Sectors,1));
 	x_share_Ii = share_Ii ;
 
 if ~Capital_Dynamics
