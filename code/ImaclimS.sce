@@ -292,7 +292,12 @@ for time_step=1:Nb_Iter
     if Macro_nb <> ""
         exec("Macro_Framework.sce");
     end
-
+	
+	// Calibration of capital dynamics
+	if Capital_Dynamics & time_step ==1 
+		exec("Calibration_CapitalDyn.sce");
+	end
+	
     // Load the projections for forcing
     if Scenario <> '' then
         if time_step == 1 then

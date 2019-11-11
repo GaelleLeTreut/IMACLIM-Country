@@ -543,30 +543,6 @@ for elt=1:nb_IncomeSources;
 end
 
 
-// Capital Dynamics if required
-if Capital_Dynamics 
-
-	DataCapDynamics(:, size(DataCapDynamics,"c")) = [];
-	list_demo_variable= DataCapDynamics(1:$,1);
-		for elt=1:size(list_demo_variable,"r");	
-			indtemp= find(DataCapDynamics(:,1)==list_demo_variable(elt));
-			valtemp = evstr(DataCapDynamics(indtemp,2));
-			execstr("initial_value."+list_demo_variable(elt)+"=valtemp;")
-		end
-		
-	if initial_value.Capital_endowment=="to define"
-		warning("inform a capital stock before running IMACLIM")
-		pause
-	end	
-	
-else 
-
-	// Variables created for flexibility but are not used in this case of Capital_Dynamics==%F
-	initial_value.Capital_endowment = 0; 
-	initial_value.pRental =0 ;
-		
-end
-
 // IC Domestic and imports tables
 [initial_value.IC_Import_rate] = fill_table( IOT_Import_rate,IndRow_IOT_Import_rate,IndCol_IOT_Import_rate,Index_Commodities,Index_Sectors);
 

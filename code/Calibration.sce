@@ -1546,47 +1546,6 @@ else
 end
 
 end
-
-// Capital Market
-
-if Capital_Dynamics 
-	
-	Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment);
-	x_Capital_consumption = Capital_consumption;
-	
-	//pK = Capital_consumption ./ Capital_income ;
-	pK = Capital_income ./ Capital_consumption ;
-	x_pK = pK; 
-	
-	for elt=2:nb_Sectors
-		if (round(pK(elt)*1000))/1000 <> (round(pK(elt-1)*1000))/1000
-			error ("problem in calibrating pK")		
-		end
-	end
-	
-	pRental = pK(1);
-	x_pRental = pRental;
-	
-	function [const_kappa] =fcalCapIncome_Const_1(x_kappa, Capital_income, pK, Y, Imaclim_VarCalib)
-    kappa= indiv_x2variable(Imaclim_VarCalib, "x_kappa");
-    y1_1 = (Y==0).*(kappa');
-    y1_2 = (Y<>0).*Capital_income_Const_1(Capital_income, pK, kappa, Y);
-    const_kappa	= (Y==0).*y1_1  + (Y<>0).*y1_2;
-	endfunction
-
-	[x_kappa, const_kappa, infCal_Capital_income] = fsolve(x_kappa, list(fcalCapIncome_Const_1, Capital_income, pK, Y, Index_Imaclim_VarCalib));
-
-	if norm(const_kappa) > sensib
-		error( "review calib_kappa")
-	else
-		kappa = indiv_x2variable (Index_Imaclim_VarCalib, "x_kappa");
-		kappa = (abs(kappa) > %eps).*kappa;
-
-	end
-
-
-end
-
 	//Scalar
 	ShareI_GDP = divide(sum(sum(I,"c").*pI),GDP,0);
 	x_ShareI_GDP = ShareI_GDP;
