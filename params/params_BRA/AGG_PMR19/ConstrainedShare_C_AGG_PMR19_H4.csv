@@ -14,7 +14,7 @@ NonFerrousMetals;0.5;0.5;0.5;0.5
 Chemical;0.5;0.5;0.5;0.5
 BovineMeat;0.5;0.5;0.5;0.5
 RestFoodBeve;0.5;0.5;0.5;0.5
+PaperPulp;0.5;0.5;0.5;0.5
 RestIndus;0.5;0.5;0.5;0.5
-FreightTrans;0.5;0.5;0.5;0.5
-PassTrans;0.5;0.5;0.5;0.5
+Transp;0.5;0.5;0.5;0.5
 RestComp;%nan;%nan;%nan;%nan

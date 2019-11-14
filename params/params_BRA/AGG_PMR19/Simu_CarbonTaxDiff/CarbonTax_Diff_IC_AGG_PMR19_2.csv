@@ -1,5 +1,5 @@
-CarbonTax_Diff_IC;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;RestIndus;FreightTrans;PassTrans;RestComp
-Coal;0.1131792;0;0;0;0;0.4374999;0;0;0;0.4675750;2.7493247;0.4040223;0.414749;0.2839194;0.2999411;0.4270928;0;0;0
+CarbonTax_Diff_IC;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;PaperPulp;RestIndus;Transp;RestComp
+Coal;0.1131792;0;0;0;0;0.4374999;0;0;0;0.467575;2.7493247;0.4040223;0.414749;0.2839194;0.2999411;0.4270928;0;0;0
 COilFFuelExDies;0;6.2343014;2.910D-18;0;1.6650124;0.8222801;1.4028918;1.1054973;1.0317975;0.2982778;1.1035441;0.8831754;0.8203125;0.7120393;0.7519674;0.6740103;1.5454375;2.6328125;1.624998
 NaturalGas;0;0.1528802;7.080D-09;0.8890228;0.1301353;0.677719;0;0;0;0.884781;0.7569301;0.75;0.7414399;0.5285751;0.5546982;0.7695764;0;3.1333962;0.8693876
 Allbiofuel;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
@@ -14,7 +14,7 @@ NonFerrousMetals;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 Chemical;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 BovineMeat;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 RestFoodBeve;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+PaperPulp;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 RestIndus;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-FreightTrans;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-PassTrans;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Transp;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 RestComp;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0

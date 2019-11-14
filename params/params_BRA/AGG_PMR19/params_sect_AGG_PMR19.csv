@@ -1,6 +1,6 @@
 //Names;;;Notes;;;;;;;;;;;;;;;;
 //;;;;;;;;;;;;;;;;;;;
-//Sectors;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;RestIndus;FreightTrans;PassTrans;RestComp
+//Sectors;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;PaperPulp;RestIndus;Transp;RestComp
 sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1
 Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 //;;;;;;;;;;;;;;;;;;;

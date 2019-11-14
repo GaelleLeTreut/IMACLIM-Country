@@ -1,4 +1,4 @@
-CarbonTax_Diff_IC;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;RestIndus;FreightTrans;PassTrans;RestComp
+CarbonTax_Diff_IC;Coal;COilFFuelExDies;NaturalGas;Allbiofuel;Diesel;Electricity;PlantedForest;Cattle;RestAgri;Cement;IronSteel;NonFerrousMetals;Chemical;BovineMeat;RestFoodBeve;PaperPulp;RestIndus;Transp;RestComp
 Coal;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 COilFFuelExDies;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 NaturalGas;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
@@ -14,7 +14,7 @@ NonFerrousMetals;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Chemical;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 BovineMeat;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 RestFoodBeve;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+PaperPulp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 RestIndus;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-FreightTrans;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-PassTrans;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Transp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 RestComp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
