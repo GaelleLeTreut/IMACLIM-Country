@@ -14,7 +14,7 @@ NonFerrousMetals;0.2;0.2;0.2
 Chemical;0.2;0.2;0.2
 BovineMeat;0.446;0.426;0.326
 RestFoodBeve;0.446;0.426;0.326
-PaperPulp;0.96;0.99;0.866666667
-RestIndus;0.6705;0.515666667;0.476333333
+PaperPulp;0.2;0.2;0.2
+RestIndus;0.96;0.99;0.866666667
 Transp;0.6705;0.515666667;0.476333333
 RestComp;0.96;0.99;0.866666667
