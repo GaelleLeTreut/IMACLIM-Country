@@ -8,9 +8,9 @@ SystemOpt_Resol;SystemOpt_Static
 // SystemOpt_Resol;SystemOpt_StaticCap
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
+// study;Static_RunChoices
 // study;Projection_evolution
-// study;Recursive_RunChoices
+study;Recursive_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 AGG_type;
 // AGG_type;AGG_EnComp
