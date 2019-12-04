@@ -23,7 +23,7 @@ delta_interest_rate;1;1;Param
 Mu;1;1;Param
 ConstrainedShare_C;nb_Commodities;nb_Households;Param
 sigma_pC;nb_Commodities;nb_Households;Param
-sigma_ConsoBudget;1;nb_Households;Param
+sigma_ConsoBudget;nb_Commodities;nb_Households;Param
 phi_IC;nb_Commodities;nb_Sectors;Param
 phi_L;1;nb_Sectors;Param
 phi_K;1;nb_Sectors;Param

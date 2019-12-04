@@ -373,8 +373,14 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     ///. Variation with relative prices (price-elasticities sigma_pC)
     ///. Variation with consumption budget (income-elasticities : sigma_ConsoBudget)
 
+	// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	if size(sigma_ConsoBudget,"r")==1
+		sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
+	end
+	
+
     y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
-(ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_EnerSect, 1)) );
+(ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( ( (Consumption_budget.*.ones(nb_EnerSect, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_EnerSect, 1))./BY.CPI) ) .^ sigma_ConsoBudget(Indice_EnerSect, :)) );
 
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )
     /// Exogenous distribution of budget shares among non final energy consumption items (Budget_Shares_ref)
@@ -401,9 +407,14 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 	Consumption_budget = abs(Consumption_budget);
 
 	y1 = zeros(nb_Commodities, nb_Households) ;
+	
+		// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	if size(sigma_ConsoBudget,"r")==1
+	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
+	end
 
     y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
-(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
 	
     Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
@@ -421,11 +432,16 @@ function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sig
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
+	
+	// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	if size(sigma_ConsoBudget,"r")==1
+	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
+	end
 
     C = zeros(C);
 
     C(1:nb_Sectors-1, :) = (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
-(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( (Consumption_budget/CPI) ./ (BY.Consumption_budget/BY.CPI) ) .^ sigma_ConsoBudget .*. ones(nb_Sectors-1, 1)) );
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ).^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
     Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
     
@@ -2473,7 +2489,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
 	//Ventilated by BY Shares
-		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+		// ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+		ShareI_GDP = ini.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( ini.Capital_endowment./ sum(ini.I) ) ;
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
 			// so far, only to inform the electric vector of investments
