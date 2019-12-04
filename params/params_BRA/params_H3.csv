@@ -3,5 +3,5 @@
 //HH Desagregation;H1;H2;H3
 //;;;
 // Consumption;;;
-sigma_ConsoBudget;0.8;0.8;0.8
+// sigma_ConsoBudget;0.8;0.8;0.8
 Exo_HH;1;1;1
