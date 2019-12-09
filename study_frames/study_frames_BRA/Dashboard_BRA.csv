@@ -39,6 +39,8 @@ X_nonEnerg;False
 // Scenario;
 // Scenario;PMR_Ref_Disag
 Scenario;PMR_Ref
+// Scenario;PMR_Ten_Disag
+// Scenario;PMR_Ten
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
