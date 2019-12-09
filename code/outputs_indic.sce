@@ -1113,7 +1113,6 @@ if (Out.pX ./ ref.pX ) <> 1
 end
 
 
-
 if Output_files
 if OutputfilesBY
 csvWrite(OutputTable("MacroT_"+ref_name),SAVEDIR+"TableMacro_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
@@ -1128,6 +1127,7 @@ csvWrite(OutputTable("EnerNonEnTable_"+ref_name),SAVEDIR+"TableENnonEnOutput_"+r
 csvWrite(OutputTable.GDP_decomBIS,SAVEDIR+"GDP_decomBIS_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("Trade_Sect_"+ref_name),SAVEDIR+"Trade_Sect_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("Trade_Sect_Share_"+ref_name),SAVEDIR+"Trade_Sect_Share_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite([Index_Sectors,Out.Capital_consumption'],SAVEDIR+"Capital_Cons_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 
 
 elseif ~OutputfilesBY
@@ -1136,6 +1136,7 @@ csvWrite(OutputTable("MacroTExtend_evol_"+ref_name),SAVEDIR_INIT+"TableMacroExte
 csvWrite(OutputTable("MacroTExtended_Ratio_"+ref_name),SAVEDIR_INIT+"TableMacroRatio"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("MacroT_Abs_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Abs_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 csvWrite(OutputTable("Equity_"+Name_time) ,SAVEDIR_INIT+"TableMacro_Equity_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
+csvWrite([Index_Sectors,Out.Capital_consumption'],SAVEDIR_INIT+"Capital_Cons_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 
 end
 end
@@ -1415,7 +1416,6 @@ end
 if Output_files
 	if OutputfilesBY
 		csvWrite(OutputTable("FullTemplate_"+ref_name),SAVEDIR+"FullTemplate_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
-
 	elseif ~OutputfilesBY
 		csvWrite(OutputTable("FullTemplate_"+ref_name),SAVEDIR_INIT+"FullTemplate_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');		
 			// if Country=="Argentina"&time_step ==1

@@ -73,6 +73,21 @@ def output_table(file_name, lines_to_remove, save_path):
 #    table_path = table_fold + table_name
 #
 #    return macro_csv_name, lines_to_remove, table_path
+def data_capital_cons():
+
+    macro_csv_name = 'Capital_Cons_BY'
+    
+    lines_to_remove = [
+    ]
+
+    # Path to record the created table
+    table_fold = 'MacroTables/'
+    if not os.path.exists(table_fold):
+        os.makedirs(table_fold)
+    table_name = 'Capital_Cons.csv'
+    table_path = table_fold + table_name
+
+    return macro_csv_name, lines_to_remove, table_path
             
 def data_equity():
 
@@ -173,6 +188,9 @@ if __name__ == '__main__':
     
     working_file5, lines_to_remove5, save_path5 = data_equity()
     output_table(working_file5, lines_to_remove5, save_path5) 
+    
+    working_file6, lines_to_remove6, save_path6 = data_capital_cons()
+    output_table(working_file6, lines_to_remove6, save_path6) 
     
 #    working_file2, lines_to_remove2, save_path2 = data_macro_2015()
 #    output_table(working_file2, lines_to_remove2, save_path2)
