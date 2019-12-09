@@ -343,6 +343,18 @@ G_FinEn_qFish = QInd_Fish( ref.pG, ref.G, Out.pG, Out.G, Indice_FinEnerSect, :);
 ////////////Investment
 ////////////////////////
 
+ind_Inv = find(I<>0)';
+for ind = 1:size(ind_Inv,"r")
+I_pLasp_temp(ind) = PInd_Lasp( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
+I_pPaas_temp(ind) = PInd_Paas( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
+I_pFish_temp(ind) = PInd_Fish( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
+end
+
+execstr ( "I_"+Index_Sectors(ind_Inv)+"_pLasp = "+I_pLasp_temp);
+execstr ( "I_"+Index_Sectors(ind_Inv)+"_pPaas = "+I_pPaas_temp);
+execstr ( "I_"+Index_Sectors(ind_Inv)+"_pFish = "+I_pFish_temp);
+clear I_pFish_temp I_pLasp_temp I_pPaas_temp
+
 // Price indices (Laspeyres, Paasche and Fisher) - Investment
 I_pLasp = PInd_Lasp( ref.pI, ref.I, Out.pI, Out.I, :, :);
 I_pPaas = PInd_Paas( ref.pI, ref.I, Out.pI, Out.I, :, :);
@@ -1389,6 +1401,15 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["X qFish",														X_qFish								 							];..
 ];
 
+if Capital_Dynamics
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Capital Stock ---",								 ""																	];..
+["Capital Endowment",							money_disp_adj.*Out.Capital_endowment							];..
+[string("Capital Cons - "+ Index_Sectors),		money_disp_adj.*Out.Capital_consumption'						];..
+[string("Real I - "+ Index_Sectors(ind_Inv)),	money_disp_adj.*sum(Out.I_value(ind_Inv,:),"c")./eval("I_"+Index_Sectors(ind_Inv)+"_pFish")	];..
+[string("Volume I - "+ Index_Sectors(ind_Inv)),	money_disp_adj.*sum(Out.I(ind_Inv,:),"c")											];..
+];
+end
 
 ///Store BY
 if Output_files

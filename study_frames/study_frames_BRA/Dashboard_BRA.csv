@@ -26,7 +26,7 @@ H_DISAGG;H4
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;2
+Nb_Iter;15
 // SELECT a Macro framework to run;
 // Macro_nb;
 Macro_nb;NDC

@@ -2489,8 +2489,9 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
 	//Ventilated by BY Shares
-		// ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
-		ShareI_GDP = ini.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( ini.Capital_endowment./ sum(ini.I) ) ;
+		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+		// ShareI_GDP = ini.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( ini.Capital_endowment./ sum(ini.I) ) ;
+		// I = "beta" Io 
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
 			// so far, only to inform the electric vector of investments
