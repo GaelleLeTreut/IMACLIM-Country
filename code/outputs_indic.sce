@@ -343,11 +343,12 @@ G_FinEn_qFish = QInd_Fish( ref.pG, ref.G, Out.pG, Out.G, Indice_FinEnerSect, :);
 ////////////Investment
 ////////////////////////
 
-ind_Inv = find(I<>0)';
+ind_Inv = find(sum(I,"c")<>0)';
 for ind = 1:size(ind_Inv,"r")
-I_pLasp_temp(ind) = PInd_Lasp( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
-I_pPaas_temp(ind) = PInd_Paas( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
-I_pFish_temp(ind) = PInd_Fish( ref.pI, ref.I, Out.pI, Out.I, ind_Inv(ind), :);
+indI = ind_Inv(ind);
+I_pLasp_temp(ind) = PInd_Lasp( ref.pI, ref.I, Out.pI, Out.I, indI, :);
+I_pPaas_temp(ind) = PInd_Paas( ref.pI, ref.I, Out.pI, Out.I, indI, :);
+I_pFish_temp(ind) = PInd_Fish( ref.pI, ref.I, Out.pI, Out.I, indI, :);
 end
 
 execstr ( "I_"+Index_Sectors(ind_Inv)+"_pLasp = "+I_pLasp_temp);
