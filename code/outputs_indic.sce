@@ -1338,7 +1338,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Net Lending_"+Index_InstitAgents,							money_disp_adj.*Out.NetLending'									];..
 ["Country Deficit/GDP-ratio/"+ref_name, 					evol_ref.NetLendingRoW_GDP 										];..
 ["Net Debt"+Index_InstitAgents,									money_disp_adj.*Out.NetFinancialDebt'								];..
-["HH saving - % "+ref_name,	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
+["HH saving - % ",	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
 ["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
