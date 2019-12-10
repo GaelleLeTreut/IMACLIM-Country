@@ -29,8 +29,8 @@ Resol_Mode;Dynamic_projection
 Nb_Iter;15
 // SELECT a Macro framework to run;
 // Macro_nb;
-// Macro_nb;NDC
-Macro_nb;Mean
+Macro_nb;NDC
+// Macro_nb;Mean
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
