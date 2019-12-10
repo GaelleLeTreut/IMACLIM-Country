@@ -21,8 +21,10 @@ and(IndexRow(1:nb_Sectors,:) == Index_Commodities) & and(IndexCol(:,1:nb_Sectors
 
 if proj_desaggregated then
     Index_Sectors_IC = Index_SectInit;
+	Index_Commo_IC = Index_CommoInit;
 else
     Index_Sectors_IC = Index_Sectors;
+	Index_Commo_IC = Index_Commodities;
 end
 
 if nb_Households == 1 then
@@ -171,9 +173,15 @@ for var = fieldnames(Proj_Vol)'
             end
 
         elseif find(proj_files == Proj_Vol(var).file) <> [] then
-            Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).headline, Proj_Vol(var).headcol, ..
-                Index_CommoInit, Proj_Vol(var).headers(time_step));
-
+            
+			    if proj_well_aggregated then
+                    			Proj_Vol(var).val = fill_table(Proj_Vol(var).data, Proj_Vol(var).headline, Proj_Vol(var).headcol, ..
+                Index_Commo_IC, Proj_Vol(var).headers(time_step));
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+			
+			
             if find(to_transpose == Proj_Vol(var).file) <> [] then
                 Proj_Vol(var).val = Proj_Vol(var).val';
             end
@@ -237,13 +245,25 @@ end
 function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
 		
     Proj_Vol(var_intens_name) = Proj_Vol(var_name);
-	Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
+	// Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
+	Y_copy_lines = Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
+	Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1).*. Y_copy_lines
 	Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
 	
-	for elt=1:size(Proj_Vol(var_name).val,"c")
-		if 	Proj_Vol(var_name).val(elt) ./ Y_copy_lines(elt) <> 0 & Proj_Vol.Y.val(elt)==0
-			warning(var_intens_name +' of sector '+Index_Sectors(elt)+ ' evaluated using Y of last step: projection of Y required.')
+	if var_name <> 'IC'
+		for elt=1:size(Proj_Vol(var_name).val,"c")
+			if 	Proj_Vol(var_name).val(elt) ./ Y_copy_lines(elt) <> 0 & Proj_Vol.Y.val(elt)==0
+				warning(var_intens_name +' of sector '+Index_Sectors(elt)+ ' evaluated using Y of last step: projection of Y required.')
+			end
 		end
+		
+	else
+		for elt=1:size(Proj_Vol(var_name).val,"c")
+			if 	Proj_Vol.Y.val(elt)==0
+				warning(var_intens_name+'s of sector '+Index_Sectors(elt)+ ' evaluated using Y of last step: projection of Y required.')
+			end
+		end
+
 	end
 	
     Proj_Vol(var_name).apply_proj = %F;
@@ -266,11 +286,11 @@ end
 
 // Capital_consumption intensity projection
 if find(fieldnames(Proj_Vol) == 'Capital_consumption') <> [] then
- if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens then
+	if Proj_Vol.Capital_consumption.apply_proj & Proj_Vol.Capital_consumption.intens then
         Proj_Vol = proj_intens(Proj_Vol, 'Capital_consumption', 'kappa');
-    end
+	end
 end
-    
+
 // Don't project Y
 Proj_Vol.Y = null();
 
