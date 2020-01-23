@@ -184,10 +184,17 @@ if (size(ClosCarbRev,"r")<>[1]| size(ClosCarbRev,"r")<>[1])
 end 
 
 
-
 ////  Capital Dynamics
 if isdef("Capital_Dynamics") then
     Capital_Dynamics = eval(Capital_Dynamics);
 else
     Capital_Dynamics = %F;
 end
+
+/// Profil of invesment share to GDP in capital dynamics
+if isdef("Exo_ShareI_GDP") then
+    Exo_ShareI_GDP = eval(Exo_ShareI_GDP);
+else
+    Exo_ShareI_GDP = %F;
+end
+
