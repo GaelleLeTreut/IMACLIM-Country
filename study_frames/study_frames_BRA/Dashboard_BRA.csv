@@ -12,7 +12,9 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // study;Projection_evolution
 study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
-Capital_Dynamics;%F
+Capital_Dynamics;%T
+// Exogenous share of investment to GDP;
+Exo_ShareI_GDP;%T
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_PMR19
@@ -34,20 +36,20 @@ Macro_nb;NDC
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
-World_prices;False
-X_nonEnerg;False
+X_nonEnerg;True
+World_prices;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 // Scenario;PMR_Ref_Disag
-Scenario;PMR_Ref
+// Scenario;PMR_Ref
 // Scenario;PMR_Ten_Disag
-// Scenario;PMR_Ten
+Scenario;PMR_Ten
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%T
-Output_prints;%T
+Output_prints;%F
 // SELECT the uses of carbon tax revenues;
 Recycling_Option;
 // Recycling_Option;LabTax

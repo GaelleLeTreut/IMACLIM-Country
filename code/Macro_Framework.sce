@@ -98,6 +98,11 @@ if X_nonEnerg == "True"
 end
 
 
+/// Capital Dynamic and Investment/GDP path 
+if Capital_Dynamics|Exo_ShareI_GDP|~isdef("Proj_Macro.ShareI_GDP")
+ warning("Dashboard says that an exogenous Share of investment to GDP path is required but it is not defined");
+end 
+
 // clear programming trick for Static_comparative
 if Resol_Mode == "Static_comparative"
 	time_step=time_step_temp;
