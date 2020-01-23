@@ -2452,9 +2452,13 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
-	//Ventilated by BY Shares
-			
-		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+			if ~Exo_ShareI_GDP
+				ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+			else 
+				ShareI_GDP = Proj_Macro.ShareI_GDP(time_step);
+			end		
+		
+		//Ventilated by BY Shares
 		y1 = I - ( ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I );
 		
 		// so far, only to inform the electric vector of investments
@@ -2488,9 +2492,13 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		
 	elseif Capital_Dynamics
 	// If Capital Market - Investment is a share of GDP - Give the repartition of I
-	//Ventilated by BY Shares
-		ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
-		// ShareI_GDP = ini.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( ini.Capital_endowment./ sum(ini.I) ) ;
+			if ~Exo_ShareI_GDP
+				ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+			else 
+				ShareI_GDP = Proj_Macro.ShareI_GDP(time_step);
+			end		
+		
+		//Ventilated by BY Shares
 		// I = "beta" Io 
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
@@ -3351,7 +3359,7 @@ function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
 
     // Mean wage reference (omega_ref).
     omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
-  
+	
     // Wage curve
 	// Coef_real_wage defined in parameter
 	// Coef_real_wage = 1 => mean real wage curve 
