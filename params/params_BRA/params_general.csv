@@ -11,7 +11,7 @@ delta_LS_S;0;0;1;scalar on carbon tax revenue for lump sum transfer to Sect;
 //Labor market parameters;;;;;
 NetWage_variation;1;0;5;;
 sigma_omegaU;-0.3;;;-0.1;
-Coef_real_wage;0;0;1;1;
+Coef_real_wage;1;0;1;1;
 u_param;0.0955262;0;1;value ofBY;
 //;;;;;
 //Capital;;;;;
