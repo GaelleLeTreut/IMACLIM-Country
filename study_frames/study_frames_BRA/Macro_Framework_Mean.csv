@@ -1,6 +1,6 @@
 reference_year;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025;2026;2027;2028;2029
 current_year;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025;2026;2027;2028;2029;2030
-GDP;0.0018;0.0018;0.0018;0.0018;0.0018;0.0018;0.032;0.032;0.032;0.032;0.032;0.032;0.032;0.032;0.032
+GDP;0.01;0.01;0.01;0.012;0.015;0.02;0.025;0.03;0.033;0.034;0.035;0.034;0.033;0.033;0.033
 Population;0.008260958;0.008033639;0.008172728;0.007924534;0.00765448;0.007376175;0.00708287;0.006776237;0.006473855;0.006176973;0.005877927;0.005576994;0.005274025;0.004973363;0.00467854
 Labour_force;0.008773688;0.008023674;0.007430783;0.006914254;0.006207159;0.005246428;0.004653424;0.004097771;0.003417924;0.003105964;0.002811647;0.002399423;0.002335498;0.002462117;0.001838528
 Retired;0.039178893;0.039661003;0.040026439;0.040323475;0.04050279;0.040585059;0.040564529;0.040375063;0.040035782;0.039546773;0.039003442;0.038429809;0.037595099;0.036474191;0.035189247
@@ -8,4 +8,7 @@ GDP_world;0.032679739;0.032911392;0.031862745;0.032066508;0.031563373;0.02948207
 pM_Coal;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 pM_COilFFuelExDies;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 pM_NaturalGas;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-units;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate
+ShareI_GDP;0.18;0.183;0.185;0.19;0.195;0.201;0.208;0.215;0.223;0.228;0.227;0.224;0.222;0.22;0.218
+u_tot;0.094;0.093;0.091;0.088;0.085;0.081;0.076;0.071;0.067;0.063;0.06;0.058;0.057;0.056;0.055
+delta_Kstock_Adj;-0.000043905;0.000547804;0.001283783;0.010761464;0.016590415;0.030575952;0.04824412;0.06837705;0.084860162;0.098889994;0.11220532;0.12015487;0.12348151;0.12752894;0.13118717
+units;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare;mean_yearly_growth_rate_OrPercentforShare
