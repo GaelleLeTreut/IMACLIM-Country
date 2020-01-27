@@ -168,18 +168,19 @@ param_table_sec($+1,1) = ["$\delta_{X_{i}}$"];
 param_table_sec($:$,2:3) = [" "];
 param_table_sec($,4:4+nb_Sectors-1) = string(delta_X_parameter);
 
+if size(sigma_ConsoBudget,"r")<>1
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\sigma_{CR_i}$"];
 param_table_sec($-(nb_Households-1):$,2) = [""];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(sigma_ConsoBudget');
+end
 
-if size(sigma_ConsoBudget,"r")<>1
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$\sigma_{CP_i}$"];
 param_table_sec($-(nb_Households-1):$,2) = [""];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(sigma_pC');
-end
 
+pause
 param_table_sec($+1,1) = ["-----"];
 param_table_sec($+1,1) = ["Not applied to sectoral decomposition"];
 
