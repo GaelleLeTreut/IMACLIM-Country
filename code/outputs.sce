@@ -180,7 +180,6 @@ param_table_sec($-(nb_Households-1):$,2) = [""];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
 param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1)= string(sigma_pC');
 
-pause
 param_table_sec($+1,1) = ["-----"];
 param_table_sec($+1,1) = ["Not applied to sectoral decomposition"];
 
