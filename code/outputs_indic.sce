@@ -343,6 +343,7 @@ G_FinEn_qFish = QInd_Fish( ref.pG, ref.G, Out.pG, Out.G, Indice_FinEnerSect, :);
 ////////////Investment
 ////////////////////////
 
+I = (abs(I) > %eps).*I;
 ind_Inv = find(sum(I,"c")<>0)';
 for ind = 1:size(ind_Inv,"r")
 indI = ind_Inv(ind);
