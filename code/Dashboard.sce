@@ -198,3 +198,27 @@ else
     Exo_ShareI_GDP = %F;
 end
 
+/// Profil of unemployment to calibrate capital dynamics
+if isdef("Exo_u_tot") then
+    Exo_u_tot = eval(Exo_u_tot);
+else
+    Exo_u_tot = %F;
+end
+
+/// Adjustment in capital stock compared to the perpetual inventory
+if isdef("Exo_Kstock_Adj") then
+    Exo_Kstock_Adj = eval(Exo_Kstock_Adj);
+else
+    Exo_Kstock_Adj = %F;
+end
+
+// By default - To avoid confusion
+if ~Capital_Dynamics
+	Exo_u_tot = %F;
+	Exo_ShareI_GDP = %F;
+	Exo_Kstock_Adj = %F ; 
+end
+
+if Exo_u_tot&Exo_Kstock_Adj
+	error( "You can not inform both unemployment rate and adjustment of capital stock exogenously "); 
+end

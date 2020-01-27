@@ -99,8 +99,18 @@ end
 
 
 /// Capital Dynamic and Investment/GDP path 
-if Capital_Dynamics|Exo_ShareI_GDP|~isdef("Proj_Macro.ShareI_GDP")
- warning("Dashboard says that an exogenous Share of investment to GDP path is required but it is not defined");
+if Capital_Dynamics&Exo_ShareI_GDP&(find(fieldnames(Proj_Macro)=="ShareI_GDP")=="")
+ error("Dashboard says that an exogenous Share of investment to GDP path is required but it is not definedin the Macro_Framework file");
+end 
+
+/// Capital Dynamic and Investment/GDP path 
+if Capital_Dynamics&Exo_u_tot&(find(fieldnames(Proj_Macro)=="u_tot")=="")
+ error("Dashboard says that an exogenous unemployment path is required but it is not defined in the Macro_Framework file");
+end 
+
+/// Capital Dynamic and Investment/GDP path 
+if Capital_Dynamics&Exo_Kstock_Adj&(find(fieldnames(Proj_Macro)=="delta_Kstock_Adj")=="")
+ error("Dashboard says that an exogenous adjustment of K stock is required but it is not defined in the Macro_Framework file");
 end 
 
 // clear programming trick for Static_comparative

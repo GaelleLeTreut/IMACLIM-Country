@@ -3771,16 +3771,30 @@ endfunction
 //  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
 function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 	if Capital_Dynamics
-		y = Capital_endowment - sum (kappa.*Y');
+		
+		// If exogenous unemployment rate, capital stock constraint is substitute for an unemployment rate constraint
+		if ~Exo_u_tot
+			if ~Exo_Kstock_Adj 
+				y = Capital_endowment - sum (kappa.*Y');
+			else
+				y = Capital_endowment * ( 1 + Proj_Macro.delta_Kstock_Adj(time_step) ) - sum (kappa.*Y');
+			end
+			
+		else
+			y =  u_tot - Proj_Macro.u_tot (time_step) ;
+		end 
+		// y = Capital_endowment *( 1+ delta)  - sum (kappa.*Y');
 	else
 		y = pRental - BY.pRental;
 	end
 endfunction
 
+
 ///  Used to calibrate a trajectory of Invesment that stabilise unemployment
 // - > substitute with the equation of capital  stock : capital endowment is caculated to maintain a unemployment constant
 function u_tot = Unemployment_Val_2 ( )
-	u_tot = BY.u_tot ;	
+	// u_tot = BY.u_tot ;	
+	 u_tot = Proj_Macro.u_tot (time_step) 
 endfunction
 
 function [I_obj,I_obj_value,shareI_GDP_obj] = Post_InvestTraj_Val_1 ()
