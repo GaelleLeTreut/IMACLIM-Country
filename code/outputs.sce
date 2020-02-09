@@ -908,6 +908,6 @@ for line  = 1:nb_Commodities
 		
 end
 
-
-
-
+if u_tot<0 
+error("The unemployment is negative, the resolution went wrong")
+end
