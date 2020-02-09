@@ -382,6 +382,19 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     y1(Indice_EnerSect, :) = C(Indice_EnerSect, :) - ((1+delta_C_parameter(Indice_EnerSect)').^time_since_BY).*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(Indice_EnerSect, :) .* BY.C(Indice_EnerSect, :) + (1 - ConstrainedShare_C(Indice_EnerSect, :)) .* BY.C(Indice_EnerSect, :) .* ( (pC(Indice_EnerSect, :)/CPI) ./ (BY.pC(Indice_EnerSect, :)/BY.CPI) ).^ sigma_pC(Indice_EnerSect, :) .* (( ( (Consumption_budget.*.ones(nb_EnerSect, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_EnerSect, 1))./BY.CPI) ) .^ sigma_ConsoBudget(Indice_EnerSect, :)) );
 
+	if is_projected('C') then
+		// As it is ; H_demand_Const_1 only works if only energy are forced. Checking if it's the case
+		check_ind =[];
+			for ind = Proj_Vol.C.ind_of_proj
+				check_ind(1+$:size(ind(1),"c")+$,1) =ind(1)'
+			end
+		if ~Indice_EnerSect == check_ind'
+			error("H_demand_Const_1 can not inform other values than the C from Energy - use H_demand_Const_2 or improve H_demand_Const_1 required")
+		end
+	
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+	pause
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )
     /// Exogenous distribution of budget shares among non final energy consumption items (Budget_Shares_ref)
     // y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - Budget_Shares_ref(Indice_NonEnerSect, :) * Consumption_budget ;
@@ -390,9 +403,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
     y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - NonFinEn_BudgShare_ref .* ( NonFinEn_budget .*. ones(nb_NonEnerSect, 1) ) ;
 
-    if is_projected('C') then
-        y1 = apply_proj_eq(y1,C,'C');
-    end
+
 
     y = matrix(y1 .* signRuben, -1 , 1) ;
 
@@ -408,22 +419,23 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
 	y1 = zeros(nb_Commodities, nb_Households) ;
 	
-		// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
 	if size(sigma_ConsoBudget,"r")==1
 	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
 	end
 
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
     y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
-	
-    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
-	
-	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
-	
+	/// Replace C by the one that are informed if so
     if is_projected('C') then
         y1 = apply_proj_eq(y1,C,'C');
     end
+	
+	// Remaining budget goes to composite
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
 endfunction
@@ -443,13 +455,14 @@ function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sig
     C(1:nb_Sectors-1, :) = (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ).^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
-    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
-    
-    C(nb_Sectors,:) = (pC(nb_Sectors,:) <> 0) .* divide(Composite_budget, pC(nb_Sectors,:), 1);
-    
+    /// Replace C by the one that are informed if so
     if is_projected('C') then
         C = apply_proj_val(C,'C');
     end
+	
+	// Remaining budget goes to composite
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+    C(nb_Sectors,:) = (pC(nb_Sectors,:) <> 0) .* divide(Composite_budget, pC(nb_Sectors,:), 1);
     
 endfunction
 
