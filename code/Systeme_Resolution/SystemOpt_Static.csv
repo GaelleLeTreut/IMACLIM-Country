@@ -99,7 +99,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;;;
 ////////////////////// Production and consumption choices;;;
 ////// Households consumption choices;;;
-;H_demand_Const_1;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
+;H_demand_Const_2;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
@@ -116,11 +116,11 @@ Y;MarketBalance_Val_1;IC, C, G, I, X, M;
 Labour;Employment_Val_1;lambda, Y;
 ;LabourByWorker_Const_1;LabourByWorker_coef, u_tot, Labour_force, lambda, Y;
 // For Mean wage curve: ;;;
-// ;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
-// w;Wage_Variation_Val_1;NetWage_variation;
+;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
+w;Wage_Variation_Val_1;NetWage_variation;
 // For Sectoral wage curve:;;;
-w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
-;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
+// w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
+// ;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
 ////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_1;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
