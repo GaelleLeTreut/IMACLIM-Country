@@ -11,7 +11,6 @@ end
 Capital_endowment = sum(BY.I) / ( parameters.depreciation_rate + GDP_index(time_step_calib) - 1) ;
 x_Capital_consumption = Capital_endowment; 
 clear time_step_calib
-pause
 
 Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment);
 x_Capital_consumption = Capital_consumption;
