@@ -1,66 +1,71 @@
 Dashboard;;;
 ;;;
-Component;Name;;
-// SELECT a type of resoultion by uncomment it;;;
-// System_Resol;Systeme_ProjHomot_BRA;;
-System_Resol;Systeme_Ref_BRA;;
-// * If Optimization_Resol == %T, System_Resol is ignored *;;;
-Optimization_Resol;%T;;
-SystemOpt_Resol;SystemOpt_Ref_BRA;;
-// SystemOpt_Resol;SystemOpt_ProjHomo_BRA;;
-// SystemOpt_Resol;SystemOpt_RefCAP_BRA;;
-// SELECT a type of study (shock in parameters) by uncomment it;;;
-// study;Static_RunChoices;;
-// study;Projection_evolution;;
-study;Recursive_RunChoices;;
-// TELL if you want a capital dynamics;;;
-Capital_Dynamics;%F;;
-// SELECT an aggregation sector profil by uncomment it;;;
-// AGG_type;;;
-AGG_type;AGG_PMR19;;
-// AGG_type;AGG_EnComp;;
-// SELECT an households dissagregation profil by uncomment it;;;
-// H_DISAGG;HH1;;
-// H_DISAGG;H3;;
-H_DISAGG;H4;;
-// H_DISAGG;H10;;
-// SELECT the resolution mode;;;
-// Resol_Mode;Static_comparative;;
-Resol_Mode;Dynamic_projection;;
-// SELECT the number of iteration (Default=1);;;
-Nb_Iter;15;;
-// SELECT a Macro framework to run;;;
-// Macro_nb;;;
-Macro_nb;NDC;;
-// Macro_nb;Mean;;
-// SELECT which shock from the Macro framework you want to apply ;;;
-Demographic_shift;True;;
-Labour_product;True;;
-World_prices;False;;
-X_nonEnerg;False;;
-// SELECT the scenario to run (soft_linking);;;
-// Scenario;;;
-// Scenario;PMR_Ref_Disag;;
-Scenario;PMR_Ref;;
-// Scenario;PMR_Ten_Disag;;
-// Scenario;PMR_Ten;;
-// TELL if you want to realise a carbon footprint analysis;;;
-// CO2_footprint;True;;
-CO2_footprint;False;;
-// TELL if you want to create output files or prints in scilab console;;;
-Output_files;%T;;
-Output_prints;%T;;
-// SELECT the uses of carbon tax revenues;;;
-Recycling_Option;;;
-// Recycling_Option;LabTax;;
-// Recycling_Option;LumpSumHH;;
-// Recycling_Option;ExactRestitution;;
-// Recycling_Option;LabTax_LumpSumHH;;
-// Select a closure of public finance while recycling carbon revenues;;;
-ClosCarbRev;CstNetLend;;
-//ClosCarbRev;AllLabTax;;
-Carbon_BTA;%F;;
-CarbonTaxDiff;%F;;
+Component;Name
+// SELECT a type of resoultion by uncomment it;
+// System_Resol;Systeme_ProjHomot_BRA
+System_Resol;Systeme_Ref_BRA
+// * If Optimization_Resol == %T, System_Resol is ignored *;
+Optimization_Resol;%T
+SystemOpt_Resol;SystemOpt_Ref_BRA
+// SystemOpt_Resol;SystemOpt_ProjHomo_BRA
+// SystemOpt_Resol;SystemOpt_RefCAP_BRA
+// SELECT a type of study (shock in parameters) by uncomment it;
+// study;Static_RunChoices
+// study;Projection_evolution
+study;Recursive_RunChoices
+// TELL if you want a capital dynamics;
+Capital_Dynamics;%T
+// SELECT option for Capital_Dynamics;
+// Exogenous share of investment to GDP or unemployment;
+Exo_ShareI_GDP;%T
+Exo_u_tot;%F
+Exo_Kstock_Adj;%T
+// SELECT an aggregation sector profil by uncomment it;
+// AGG_type;
+AGG_type;AGG_PMR19
+// AGG_type;AGG_EnComp
+// SELECT an households dissagregation profil by uncomment it;
+// H_DISAGG;HH1
+// H_DISAGG;H3
+H_DISAGG;H4
+// H_DISAGG;H10
+// SELECT the resolution mode;
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
+// SELECT the number of iteration (Default=1);
+Nb_Iter;15
+// SELECT a Macro framework to run;
+// Macro_nb;
+Macro_nb;NDC
+// Macro_nb;Mean
+// SELECT which shock from the Macro framework you want to apply ;
+Demographic_shift;True
+Labour_product;True
+X_nonEnerg;True
+World_prices;True
+// SELECT the scenario to run (soft_linking);
+// Scenario;
+// Scenario;PMR_Ref_Disag
+// Scenario;PMR_Ref
+// Scenario;PMR_Ten_Disag
+Scenario;PMR_Ten
+// TELL if you want to realise a carbon footprint analysis;
+// CO2_footprint;True
+CO2_footprint;False
+// TELL if you want to create output files or prints in scilab console;
+Output_files;%T
+Output_prints;%F
+// SELECT the uses of carbon tax revenues;
+// Recycling_Option;
+Recycling_Option;LabTax
+// Recycling_Option;LumpSumHH
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_LumpSumHH
+// Select a closure of public finance while recycling carbon revenues;
+// ClosCarbRev;CstNetLend
+ClosCarbRev;AllLabTax
+Carbon_BTA;%F
+CarbonTaxDiff;%F
 ;;;
 **********;;;
 Functions;;;

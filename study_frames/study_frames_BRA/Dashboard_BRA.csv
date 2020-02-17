@@ -12,12 +12,12 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // study;Projection_evolution
 study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
-Capital_Dynamics;%F
+Capital_Dynamics;%T
 // SELECT option for Capital_Dynamics;
 // Exogenous share of investment to GDP or unemployment;
 Exo_ShareI_GDP;%T
 Exo_u_tot;%F
-Exo_Kstock_Adj;%T 
+Exo_Kstock_Adj;%T
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_PMR19
@@ -54,13 +54,13 @@ CO2_footprint;False
 Output_files;%T
 Output_prints;%F
 // SELECT the uses of carbon tax revenues;
-Recycling_Option;
-// Recycling_Option;LabTax
+// Recycling_Option;
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev;CstNetLend
-//ClosCarbRev;AllLabTax
+// ClosCarbRev;CstNetLend
+ClosCarbRev;AllLabTax
 Carbon_BTA;%F
 CarbonTaxDiff;%F
