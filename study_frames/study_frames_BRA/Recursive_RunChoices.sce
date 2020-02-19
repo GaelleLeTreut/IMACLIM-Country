@@ -10,6 +10,10 @@ if CO2_footprint == "True" & Scenario <>"" then
 	execstr("Deriv_Exogenous.CoefCO2_reg = CoefCO2_reg_" + time_step + "_" + Macro_nb);
 end
 
+period_0 = [1,2,3,4,5];
+period_1 = [6,7,8,9,10];
+period_2 =[11,12,13,14,15];
+
 ////////////////////////////////////
 ///// Modification of Household saving rate 
 ////////////////////////////////////
@@ -25,13 +29,31 @@ if H_DISAGG=="H4"
 Household_saving_rate = eval(Table_Hsav_rate(2:$,time_step+2)');
 end
 
+////////////////////////////////////
+///// Capital_consumption or Kappa never informed in first period
+////////////////////////////////////
+
+if Proj_Vol.Capital_consumption.apply_proj & ~Proj_Vol.Capital_consumption.intens
+
+	if or(time_step==period_0)
+		Proj_Vol.Capital_consumption.apply_proj = %F;
+	elseif or(time_step<>period_0)
+		Proj_Vol.Capital_consumption.apply_proj = %T; 
+	end
+end 
+
+if ( find("kappa"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.kappa.intens
+if or(time_step==period_0)
+		Proj_Vol.kappa.apply_proj = %F;
+	elseif or(time_step<>period_0)
+		Proj_Vol.kappa.apply_proj = %T; 
+	end
+end 
+
 
 ////////////////////////////////////
 //// CARBON TAX AND EXEMPTIONS 
 ////////////////////////////////////
-period_1 = [6,7,8,9,10];
-period_2 =[11,12,13,14,15];
-
 
 /////
 // Carbon tax rate
