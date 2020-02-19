@@ -1,12 +1,12 @@
 // Capital Market
 	
 //Calibration stock at BY
-if Country =="Brasil" & Macro_nb=="NDC"
+// if Country =="Brasil" & Macro_nb=="NDC"
 // Use an average over 6 years of the expected growth rather than the only one year growth (recession in this case) of the calibration year
-	time_step_calib = 6;
-else
+	// time_step_calib = 6;
+// else
 	time_step_calib = 1;
-end
+// end
 	
 Capital_endowment = sum(BY.I) / ( parameters.depreciation_rate + GDP_index(time_step_calib) - 1) ;
 x_Capital_consumption = Capital_endowment; 
