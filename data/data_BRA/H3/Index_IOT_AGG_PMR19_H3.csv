@@ -3,10 +3,10 @@ Row;COilFFuelExDies;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;
 Row;NaturalGas;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;-
 Row;Allbiofuel;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;AllbioF
 Row;Diesel;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;-
-Row;Electricity;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;-
-Row;PlantedForest;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;-
-Row;Cattle;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;-
-Row;RestAgri;Commodities;NonEnerSect;AllExceptComp;NonHybridCommod;-;-
+Row;Electricity;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;ElecS
+Row;PlantedForest;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;PltForestS
+Row;Cattle;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;CattleS
+Row;RestAgri;Commodities;NonEnerSect;AllExceptComp;NonHybridCommod;-;RestAgriS
 Row;Cement;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;CementS
 Row;IronSteel;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;IronSteelS
 Row;NonFerrousMetals;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;NonFerrousMetalsS
