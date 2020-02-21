@@ -1422,6 +1422,18 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ];
 end
 
+/// Temporary - to delete
+if Country=="Brasil"&Scenario=="PMR_Ten"
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Y pseudo quantities --",			 ""																	];..
+["Yten_"+Index_Sectors,									Out.Y						];..
+["---Y objectif pseudo quantities --",			 ""																	];..
+["Yobj_"+Index_Sectors,									Y_obj.val						];..
+["---Yobj/Yten --",			 ""																	];..
+["RatioYobj/Yten"+Index_Sectors,						Y_obj.val./Out.Y						];..
+];
+end
+
 ///Store BY
 if Output_files
 	if OutputfilesBY

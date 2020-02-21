@@ -292,6 +292,7 @@ if find(fieldnames(Proj_Vol) == 'Capital_consumption') <> [] then
 end
 
 // Don't project Y
+Y_obj = Proj_Vol.Y;
 Proj_Vol.Y = null();
 
 // Clear unuseful Proj_Vol entries
