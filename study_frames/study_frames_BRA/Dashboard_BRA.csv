@@ -43,10 +43,16 @@ X_nonEnerg;True
 World_prices;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-// Scenario;PMR_Ref_Disag
-// Scenario;PMR_Ref
 // Scenario;PMR_Ten_Disag
-Scenario;PMR_Ten
+// Scenario;PMR_Ten
+// Scenario;PMR_Ref_Disag
+Scenario;PMR_Ref
+// Scenario;PMR_CP1
+// Scenario;PMR_CP2
+// Scenario;PMR_CP3
+// Scenario;PMR_CP4
+// Scenario;PMR_CP5
+// Scenario;PMR_CP6
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
