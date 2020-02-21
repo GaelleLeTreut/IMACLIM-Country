@@ -78,51 +78,51 @@ end
 /////
 if (Scenario =="PMR_CP1"|Scenario =="PMR_CP2") & AGG_type== "AGG_PMR19"
 	if or(time_step==period_1)
-		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50,0.50].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p1 ;
 	end
 	if or(time_step==period_2)
-		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00,1.00].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p2 ;
 	end
 
 elseif Scenario =="PMR_CP3" & AGG_type== "AGG_PMR19"
 	if or(time_step==period_1)
-		CarbonTax_Diff_IC_p1 = [0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p1 = [0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p1 ;
 	end
 	if or(time_step==period_2)
-		CarbonTax_Diff_IC_p2 = [1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p2 = [1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p2 ;
 	end
 
 elseif Scenario =="PMR_CP4" & AGG_type== "AGG_PMR19"
 	if or(time_step==period_1)
-		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50,0.50].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p1 ;
 	end
 	if or(time_step==period_2)
-		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00,1.00].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p2 ;
 	end
 
 elseif Scenario =="PMR_CP5" & AGG_type== "AGG_PMR19"
 	if or(time_step==period_1)
-		CarbonTax_Diff_IC_p1 = [0.40,0.30,0.37,0.40,0,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50,0.50].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p1 = [0.40,0.30,0.37,0.40,0,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p1 ;
 	end
 	if or(time_step==period_2)
-		CarbonTax_Diff_IC_p2 = [0.90,0.70,0.82,0.90,0,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00,1.00].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p2 = [0.90,0.70,0.82,0.90,0,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p2 ;
 	end
 
 elseif Scenario =="PMR_CP6" & AGG_type== "AGG_PMR19"
 	if or(time_step==period_1)
-		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50,0.50].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p1 = [0.40,0.40,0.40,0.40,0.40,0.50,0.40,0.50,0.40,0.50,0.40,0.40,0.40,0.40,0.40,0.40,0.40,0.50,0.50].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p1 ;
 	end
 	if or(time_step==period_2)
-		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00,1.00].*.ones(nb_Sectors,1);
+		CarbonTax_Diff_IC_p2 = [0.90,0.90,0.90,0.90,0.90,1.00,0.95,1.00,0.90,1.00,0.90,0.90,0.90,0.90,0.90,0.90,0.90,1.00,1.00].*.ones(nb_Sectors,1);
 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC_p2 ;
 	end
 	
