@@ -889,10 +889,11 @@ end
 // Affectation de toutes les valeurs finales aux noms de variables contenu dans la structure d. ( eviter des confusions entre une variable hors structure ; ini ou final)
 execstr(fieldnames(d)+"= d." + fieldnames(d));
 
-
+Err_balance_tol_temp = 10^-1;
+IC_temp = (abs(IC) > 10^-5).*IC;
 // Check after loading outputs
 for line  = 1:nb_Commodities
-    if abs(d.ERE_balance_val(line))>=Err_balance_tol then
+    if abs(d.ERE_balance_val(line))>=Err_balance_tol_temp then
        error("The IOT output is not well balanced , something did not go well for the sector n°"+line+";Supply-Uses not balanced")
     end
 	
@@ -900,9 +901,23 @@ for line  = 1:nb_Commodities
 		error("The consumption price pC for the sector n°"+line+" is negative, the resolution went wrong")
 	end
 	
+	if d.pY(line) < 0
+		error("The consumption price pY for the sector n°"+line+" is negative, the resolution went wrong")
+	end
+	
+	if d.pM(line) < 0
+		error("The consumption price pM for the sector n°"+line+" is negative, the resolution went wrong")
+	end
+	
 	for col= 1:nb_Commodities
 		if pIC(line,col)<0
 		error("The consumption price pIC of"+line+", "+col+" is negative, the resolution went wrong")
+		end
+	end
+	
+	for col= 1:nb_Commodities
+		if IC_temp(line,col)<0
+		error("The quantity IC of"+line+", "+col+" is negative, the resolution went wrong")
 		end
 	end
 		
