@@ -27,5 +27,4 @@ if Scenario<>""
 
 end
 
-	pause
 
