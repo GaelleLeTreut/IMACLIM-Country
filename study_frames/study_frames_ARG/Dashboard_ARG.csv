@@ -33,13 +33,16 @@ X_nonEnerg;True
 // SELECT an Capital Flow representation by uncomment it;
 // Invest_matrix;%F
 Invest_matrix;%T
+// SELECT if required a type of adaptation of the kappa for non energy sectors;
+AdjustKappaOnly;%F
+AdjustKappaWithSubst;%F
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 Scenario;NDC
 // Scenario;CCS
 // Scenario;HydNuc
-// Scenario;CCS_EnNDC
-// Scenario;HdNc_EnND
+// Scenario;CCS_XgND
+// Scenario;HdNC_XgND
 // Scenario;EmisObj_NDC
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True

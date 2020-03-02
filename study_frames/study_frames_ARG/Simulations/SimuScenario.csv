@@ -1,58 +1,63 @@
 Dashboard;;;
 ;;;
-Component;Name;;
-// SELECT a type of resoultion by uncomment it;;;
-System_Resol;Systeme_ProjHomothetic;;
-// System_Resol;Systeme_Static;;
-// * If Optimization_Resol == %T, System_Resol is ignored *;;;
-Optimization_Resol;%T;;
-SystemOpt_Resol;SystemOpt_Static;;
-// SystemOpt_Resol;SystemOpt_ProjHomo;;
-// SELECT a type of study (shock in parameters) by uncomment it;;;
-// study;Static_RunChoices;;
-// study;Projection_evolution;;
-study;Recursive_RunChoices;;
-// SELECT an aggregation sector profil by uncomment it;;;
-AGG_type;;;
-// AGG_type;AGG_EnComp;;
-// SELECT an households dissagregation profil by uncomment it;;;
-H_DISAGG;HH1;;
-// SELECT the resolution mode;;;
-// Resol_Mode;Static_comparative;;
-Resol_Mode;Dynamic_projection;;
-// SELECT the number of iteration (Default=1);;;
-Nb_Iter;7;;
-// SELECT a Macro framework to run;;;
-// Macro_nb;;;
-Macro_nb;Current;;
-// Macro_nb;StrucChgt;;
-// SELECT which shock from the Macro framework you want to apply ;;;
-Demographic_shift;True;;
-Labour_product;True;;
-World_prices;False;;
-X_nonEnerg;True;;
-// SELECT an Capital Flow representation by uncomment it;;;
-// Invest_matrix;%F;;
-Invest_matrix;%T;;
-// SELECT the scenario to run (soft_linking);;;
-// Scenario;;;
-Scenario;NDC;;
-// Scenario;CCS;;
-// Scenario;HydNuc;;
-// Scenario;CCS_EnNDC;;
-// Scenario;HydNuc_EnNDC;;
-// TELL if you want to realise a carbon footprint analysis;;;
-// CO2_footprint;True;;
-CO2_footprint;False;;
-// TELL if you want to create output files or prints in scilab console;;;
-Output_files;%T;;
-Output_prints;%F;;
-// SELECT the uses of carbon tax revenues;;;
-Recycling_Option;;;
-// Recycling_Option;LabTax;;
-// Select a closure of public finance while recycling carbon revenues;;;
-ClosCarbRev;CstNetLend;;
-//ClosCarbRev;AllLabTax;;
+Component;Name
+// SELECT a type of resoultion by uncomment it;
+System_Resol;Systeme_ProjHomothetic
+// System_Resol;Systeme_Static
+// * If Optimization_Resol == %T, System_Resol is ignored *;
+Optimization_Resol;%T
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_StaticCap
+// SystemOpt_Resol;SystemOpt_ProjHomo
+// SELECT a type of study (shock in parameters) by uncomment it;
+// study;Static_RunChoices
+// study;Projection_evolution
+study;Recursive_RunChoices
+// SELECT an aggregation sector profil by uncomment it;
+AGG_type;
+// AGG_type;AGG_EnComp
+// SELECT an households dissagregation profil by uncomment it;
+H_DISAGG;HH1
+// SELECT the resolution mode;
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
+// SELECT the number of iteration (Default=1);
+Nb_Iter;7
+// SELECT a Macro framework to run;
+// Macro_nb;
+Macro_nb;Current
+// Macro_nb;StrucChgt
+// SELECT which shock from the Macro framework you want to apply ;
+Demographic_shift;True
+Labour_product;True
+World_prices;False
+X_nonEnerg;True
+// SELECT an Capital Flow representation by uncomment it;
+// Invest_matrix;%F
+Invest_matrix;%T
+// SELECT if required a type of adaptation of the kappa for non energy sectors;
+AdjustKappaOnly;%F
+AdjustKappaWithSubst;%F
+// SELECT the scenario to run (soft_linking);
+// Scenario;
+Scenario;NDC
+// Scenario;CCS
+// Scenario;HydNuc
+// Scenario;CCS_XgND
+// Scenario;HdNC_XgND
+// Scenario;EmisObj_NDC
+// TELL if you want to realise a carbon footprint analysis;
+// CO2_footprint;True
+CO2_footprint;False
+// TELL if you want to create output files or prints in scilab console;
+Output_files;%T
+Output_prints;%F
+// SELECT the uses of carbon tax revenues;
+Recycling_Option;
+// Recycling_Option;LabTax
+// Select a closure of public finance while recycling carbon revenues;
+ClosCarbRev;CstNetLend
+//ClosCarbRev;AllLabTax
 ;;;
 ;;;
 ;;;
