@@ -2064,10 +2064,29 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     (FPI .^(sigma./(1 - sigma)))) ;
 
 	if ~Capital_Dynamics
+			
 		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
 				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
 				(FPI .^(sigma./(1 - sigma)))) ;
+		
+		
+		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
+		if AdjustKappaOnly|AdjustKappaWithSubst
+			
+			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+			sigmaKE = -ones(Indice_NonEnerSect).*0.2;
+				 
+			if AdjustKappaOnly
+			
+					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
+					
+			elseif AdjustKappaWithSubst
+				
+					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
+			end 
 	
+		end 
+		
 	elseif Capital_Dynamics
 	// Unique price of capital
 	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..

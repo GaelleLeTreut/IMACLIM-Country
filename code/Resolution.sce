@@ -297,7 +297,6 @@ end
 
 exec(CODE+"terminateResolution.sce");
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////
 // Reafectation des valeurs aux variables et à la structure après résolution
@@ -305,6 +304,7 @@ exec(CODE+"terminateResolution.sce");
 ////////////////////////////////////////////////////////////////////////////////////////
 Deriv_variables = X2variables (Index_VarResol, listDeriv_Var, Xbest);
 execstr(fieldnames(Deriv_variables)+"= Deriv_variables." + fieldnames(Deriv_variables)+";");
+
 
 if exists('Deriv_Exogenous')==1
     Table_Deriv_Exogenous = struct2Variables(Deriv_Exogenous,"Deriv_Exogenous");
@@ -326,6 +326,14 @@ execstr("d."+fieldnames(initial_value)+"= initial_value."+fieldnames(initial_val
 execstr("d."+fieldnames(parameters)+"= parameters."+fieldnames(parameters)+";");
 // introducing changes in variable value
 execstr("d."+fieldnames(Deriv_variables)+"= Deriv_variables."+fieldnames(Deriv_variables)+";");
+
+if  d.u_tot<0
+d.u_tot=null();
+d.u_tot = abs(u_tot);
+printf("check sign unemployment");
+end
+
+
 
 for var = [var_resol_out; var_resol_interm]'
     d(var) = eval(var);

@@ -222,3 +222,20 @@ end
 if Exo_u_tot&Exo_Kstock_Adj
 	error( "You can not inform both unemployment rate and adjustment of capital stock exogenously "); 
 end
+
+// Adjustment of kappa for non energy sectors according to energy intensity
+if isdef("AdjustKappaOnly") then
+    AdjustKappaOnly = eval(AdjustKappaOnly);
+else
+    AdjustKappaOnly = %F;
+end
+
+if isdef("AdjustKappaWithSubst") then
+    AdjustKappaWithSubst = eval(AdjustKappaWithSubst);
+else
+    AdjustKappaWithSubst = %F;
+end
+
+if AdjustKappaOnly&AdjustKappaWithSubst
+	error( "You have to chose between adjusting kappa with or without keeping other substitution "); 
+end
