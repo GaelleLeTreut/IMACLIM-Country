@@ -394,7 +394,7 @@ function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 	
         y1 = apply_proj_eq(y1,C,'C');
     end
-	pause
+	
     /// Non energy consumption (when Commodities = Indice_NonEnerSect )
     /// Exogenous distribution of budget shares among non final energy consumption items (Budget_Shares_ref)
     // y1(Indice_NonEnerSect, :) = pC(Indice_NonEnerSect, :) .* C(Indice_NonEnerSect, :) - Budget_Shares_ref(Indice_NonEnerSect, :) * Consumption_budget ;
