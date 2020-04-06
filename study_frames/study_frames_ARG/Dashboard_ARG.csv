@@ -41,7 +41,9 @@ AdjustKappaWithSubst;%F
 Scenario;NDC
 // Scenario;CCS
 // Scenario;HydNuc
+// Scenario;CCS_XgND
 // Scenario;CCS_XNDC
+// Scenario;HdNC_XgND
 // Scenario;HdNC_XNDC
 // Scenario;EmisObj_NDC
 // TELL if you want to realise a carbon footprint analysis;
