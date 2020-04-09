@@ -35,7 +35,7 @@ X_nonEnerg;True
 Invest_matrix;%T
 // SELECT if required a type of adaptation of the kappa for non energy sectors;
 AdjustKappaOnly;%F
-AdjustKappaWithSubst;%F
+AdjustKappaWithSubst;%T
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 Scenario;NDC
