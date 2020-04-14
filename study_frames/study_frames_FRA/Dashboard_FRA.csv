@@ -22,6 +22,7 @@ AGG_type;AGG_SNBC2
 // AGG_type;AGG_Ener1
 // AGG_type;AGG_Ener2
 // AGG_type;AGG_4Sec
+// AGG_type;AGG_4SecB
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
