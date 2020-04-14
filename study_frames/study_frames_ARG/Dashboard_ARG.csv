@@ -35,14 +35,16 @@ X_nonEnerg;True
 Invest_matrix;%T
 // SELECT if required a type of adaptation of the kappa for non energy sectors;
 AdjustKappaOnly;%F
-AdjustKappaWithSubst;%F
+AdjustKappaWithSubst;%T
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 Scenario;NDC
 // Scenario;CCS
 // Scenario;HydNuc
 // Scenario;CCS_XgND
+// Scenario;CCS_XNDC
 // Scenario;HdNC_XgND
+// Scenario;HdNC_XNDC
 // Scenario;EmisObj_NDC
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
