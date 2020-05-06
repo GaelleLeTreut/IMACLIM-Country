@@ -134,12 +134,22 @@ end
         exec("Macro_Framework.sce");
     end
 
+    // Load the projections for forcing
+    if Scenario <> '' then
+        if time_step == 1 then
+            exec("Load_Proj_files.sce");
+        end
+        exec('Load_Proj_Vol.sce');
+    end
+
     // Loading other study changes (specific feature) except for homothetic projections
 	// Homo_Shortname = "Systeme_ProjHomo";
 	// if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
     // exec(STUDY_Country+study+".sce");
 	// end 
-	
+
+    // Loading other study changes (specific feature)
+    exec(STUDY_Country+study+".sce");
 
 // Recherche d'optimum ou simple résolution
 //		[Mu    			u_param  		sigma_omegaU	CoefRealWage	phi_K..		
@@ -210,7 +220,7 @@ print(out,"STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
 	end
 
 
-Test_1 = "False";
+Test_1 = "True";
 if Test_1 == "True"
 	exec("test"+filesep()+"test_1.sce");
 	pause

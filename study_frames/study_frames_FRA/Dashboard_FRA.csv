@@ -1,9 +1,9 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
 // System_Resol;Systeme_ProjHomothetic
-System_Resol;Systeme_Static
+// System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
-// System_Resol;Systeme_Static_recalib
+System_Resol;Systeme_Static_recalib
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
@@ -34,10 +34,10 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;2
 // SELECT a Macro framework to run;
 // Macro_nb;
-// Macro_nb;Recalib
+Macro_nb;Recalib
 // Macro_nb;NDC
 // Macro_nb;2deg
 // Macro_nb;2deg_bis
@@ -56,8 +56,8 @@ Energy_Balance;True
 // Scenario;AME_desag
 Scenario;AMS_desag
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-// Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
+Recycling_Option;PublicDeficit
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution

@@ -1,0 +1,9 @@
+ClimPolicyCompens
+ClimPolCompensbySect
+Labour_Tax_Cut
+sum(I_value)/I_pFish
+GFCF_byAgent(Indice_Government)
+delta_LS_S
+delta_LS_H
+delta_LS_I
+delta_LS_LT
