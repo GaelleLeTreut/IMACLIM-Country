@@ -1623,6 +1623,8 @@ end
 count=0;
 
 clear Other_Transfers_ref ;
+
+GOS_total = sum(GOS_byAgent);
 ///////////////////////////
 // Comment Antoine : du temporaire, à régler
 

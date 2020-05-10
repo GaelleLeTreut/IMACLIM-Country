@@ -849,6 +849,19 @@ function Production_Tax = Production_Tax_Val_1(Production_Tax_rate, pY, Y)
 
 endfunction
 
+function y = ProductTax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
+
+    y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = ProdTax_byAgent_Const_1(Production_Tax_byAgent, Production_Tax)
+
+    y = Production_Tax_byAgent - sum(Production_Tax)
+
+endfunction
+
 /// Labour Tax (by productive sector)
 
 function y = Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y);
@@ -929,6 +942,19 @@ function VA_Tax = VA_Tax_Val_1(VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Same rate for all items of domestic final demand
     VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
+
+endfunction
+
+function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
+
+    y1 = VA_Tax_rate - tau_VA_Tax_rate*(BY.VA_Tax_rate<>0).*BY.VA_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = VA_Tax_byAgent_Const_1(VA_Tax_byAgent, VA_Tax)
+
+    y = VA_Tax_byAgent - sum(VA_Tax)
 
 endfunction
 
@@ -1464,7 +1490,7 @@ function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, ClimPol
     y=y1';
 endfunction
 
-function ClimPolicyCompens = ClimCompensat_Val_1()
+function ClimPolicyCompens = ClimCompensat_Val_1(GDP, delta_LS_H, ClimPolCompensbySect)
     // /// No new direct compensations to households
 
     ClimPolicyCompens = BY.ClimPolicyCompens;
@@ -1539,7 +1565,7 @@ function [y] = S_ClimCompensat_Const_1(ClimPolCompensbySect,GDP, delta_LS_S)  ;
 endfunction
 
 
-function ClimPolCompensbySect = S_ClimCompensat_Val_1()
+function ClimPolCompensbySect = S_ClimCompensat_Val_1(GDP, delta_LS_S)
     
     /// No new direct compensations to sectors
     ClimPolCompensbySect = BY.ClimPolCompensbySect;
@@ -2247,6 +2273,14 @@ function [y] =  Markup_Const_1(markup_rate) ;
     y=y1';
 endfunction
 
+function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
+
+    //  Fixed Markup ( markup_rate(nb_Sectors) )
+    y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
+
+    y=y1';
+endfunction
+
 // PAS POUR CALIBRAGE //
 // Transport margins rates
 function [y] =  Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins) ;
@@ -2563,6 +2597,18 @@ function [Betta_proj]=Betta_Const_1(Betta_ref, pI, pBetta, Indice, Adjustment)
     
     //Betta_proj = matrix(y1, -1 , 1)
     Betta_proj = y1;
+
+endfunction
+
+function [y] = Betta_Const_2(Betta, tau_Betta) ;
+
+    y = Betta  - tau_Betta * BY.Betta;
+
+endfunction
+
+function [y] = I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+
+    y = I_Consumption_budget - sum(sum(I,"c") .* pI) ;
 
 endfunction
 
@@ -3804,6 +3850,12 @@ function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
+
+endfunction
+
+function y = GOS_total_Const_1(GOS_total, GOS_byAgent)
+
+    y = GOS_total - sum(GOS_byAgent);
 
 endfunction
 

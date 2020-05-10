@@ -439,6 +439,8 @@ for time_step=1:Nb_Iter
         exec(CODE+"IOA_Run.sce");
     end
 
+    pause
+
     ////////////////////////////////////////////////////////////
     // 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
     ////////////////////////////////////////////////////////////
@@ -447,6 +449,8 @@ for time_step=1:Nb_Iter
     else
         print(out,"Variable Storage not executed for the Nb_Iter = " + string(Nb_Iter));
     end
+
+
 
 
 end // Loop ending for for various time step calculation

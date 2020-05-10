@@ -1,19 +1,22 @@
 Component;Name
 // SELECT a type of resoultion by uncomment it;
 // System_Resol;Systeme_ProjHomothetic
-// System_Resol;Systeme_Static
+System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
-System_Resol;Systeme_Static_recalib
+// System_Resol;Systeme_Static_recalib
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_SNBC
+SystemOpt_Resol;SystemOpt_Static_b
 // SystemOpt_Resol;SystemOpt_ProjHomo
+// SystemOpt_Resol;SystemOpt_ProjHomo_b
+// SystemOpt_Resol;SystemOpt_FalseProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
-study;Recursive_RunChoices
-// study;Recalib_RunChoices_1
+// study;Recursive_RunChoices
+study;Recalib_RunChoices_1
+// study;Recalib_RunChoices_2
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 // AGG_type;AGG_SNBC2018
@@ -46,7 +49,7 @@ Macro_nb;2deg_ter
 Demographic_shift;True
 Labour_product;True
 World_prices;True
-X_nonEnerg;True
+X_nonEnerg;False
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;

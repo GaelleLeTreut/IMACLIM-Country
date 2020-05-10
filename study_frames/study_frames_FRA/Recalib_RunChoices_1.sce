@@ -59,24 +59,32 @@ if H_DISAGG == "H10"
 end
 
 // Composanste du GDP
-Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);
+//Deriv_Exogenous.Consumption_budget   = (1199.2438728305*1E6)*BY.Consumption_budget/sum(BY.Consumption_budget);
 Deriv_Exogenous.G_Consumption_budget = 576.37*1E6;
 Deriv_Exogenous.I_Consumption_budget = 488.008*1E6;
 
 // TEE update
-Exo_VA_Tax = 154.43*1E6; 
 Deriv_Exogenous.Labour_Tax_rate = ones(Labour_Tax_rate) * 0.4509447164;
 Deriv_Exogenous.Unemployment_transfers = 44500000.0*BY.Unemployment_transfers/sum(BY.Unemployment_transfers);
 Deriv_Exogenous.Pensions = 325300000.0*BY.Pensions/sum(BY.Pensions);
 Deriv_Exogenous.Other_social_transfers = 116492000.0*BY.Other_social_transfers/sum(Other_social_transfers);
 Deriv_Exogenous.Corporate_Tax = 51.6121588305*1E6;
 Deriv_Exogenous.Income_Tax = 200.6828411695*1E6*BY.Income_Tax/sum(BY.Income_Tax);
-Exo_Production_Tax = 57.171*1E6; 
-Exo_GrossOpSurplus = 716.3928748305*1E6; 
+Deriv_Exogenous.Production_Tax_byAgent = 57.171*1E6; 
+Deriv_Exogenous.VA_Tax_byAgent = 154.43*1E6; 
+Deriv_Exogenous.GOS_total = 716.3928748305*1E6; 
 
 //////////////////////////
 // Paramètres centraux à caller 
 //////////////////////////
+
+// Recherche d'optimum ou simple résolution
+//		[Mu    			u_param  		sigma_omegaU	CoefRealWage	phi_K..		
+scal = 	[0.0082227339	0.1127758064	-0.1192021581	0.8242216354	-0.004913253 .. 
+		0.0161172695	0.0179282157	-0.4074066869	-0.1707256015	-0.0729734596];
+//		delta_M			delta_X			pGaz 			pFuels 			pElec];
+
+
 // Indicateurs macroéconomiques
 parameters.Mu = scal(1);
 parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
