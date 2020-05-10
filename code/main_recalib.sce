@@ -166,7 +166,7 @@ if Optimum_1 == "True"
 
 	function [y] = System_optimisation(scal)
 		[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
-		y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
+		y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) .. 			//1
 			100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
 			100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//3
 			100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3

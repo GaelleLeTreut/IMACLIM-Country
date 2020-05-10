@@ -306,6 +306,17 @@ if find(fieldnames(Proj_Vol) == 'Capital_consumption') <> [] then
 	end
 end
 
+// HH consumption projection in case HH != 1 and size(Proj_Vol.C.val,2) == 1
+// prorata distribution on BY data
+if ~(nb_Households == size(Proj_Vol.C.val,2))
+    if size(Proj_Vol.C.val,2) == 1
+        Proj_Vol.C.ind_of_proj(1)(2) = 1 : nb_Households;
+        Proj_Vol.C.val = (ones(1,10) .*. Proj_Vol.C.val) .* BY.C ./ (ones(1,10) .*. ((sum(BY.C,'c') == 0) + (~(sum(BY.C,'c') == 0)) .* sum(BY.C,'c')));
+    else
+       warning("nb_Households BY = " + nb_Households + " and nb_Households proj = " + size(Proj_Vol.C.val,2) + " might be a case not implemented") 
+    end
+end
+
 // Don't project Y
 Y_obj = Proj_Vol.Y;
 Proj_Vol.Y = null();

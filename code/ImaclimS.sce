@@ -277,6 +277,13 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
 
+    // set up calibration to ini instead of BY
+    if time_step > 1 & Country = 'France' & study == 'Recalib_RunChoices'
+
+        // load a file !!!
+
+    end
+
     // Loading different carbon tax diff for each time step ( to be informed in dashboard)
     if CarbonTaxDiff
         if AGG_type == ""
@@ -318,7 +325,11 @@ for time_step=1:Nb_Iter
     // Loading other study changes (specific feature) except for homothetic projections
     if Optimization_Resol then
         if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
-            exec(STUDY_Country+study+".sce");
+            if Country == "France" & study == 'Recalib_RunChoices'
+                exec(STUDY_Country+study+"_"+time_step+".sce");
+            else
+                exec(STUDY_Country+study+".sce");
+            end
         end 
     else
         if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
@@ -326,7 +337,8 @@ for time_step=1:Nb_Iter
         end 
     end
 
-	
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+
 	// Give the year into file name instead of the time step
 	if isdef("Proj_Macro")
 	Name_time=	Proj_Macro.current_year(time_step);
@@ -369,14 +381,13 @@ for time_step=1:Nb_Iter
         exec("Check_Proj_Vol.sce");
     end
 
-
     ////////////////////////////////////////////////////////////
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
     printf("STEP 6: RECORDING THE OUTPUTS... \n");
     exec(CODE+"outputs.sce");
     if time_step == 1
-        BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
+        BY = ini; 
 		//Save BY for full output template
 		ref = BY;
 		evol_ref = evol_init;
@@ -439,7 +450,23 @@ for time_step=1:Nb_Iter
         exec(CODE+"IOA_Run.sce");
     end
 
-    pause
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+// Tests de contrôle recalibration 
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+    if Country == "France" & SystemOpt_Resol == "SystemOpt_Static_Recalib"
+        Test_1 = "False";
+        Test_2 = "True";
+
+        if Test_1 == "True"
+            exec("Test_Recalib"+filesep()+"test_1.sce");
+            pause
+        end
+        if Test_2 == "True"
+            exec("Test_Recalib"+filesep()+"test_2.sce");
+            pause
+        end
+    end
+//%%%%%%%%%%%%%%%%%%%%%%%%%
 
     ////////////////////////////////////////////////////////////
     // 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
@@ -449,9 +476,6 @@ for time_step=1:Nb_Iter
     else
         print(out,"Variable Storage not executed for the Nb_Iter = " + string(Nb_Iter));
     end
-
-
-
 
 end // Loop ending for for various time step calculation
 

@@ -233,6 +233,22 @@ function Household_savings = H_Savings_Val_1(H_disposable_income, Household_savi
 endfunction
 
 
+function y = H_SavingsTot_Const_1(Household_savings, H_disposable_income, HH_saving_rate_agg) ;
+
+    /// Household savings constraint (Household_savings)
+    y1 = sum(Household_savings) - (sum(H_disposable_income) .* HH_saving_rate_agg) ;
+
+    y=y1';      
+endfunction
+
+
+function [y] = H_Savings_rate_Const_1(Household_saving_rate, delta_HH_saving_rate) ;
+
+    y1 = Household_saving_rate - (delta_HH_saving_rate + BY.Household_saving_rate) ;
+
+    y=y1';
+endfunction
+
 // Household gross fixed capital formation (by household class)
 // A proportion of disposable income is used directly by household classes to accumulate capital stocks (houses, lands, business goodwill of individual entrepreneurs, etc.)
 // The household gross fixed capital formation differs from household savings (if higher, they lend money in financial markets; if lower, they borrow in financial markets)
@@ -3498,6 +3514,7 @@ function y = Mean_wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
     y = omega  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
       
 endfunction
+
 
 // PAS POUR CALIBRAGE !
 // Net wage by productive sector (w)

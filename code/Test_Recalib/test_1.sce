@@ -5,7 +5,7 @@ disp("Unemployment rate ")
 100*(u_tot - 0.101573450097788)/0.101573450097788
 //u_param
 disp("real GDP")
-100*((GDP/GDP_pFish)/BY.GDP - GDP_index)./(GDP_index)
+100*((GDP/GDP_pFish)/BY.GDP - GDP_index(time_step))./(GDP_index(time_step))
 disp("CPI")
 100*(CPI - 1.0718874451)/1.0718874451
 disp("Y, M-X")
@@ -48,7 +48,7 @@ disp("Produits Pétroliers (hors non-énergie): M / Y / X / Total CF / Ménages"
 100*(sum(pC(4,:).*C(4,:))*1E-3 - (35884.0 + 5212.0))/(35884.0 + 5212.0)
 //////////////////////////////////////////////////////////////////////////
 
-F_opt = [100*abs(((GDP/GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 					//1
+F_opt = [100*abs(((GDP/GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) .. 					//1
 		100*abs((u_tot - 0.101573450097788)/0.101573450097788) .. 						//2
 		100*(sum(NetCompWages_byAgent(Indice_Households))*1E-6 - 847.503)/847.503 ..	//3
 		100*abs((CPI - 1.0718874451)/1.0718874451) .. 									//3

@@ -7,16 +7,14 @@ System_Resol;Systeme_Static
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_b
+SystemOpt_Resol;SystemOpt_Static_Recalib
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SystemOpt_Resol;SystemOpt_ProjHomo_b
-// SystemOpt_Resol;SystemOpt_FalseProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 // study;Projection_evolution
 // study;Recursive_RunChoices
-study;Recalib_RunChoices_1
-// study;Recalib_RunChoices_2
+study;Recalib_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 // AGG_type;AGG_SNBC2018
@@ -31,8 +29,8 @@ AGG_type;AGG_SNBC2020
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
-// H_DISAGG;H10
+// H_DISAGG;HH1
+H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection

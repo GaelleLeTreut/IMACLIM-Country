@@ -469,6 +469,25 @@ else
     Household_saving_rate = indiv_x2variable (Index_Imaclim_VarCalib, "x_Household_saving_rate");
 end
 
+count=0;
+
+if Country=="France" then
+
+	function [const_HH_saving_rate_agg] =fcalib_H_SavingsTot_Const_1(x_HH_saving_rate_agg, Household_savings, H_disposable_income, Imaclim_VarCalib)
+	    HH_saving_rate_agg= indiv_x2variable(Imaclim_VarCalib, "x_HH_saving_rate_agg");
+	    const_HH_saving_rate_agg= H_SavingsTot_Const_1(Household_savings, H_disposable_income, HH_saving_rate_agg);
+	endfunction
+	[x_HH_saving_rate_agg, const_HH_saving_rate_agg, info_calib_HHsaving_rate] = fsolve(x_HH_saving_rate_agg, list(fcalib_H_SavingsTot_Const_1,Household_savings, H_disposable_income, Index_Imaclim_VarCalib));
+
+	if norm(const_HH_saving_rate_agg) > sensib
+	    error( "review calib_HH_saving_rate_agg")
+	else
+	    HH_saving_rate_agg = indiv_x2variable (Index_Imaclim_VarCalib, "x_HH_saving_rate_agg");
+	end
+
+	delta_HH_saving_rate = 0;
+end
+
 function [const_HInvest_propensity] =fcalib_H_Invest_Const_1(x_H_Invest_propensity, GFCF_byAgent, H_disposable_income, Imaclim_VarCalib)
     H_Invest_propensity= indiv_x2variable(Imaclim_VarCalib, "x_H_Invest_propensity");
     const_HInvest_propensity=H_Investment_Const_1(GFCF_byAgent, H_disposable_income, H_Invest_propensity);
@@ -1623,11 +1642,13 @@ end
 count=0;
 
 clear Other_Transfers_ref ;
-
-GOS_total = sum(GOS_byAgent);
 ///////////////////////////
 // Comment Antoine : du temporaire, à régler
 
+
+if Country=="France" then
+	GOS_total = sum(GOS_byAgent);
+end
 
 //[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
 //for i= Const2Exec
