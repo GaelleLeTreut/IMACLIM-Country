@@ -1,0 +1,16 @@
+ConstrainedShared_IC;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;AgriFood_Indus;PropertyBus;Comp
+Crude_oil;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Natural_gas;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Coal;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+AllFuels;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Electricity;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+HeatGeoSol_Th;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Heavy_Industry;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Buildings_constr;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Work_constr;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Automobile;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Load_PipeTransp;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+PassTransp;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+AgriFood_Indus;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+PropertyBus;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8
+Comp;1;1;1;1;1;1;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8;0.8

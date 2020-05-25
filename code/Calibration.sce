@@ -1104,7 +1104,7 @@ while norm(const_G_Consum_budget) > sensib
 end
 count=0;
 
-if Country == 'France' then
+if Country_ISO == 'FRA' then
     function [const_I_Consum_budget] =fcal_I_BudgBal_Const_1(x_I_Consumption_budget,  I, pI, Imaclim_VarCalib)
         I_Consumption_budget = indiv_x2variable(Imaclim_VarCalib, "x_I_Consumption_budget");
         const_I_Consum_budget =  I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
@@ -1774,7 +1774,7 @@ else
     Government_closure = indiv_x2variable (Index_Imaclim_VarCalib, "x_Government_closure");
 end
 
-if Country == 'France' then
+if Country_ISO == 'FRA' then
     function [const_GFCFbyAgentshare] =fcalib_GFCFShare_Const_1(x_GFCF_Distribution_Shares, GFCF_byAgent,pI,I, Imaclim_VarCalib)
         GFCF_Distribution_Shares= indiv_x2variable(Imaclim_VarCalib, "x_GFCF_Distribution_Shares");
         const_GFCFbyAgentshare=GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares);

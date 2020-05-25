@@ -399,7 +399,7 @@ initial_value.Tot_CO2Emis_C = sum(initial_value.CO2Emis_C);
 
 initial_value.Tot_CO2Emis =initial_value.Tot_CO2Emis_IC + initial_value.Tot_CO2Emis_C;
 
-if Country == "France";
+if Country_ISO == "FRA";
     // emissions in 2030 ( from snbc)
     CO2Emis_IC_2030 = fill_table(IOT_CO2Emis_2030,IndRow_IOT_CO2Emis_2030,IndCol_IOT_CO2Emis_2030,Index_Commodities,Index_Sectors);
     Tot_CO2Emis_IC_2030 = sum(CO2Emis_IC_2030);
