@@ -23,21 +23,19 @@ end
 parameters.phi_L = ones(parameters.phi_L) * parameters.Mu;
 
 // Penetration rate of biofuels (1) and biogaz (2) regarding conventional sectors
-// select Scenario
-// case "AME"
-// 	penetration_rate = zeros(1, 2);
-// case "AMS"
-// 	select time_step 
-// 	case 1 then
-// 		penetration_rate = [0.18, 0.054];
-// 		// fuels : 7% en 2010 et on passe à 12% : 0.054 de réduction du contenu carbone
-// 		// to check again  
-// 	case 2 then
-// 		penetration_rate = ones(1, 2);
-// 	end
-// end
-
-
+select Scenario
+case "AME"
+	penetration_rate = zeros(1, 2);
+case "AMS"
+	select time_step 
+	case 1 then
+		penetration_rate = [0.18, 0.054];
+		// fuels : 7% en 2010 et on passe à 12% : 0.054 de réduction du contenu carbone
+		// to check again  
+	case 2 then
+		penetration_rate = ones(1, 2);
+	end
+end
 
 // Carbon and energy taxes + Emission coefficients
 // select Scenario 
@@ -76,27 +74,27 @@ parameters.phi_L = ones(parameters.phi_L) * parameters.Mu;
 // end
 
 // capital and labour intensities of production 
+// setors names			Crude_oil  	Gas  		Coal  	AllFuels  Electricity	Heat	Heavy_Industry	Buildings	Work_constr	Automobile	LoadTransp	PassTransp	Agri 		RealEstate	OthSectors
 // select Scenario
 // case "AME"
 // 	select time_step 
 // 	case 1 then
-// 		parameters.phi_K =[0	-0.1550108	0	0	-0.0124576	0.0066989	-0.0088444	-0.0062498	-0.0057102	-0.0034528	-0.0080829	-0.0168043	0	-0.0208056	-0.0159105];
-// 		parameters.phi_L =[0.0135	-0.1436035	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0143043	0.0135	0.0135];
+// 		parameters.phi_K =[0		-0.1550108	0		0			-0.0124576	0.0066989	-0.0088444	-0.0062498	-0.0057102	-0.0034528	-0.0080829	-0.0168043	0			-0.0208056	-0.0159105];
+// 		parameters.phi_L =[0.0135	-0.1436035	0.0135	0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0143043	0.0135		0.0135];
 // 	case 2 then
-// 		parameters.phi_K =[0	-0.0796872	0	0	-0.0173205	0.0248238	-0.0064919	-0.0029835	-0.0026108	-0.0006726	-0.0097622	-0.0174599	0	-0.014198	-0.0106965];
-// 		parameters.phi_L =[0.016	-0.0649622	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.0172445	0.016	0.016];
+// 		parameters.phi_K =[0		-0.0796872	0		0			-0.0173205	0.0248238	-0.0064919	-0.0029835	-0.0026108	-0.0006726	-0.0097622	-0.0174599	0			-0.014198	-0.0106965];
+// 		parameters.phi_L =[0.016	-0.0649622	0.016	0.016		0.016		0.016		0.016		0.016		0.016		0.016		0.016		0.016		0.0172445	0.016		0.016];
 // 	end
 // case "AMS"
 // 	select time_step 
 // 	case 1 then
-// 		parameters.phi_K =[0	0.0662911	0	-0.0855834	-0.0186164	-0.0587296	-0.0120686	-0.0072547	-0.0066602	-0.0030313	-0.0116768	-0.0296089	0	-0.0215932	-0.0177525];
-// 		parameters.phi_L =[0.0135	0.10112	0.0135	-0.0004573	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0135	0.0128728	0.0135	0.0135];
+// 		parameters.phi_K =[0		0.0662911	0		-0.0855834	-0.0186164	-0.0587296	-0.0120686	-0.0072547	-0.0066602	-0.0030313	-0.0116768	-0.0296089	0			-0.0215932	-0.0177525];
+// 		parameters.phi_L =[0.0135	0.10112		0.0135	-0.0004573	0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0135		0.0128728	0.0135		0.0135];
 // 	case 2 then
-// 		parameters.phi_K =[0	0.0690707	0	-0.0868102	-0.0229234	-0.0411437	-0.0125368	-0.0045674	-0.0041246	-0.0019489	-0.0145488	-0.0296514	0	-0.0165052	-0.0135263];
-// 		parameters.phi_L =[0.016	0.0922118	0.016	-0.015186	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.016	0.0121447	0.016	0.016];
+// 		parameters.phi_K =[0		0.0690707	0		-0.0868102	-0.0229234	-0.0411437	-0.0125368	-0.0045674	-0.0041246	-0.0019489	-0.0145488	-0.0296514	0			-0.0165052	-0.0135263];
+// 		parameters.phi_L =[0.016	0.0922118	0.016	-0.015186	0.016		0.016		0.016		0.016		0.016		0.016		0.016		0.016		0.0121447	0.016		0.016];
 // 	end
 // end
-
 
 
 // specific to gaz and fuels 

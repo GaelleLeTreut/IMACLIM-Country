@@ -46,13 +46,13 @@ World_prices;True
 X_nonEnerg;True
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
 // Scenario;Recalib
-// Scenario;AME
+Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-Recycling_Option;PublicDeficit
-// Recycling_Option;LabTax
+// Recycling_Option;PublicDeficit
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution
@@ -62,8 +62,8 @@ Recycling_Option;PublicDeficit
 // Recycling_Option;LSBasicNeed
 // Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev;CstNetLend
-// ClosCarbRev;AllLabTax
+// ClosCarbRev;CstNetLend
+ClosCarbRev;AllLabTax
 // ClosCarbRev;AdjTransf
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True
