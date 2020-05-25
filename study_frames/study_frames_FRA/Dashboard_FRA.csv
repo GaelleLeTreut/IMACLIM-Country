@@ -5,8 +5,9 @@ System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
 // System_Resol;Systeme_Static_recalib
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%F
-SystemOpt_Resol;SystemOpt_Static
+Optimization_Resol;%T
+// SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_Static_SNBC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
@@ -42,16 +43,16 @@ Macro_nb;NDC
 Demographic_shift;True
 Labour_product;True
 World_prices;True
-X_nonEnerg;False
+X_nonEnerg;True
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
-// Scenario;
-Scenario;Recalib
+Scenario;
+// Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
-// Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
+Recycling_Option;PublicDeficit
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution

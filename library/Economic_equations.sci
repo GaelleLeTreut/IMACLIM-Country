@@ -251,6 +251,8 @@ endfunction
 
 function y = H_Investment_Const_2(GFCF_byAgent, pC, C) ;
 
+    Indice_Immo = find(Index_Sectors == Index_Property_business);
+
     // Household gross fixed capital formation constraint (GFCF_byAgent(Indice_Households))
     y1 = GFCF_byAgent(Indice_Households) - BY.GFCF_byAgent(Indice_Households)*sum(C(Indice_Immo,:).*pC(Indice_Immo,:))/sum(BY.C(Indice_Immo,:).*BY.pC(Indice_Immo,:));
 
@@ -3421,6 +3423,28 @@ function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
 	// Coef_real_wage = 0 => mean nominal wage curve
 
 	y = omega - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
+endfunction
+
+// Similar than Mean_wage_Const_1 but indexed by u_param instead of BY.u_tot
+function y = Mean_wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
+    w=abs(w);
+    lambda = abs(lambda);
+    u_tot = abs(u_tot);
+    
+    // Mean wage (omega).
+    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
+
+    // Mean wage reference (omega_ref).
+    omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
+    
+    // Wage curve
+    // Coef_real_wage defined in parameter
+    // Coef_real_wage = 1 => mean real wage curve 
+    // Coef_real_wage = 0 => mean nominal wage curve
+    // If no macroframework for projection =>  Mu = 0  
+    
+    y = omega  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+      
 endfunction
 
 // PAS POUR CALIBRAGE !
