@@ -3768,6 +3768,19 @@ function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Va
 
 endfunction
 
+function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Val_2(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    NetCompWages_byAgent = Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    GOS_byAgent = Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus);
+
+    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
+    Other_Transfers = Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) + LowCarb_Transfers;
+
+endfunction
+
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)
 function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
