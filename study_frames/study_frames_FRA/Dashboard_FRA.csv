@@ -33,12 +33,13 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;2
 // SELECT a Macro framework to run;
 // Macro_nb;
 // Macro_nb;Recalib
-Macro_nb;NDC
+// Macro_nb;NDC
 // Macro_nb;2deg
+Macro_nb;2deg_bis
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
@@ -48,8 +49,8 @@ Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 // Scenario;Recalib
-Scenario;AME
-// Scenario;AMS
+// Scenario;AME
+Scenario;AMS
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
 Recycling_Option;LabTax

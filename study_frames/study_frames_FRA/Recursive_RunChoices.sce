@@ -86,7 +86,7 @@ case "AMS"
 		parameters.phi_IC(Indice_NonEnerSect,Index_Gaz) =  0.102501 * ones(parameters.phi_IC(Indice_NonEnerSect,Index_Gaz));
 		parameters.phi_K(Index_Gaz)  =  0.0690707;
 		parameters.phi_L(Index_Gaz)  =  0.0922118;
-		parameters.phi_IC(Index_Agri,Index_Gaz) = 0.0; 
+		parameters.phi_IC(Index_Agri,Index_Gaz) = -0.0673676; 
 	end
 end
 /////////////////////////////////////////////////////////////////////////////////////
@@ -94,15 +94,19 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // Fuel cost structure correction 
 /////////////////////////////////////////////////////////////////////////////////////
-// NB: 	AME --> nothing ??
-// 		AMS --> ??? 
+// NB: 	AME --> nothing
+// 		AMS --> same as gaz for biofuel expansion
 select Scenario
 case "AMS"
 	select time_step
 	case 1 then
 		parameters.phi_IC(Indice_NonEnerSect,Index_Carb) = -0.04 * ones(parameters.phi_IC(Indice_NonEnerSect,Index_Carb));
 		parameters.phi_IC(Index_Agri,Index_Carb) = -0.1771781;
+		parameters.phi_L(Index_Carb) = -0.0004573;
 	case 2 then 
+		parameters.phi_IC(Indice_NonEnerSect,Index_Carb) = -0.006 * ones(parameters.phi_IC(Indice_NonEnerSect,Index_Carb));
+		parameters.phi_IC(Index_Agri,Index_Carb) = -0.1350461;
+		parameters.phi_L(Index_Carb) = -0.015186;
 	end
 end
 
@@ -110,28 +114,30 @@ end
 // Automobile cost struction correction 
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: aim to depict electric car penetration and production price targets of DGEC
+Deriv_Exogenous.SpeMarg_rates_C = BY.SpeMarg_rates_C;
+Deriv_Exogenous.SpeMarg_rates_I = BY.SpeMarg_rates_I;
 select Scenario
 case "AME"
 	select time_step 
 	case 1 then
-		SpeMarg_rates_C(Index_Auto) = - 0.20;
-		SpeMarg_rates_I(Index_Auto) = 0.2746654649;
+		Deriv_Exogenous.SpeMarg_rates_C(Index_Auto) = - 0.20;
+		Deriv_Exogenous.SpeMarg_rates_I(Index_Auto) = 0.2746654649;
 		parameters.phi_IC(nb_Sectors,Index_Auto) = 0.0045;
 	case 2 then
-		SpeMarg_rates_C(Index_Auto) = -0.29002239958983045;
-		SpeMarg_rates_I(Index_Auto) = 0.20554114463394632;
+		Deriv_Exogenous.SpeMarg_rates_C(Index_Auto) = -0.29002239958983045;
+		Deriv_Exogenous.SpeMarg_rates_I(Index_Auto) = 0.20554114463394632;
 		parameters.phi_IC(nb_Sectors,Index_Auto) = -0.0025;
 	end
 case "AMS"
 	select time_step 
 	case 1 then
-		SpeMarg_rates_C(Index_Auto) = - 0.26;
-		SpeMarg_rates_I(Index_Auto) = 0.27;
-		parameters.phi_IC(nb_Sectors,Index_Auto) = 0.0045;
-	case 2 then
-		SpeMarg_rates_C(Index_Auto) = -0.29002239958983045;
-		SpeMarg_rates_I(Index_Auto) = 0.20554114463394632;
+		Deriv_Exogenous.SpeMarg_rates_C(Index_Auto) = - 0.26;
+		Deriv_Exogenous.SpeMarg_rates_I(Index_Auto) = 0.27;
 		parameters.phi_IC(nb_Sectors,Index_Auto) = -0.0025;
+	case 2 then
+		Deriv_Exogenous.SpeMarg_rates_C(Index_Auto) = -0.28;
+		Deriv_Exogenous.SpeMarg_rates_I(Index_Auto) = 0.265;
+		parameters.phi_IC(nb_Sectors,Index_Auto) = 0.0;
 	end
 end
 
@@ -151,8 +157,9 @@ case "AME"
 case "AMS"
 	// assumption: catching-up of EU-ETS and domestic carbon tax
 	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
-	parameters.CarbonTax_Diff_IC = ones(CarbonTax_Diff_IC);
 	// update of emission coefficients due to bio penetration 
+	Deriv_Exogenous.Emission_Coef_C = Emission_Coef_C;
+	Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
 	Deriv_Exogenous.Emission_Coef_C(Index_Gaz,:) = (1-penetration_rate(1))*Emission_Coef_C(Index_Gaz,:);
 	Deriv_Exogenous.Emission_Coef_IC(Index_Gaz,:) = (1-penetration_rate(1))*Emission_Coef_IC(Index_Gaz,:);
 	Deriv_Exogenous.Emission_Coef_C(Index_Carb,:) = (1-penetration_rate(2))*Emission_Coef_C(Index_Carb,:);
@@ -184,10 +191,10 @@ case "AME"
 	select time_step 
 	case 1 then
 		parameters.phi_K =[0		-0.1550108	0		0			-0.0124576	0.0066989	-0.0088444	-0.0062498	-0.0057102	-0.0034528	-0.0080829	-0.0168043	0			-0.0208056	-0.0159105];
-		parameters.phi_L(Index_Agri) =  0.0143043*(-1) + parameters.Mu; 
+		parameters.phi_L(Index_Agri) =  0.0143043;//*(-1) + parameters.Mu; 
 	case 2 then
 		parameters.phi_K =[0		-0.0796872	0		0			-0.0173205	0.0248238	-0.0064919	-0.0029835	-0.0026108	-0.0006726	-0.0097622	-0.0174599	0			-0.014198	-0.0106965];
-		parameters.phi_L(Index_Agri) = 	0.0172445*(-1) + parameters.Mu; 
+		parameters.phi_L(Index_Agri) = 	0.0172445;//*(-1) + parameters.Mu; 
 	end
 case "AMS"
 	select time_step 
