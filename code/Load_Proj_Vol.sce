@@ -39,7 +39,11 @@ end
 // ------------------------- *
 
 // Parameter's file
-file_name = 'Projections_Scenario.csv';
+if Country == 'France'
+    file_name = 'ProjScenario'  + AGG_type + '.csv';
+else
+    file_name = 'Projections_Scenario.csv';
+end
 proj_file = STUDY_Country + file_name;
 
 // Read the parameter's file

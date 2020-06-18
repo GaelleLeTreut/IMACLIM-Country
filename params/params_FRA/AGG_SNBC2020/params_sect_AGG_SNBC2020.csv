@@ -1,0 +1,25 @@
+//Names;;;;;;;;;;;;;Notes;;;;
+//;;;;;;;;;;;;;;;;;
+//Sectors;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;OthTranspEquip;Load_PipeTransp;PassTransp;AirTransp;Agri_Food_industry;Property_business;OthSectors
+sigma_omegaU_sect;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
+Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+//;;;;;;;;;;;;;;;;;
+// Production;;;;;;;;;;;;;;;;;
+sigma_Phi;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+sigma_Theta;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+phi_L;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+phi_K;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+ConstrainedShare_Labour;1;1;1;1;1;1;0;0;0;0;0;1;1;0;0;1;0
+ConstrainedShare_Capital;1;1;1;1;1;1;0;0;0;0;0;1;1;0;0;1;0
+// Consumption;;;;;;;;;;;;;;;;;
+delta_C_parameter;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+//;;;;;;;;;;;;;;;;;
+//International trade parameters;;;;;;;;;;;;;;;;;
+sigma;2;2;2;2;2;2;0.22;0.17;0.17;0.18;0.18;0.14;0.14;0.24;1.07;0.31;0.13
+sigma_KLE;2;2;2;2;2;2;0.66;0.15;0.15;0.16;0.16;0.42;0.42;0.37;0.4;0.68;0.38
+sigma_X;0;0;0;0;0;0;1.4964142143;0;0;3.4158415842;3.4158415842;0;0;0;1.2277227723;0;1.3652169537
+sigma_M;0;0;0;0;0;0;1.7400528961;0;0;1.6633663366;1.6633663366;0;0;0;1.9900990099;0;1.695522401
+delta_M_parameter;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+delta_X_parameter;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+delta_pM_parameter;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+CarbonTax_Diff_M;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1

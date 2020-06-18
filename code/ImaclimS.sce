@@ -115,7 +115,11 @@ if Output_files
     // Save Dashbord.csv & System_Resol.csv in output
     copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
 	if Scenario <> '' 
-    copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
+        if Country == France
+            copyfile(STUDY_Country + "ProjScenario" + AGG_type + ".csv", SAVEDIR);	
+        else
+            copyfile(STUDY_Country + 'Projections_Scenario.csv', SAVEDIR); 
+        end
 	end
     if Optimization_Resol then
         copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
@@ -236,6 +240,8 @@ if AGG_type <> ""
 end
 
 exec("Hybridisation.sce" );
+
+pause
 
 exec("Loading_params.sce");
 

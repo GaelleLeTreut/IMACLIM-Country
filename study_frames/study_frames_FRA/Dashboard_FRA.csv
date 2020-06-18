@@ -16,7 +16,7 @@ study;Recursive_RunChoices
 // study;Recalib_RunChoices_1
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_SNBC2
+AGG_type;AGG_SNBC2018
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
@@ -37,9 +37,9 @@ Nb_Iter;2
 // SELECT a Macro framework to run;
 // Macro_nb;
 // Macro_nb;Recalib
-// Macro_nb;NDC
+Macro_nb;NDC
 // Macro_nb;2deg
-Macro_nb;2deg_bis
+// Macro_nb;2deg_bis
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
@@ -49,8 +49,10 @@ Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
 // Scenario;Recalib
-// Scenario;AME
-Scenario;AMS
+Scenario;AME
+// Scenario;AMS
+// Scenario;AME_desag
+// Scenario;AMS_desag
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
 Recycling_Option;LabTax
