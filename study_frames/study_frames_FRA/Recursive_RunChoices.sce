@@ -196,7 +196,6 @@ end
 // capital and labour intensities of production
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: from BU expertise or outside calculation using sigma_KL-E on K (Construction + Industries) or L (Agriculture)
-// setors 				Crude_oil  	Gas  		Coal  	AllFuels  Electricity	Heat	Heavy_Industry	Buildings	Work_constr	Automobile	LoadTransp	PassTransp	Agri 		RealEstate	OthSectors
 select Scenario_temp
 case "AME"
 	select time_step 
@@ -231,7 +230,6 @@ case "AMS"
 		parameters.phi_K(nb_Sectors) = -0.0177525;
 
 	case 2 then
-		parameters.phi_K =[0		0.0690707	0		-0.0868102	-0.0229234	-0.0411437	-0.0125368	-0.0045674	-0.0041246	-0.0019489	-0.0145488	-0.0296514	0			-0.0165052	-0.0135263];
 		parameters.phi_K(Index_Elec) = -0.0229234;	
 		parameters.phi_K(Index_Heat) = -0.0411437;
 		parameters.phi_K(7:10) = [-0.0125368	-0.0045674	-0.0041246	-0.0019489];

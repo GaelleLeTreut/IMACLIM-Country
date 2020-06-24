@@ -115,7 +115,7 @@ if Output_files
     // Save Dashbord.csv & System_Resol.csv in output
     copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
 	if Scenario <> '' 
-        if Country == France
+        if Country == 'France'
             copyfile(STUDY_Country + "ProjScenario" + AGG_type + ".csv", SAVEDIR);	
         else
             copyfile(STUDY_Country + 'Projections_Scenario.csv', SAVEDIR); 
