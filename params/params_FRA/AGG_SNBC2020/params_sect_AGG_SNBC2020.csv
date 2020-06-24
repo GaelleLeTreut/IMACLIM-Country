@@ -1,6 +1,6 @@
 //Names;;;;;;;;;;;;;Notes;;;;
 //;;;;;;;;;;;;;;;;;
-//Sectors;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;OthTranspEquip;Load_PipeTransp;PassTransp;AirTransp;Agri_Food_industry;Property_business;OthSectors
+//Sectors;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;OthTranspEquip;Load_PipeTransp;PassTransp;AirTransp;Agri_Food_industry;Property_business;OtherSectors
 sigma_omegaU_sect;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03;-0.03
 Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 //;;;;;;;;;;;;;;;;;

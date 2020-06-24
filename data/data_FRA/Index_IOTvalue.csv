@@ -27,7 +27,7 @@ Row;Automobile;Commodities;NonEnerSect;HybridCommod;-;Automobile;Automobile;Tran
 Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;OthTranspEquip;OthSectors;TranspEquipment;OthIndus;OthIndus;TranspEquipment;TranspEquipment;AllIndus;AllComp;AllComp;AllComp
 Row;Load_PipeTransp;Commodities;NonEnerSect;HybridCommod;-;Load_PipeTransp;Load_PipeTransp;Transport_serv;OthIndus;OthIndus;Transport_serv;Transport_serv;AllIndus;AllComp;AllComp;AllComp
 Row;PassTransp;Commodities;NonEnerSect;HybridCommod;-;PassTransp;PassTransp;Transport_serv;OthIndus;OthIndus;Transport_serv;Transport_serv;AllIndus;AllComp;AllComp;AllComp
-Row;NavalTransp;Commodities;NonEnerSect;HybridCommod;-;OthSectors;OthSectors;Transport_serv;OthIndus;OthIndus;Transport_serv;Transport_serv;AllIndus;AllComp;AllComp;AllComp
+Row;NavalTransp;Commodities;NonEnerSect;HybridCommod;-;OtherSectors;OthSectors;Transport_serv;OthIndus;OthIndus;Transport_serv;Transport_serv;AllIndus;AllComp;AllComp;AllComp
 Row;AirTransp;Commodities;NonEnerSect;HybridCommod;-;AirTransp;OthSectors;Transport_serv;OthIndus;OthIndus;Transport_serv;Transport_serv;AllIndus;AllComp;AllComp;AllComp
 Row;Agri_Forestry;Commodities;NonEnerSect;NonHybridCommod;-;Agri_Food_industry;Agri_Food_industry;Agri_Forestry;Agriculture;Agriculture;Agriculture;Agriculture;AllIndus;AllComp;AllComp;AllComp
 Row;Fishing;Commodities;NonEnerSect;NonHybridCommod;-;Agri_Food_industry;Agri_Food_industry;Fishing;Agriculture;Agriculture;Agriculture;Agriculture;AllIndus;AllComp;AllComp;AllComp

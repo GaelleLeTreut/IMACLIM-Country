@@ -9,14 +9,23 @@ if CO2_footprint == "True" & Scenario <>"" then
 end
 /////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////
+// Get with which scenario we are working
+/////////////////////////////////////////////////////////////////////////////////////
+Scenario_temp = strsplit(Scenario);
+Scenario_temp = strcat(Scenario_temp(1:3,:));
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Missing Index and Indice after aggregation processes 
 /////////////////////////////////////////////////////////////////////////////////////
 Index_Gaz = find(Index_Sectors=="Natural_gas");
 Index_Carb = [find(Index_Sectors=="AllFuels")];
+Index_Elec = [find(Index_Sectors=="Electricity")];
+Index_Heat = [find(Index_Sectors=="HeatGeoSol_Th")];
 Index_Agri = find(Index_Sectors=="Agri_Food_industry");
 Index_Auto = find(Index_Sectors=="Automobile");
+Index_TerTransp = [find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp")];
+Indice_Immo = find(Index_Sectors == Index_Property_business);
 /////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +45,7 @@ parameters.phi_L = ones(parameters.phi_L) * parameters.Mu;
 /////////////////////////////////////////////////////////////////////////////////////
 // Penetration rate of biofuels (1) and biogaz (2) regarding conventional sectors
 /////////////////////////////////////////////////////////////////////////////////////
-select Scenario
+select Scenario_temp
 case "AME"
 	penetration_rate = zeros(1, 2);
 case "AMS"
@@ -56,7 +65,7 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: 	AME --> issue regarding production vs. distribution 
 // 		AMS --> biogaz cost structure of production (which target ?) + price target of DGEC + penetration rate
-select Scenario
+select Scenario_temp
 case "AME"
 	select time_step 
 	case 1 then 
@@ -96,17 +105,19 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: 	AME --> nothing
 // 		AMS --> same as gaz for biofuel expansion
-select Scenario
+select Scenario_temp
 case "AMS"
 	select time_step
 	case 1 then
 		parameters.phi_IC(Indice_NonEnerSect,Index_Carb) = -0.04 * ones(parameters.phi_IC(Indice_NonEnerSect,Index_Carb));
 		parameters.phi_IC(Index_Agri,Index_Carb) = -0.1771781;
 		parameters.phi_L(Index_Carb) = -0.0004573;
+		parameters.phi_K(Index_Carb) = -0.0855834;
 	case 2 then 
 		parameters.phi_IC(Indice_NonEnerSect,Index_Carb) = -0.006 * ones(parameters.phi_IC(Indice_NonEnerSect,Index_Carb));
 		parameters.phi_IC(Index_Agri,Index_Carb) = -0.1350461;
 		parameters.phi_L(Index_Carb) = -0.015186;
+		parameters.phi_K(Index_Carb) = -0.0868102;
 	end
 end
 
@@ -116,7 +127,7 @@ end
 // NB: aim to depict electric car penetration and production price targets of DGEC
 Deriv_Exogenous.SpeMarg_rates_C = BY.SpeMarg_rates_C;
 Deriv_Exogenous.SpeMarg_rates_I = BY.SpeMarg_rates_I;
-select Scenario
+select Scenario_temp
 case "AME"
 	select time_step 
 	case 1 then
@@ -144,7 +155,7 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // Carbon and energy taxes + Emission coefficients
 /////////////////////////////////////////////////////////////////////////////////////
-select Scenario 
+select Scenario_temp 
 case "AME"
 	parameters.Carbon_Tax_rate = 100*1e3;
 	// UE-ETS evolution 
@@ -186,33 +197,58 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: from BU expertise or outside calculation using sigma_KL-E on K (Construction + Industries) or L (Agriculture)
 // setors 				Crude_oil  	Gas  		Coal  	AllFuels  Electricity	Heat	Heavy_Industry	Buildings	Work_constr	Automobile	LoadTransp	PassTransp	Agri 		RealEstate	OthSectors
-select Scenario
+select Scenario_temp
 case "AME"
 	select time_step 
 	case 1 then
-		parameters.phi_K =[0		-0.1550108	0		0			-0.0124576	0.0066989	-0.0088444	-0.0062498	-0.0057102	-0.0034528	-0.0080829	-0.0168043	0			-0.0208056	-0.0159105];
-		parameters.phi_L(Index_Agri) =  0.0143043;//*(-1) + parameters.Mu; 
+		parameters.phi_K(Index_Elec) = -0.0124576;	
+		parameters.phi_K(Index_Heat) = 0.0066989;
+		parameters.phi_K(7:10) = [-0.0088444	-0.0062498	-0.0057102	-0.0034528];
+		parameters.phi_K(Index_TerTransp) = [-0.0080829	-0.0168043];
+		parameters.phi_L(Index_Agri) =  0.0143043; 
+		parameters.phi_K(Indice_Immo) = -0.0208056;
+		parameters.phi_K(nb_Sectors) = -0.0159105;
+
 	case 2 then
-		parameters.phi_K =[0		-0.0796872	0		0			-0.0173205	0.0248238	-0.0064919	-0.0029835	-0.0026108	-0.0006726	-0.0097622	-0.0174599	0			-0.014198	-0.0106965];
-		parameters.phi_L(Index_Agri) = 	0.0172445;//*(-1) + parameters.Mu; 
+		parameters.phi_K(Index_Elec) = -0.0173205;	
+		parameters.phi_K(Index_Heat) = 0.0248238;
+		parameters.phi_K(7:10) = [-0.0064919	-0.0029835	-0.0026108	-0.0006726];
+		parameters.phi_K(Index_TerTransp) = [-0.0097622	-0.0174599];
+		parameters.phi_L(Index_Agri) = 	0.0172445;
+		parameters.phi_K(Indice_Immo) = -0.014198;
+		parameters.phi_K(nb_Sectors) = -0.0106965;
 	end
+
 case "AMS"
 	select time_step 
 	case 1 then
-		parameters.phi_K =[0		0.0662911	0		-0.0855834	-0.0186164	-0.0587296	-0.0120686	-0.0072547	-0.0066602	-0.0030313	-0.0116768	-0.0296089	0			-0.0215932	-0.0177525];
-		parameters.phi_L(Index_Agri) = 	0.0128728;//*(-1) + parameters.Mu;
+		parameters.phi_K(Index_Elec) = -0.0186164;	
+		parameters.phi_K(Index_Heat) = -0.0587296;
+		parameters.phi_K(7:10) = [-0.0120686	-0.0072547	-0.0066602	-0.0030313];
+		parameters.phi_K(Index_TerTransp) = [-0.0116768	-0.0296089];
+		parameters.phi_L(Index_Agri) = 	0.0128728;
+		parameters.phi_K(Indice_Immo) = -0.0215932;
+		parameters.phi_K(nb_Sectors) = -0.0177525;
+
 	case 2 then
 		parameters.phi_K =[0		0.0690707	0		-0.0868102	-0.0229234	-0.0411437	-0.0125368	-0.0045674	-0.0041246	-0.0019489	-0.0145488	-0.0296514	0			-0.0165052	-0.0135263];
-		parameters.phi_L(Index_Agri) = 	0.0121447;//*(-1) + parameters.Mu;
+		parameters.phi_K(Index_Elec) = -0.0229234;	
+		parameters.phi_K(Index_Heat) = -0.0411437;
+		parameters.phi_K(7:10) = [-0.0125368	-0.0045674	-0.0041246	-0.0019489];
+		parameters.phi_K(Index_TerTransp) = [-0.0145488	-0.0296514];
+		parameters.phi_L(Index_Agri) = 	0.0121447;//
+		parameters.phi_K(Indice_Immo) = -0.0165052;
+		parameters.phi_K(nb_Sectors) = -0.0135263;
 	end
 end
 /////////////////////////////////////////////////////////////////////////////////////
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Additionnal transfers to support HH 
 /////////////////////////////////////////////////////////////////////////////////////
 // InstitAgents							Corporations  		Government  		Households  	RestOfWorld			   
-select Scenario
+select Scenario_temp
 case "AME"
 	select time_step 
 	case 1 then 
