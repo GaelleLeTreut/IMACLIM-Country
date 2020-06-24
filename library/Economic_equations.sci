@@ -2692,6 +2692,12 @@ function M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter);
     if is_projected('M') then
         M = apply_proj_val(M, 'M');
     end
+
+    if is_projected('M_Y') then
+       Proj_param.M.val = Proj_Vol.M_Y.val .* Y;
+       Proj_param.M.ind_of_proj = Proj_Vol.M_Y.ind_of_proj;
+       M = apply_proj_val(M, 'M', Proj_param)
+    end
     
 endfunction
 

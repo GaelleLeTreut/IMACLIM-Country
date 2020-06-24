@@ -251,8 +251,12 @@ function Proj_Vol = proj_intens(Proj_Vol, var_name, var_intens_name)
     Proj_Vol(var_intens_name) = Proj_Vol(var_name);
 	// Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1) * Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
 	Y_copy_lines = Proj_Vol.Y.val' + (Proj_Vol.Y.val'  == 0).*Y';
-	Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1).*. Y_copy_lines
-	Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
+    if size(Proj_Vol(var_name).val,1) == nb_Sectors & size(Proj_Vol(var_name).val,2) == 1
+        Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines';
+    else
+        Y_copy_lines = ones(size(Proj_Vol(var_name).val,1), 1).*. Y_copy_lines
+    	Proj_Vol(var_intens_name).val = Proj_Vol(var_name).val ./ Y_copy_lines;
+    end
 	
 	if var_name <> 'IC'
 		for elt=1:size(Proj_Vol(var_name).val,"c")
@@ -278,6 +282,13 @@ endfunction
 if find(fieldnames(Proj_Vol) == 'IC') <> [] then
     if Proj_Vol.IC.apply_proj & Proj_Vol.IC.intens then
         Proj_Vol = proj_intens(Proj_Vol, 'IC', 'alpha');
+    end
+end
+
+// M/Y ratio (import intensity of production) projection
+if find(fieldnames(Proj_Vol) == 'M') <> [] then
+    if Proj_Vol.M.apply_proj & Proj_Vol.M.intens then
+        Proj_Vol = proj_intens(Proj_Vol, 'M', 'M_Y');
     end
 end
 
