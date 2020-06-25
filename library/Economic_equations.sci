@@ -2076,7 +2076,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
 		if AdjustKappaOnly|AdjustKappaWithSubst
 			
 			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
-			sigmaKE = -ones(Indice_NonEnerSect).*0.2;
+			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
 				 
 			if AdjustKappaOnly
 			

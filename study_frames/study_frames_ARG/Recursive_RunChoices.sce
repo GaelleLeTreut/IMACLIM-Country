@@ -11,7 +11,7 @@ if Scenario<>""
 		
 		Deriv_Exogenous.Emission_Coef_IC =  ini.Emission_Coef_IC;
 		Deriv_Exogenous.Emission_Coef_IC(Indice_Gas,Indice_Elec) =  Emis_Coef_Gas_Elec(time_step);
-		parameters.delta_M_parameter(Indice_LightIndus) = 0.01; 
+		// parameters.delta_M_parameter(Indice_LightIndus) = 0.01; 
 	
 	end
 
@@ -21,7 +21,7 @@ if Scenario<>""
 	
 	if  (part(Scenario,1:length(HydNuc_Shortname))== HydNuc_Shortname & AGG_type=="" ) |  (part(Scenario,1:length(HydNuc_Shortname2))== HydNuc_Shortname2 & AGG_type=="" )
 		
-		parameters.delta_M_parameter(Indice_LightIndus) = -0.01; 
+		// parameters.delta_M_parameter(Indice_LightIndus) = -0.01; 
 		
 	end
 
