@@ -1,5 +1,6 @@
 variable;file;headers;indexes_of_proj;apply_the_proj;Intens;Can be agg
-C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households),list([10, 13:16] ,1:nb_Households));%T;;%T
-IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%F;%T
+C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households),list(Indice_Auto,1:nb_Households),list(Indice_AllTransp(2:3),1:nb_Households),list(Indice_Agri,1:nb_Households),list(Indice_Immo,1:nb_Households));%T;;%T
+IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%T;%T
 X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%T;;%T
-M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;%F;%T
+M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;%T;%T
+Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_Elec),list(1,Indice_Heat),list(1,Indice_TerTransp),list(1,Indice_Immo));%T;%T;%F
