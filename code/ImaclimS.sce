@@ -472,3 +472,13 @@ if Output_files
 end
 
 printf('\n------------ Done ! :) ------------\n');
+
+AGG_type
+time_step
+Macro_nb
+Scenario
+Recycling_Option
+
+GDP
+u_tot
+GDP_pFish
