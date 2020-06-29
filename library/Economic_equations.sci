@@ -251,6 +251,8 @@ endfunction
 
 function y = H_Investment_Const_2(GFCF_byAgent, pC, C) ;
 
+    Indice_Immo = find(Index_Sectors == Index_Property_business);
+
     // Household gross fixed capital formation constraint (GFCF_byAgent(Indice_Households))
     y1 = GFCF_byAgent(Indice_Households) - BY.GFCF_byAgent(Indice_Households)*sum(C(Indice_Immo,:).*pC(Indice_Immo,:))/sum(BY.C(Indice_Immo,:).*BY.pC(Indice_Immo,:));
 
@@ -2690,6 +2692,12 @@ function M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter);
     if is_projected('M') then
         M = apply_proj_val(M, 'M');
     end
+
+    if is_projected('M_Y') then
+       Proj_param.M.val = Proj_Vol.M_Y.val .* Y;
+       Proj_param.M.ind_of_proj = Proj_Vol.M_Y.ind_of_proj;
+       M = apply_proj_val(M, 'M', Proj_param)
+    end
     
 endfunction
 
@@ -3423,6 +3431,28 @@ function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
 	y = omega - ( omega_ref * (Coef_real_wage*CPI + (1-Coef_real_wage))) ;
 endfunction
 
+// Similar than Mean_wage_Const_1 but indexed by u_param instead of BY.u_tot
+function y = Mean_wage_Const_3(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
+    w=abs(w);
+    lambda = abs(lambda);
+    u_tot = abs(u_tot);
+    
+    // Mean wage (omega).
+    omega = sum (w .* lambda .* Y') / sum(lambda .* Y') ;
+
+    // Mean wage reference (omega_ref).
+    omega_ref = sum (BY.w .* BY.lambda .* BY.Y') / sum(BY.lambda .* BY.Y') ;
+    
+    // Wage curve
+    // Coef_real_wage defined in parameter
+    // Coef_real_wage = 1 => mean real wage curve 
+    // Coef_real_wage = 0 => mean nominal wage curve
+    // If no macroframework for projection =>  Mu = 0  
+    
+    y = omega  - ( omega_ref * ((u_tot / u_param)^(sigma_omegaU))*(Coef_real_wage*CPI + (1-Coef_real_wage))*(1+Mu)^(time_since_BY)) ;
+      
+endfunction
+
 // PAS POUR CALIBRAGE !
 // Net wage by productive sector (w)
 function [y] = Wage_Variation_Const_1(w, NetWage_variation) ;
@@ -3741,6 +3771,19 @@ function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Va
 
     // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
     Other_Transfers = Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP);
+
+endfunction
+
+function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Val_2(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    NetCompWages_byAgent = Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    GOS_byAgent = Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus);
+
+    // Other transfers payments accruing to each agent is a share of a total amount of Other transfers
+    Other_Transfers = Distribution_Shares (Indice_Other_Transfers, :) .* sum((BY.Other_Transfers>0).*BY.Other_Transfers) * (GDP/BY.GDP) + LowCarb_Transfers;
 
 endfunction
 

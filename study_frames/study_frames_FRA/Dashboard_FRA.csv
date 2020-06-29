@@ -5,8 +5,9 @@ System_Resol;Systeme_Static
 // System_Resol;Systeme_StatJCH
 // System_Resol;Systeme_Static_recalib
 // * If Optimization_Resol == %T, System_Resol is ignored *;
-Optimization_Resol;%F
-SystemOpt_Resol;SystemOpt_Static
+Optimization_Resol;%T
+// SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_Static_SNBC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
@@ -15,7 +16,8 @@ study;Recursive_RunChoices
 // study;Recalib_RunChoices_1
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_SNBC2
+// AGG_type;AGG_SNBC2018
+AGG_type;AGG_SNBC2020
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
@@ -32,37 +34,41 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;2
 // SELECT a Macro framework to run;
 // Macro_nb;
 // Macro_nb;Recalib
-Macro_nb;NDC
+// Macro_nb;NDC
 // Macro_nb;2deg
+// Macro_nb;2deg_bis
+Macro_nb;2deg_ter
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
 World_prices;True
-X_nonEnerg;False
+X_nonEnerg;True
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-Scenario;Recalib
+// Scenario;Recalib
 // Scenario;AME
 // Scenario;AMS
+// Scenario;AME_desag
+Scenario;AMS_desag
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
-// Recycling_Option;ExactRestitution
+Recycling_Option;ExactRestitution
 // Recycling_Option;GreenInvest
 // Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_PublicDeficit
 // Recycling_Option;LSBasicNeed
 // Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev;CstNetLend
-// ClosCarbRev;AllLabTax
+// ClosCarbRev;CstNetLend
+ClosCarbRev;AllLabTax
 // ClosCarbRev;AdjTransf
 // TELL if you wantto realise a carbon footprint analysis;
 // CO2_footprint;True

@@ -8,8 +8,8 @@ AdjRecycle;0;0;1;variable to ajust other social transfer if the closure of publi
 //;;;;;
 //Labor market parameters;;;;;
 sigma_omegaU;-0.1;;;;
-Coef_real_wage;0;;;;
-u_param;0.092362;0;1;BY.u_tot = 0.0923620;
+Coef_real_wage;0.7;;;;
+u_param;0.092362;0;1;;
 //;;;;;
 //Capital;;;;;
 depreciation_rate;0.04;0;1;for capital market;
