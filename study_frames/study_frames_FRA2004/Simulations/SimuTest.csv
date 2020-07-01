@@ -1,0 +1,96 @@
+Dashboard;;;
+;;;
+Component;Name
+// SELECT a type of resoultion by uncomment it;
+// * If Optimization_Resol == %T, System_Resol is ignored *;
+Optimization_Resol;%T
+SystemOpt_Resol;SystemOpt_Ref
+// SystemOpt_Resol;SystemOpt_ProjHomo
+// SELECT a type of study (shock in parameters) by uncomment it;
+// study;Static_RunChoices
+study;Recursive_RunChoices
+// TELL if you want a capital dynamics;
+Capital_Dynamics;%F
+// SELECT option for Capital_Dynamics;
+// Exogenous share of investment to GDP or unemployment;
+Exo_ShareI_GDP;%F
+Exo_u_tot;%F
+Exo_Kstock_Adj;%F
+// SELECT an aggregation sector profil by uncomment it;
+AGG_type;
+// AGG_type;AGG_EnComp
+// SELECT an households dissagregation profil by uncomment it;
+H_DISAGG;HH1
+// H_DISAGG;H10
+// SELECT the resolution mode;
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
+// SELECT the number of iteration (Default=1);
+Nb_Iter;1
+// SELECT a Macro framework to run;
+// Macro_nb;
+Macro_nb;NDC
+// Macro_nb;Cov
+// SELECT which shock from the Macro framework you want to apply ;
+Demographic_shift;True
+Labour_product;True
+X_nonEnerg;True
+World_prices;True
+// SELECT the scenario to run (soft_linking);
+// Scenario;
+// Scenario;AME
+// Scenario;AMS
+// TELL if you want to realise a carbon footprint analysis;
+// CO2_footprint;True
+CO2_footprint;False
+// TELL if you want to create output files or prints in scilab console;
+Output_files;%T
+Output_prints;%F
+// SELECT the uses of carbon tax revenues;
+// Recycling_Option;
+Recycling_Option;LabTax
+// Recycling_Option;LumpSumHH
+// Recycling_Option;ExactRestitution
+// Recycling_Option;LabTax_LumpSumHH
+// Select a closure of public finance while recycling carbon revenues;
+ClosCarbRev;CstNetLend
+// ClosCarbRev;AllLabTax
+Carbon_BTA;%F
+CarbonTaxDiff;%F
+;;;
+**********;;;
+Functions;;;
+// ID;var;nom fonction;args
+1;;CO2_intensity_IC;CO2Emis_IC, Emission_Coef_IC , IC
+;;;
+**********;;;
+Variables;;;
+// nom;nb lignes;nb col;
+CarbonTax_Diff_IC;nb_Commodities;nb_Sectors;
+;;;
+;;;
+;;;
+**********;;;
+Simulation;AME;;
+Sensib;;;
+Remove_Var;;;
+Add_Var;;;
+Remove_Fun;;;
+Add_Fun;;;
+;;;
+Dash_changes;;;
+Scenario;AME;;
+Capital_Dynamics;%F;;
+Macro_nb;NDC;;
+;;;
+**********;;;
+Simulation;AMS;;
+Sensib;;;
+Remove_Var;;;
+Add_Var;;;
+Remove_Fun;;;
+Add_Fun;;;
+;;;
+Dash_changes;;;
+Scenario;AMS;;
+Macro_nb;NDC;;
