@@ -270,18 +270,8 @@ end
 
 // Adding some indexes for France to make it working (to correct with Gaëlle)
 if Country == 'France' 
-    Indice_Gaz = find(Index_Sectors=="Natural_gas");
-    Indice_Carb = [find(Index_Sectors=="AllFuels")];
-    Indice_Elec = [find(Index_Sectors=="Electricity")];
-    Indice_Heat = [find(Index_Sectors=="HeatGeoSol_Th")];
-    Indice_Agri = find(Index_Sectors=="Agri_Food_industry");
-    Indice_Auto = find(Index_Sectors=="Automobile");
-    Indice_TerTransp = [find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp")];
-    Indice_AllTransp = [find(Index_Sectors=="Load_PipeTransp") find(Index_Sectors=="PassTransp") find(Index_Sectors=="AirTransp")];
-    Indice_Immo = find(Index_Sectors == Index_Property_business);
+    Indice_Immo = find(Index_Sectors == "PropertyBus");
 end
-
-
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM

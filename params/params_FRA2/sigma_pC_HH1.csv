@@ -1,0 +1,16 @@
+sigma_pC;HH1
+Crude_oil;-0.03
+Natural_gas;-0.03
+Coal;-0.03
+AllFuels;-0.39
+Electricity;-0.03
+HeatGeoSol_Th;-0.03
+Heavy_Industry;-0.8
+Buildings_constr;-0.8
+Work_constr;-0.8
+Automobile;-0.8
+Load_PipeTransp;-0.8
+PassTransp;-0.8
+AgriFood_Indus;-0.8
+PropertyBus;-0.8
+Comp;-0.8

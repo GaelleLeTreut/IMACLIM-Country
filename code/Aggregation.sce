@@ -152,7 +152,7 @@ end
 IC_AGG_value = zeros( nb_SectorsAGG,nb_SectorsAGG );
 IC_AGG= zeros( nb_SectorsAGG,nb_SectorsAGG );
 initial_valueAGG.SpeMarg_IC = zeros( nb_SectorsAGG,nb_SectorsAGG );
-if Country=="France"
+if Country_ISO == "FRA"
     CO2Emis_IC_2030_AGG = zeros( nb_SectorsAGG,nb_SectorsAGG );
 end
 
@@ -170,7 +170,7 @@ for line  = 1:nb_SectorsAGG
         // initial_valueAGG.SpeMarg_IC_IMP(line,column)=sum(initial_value.SpeMarg_IC_IMP(all_IND(line),all_IND(column)));
         initial_valueAGG.Carbon_Tax_IC(line,column)=sum(initial_value.Carbon_Tax_IC(all_IND(line),all_IND(column)));
         initial_valueAGG.CO2Emis_IC(line,column)=sum(initial_value.CO2Emis_IC(all_IND(line),all_IND(column)));
-        if Country=="France"
+        if Country_ISO == "FRA"
             CO2Emis_IC_2030_AGG(line,column)=sum(CO2Emis_IC_2030(all_IND(line),all_IND(column)));
         end
         // Aggregation des matrices IC du RoW
@@ -229,7 +229,7 @@ for column = 1:nb_SectorsAGG
     initial_valueAGG.Y(column,:) = sum(initial_value.Y(all_IND(column)),:);
     initial_valueAGG.M(column,:) = sum(initial_value.M(all_IND(column)),:);
     initial_valueAGG.CO2Emis_C(column,:) = sum(initial_value.CO2Emis_C(all_IND(column),:),:);
-    if Country=="France"
+    if Country_ISO == "FRA"
         CO2Emis_C_2030_AGG(column,:) = sum(CO2Emis_C_2030(all_IND(column),:),:);
     end
     initial_valueAGG.CO2Emis_X(column,:) = sum(initial_value.CO2Emis_X(all_IND(column)),:);
@@ -239,7 +239,7 @@ for column = 1:nb_SectorsAGG
     //ERE_balance_AGG(:,column) = sum(initial_value.ERE_balance(:,all_IND(column)));
 end
 
-if Country=="France"
+if Country_ISO == "FRA"
     CO2Emis_IC_2030 = CO2Emis_IC_2030_AGG;
     CO2Emis_C_2030 = CO2Emis_C_2030_AGG;
 end
