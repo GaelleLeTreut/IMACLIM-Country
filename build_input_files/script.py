@@ -40,7 +40,7 @@ for agg_name in agg_names:
 	# set iot component names
 	##########################
 	# set sector names and caracteristics  
-	sector_carac = np.genfromtxt((sect_def_dir + os.path.sep + 'AGG_' + agg_name + '.csv'), dtype = 'U20', delimiter = ";")
+	sector_carac = np.genfromtxt((sect_def_dir + os.path.sep + 'AGG_' + agg_name + '.csv'), dtype = 'U40', delimiter = ";")
 	# 0 = sectors names
 	# 1 = Ener/NonEner sect
 	# 2 = Hybrid/NonHybrid Sect

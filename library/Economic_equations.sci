@@ -251,7 +251,7 @@ endfunction
 
 function y = H_Investment_Const_2(GFCF_byAgent, pC, C) ;
 
-    Indice_Immo = find(Index_Sectors == Index_Property_business);
+    // Indice_Immo = find(Index_Sectors == Index_Property_business);
 
     // Household gross fixed capital formation constraint (GFCF_byAgent(Indice_Households))
     y1 = GFCF_byAgent(Indice_Households) - BY.GFCF_byAgent(Indice_Households)*sum(C(Indice_Immo,:).*pC(Indice_Immo,:))/sum(BY.C(Indice_Immo,:).*BY.pC(Indice_Immo,:));

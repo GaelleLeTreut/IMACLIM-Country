@@ -115,69 +115,69 @@ def build_and_save_Index_IOT(agg_name, nb_HH, sector_carac, data_dir, FD, FD_HH,
 	IOT_index = np.insert(sector_carac, 1, "Commodities", axis = 1)
 
 	# set OthPart_IOT name
-	if agg_name == '' and HH_desag == False:
+	if agg_name == '':
 		OthPart_IOT_name = 'OthPart_IOT'
 	else:
 		OthPart_IOT_name = 'OthPart_IOT_AGG'
 
 	# fill VA
 	for count, VA_comp in enumerate(VA):
-		to_add = np.empty((1,6), dtype='U20')
-		to_add[0][:] = np.array([VA_comp, OthPart_IOT_name, 'Value_Added', '-', '-', '-'], dtype='U20')
+		to_add = np.empty((1,6), dtype='U40')
+		to_add[0][:] = np.array([VA_comp, OthPart_IOT_name, 'Value_Added', '-', '-', '-'], dtype='U40')
 		IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill M_value
-	to_add[0][:] = np.array([M[0], OthPart_IOT_name, '-', '-', '-', '-'], dtype='U20')
+	to_add[0][:] = np.array([M[0], OthPart_IOT_name, '-', '-', '-', '-'], dtype='U40')
 	IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill margins
 	for count, marg_comp in enumerate(Margins):
-		to_add[0][:] = np.array([marg_comp, OthPart_IOT_name, 'Margins', '-', '-', '-'], dtype='U20')
+		to_add[0][:] = np.array([marg_comp, OthPart_IOT_name, 'Margins', '-', '-', '-'], dtype='U40')
 		IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill spe margin for sectors
 	for count, sector in enumerate(sector_carac[:,0].tolist()):
-		to_add[0][:] = np.array([SpeMarg[0] + '_' + sector, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_IC', '-', '-'], dtype='U20')
+		to_add[0][:] = np.array([SpeMarg[0] + '_' + sector, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_IC', '-', '-'], dtype='U40')
 		IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill spe margin for FD
 	if HH_desag == False:
 		for count, FD_elt in enumerate(FD): 
-			to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', '-', '-'], dtype='U20')
+			to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', '-', '-'], dtype='U40')
 			IOT_index = np.append(IOT_index, to_add, axis=0)
 	else:
 		for count, FD_elt in enumerate(FD_HH): 
 			if count<nb_HH:
-				to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', 'SpeMarg_C', '-'], dtype='U20')
+				to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', 'SpeMarg_C', '-'], dtype='U40')
 			else:
-				to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', '-', '-'], dtype='U20')
+				to_add[0][:] = np.array([SpeMarg[0] + '_' + FD_elt, OthPart_IOT_name, 'SpeMarg', 'SpeMarg_FC', '-', '-'], dtype='U40')
 			IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill spe margin for sectors
 	for count, tax_comp in enumerate(Taxes):
-		to_add[0][:] = np.array([tax_comp, OthPart_IOT_name, 'Taxes', '-', '-', '-'], dtype='U20')
+		to_add[0][:] = np.array([tax_comp, OthPart_IOT_name, 'Taxes', '-', '-', '-'], dtype='U40')
 		IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# inset "Row" first columns
 	IOT_index = np.insert(IOT_index, 0, "Row", axis = 1)
 
 	# fill sectors
-	to_add = np.empty((1,7), dtype='U20')
+	to_add = np.empty((1,7), dtype='U40')
 	for count, sector in enumerate(sector_carac[:,0].tolist()):
-		to_add[0][:] = np.array(['Column', sector, 'Sectors', IOT_index[count][IOT_index.shape[1]-1], '-', '-', '-'], dtype='U20')
+		to_add[0][:] = np.array(['Column', sector, 'Sectors', IOT_index[count][IOT_index.shape[1]-1], '-', '-', '-'], dtype='U40')
 		IOT_index = np.append(IOT_index, to_add, axis=0)
 
 	# fill FD
 	if HH_desag == False:
 		for count, FD_elt in enumerate(FD):
-			to_add[0][:] = np.array(['Column', FD_elt, 'FC', '-', '-', '-', '-'], dtype='U20')
+			to_add[0][:] = np.array(['Column', FD_elt, 'FC', '-', '-', '-', '-'], dtype='U40')
 			IOT_index = np.append(IOT_index, to_add, axis=0)
 	else:
 		for count, FD_elt in enumerate(FD_HH): 
 			if count<nb_HH:
-				to_add[0][:] = np.array(['Column', FD_elt, 'FC', 'C', '-', '-', '-'], dtype='U20')
+				to_add[0][:] = np.array(['Column', FD_elt, 'FC', 'C', '-', '-', '-'], dtype='U40')
 			else:
-				to_add[0][:] = np.array(['Column', FD_elt, 'FC', '-', '-', '-', '-'], dtype='U20')
+				to_add[0][:] = np.array(['Column', FD_elt, 'FC', '-', '-', '-', '-'], dtype='U40')
 			IOT_index = np.append(IOT_index, to_add, axis=0)		
 
 	# drop last column
