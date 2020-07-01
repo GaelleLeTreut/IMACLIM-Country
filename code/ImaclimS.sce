@@ -268,11 +268,6 @@ if CO2_footprint =="True"
     exec(CODE+"IOA_BY.sce");
 end
 
-// Adding some indexes for France to make it working (to correct with Gaëlle)
-if Country == 'France' 
-    Indice_Immo = find(Index_Sectors == "PropertyBus");
-end
-
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM
 ////////////////////////////////////////////////////////////
