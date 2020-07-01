@@ -1,4 +1,4 @@
-Import_rate;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;AgriFood_Indus;PropertyBus;Comp;C;G;I;X
+;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;AgriFood_Indus;PropertyBus;Comp;C;G;I;X
 Crude_oil;0;0;0;0.985616162;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0.430677328
 Natural_gas;1;0;1;1;1;1;1;1;1;1;1;1;1;1;1;0.082906669;0;0;0
 Coal;0;0;0.893805465;0;0.825404885;1;0.465558875;0;0.236320096;0.285340035;0;0;0.887011097;0.219237714;0.708391374;0.493756974;0;0;0.397945973

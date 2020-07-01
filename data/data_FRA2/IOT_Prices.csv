@@ -1,4 +1,4 @@
-Prices;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;AgriFood_Indus;PropertyBus;Comp;C;G;I;X;Tot_uses;Y;M
+;Crude_oil;Natural_gas;Coal;AllFuels;Electricity;HeatGeoSol_Th;Heavy_Industry;Buildings_constr;Work_constr;Automobile;Load_PipeTransp;PassTransp;AgriFood_Indus;PropertyBus;Comp;C;G;I;X;Tot_uses;Y;M
 Crude_oil;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;345.7;362.9;344.9;239.6;347.1
 Natural_gas;362.4;480.9;362.4;362.4;362.4;362.4;363.6;525.1;449.8;449.8;449.8;449.8;456;449.8;449.8;799.5;558.6;558.6;222.3;460.5;228016.2;252.3
 Coal;229.4;229.4;247.3;229.4;149.2;172.9;292.3;229.4;275;388;229.4;229.4;188.7;275;201;266.7;387.6;387.6;301.4;213.6;332.2;164.6

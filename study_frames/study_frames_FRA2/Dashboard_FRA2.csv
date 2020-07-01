@@ -18,14 +18,14 @@ Exo_ShareI_GDP;%F
 Exo_u_tot;%F
 Exo_Kstock_Adj;%F
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_EnComp
+AGG_type;
+// AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
-// H_DISAGG;H10
+// H_DISAGG;HH1
+H_DISAGG;H10
 // SELECT the resolution mode;
-// Resol_Mode;Static_comparative
-Resol_Mode;Dynamic_projection
+Resol_Mode;Static_comparative
+// Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;1
 // SELECT a Macro framework to run;
@@ -33,8 +33,8 @@ Macro_nb;
 // Macro_nb;NDC
 // Macro_nb;Cov
 // SELECT which shock from the Macro framework you want to apply ;
-Demographic_shift;True
-Labour_product;True
+Demographic_shift;False
+Labour_product;False
 X_nonEnerg;False
 World_prices;False
 // SELECT the scenario to run (soft_linking);
@@ -46,10 +46,10 @@ Scenario;
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%F
-Output_prints;%T
-// SELECT the uses of carbon tax revenues;
-// Recycling_Option;
-Recycling_Option;LabTax
+Output_prints;%F
+// SELECT the uses of carbon tax revenues (standard = "PublicDeficit" = "");
+Recycling_Option;PublicDeficit
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
