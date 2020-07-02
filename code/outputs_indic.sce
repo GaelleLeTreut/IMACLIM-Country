@@ -1300,7 +1300,7 @@ if AGG_type == "AGG_IndEner"
 
 end
 
-
+Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.ClimPolCompensbySect + Out.GrossOpSurplus + Out.OtherIndirTax + Out.VA_Tax + Out.Energy_Tax_IC + Out.Energy_Tax_FC + Out.Carbon_Tax;
 
 //////////////////////////
 ///////////// TEMPLATE
@@ -1336,6 +1336,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal X_"+Index_Sectors,									money_disp_adj.*Out.X_value										];..
 ["Nominal Y_"+Index_Sectors,									money_disp_adj.*Out.Y_value'										];..
 ["Nominal VA-"+Index_Sectors,									money_disp_adj.*sum(Out.Value_Added,"r")'						];..
+["Nominal GDP-"+Index_Sectors,									money_disp_adj.*sum(Out.GDP_sect,"r")'						];..
 ["GFCF_"+Index_DomesticAgents,									money_disp_adj.*Out.GFCF_byAgent(Indice_DomesticAgents)'		];..
 ["Disposable income_"+Index_InstitAgents,						money_disp_adj.*Out.Disposable_Income'							];..
 ["Net Lending_"+Index_InstitAgents,							money_disp_adj.*Out.NetLending'									];..
