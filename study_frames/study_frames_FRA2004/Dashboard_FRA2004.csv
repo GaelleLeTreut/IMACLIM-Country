@@ -22,7 +22,8 @@ AGG_type;
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
-H_DISAGG;H10
+// H_DISAGG;H20
+H_DISAGG;L6
 // SELECT the resolution mode;
 Resol_Mode;Static_comparative
 // Resol_Mode;Dynamic_projection
@@ -47,7 +48,7 @@ CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%F
 Output_prints;%F
-// SELECT the uses of carbon tax revenues (standard = "PublicDeficit" = "");
+"// SELECT the uses of carbon tax revenues (standard = ""PublicDeficit"" = """")";
 Recycling_Option;PublicDeficit
 // Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
