@@ -1,5 +1,5 @@
-;PrimEnergy;FinEnHTr;FinEnHRes;AllComp;C;G;I;X
+;PrimEnergy;FinEnHTr;FinEnHRes;Comp;C;G;I;X
 PrimEnergy;0.1;0.1;0.1;0.1;0.1;0.1;0.1;0.1
 FinEnHTr;0.1;0.1;0.1;0.1;0.1;0.1;0.1;0.1
 FinEnHRes;0.1;0.1;0.1;0.1;0.1;0.1;0.1;0.1
-AllComp;0.1;0.1;0.1;0.1;0.1;0.1;0.1;0.1
+Comp;0.1;0.1;0.1;0.1;0.1;0.1;0.1;0.1

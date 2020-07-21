@@ -230,9 +230,11 @@ case "AMS"
 end
 
 // put back some phi_K to zero if CCF forcing is applied 
-if Proj_Vol.Capital_consumption.apply_proj | Proj_Vol.kappa.apply_proj then 
-	for elt=1:size(Proj_Vol.Capital_consumption.ind_of_proj)
-		parameters.phi_K(Proj_Vol.Capital_consumption.ind_of_proj(elt)(2)) = 0;
+if Scenario == 'AME_desag' | Scenario == 'AMS_desag' then
+	if Proj_Vol.Capital_consumption.apply_proj | Proj_Vol.kappa.apply_proj then 
+		for elt=1:size(Proj_Vol.Capital_consumption.ind_of_proj)
+			parameters.phi_K(Proj_Vol.Capital_consumption.ind_of_proj(elt)(2)) = 0;
+		end
 	end
 end
 /////////////////////////////////////////////////////////////////////////////////////
@@ -258,8 +260,6 @@ case "AMS"
 		parameters.LowCarb_Transfers = [-6564572.236067200 	-8124784.748932800 	14689356.985 	0];
 	end
 end
-
-
 
 
 

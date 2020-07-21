@@ -8,8 +8,8 @@ Row;Heavy_Industry;Commodities;NonEnerSect;NonHybridCommod;-;-;-
 Row;Buildings_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-
 Row;Work_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-
 Row;Automobile;Commodities;NonEnerSect;HybridCommod;-;Auto;-
-Row;Load_PipeTransp;Commodities;NonEnerSect;HybridCommod;-;TerTransp;AllTransp
-Row;PassTransp;Commodities;NonEnerSect;HybridCommod;-;TerTransp;AllTransp
+Row;Load_PipeTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp
+Row;PassTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp
 Row;Agri_Food_industry;Commodities;NonEnerSect;NonHybridCommod;-;Agri;-
 Row;Property_business;Commodities;NonEnerSect;HybridCommod;-;Immo;-
 Row;OthSectors;Commodities;NonEnerSect;NonHybridCommod;-;-;-
