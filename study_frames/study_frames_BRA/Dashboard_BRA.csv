@@ -8,9 +8,9 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA
 // SystemOpt_Resol;SystemOpt_RefCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
+study;Static_RunChoices
 // study;Projection_evolution
-study;Recursive_RunChoices
+// study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%T
 // SELECT option for Capital_Dynamics;
@@ -20,7 +20,8 @@ Exo_u_tot;%F
 Exo_Kstock_Adj;%T
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
-AGG_type;AGG_PMR19
+// AGG_type;AGG_PMR19
+AGG_type;AGG_BIICS19
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
@@ -31,7 +32,7 @@ H_DISAGG;H4
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;15
+Nb_Iter;1
 // SELECT a Macro framework to run;
 // Macro_nb;
 Macro_nb;NDC
@@ -42,11 +43,11 @@ Labour_product;True
 X_nonEnerg;True
 World_prices;True
 // SELECT the scenario to run (soft_linking);
-// Scenario;
+Scenario;
 // Scenario;PMR_Ten_Disag
 // Scenario;PMR_Ten
 // Scenario;PMR_Ref_Disag
-Scenario;PMR_Ref
+// Scenario;PMR_Ref
 // Scenario;PMR_CP1
 // Scenario;PMR_CP2
 // Scenario;PMR_CP3
