@@ -8,16 +8,16 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // SystemOpt_Resol;SystemOpt_ProjHomo_BRA
 // SystemOpt_Resol;SystemOpt_RefCAP_BRA
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
+// study;Static_RunChoices
 // study;Projection_evolution
 // study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
-Capital_Dynamics;%T
+Capital_Dynamics;%F
 // SELECT option for Capital_Dynamics;
 // Exogenous share of investment to GDP or unemployment;
-Exo_ShareI_GDP;%T
-Exo_u_tot;%F
-Exo_Kstock_Adj;%T
+// Exo_ShareI_GDP;%T
+// Exo_u_tot;%F
+// Exo_Kstock_Adj;%T
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 // AGG_type;AGG_PMR19
@@ -32,11 +32,12 @@ H_DISAGG;H4
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;7
 // SELECT a Macro framework to run;
 // Macro_nb;
-Macro_nb;NDC
+// Macro_nb;NDC
 // Macro_nb;Mean
+Macro_nb;BIICS
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
@@ -54,6 +55,7 @@ Scenario;
 // Scenario;PMR_CP4
 // Scenario;PMR_CP5
 // Scenario;PMR_CP6
+Scenario;BIICS_CPS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
