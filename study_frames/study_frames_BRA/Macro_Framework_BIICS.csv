@@ -6,4 +6,4 @@ Labour_force;0.040667425;0.02219712;0.011870721;0.006244057;-0.001013772;-0.0157
 Retired;0.216292696;0.217948298;0.201158417;0.167907802;0.135162619;0.130846282;0.115719636
 GDP_world;0.181959767;0.181959767;0.181959767;0.142489502;0.142489502;0.125899907;0.125899907
 pM_CrudeOil;-0.572901553;1;0;0;0;0;0
-units;mean_growth_rate;mean_growth_rate;mean_growth_rate;mean_growth_rate;mean_growth_rate;mean_growth_rate;mean_growth_rate
+units;mean_period_growth_rate_OrPercentforShare;;;;;;
