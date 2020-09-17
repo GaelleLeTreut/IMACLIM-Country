@@ -11,6 +11,7 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // study;Static_RunChoices
 // study;Projection_evolution
 // study;Recursive_RunChoices
+study;Static_RunBiics
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
 // SELECT option for Capital_Dynamics;
@@ -44,7 +45,7 @@ Labour_product;True
 X_nonEnerg;True
 World_prices;True
 // SELECT the scenario to run (soft_linking);
-Scenario;
+// Scenario;
 // Scenario;PMR_Ten_Disag
 // Scenario;PMR_Ten
 // Scenario;PMR_Ref_Disag
@@ -60,8 +61,8 @@ Scenario;BIICS_CPS
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
-Output_files;%T
-Output_prints;%F
+Output_files;%F
+Output_prints;%T
 // SELECT the uses of carbon tax revenues;
 // Recycling_Option;
 Recycling_Option;LabTax
