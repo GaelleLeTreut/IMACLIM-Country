@@ -1989,7 +1989,14 @@ function Phi =  TechnicProgress_Val_1()
 
 endfunction
 
-function y =  TechnicProgress_Const_2(Phi, Capital_consumption, sigma_Phi)
+function Phi =  TechnicProgress_Val_2(Phi, Capital_consumption, sigma_Phi)
+    
+    Phi = ones(1, nb_Sectors);
+    Phi(nb_Sectors) = (Capital_consumption(nb_Sectors)/BY.Capital_consumption(nb_Sectors))^sigma_Phi(nb_Sectors)
+
+endfunction
+
+function y =  TechnicProgress_Const_2(Capital_consumption, sigma_Phi)
 
     y1 = (Phi.^(1 ./sigma_Phi)).*BY.Capital_consumption - Capital_consumption;
     y=y1';
@@ -2026,6 +2033,14 @@ function Theta =  DecreasingReturn_Val_1()
     Theta =  ones(1, nb_Sectors);
 
 endfunction
+
+function Theta =  DecreasingReturn_Val_2(Y, sigma_Theta)
+
+    Theta =  ones(1, nb_Sectors);
+    Theta(nb_Sectors) = (Y(nb_Sectors)/BY.Y(nb_Sectors))^sigma_Theta(nb_Sectors)
+
+endfunction
+
 
 /// Technical substitution
 

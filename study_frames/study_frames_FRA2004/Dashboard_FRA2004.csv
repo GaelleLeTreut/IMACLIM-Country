@@ -5,8 +5,8 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
-// SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_ProjHomo
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 study;Recursive_RunChoices
@@ -40,17 +40,15 @@ X_nonEnerg;False
 World_prices;False
 // SELECT the scenario to run (soft_linking);
 Scenario;
-// Scenario;AME
-// Scenario;AMS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
-Output_files;%F
+Output_files;%T
 Output_prints;%F
 "// SELECT the uses of carbon tax revenues (standard = ""PublicDeficit"" = """")";
-Recycling_Option;PublicDeficit
-// Recycling_Option;LabTax
+// Recycling_Option;PublicDeficit
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
