@@ -83,13 +83,21 @@ function Import_penet_rate = M_penetRat(M, Y, X);
 Import_penet_rate = divide ( M, Y+M-X, %nan) ;
 endfunction 
 
-
-// Gini indicator on source of income (H_disposable_income or effective consumption for instance)
 // Gini indicator on source of income (H_disposable_income or effective consumption for instance)
 function Gini_HH = Gini_indicator(Income, Population);
 	Cum_share_income = [0 cumsum(Income)/sum(Income)];
 	Cum_share_pop =[0 cumsum(Population)/sum(Population)];
 	Gini_HH = (Cum_share_income(1:nb_Households) + Cum_share_income(2:nb_Households+1)).* (Cum_share_pop(2:nb_Households+1) - Cum_share_pop(1:nb_Households))
 endfunction
+
+// Gini indicator on source of income (H_disposable_income or effective consumption for instance)
+function Gini = Gini_indicator_bis(Income, Population);
+	Cumulative_share = [0 cumsum(Income)/sum(Income)]
+	// Cum_share_pop =[0 cumsum(Population)/sum(Population)];
+	Gini = 1 - sum((Cumulative_share(1:nb_Households) + Cumulative_share(2:nb_Households+1)).* Population./sum(Population))
+	// Gini = 1 - sum((Cumulative_share(1:nb_Households) + Cumulative_share(2:nb_Households+1)).* (Cum_share_pop(2:nb_Households+1) - Cum_share_pop(1:nb_Households)))
+endfunction
+
+
 
 

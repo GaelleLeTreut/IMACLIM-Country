@@ -48,8 +48,8 @@ Output_files;%T
 Output_prints;%F
 "// SELECT the uses of carbon tax revenues (standard = ""PublicDeficit"" = """")";
 // Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
-// Recycling_Option;LumpSumHH
+// Recycling_Option;LabTax
+Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
 // Select a closure of public finance while recycling carbon revenues;
