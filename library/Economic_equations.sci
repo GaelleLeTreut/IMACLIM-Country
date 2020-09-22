@@ -1989,7 +1989,7 @@ function Phi =  TechnicProgress_Val_1()
 
 endfunction
 
-function Phi =  TechnicProgress_Val_2(Phi, Capital_consumption, sigma_Phi)
+function Phi =  TechnicProgress_Val_2(Capital_consumption, sigma_Phi)
     
     Phi = ones(1, nb_Sectors);
     Phi(nb_Sectors) = (Capital_consumption(nb_Sectors)/BY.Capital_consumption(nb_Sectors))^sigma_Phi(nb_Sectors)
