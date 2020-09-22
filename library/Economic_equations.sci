@@ -1085,6 +1085,12 @@ function [y] = Pension_Benefits_Const_3(Pension_Benefits, NetWage_variation, Pen
     y=y1';
 endfunction
 
+function [Pension_Benefits] = Pension_Benefits_Val_3(NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
+
+    Pension_Benefits = BY.Pension_Benefits ;
+
+endfunction
+
 //// Opt 4 = function of CPI
 function [y] = Pension_Benefits_Const_4(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population) ;
 
@@ -1148,6 +1154,12 @@ function [y] = UnemployBenefits_Const_3(UnemployBenefits, NetWage_variation, Une
     y1 = UnemployBenefits - BY.UnemployBenefits;
 
     y=y1';
+endfunction
+
+function UnemployBenefits = UnemployBenefits_Val_3(NetWage_variation, UnemployBenefits_param, GDP, Unemployed)
+
+    UnemployBenefits = BY.UnemployBenefits;
+
 endfunction
 
 /// Other social benefits (by household class)
@@ -1698,6 +1710,21 @@ function G_Consumption_budget = G_ConsumpBudget_Val_2(GDP)
     
 endfunction
 
+function [y] = G_ConsumpBudget_Const_3(G_Consumption_budget, G, pG, GDP, G_pFish) ;
+
+    /// Public consumption budget - constant in real terms
+    y1 = G_Consumption_budget - (G_pFish *  BY.G_Consumption_budget);
+    y = y1' ;
+
+endfunction
+
+function G_Consumption_budget = G_ConsumpBudget_Val_3(G_pFish)
+
+    /// Public consumption budget - Proportion of GDP
+    G_Consumption_budget = (G_pFish *  BY.G_Consumption_budget);
+    
+endfunction
+
 /// Balance between consumption budgets and expenditures
 function [y] = G_BudgetBalance_Const_1(G_Consumption_budget, G, pG) ;
 
@@ -1768,6 +1795,16 @@ function [y] = G_investment_Const_2(GFCF_byAgent, G_disposable_income, G_invest_
     y1 = GFCF_byAgent(Indice_Government) - ini.GFCF_byAgent(Indice_Government)*(GDP/ini.GDP) ;
     y  = y1' ;
 endfunction
+
+/// Government_investment_constraint_3 : Constant in real term
+function [y] = G_investment_Const_3(GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP) ;
+
+    // Government gross fixed capital formation constraint (GFCF_byAgent(Indice_Government))
+    y1 = GFCF_byAgent(Indice_Government) - I_pFish * BY.GFCF_byAgent(Indice_Government);
+
+    y  = y1' ;
+endfunction
+
 
 
 // Government net lending (+) / net borrowing (-)
@@ -2559,6 +2596,12 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 
 endfunction
 
+// constant invest demand in real term
+function [I] = Invest_demand_Val_2(pI, I_pFish) ;
+
+    I = BY.I.*BY.pI.*I_pFish ./ pI ;
+
+endfunction
 
 ///////// 
 // Betta calculation function of K cost & pI

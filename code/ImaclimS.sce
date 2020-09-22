@@ -104,7 +104,8 @@ if Output_files
         syst_name = System_Resol;
     end
 
-    runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+    // runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+    runName = SystemOpt_Resol + "__" + Recycling_Option
     SAVEDIR = OUTPUT + runName + filesep();
     mkdir(SAVEDIR);
     diary(SAVEDIR+"summary.log");
