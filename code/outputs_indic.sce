@@ -1503,7 +1503,7 @@ if [H_DISAGG == "H20"] & [Country == "France"]
 	Indice_Rich 	= 20;
 
 	OutputTable.EquityEfficiency = ["Variables" 	"BY values" 															"Variation to BY (+x%)"
-		["Total CO2 emissions", 					string(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))+" GtCO2",					round(1000*((sum(d.CO2Emis_IC)+sum(d.CO2Emis_C))./(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))-1))/10 + " %"];..
+		["Total CO2 emissions", 					string(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))+" MtCO2",					round(1000*((sum(d.CO2Emis_IC)+sum(d.CO2Emis_C))./(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))-1))/10 + " %"];..
 		["Real GDP",			 					string(BY.GDP*1E-6)+" M€", 												round(1000*((d.GDP/(GDP_pLasp*BY.GDP))-1))/10 + " %"];..
 		["Total employment (full time equivalent)",	string(sum(BY.Labour*1E-3))+" mil",										round(1000*(sum(d.Labour)/sum(BY.Labour)-1))/10 + " %"];..
 		["Real investment",							string(sum(BY.I_value)*1E-6)+" M€",										round(1000*((sum(d.I_value)/sum(I_pLasp*BY.I_value))-1))/10 + " %"];..
