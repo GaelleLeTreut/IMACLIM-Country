@@ -1,45 +1,36 @@
-// Shocking some parameters default values
+//Shocking some parameters default values
 
-// Carbon_Tax_rate0 = 1e5; // 100reais / tCO2 
-// Carbon_Tax_rate1 = 2e5;
-// Carbon_Tax_rate2 = 3e5;
-// Carbon_Tax_rate3 = 5e5;
+//definir as taxas aqui para cada período - definição da varíavel Carbon_Tax_rate
+Carbon_Tax_rate2025 = 1e6; // 100reais / tCO2 
+Carbon_Tax_rate2030 = 1e6;
+Carbon_Tax_rate2035 = 1e6;
+Carbon_Tax_rate2040 = 1e6;
+Carbon_Tax_rate2045 = 1e6;
+Carbon_Tax_rate2050 = 1e6;
 
+//isso quer dizer que cada iteração terá um valor de taxa de carbono
 
-/// Info  reduction goal
-// if time_step == 1 
-// parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-// goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);
-// goal_reduc_C = 0.05 * ones(nb_Sectors, nb_Households);
+if time_step == 2 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2025;
+end 
 
-// Calcul indirect IC / direct C
-////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-// parameters.CarbonCap = 0.2 ;
-// parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
-// CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
-// parameters.CarbonCap_C = parameters.CarbonCap.* ones(nb_Sectors,nb_Households);
-// CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
+if time_step == 3 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2030;
+end
 
-// end 
+if time_step == 4 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2035;
+end 
 
+if time_step == 5 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2040;
+end 
 
-// if time_step == 2 
-// parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-// goal_reduc_IC = 0.15 * ones(nb_Sectors,nb_Sectors);
-// goal_reduc_C = 0.15 * ones(nb_Sectors, nb_Households);
+if time_step == 6 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2045;
+end 
 
-// Calcul indirect IC / direct C
-////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-// parameters.CarbonCap = 0.1 ;
-// parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
-// CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
-// parameters.CarbonCap_C = parameters.CarbonCap.* ones(nb_Sectors,nb_Households);
-// CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
-
-// end 
-
-// u_param a clarifier
-// parameters.u_param = BY.u_tot;
-
-
+if time_step == 7 
+parameters.Carbon_Tax_rate = Carbon_Tax_rate2050;
+end 
 

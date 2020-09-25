@@ -64,8 +64,8 @@ CO2_footprint;False
 Output_files;%F
 Output_prints;%T
 // SELECT the uses of carbon tax revenues;
-// Recycling_Option;
-Recycling_Option;LabTax
+Recycling_Option;
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
