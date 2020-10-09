@@ -25,8 +25,8 @@ AGG_type;
 H_DISAGG;HH1
 // H_DISAGG;H10
 // SELECT the resolution mode;
-Resol_Mode;Static_comparative
-// Resol_Mode;Dynamic_projection
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
 Nb_Iter;1
 // SELECT a Macro framework to run;
