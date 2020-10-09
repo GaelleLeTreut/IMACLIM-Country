@@ -1,18 +1,19 @@
 //Shocking some parameters default values
 
+// 2030 - 25 dólares ; 2040 - 50 ; 2050 - 100
 //definir as taxas aqui para cada período - definição da varíavel Carbon_Tax_rate
-Carbon_Tax_rate2025 = 1e3; // reais / tCO2 
-Carbon_Tax_rate2030 = 1e3;
-Carbon_Tax_rate2035 = 1e3;
-Carbon_Tax_rate2040 = 1e3;
-Carbon_Tax_rate2045 = 1e3;
-Carbon_Tax_rate2050 = 1e3;
+Carbon_Tax_rate2025 = 12.5*3.15e3; // reais / tCO2 
+Carbon_Tax_rate2030 = 25*3.15e3;
+Carbon_Tax_rate2035 = 37.5*3.15e3;
+Carbon_Tax_rate2040 = 50*3.15e3;
+Carbon_Tax_rate2045 = 75*3.15e3;
+Carbon_Tax_rate2050 = 100*3.15e3;
 
 
 period_0 = [1];
 period_1 = [2,3,4,5,6,7];
 
-// 2030 - 25 dólares ; 2040 - 50 ; 2050 - 100
+
 
 
 ////////////////////////////////////
