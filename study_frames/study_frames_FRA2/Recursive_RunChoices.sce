@@ -21,21 +21,21 @@ Scenario_temp = strcat(Scenario_temp(1:3,:));
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
-// Manual correction of macroframework 
+// GLT: TO DELETE ?  Manual correction of macroframework 
 /////////////////////////////////////////////////////////////////////////////////
-select time_step 
-case 1 then
-	parameters.Mu = 0.0135;
-	parameters.u_param = 0.165;
-case 2 then
-	parameters.Mu = 0.016;
-	parameters.u_param = 0.165;
-end
-parameters.phi_L = ones(parameters.phi_L) * parameters.Mu;
+// select time_step 
+// case 1 then
+	// parameters.Mu = 0.0135;
+	// parameters.u_param = 0.165;
+// case 2 then
+	// parameters.Mu = 0.016;
+	// parameters.u_param = 0.165;
+// end
+// parameters.phi_L = ones(parameters.phi_L) * parameters.Mu;
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
-// Penetration rate of biofuels (1) and biogaz (2) regarding conventional sectors
+// GLT: TO UPDATE ? Penetration rate of biofuels (1) and biogaz (2) regarding conventional sectors
 /////////////////////////////////////////////////////////////////////////////////
 select Scenario_temp
 case "AME"
@@ -263,35 +263,4 @@ case "AMS"
 		parameters.LowCarb_Transfers = [-6564572.236067200 	-8124784.748932800 	14689356.985 	0];
 	end
 end
-
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////
-// Additionnal transfers to support HH 
-/////////////////////////////////////////////////////////////////////////////////
-// InstitAgents							Corporations  		Government  		Households  	RestOfWorld			   
-select Scenario_temp
-case "AME"
-	select time_step 
-	case 1 then 
-		parameters.LowCarb_Transfers = [21696.000 			-936028.230 		914332.230 		0];
-	case 2 then
-		parameters.LowCarb_Transfers = [9480.000 			-549380.740 		539900.740 		0];
-	end
-case "AMS"
-	select time_step 
-	case 1 then
-		parameters.LowCarb_Transfers = [16823.485531064 	-5696089.70453106 	5679266.219 	0];
-	case 2 then
-		parameters.LowCarb_Transfers = [-6564572.236067200 	-8124784.748932800 	14689356.985 	0];
-	end
-end
-
-
-
-
 
