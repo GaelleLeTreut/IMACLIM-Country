@@ -56,7 +56,8 @@ World_prices;True
 // Scenario;PMR_CP4
 // Scenario;PMR_CP5
 // Scenario;PMR_CP6
-Scenario;BIICS_CPS
+// Scenario;BIICS_CPS
+Scenario;BIICS_DDS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

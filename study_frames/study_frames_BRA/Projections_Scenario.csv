@@ -3,3 +3,4 @@ C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));
 IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%F;%T;%T
 X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%F;;%T
 M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%F;;%T
+Capital_consumption;"""Capital_Cons_BIICS_DDS""";string(Proj_Macro.current_year);list(list(1,Indice_BioFu),list(1,Indice_Elect),list(1,Indice_Cattl),list(1,Indice_Cemen),list(1,Indice_IronS),list(1,Indice_NonFe),list(1,Indice_FoodB),list(1,Indice_Paper),list(1,Indice_RestI),list(1,Indice_Freig),list(1,Indice_PassT),list(1,Indice_Comp ));%F;%T;%F
