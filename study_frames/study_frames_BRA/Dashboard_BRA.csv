@@ -12,6 +12,7 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 // study;Projection_evolution
 // study;Recursive_RunChoices
 study;Static_RunBiics
+// study;Static_RunBiics_CPS
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
 // SELECT option for Capital_Dynamics;
