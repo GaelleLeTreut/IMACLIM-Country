@@ -9,8 +9,10 @@ Row;Heavy_Industry;Commodities;NonEnerSect;NonHybridCommod;-;-;-;AllComp;AllComp
 Row;Buildings_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-;AllComp;AllComp
 Row;Work_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-;AllComp;AllComp
 Row;Automobile;Commodities;NonEnerSect;HybridCommod;-;Auto;-;AllComp;AllComp
+Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;-;-;AllComp;AllComp
 Row;Load_PipeTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp;AllComp;AllComp
 Row;PassTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp;AllComp;AllComp
+Row;AirTransp;Commodities;NonEnerSect;NonHybridCommod;-;AllTransp;-;AllComp;AllComp
 Row;AgriFood_Indus;Commodities;NonEnerSect;NonHybridCommod;-;Agri;-;AllComp;AllComp
 Row;PropertyBus;Commodities;NonEnerSect;HybridCommod;-;Immo;-;AllComp;AllComp
 Row;Comp;Commodities;NonEnerSect;NonHybridCommod;-;-;-;AllComp;AllComp
@@ -29,11 +31,13 @@ Row;SpeMarg_AllFuels;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Electricity;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_HeatGeoSol_Th;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Heavy_Industry;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
-Row;SpeMarg_Buildings_constr ;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
+Row;SpeMarg_Buildings_constr;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Work_constr;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Automobile;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
+Row;SpeMarg_OthTranspEquip;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Load_PipeTransp;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_PassTransp;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
+Row;SpeMarg_AirTransp;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_AgriFood_Indus;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_PropertyBus;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
 Row;SpeMarg_Comp;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-;-
@@ -56,8 +60,10 @@ Column;Heavy_Industry;Sectors;-;-;-;-;-;-;-
 Column;Buildings_constr;Sectors;-;-;-;-;-;-;-
 Column;Work_constr;Sectors;-;-;-;-;-;-;-
 Column;Automobile;Sectors;-;-;-;-;-;-;-
+Column;OthTranspEquip;Sectors;-;-;-;-;-;-;-
 Column;Load_PipeTransp;Sectors;-;-;-;-;-;-;-
 Column;PassTransp;Sectors;-;-;-;-;-;-;-
+Column;AirTransp;Sectors;-;-;-;-;-;-;-
 Column;AgriFood_Indus;Sectors;-;-;-;-;-;-;-
 Column;PropertyBus;Sectors;-;-;-;-;-;-;-
 Column;Comp;Sectors;-;-;-;-;-;-;-

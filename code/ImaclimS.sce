@@ -118,11 +118,7 @@ if Output_files
     copyfile(STUDY_Country + study + ".sce", SAVEDIR);	
 	end	
 	if Scenario <> '' 
-        if Country_ISO == 'FRA'
-            copyfile(STUDY_Country + "ProjScenario" + AGG_type + ".csv", SAVEDIR);	
-        else
-            copyfile(STUDY_Country + 'Projections_Scenario.csv', SAVEDIR); 
-        end
+    copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
 	end
     if Optimization_Resol then
         copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
@@ -267,6 +263,7 @@ printf("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR \n");
 if CO2_footprint =="True"
     exec(CODE+"IOA_BY.sce");
 end
+
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM
@@ -457,13 +454,3 @@ if Output_files
 end
 
 printf('\n------------ Done ! :) ------------\n');
-
-AGG_type
-time_step
-Macro_nb
-Scenario
-Recycling_Option
-
-GDP
-u_tot
-GDP_pFish
