@@ -39,6 +39,9 @@ end
 
 //isso quer dizer que cada iteração terá um valor de taxa de carbono
 
+
+if Scenario=="DDS" & AGG_type== "AGG_BIICS19"
+
 if time_step == 2 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate2025;
 end 
@@ -63,3 +66,4 @@ if time_step == 7
 parameters.Carbon_Tax_rate = Carbon_Tax_rate2050;
 end 
 
+end
