@@ -118,7 +118,11 @@ if Output_files
     copyfile(STUDY_Country + study + ".sce", SAVEDIR);	
 	end	
 	if Scenario <> '' 
-    copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
+		if Country_ISO <> 'FRA'
+			copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
+		else
+			copyfile(STUDY_Country + 'ProjScenario'+ AGG_type + ".csv", SAVEDIR);	
+		end
 	end
     if Optimization_Resol then
         copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
