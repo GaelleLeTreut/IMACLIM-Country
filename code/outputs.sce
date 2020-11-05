@@ -660,11 +660,17 @@ for ind=1:size(evol_list)
 		execstr("evol."+varname+"=divide(d."+varname+",ini."+varname+",%nan)");
 		/// Specific case for argentina to compare with 2015 : step 1 of the resolution
 		execstr("evol_2015."+varname+"=divide(d."+varname+",data_1."+varname+",%nan)")
+		execstr("evol_2018."+varname+"=divide(d."+varname+",data_1."+varname+",%nan)")
 	end
 	
 	if Country=="Argentina"& time_step==1
 	/// Specific case for argentina to compare with 2015 : step 1 of the resolution
 	execstr("evol_2015."+varname+"=divide(d."+varname+",d."+varname+",%nan)")
+	end
+
+	if Country_ISO=="FRA"& time_step==1 & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+	/// Specific case for France with step at 2018 to compare with 2018 : step 1 of the resolution
+	execstr("evol_2018."+varname+"=divide(d."+varname+",d."+varname+",%nan)")
 	end
 
 end
@@ -685,8 +691,13 @@ elseif time_step >1
 
 	Prices.evo = buildPriceT( evol.pIC-1 , evol.pFC-1, evol.w-1, evol.pL-1, evol.pK-1, evol.pY-1, evol.pM-1, evol.p-1, 100 , 1);
 	if  Country== 'Argentina'
-		Prices.evo15 = buildPriceT( evol_2015.pIC-1 , evol_2015.pFC-1, evol_2015.w-1, evol_2015.pL-1, evol_2015.pK-1, evol_2015.pY-1, evol_2015.pM-1, 	evol_2015.p-1, 100 , 1);
+		Prices.evo15 = buildPriceT( evol_2015.pIC-1 , evol_2015.pFC-1, evol_2015.w-1, evol_2015.pL-1, evol_2015.pK-1, evol_2015.pY-1, evol_2015.pM-1, evol_2015.p-1, 100 , 1);
 	end
+	
+	if  Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+		Prices.evo18 = buildPriceT( evol_2018.pIC-1 , evol_2018.pFC-1, evol_2018.w-1, evol_2018.pL-1, evol_2018.pK-1, evol_2018.pY-1, evol_2018.pM-1, evol_2018.p-1, 100 , 1);
+	end
+	
 end
 
 
@@ -706,6 +717,11 @@ elseif time_step >1
 	if Country== 'Argentina'
 		TechCOef.evo15 = buildTechCoefT( evol_2015.alpha-1, evol_2015.lambda-1, evol_2015.kappa-1, 100 , 1);
 	end
+	if  Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+		TechCOef.evo18 = buildTechCoefT( evol_2018.alpha-1, evol_2018.lambda-1, evol_2018.kappa-1, 100 , 1);
+	end
+	
+	
 end
 
 
@@ -726,6 +742,11 @@ elseif time_step >1
 	if Country== 'Argentina'
 		CO2Emis.evo15 = buildEmisT( evol_2015.CO2Emis_IC-1 , evol_2015.CO2Emis_C-1, evol_2015.CO2Emis_X-1 , evol_2015.CO2Emis_Sec-1 ,evol_2015.Tot_CO2Emis_IC - 1,evol_2015.Tot_CO2Emis_C-1,evol_2015.DOM_CO2-1,100 , 1);
 	end
+	
+	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+		CO2Emis.evo18 = buildEmisT( evol_2018.CO2Emis_IC-1 , evol_2018.CO2Emis_C-1, evol_2018.CO2Emis_X-1 , evol_2018.CO2Emis_Sec-1 ,evol_2018.Tot_CO2Emis_IC - 1,evol_2018.Tot_CO2Emis_C-1,evol_2018.DOM_CO2-1,100 , 1);
+	end
+	
 end
 
 
@@ -744,6 +765,10 @@ elseif time_step >1
 	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax -1, evol.Supply-1, evol.Uses-1, 100 , 1);
 	if Country== 'Argentina'
 		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , 1);
+	end
+	
+	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+		io.evo18 = buildIot(evol_2018.IC_value-1 ,  evol_2018.FC_value-1 , evol_2018.OthPart_IOT-1 ,evol_2018.Carbon_Tax -1, evol_2018.Supply-1, evol_2018.Uses-1, 100 , 1);
 	end
 end
 
@@ -765,6 +790,10 @@ elseif time_step >1
 		if Country== 'Argentina'
 			ioQ.evo15 = buildIotQ(   evol_2015.IC-1 ,   evol_2015.FC-1 ,   evol_2015.OthQ-1 , 100 , 1);
 		end
+		
+		if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+			ioQ.evo18 = buildIotQ(   evol_2018.IC-1 ,   evol_2018.FC-1 ,   evol_2018.OthQ-1 , 100 , 1);
+		end
 end
 
 
@@ -784,6 +813,11 @@ ecoT.evo = buildEcoTabl(evol.Ecotable-1 ,100 , 1);
 	if Country== 'Argentina'
 		ecoT.evo15 = buildEcoTabl(evol_2015.Ecotable-1 ,100 , 1);
 	end
+	
+	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+		ecoT.evo18 = buildEcoTabl(evol_2018.Ecotable-1 ,100 , 1);
+	end
+	
 end
 
 /////////////////////////////////////////////////
@@ -877,6 +911,19 @@ if Output_files
 									csvWrite(InvestMat.evo15,SAVEDIR+"InvestMat-evo15_"+Name_time+"_"+simu_name+".csv", ';');
 								end		
 					end
+					
+										/// Comparison with 2018 for France Cov
+					if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
+						csvWrite(Prices.evo18,SAVEDIR+"Prices-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+						csvWrite(TechCOef.evo18,SAVEDIR+"TechCOef-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+						csvWrite(CO2Emis.evo18,SAVEDIR+"CO2Emis-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+						csvWrite(io.evo18,SAVEDIR+"ioV-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+						csvWrite(ioQ.evo18,SAVEDIR+"ioQ-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+						csvWrite(ecoT.evo18,SAVEDIR+"ecoT-evo15_"+Name_time+"_"+simu_name+".csv", ';');
+					end
+					
+					
+					
 			end
 end
 

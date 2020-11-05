@@ -430,7 +430,34 @@ for time_step=1:Nb_Iter
 			exec(CODE+"outputs_indic.sce");
 		end
 	end
-	
+
+	// Changing reference_year to compare results
+	if Country_ISO=="FRA"	
+		if time_step==1
+			ref = d;
+			evol_ref = evol_2018;
+			ref_name = "2018";
+			Out = d ;
+			OutputfilesBY =%F;
+				if Output_files
+					SAVEDIR_INIT_temp =SAVEDIR_INIT; 
+					SAVEDIR_INIT = SAVEDIR;
+				end
+			exec(CODE+"outputs_indic.sce");	
+			OutputfilesBY =%T;
+				if Output_files
+					SAVEDIR_INIT =SAVEDIR_INIT_temp;
+					clear SAVEDIR_INIT_temp 
+				end
+		elseif time_step>=2
+			ref = data_1;
+			evol_ref = evol_2018;
+			ref_name = "2018";
+			Out=d;
+			exec(CODE+"outputs_indic.sce");
+		end
+	end
+
 
     ////////////////////////////////////////////////////////////
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
