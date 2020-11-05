@@ -44,6 +44,8 @@ Nb_Iter;2
 // Macro_nb;2deg_bis
 // Macro_nb;2deg_ter
 Macro_nb;CovRef
+// Macro_nb;CovLow
+// Macro_nb;CovHigh
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
