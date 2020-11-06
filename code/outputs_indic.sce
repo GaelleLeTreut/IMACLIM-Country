@@ -1327,7 +1327,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal I",														money_disp_adj.*sum(Out.I_value)									];..
 ["Nominal X",														money_disp_adj.*sum(Out.X_value)									];..
 ["Nominal M",														money_disp_adj.*sum(Out.M_value)									];..
-["Nominal Trade Balance",										money_disp_adj.*sum((Out.X_value)-sum(Out.M_value))					];..
+["Nominal Trade Balance",										money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))					];..
 ["Nominal M/Y ratio_"+Index_Sectors,							divide(Out.M, Out.Y, %nan) 						];..
 ["Nominal Net-of-tax wages",										Out.omega										   						];..
 ["Net-of-tax effective wages",									Out.omega/((1+Out.Mu)^Out.time_since_BY)								];..
