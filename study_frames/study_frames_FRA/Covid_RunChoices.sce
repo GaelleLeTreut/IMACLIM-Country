@@ -15,6 +15,46 @@ end
 // Assuming that the first 3 digit are AMS or AME
 Scenario_temp =part(Scenario,1:3);
 
+/// Adjustment of the WC on real wage
+parameters.Coef_real_wage = 1;
+
+/// Adjustment of elasticity of exports // Test
+// if time_step==2 &(Macro_nb == "CovLow" | Macro_nb == "CovHigh")
+	// Deriv_Exogenous.sigma_X = parameters.sigma_X;
+	// Deriv_Exogenous.sigma_X(Indice_HeavInd) = Deriv_Exogenous.sigma_X(Indice_HeavInd) +2;
+	// Deriv_Exogenous.sigma_X(Indice_EquipTrans) = Deriv_Exogenous.sigma_X(Indice_EquipTrans) +2;
+	// Deriv_Exogenous.sigma_X(Indice_Agri) = Deriv_Exogenous.sigma_X(Indice_Agri) +2;
+// end
+
+/// Ajusting B on the reference rate by changing closure rule
+// Coming from AMS simu ( omega / pM compo at 2018 and 2030
+if Macro_nb == "CovLow"
+Table_ExoCst_Bal = [33.73386662	46.08498598];
+	if time_step == 1
+		ExoCst_Bal = Table_ExoCst_Bal(1);
+	elseif time_step == 2
+		ExoCst_Bal = Table_ExoCst_Bal(2);
+	end
+elseif Macro_nb == "CovHigh"		
+
+Table_ExoCst_Bal = [33.73386662	41.84752127];
+
+	if time_step == 1
+		ExoCst_Bal = Table_ExoCst_Bal(1);
+	elseif time_step == 2
+		ExoCst_Bal = Table_ExoCst_Bal(2);
+	end	
+end 
+
+
+/////////// Increasing savings of HH and markup of property business
+if Macro_nb == "CovLow"|Macro_nb == "CovHigh"
+	if time_step == 2
+	parameters.Household_saving_rate = BY.Household_saving_rate + 0.04;
+	markup_rate(Indice_Immo) =BY.markup_rate(Indice_Immo)*1.15;
+	end
+end 
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Changes in projection for step 1 (2018); only hybrid goods balances for C,IC,X,M (capital below)
 if time_step == 1
@@ -319,6 +359,7 @@ end
 // Additionnal transfers to support HH 
 /////////////////////////////////////////////////////////////////////////////////////
 // InstitAgents							Corporations  		Government  		Households  	RestOfWorld	
+
 if time_step<> 1	   
 	select Scenario_temp
 	case "AME"
@@ -339,3 +380,10 @@ if time_step<> 1
 elseif time_step == 1
 	parameters.LowCarb_Transfers = zeros(1,nb_InstitAgents);
 end
+
+if find(fieldnames(parameters)=='LowCarb_Transfers')<>[]
+	if (H_DISAGG<>"HH1")&(or(parameters.LowCarb_Transfers<>0))
+		error("LowCarb_Transfers must be split between HHs"); 
+	end
+end
+
