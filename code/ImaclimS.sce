@@ -96,7 +96,12 @@ if Output_files
 	else
 		simu_name=Scenario;
     end
-
+	
+	// GLT Temporary : specific name for FRA Simu
+	if Country_ISO <> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+	simu_name = simu_name+"_"+Macro_nb;
+	end
+	
     syst_name = '';
     if Optimization_Resol then
         syst_name = SystemOpt_Resol;
@@ -134,7 +139,7 @@ if Output_files
     if SIMU_MODE then
         current_run_name = simu_name;
     elseif Scenario <> '' then
-        current_run_name = Scenario;
+        current_run_name = simu_name;
     else
         current_run_name = 'NoScen';
     end
