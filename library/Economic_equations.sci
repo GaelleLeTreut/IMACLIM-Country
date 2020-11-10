@@ -232,6 +232,22 @@ function Household_savings = H_Savings_Val_1(H_disposable_income, Household_savi
 		
 endfunction
 
+	/// Constraint on balance for closure instead of H_Savings_Val_1 (could be renamed latter - for now, keeping here to clarify that this equation subsitutes the one on HH savings
+	// Can not be used like this for various HH classes -> new constraint of size 1 and not size nb_Households... 
+function y = H_Savings_Const_2(pM, Labour, w)
+	
+	if nb_Households <> 1
+		warning("can not be used as a closure rule")
+	end 
+	
+	omega = sum (w .* Labour) / sum(Labour)
+	// assuming that the last sector is the composite
+	 y1 = omega/pM(nb_Sectors) - ExoCst_Bal;
+	
+	y = y1'; 
+		
+endfunction
+
 
 // Household gross fixed capital formation (by household class)
 // A proportion of disposable income is used directly by household classes to accumulate capital stocks (houses, lands, business goodwill of individual entrepreneurs, etc.)
