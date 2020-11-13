@@ -30,11 +30,12 @@ period_1 = [2,3,4,5,6,7];
 // de taxa de carbono de acordo com a definição da variável Carbon tax
 //////////////////////////////////////////////////////
 
-if Scenario=="DDS" & AGG_type== "AGG_BIICS19"
+if Scenario=="BIICS_DDS" & AGG_type== "AGG_BIICS19"
 
 
 if time_step == 2 
 parameters.Carbon_Tax_rate = Carbon_Tax_rate2025;
+
 end 
 
 if time_step == 3 
