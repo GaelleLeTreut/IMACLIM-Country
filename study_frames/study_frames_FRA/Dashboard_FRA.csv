@@ -7,7 +7,8 @@ System_Resol;Systeme_Static
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_SNBC
+// SystemOpt_Resol;SystemOpt_Static_SNBC
+SystemOpt_Resol;SystemOpt_Static_Cov
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
