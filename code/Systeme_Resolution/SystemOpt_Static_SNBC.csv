@@ -52,7 +52,7 @@ Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate
 ;H_Investment_Const_2;GFCF_byAgent,pC,C;
 ;H_NetLending_Const_1;NetLending, GFCF_byAgent, Household_savings;
 ;H_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-;H_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
+;H_NetDebt_Const_1;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Firms;;;
 Corp_disposable_income;Corp_income_Val_1; GOS_byAgent, Other_Transfers, Property_income , Corporate_Tax;
@@ -61,7 +61,7 @@ Corporations_savings;Corp_savings_Val_1;Corp_disposable_income;
 ;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
 ;Corp_NetLending_Const_1;NetLending, GFCF_byAgent, Corporations_savings;
 ;Corp_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-;Corp_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
+;Corp_NetDebt_Const_1;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Public Administration;;;
 // Tax revenues;;;
@@ -89,12 +89,12 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;G_investment_Const_1;GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP;// Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
 ;G_NetLending_Const_1;NetLending, GFCF_byAgent, Government_savings;
 ;G_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-;G_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
+;G_NetDebt_Const_1;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Rest of the world;;;
 ;RoW_NetLending_Const_1;NetLending, pM, M, pX, X, Property_income, Other_Transfers;
 ;RoW_PropTranf_Const_2;Property_income;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-;RoW_NetDebt_Const_1;NetFinancialDebt, time_since_ini, NetLending;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
+;RoW_NetDebt_Const_1;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 //;Interest_rate_Const_1;interest_rate, delta_interest_rate;
 ;;;
 ////////////////////// Production and consumption choices;;;

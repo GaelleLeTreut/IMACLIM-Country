@@ -301,7 +301,7 @@ endfunction
 /// Household_NetDebt_constraint_1 : linear deviation from a reference level (Household_NetDebt_ref)
 /// The Debt deviation is proportional to the deviation of net lending/borrowing from its reference level (NetLending_ref(Indice_Households))
 
-function y = H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = H_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Household net Debt constraint (NetFinancialDebt)
     y1 = NetFinancialDebt(Indice_Households) - ( ini.NetFinancialDebt(Indice_Households) + (time_since_ini / 2) * (ini.NetLending(Indice_Households) - NetLending(Indice_Households) ) ) ;
@@ -309,7 +309,7 @@ function y = H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
 	y=y1';		
 endfunction
 
-function y = H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = H_NetDebt_Const_2(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Household net Debt constraint (NetFinancialDebt)
     y1 = NetFinancialDebt(Indice_Households) - BY.NetFinancialDebt(Indice_Households);
@@ -649,7 +649,7 @@ endfunction
 /// Corporations_NetDebt_constraint_1: linear deviation from a reference level (NetFinancialDebt_ref)
 /// The Debt deviation is proportional to the deviation of net lending/borrowing from its reference level (NetLending_ref(Indice_Corporations))
 
-function y = Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = Corp_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Household net lending constraint (NetLending(Indice_Households))
     y1 = NetFinancialDebt(Indice_Corporations) - (ini.NetFinancialDebt(Indice_Corporations) + (time_since_ini / 2) * (ini.NetLending(Indice_Corporations) - NetLending(Indice_Corporations))) ;
@@ -657,7 +657,7 @@ function y = Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) 
 	y=y1';		
 endfunction
 
-function y = Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = Corp_NetDebt_Const_2(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Household net lending constraint (NetLending(Indice_Households))
     y1 = NetFinancialDebt(Indice_Corporations) - BY.NetFinancialDebt(Indice_Corporations) ; 
@@ -1856,7 +1856,7 @@ endfunction
 /// Government_NetDebt_constraint_1 : linear deviation from a reference level (NetFinancialDebt_ref(Indice_Government))
 /// The Debt deviation is proportional to the deviation of net lending/borrowing from its reference level (NetLending_ref(Indice_Government))
 
-function y = G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending);
+function y = G_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini);
 
     /// Government net lending constraint (NetLending(Indice_Government))
     y1 = NetFinancialDebt(Indice_Government) - (ini.NetFinancialDebt(Indice_Government) + (time_since_ini / 2) * (ini.NetLending(Indice_Government) - NetLending(Indice_Government)));
@@ -1864,7 +1864,7 @@ function y = G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending);
 	y  = y1' ;
 endfunction
 
-function y = G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending);
+function y = G_NetDebt_Const_2(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini);
 
     /// Government net lending constraint (NetLending(Indice_Government))
     y1 = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government);
@@ -2032,7 +2032,7 @@ endfunction
 
 /// RestOfTheWorld_NetDebt_constraint_1 : linear deviation from a reference level (NetFinancialDebt_ref(Indice_RestOfWorld))
 /// The Debt deviation is proportional to the deviation of net lending/borrowing from its reference level (NetLending_ref(Indice_RestOfWorld))
-function y = RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = RoW_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Government net lending constraint (NetLending(Indice_Government))
     y1 = NetFinancialDebt(Indice_RestOfWorld) - (ini.NetFinancialDebt(Indice_RestOfWorld) + (time_since_ini / 2) * (ini.NetLending(Indice_RestOfWorld) - NetLending(Indice_RestOfWorld)));
@@ -2040,7 +2040,7 @@ function y = RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending) ;
 	y=y1';
 endfunction
 
-function y = RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
+function y = RoW_NetDebt_Const_2(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Government net lending constraint (NetLending(Indice_Government))
     y1 = NetFinancialDebt(Indice_RestOfWorld) - BY.NetFinancialDebt(Indice_RestOfWorld);
