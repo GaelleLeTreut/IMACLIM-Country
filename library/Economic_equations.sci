@@ -317,6 +317,27 @@ function y = H_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
 	y=y1';		
 endfunction
 
+/// Household net Debt constraint (NetFinancialDebt) from De Lauretis
+function y = H_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+	// Gross net lending at BY and currend
+	Gross_NetLending0 = BY.NetLending(Indice_Households) - BY.Property_income(Indice_Households);
+	Gross_NetLending= NetLending(Indice_Households) - Property_income(Indice_Households);
+		
+    /// Household net Debt constraint (NetFinancialDebt)
+    Incr_GrossNetLending = (Gross_NetLending - Gross_NetLending0)./time_since_BY ; 
+
+	TermDebt0 = [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Households))^time_since_BY ].* BY.NetFinancialDebt(Indice_Households);
+	
+	Term1 = 0;
+	for elt=0:time_since_BY-1
+		Term1 = Term1 + [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Households))^elt ].* [- Gross_NetLending0 - (time_since_BY - 1 - elt)*Incr_GrossNetLending  ] ; 
+	end
+	
+	y1 = NetFinancialDebt(Indice_Households) - ( TermDebt0 + Term1 ) ;
+	y=y1';	
+	
+endfunction
+
 
 // Household consumption (by products, by household class)
 // Aggregated demand functions (may not assume identical and perfect aggregation preferences, identical constraints and maximisation programs)
@@ -643,6 +664,30 @@ function y = Corp_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) 
 
 	y=y1';		
 endfunction
+
+/// Corporations_NetDebt_constraint_1 net Debt constraint (NetFinancialDebt) from De Lauretis
+function y = Corp_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+
+	// Gross net lending at BY and currend
+	Gross_NetLending0 = BY.NetLending(Indice_Corporations) - BY.Property_income(Indice_Corporations);
+	Gross_NetLending= NetLending(Indice_Corporations) - Property_income(Indice_Corporations);
+		
+    /// Corporations_NetDebt_constraint_1 net Debt constraint (NetFinancialDebt)
+    Incr_GrossNetLending = (Gross_NetLending - Gross_NetLending0)./time_since_BY ; 
+
+	TermDebt0 = [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Corporations))^time_since_BY ].* BY.NetFinancialDebt(Indice_Corporations);
+	
+	Term1 = 0;
+	for elt=0:time_since_BY-1
+		Term1 = Term1 + [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Corporations))^elt ].* [- Gross_NetLending0 - (time_since_BY - 1 - elt)*Incr_GrossNetLending  ] ; 
+	end
+
+	
+	y1 = NetFinancialDebt(Indice_Corporations) - ( TermDebt0 + Term1 ) ;
+	y=y1';	
+	
+endfunction
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1827,6 +1872,29 @@ function y = G_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending);
 	y  = y1' ;
 endfunction
 
+/// Corporations_NetDebt_constraint_1 net Debt constraint (NetFinancialDebt) from De Lauretis
+function y = G_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+
+	// Gross net lending at BY and currend
+	Gross_NetLending0 = BY.NetLending(Indice_Government) - BY.Property_income(Indice_Government);
+	Gross_NetLending= NetLending(Indice_Government) -	Property_income(Indice_Government);
+		
+    /// Corporations_NetDebt_constraint_1 net Debt constraint (NetFinancialDebt)
+    Incr_GrossNetLending = (Gross_NetLending - Gross_NetLending0)./time_since_BY ; 
+
+	TermDebt0 = [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Government))^time_since_BY ].* BY.NetFinancialDebt(Indice_Government);
+	
+	Term1 = 0;
+	for elt=0:time_since_BY-1
+		Term1 = Term1 + [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Government))^elt ].* [- Gross_NetLending0 - (time_since_BY - 1 - elt)*Incr_GrossNetLending  ] ; 
+	end
+		
+	y1 = NetFinancialDebt(Indice_Government) - ( TermDebt0 + Term1 ) ;
+	y=y1';	
+	
+endfunction
+
+
 // Public finance "closure"
 // Set of variables and exogenous constraints that balances the government account
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1978,6 +2046,13 @@ function y = RoW_NetDebt_Const_2(NetFinancialDebt, time_since_ini, NetLending) ;
     y1 = NetFinancialDebt(Indice_RestOfWorld) - BY.NetFinancialDebt(Indice_RestOfWorld);
 
 	y=y1';
+endfunction
+
+function y = RoW_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+	
+	y1 = NetFinancialDebt(Indice_RestOfWorld) + ( sum(NetFinancialDebt(Indice_Households)) + NetFinancialDebt(Indice_Government) + NetFinancialDebt(Indice_Corporations) ) ;
+	y=y1';	
+	
 endfunction
 
 

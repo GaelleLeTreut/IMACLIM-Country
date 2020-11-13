@@ -25,3 +25,5 @@ time_since_ini;5;0;100;has to be equal to time_step in a Static mode;
 Government_closure;1;0;1;;
 delta_TranspMargins_rate;1;0;1;;
 delta_TradeMargins_rate;1;0;1;;
+// Inflation rat for calculation of netdebt;;;;;
+Inflation_rate;0.01;0;1;;
