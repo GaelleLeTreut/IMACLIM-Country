@@ -9,9 +9,17 @@ if CO2_footprint == "True" & Scenario <>"" then
 end
 /////////////////////////////////////////////////////////////////////////////////////
 
+////// Correction of delta_X 
+parameters.delta_X_parameter = delta_X_parameter_indBY(time_step,:);
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Get with which scenario we are working
 /////////////////////////////////////////////////////////////////////////////////////
+/// period_0 2018 / 2023 
+period_0 = [1, 2];
+// period_1 2030 2050 = [3, 4]; 
+period_1 = [3, 4];
+
 // Assuming that the first 3 digit are AMS or AME
 Scenario_temp =part(Scenario,1:3);
 
@@ -28,28 +36,32 @@ parameters.Coef_real_wage = 1;
 
 /// Ajusting B on the reference rate by changing closure rule
 // Coming from AMS simu ( omega / pM compo at 2018 and 2030
+// A ajuster avec le pas de temps 2023 (valeur arbitraire au pif)
 if Macro_nb == "CovLow"
-Table_ExoCst_Bal = [33.73386662	46.08498598];
+Table_ExoCst_Bal = [33.73386662	38  46.08498598];
 	if time_step == 1
 		ExoCst_Bal = Table_ExoCst_Bal(1);
 	elseif time_step == 2
 		ExoCst_Bal = Table_ExoCst_Bal(2);
+	elseif time_step == 3
+		ExoCst_Bal = Table_ExoCst_Bal(3);
 	end
 elseif Macro_nb == "CovHigh"		
-
-Table_ExoCst_Bal = [33.73386662	41.84752127];
+Table_ExoCst_Bal = [33.73386662  36	41.84752127];
 
 	if time_step == 1
 		ExoCst_Bal = Table_ExoCst_Bal(1);
 	elseif time_step == 2
 		ExoCst_Bal = Table_ExoCst_Bal(2);
+	elseif time_step == 3
+		ExoCst_Bal = Table_ExoCst_Bal(3);
 	end	
 end 
 
 
 /////////// Increasing savings of HH and markup of property business
 if Macro_nb == "CovLow"|Macro_nb == "CovHigh"
-	if time_step == 2
+	if time_step == 3
 	parameters.Household_saving_rate = BY.Household_saving_rate + 0.04;
 	markup_rate(Indice_Immo) =BY.markup_rate(Indice_Immo)*1.15;
 	end
@@ -105,10 +117,10 @@ end
 
 if ( Scenario_temp=="AMS" | Scenario_temp=="AME" ) & Macro_nb=="CovRef"
 	select time_step 
-	case 2 then
+	case 3 then
 		parameters.Mu = 0.0135;
 		parameters.u_param = 0.165;
-	case 3 then
+	case 4 then
 		parameters.Mu = 0.016;
 		parameters.u_param = 0.165;
 	end
@@ -121,21 +133,21 @@ end
 // Penetration rate of biofuels (1) and biogaz (2) regarding conventional sectors
 /////////////////////////////////////////////////////////////////////////////////////
 
-if time_step <> 1
+if or(time_step==period_1)
 	select Scenario_temp
 	case "AME"
 		penetration_rate = zeros(1, 2);
 	case "AMS"
 		select time_step 
-		case 2 then
+		case 3 then
 			penetration_rate = [0.18, 0.054];
 			// fuels : 7% en 2010 et on passe à 12% : 0.054 de réduction du contenu carbone
 			// to check again  
-		case 3 then
+		case 4 then
 			penetration_rate = ones(1, 2);
 		end
 	end
-elseif time_step== 1
+elseif or(time_step==period_0)
 	penetration_rate = zeros(1, 2);	
 end
 /////////////////////////////////////////////////////////////////////////////////////
@@ -145,16 +157,16 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: 	AME --> issue regarding production vs. distribution 
 // 		AMS --> biogaz cost structure of production (which target ?) + price target of DGEC + penetration rate
-if time_step <> 1
+if  or(time_step==period_1)
 	select Scenario_temp
 	case "AME"
 		select time_step 
-		case 2 then 
+		case 3 then 
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz) = -0.1550108 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz));
 			parameters.phi_K(Indice_Gaz)  = -0.1550108;
 			parameters.phi_L(Indice_Gaz)  = -0.1436035;
 			parameters.phi_IC(Indice_Agri,Indice_Gaz) = 0.0; 
-		case 3 then 
+		case 4 then 
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz) = -0.0796872 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz));
 			parameters.phi_K(Indice_Gaz)  = -0.0796872;
 			parameters.phi_L(Indice_Gaz)  = -0.0649622;
@@ -162,7 +174,7 @@ if time_step <> 1
 		end
 	case "AMS"
 		select time_step 
-		case 2 then
+		case 3 then
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz) = 0.1161498 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz));
 			parameters.phi_K(Indice_Gaz)  = 0.0662911;
 			parameters.phi_L(Indice_Gaz)  = 0.10112;	
@@ -172,7 +184,7 @@ if time_step <> 1
 			Deriv_Exogenous.Production_Tax_rate = Production_Tax_rate;
 			Deriv_Exogenous.Production_Tax_rate(Indice_Gaz) = mean(Production_Tax_rate(Indice_Carb));
 	
-		case 3 then
+		case 4 then
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz) =  0.102501 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Gaz));
 			parameters.phi_K(Indice_Gaz)  =  0.0690707;
 			parameters.phi_L(Indice_Gaz)  =  0.0922118;
@@ -187,16 +199,16 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: 	AME --> nothing
 // 		AMS --> same as gaz for biofuel expansion
-if time_step <> 1
+if  or(time_step==period_1)
 	select Scenario_temp
 	case "AMS"
 		select time_step
-		case 2 then
+		case 3 then
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Carb) = -0.04 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Carb));
 			parameters.phi_IC(Indice_Agri,Indice_Carb) = -0.1771781;
 			parameters.phi_L(Indice_Carb) = -0.0004573;
 			parameters.phi_K(Indice_Carb) = -0.0855834;
-		case 3 then 
+		case 4 then 
 			parameters.phi_IC(Indice_NonEnerSect,Indice_Carb) = -0.006 * ones(parameters.phi_IC(Indice_NonEnerSect,Indice_Carb));
 			parameters.phi_IC(Indice_Agri,Indice_Carb) = -0.1350461;
 			parameters.phi_L(Indice_Carb) = -0.015186;
@@ -209,45 +221,47 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: aim to depict electric car penetration and production price targets of DGEC
 
+ // if or(time_step==period_1)
 // Deriv_Exogenous.SpeMarg_rates_C = BY.SpeMarg_rates_C;
 // Deriv_Exogenous.SpeMarg_rates_I = BY.SpeMarg_rates_I;
 // select Scenario_temp
 // case "AME"
 	// select time_step 
-	// case 1 then
+	// case 3 then
 		// Deriv_Exogenous.SpeMarg_rates_C(Indice_Auto) = - 0.20;
 		// Deriv_Exogenous.SpeMarg_rates_I(Indice_Auto) = 0.2746654649;
 		// parameters.phi_IC(nb_Sectors,Indice_Auto) = 0.0045;
-	// case 2 then
+	// case 4 then
 		// Deriv_Exogenous.SpeMarg_rates_C(Indice_Auto) = -0.29002239958983045;
 		// Deriv_Exogenous.SpeMarg_rates_I(Indice_Auto) = 0.20554114463394632;
 		// parameters.phi_IC(nb_Sectors,Indice_Auto) = -0.0025;
 	// end
 // case "AMS"
 	// select time_step 
-	// case 1 then
+	// case 3 then
 		// Deriv_Exogenous.SpeMarg_rates_C(Indice_Auto) = - 0.26;
 		// Deriv_Exogenous.SpeMarg_rates_I(Indice_Auto) = 0.27;
 		// parameters.phi_IC(nb_Sectors,Indice_Auto) = -0.0025;
-	// case 2 then
+	// case 4 then
 		// Deriv_Exogenous.SpeMarg_rates_C(Indice_Auto) = -0.28;
 		// Deriv_Exogenous.SpeMarg_rates_I(Indice_Auto) = 0.265;
 		// parameters.phi_IC(nb_Sectors,Indice_Auto) = 0.0;
 	// end
 // end
+// end
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Carbon and energy taxes + Emission coefficients
 /////////////////////////////////////////////////////////////////////////////////////
-if time_step <> 1
+if  or(time_step==period_1)
 	select Scenario_temp 
 	case "AME"
 		parameters.Carbon_Tax_rate = 100*1e3;
 		// UE-ETS evolution 
 		select time_step 
-		case 2 then
-			parameters.CarbonTax_Diff_IC = parameters.CarbonTax_Diff_IC;		// do nothing: already in csv param file
 		case 3 then
+			parameters.CarbonTax_Diff_IC = parameters.CarbonTax_Diff_IC;		// do nothing: already in csv param file
+		case 4 then
 			parameters.CarbonTax_Diff_IC = (parameters.CarbonTax_Diff_IC==0.335)*0.88 + (parameters.CarbonTax_Diff_IC<>0.335).*parameters.CarbonTax_Diff_IC;
 		end
 	case "AMS"
@@ -261,9 +275,9 @@ if time_step <> 1
 		Deriv_Exogenous.Emission_Coef_C(Indice_Carb,:) = (1-penetration_rate(2))*Emission_Coef_C(Indice_Carb,:);
 		Deriv_Exogenous.Emission_Coef_IC(Indice_Carb,:) = (1-penetration_rate(2))*Emission_Coef_IC(Indice_Carb,:);
 		select time_step
-		case 2 then
-			parameters.Carbon_Tax_rate = 225*1e3;
 		case 3 then
+			parameters.Carbon_Tax_rate = 225*1e3;
+		case 4 then
 			parameters.Carbon_Tax_rate = 600*1e3;
 			// additional energy tax: price signal for biomass scarcity
 			Energy_Tax_rate_sup = 232.6;
@@ -282,11 +296,11 @@ end
 // capital and labour intensities of production
 /////////////////////////////////////////////////////////////////////////////////////
 // NB: from BU expertise or outside calculation using sigma_KL-E on K (Construction + Industries) or L (Agriculture)
-if time_step <> 1
+if  or(time_step==period_1)
 	select Scenario_temp
 	case "AME"
 		select time_step 
-		case 2 then
+		case 3 then
 			parameters.phi_K(Indice_Elec) = -0.0124576;	
 			parameters.phi_K(Indice_Heat) = 0.0066989;
 			parameters.phi_K(7:10) = [-0.0088444	-0.0062498	-0.0057102	-0.0034528];
@@ -295,7 +309,7 @@ if time_step <> 1
 			parameters.phi_K(Indice_Immo) = -0.0208056;
 			parameters.phi_K(nb_Sectors) = -0.0159105;
 	
-		case 3 then
+		case 4 then
 			parameters.phi_K(Indice_Elec) = -0.0173205;	
 			parameters.phi_K(Indice_Heat) = 0.0248238;
 			parameters.phi_K(7:10) = [-0.0064919	-0.0029835	-0.0026108	-0.0006726];
@@ -307,7 +321,7 @@ if time_step <> 1
 	
 	case "AMS"
 		select time_step 
-		case 2 then
+		case 3 then
 			parameters.phi_K(Indice_Elec) = -0.0186164;	
 			parameters.phi_K(Indice_Heat) = -0.0587296;
 			parameters.phi_K(7:10) = [-0.0120686	-0.0072547	-0.0066602	-0.0030313];
@@ -316,7 +330,7 @@ if time_step <> 1
 			parameters.phi_K(Indice_Immo) = -0.0215932;
 			parameters.phi_K(nb_Sectors) = -0.0177525;
 	
-		case 3 then
+		case 4 then
 			parameters.phi_K(Indice_Elec) = -0.0229234;	
 			parameters.phi_K(Indice_Heat) = -0.0411437;
 			parameters.phi_K(7:10) = [-0.0125368	-0.0045674	-0.0041246	-0.0019489];
@@ -360,24 +374,24 @@ end
 /////////////////////////////////////////////////////////////////////////////////////
 // InstitAgents							Corporations  		Government  		Households  	RestOfWorld	
 
-if time_step<> 1	   
+if  or(time_step==period_1)	   
 	select Scenario_temp
 	case "AME"
 		select time_step 
-		case 2 then 
+		case 3 then 
 			parameters.LowCarb_Transfers = [21696.000 			-936028.230 		914332.230 		0];
-		case 3 then
+		case 4 then
 			parameters.LowCarb_Transfers = [9480.000 			-549380.740 		539900.740 		0];
 		end
 	case "AMS"
 		select time_step 
-		case 2 then
-			parameters.LowCarb_Transfers = [16823.485531064 	-5696089.70453106 	5679266.219 	0];
 		case 3 then
+			parameters.LowCarb_Transfers = [16823.485531064 	-5696089.70453106 	5679266.219 	0];
+		case 4 then
 			parameters.LowCarb_Transfers = [-6564572.236067200 	-8124784.748932800 	14689356.985 	0];
 		end
 	end
-elseif time_step == 1
+elseif  or(time_step==period_0)
 	parameters.LowCarb_Transfers = zeros(1,nb_InstitAgents);
 end
 
