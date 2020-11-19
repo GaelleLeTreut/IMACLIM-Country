@@ -1435,6 +1435,24 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ];
 end
 
+/// Temporary - to delete
+if Country_ISO=="France"<> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Public transfers for HH in nominal terms in "+money_disp_unit+money+"---",			 ""							];..
+["Unemployment transfers",						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)						];..
+["Pensions",									money_disp_adj.*Out.Pensions(Indice_Households)										];..
+["Other social transfers",						money_disp_adj.*Out.Other_social_transfers(Indice_Households)						];..
+["---Public transfers/GDP ratio in nominal terms---",			 ""							];..
+["Unemployment transfers",						(money_disp_adj.*Out.Unemployment_transfers(Indice_Households)/Out.GDP)*100						];..
+["Pensions",									(money_disp_adj.*Out.Pensions(Indice_Households)/Out.GDP)*100				  					];..
+["Other social transfers",						(money_disp_adj.*Out.Other_social_transfers(Indice_Households)/Out.GDP)*100						];..
+["---Demography---",			 ""							];..
+["Population", Out.Population						];..
+["Labour force", Out.Labour_force						];..
+];
+end
+
+
 ///Store BY
 if Output_files
 	if OutputfilesBY
