@@ -95,6 +95,19 @@ end
 // Export growth of non-energy sectors as GDP_world
 if X_nonEnerg == "True"
 	parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Proj_Macro.GDP_world(time_step);
+	
+	// Must be corrected: delta_X_parameter refers as the BY variation but in the Macro is the mean growth year between ini and current time step
+	// delta_X_parameter  should be equal to delta_X_parameter_indBY(time_step,:) ( 11/2020 correction in the study run choices files only but need to be harmonized)
+	if time_step == 1 	
+		for elt = 1:Nb_Iter
+			GDP_world_index(elt) = prod((1 + Proj_Macro.GDP_world(1:elt)).^(Proj_Macro.current_year(1:elt) - Proj_Macro.reference_year(1:elt)));
+			delta_X_parameter_indBY = zeros(Nb_Iter,nb_Sectors);
+		end
+	end
+		
+	delta_X_parameter_indBY(time_step,:) =[zeros(1,nb_EnerSect) ((ones(1,nb_NonEnerSect).*GDP_world_index(time_step)).^(1/parameters.time_since_BY) - 1)]; 
+	
+	
 end
 
 
