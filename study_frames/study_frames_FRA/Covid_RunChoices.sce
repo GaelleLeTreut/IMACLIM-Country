@@ -36,9 +36,8 @@ parameters.Coef_real_wage = 1;
 
 /// Ajusting B on the reference rate by changing closure rule
 // Coming from AMS simu ( omega / pM compo at 2018 and 2030
-// A ajuster avec le pas de temps 2023 (valeur arbitraire au pif)
 if Macro_nb == "CovLow"
-Table_ExoCst_Bal = [33.73386662	38  46.08498598];
+Table_ExoCst_Bal = [34.32564686	40.36601416	57.70975187];
 	if time_step == 1
 		ExoCst_Bal = Table_ExoCst_Bal(1);
 	elseif time_step == 2
@@ -47,7 +46,7 @@ Table_ExoCst_Bal = [33.73386662	38  46.08498598];
 		ExoCst_Bal = Table_ExoCst_Bal(3);
 	end
 elseif Macro_nb == "CovHigh"		
-Table_ExoCst_Bal = [33.73386662  36	41.84752127];
+Table_ExoCst_Bal = [34.32564686	36.65438807	52.40340249];
 
 	if time_step == 1
 		ExoCst_Bal = Table_ExoCst_Bal(1);
@@ -60,12 +59,17 @@ end
 
 
 /////////// Increasing savings of HH and markup of property business
-if Macro_nb == "CovLow"|Macro_nb == "CovHigh"
-	if time_step == 3
-	parameters.Household_saving_rate = BY.Household_saving_rate + 0.04;
-	markup_rate(Indice_Immo) =BY.markup_rate(Indice_Immo)*1.15;
-	end
-end 
+// if Macro_nb == "CovLow"|Macro_nb == "CovHigh"
+	// if time_step == 2
+	// parameters.Household_saving_rate = BY.Household_saving_rate + 0.04;
+	// markup_rate(Indice_Immo) =BY.markup_rate(Indice_Immo)*1.15;
+	// end
+
+	// if time_step == 3
+	// parameters.Household_saving_rate = BY.Household_saving_rate + 0.02;
+	// markup_rate(Indice_Immo) =BY.markup_rate(Indice_Immo)*1.07;
+	// end
+// end 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Changes in projection for step 1 (2018); only hybrid goods balances for C,IC,X,M (capital below)
