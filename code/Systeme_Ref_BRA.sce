@@ -166,10 +166,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     G_NetLending_Const_1(NetLending, GFCF_byAgent, Government_savings)
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers) 
 
-    H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    H_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    Corp_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    G_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    RoW_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
 
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)
     H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)

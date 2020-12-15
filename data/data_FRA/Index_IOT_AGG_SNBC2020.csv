@@ -4,11 +4,11 @@ Row;Coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;-;-
 Row;AllFuels;Commodities;EnerSect;HybridCommod;FinEnerSect;Carb;-
 Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;Elec;-
 Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;Heat;-
-Row;Heavy_Industry;Commodities;NonEnerSect;NonHybridCommod;-;-;-
+Row;Heavy_Industry;Commodities;NonEnerSect;NonHybridCommod;-;HeavInd;-
 Row;Buildings_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-
 Row;Work_constr;Commodities;NonEnerSect;NonHybridCommod;-;-;-
-Row;Automobile;Commodities;NonEnerSect;HybridCommod;-;Auto;-
-Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;-;-
+Row;Automobile;Commodities;NonEnerSect;HybridCommod;-;Auto;EquipTrans
+Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;-;EquipTrans
 Row;Load_PipeTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp
 Row;PassTransp;Commodities;NonEnerSect;HybridCommod;-;AllTransp;TerTransp
 Row;AirTransp;Commodities;NonEnerSect;NonHybridCommod;-;AllTransp;-

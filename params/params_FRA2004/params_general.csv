@@ -17,3 +17,5 @@ depreciation_rate;0.024072808;0;1;for capital market;
 Mu;0;0;1;labour productivity growth rate;
 time_since_BY;0;0;100;has to be equal to time_period in a Static mode;
 time_since_ini;20;0;100;has to be equal to time_step in a Static mode;
+// Inflation rat for calculation of netdebt;;;;;
+Inflation_rate;0.01;0;1;;

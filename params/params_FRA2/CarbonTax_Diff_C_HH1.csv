@@ -9,8 +9,10 @@ Heavy_Industry;1
 Buildings_constr;1
 Work_constr;1
 Automobile;1
+OthTranspEquip;1
 Load_PipeTransp;1
 PassTransp;1
+AirTransp;1
 AgriFood_Indus;1
 PropertyBus;1
 Comp;1

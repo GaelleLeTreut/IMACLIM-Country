@@ -181,10 +181,10 @@ function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNu
     RoW_NetLending_Const_1(NetLending, pM, M, pX, X, Property_income, Other_Transfers)
 
     // Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
-    H_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    Corp_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    G_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
-    RoW_NetDebt_Const_1(NetFinancialDebt, time_since_ini, NetLending)
+    H_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    Corp_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    G_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
+    RoW_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini)
 
     // 1 : share o disposable income / 2 : constant in real term
     ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate)

@@ -232,6 +232,12 @@ else
 
     //No specific margins for government
     initial_value.SpeMarg_G= zeros(1, nb_Sectors);
+	
+	if Country_ISO == "FRA2"
+		SpeMarg_G_p (1, Indice_HybridCommod)= (initial_value.pG(Indice_HybridCommod,:)' - p_AllTax_WithoutSpeM(Indice_HybridCommod))./((1+Tax_rate(Indice_HybridCommod)));
+		SpeMarg_G_p(1,Indice_NonHybridCommod) =0;
+		initial_value.SpeMarg_G =  SpeMarg_G_p.* initial_value.G';
+	end
 
 end 
 
@@ -258,3 +264,5 @@ for column  = 1:nb_Commodities
         printf("===============================================\n");
     end
 end
+
+

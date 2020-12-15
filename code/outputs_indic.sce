@@ -1363,7 +1363,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal I",														money_disp_adj.*sum(Out.I_value)									];..
 ["Nominal X",														money_disp_adj.*sum(Out.X_value)									];..
 ["Nominal M",														money_disp_adj.*sum(Out.M_value)									];..
-["Nominal Trade Balance",										money_disp_adj.*sum((Out.X_value)-sum(Out.M_value))					];..
+["Nominal Trade Balance",										money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))					];..
 ["Nominal M/Y ratio_"+Index_Sectors,							divide(Out.M, Out.Y, %nan) 						];..
 ["Nominal Net-of-tax wages",										Out.omega										   						];..
 ["Net-of-tax effective wages",									Out.omega/((1+Out.Mu)^Out.time_since_BY)								];..
@@ -1470,6 +1470,24 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["RatioYobj/Yten"+Index_Sectors,						Y_obj.val./Out.Y						];..
 ];
 end
+
+/// Temporary - to delete
+if Country_ISO=="France"<> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Public transfers for HH in nominal terms in "+money_disp_unit+money+"---",			 ""							];..
+["Unemployment transfers",						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)						];..
+["Pensions",									money_disp_adj.*Out.Pensions(Indice_Households)										];..
+["Other social transfers",						money_disp_adj.*Out.Other_social_transfers(Indice_Households)						];..
+["---Public transfers/GDP ratio in nominal terms---",			 ""							];..
+["Unemployment transfers",						(money_disp_adj.*Out.Unemployment_transfers(Indice_Households)/Out.GDP)*100						];..
+["Pensions",									(money_disp_adj.*Out.Pensions(Indice_Households)/Out.GDP)*100				  					];..
+["Other social transfers",						(money_disp_adj.*Out.Other_social_transfers(Indice_Households)/Out.GDP)*100						];..
+["---Demography---",			 ""							];..
+["Population", Out.Population						];..
+["Labour force", Out.Labour_force						];..
+];
+end
+
 
 ///Store BY
 if Output_files

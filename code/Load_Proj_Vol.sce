@@ -39,7 +39,7 @@ end
 // ------------------------- *
 
 // Parameter's file
-if Country == 'France'
+if Country_ISO == 'FRA'
     file_name = 'ProjScenario'  + AGG_type + '.csv';
 else
     file_name = 'Projections_Scenario.csv';

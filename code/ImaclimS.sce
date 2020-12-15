@@ -96,7 +96,12 @@ if Output_files
 	else
 		simu_name=Scenario;
     end
-
+	
+	// GLT Temporary : specific name for FRA Simu
+	if Country_ISO <> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+	simu_name = simu_name+"_"+Macro_nb;
+	end
+	
     syst_name = '';
     if Optimization_Resol then
         syst_name = SystemOpt_Resol;
@@ -119,11 +124,11 @@ if Output_files
     copyfile(STUDY_Country + study + ".sce", SAVEDIR);	
 	end	
 	if Scenario <> '' 
-        if Country == 'France'
-            copyfile(STUDY_Country + "ProjScenario" + AGG_type + ".csv", SAVEDIR);	
-        else
-            copyfile(STUDY_Country + 'Projections_Scenario.csv', SAVEDIR); 
-        end
+		if Country_ISO <> 'FRA'
+			copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
+		else
+			copyfile(STUDY_Country + 'ProjScenario'+ AGG_type + ".csv", SAVEDIR);	
+		end
 	end
     if Optimization_Resol then
         copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
@@ -135,7 +140,7 @@ if Output_files
     if SIMU_MODE then
         current_run_name = simu_name;
     elseif Scenario <> '' then
-        current_run_name = Scenario;
+        current_run_name = simu_name;
     else
         current_run_name = 'NoScen';
     end
@@ -268,6 +273,7 @@ printf("STEP 4: INPUT OUTPUT ANALYSIS FOR EMBODIED EMISSIONS AT BASE YEAR \n");
 if CO2_footprint =="True"
     exec(CODE+"IOA_BY.sce");
 end
+
 
 ////////////////////////////////////////////////////////////
 // 	STEP 5: RESOLUTION - EQUILIBRIUM
@@ -430,7 +436,34 @@ for time_step=1:Nb_Iter
 			exec(CODE+"outputs_indic.sce");
 		end
 	end
-	
+
+	// Changing reference_year to compare results
+	if Country_ISO=="FRA"	
+		if time_step==1
+			ref = d;
+			evol_ref = evol_2018;
+			ref_name = "2018";
+			Out = d ;
+			OutputfilesBY =%F;
+				if Output_files
+					SAVEDIR_INIT_temp =SAVEDIR_INIT; 
+					SAVEDIR_INIT = SAVEDIR;
+				end
+			exec(CODE+"outputs_indic.sce");	
+			OutputfilesBY =%T;
+				if Output_files
+					SAVEDIR_INIT =SAVEDIR_INIT_temp;
+					clear SAVEDIR_INIT_temp 
+				end
+		elseif time_step>=2
+			ref = data_1;
+			evol_ref = evol_2018;
+			ref_name = "2018";
+			Out=d;
+			exec(CODE+"outputs_indic.sce");
+		end
+	end
+
 
     ////////////////////////////////////////////////////////////
     // 	STEP 7: INPUT OUTPUT ANALYSIS AFTER RUN
@@ -458,13 +491,3 @@ if Output_files
 end
 
 printf('\n------------ Done ! :) ------------\n');
-
-AGG_type
-time_step
-Macro_nb
-Scenario
-Recycling_Option
-
-GDP
-u_tot
-GDP_pFish
