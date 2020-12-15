@@ -1472,19 +1472,19 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 end
 
 /// Temporary - to delete
-if Country_ISO=="France"<> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+if Country_ISO=='FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["---Public transfers for HH in nominal terms in "+money_disp_unit+money+"---",			 ""							];..
-["Unemployment transfers",						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)						];..
-["Pensions",									money_disp_adj.*Out.Pensions(Indice_Households)										];..
-["Other social transfers",						money_disp_adj.*Out.Other_social_transfers(Indice_Households)						];..
+["Unemployment transfers"+" HH"+(1:nb_Households)',						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)'						];..
+["Pensions"+" HH"+(1:nb_Households)',									(money_disp_adj.*Out.Pensions(Indice_Households))'										];..
+["Other social transfers"+" HH"+(1:nb_Households)',						(money_disp_adj.*Out.Other_social_transfers(Indice_Households))'					];..
 ["---Public transfers/GDP ratio in nominal terms---",			 ""							];..
-["Unemployment transfers",						(money_disp_adj.*Out.Unemployment_transfers(Indice_Households)/Out.GDP)*100						];..
-["Pensions",									(money_disp_adj.*Out.Pensions(Indice_Households)/Out.GDP)*100				  					];..
-["Other social transfers",						(money_disp_adj.*Out.Other_social_transfers(Indice_Households)/Out.GDP)*100						];..
+["Unemployment transfers"+" HH"+(1:nb_Households)',						((money_disp_adj.*Out.Unemployment_transfers(Indice_Households)/Out.GDP)*100)'				];..
+["Pensions"+" HH"+(1:nb_Households)',									((money_disp_adj.*Out.Pensions(Indice_Households)/Out.GDP)*100)'		  					];..
+["Other social transfers"+" HH"+(1:nb_Households)',						((money_disp_adj.*Out.Other_social_transfers(Indice_Households)/Out.GDP)*100)'					];..
 ["---Demography---",			 ""							];..
-["Population", Out.Population						];..
-["Labour force", Out.Labour_force						];..
+["Population"+" ClassHH"+(1:nb_Households)', Out.Population'						];..
+["Labour force"+" ClassHH"+(1:nb_Households)', Out.Labour_force'						];..
 ];
 end
 
@@ -1551,6 +1551,9 @@ if [H_DISAGG == "H20"] & [Country == "France"]
 		["Public debt to GDP ratio",				BY.NetFinancialDebt(Indice_Government)/BY.GDP,							(d.NetFinancialDebt(Indice_Government)/d.GDP)/(BY.NetFinancialDebt(Indice_Government)/BY.GDP)];..
 		["Public net lending to GDP ratio",			BY.NetLending(Indice_Government)/BY.GDP,								(d.NetLending(Indice_Government)/d.GDP)/(BY.NetLending(Indice_Government)/BY.GDP)];..
 		];
+		
+	if Output_files
+	csvWrite(OutputTable.EquityEfficiency,SAVEDIR+"EquityEfficiency.csv", ';');
+	end 
 end
 
-csvWrite(OutputTable.EquityEfficiency,SAVEDIR+"EquityEfficiency.csv", ';');
