@@ -98,7 +98,7 @@ if Output_files
     end
 	
 	// GLT Temporary : specific name for FRA Simu
-	if Country_ISO <> 'FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+	if Country_ISO <> 'FRA'&part(Macro_nb,1:length('Cov'))=="Cov"
 	simu_name = simu_name+"_"+Macro_nb;
 	end
 	
@@ -108,9 +108,13 @@ if Output_files
     else
         syst_name = System_Resol;
     end
-
-    // runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
-    runName = SystemOpt_Resol + "__" + Recycling_Option
+	
+	if Scenario==""
+	    runName =Country_ISO + '_' + mydate()+'_'+ SystemOpt_Resol + "_" + Recycling_Option
+	else
+		runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+	end 
+	
     SAVEDIR = OUTPUT + runName + filesep();
     mkdir(SAVEDIR);
     diary(SAVEDIR+"summary.log");

@@ -42,55 +42,67 @@
 ///	Definition: Production price = (Theta / Phi) * Cost_Structure / PriceCost_wedge
 
 //	Initial cost structure
-
 BY.Cost_Structure = sum(BY.pIC .* BY.alpha,"r") + sum(BY.pL .* BY.lambda,"r") + sum(BY.pK .* BY.kappa, "r") - BY.ClimPolCompensbySect./BY.Y';
 
 //	Final cost structure
-
 Out.Cost_Structure = sum(Out.pIC .* Out.alpha,"r") + sum(Out.pL .* Out.lambda,"r") + sum(Out.pK .* Out.kappa, "r") - Out.ClimPolCompensbySect./Out.Y';
 
+
+//////////////////////////
 //	Scale effects
-// Out.Theta = BY.Theta ;
-// Out.Phi = BY.Phi;
+//////////////////////////
 ScaleEffect_Cost	= (1/2)*( Out.Theta ./ Out.Phi - Out.Phi ./ Out.Theta );
-
+//1
+//////////////////////////
 //	Price effects
-
+//////////////////////////
 // Energy prices
-
+//2
 EnergPriceEffect_Cost = (1/2)*sum((BY.alpha(Indice_EnerSect,:)./(ones(nb_EnerSect, 1).*.BY.Cost_Structure) + Out.alpha(Indice_EnerSect,:)./(ones(nb_EnerSect, 1).*.Out.Cost_Structure)).*( Out.pIC(Indice_EnerSect,:) - BY.pIC(Indice_EnerSect,:) ), "r");
 
 // Non energy prices (intermediate consumption + capital consumption)
-
 NonEnergPriceEffect_Cost = (1/2)*( sum((BY.alpha(Indice_NonEnerSect,:)./(ones(nb_NonEnerSect, 1).*.BY.Cost_Structure) + Out.alpha(Indice_NonEnerSect,:)./(ones(nb_NonEnerSect, 1).*.Out.Cost_Structure)).*( Out.pIC(Indice_NonEnerSect,:) - BY.pIC(Indice_NonEnerSect,:) ), "r") + (BY.kappa./BY.Cost_Structure + Out.kappa./Out.Cost_Structure).*(Out.pK - BY.pK) );
 
 // Net-of-tax wage
-
 NetWageEffect_Cost = (1/2)* ( (ones(1, nb_Sectors) + BY.Labour_Tax_rate) .* BY.lambda ./ BY.Cost_Structure + (ones(1, nb_Sectors) + Out.Labour_Tax_rate) .* Out.lambda ./ Out.Cost_Structure ) .* ( Out.w - BY.w );
 
 // Labour tax
-
-LabourTaxEffect_Cost = (1/2)* ( BY.w .* BY.lambda ./ BY.Cost_Structure + Out.w .* Out.lambda ./ Out.Cost_Structure ) .* ( BY.Labour_Tax_rate - Out.Labour_Tax_rate );
+LabourTaxEffect_Cost = (1/2)* ( BY.w .* BY.lambda ./ BY.Cost_Structure + Out.w .* Out.lambda ./ Out.Cost_Structure ) .* ( Out.Labour_Tax_rate - BY.Labour_Tax_rate );
 
 //	Profit margin and tax on production effects
-
 //	Price-cost wedge
 BY.PriceCost_wedge 	= ones(1, nb_Sectors) - BY.markup_rate - BY.Production_Tax_rate;
 Out.PriceCost_wedge   	= ones(1, nb_Sectors) - Out.markup_rate - Production_Tax_rate;		// Rq: modifier si Production_Tax_rate est variable: Out.Production_Tax_rate
 
 MarginEffect_Cost = (1/2)* ( BY.PriceCost_wedge ./ Out.PriceCost_wedge - Out.PriceCost_wedge ./ BY.PriceCost_wedge );
 
+////////////////////////////////////////////////////
 //	Technical substitution effects
-
+////////////////////////////////////////////////////
 SubstitutionEffect_Cost = (1/2)*sum((BY.pIC(:,:)./(ones(nb_Sectors, 1).*.BY.Cost_Structure) + Out.pIC(:,:)./(ones(nb_Sectors, 1).*.Out.Cost_Structure)).*( Out.alpha(:,:) - BY.alpha(:,:) ), "r") + ( (ones(1, nb_Sectors) + BY.Labour_Tax_rate) .* BY.w ./ BY.Cost_Structure + (ones(1, nb_Sectors) + Out.Labour_Tax_rate) .* Out.w ./ Out.Cost_Structure ) .* ( Out.lambda - BY.lambda ) + (BY.pK./BY.Cost_Structure + Out.pK./Out.Cost_Structure).*(Out.kappa - BY.kappa);
 
 // 	Climate lump sum compensation to sectors
-
 CompensationEffect_Cost = - (1/2)*( ones(1, nb_Sectors)./(BY.Cost_Structure.*BY.Y') + ones(1, nb_Sectors)./(Out.Cost_Structure.*Out.Y') ).*(Out.ClimPolCompensbySect - BY.ClimPolCompensbySect);
 
+//////////////////////////
 //	Decomposition Error
+//////////////////////////
 CostDecompositionError = (divide(d.pY,BY.pY,%nan)-1)' - ( ScaleEffect_Cost + EnergPriceEffect_Cost + NonEnergPriceEffect_Cost + NetWageEffect_Cost + LabourTaxEffect_Cost + MarginEffect_Cost + SubstitutionEffect_Cost + CompensationEffect_Cost);
 
-//	Table
 
+//////////////////////////
+//	Table
+//////////////////////////
 CostDecompositionTable = [["Sectors (%)", "Production Price", "Scale Effect", "Energy Price Effect", "Other Price Effect", "Net Wage Effect", "Labour Tax effect", "Margin effect", "Substitution effect", "Climate Compensation Effect", "Decomposition Error"]; [Index_Sectors, (divide(d.pY,BY.pY,%nan)-1)*100, ScaleEffect_Cost'*100, EnergPriceEffect_Cost'*100, NonEnergPriceEffect_Cost'*100, NetWageEffect_Cost'*100, LabourTaxEffect_Cost'*100, MarginEffect_Cost'*100, SubstitutionEffect_Cost'*100, CompensationEffect_Cost'*100, CostDecompositionError'*100]];
+CostDecompositionTable = CostDecompositionTable';
+
+OutputTable.CostDecomposCOMTable = [
+["Carbon Tax rate-"+money+"/tCO2", 		  		(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6 ];..
+["Recycling_Option", 		  					Recycling_Option+' '+ClosCarbRev];..
+["Production Price Decomposition - Composite (%)",   				""	  				];..
+[CostDecompositionTable(2:$,1),CostDecompositionTable(2:$,$)]
+];
+
+if Output_files
+ csvWrite(OutputTable.CostDecomposCOMTable,SAVEDIR+"TableCostDecomposCOM.csv", ';');
+end 
