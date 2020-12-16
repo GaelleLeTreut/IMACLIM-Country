@@ -1,5 +1,5 @@
 
-
+////// For equity - efficacity study on carbon tax
 if [H_DISAGG == "H20"] & [Country == "France"]
 
 	Out.H_Primary_income = Out.H_disposable_income - Out.Other_Direct_Tax(Indice_Households) - Out.Income_Tax(Indice_Households);
@@ -53,3 +53,34 @@ if [H_DISAGG == "H20"] & [Country == "France"]
 	csvWrite(OutputTable.EquityEfficiency,SAVEDIR+"EquityEfficiency.csv", ';');
 	end 
 end
+
+
+////// Covid 
+/// Temporary - to be delete
+// if Country_ISO=='FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Public transfers for HH in nominal terms in "+money_disp_unit+money+"---",			 ""							];..
+["Unemployment transfers"+" HH"+(1:nb_Households)',						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)'						];..
+["Pensions"+" HH"+(1:nb_Households)',									(money_disp_adj.*Out.Pensions(Indice_Households))'										];..
+["Other social transfers"+" HH"+(1:nb_Households)',						(money_disp_adj.*Out.Other_social_transfers(Indice_Households))'					];..
+["---Public transfers/GDP ratio in nominal terms---",			 ""							];..
+["Unemployment transfers"+" HH"+(1:nb_Households)',						((money_disp_adj.*Out.Unemployment_transfers(Indice_Households)/Out.GDP)*100)'				];..
+["Pensions"+" HH"+(1:nb_Households)',									((money_disp_adj.*Out.Pensions(Indice_Households)/Out.GDP)*100)'		  					];..
+["Other social transfers"+" HH"+(1:nb_Households)',						((money_disp_adj.*Out.Other_social_transfers(Indice_Households)/Out.GDP)*100)'					];..
+["---Demography---",			 ""							];..
+["Population"+" ClassHH"+(1:nb_Households)', Out.Population'						];..
+["Labour force"+" ClassHH"+(1:nb_Households)', Out.Labour_force'						];..
+];
+// end
+
+
+
+
+
+
+
+
+
+
+
+
