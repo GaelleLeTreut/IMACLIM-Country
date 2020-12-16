@@ -46,6 +46,7 @@ elseif Country=="France" then
     moneyTex="\euro";
 	money_unit_data ="10^3";
 	money_disp_unit ="Millions of ";
+	money_DUnit_short=" M";
 	money_disp_adj = 10^-3;
 	Labour_unit = "ThousandFTE";
 	
