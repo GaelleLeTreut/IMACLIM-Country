@@ -57,7 +57,7 @@ end
 
 ////// Covid 
 /// Temporary - to be delete
-// if Country_ISO=='FRA'|part(Macro_nb,1:length('Cov'))=="Cov"
+if part(Macro_nb,1:length('Cov'))=="Cov"
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["---Public transfers for HH in nominal terms in "+money_disp_unit+money+"---",			 ""							];..
 ["Unemployment transfers"+" HH"+(1:nb_Households)',						money_disp_adj.*Out.Unemployment_transfers(Indice_Households)'						];..
@@ -71,7 +71,7 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["Population"+" ClassHH"+(1:nb_Households)', Out.Population'						];..
 ["Labour force"+" ClassHH"+(1:nb_Households)', Out.Labour_force'						];..
 ];
-// end
+end
 
 
 
