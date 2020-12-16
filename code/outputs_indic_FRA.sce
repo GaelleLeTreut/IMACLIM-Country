@@ -1,4 +1,4 @@
-
+//////////////////////////////////////////////////////////////////////////////
 ////// For equity - efficacity study on carbon tax
 if [H_DISAGG == "H20"] & [Country == "France"]
 
@@ -54,6 +54,10 @@ if [H_DISAGG == "H20"] & [Country == "France"]
 	end 
 end
 
+
+exec("ProdPriceDecomposition.sce");
+
+//////////////////////////////////////////////////////////////////////////////
 
 ////// Covid 
 /// Temporary - to be delete
