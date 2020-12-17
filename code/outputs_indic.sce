@@ -1101,7 +1101,7 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
  ];
 end
 
- if nb_Households <> 10 
+ if and(nb_Households <> [10,1]) 
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Share of HH Disposable Income in %pts/"+ref_name,														" "];..
 ["Disposable Income"+"Class HH"+(1:nb_Households)',		(100*(Out.H_disposable_income./sum(Out.H_disposable_income)-ref.H_disposable_income./sum(ref.H_disposable_income)))'];..
