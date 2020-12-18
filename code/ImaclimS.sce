@@ -442,7 +442,7 @@ for time_step=1:Nb_Iter
 	end
 
 	// Changing reference_year to compare results
-	if Country_ISO=="FRA"	
+	if Country_ISO=="FRA"& (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")	
 		if time_step==1
 			ref = d;
 			evol_ref = evol_2018;
