@@ -99,7 +99,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;;;
 ////////////////////// Production and consumption choices;;;
 ////// Households consumption choices;;;
-;H_demand_Const_1;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
+;H_demand_Const_2;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
@@ -139,8 +139,8 @@ ClimPolCompensbySect;S_ClimCompensat_Val_3;GDP, delta_LS_S;
 Labour_Tax_rate;Labour_Taxe_rate_Val_1;LabTaxRate_BeforeCut, Labour_Tax_Cut;
 ;;;
 //////////////////////  Commercial balance;;;
-//;Trade_Balance_Const_1;pM, pX, X, M, GDP;//  1-évolution proportionnelle au PIB "réel" (GDP/CPI) / 2-... au PIB nominal
-////////////////////// Public finance "closure";;;
+//;Trade_Balance_Const_1;pM, pX, X, M, GDP;"//  1-évolution proportionnelle au PIB ""réel"" (GDP/CPI) / 2-... au PIB nominal"
+"////////////////////// Public finance ""closure""";;;
 // Government_closure;Public_finance_Val_1;;
 //;G_closure_Const_1;Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity;
 ;;;
@@ -151,5 +151,3 @@ Profit_margin;Profit_income_Val_1;markup_rate, pY, Y;
 Capital_income;Capital_income_Val_1;pK, kappa, Y;
 Distribution_Shares;DistributShares_Val_1;Labour_force, Unemployed;
 NetCompWages_byAgent, GOS_byAgent, Other_Transfers;IncomeDistrib_Val_1;GDP, Distribution_Shares, Labour_income, GrossOpSurplus;
-;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;
-;Interest_rate_Const_1;interest_rate, delta_interest_rate;
