@@ -222,7 +222,7 @@ print(out,"STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
 
 Test_1 = "True";
 if Test_1 == "True"
-	exec("test"+filesep()+"test_1.sce");
+	exec("Test_Recalib"+filesep()+"test_1.sce");
 	pause
 end
 

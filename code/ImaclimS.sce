@@ -85,6 +85,28 @@ exec("Load_file_structure.sce");
 exec ("preambule.sce");
 exec("Dashboard.sce");
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+// few parameters to add in the Dashboard ??? 
+Recalibration = %T;
+Optimum_Recal = %F;
+BY_Recal = 2018;
+Macro_nb = Macro_nb +  BY_Recal;
+study = study + '_' + BY_Recal;
+Scenario = Scenario + '_' + BY_Recal;
+
+// check consistency with AGG_level
+if BY_Recal == 2016 & AGG_type <> 'AGG_SNBC2018' then 
+    warning('Put AGG_type to AGG_SNBC2018')
+end
+if BY_Recal == 2018 & AGG_type <> '30Sect' then 
+    warning('Put AGG_type to 30Sect')
+end
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 if Output_files
 
@@ -278,9 +300,9 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 for time_step=1:Nb_Iter
 
     // set up calibration to ini instead of BY
-    if time_step > 1 & Country = 'France' & study == 'Recalib_RunChoices'
+    if time_step > 1 & Country == 'France' & Recalibration
 
-        // load a file !!!
+        warning('need to set up calibration to ini instead of BY to use recalibration')
 
     end
 
@@ -325,10 +347,9 @@ for time_step=1:Nb_Iter
     // Loading other study changes (specific feature) except for homothetic projections
     if Optimization_Resol then
         if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
-            if Country == "France" & study == 'Recalib_RunChoices'
-                exec(STUDY_Country+study+"_"+time_step+".sce");
-            else
-                exec(STUDY_Country+study+".sce");
+            exec(STUDY_Country+study+".sce");
+            if Country == "France" & Recalibration & Optimum_Recal
+                exec('find_optimimum.sce');
             end
         end 
     else
@@ -453,18 +474,9 @@ for time_step=1:Nb_Iter
 //%%%%%%%%%%%%%%%%%%%%%%%%%
 // Tests de contrôle recalibration 
 //%%%%%%%%%%%%%%%%%%%%%%%%%
-    if Country == "France" & SystemOpt_Resol == "SystemOpt_Static_Recalib"
-        Test_1 = "False";
-        Test_2 = "True";
-
-        if Test_1 == "True"
-            exec("Test_Recalib"+filesep()+"test_1.sce");
-            pause
-        end
-        if Test_2 == "True"
-            exec("Test_Recalib"+filesep()+"test_2.sce");
-            pause
-        end
+    if Country == "France" & Recalibration
+        exec("Test_Recalib"+filesep()+"test_" + BY_Recal + ".sce");
+        pause
     end
 //%%%%%%%%%%%%%%%%%%%%%%%%%
 

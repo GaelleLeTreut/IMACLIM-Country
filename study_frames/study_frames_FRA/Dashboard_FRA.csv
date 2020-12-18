@@ -17,8 +17,9 @@ SystemOpt_Resol;SystemOpt_Static_Recalib
 study;Recalib_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
+AGG_type;AGG_30Sect
 // AGG_type;AGG_SNBC2018
-AGG_type;AGG_SNBC2020
+// AGG_type;AGG_SNBC2020
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
@@ -29,20 +30,20 @@ AGG_type;AGG_SNBC2020
 // AGG_type;AGG_3Sec
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
-// H_DISAGG;HH1
-H_DISAGG;H10
+H_DISAGG;HH1
+// H_DISAGG;H10
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;2
+Nb_Iter;1
 // SELECT a Macro framework to run;
 // Macro_nb;
-Macro_nb;Recalib
+Macro_nb;Cal
 // Macro_nb;NDC
 // Macro_nb;2deg
 // Macro_nb;2deg_bis
-Macro_nb;2deg_ter
+// Macro_nb;2deg_ter
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
 Labour_product;True
@@ -51,11 +52,11 @@ X_nonEnerg;False
 Energy_Balance;True
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-// Scenario;Recalib
+Scenario;Cal
 // Scenario;AME
 // Scenario;AMS
 // Scenario;AME_desag
-Scenario;AMS_desag
+// Scenario;AMS_desag
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 Recycling_Option;PublicDeficit
 // Recycling_Option;LabTax

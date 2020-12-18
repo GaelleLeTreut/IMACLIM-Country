@@ -55,6 +55,15 @@ scal = 	[0.0082227339	0.1127758064	-0.1192021581	0.8242216354	-0.004913253 ..
 //		delta_M			delta_X			pGaz 			pFuels 			pElec];
 
 
+target = 	[0.101573450097788.. 	// u_tot	
+			847.503..				// NetCompWages_byAgent
+			1.0718874451..			// CPI
+			44.676..				// Trade_balance
+			1.0280235988..
+			0.9678596039..
+			1.3837111671
+			];
+
 // Indicateurs macroéconomiques
 parameters.Mu = scal(1);
 parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
@@ -81,4 +90,4 @@ parameters.phi_IC(Indice_NonEnerSect,[2 4 5]) = ones(Indice_NonEnerSect)'.*.[sca
 //Deriv_Exogenous.SpeMarg_rates_X(4) = BY.SpeMarg_rates_X(4)*scal(9);
 
 
-clear scal
+// clear scal
