@@ -42,7 +42,10 @@ Deriv_Exogenous.Corporate_Tax = 51.6121588305*1E6;
 Deriv_Exogenous.Income_Tax = 200.6828411695*1E6*BY.Income_Tax/sum(BY.Income_Tax);
 Deriv_Exogenous.Production_Tax_byAgent = 57.171*1E6; 
 Deriv_Exogenous.VA_Tax_byAgent = 154.43*1E6; 
-Deriv_Exogenous.GOS_total = 716.3928748305*1E6; 
+Deriv_Exogenous.GOS_total = 716.3928748305*1E6;
+
+
+
 
 //////////////////////////
 // Paramètres centraux à caller 
