@@ -146,11 +146,11 @@ if Output_files
             copyfile(STUDY_Country + 'Projections_Scenario.csv', SAVEDIR); 
         end
 	end
-    if Optimization_Resol then
-        copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
-    else
-        copyfile(CODE + System_Resol + ".sce", SAVEDIR);
-    end
+    // if Optimization_Resol then
+    //     copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
+    // else
+    //     copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    // end
 
     // Record the name of the current run
     if SIMU_MODE then
