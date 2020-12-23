@@ -71,7 +71,7 @@ Labour_Tax;Labour_Tax_Val_1;Labour_Tax_rate, w, lambda, Y;
 ;Production_Tax_Const_1;Production_Tax , Production_Tax_rate, pY, Y;
 ;ProductTax_rate_Const_1;Production_Tax_rate, tau_Production_Tax_rate;
 ;ProdTax_byAgent_Const_1;Production_Tax_byAgent, Production_Tax;
-Other_Direct_Tax;Other_Direct_Tax_Val_1;CPI, Other_Direct_Tax_param;
+// Other_Direct_Tax;Other_Direct_Tax_Val_1;CPI, Other_Direct_Tax_param;
 OtherIndirTax;OtherIndirTax_Val_1;OtherIndirTax_rate, alpha, Y, C, G, I;// const_1 : calib / const_2 : CPI / const_3 : GDP
 ;VA_Tax_Const_1;VA_Tax, VA_Tax_rate, pC, C, pG, G, pI, I;
 ;VA_Tax_rate_Const_1;VA_Tax_rate, tau_VA_Tax_rate;
@@ -166,4 +166,4 @@ Profit_margin;Profit_income_Val_1;markup_rate, pY, Y;
 ;GOS_total_Const_1;GOS_total, GOS_byAgent;
 Capital_income;Capital_income_Val_1;pK, kappa, Y;
 // Distribution_Shares;DistributShares_Val_1;Labour_force, Unemployed;
-NetCompWages_byAgent, GOS_byAgent, Other_Transfers;IncomeDistrib_Val_1;GDP, Distribution_Shares, Labour_income, GrossOpSurplus;
+NetCompWages_byAgent, GOS_byAgent;IncomeDistrib_Val_2;GDP, Distribution_Shares, Labour_income, GrossOpSurplus;

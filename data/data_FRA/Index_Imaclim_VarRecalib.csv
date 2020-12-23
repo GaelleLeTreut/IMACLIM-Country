@@ -16,7 +16,6 @@ C;nb_Commodities;nb_Households;Var;0;%inf
 Corp_disposable_income;1;nb_Corporations;Var;0;%inf
 G_disposable_income;1;nb_Government;Var;0;%inf
 Income_Tax_rate;1;nb_Households;Var;0;%inf
-Other_Direct_Tax;1;nb_Households;Var_interm;0;%inf
 Corporate_Tax_rate;1;nb_Corporations;Var;0;%inf
 Production_Tax;1;nb_Sectors;Var;-%inf;%inf
 Production_Tax_rate;1;nb_Sectors;Var;-%inf;%inf
@@ -87,7 +86,6 @@ tau_markup_rate;1;1;Var;-%inf;%inf
 Capital_income;1;nb_Sectors;Var;0;%inf
 NetCompWages_byAgent;1;nb_InstitAgents;Var;0;%inf
 GOS_byAgent;1;nb_InstitAgents;Var;0;%inf
-Other_Transfers;1;nb_InstitAgents;Var;-%inf;%inf
 pM;nb_Sectors;1;Var_interm;0;%inf
 delta_LS_H;1;nb_Households;Var_interm;0;1
 delta_LS_S;1;nb_Sectors;Var_interm;0;1
