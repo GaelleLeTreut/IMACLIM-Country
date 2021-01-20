@@ -1,5 +1,5 @@
 //////  Copyright or © or Copr. Ecole des Ponts ParisTech / CNRS 2018
-//////  Main Contributor (2017) : Gaëlle Le Treut / letreut[at]centre-cireOut.fr
+//////  Main Contributor (2017) : Gaëlle Le Treut / letreut[at]centre-cired.fr
 //////  Contributors : Emmanuel Combet, Ruben Bibas, Julien Lefèvre
 //////  
 //////  
