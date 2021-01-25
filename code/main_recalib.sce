@@ -134,12 +134,22 @@ end
         exec("Macro_Framework.sce");
     end
 
+    // Load the projections for forcing
+    if Scenario <> '' then
+        if time_step == 1 then
+            exec("Load_Proj_files.sce");
+        end
+        exec('Load_Proj_Vol.sce');
+    end
+
     // Loading other study changes (specific feature) except for homothetic projections
 	// Homo_Shortname = "Systeme_ProjHomo";
 	// if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
     // exec(STUDY_Country+study+".sce");
 	// end 
-	
+
+    // Loading other study changes (specific feature)
+    exec(STUDY_Country+study+".sce");
 
 // Recherche d'optimum ou simple résolution
 //		[Mu    			u_param  		sigma_omegaU	CoefRealWage	phi_K..		
@@ -156,7 +166,7 @@ if Optimum_1 == "True"
 
 	function [y] = System_optimisation(scal)
 		[d, parameters, Deriv_Exogenous] = GDP_calculation(parameters, Deriv_Exogenous, BY, calib, initial_value, scal)
-		y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index)/GDP_index) .. 			//1
+		y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) .. 			//1
 			100*abs((d.u_tot - 0.101573450097788)/0.101573450097788) .. 				//2
 			100*(d.NetCompWages_byAgent(Indice_Households)*1E-6 - 847.503)/847.503 ..	//3
 			100*abs((d.CPI - 1.0718874451)/1.0718874451) .. 							//3
@@ -210,9 +220,9 @@ print(out,"STEP 5: OUTPUT EXTRACTION AND RESULTS DISPLAY 2016");
 	end
 
 
-Test_1 = "False";
+Test_1 = "True";
 if Test_1 == "True"
-	exec("test"+filesep()+"test_1.sce");
+	exec("Test_Recalib"+filesep()+"test_1.sce");
 	pause
 end
 

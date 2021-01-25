@@ -249,6 +249,22 @@ function y = H_Savings_Const_2(pM, Labour, w)
 endfunction
 
 
+function y = H_SavingsTot_Const_1(Household_savings, H_disposable_income, HH_saving_rate_agg) ;
+
+    /// Household savings constraint (Household_savings)
+    y1 = sum(Household_savings) - (sum(H_disposable_income) .* HH_saving_rate_agg) ;
+
+    y=y1';      
+endfunction
+
+
+function [y] = H_Savings_rate_Const_1(Household_saving_rate, delta_HH_saving_rate) ;
+
+    y1 = Household_saving_rate - (delta_HH_saving_rate + BY.Household_saving_rate) ;
+
+    y=y1';
+endfunction
+
 // Household gross fixed capital formation (by household class)
 // A proportion of disposable income is used directly by household classes to accumulate capital stocks (houses, lands, business goodwill of individual entrepreneurs, etc.)
 // The household gross fixed capital formation differs from household savings (if higher, they lend money in financial markets; if lower, they borrow in financial markets)
@@ -910,6 +926,19 @@ function Production_Tax = Production_Tax_Val_1(Production_Tax_rate, pY, Y)
 
 endfunction
 
+function y = ProductTax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
+
+    y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = ProdTax_byAgent_Const_1(Production_Tax_byAgent, Production_Tax)
+
+    y = Production_Tax_byAgent - sum(Production_Tax)
+
+endfunction
+
 /// Labour Tax (by productive sector)
 
 function y = Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y);
@@ -990,6 +1019,19 @@ function VA_Tax = VA_Tax_Val_1(VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Same rate for all items of domestic final demand
     VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
+
+endfunction
+
+function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
+
+    y1 = VA_Tax_rate - tau_VA_Tax_rate*(BY.VA_Tax_rate<>0).*BY.VA_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = VA_Tax_byAgent_Const_1(VA_Tax_byAgent, VA_Tax)
+
+    y = VA_Tax_byAgent - sum(VA_Tax)
 
 endfunction
 
@@ -2390,6 +2432,14 @@ function [y] =  Markup_Const_1(markup_rate) ;
     y=y1';
 endfunction
 
+function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
+
+    //  Fixed Markup ( markup_rate(nb_Sectors) )
+    y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
+
+    y=y1';
+endfunction
+
 // PAS POUR CALIBRAGE //
 // Transport margins rates
 function [y] =  Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins) ;
@@ -2712,6 +2762,18 @@ function [Betta_proj]=Betta_Const_1(Betta_ref, pI, pBetta, Indice, Adjustment)
     
     //Betta_proj = matrix(y1, -1 , 1)
     Betta_proj = y1;
+
+endfunction
+
+function [y] = Betta_Const_2(Betta, tau_Betta) ;
+
+    y = Betta  - tau_Betta * BY.Betta;
+
+endfunction
+
+function [y] = I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+
+    y = I_Consumption_budget - sum(sum(I,"c") .* pI) ;
 
 endfunction
 
@@ -3936,6 +3998,16 @@ function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Va
 
 endfunction
 
+function [NetCompWages_byAgent, GOS_byAgent] = IncomeDistrib_Val_3(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    NetCompWages_byAgent = Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    GOS_byAgent = Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus);
+
+endfunction
+
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)
 function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
@@ -3953,6 +4025,12 @@ function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
+
+endfunction
+
+function y = GOS_total_Const_1(GOS_total, GOS_byAgent)
+
+    y = GOS_total - sum(GOS_byAgent);
 
 endfunction
 

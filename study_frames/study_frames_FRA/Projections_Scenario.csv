@@ -1,0 +1,5 @@
+variable;file;headers;indexes_of_proj;apply_the_proj;Intens;Can be agg
+C;"""IOT_Qtities""";"""C""";list(list(Indice_EnerSect,1));%T;;%T
+IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%F;%T
+X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%T;;%T
+M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;;%T

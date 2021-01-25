@@ -27,55 +27,9 @@ function [y] = GFCF_byAgent_Const_1(GFCF_byAgent,pI,I, GFCF_Distribution_Shares)
 endfunction
 
 
-function y = Exo_VA_Tax_Const_1(Exo_VA_Tax, VA_Tax)
-
-	y = Exo_VA_Tax - sum(VA_Tax)
-
-endfunction
-
-function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
-
-    y1 = VA_Tax_rate - tau_VA_Tax_rate*(BY.VA_Tax_rate<>0).*BY.VA_Tax_rate;
-    y = y1';
-
-endfunction
-
-function y = Exo_ProductTax_Const_1(Exo_Production_Tax, Production_Tax)
-
-	y = Exo_Production_Tax - sum(Production_Tax)
-
-endfunction
-
-function y = ProductTax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
-
-    y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
-    y = y1';
-
-endfunction
-
 function y = Exo_GrossOpSurp_Const_1(Exo_GrossOpSurplus, GrossOpSurplus)
 
 	y = Exo_GrossOpSurplus - sum(GrossOpSurplus)
-
-endfunction
-
-function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
-
-    //  Fixed Markup ( markup_rate(nb_Sectors) )
-    y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
-
-    y=y1';
-endfunction
-
-function [y] = I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
-
-    y = I_Consumption_budget - sum(I .* pI) ;
-
-endfunction
-
-function [y] = Betta_Const_2(Betta, tau_Betta) ;
-
-    y = Betta  - tau_Betta*BY.Betta;
 
 endfunction
 

@@ -234,6 +234,8 @@ value_DISAG.Corporate_Tax = value_DISAG.Corporate_Tax(Indice_CorporationsTEMP);
 value_DISAG.Corporate_Tax = abs(value_DISAG.Corporate_Tax);
 Indice_RestOfWorldTEMP = find("RestOfWorld" == Index_InstitAgents_DISAG);
 value_DISAG.GFCF_byAgent(Indice_RestOfWorldTEMP) = [];
+value_DISAG.Production_Tax_byAgent = value_DISAG.Production_Tax_byAgent(Indice_GovernmentTEMP);
+value_DISAG.VA_Tax_byAgent = value_DISAG.VA_Tax_byAgent(Indice_GovernmentTEMP);
 
 
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLES
