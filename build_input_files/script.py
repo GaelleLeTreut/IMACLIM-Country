@@ -14,7 +14,7 @@ nb_HH = 10
 
 # set agg sector name
 # agg_names = ['', 'EnComp', '4SecB']
-agg_names = ['30Sect']
+agg_names = ['', '4SecB']
 
 for agg_name in agg_names:
 
