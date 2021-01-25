@@ -69,8 +69,10 @@ if Labour_product == "True"
 			GDP_index(elt) = prod((1 + Proj_Macro.GDP(1:elt)).^(Proj_Macro.current_year(1:elt) - Proj_Macro.reference_year(1:elt)));
 		end
 	// Last step with same growth ( use for capital dynamics)
-	GDP_index($+1) = GDP_index($)*( 1 + Proj_Macro.GDP(Nb_Iter) )  ;	
-		
+		if Capital_Dynamics
+			GDP_index($+1) = GDP_index($)*( 1 + Proj_Macro.GDP(Nb_Iter) )  ;	
+		end 
+
 	end
 	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;

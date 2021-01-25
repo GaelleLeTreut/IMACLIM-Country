@@ -471,6 +471,14 @@ ini.Corporate_Tax(1,[Indice_Households,Indice_RestOfWorld]) = 0;
 ini.Corporate_Tax(1,Indice_Government) = -ini.Corporate_Tax(Indice_Corporations);
 ini.GFCF_byAgent (Indice_RestOfWorld) = 0;
 
+ini.Production_Tax_byAgent(1, Indice_Government)= ini.Production_Tax_byAgent;
+ini.Production_Tax_byAgent(Indice_Corporations)= 0;
+ini.Production_Tax_byAgent(1,[Indice_Households,Indice_RestOfWorld]) = 0;
+
+ini.VA_Tax_byAgent(1, Indice_Government)= ini.VA_Tax_byAgent;
+ini.VA_Tax_byAgent(Indice_Corporations)= 0;
+ini.VA_Tax_byAgent(1,[Indice_Households,Indice_RestOfWorld]) = 0;
+
 if  Country<>"Brasil" then
     ini.Pensions(Indice_Households)= ini.Pensions;
     ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
