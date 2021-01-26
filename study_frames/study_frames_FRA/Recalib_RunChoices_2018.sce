@@ -50,6 +50,10 @@ Energy_tax_mask  = [0	1	1	0	0	0	0	0	0	0	1	1];
 Deriv_Exogenous.Energy_Tax_rate_FC = calib.Energy_Tax_rate_FC;
 Deriv_Exogenous.Energy_Tax_rate_FC(Indice_EnerSect) = 	(Energy_tax_mask == 1).*Energy_tax_params + ..
 														(Energy_tax_mask <> 1).*Deriv_Exogenous.Energy_Tax_rate_FC(Indice_EnerSect).*Energy_tax_params;
+
+Deriv_Exogenous.Energy_Tax_rate_IC = calib.Energy_Tax_rate_IC;
+Deriv_Exogenous.Energy_Tax_rate_IC(Indice_EnerSect) = Deriv_Exogenous.Energy_Tax_rate_FC(Indice_EnerSect) .* [1 0.547794117647059 0 0 1 1 1 1 1 1 0.606923506420994 1];
+
 //////////////////////////
 // Paramètres centraux à caller 
 //////////////////////////

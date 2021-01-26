@@ -90,8 +90,8 @@ exec("Dashboard.sce");
 //////////////////////////////////////////////////////////////////////////////////////
 
 // few parameters to add in the Dashboard ??? 
-Recalibration = %F;
-Optimum_Recal = %F;
+Recalibration = %T;
+Optimum_Recal = %T;
 if Recalibration then 
     BY_Recal = 2018;
 	Macro_nb = Macro_nb +  BY_Recal;
@@ -363,7 +363,7 @@ for time_step=1:Nb_Iter
         if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
             exec(STUDY_Country+study+".sce");
             if Country == "France" & Recalibration & Optimum_Recal
-                exec('find_optimimum.sce');
+                exec('find_optimum.sce');
             end
         end 
     else
