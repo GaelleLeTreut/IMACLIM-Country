@@ -1,5 +1,5 @@
-;HH1
-PrimEnergy;1.0
-FinEnHTr;1.0
-FinEnHRes;1.0
-AllComp;1.0
+ConstrainedShare_C;HH1
+PrimEnergy;0
+FinEnHTr;0.496799809948176
+FinEnHRes;0.656028914388176
+AllComp;%nan

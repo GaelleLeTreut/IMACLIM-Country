@@ -1,0 +1,21 @@
+// name;value;lowerBound;UpperBound;explanation;name in model description
+//;;;;;
+// MODEL PARAMETERS;;;;;
+//;;;;;
+// Carbon tax;;;;;
+Carbon_Tax_rate;300000;0;1;;
+AdjRecycle;0;0;1;variable to ajust other social transfer if the closure of public finance in recycling carbon tax scheme require it;
+//;;;;;
+//Labor market parameters;;;;;
+sigma_omegaU;-0.1;;;;
+Coef_real_wage;0;;;;
+u_param;0.1059428;0;1;;
+//;;;;;
+//Capital;;;;;
+depreciation_rate;0.024072808;0;1;for capital market;
+//Other params;;;;;
+Mu;0;0;1;labour productivity growth rate;
+time_since_BY;0;0;100;has to be equal to time_period in a Static mode;
+time_since_ini;20;0;100;has to be equal to time_step in a Static mode;
+// Inflation rat for calculation of netdebt;;;;;
+Inflation_rate;0.01;0;1;;

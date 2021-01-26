@@ -1,5 +1,5 @@
-;PrimEnergy;FinEnHTr;FinEnHRes;AllComp
-PrimEnergy;1.0;1.0;1.0;1.0
-FinEnHTr;1.0;1.0;1.0;1.0
-FinEnHRes;1.0;1.0;1.0;1.0
-AllComp;1.0;1.0;1.0;1.0
+phi_IC;PrimEnergy;FinEnHTr;FinEnHRes;AllComp
+PrimEnergy;0;0;0;0
+FinEnHTr;0;0;0;0
+FinEnHRes;0;0;0;0
+AllComp;0;0;0;0

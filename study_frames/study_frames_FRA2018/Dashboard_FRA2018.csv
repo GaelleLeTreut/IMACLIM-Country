@@ -6,9 +6,9 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_JCH
+// SystemOpt_Resol;SystemOpt_Static_JCH
 // SystemOpt_Resol;SystemOpt_Static_EC
-// SystemOpt_Resol;SystemOpt_ProjHomo
+SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
 study;Recursive_RunChoices
@@ -20,8 +20,8 @@ Exo_ShareI_GDP;%F
 Exo_u_tot;%F
 Exo_Kstock_Adj;%F
 // SELECT an aggregation sector profil by uncomment it;
-AGG_type;
-// AGG_type;AGG_EnComp
+// AGG_type;
+AGG_type;AGG_4SecB
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
