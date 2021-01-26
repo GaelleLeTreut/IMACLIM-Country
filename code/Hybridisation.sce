@@ -261,6 +261,8 @@ print(out,"test equilibrium on specific margins after hybridization\n");
 for column  = 1:nb_Commodities
     if abs(sum(initial_value.SpeMarg(:,column)))>=Err_balance_tol then
         printf(Index_Commodities(column)+" to balance: "+sum(initial_value.SpeMarg(:,column))+"\n");
+        printf(100*sum(initial_value.SpeMarg(:,column))/initial_value.Y_value(column) + " percentage of production"+"\n")
+        printf(100*sum(initial_value.SpeMarg(:,column))/(initial_value.Y_value(column) + initial_value.M_value(column)) + " percentage of supply"+"\n"+"\n")
         printf("===============================================\n");
     end
 end
