@@ -1,12 +1,12 @@
 Economic Table;Corporations;Government;Households;RestOfWorld
-Trade_Balance;0;0;0;53424767
+Trade_Balance;0;0;0;53738360
 GOS_byAgent;4.492e+08;92211298;2.092e+08;0
-NetCompWages_byAgent;0;0;8.406e+08;0
-InsuranceContrib_byAgent;0;3.790e+08;0;0
+NetCompWages_byAgent;0;0;7.973e+08;0
+InsuranceContrib_byAgent;0;3.596e+08;0;0
 Production_Tax_byAgent;0;59988880;0;0
-Energ_Tax_byAgent;0;28668122;0;0
+Energ_Tax_byAgent;0;54219918;0;0
 Carbon_Tax_byAgent;0;0;0;0
-OtherIndirTax_byAgent;0;42105419;0;0
+OtherIndirTax_byAgent;0;41966084;0;0
 VA_Tax_byAgent;0;1.617e+08;0;0
 Property_income;-27709000;-24675000;81974000;-29590000
 Unemployment_transfers;0;-40211649;40211649;0
@@ -17,10 +17,10 @@ Other_Transfers;-70427492;67136736;15884961;-12594205
 Income_Tax;0;2.259e+08;-2.259e+08;0
 Corporate_Tax;-59783000;59783000;0;0
 Other_Direct_Tax;0;22659000;-22659000;0
-Disposable_Income;2.913e+08;6.097e+08;1.404e+09;11240562
-FC_byAgent;0;6.044e+08;1.201e+09;0
+Disposable_Income;2.913e+08;6.157e+08;1.361e+09;11554155
+FC_byAgent;0;6.044e+08;1.164e+09;0
 GFCF_byAgent;3.007e+08;80534466;1.294e+08;0
-Tot_FC_byAgent;3.007e+08;6.849e+08;1.331e+09;0
-NetLending;-9369330;-75198626;73327394;11240562
+Tot_FC_byAgent;3.007e+08;6.849e+08;1.294e+09;0
+NetLending;-9369330;-69271904;67087079;11554155
 NetFinancialDebt;1.960e+09;1.758e+09;-3.639e+09;-79189000
 Thousand of euros;0;0;0;0

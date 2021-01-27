@@ -57,51 +57,55 @@ Deriv_Exogenous.Energy_Tax_rate_IC(Indice_EnerSect) = Deriv_Exogenous.Energy_Tax
 //////////////////////////
 // Paramètres centraux à caller 
 //////////////////////////
+// copier coller de l'optimisation 
+// créer une fonction unique plus tard 
+// isoler l'ensemble des fonctions dans lib ??? 
 
-// target definition 
-// target.u_tot 				= 0.096657603;
-// target.NetCompWages_byAgent	= 890.989561480099;
-// target.CPI 					= 1.0847715321481;
-// target.Trade_balance		= 54.3722247871991;
-// target.pC = [1.35909757603164 1.1176459210912 1.11302943713353 1.25327047141911 1.27317747456186 1.37781176761594];
-// target.pIndice = [Indice_Gas Indice_HH_Fuels Indice_Elec];
+// target
+exec("find_optimum.sce");
 
-// // Recherche d'optimum ou simple résolution
-// scal = [0.006715296522585	0.093911951945478	-0.101678127309367	0.711746891165572	-0.000791516714252	-0.002181565502178	0.002517190964051	-0.006136655189795	0.002517190964051	0.002517190964051	3.19838634592751E-05	0.002517190964051	-0.000350355690478];
+// scals
+scal_1 = [0.011984926156042	0.046391781928944	0.023514364417092	-0.01934599655494	-0.011369115130157	-0.130937525814799	0.468901671740756];
+scal_2 = [0.258137716444485	1.81211799319418	1.09692823781033	-0.000638610379612	1.41220992402367	1.35058665073042	-0.110945300400332	0.000942498053351];
+scal_3 = [0.006698907256563	-0.149690449998717	-0.176930607951945	-0.514710239666718	1.44936496678128	2.50061711513616	-0.608338566614057	0.541696808267123	4.53963965946791];
 
-if Optimum_Recal <> %T
-	target.u_tot 				= 0.096657603;
-	target.NetCompWages_byAgent	= 890.989561480099;
-	target.CPI 					= 1.0847715321481;
-	target.Trade_balance		= 54.3722247871991;
-	target.M_value				= 481.634411627445;
-	target.X_value				= 427.262186840246;
-	target.pC = [1.35909757603164 1.1176459210912 1.11302943713353 1.25327047141911 1.27317747456186 1.37781176761594];
-	target.pIndice = [Indice_Gas Indice_HH_Fuels Indice_Elec];
+// set results of previsous optimisation
+parameters.Mu = scal_1(1);
+parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
+parameters.u_param = scal_1(2);
+parameters.phi_K = ones(Indice_Sectors)*scal_1(3);
+parameters.sigma_M = zeros(parameters.sigma_M);
+parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal_1(4);
+parameters.sigma_X = zeros(parameters.sigma_X);
+parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal_1(5);
+parameters.sigma_omegaU = scal_1(6);
+parameters.Coef_real_wage = scal_1(7);
 
-scal = [0.013479938172368	0.066173868682517..
-		0.073686756678932..
-		-0.025367784169615	-0.011498859862948..
-		-0.559467206301469	2.01946027534565..
-		0.062191070802509	0.014532244560709	-0.133449359806118	-0.141765614263338..	//-0.001338020171661	-0.016776238930613];
-		-0.15	-0.016776238930613];
+// init SpeMarg
+Deriv_Exogenous.SpeMarg_rates_C 	= BY.SpeMarg_rates_C;
+Deriv_Exogenous.SpeMarg_rates_IC 	= BY.SpeMarg_rates_IC;
 
-	parameters.Mu = scal(1);
-	parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
-	parameters.u_param = scal(2);
-	parameters.phi_K = ones(Indice_Sectors)*scal(3);
-	parameters.sigma_M = zeros(parameters.sigma_M);
-	parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal(4);
-	parameters.sigma_X = zeros(parameters.sigma_X);
-	parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal(5);
-	parameters.sigma_omegaU = scal(6);
-	parameters.Coef_real_wage = scal(7);
+// Gaz
+parameters.phi_K(Indice_Gas) 		= scal_2(1);
+parameters.phi_L(Indice_Gas)	= scal_2(1);
+parameters.phi_IC(Indice_NonEnerSect,Indice_Gas) = ones(size(Indice_NonEnerSect,2),size(Indice_Gas,1))*scal_2(1);
+Deriv_Exogenous.SpeMarg_rates_C(Indice_Gas)		= scal_2(2) * Deriv_Exogenous.SpeMarg_rates_C(Indice_Gas);
+Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Gas)	= scal_2(3) * Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Gas);
 
-	// Energy prices (Gaz, AllFuels & Elec)
-	parameters.phi_K(target.pIndice) = [scal(8) scal(9) scal(10) scal(11) scal(12) scal(13)]; // scal(8:13) ne fonctionne pas !! 
-	parameters.phi_L(target.pIndice)= [scal(8) scal(9) scal(10) scal(11) scal(12) scal(13)];
-	parameters.phi_IC = zeros(parameters.phi_IC);
-	parameters.phi_IC(Indice_NonEnerSect,target.pIndice) = ones(Indice_NonEnerSect)'.*.[scal(8) scal(9) scal(10) scal(11) scal(12) scal(13)];
+// Électricité
+parameters.phi_K(Indice_Elec) 	= scal_2(4);
+parameters.phi_L(Indice_Elec)	= scal_2(4);
+parameters.phi_IC(Indice_NonEnerSect,Indice_Elec) = ones(size(Indice_NonEnerSect,2),size(Indice_Elec,1))*scal_2(4);
+Deriv_Exogenous.SpeMarg_rates_C(Indice_Elec)		= scal_2(5) * Deriv_Exogenous.SpeMarg_rates_C(Indice_Elec);
+Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Elec)	= scal_2(6) * Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Elec);
 
-end
+// Crude_coal 
+Deriv_Exogenous.SpeMarg_rates_C(3)	= scal_2(7) * Deriv_Exogenous.SpeMarg_rates_C(3);
+Deriv_Exogenous.SpeMarg_rates_IC(:,3)	= scal_2(8) * Deriv_Exogenous.SpeMarg_rates_IC(:,3);
 
+// Fuels 
+parameters.phi_K(Indice_HH_Fuels) 	= [scal_3(1), scal_3(2), scal_3(3)];
+parameters.phi_L(Indice_HH_Fuels)	= [scal_3(1), scal_3(2), scal_3(3)];
+parameters.phi_IC(Indice_NonEnerSect,Indice_HH_Fuels) = ones(Indice_NonEnerSect').*.[scal_3(1), scal_3(2), scal_3(3)];
+Deriv_Exogenous.SpeMarg_rates_C(Indice_HH_Fuels)	= Deriv_Exogenous.SpeMarg_rates_C(Indice_HH_Fuels).*[scal_3(4), scal_3(5), scal_3(6)];
+Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_HH_Fuels)	= Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_HH_Fuels).*(ones(Indice_Sectors').*.[scal_3(7), scal_3(8), scal_3(9)]);

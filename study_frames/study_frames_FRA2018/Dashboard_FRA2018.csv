@@ -23,8 +23,8 @@ Exo_Kstock_Adj;%F
 // AGG_type;
 AGG_type;AGG_4SecB
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
-// H_DISAGG;H10
+// H_DISAGG;HH1
+H_DISAGG;H10
 // H_DISAGG;L6
 // SELECT the resolution mode;
 Resol_Mode;Static_comparative

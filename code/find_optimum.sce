@@ -167,16 +167,11 @@ endfunction
 // run nested optimization process
 //////////////////////////////////////////////////////////////////////////
 
-diary(SAVEDIR_OPT+ mydate + "_summary" + ".log");
+if Optimum_Recal
 
-// améliorer les choses pour avoir le nom des variables et afficher la convergence des paramètres
-// idée sup: supprimer l'hybridation des biens non énergétiques pour l'instant : simplification
-// ajouter une contrainte généraliser sur tous les biens hybridés Indice_HybridCommod
-// Unique cible non atteinte : NetCompWages_byAgent. 10% inférieures...
-// Vérifier les données d'entrée 
-// possibilité de le caler autrement ? Impact sur le système ? 
+	diary(SAVEDIR_OPT+ mydate + "_summary" + ".log");
 
-for elt=1:10
+	for elt=1:10
 
 	printf("--------------------------- \n");
 	printf("Start loop: " + elt + " \n");
@@ -202,8 +197,21 @@ for elt=1:10
 
 	scal_3 = scal_opt_3;
 
+	end
+
+	diary(0);
+	print(out,"abort because of you choose to run an optimisation")
+	abort
 end
 
-diary(0);
-print(out,"abort because of you choose to run an optimisation")
-abort
+//////////////////////////////////////////////////////////////////////////
+// Idea to update
+//////////////////////////////////////////////////////////////////////////
+
+// améliorer les choses pour avoir le nom des variables et afficher la convergence des paramètres
+// idée sup: supprimer l'hybridation des biens non énergétiques pour l'instant : simplification
+// ajouter une contrainte généraliser sur tous les biens hybridés Indice_HybridCommod
+// Unique cible non atteinte : NetCompWages_byAgent. 10% inférieures...
+// Vérifier les données d'entrée 
+// possibilité de le caler autrement ? Impact sur le système ? 
+// utiliser une désagrégation à 10 classes de ménages + fonction KLEMS de production ? 

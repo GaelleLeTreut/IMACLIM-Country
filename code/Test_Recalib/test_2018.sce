@@ -28,10 +28,12 @@ disp("/////////////////////////////////////////////////")
 disp("Balance énergétique")
 disp("/////////////////////////////////////////////////")
 disp("HH Energy prices : pC(Natural_gas	Gasoline LPG Road_diesel Heating_oil Electricity)")
-pIC_to_reach	= [1.0670943534191	1.1176459210912	1.11302943713353	1.25327047141911	1.27317747456186	1.21881908084104];
-100*(pC(target.pIndice,1)./BY.pC(target.pIndice,1) - target.pC')./target.pC'
+
+mean_pIC_proj	= (sum(d.pIC([Indice_Gas Indice_Elec],:).*d.IC([Indice_Gas Indice_Elec],:),"c")./sum(d.IC([Indice_Gas Indice_Elec],:),"c"));
+mean_pIC_BY		= (sum(BY.pIC([Indice_Gas Indice_Elec],:).*BY.IC([Indice_Gas Indice_Elec],:),"c")./sum(BY.IC([Indice_Gas Indice_Elec],:),"c"));
+100*abs(d.pC(target.Indice_HH)./(BY.pC(target.Indice_HH) .* target.pC') - 1)'
 disp("ENT Energy prices : pIC(Natural_gas Gasoline LPG	Road_diesel Heating_oil Electricity)")
-100*((sum(pIC(target.pIndice,:).*IC(target.pIndice,:),"c")./sum(IC(target.pIndice,:),"c"))./(sum(BY.IC_value(target.pIndice,:),"c")./sum(BY.IC(target.pIndice,:),"c")) - pIC_to_reach')./pIC_to_reach'
+100*abs(mean_pIC_proj./(mean_pIC_BY .* target.pIC') - 1)' ..
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
@@ -54,14 +56,14 @@ disp("Gaz naturel : M / Total CF / Résidentiel")
 //////////////////////////////////////////////////////////////////////////
 
 
-F_opt = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) ..
-		100*abs(d.u_tot/target.u_tot - 1) ..
-		100*abs(d.NetCompWages_byAgent(Indice_Households)*1E-6/target.NetCompWages_byAgent - 1) ..	
-		100*abs(d.CPI/target.CPI - 1) .. 
-		100*abs(sum(d.pM.*d.M)*1E-6/target.M_value - 1).. 
-		100*abs(sum(d.pX.*d.X)*1E-6/target.X_value - 1).. 
-		100*abs((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6/target.Trade_balance - 1)..
-		100*abs(d.pC(target.pIndice)./(BY.pC(target.pIndice) .* target.pC') - 1)' ..
-		];
+// F_opt = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) ..
+// 		100*abs(d.u_tot/target.u_tot - 1) ..
+// 		100*abs(d.NetCompWages_byAgent(Indice_Households)*1E-6/target.NetCompWages_byAgent - 1) ..	
+// 		100*abs(d.CPI/target.CPI - 1) .. 
+// 		100*abs(sum(d.pM.*d.M)*1E-6/target.M_value - 1).. 
+// 		100*abs(sum(d.pX.*d.X)*1E-6/target.X_value - 1).. 
+// 		100*abs((sum(d.pM.*d.M) - sum(d.pX.*d.X))*1E-6/target.Trade_balance - 1)..
+// 		100*abs(d.pC(target.pIndice)./(BY.pC(target.pIndice) .* target.pC') - 1)' ..
+// 		];
 
-F_norm = norm(F_opt)
+// F_norm = norm(F_opt)

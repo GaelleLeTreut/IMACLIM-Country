@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 ////// For equity - efficacity study on carbon tax
-if [Country == "France"]
+if nb_Households <> 1 & [Country == "France"]
 
 	Out.H_Primary_income = Out.H_disposable_income - Out.Other_Direct_Tax(Indice_Households) - Out.Income_Tax(Indice_Households);
 	BY.H_Primary_income = ini.H_disposable_income - ini.Other_Direct_Tax(Indice_Households) - ini.Income_Tax(Indice_Households);	
