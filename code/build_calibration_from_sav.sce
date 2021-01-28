@@ -3,6 +3,9 @@
 // reload library
 getd(LIB);
 
+// set format
+format(12)
+
 // define new data dir
 DataDir = PARENT + "data" + sep + "data_FRA2018" + sep;
 mkdir(DataDir);
@@ -13,7 +16,7 @@ fact = 1;
 decimals = 5;
 
 // DataAccountTable
-Ecotable = buildEcoTabl(data_1.Ecotable, fact, decimals);
+Ecotable = buildEcoTabl(d.Ecotable, fact, decimals);
 Ecotable(size(Ecotable,1)-1:size(Ecotable,1),:)=[];
 Ecotable(size(Ecotable,1)+1,:) = ["Thousand of euros", "0", "0", "0", "0"];
 csvWrite(Ecotable, DataDir + "DataAccountTable.csv", ";");

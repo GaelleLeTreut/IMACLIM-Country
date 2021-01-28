@@ -83,4 +83,4 @@ ClosCarbRev;AllLabTax
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_prints;%F
-Output_files;%F
+Output_files;%T
