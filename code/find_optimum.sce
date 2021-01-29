@@ -4,11 +4,11 @@
 
 // Indicateurs macroéconomiques
 target.u_tot 				= 0.096657603;
-target.NetCompWages_byAgent	= 890.989561480099;
+target.NetCompWages_byAgent	= 903.255;
 target.CPI 					= 1.0847715321481;
-target.Trade_balance		= 54.3722247871991;
-target.M_value				= 481.634411627445;
-target.X_value				= 427.262186840246;
+target.Trade_balance		= 24.572;
+target.M_value				= 773.362;
+target.X_value				= 748.79;
 
 // Prix de l'énergie 
 target.pC 	= [1.35909757603164 1.1176459210912 1.25327047141911 1.27317747456186 1.37781176761594];
@@ -21,8 +21,8 @@ target.Indice_Ind = [Indice_Gas Indice_Elec];
 // resolution parameters
 opt = optimset ("Display","iter", ..
                "FunValCheck","on", ..
-               "MaxFunEvals",200, ..
-               "MaxIter",100, ..
+               "MaxFunEvals",300, ..
+               "MaxIter",150, ..
                "TolFun",1.e-5, ..
                "TolX",1.e-10);
 
@@ -56,10 +56,10 @@ scal_3 = [0.0 0.0 0.0 .. //Fuels cost structure
 scal_4 =[ones(Indice_OtherEner) ones(Indice_OtherEner)]; // other SpeMarg
 
 // scals
-scal_1 = [0.011498865763324	0.044623220900819	0.015043435441596	-0.018800153802571	-0.011799279452524	-0.123508547794858	0.526211424350851];
-scal_2 = [0.163737946919668	1.83982018219429	1.07197467376553	-3.61800263502675E-05	1.48501534819306	1.31408650903284];
-scal_3 = [-0.078645390780063	-0.140018525449538	-0.172796673650209	0.048474700814283	0.83255824730703	2.29442988967154	0.102238678135968	1.24687646365729	4.15943623877128];
-scal_4 = [1.27372319122982	0.439894777914517	1.65064002571252	1.25112281571934	1.49230765038031	1.22782211523085	1.57734475241764	0.921873364844688	1.16851748349912	1.42164167155913	0.841754783687397	0.209386794210847	1.24215015261965	0.050696486751292];
+scal_1 = [0.003445295389303	0.113321491404601	-0.107704736198401	0.056906796418956	0.050549191290381	-0.135757269399127	1.10517753037372];
+scal_2 = [0.106764001773717	1.8400276428314	1.07095238220527	-0.000107473660823	2.17277703077935	1.42663104601224];
+scal_3 = [0.02330359757791	-0.125596610044839	-0.153493337720825	0.054288574551023	1.47133758111109	1.13993880083635	0.117584537166667	2.20653628738035	2.06967852706102];
+scal_4 = [1.0708544301228	0.401406203524259	1.14595141268998	1.34759886367218	1.11835881110889	1.17952951977283	1.25974269548617	1.41998910093386	1.06957016813065	1.40430257823024	0.90192874551227	0.932465953846021	1.17692683652303	0.097058400778571];
 
 //////////////////////////////////////////////////////////////////////////
 // def main function
@@ -71,10 +71,10 @@ function [d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_
 	parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
 	parameters.u_param = scal_1(2);
 	parameters.phi_K = ones(Indice_Sectors)*scal_1(3);
-	// parameters.sigma_M = zeros(parameters.sigma_M);
-	// parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal_1(4);
-	// parameters.sigma_X = zeros(parameters.sigma_X);
-	// parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal_1(5);
+	parameters.sigma_M = zeros(parameters.sigma_M);
+	parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal_1(4);
+	parameters.sigma_X = zeros(parameters.sigma_X);
+	parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal_1(5);
 	parameters.sigma_omegaU = scal_1(6);
 	parameters.Coef_real_wage = scal_1(7);
 
@@ -201,19 +201,18 @@ function [y] = System_optimisation_4(scal_4)
 
 endfunction
 
-pause
 //////////////////////////////////////////////////////////////////////////
 // run nested optimization process
 //////////////////////////////////////////////////////////////////////////
 
 if Optimum_Recal
 
-	Nb_iter = 5;
+	Nb_iter = 4;
 
-	scal_out_1 = ones(Nb_iter, size(scal_1,2));
-	scal_out_2 = ones(Nb_iter, size(scal_2,2));
-	scal_out_3 = ones(Nb_iter, size(scal_3,2));
-	scal_out_4 = ones(Nb_iter, size(scal_4,2));
+	scal_out_1 = ones(Nb_iter, size(scal_1,2)+1);
+	scal_out_2 = ones(Nb_iter, size(scal_2,2)+1);
+	scal_out_3 = ones(Nb_iter, size(scal_3,2)+1);
+	scal_out_4 = ones(Nb_iter, size(scal_4,2)+1);
 
 	diary(SAVEDIR_OPT+ mydate + "_summary" + ".log");
 
@@ -225,28 +224,28 @@ if Optimum_Recal
 
 		// first system (macro)
 		[scal_opt_1, fval, exitflag, output] = fminsearch(System_optimisation_1, scal_1, opt);
-		scal_out_1(elt, :) = scal_opt_1;
+		scal_out_1(elt, :) = [scal_opt_1, fval];
 		scal_1 = scal_opt_1;
 
 		printf("--------------------------- \n");
 
 		// second system (elec and gas prices)
 		[scal_opt_2, fval, exitflag, output] = fminsearch(System_optimisation_2, scal_2, opt);
-		scal_out_2(elt, :) = scal_opt_2;
+		scal_out_2(elt, :) = [scal_opt_2, fval];
 		scal_2 = scal_opt_2;
 
 		printf("--------------------------- \n");
 
 		// third system (fossil fuels prices)
 		[scal_opt_3, fval, exitflag, output] = fminsearch(System_optimisation_3, scal_3, opt);
-		scal_out_3(elt, :) = scal_opt_3;
+		scal_out_3(elt, :) = [scal_opt_3, fval];
 		scal_3 = scal_opt_3;
 
 		printf("--------------------------- \n");
 
 		// third system (fossil fuels prices)
 		[scal_opt_4, fval, exitflag, output] = fminsearch(System_optimisation_4, scal_4, opt);
-		scal_out_4(elt, :) = scal_opt_4;
+		scal_out_4(elt, :) = [scal_opt_4, fval];
 		scal_4 = scal_opt_4;
 
 	end
