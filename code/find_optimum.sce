@@ -44,61 +44,86 @@ scal_1 = [parameters.Mu ..		 		// Mu
 		parameters.Coef_real_wage ..	// CoefRealWage
 		];
 
-scal_2 = [	0.0 1.0 1.0 .. // Gaz
-			0.0 1.0 1.0 .. // Elec
-			1.0 1.0.. // Coal
-		];
+scal_2 = [0.0 1.0 1.0 .. // elec
+		0.0 1.0 1.0 .. // Gaz
+		];  //
 
-scal_3 = [	0.0 0.0 0.0 .. // Fuels cost structure
-			1.0 1.0 1.0 .. // Fuels SpeMar_rates_C
-			1.0 1.0 1.0 .. // Fuels SpeMar_rates_IC
-		];
+scal_3 = [0.0 0.0 0.0 .. //Fuels cost structure
+		1.0 1.0 1.0 .. 	// Fuels SpeMarg
+		1.0 1.0 1.0 .. 	// Fuels SpeMarg
+		]; // 
+		
+scal_4 =[ones(Indice_OtherEner) ones(Indice_OtherEner)]; // other SpeMarg
+
+// scals
+scal_1 = [0.011498865763324	0.044623220900819	0.015043435441596	-0.018800153802571	-0.011799279452524	-0.123508547794858	0.526211424350851];
+scal_2 = [0.163737946919668	1.83982018219429	1.07197467376553	-3.61800263502675E-05	1.48501534819306	1.31408650903284];
+scal_3 = [-0.078645390780063	-0.140018525449538	-0.172796673650209	0.048474700814283	0.83255824730703	2.29442988967154	0.102238678135968	1.24687646365729	4.15943623877128];
+scal_4 = [1.27372319122982	0.439894777914517	1.65064002571252	1.25112281571934	1.49230765038031	1.22782211523085	1.57734475241764	0.921873364844688	1.16851748349912	1.42164167155913	0.841754783687397	0.209386794210847	1.24215015261965	0.050696486751292];
 
 //////////////////////////////////////////////////////////////////////////
 // def main function
 //////////////////////////////////////////////////////////////////////////
-function [d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, target) ;
+function [d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, scal_4, target) ;
 
 	// set results of previsous optimisation
 	parameters.Mu = scal_1(1);
 	parameters.phi_L = ones(Indice_Sectors)*parameters.Mu;
 	parameters.u_param = scal_1(2);
 	parameters.phi_K = ones(Indice_Sectors)*scal_1(3);
-	parameters.sigma_M = zeros(parameters.sigma_M);
-	parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal_1(4);
-	parameters.sigma_X = zeros(parameters.sigma_X);
-	parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal_1(5);
+	// parameters.sigma_M = zeros(parameters.sigma_M);
+	// parameters.delta_M_parameter(Indice_NonEnerSect)=ones(parameters.delta_M_parameter(Indice_NonEnerSect))*scal_1(4);
+	// parameters.sigma_X = zeros(parameters.sigma_X);
+	// parameters.delta_X_parameter(Indice_NonEnerSect)=ones(parameters.delta_X_parameter(Indice_NonEnerSect))*scal_1(5);
 	parameters.sigma_omegaU = scal_1(6);
 	parameters.Coef_real_wage = scal_1(7);
 
 	// init SpeMarg
 	Deriv_Exogenous.SpeMarg_rates_C 	= BY.SpeMarg_rates_C;
+	Deriv_Exogenous.SpeMarg_rates_G 	= BY.SpeMarg_rates_G;
+	Deriv_Exogenous.SpeMarg_rates_I 	= BY.SpeMarg_rates_I;
+	Deriv_Exogenous.SpeMarg_rates_X 	= BY.SpeMarg_rates_X;
 	Deriv_Exogenous.SpeMarg_rates_IC 	= BY.SpeMarg_rates_IC;
 
 	// Gaz
 	parameters.phi_K(Indice_Gas) 		= scal_2(1);
 	parameters.phi_L(Indice_Gas)	= scal_2(1);
 	parameters.phi_IC(Indice_NonEnerSect,Indice_Gas) = ones(size(Indice_NonEnerSect,2),size(Indice_Gas,1))*scal_2(1);
-	Deriv_Exogenous.SpeMarg_rates_C(Indice_Gas)		= scal_2(2) * Deriv_Exogenous.SpeMarg_rates_C(Indice_Gas);
-	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Gas)	= scal_2(3) * Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Gas);
+	Deriv_Exogenous.SpeMarg_rates_C(Indice_Gas)	= BY.SpeMarg_rates_C(Indice_Gas) .* [(BY.SpeMarg_rates_C(Indice_Gas) >= 0).*scal_2(2) + (BY.SpeMarg_rates_C(Indice_Gas) < 0).*scal_2(3)];
+	Deriv_Exogenous.SpeMarg_rates_G(Indice_Gas)	= BY.SpeMarg_rates_G(Indice_Gas) .* [(BY.SpeMarg_rates_G(Indice_Gas) >= 0).*scal_2(2) + (BY.SpeMarg_rates_G(Indice_Gas) < 0).*scal_2(3)];
+	Deriv_Exogenous.SpeMarg_rates_I(Indice_Gas)	= BY.SpeMarg_rates_I(Indice_Gas) .* [(BY.SpeMarg_rates_I(Indice_Gas) >= 0).*scal_2(2) + (BY.SpeMarg_rates_I(Indice_Gas) < 0).*scal_2(3)];
+	Deriv_Exogenous.SpeMarg_rates_X(Indice_Gas)	= BY.SpeMarg_rates_X(Indice_Gas) .* [(BY.SpeMarg_rates_X(Indice_Gas) >= 0).*scal_2(2) + (BY.SpeMarg_rates_X(Indice_Gas) < 0).*scal_2(3)];
+	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Gas)= BY.SpeMarg_rates_IC(:,Indice_Gas).*[(BY.SpeMarg_rates_IC(:,Indice_Gas) >= 0).*(ones(Indice_Sectors').*.scal_2(2)) + (BY.SpeMarg_rates_IC(:,Indice_Gas) < 0).*(ones(Indice_Sectors').*.scal_2(3))];
 
 	// Électricité
 	parameters.phi_K(Indice_Elec) 	= scal_2(4);
 	parameters.phi_L(Indice_Elec)	= scal_2(4);
 	parameters.phi_IC(Indice_NonEnerSect,Indice_Elec) = ones(size(Indice_NonEnerSect,2),size(Indice_Elec,1))*scal_2(4);
-	Deriv_Exogenous.SpeMarg_rates_C(Indice_Elec)		= scal_2(5) * Deriv_Exogenous.SpeMarg_rates_C(Indice_Elec);
-	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Elec)	= scal_2(6) * Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Elec);
-
-	// Crude_coal 
-	Deriv_Exogenous.SpeMarg_rates_C(3)	= scal_2(7) * Deriv_Exogenous.SpeMarg_rates_C(3);
-	Deriv_Exogenous.SpeMarg_rates_IC(:,3)	= scal_2(8) * Deriv_Exogenous.SpeMarg_rates_IC(:,3);
+	Deriv_Exogenous.SpeMarg_rates_C(Indice_Elec)	= BY.SpeMarg_rates_C(Indice_Elec) .* [(BY.SpeMarg_rates_C(Indice_Elec) >= 0).*scal_2(5) + (BY.SpeMarg_rates_C(Indice_Elec) < 0).*scal_2(6)];
+	Deriv_Exogenous.SpeMarg_rates_G(Indice_Elec)	= BY.SpeMarg_rates_G(Indice_Elec) .* [(BY.SpeMarg_rates_G(Indice_Elec) >= 0).*scal_2(5) + (BY.SpeMarg_rates_G(Indice_Elec) < 0).*scal_2(6)];
+	Deriv_Exogenous.SpeMarg_rates_I(Indice_Elec)	= BY.SpeMarg_rates_I(Indice_Elec) .* [(BY.SpeMarg_rates_I(Indice_Elec) >= 0).*scal_2(5) + (BY.SpeMarg_rates_I(Indice_Elec) < 0).*scal_2(6)];
+	Deriv_Exogenous.SpeMarg_rates_X(Indice_Elec)	= BY.SpeMarg_rates_X(Indice_Elec) .* [(BY.SpeMarg_rates_X(Indice_Elec) >= 0).*scal_2(5) + (BY.SpeMarg_rates_X(Indice_Elec) < 0).*scal_2(6)];
+	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_Elec)= BY.SpeMarg_rates_IC(:,Indice_Elec).*[(BY.SpeMarg_rates_IC(:,Indice_Elec) >= 0).*(ones(Indice_Sectors').*.scal_2(5)) + (BY.SpeMarg_rates_IC(:,Indice_Elec) < 0).*(ones(Indice_Sectors').*.scal_2(6))];
 
 	// Fuels 
 	parameters.phi_K(Indice_HH_Fuels) 	= [scal_3(1), scal_3(2), scal_3(3)];
 	parameters.phi_L(Indice_HH_Fuels)	= [scal_3(1), scal_3(2), scal_3(3)];
 	parameters.phi_IC(Indice_NonEnerSect,Indice_HH_Fuels) = ones(Indice_NonEnerSect').*.[scal_3(1), scal_3(2), scal_3(3)];
-	Deriv_Exogenous.SpeMarg_rates_C(Indice_HH_Fuels)	= Deriv_Exogenous.SpeMarg_rates_C(Indice_HH_Fuels).*[scal_3(4), scal_3(5), scal_3(6)];
-	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_HH_Fuels)	= Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_HH_Fuels).*(ones(Indice_Sectors').*.[scal_3(7), scal_3(8), scal_3(9)]);
+	Deriv_Exogenous.SpeMarg_rates_C(Indice_HH_Fuels)	= BY.SpeMarg_rates_C(Indice_HH_Fuels) .* [(BY.SpeMarg_rates_C(Indice_HH_Fuels) >= 0).*[scal_3(4), scal_3(5), scal_3(6)] + (BY.SpeMarg_rates_C(Indice_HH_Fuels) < 0).*[scal_3(7), scal_3(8), scal_3(9)]];
+	Deriv_Exogenous.SpeMarg_rates_G(Indice_HH_Fuels)	= BY.SpeMarg_rates_G(Indice_HH_Fuels) .* [(BY.SpeMarg_rates_G(Indice_HH_Fuels) >= 0).*[scal_3(4), scal_3(5), scal_3(6)] + (BY.SpeMarg_rates_G(Indice_HH_Fuels) < 0).*[scal_3(7), scal_3(8), scal_3(9)]];
+	Deriv_Exogenous.SpeMarg_rates_I(Indice_HH_Fuels)	= BY.SpeMarg_rates_I(Indice_HH_Fuels) .* [(BY.SpeMarg_rates_I(Indice_HH_Fuels) >= 0).*[scal_3(4), scal_3(5), scal_3(6)] + (BY.SpeMarg_rates_I(Indice_HH_Fuels) < 0).*[scal_3(7), scal_3(8), scal_3(9)]];
+	Deriv_Exogenous.SpeMarg_rates_X(Indice_HH_Fuels)	= BY.SpeMarg_rates_X(Indice_HH_Fuels) .* [(BY.SpeMarg_rates_X(Indice_HH_Fuels) >= 0).*[scal_3(4), scal_3(5), scal_3(6)] + (BY.SpeMarg_rates_X(Indice_HH_Fuels) < 0).*[scal_3(7), scal_3(8), scal_3(9)]];
+	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_HH_Fuels) = BY.SpeMarg_rates_IC(:,Indice_HH_Fuels).*[(BY.SpeMarg_rates_IC(:,Indice_HH_Fuels) >= 0).*(ones(Indice_Sectors').*.[scal_3(4), scal_3(5), scal_3(6)]) + (BY.SpeMarg_rates_IC(:,Indice_HH_Fuels) < 0).*(ones(Indice_Sectors').*.[scal_3(7), scal_3(8), scal_3(9)])];
+
+	//other energ
+	Deriv_Exogenous.SpeMarg_rates_C(Indice_OtherEner)	= BY.SpeMarg_rates_C(Indice_OtherEner) .* [(BY.SpeMarg_rates_C(Indice_OtherEner) >= 0).*[scal_4(1) scal_4(2) scal_4(3) scal_4(4) scal_4(5) scal_4(6) scal_4(7)] + (BY.SpeMarg_rates_C(Indice_OtherEner) < 0).*[scal_4(8) scal_4(9) scal_4(10) scal_4(11) scal_4(12) scal_4(13) scal_4(14)]];
+	Deriv_Exogenous.SpeMarg_rates_G(Indice_OtherEner)	= BY.SpeMarg_rates_G(Indice_OtherEner) .* [(BY.SpeMarg_rates_G(Indice_OtherEner) >= 0).*[scal_4(1) scal_4(2) scal_4(3) scal_4(4) scal_4(5) scal_4(6) scal_4(7)] + (BY.SpeMarg_rates_G(Indice_OtherEner) < 0).*[scal_4(8) scal_4(9) scal_4(10) scal_4(11) scal_4(12) scal_4(13) scal_4(14)]];
+	Deriv_Exogenous.SpeMarg_rates_I(Indice_OtherEner)	= BY.SpeMarg_rates_I(Indice_OtherEner) .* [(BY.SpeMarg_rates_I(Indice_OtherEner) >= 0).*[scal_4(1) scal_4(2) scal_4(3) scal_4(4) scal_4(5) scal_4(6) scal_4(7)] + (BY.SpeMarg_rates_I(Indice_OtherEner) < 0).*[scal_4(8) scal_4(9) scal_4(10) scal_4(11) scal_4(12) scal_4(13) scal_4(14)]];
+	Deriv_Exogenous.SpeMarg_rates_X(Indice_OtherEner)	= BY.SpeMarg_rates_X(Indice_OtherEner) .* [(BY.SpeMarg_rates_X(Indice_OtherEner) >= 0).*[scal_4(1) scal_4(2) scal_4(3) scal_4(4) scal_4(5) scal_4(6) scal_4(7)] + (BY.SpeMarg_rates_X(Indice_OtherEner) < 0).*[scal_4(8) scal_4(9) scal_4(10) scal_4(11) scal_4(12) scal_4(13) scal_4(14)]];
+	Deriv_Exogenous.SpeMarg_rates_IC(:,Indice_OtherEner)= BY.SpeMarg_rates_IC(:,Indice_OtherEner).*[..
+		(BY.SpeMarg_rates_IC(:,Indice_OtherEner) >= 0).*(ones(Indice_Sectors').*.[scal_4(1) scal_4(2) scal_4(3) scal_4(4) scal_4(5) scal_4(6) scal_4(7)]) + ..
+		(BY.SpeMarg_rates_IC(:,Indice_OtherEner) < 0).*(ones(Indice_Sectors').*.[scal_4(8) scal_4(9) scal_4(10) scal_4(11) scal_4(12) scal_4(13) scal_4(14)]) ..
+		];
 
 	exec('Order_resolution.sce');
     exec('Resolution.sce');
@@ -112,7 +137,7 @@ endfunction
 // macro indicators
 function [y] = System_optimisation_1(scal_1)
 
-	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, target);
+	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, scal_4, target);
 
 	y1 = [100*abs(((d.GDP/d.GDP_pFish)/BY.GDP - GDP_index(time_step))/GDP_index(time_step)) ..
 		100*abs(d.u_tot/target.u_tot - 1) ..
@@ -131,7 +156,7 @@ endfunction
 // Gas, Elec and coal prices
 function [y] = System_optimisation_2(scal_2)
 
-	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, target) ;
+	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, scal_4, target) ;
 
 	mean_pIC_proj	= (sum(d.pIC([Indice_Gas Indice_Elec],:).*d.IC([Indice_Gas Indice_Elec],:),"c")./sum(d.IC([Indice_Gas Indice_Elec],:),"c"));
 	mean_pIC_BY		= (sum(BY.pIC([Indice_Gas Indice_Elec],:).*BY.IC([Indice_Gas Indice_Elec],:),"c")./sum(BY.IC([Indice_Gas Indice_Elec],:),"c"));
@@ -149,7 +174,7 @@ endfunction
 // Fuel prices
 function [y] = System_optimisation_3(scal_3)
 
-	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, target) ;
+	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, scal_4, target) ;
 
 	mean_pIC_proj	= (sum(d.pIC(Indice_HH_Fuels,:).*d.IC(Indice_HH_Fuels,:),"c")./sum(d.IC(Indice_HH_Fuels,:),"c"));
 	mean_pIC_BY		= (sum(BY.pIC(Indice_HH_Fuels,:).*BY.IC(Indice_HH_Fuels,:),"c")./sum(BY.IC(Indice_HH_Fuels,:),"c"));
@@ -163,55 +188,79 @@ function [y] = System_optimisation_3(scal_3)
 
 endfunction
 
+// Other energy prices 
+function [y] = System_optimisation_4(scal_4)
+
+	[d, parameters, Deriv_Exogenous, target, vMax] = Run(parameters, Deriv_Exogenous, BY, calib, initial_value, scal_1, scal_2, scal_3, scal_4, target) ;
+
+	y1 = [100*abs(sum(d.SpeMarg_IC,"r") + d.SpeMarg_C + d.SpeMarg_X + d.SpeMarg_G + d.SpeMarg_I)./(d.pY.*d.Y + d.pM.*pM)'..
+		vMax..	
+		];
+
+	y = norm(y1);
+
+endfunction
+
+pause
 //////////////////////////////////////////////////////////////////////////
 // run nested optimization process
 //////////////////////////////////////////////////////////////////////////
 
 if Optimum_Recal
 
+	Nb_iter = 5;
+
+	scal_out_1 = ones(Nb_iter, size(scal_1,2));
+	scal_out_2 = ones(Nb_iter, size(scal_2,2));
+	scal_out_3 = ones(Nb_iter, size(scal_3,2));
+	scal_out_4 = ones(Nb_iter, size(scal_4,2));
+
 	diary(SAVEDIR_OPT+ mydate + "_summary" + ".log");
 
-	for elt=1:10
+	for elt=1:Nb_iter
 
-	printf("--------------------------- \n");
-	printf("Start loop: " + elt + " \n");
-	printf("--------------------------- \n");
+		printf("--------------------------- \n");
+		printf("Start loop: " + elt + " \n");
+		printf("--------------------------- \n");
 
-	[scal_opt_1, fval, exitflag, output] = fminsearch(System_optimisation_1, scal_1, opt);
-	csvWrite(scal_opt_1,SAVEDIR_OPT+ mydate() + "_scal_1" + ".csv", ';');
+		// first system (macro)
+		[scal_opt_1, fval, exitflag, output] = fminsearch(System_optimisation_1, scal_1, opt);
+		scal_out_1(elt, :) = scal_opt_1;
+		scal_1 = scal_opt_1;
 
-	scal_1 = scal_opt_1;
+		printf("--------------------------- \n");
 
-	printf("--------------------------- \n");
+		// second system (elec and gas prices)
+		[scal_opt_2, fval, exitflag, output] = fminsearch(System_optimisation_2, scal_2, opt);
+		scal_out_2(elt, :) = scal_opt_2;
+		scal_2 = scal_opt_2;
 
-	[scal_opt_2, fval, exitflag, output] = fminsearch(System_optimisation_2, scal_2, opt);
-	csvWrite(scal_opt_2,SAVEDIR_OPT+ mydate() + "_scal_2" + ".csv", ';');
+		printf("--------------------------- \n");
 
-	scal_2 = scal_opt_2;
+		// third system (fossil fuels prices)
+		[scal_opt_3, fval, exitflag, output] = fminsearch(System_optimisation_3, scal_3, opt);
+		scal_out_3(elt, :) = scal_opt_3;
+		scal_3 = scal_opt_3;
 
-	printf("--------------------------- \n");
+		printf("--------------------------- \n");
 
-
-	[scal_opt_3, fval, exitflag, output] = fminsearch(System_optimisation_3, scal_3, opt);
-	csvWrite(scal_opt_3,SAVEDIR_OPT+ mydate() + "_scal_3" + ".csv", ';');
-
-	scal_3 = scal_opt_3;
+		// third system (fossil fuels prices)
+		[scal_opt_4, fval, exitflag, output] = fminsearch(System_optimisation_4, scal_4, opt);
+		scal_out_4(elt, :) = scal_opt_4;
+		scal_4 = scal_opt_4;
 
 	end
+
+	// output
+	csvWrite(scal_out_1,SAVEDIR_OPT+ mydate() + "_scal_out_1.csv", ';');
+	csvWrite(scal_out_2,SAVEDIR_OPT+ mydate() + "_scal_out_2.csv", ';');
+	csvWrite(scal_out_3,SAVEDIR_OPT+ mydate() + "_scal_out_3.csv", ';');
+	csvWrite(scal_out_4,SAVEDIR_OPT+ mydate() + "_scal_out_4.csv", ';');
 
 	diary(0);
 	print(out,"abort because of you choose to run an optimisation")
 	abort
+
 end
 
-//////////////////////////////////////////////////////////////////////////
-// Idea to update
-//////////////////////////////////////////////////////////////////////////
 
-// améliorer les choses pour avoir le nom des variables et afficher la convergence des paramètres
-// idée sup: supprimer l'hybridation des biens non énergétiques pour l'instant : simplification
-// ajouter une contrainte généraliser sur tous les biens hybridés Indice_HybridCommod
-// Unique cible non atteinte : NetCompWages_byAgent. 10% inférieures...
-// Vérifier les données d'entrée 
-// possibilité de le caler autrement ? Impact sur le système ? 
-// utiliser une désagrégation à 10 classes de ménages + fonction KLEMS de production ? 

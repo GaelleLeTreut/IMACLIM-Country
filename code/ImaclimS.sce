@@ -91,7 +91,7 @@ exec("Dashboard.sce");
 
 // few parameters to add in the Dashboard ??? 
 Recalibration = %T;
-Optimum_Recal = %F;
+Optimum_Recal = %T;
 if Recalibration then 
     BY_Recal = 2018;
 	Macro_nb = Macro_nb +  BY_Recal;

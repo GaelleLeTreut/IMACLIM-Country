@@ -37,15 +37,15 @@ disp("ENT Energy prices : pIC(Natural_gas Gasoline LPG	Road_diesel Heating_oil E
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-disp("/////////////////////////////////////////////////")
-disp("Factures énergétiques")
-disp("/////////////////////////////////////////////////")
-disp("Pétrole brut : M")
-100*(pM(Indice_Oil)*M(Indice_Oil)*1E-3 - 24463.5694073419)/24463.5694073419
-disp("Gaz naturel : M / Total CF / Résidentiel")
-100*(pM(Indice_Gas)*M(Indice_Gas)*1E-3 - 12121.7621744309)/12121.7621744309
-100*((sum(pIC(Indice_Gas,Indice_NonEnerSect).*IC(Indice_Gas,Indice_NonEnerSect)) + sum(pC(Indice_Gas,:).*C(Indice_Gas,:)))*1E-3 - 18291.8603350077)/18291.8603350077
-100*(sum(pC(Indice_Gas,:).*C(Indice_Gas,:))*1E-3 - 10869.4833886892)/10869.4833886892
+// disp("/////////////////////////////////////////////////")
+// disp("Factures énergétiques")
+// disp("/////////////////////////////////////////////////")
+// disp("Pétrole brut : M")
+// 100*(pM(Indice_Oil)*M(Indice_Oil)*1E-3 - 24463.5694073419)/24463.5694073419
+// disp("Gaz naturel : M / Total CF / Résidentiel")
+// 100*(pM(Indice_Gas)*M(Indice_Gas)*1E-3 - 12121.7621744309)/12121.7621744309
+// 100*((sum(pIC(Indice_Gas,Indice_NonEnerSect).*IC(Indice_Gas,Indice_NonEnerSect)) + sum(pC(Indice_Gas,:).*C(Indice_Gas,:)))*1E-3 - 18291.8603350077)/18291.8603350077
+// 100*(sum(pC(Indice_Gas,:).*C(Indice_Gas,:))*1E-3 - 10869.4833886892)/10869.4833886892
 // disp("Produits Pétroliers (hors non-énergie): M / Y-supprimé / X / Total CF / Ménages") 
 // Indice_PP = [Indice_HH_Fuels Indice_NonHH_Fuels]
 // 100*(sum(pM(Indice_PP).*M(Indice_PP))*1E-3 - 24583.9902680768/24583.9902680768
