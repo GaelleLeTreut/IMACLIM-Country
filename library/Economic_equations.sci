@@ -4146,6 +4146,17 @@ function Emission_Coef_M = CO2_intensity_M_Val_1(  CO2Emis_IC , IC)
 
 endfunction
 
+function y = CO2_Red_Const_1(IC, C)
+
+    CO2Emis_IC = CO2_intensity_IC_Val_1( Emission_Coef_IC , IC);
+    CO2Emis_C = CO2_intensity_C_Val_1(  Emission_Coef_C , C);
+
+    CO2Emis_IC_BY = CO2_intensity_IC_Val_1( Emission_Coef_IC , BY.IC);
+    CO2Emis_C_BY = CO2_intensity_C_Val_1(  Emission_Coef_C , BY.C);
+
+    y = sum(CO2Emis_IC) + sum(CO2Emis_C) + CO2_reduction - sum(CO2Emis_IC_BY) - sum(CO2Emis_C_BY);
+
+endfunction
 
 
 ///// Exogenous emissions
