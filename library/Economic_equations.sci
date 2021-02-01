@@ -1732,6 +1732,16 @@ function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 			y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
 			y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
 		end
+
+    elseif ClosCarbRev=="CstPubDebt"
+        if Recycling_Option=="PublicDeficit"|Recycling_Option==""
+             y1 = Labour_Tax_Cut - 0 ;
+             y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        else 
+            //Part of remaining revenues from carbon tax for labour tax reduction under Public deficit constant 
+            y1 = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government)*(GDP/BY.GDP) ;
+            y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        end
 		
 	elseif ClosCarbRev=="AdjTransf"
 		if Recycling_Option=="PublicDeficit"|Recycling_Option==""
@@ -1744,7 +1754,7 @@ function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 				delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) -delta_LS_I)..
 						) ;
 			// Public deficit constant		
-			y1(1, 1+$ ) = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
+			y1(1, 1+$ ) = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government)*(GDP/BY.GDP) ;
 			// => AdjRecycle variable (scalar)  to adjust other social transfers
 		end
 	end 

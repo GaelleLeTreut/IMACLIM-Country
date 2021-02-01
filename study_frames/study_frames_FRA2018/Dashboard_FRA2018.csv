@@ -11,8 +11,8 @@ SystemOpt_Resol;SystemOpt_Static_JCH
 // SystemOpt_Resol;SystemOpt_Static_EC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
-study;Recursive_RunChoices
+study;Static_RunChoices
+// study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
 // SELECT option for Capital_Dynamics;
@@ -51,7 +51,7 @@ Output_files;%T
 Output_prints;%F
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution
@@ -59,11 +59,11 @@ Recycling_Option;LabTax
 // Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_PublicDeficit
 // Recycling_Option;LSBasicNeed
-// Recycling_Option;LSBasicNeed_Exo
+Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
 // ClosCarbRev;CstNetLend
-ClosCarbRev;CstPubDebt
+// ClosCarbRev;CstPubDebt
 // ClosCarbRev;AllLabTax
-// ClosCarbRev;AdjTransf
+ClosCarbRev;AdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F

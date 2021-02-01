@@ -3,7 +3,7 @@
 // MODEL PARAMETERS;;;;;
 //;;;;;
 // Carbon tax;;;;;
-Carbon_Tax_rate;300000;0;1;;
+Carbon_Tax_rate;150000;0;1;;
 CO2_reduction;19;0;500;MtCO2;
 AdjRecycle;0;0;1;variable to ajust other social transfer if the closure of public finance in recycling carbon tax scheme require it;
 //;;;;;
