@@ -16,7 +16,7 @@ delta_C_parameter;0;0;0;0;
 //;;;;;
 //International trade parameters;;;;;
 sigma;1.2;1.2;1.2;1.2;
-sigma_X;0;0.42;0.042;0.42;
+sigma_X;0.42;0.42;0.42;0.42;
 sigma_M;0;0;0;1.9;
 delta_M_parameter;0;0;0;0;
 delta_X_parameter;0;0;0;0;

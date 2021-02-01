@@ -6,8 +6,8 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_JCH
-// SystemOpt_Resol;SystemOpt_Static_EC
+// SystemOpt_Resol;SystemOpt_Static_JCH
+SystemOpt_Resol;SystemOpt_Static_EC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
@@ -51,12 +51,13 @@ Output_files;%T
 Output_prints;%F
 "// SELECT the uses of carbon tax revenues (standard = ""PublicDeficit"" = """")";
 // Recycling_Option;PublicDeficit
-// Recycling_Option;LabTax
-Recycling_Option;LumpSumHH
+Recycling_Option;LabTax
+// Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev;CstNetLend
-// ClosCarbRev;AllLabTax
+// ClosCarbRev;CstNetLend
+// ClosCarbRev;CstPubDebt
+ClosCarbRev;AllLabTax
 Carbon_BTA;%F
 CarbonTaxDiff;%F
