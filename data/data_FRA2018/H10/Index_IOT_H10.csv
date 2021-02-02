@@ -1,11 +1,11 @@
 Aggregation_type;-;-;-;-;-;AGG_4SecB
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy
 Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes
-Row;Crude_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy
-Row;Coke;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy
+Row;Crude_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes
+Row;Coke;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes
 Row;Gasoline;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr
 Row;LPG;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr
-Row;Jetfuel;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes
+Row;Jetfuel;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHTr
 Row;Road_diesel;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr
 Row;Heating_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes
 Row;Other_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes
