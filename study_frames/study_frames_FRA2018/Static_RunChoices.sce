@@ -1,5 +1,5 @@
 // update carbon tax rate
-parameters.Carbon_Tax_rate = 300000;
+parameters.Carbon_Tax_rate = 150000;
 
 // Basic Need  in ktep/UC
 BasicNeed = zeros(nb_Sectors,1);
