@@ -79,11 +79,11 @@ if ( find("kappa"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.kappa.intens
 	elseif or(time_step<>period_0)
 		Proj_Vol.kappa.apply_proj = %T; 
 			if	time_step==1|time_step==2
-				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
 			elseif time_step==3
-				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
 			else 
-				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk),list(1,Indice_Compk));
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
 			end 
 	end
 end 
