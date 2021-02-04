@@ -108,7 +108,7 @@ mkdir(save_rec_runchoice);
 TEST_MODE = %T;
 
 // Parameters of the simulations
-testing.countMax = 30;
+testing.countMax = 5;
 testing.debug_mode = %T;
 
 SIMU_MODE = %T;
