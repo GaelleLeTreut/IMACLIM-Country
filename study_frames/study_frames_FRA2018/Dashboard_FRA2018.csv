@@ -6,8 +6,10 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_JCH
+// SystemOpt_Resol;SystemOpt_Static_JCH
 // SystemOpt_Resol;SystemOpt_Static_JCH_CTax
+SystemOpt_Resol;SystemOpt_Static_temp
+// SystemOpt_Resol;SystemOpt_Static_temp_CTax
 // SystemOpt_Resol;SystemOpt_Static_EC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
@@ -67,3 +69,7 @@ ClosCarbRev;CstPubDebt
 // ClosCarbRev;AdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F
+// Temporary for sensitivity analysis;
+Trade_elast_var;0.0
+Fix_w;False
+

@@ -96,9 +96,15 @@ CostDecompositionError = (divide(d.pY,BY.pY,%nan)-1)' - ( ScaleEffect_Cost + Ene
 CostDecompositionTable = [["Sectors (%)", "Production Price", "Scale Effect", "Energy Price Effect", "Other Price Effect", "Net Wage Effect", "Labour Tax effect", "Margin effect", "Substitution effect", "Climate Compensation Effect", "Decomposition Error"]; [Index_Sectors, (divide(d.pY,BY.pY,%nan)-1)*100, ScaleEffect_Cost'*100, EnergPriceEffect_Cost'*100, NonEnergPriceEffect_Cost'*100, NetWageEffect_Cost'*100, LabourTaxEffect_Cost'*100, MarginEffect_Cost'*100, SubstitutionEffect_Cost'*100, CompensationEffect_Cost'*100, CostDecompositionError'*100]];
 CostDecompositionTable = CostDecompositionTable';
 
+if simu_name == ""
+	header = Recycling_Option+' '+ClosCarbRev;
+else 
+	header = simu_name;
+end
+
 OutputTable.CostDecomposCOMTable = [
 ["Carbon Tax rate-"+money+"/tCO2", 		  		(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6 ];..
-["Recycling_Option", 		  					Recycling_Option+' '+ClosCarbRev];..
+["Recycling_Option", 		  					header];..
 ["Production Price Decomposition - Composite (%)",   				""	  				];..
 [CostDecompositionTable(2:$,1),CostDecompositionTable(2:$,$)]
 ];

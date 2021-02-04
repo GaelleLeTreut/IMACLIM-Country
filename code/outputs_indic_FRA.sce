@@ -39,7 +39,14 @@ if nb_Households <> 1 & [Country == "France"]
 	LumpSumShare 	= sum(ClimPolicyCompens(Indice_Households))/sum(Carbon_Tax);
 	OtherTransfShare= sum(Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH).*Population)/sum(Carbon_Tax);
 
-	OutputTable.EquityEfficiency = [["Variables" 	"BY values" 																		Recycling_Option];..
+	if simu_name == ""
+		header = Recycling_Option;
+	else 
+		header = simu_name;
+	end
+
+	OutputTable.EquityEfficiency = [..
+		["Variables" 								"BY values" 																		header];..
 		["Total CO2 emissions", 					string(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))+" MtCO2",								round(1000*((sum(Out.CO2Emis_IC)+sum(Out.CO2Emis_C))./(sum(BY.CO2Emis_IC)+sum(BY.CO2Emis_C))-1))/10 + " %"];..
 		["HH CO2 emissions",	 					string(sum(BY.CO2Emis_C))+" MtCO2",													round(1000*(sum(Out.CO2Emis_C)./(sum(BY.CO2Emis_C))-1))/10 + " %"];..
 		["ENT CO2 emissions", 						string(sum(BY.CO2Emis_IC))+" MtCO2",												round(1000*(sum(Out.CO2Emis_IC)./(sum(BY.CO2Emis_IC))-1))/10 + " %"];..
@@ -73,7 +80,12 @@ if nb_Households <> 1 & [Country == "France"]
 		["Government expenditure (nom)",			string(sum(BY.G_value)*money_disp_adj)+money_DUnit_short+money,						round(1000*((sum(Out.G_value)/sum(BY.G_value))-1))/10 + "%"];..
 		["Public debt to GDP ratio",				BY.NetFinancialDebt(Indice_Government)/BY.GDP,										(Out.NetFinancialDebt(Indice_Government)/Out.GDP)/(BY.NetFinancialDebt(Indice_Government)/BY.GDP)];..
 		["Public net lending to GDP ratio",			BY.NetLending(Indice_Government)/BY.GDP,											(Out.NetLending(Indice_Government)/Out.GDP)/(BY.NetLending(Indice_Government)/BY.GDP)];..
-		[money_DUnit_short+money+" stands for "+money_disp_unit+money,"",""];
+		[money_DUnit_short+money+" stands for "+money_disp_unit+money,"",""];..
+		["", "", ""];..
+		["sigma_X", 		"", 		string(sigma_X(4))];..
+		["sigma_M",			"", 		string(sigma_M(4))];..
+		["sigma_omegaU",	"",		 	string(sigma_omegaU)];..
+		["Coef_real_wage", 	"", 		string(Coef_real_wage)];..
 		];
 		
 	if Output_files
