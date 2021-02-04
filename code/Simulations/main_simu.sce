@@ -299,14 +299,22 @@ for simu = simulation_list
             mclose(fd_w);
             // Execute the code
             cd('..');
-            launch_ImaclimS();
+            try
+                launch_ImaclimS();
+            catch
+                printf("simulation error")
+            end
             cd(SIMUS);
             // Restore recursive runchoice
             movefile(save_rec_runchoice + rec_runchoices, study_frames_country);
         end
     else
         cd('..');
-        launch_ImaclimS();
+        try
+            launch_ImaclimS();
+        catch
+            printf("simulation error")
+        end
         cd(SIMUS);
     end
 
