@@ -78,8 +78,10 @@ if nb_Households <> 1 & [Country == "France"]
 		["", 										"", 																				""];..
 		["Government expenditure (real)",			string(sum(BY.G_value)*money_disp_adj)+money_DUnit_short+money,						round(1000*((sum(Out.G_value)/sum(G_pLasp*BY.G_value))-1))/10+ "%"];..
 		["Government expenditure (nom)",			string(sum(BY.G_value)*money_disp_adj)+money_DUnit_short+money,						round(1000*((sum(Out.G_value)/sum(BY.G_value))-1))/10 + "%"];..
-		["Public debt to GDP ratio",				BY.NetFinancialDebt(Indice_Government)/BY.GDP,										(Out.NetFinancialDebt(Indice_Government)/Out.GDP)/(BY.NetFinancialDebt(Indice_Government)/BY.GDP)];..
-		["Public net lending to GDP ratio",			BY.NetLending(Indice_Government)/BY.GDP,											(Out.NetLending(Indice_Government)/Out.GDP)/(BY.NetLending(Indice_Government)/BY.GDP)];..
+		["Public debt to GDP ratio",				BY.NetFinancialDebt(Indice_Government)/BY.GDP,										round(1000*((sum(Out.NetFinancialDebt(Indice_Government)/Out.GDP)/sum(BY.NetFinancialDebt(Indice_Government)/BY.GDP))-1))/10 + "%"];..
+		["Public net lending to GDP ratio",			BY.NetLending(Indice_Government)/BY.GDP,											round(1000*((sum(Out.NetLending(Indice_Government)/Out.GDP)/sum(BY.NetLending(Indice_Government)/BY.GDP))-1))/10 + "%"];..
+		["RoW debt to GDP ratio",					BY.NetFinancialDebt(Indice_RestOfWorld)/BY.GDP,										round(1000*((sum(Out.NetFinancialDebt(Indice_RestOfWorld)/Out.GDP)/sum(BY.NetFinancialDebt(Indice_RestOfWorld)/BY.GDP))-1))/10 + "%"];..
+		["RoW net lending to GDP ratio",			BY.NetLending(Indice_RestOfWorld)/BY.GDP,											round(1000*((sum(Out.NetLending(Indice_RestOfWorld)/Out.GDP)/sum(BY.NetLending(Indice_RestOfWorld)/BY.GDP))-1))/10 + "%"];..
 		[money_DUnit_short+money+" stands for "+money_disp_unit+money,"",""];..
 		["", "", ""];..
 		["sigma_X", 		"", 		string(sigma_X(4))];..
