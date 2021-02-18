@@ -146,14 +146,15 @@ endfunction
 /////////////////////////////////////////////////
 // IOT in value
 
-function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, Uses, fact , decimals )
+function iot = buildIot( IC_value, FC_value, OthPart_IOT, Carbon_Tax_IC, Carbon_Tax_C, Supply, Uses, fact , decimals )
 
     indexCommo = part(Index_Commodities,1:5);
 
     IC_value = round( IC_value * fact * 10^decimals ) / 10^decimals;
     FC_value = round( FC_value * fact * 10^decimals ) / 10^decimals;
     OthPart_IOT = round( OthPart_IOT * fact * 10^decimals ) / 10^decimals;
-    Carbon_Tax = round( Carbon_Tax * fact * 10^decimals ) / 10^decimals;
+    Carbon_Tax_IC = round( sum(Carbon_Tax_IC',"r") * fact * 10^decimals ) / 10^decimals;
+    Carbon_Tax_C = round( Carbon_Tax_C * fact * 10^decimals ) / 10^decimals;
     Supply = round( Supply * fact * 10^decimals ) / 10^decimals
     Uses = round( Uses * fact * 10^decimals ) / 10^decimals;
 
@@ -164,8 +165,13 @@ function iot = buildIot( IC_value , FC_value , OthPart_IOT, Carbon_Tax,Supply, U
     iot( 1:nCommo+1 , nCommo+2+nb_FC ) =  ["Uses";Uses];
 
     iot( nCommo+2:nCommo+1+size(OthPart_IOT,1),1:nCommo+1) = [Index_OthPart_IOT,OthPart_IOT ];
-    iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax",Carbon_Tax];
-    iot(nCommo+1+size(OthPart_IOT,1)+2 ,1:nCommo+1) = ["Supply",Supply];
+    iot(nCommo+1+size(OthPart_IOT,1)+1 ,1:nCommo+1) = ["Carbon_Tax_IC",Carbon_Tax_IC];
+
+    for elt=1:nb_Households 
+        iot(nCommo+1+size(OthPart_IOT,1)+1+elt ,1:nCommo+1) = ["Carbon_Tax_" + Index_Households(elt), Carbon_Tax_C(:,elt)'];
+    end 
+    
+    iot(nCommo+1+size(OthPart_IOT,1)+elt+2 ,1:nCommo+1) = ["Supply",Supply];
 
     iot($+2,1:2) = ["Units",money_disp_unit+money ]
 
