@@ -23,4 +23,13 @@ Coef_HH_unitpeople = 10^3;
 	warning("Exo_HH == 1 for each HH class ; the model is then running in a equivalent config to the LSBasicNeed options: no exemption for the unique HH")
 	end
  end
- 
+
+// sensitivity analysis 
+parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
+parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
+
+if Fix_w == "True"
+	parameters.sigma_omegaU = 0;
+	parameters.Coef_real_wage = 1;
+end
+
