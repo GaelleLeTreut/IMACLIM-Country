@@ -109,6 +109,8 @@ for i= Table_parameters
     execstr(Table_parameters);
 end
 
+AdjRecycle = 0;
+
 // Calibrated parameters
 [Table_calib] = struct2Variables(calib,"calib");
 for i= Table_calib

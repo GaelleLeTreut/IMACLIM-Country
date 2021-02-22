@@ -1269,7 +1269,7 @@ endfunction
 //// Opt 1 = function of net wage variation
 function [y] = Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle ) 
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf"
 		y1 = Other_SocioBenef - NetWage_variation * Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - NetWage_variation * Other_SocioBenef_param .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1280,7 +1280,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_1(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf"
 		Other_SocioBenef  = NetWage_variation * Other_SocioBenef_param ;
 	else	
 		Other_SocioBenef  = NetWage_variation * Other_SocioBenef_param .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1291,7 +1291,7 @@ endfunction
 //// Opt 2 = function of GDP/capita variation - > hometetic proj
 function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
 	
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ).*  (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ).* Other_SocioBenef_param ;
@@ -1303,7 +1303,7 @@ endfunction
 
 function Other_SocioBenef = Other_SocioBenef_Val_2(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
 	
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param;
 	else
 		Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) )  .* Other_SocioBenef_param
@@ -1315,7 +1315,7 @@ endfunction
 //// Opt 3 = constant
 function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf )
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - BY.Other_SocioBenef;
 	else
 		y1 = Other_SocioBenef - BY.Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1327,7 +1327,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf )
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = BY.Other_SocioBenef;
 	else
 		Other_SocioBenef = BY.Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1338,7 +1338,7 @@ endfunction
 //// Opt 4 = function of CPI
 function [y] = Other_SocioBenef_Const_4(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - CPI .* Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - CPI .* Other_SocioBenef_param.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1350,7 +1350,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_4(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf ) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = CPI .* Other_SocioBenef_param ;
 	else
 		Other_SocioBenef = CPI .* Other_SocioBenef_param.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1715,13 +1715,17 @@ endfunction
 
 function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
 		
-	 if ClosCarbRev=="AllLabTax"
+	 if ClosCarbRev=="AllLabTax" | ClosCarbRev=="ExoAdjTransf"
 	//All tax base after climate compensation ( for HH or sectors) for labour tax reduction
 		y1 = sum(Labour_Tax) - (..
 			sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
 			delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) -delta_LS_I)..
 					) ;
-		y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        if ClosCarbRev=="AllLabTax"
+    		y1(1, 1+$ ) = AdjRecycle;
+        else 
+            y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        end
 
 	elseif ClosCarbRev=="CstNetLend"
 		if Recycling_Option=="PublicDeficit"|Recycling_Option==""
