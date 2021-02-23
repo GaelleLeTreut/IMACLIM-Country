@@ -69,15 +69,22 @@ if Proj_Vol.Capital_consumption.apply_proj & ~Proj_Vol.Capital_consumption.inten
 	if or(time_step==period_0)
 		Proj_Vol.Capital_consumption.apply_proj = %F;
 	elseif or(time_step<>period_0)
-		Proj_Vol.Capital_consumption.apply_proj = %T; 
+		Proj_Vol.Capital_consumption.apply_proj = %T;
 	end
 end 
 
 if ( find("kappa"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.kappa.intens
-if or(time_step==period_0)
+	if or(time_step==period_0)
 		Proj_Vol.kappa.apply_proj = %F;
 	elseif or(time_step<>period_0)
 		Proj_Vol.kappa.apply_proj = %T; 
+			if	time_step==1|time_step==2
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
+			elseif time_step==3
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
+			else 
+				Proj_Vol.kappa.ind_of_proj = list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));
+			end 
 	end
 end 
 

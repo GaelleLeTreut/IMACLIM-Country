@@ -3,4 +3,4 @@ C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));
 IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%T;%T
 X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%T;;%T
 M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;;%T
-Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));%F;%F;%F
+Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_BioFuk),list(1,Indice_Electk),list(1,Indice_Plantk),list(1,Indice_Cattlk),list(1,Indice_RestAk),list(1,Indice_Cemenk),list(1,Indice_IronSk),list(1,Indice_NonFek),list(1,Indice_Chemik),list(1,Indice_FoodBk),list(1,Indice_Paperk),list(1,Indice_RestIk),list(1,Indice_Freigk),list(1,Indice_PassTk));%T;%T;%T
