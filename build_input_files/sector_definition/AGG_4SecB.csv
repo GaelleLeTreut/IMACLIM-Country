@@ -1,4 +1,4 @@
 PrimEnergy;EnerSect;HybridCommod;PrimEnerSect;NonSupplierSect
 FinEnHTr;EnerSect;HybridCommod;FinEnerSect;NonSupplierSect
-FinEnHRes;EnerSect;NonHybridCommod;FinEnerSect;-
+FinEnHRes;EnerSect;HybridCommod;FinEnerSect;-
 AllComp;NonEnerSect;NonHybridCommod;-;-

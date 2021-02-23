@@ -1,0 +1,15 @@
+Crude_oil;EnerSect;HybridCommod;PrimEnerSect;NonSupplierSect
+Natural_gas;EnerSect;HybridCommod;PrimEnerSect;NonSupplierSect
+Coal;EnerSect;HybridCommod;PrimEnerSect;-
+AllFuels;EnerSect;HybridCommod;FinEnerSect;-
+Electricity;EnerSect;HybridCommod;FinEnerSect;-
+HeatGeoSol_Th;EnerSect;HybridCommod;FinEnerSect;-
+Heavy_Industry;NonEnerSect;NonHybridCommod;-;-
+Buildings_constr;NonEnerSect;NonHybridCommod;-;-
+Work_constr;NonEnerSect;NonHybridCommod;-;-
+Automobile;NonEnerSect;HybridCommod;-;-
+Load_PipeTransp;NonEnerSect;HybridCommod;-;-
+PassTransp;NonEnerSect;HybridCommod;-;-
+AgriFood_Indus;NonEnerSect;NonHybridCommod;-;-
+PropertyBus;NonEnerSect;HybridCommod;-;-
+Comp;NonEnerSect;NonHybridCommod;-;-

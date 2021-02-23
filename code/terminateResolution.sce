@@ -39,7 +39,7 @@ end
 
 if count==countMax&vBest>sensib
     // error("fsolve did NOT converge");
-    printf("fsolve did NOT converge properly: vBest = " + string(vBest) + "\n");
+    error("fsolve did NOT converge properly: vBest = " + string(vBest) + "\n");
 else
     printf("equilibrium FOUND with vBest = " + string(vBest) + "\n");
 end

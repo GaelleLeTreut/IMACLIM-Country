@@ -76,8 +76,6 @@ if exists('Deriv_Exogenous')==1
     execstr(Table_Deriv_Exogenous);
 end
 
-// Indice_Immo = find(Index_Sectors == "Property_business") ;
-
 //  Introduire le changement des valeurs par défaut des parametres selon les différentes simulation
 [Table_parameters] = struct2Variables(parameters,"parameters");
 execstr(Table_parameters);
@@ -236,7 +234,7 @@ end
 //////SOLVEUR
 /////////////////////////////////////////////////
 count        = 0;
-countMax     = 30;
+countMax     = 5;
 vMax         = 10000000;
 vBest        = 10000000;
 sensib       = 1e-5;

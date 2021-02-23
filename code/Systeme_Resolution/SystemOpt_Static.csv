@@ -5,7 +5,7 @@ Var_Resol;Index_Imaclim_VarResol;;
 // Ignored : empty lines and commented lines;;;
 ;;;
 ///////////////////////  Demograhic context;;;
-;HH_Unemployment_Const_1;u,u_tot;
+u;HH_Unemployment_Val_1;u_tot;
 Unemployed;HH_Employment_Val_1;u, Labour_force;
 Pensions;Pensions_Val_1;Pension_Benefits, Retired;
 Unemployment_transfers;Unemploy_Transf_Val_1;UnemployBenefits, Unemployed;

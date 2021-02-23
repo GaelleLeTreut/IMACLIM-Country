@@ -25,6 +25,8 @@ Pension_Benefits;1;nb_Households;calib
 UnemployBenefits;1;nb_Households;calib
 Other_SocioBenef;1;nb_Households;calib
 Household_saving_rate;1;nb_Households;calib
+HH_saving_rate_agg;1;1;calib
+delta_HH_saving_rate;1;1;calib
 Household_savings;1;nb_Households;calib
 NetLending;1;nb_InstitAgents;InitVal
 GFCF_byAgent;1;nb_DomesticAgents;InitVal
