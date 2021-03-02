@@ -49,7 +49,7 @@ if nb_Households <> 1 & [Country == "France"]
 
 	LabTaxShare 	= sum((Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y')/sum(Carbon_Tax);
 	LumpSumShare 	= sum(ClimPolicyCompens(Indice_Households))/sum(Carbon_Tax);
-	OtherTransfShare= sum(Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH).*Population)/sum(Carbon_Tax);
+	OtherTransfShare= sum((Other_SocioBenef - NetWage_variation * Other_SocioBenef_param).*Population)/sum(Carbon_Tax);
 
 	if simu_name == ""
 		header = Recycling_Option;
@@ -65,7 +65,8 @@ if nb_Households <> 1 & [Country == "France"]
 		["CO2 emissions reduction",					"",																					round(100 * (sum(Out.CO2Emis_IC) - sum(BY.CO2Emis_IC) + sum(Out.CO2Emis_C) - sum(BY.CO2Emis_C)))/100 + " MtCO2"];..
 		["Carbon Tax rate", 						"", 																				round(Carbon_Tax_rate)*1E-3 + " €/tCO2"];..
 		["Share spent in LabTax reductions",		"",																					round(1000*LabTaxShare)/ 10 + " %"];.. 	
-		["Share spent in LumpSum transfers",		"",																					round(1000*(LumpSumShare + OtherTransfShare))/ 10 + " %"];..
+		["Share spent in LumpSum transfers",		"",																					round(1000*LumpSumShare)/ 10 + " %"];..
+		["Share spent in social transfers",			"",																					round(1000*OtherTransfShare)/ 10 + " %"];..
 		["Real GDP",			 					string(BY.GDP*money_disp_adj)+money_DUnit_short+money, 								round(1000*((Out.GDP/(GDP_pLasp*BY.GDP))-1))/10 + " %"];..
 		["Total employment",						string(sum(BY.Labour))+Labour_unit,													round(1000*(sum(Out.Labour)/sum(BY.Labour)-1))/10 + " %"];..
 		["Real investment",							string(sum(BY.I_value)*money_disp_adj)+money_DUnit_short+money,						round(1000*((sum(Out.I_value)/sum(I_pLasp*BY.I_value))-1))/10 + " %"];..
@@ -100,6 +101,7 @@ if nb_Households <> 1 & [Country == "France"]
 		["sigma_M",			"", 		string(sigma_M(4))];..
 		["sigma_omegaU",	"",		 	string(sigma_omegaU)];..
 		["Coef_real_wage", 	"", 		string(Coef_real_wage)];..
+		["AdjRecycle", 		"", 		string(AdjRecycle)];..
 		];
 		
 	if Output_files

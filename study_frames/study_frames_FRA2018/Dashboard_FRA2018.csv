@@ -27,8 +27,8 @@ Exo_Kstock_Adj;%F
 AGG_type;AGG_4SecB
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
-// H_DISAGG;H10
-H_DISAGG;L5
+H_DISAGG;H10
+// H_DISAGG;L5
 // SELECT the resolution mode;
 Resol_Mode;Static_comparative
 // Resol_Mode;Dynamic_projection
@@ -53,7 +53,7 @@ Output_files;%T
 Output_prints;%F
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
-Recycling_Option;LabTax
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution
@@ -61,12 +61,13 @@ Recycling_Option;LabTax
 // Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_PublicDeficit
 // Recycling_Option;LSBasicNeed
-// Recycling_Option;LSBasicNeed_Exo
+Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
 // ClosCarbRev;CstNetLend
-ClosCarbRev;CstPubDebt
+// ClosCarbRev;CstPubDebt
 // ClosCarbRev;AllLabTax
 // ClosCarbRev;AdjTransf
+ClosCarbRev;ExoAdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F
 // Temporary for sensitivity analysis;

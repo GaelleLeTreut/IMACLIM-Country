@@ -24,6 +24,14 @@ Coef_HH_unitpeople = 10^3;
 	end
  end
 
+ if ClosCarbRev <> "ExoAdjTransf"
+ 	parameters.AdjRecycle = 0;
+	BY.AdjRecycle = parameters.AdjRecycle;	
+	AdjRecycle = parameters.AdjRecycle;
+ end
+
+
+
 // sensitivity analysis 
 parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
 parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
