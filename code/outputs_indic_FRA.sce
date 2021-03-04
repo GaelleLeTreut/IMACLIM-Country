@@ -101,8 +101,8 @@ end
 		["RoW net lending to GDP ratio",			BY.NetLending(Indice_RestOfWorld)/BY.GDP,											round(1000*((sum(Out.NetLending(Indice_RestOfWorld)/Out.GDP)/sum(BY.NetLending(Indice_RestOfWorld)/BY.GDP))-1))/10 + "%"];..
 		[money_DUnit_short+money+" stands for "+money_disp_unit+money,"",""];..
 		["", "", ""];..
-		["sigma_X", 		"", 		string(sigma_X(4))];..
-		["sigma_M",			"", 		string(sigma_M(4))];..
+		["sigma_X", 		"", 		string(sigma_X(nb_Sectors))];..
+		["sigma_M",			"", 		string(sigma_M(nb_Sectors))];..
 		["sigma_omegaU",	"",		 	string(sigma_omegaU)];..
 		["Coef_real_wage", 	"", 		string(Coef_real_wage)];..
 		["AdjRecycle", 		"", 		string(AdjRecycle)];..
