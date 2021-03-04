@@ -47,15 +47,19 @@ if nb_Households <> 1 & [Country == "France"]
 		Name_Rich = "Paris agglomeration";
 	end
 
-	LabTaxShare 	= sum((Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y')/sum(Carbon_Tax);
-	LumpSumShare 	= sum(ClimPolicyCompens(Indice_Households))/sum(Carbon_Tax);
-	OtherTransfShare= sum((Other_SocioBenef - NetWage_variation * Other_SocioBenef_param).*Population)/sum(Carbon_Tax);
+	LabTaxShare 	= divide(sum((Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y'),sum(Carbon_Tax),0);
+	LumpSumShare 	= divide(sum(ClimPolicyCompens(Indice_Households)),sum(Carbon_Tax),0);
+	OtherTransfShare= divide(sum((Other_SocioBenef - NetWage_variation * Other_SocioBenef_param).*Population),sum(Carbon_Tax),0);
 
+if ~isdef('simu_name')
+	header = Recycling_Option;
+else	
 	if simu_name == ""
 		header = Recycling_Option;
 	else 
 		header = simu_name;
 	end
+end
 
 	OutputTable.EquityEfficiency = [..
 		["Variables" 								"BY values" 																		header];..
