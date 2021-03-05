@@ -1,4 +1,4 @@
-Aggregation_type;-;-;-;-;-;AGG_30Sect;AGG_SNBC2020;AGG_SNBC2018;AGG_MetMin;AGG_IndEner;AGG_MetMinEn;AGG_Ener1;AGG_Ener2;AGG_4Sec;AGG_4SecB;AGG_3Sec;AGG_EnComp
+Aggregation_type;-;-;-;-;-;AGG_30Sect;AGG_SNBC17;AGG_SNBC15;AGG_MetMin;AGG_IndEner;AGG_MetMinEn;AGG_Ener1;AGG_Ener2;AGG_4Sec;AGG_4SecB;AGG_3Sec;AGG_EnComp
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;Crude_oil;Crude_oil;Crude_oil;Crude_oil;Crude_oil;Crude_oil;Crude_oil;Crude_oil;PrimEnergy;PrimEnergy;PrimEnergy;AllEnergy
 Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;Natural_gas;Natural_gas;Natural_gas;Natural_gas;Natural_gas;Natural_gas;Natural_gas;Natural_gas;PrimEnergy;PrimEnergy;PrimEnergy;AllEnergy
 Row;Coking_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;Crude_coal;Coal;Coal;Coking_coal;Coal;Coal;Coal;Coal;PrimEnergy;PrimEnergy;PrimEnergy;AllEnergy

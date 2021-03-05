@@ -101,8 +101,8 @@ if Recalibration then
 	Scenario = Scenario + '_' + BY_Recal;
 
 	// check consistency with AGG_level
-	if BY_Recal == 2016 & AGG_type <> 'AGG_SNBC2018' then 
-	    warning('Put AGG_type to AGG_SNBC2018')
+	if BY_Recal == 2016 & AGG_type <> 'AGG_SNBC15' then 
+	    warning('Put AGG_type to AGG_SNBC15')
 	end
 	if BY_Recal == 2018 & AGG_type <> '30Sect' then 
 	    warning('Put AGG_type to 30Sect')

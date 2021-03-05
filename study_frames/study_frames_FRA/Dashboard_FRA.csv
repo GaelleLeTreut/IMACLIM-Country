@@ -21,8 +21,8 @@ study;Recalib_RunChoices
 // SELECT an aggregation sector profil by uncomment it;
 // AGG_type;
 AGG_type;AGG_30Sect
-// AGG_type;AGG_SNBC2018
-// AGG_type;AGG_SNBC2020
+// AGG_type;AGG_SNBC15
+// AGG_type;AGG_SNBC17
 // AGG_type;AGG_MetMin
 // AGG_type;AGG_IndEner
 // AGG_type;AGG_MetMinEn
