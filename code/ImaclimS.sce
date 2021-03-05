@@ -126,7 +126,7 @@ if Output_files
     end
 	
 	// GLT Temporary : specific name for FRA Simu
-	if Country_ISO <> 'FRA'&part(Macro_nb,1:length('Cov'))=="Cov"
+	if Country_ISO =='FRA'&part(Macro_nb,1:length('Cov'))=="Cov"
 	simu_name = simu_name+"_"+Macro_nb;
 	end
 	
