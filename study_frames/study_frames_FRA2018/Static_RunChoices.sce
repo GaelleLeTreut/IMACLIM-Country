@@ -5,7 +5,9 @@ parameters.Carbon_Tax_rate = 110000;
 BasicNeed = zeros(nb_Sectors,1);
 // Put in sectoral parameters 
 
+if AGG_type== 'AGG_4SecB'
 BasicNeed(Indice_FinEnerSect) = [0.0001982324600037440, 0.0003789139351315460]';
+end
 BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
 
 // Data for Households are in thousand of people
