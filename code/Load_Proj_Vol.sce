@@ -287,7 +287,7 @@ end
 
 // M/Y ratio (import intensity of production) projection
 if find(fieldnames(Proj_Vol) == 'M') <> [] then
-    if (Proj_Vol.M.apply_proj & Proj_Vol.M.intens==%F)|(Proj_Vol.M.apply_proj & Proj_Vol.M.intens=="") then
+    if Proj_Vol.M.apply_proj & Proj_Vol.M.intens==%T then
         Proj_Vol = proj_intens(Proj_Vol, 'M', 'M_Y');
     end
 end
