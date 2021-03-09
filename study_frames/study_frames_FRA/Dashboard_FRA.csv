@@ -46,8 +46,8 @@ Nb_Iter;3
 // Macro_nb;2deg
 // Macro_nb;2deg_bis
 // Macro_nb;2deg_ter
-// Macro_nb;CovRef
-Macro_nb;CovLow
+Macro_nb;CovRef
+// Macro_nb;CovLow
 // Macro_nb;CovHigh
 // SELECT which shock from the Macro framework you want to apply ;
 Demographic_shift;True
@@ -62,7 +62,7 @@ Energy_Balance;True
 // Scenario;AMS
 // Scenario;AME_desag
 // Scenario;AMS_desag
-Scenario;AMS_Ref				
+Scenario;AMS_Ref
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
 Recycling_Option;LabTax

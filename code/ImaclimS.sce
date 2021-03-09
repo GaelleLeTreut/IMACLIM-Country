@@ -150,7 +150,7 @@ if Output_files
     SAVEDIR_IOA = SAVEDIR + "outputs_IOA" + filesep();
     mkdir(SAVEDIR_IOA);	
 
-    // Save Dashbord.csv & System_Resol.csv in output
+    // Save Dashbord.csv & simulation elements in outputs
     copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
 	if study <> '' 
     copyfile(STUDY_Country + study + ".sce", SAVEDIR);
@@ -162,13 +162,18 @@ if Output_files
 			copyfile(STUDY_Country + 'ProjScenario'+ AGG_type + ".csv", SAVEDIR);	
 		end
 	end
-    // if Optimization_Resol then
-    //     copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
-    // else
-    //     copyfile(CODE + System_Resol + ".sce", SAVEDIR);
-    // end
-
-    // Record the name of the current run
+	
+    if Optimization_Resol then
+        copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
+    else
+        copyfile(CODE + System_Resol + ".sce", SAVEDIR);
+    end
+	
+    if Macro_nb<>'' then
+        copyfile(STUDY_Country +'Macro_Framework_'+ Macro_nb + ".csv", SAVEDIR);
+    end
+    
+	// Record the name of the current run
     if SIMU_MODE then
         current_run_name = simu_name;
     elseif Scenario <> '' then
