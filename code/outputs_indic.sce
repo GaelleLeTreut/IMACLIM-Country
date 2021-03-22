@@ -1051,6 +1051,7 @@ OutputTable("Equity_"+Name_time) = [
 ["Carbon Tax rate", (Out.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2" 											];..
 [ "Carbon Tax proceeds to lump-sum transfers in %", 100*divide(sum(Out.ClimPolicyCompens(Indice_Households)),sum(Out.Carbon_Tax),%nan)	];..
 ["Total CO2 emissions %/"+ref_name, 							(evol_ref.DOM_CO2-1)*100											];..
+["Population "+Index_Households,Out.Population'];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
 ["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
@@ -1113,6 +1114,13 @@ if nb_Households <> 1
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Gini index on HH Disposable Income",	(1 - sum(Gini_indicator(Out.H_disposable_income,Out.Population)))*100];..
 ];
+ end
+ 
+  if Country == "Brasil"&(Scenario=="BIICS_CPS"|Scenario=="BIICS_DDS")
+OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
+["electricity consumption (toe/capita) "+Index_Households, (C(Indice_Electk,:)./Out.Population)'];..
+["electricity consumption (MWh/capita) "+Index_Households, (C(Indice_Electk,:)*(11.63)./Out.Population)'];..
+ ];
  end
  
 /////////////Sectoral tables
