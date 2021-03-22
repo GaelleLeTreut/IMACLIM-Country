@@ -10,6 +10,7 @@ SystemOpt_Resol;SystemOpt_Static_temp
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 study;Static_RunChoices
+// study;MacroIncer_RunChoices
 // study;Recursive_RunChoices
 // study;Covid_RunChoices
 // TELL if you want a capital dynamics;
