@@ -1,45 +1,35 @@
-// Shocking some parameters default values
+// update carbon tax rate
+parameters.Carbon_Tax_rate = 300000;
 
-Carbon_Tax_rate0 = 1e5; // 100reais / tCO2 
-Carbon_Tax_rate1 = 2e5;
-Carbon_Tax_rate2 = 3e5;
-Carbon_Tax_rate3 = 5e5;
+// Basic Need  in ktep/UC
+BasicNeed = zeros(nb_Sectors,1);
+// Put in sectoral parameters 
 
+BasicNeed(Indice_FinEnerSect) = [0.0001982324600037440, 0.0003789139351315460]';
+BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
 
-/// Info  reduction goal
-if time_step == 1 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-goal_reduc_IC = 0.05 * ones(nb_Sectors,nb_Sectors);
-goal_reduc_C = 0.05 * ones(nb_Sectors, nb_Households);
-
-// Calcul indirect IC / direct C
-////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-// parameters.CarbonCap = 0.2 ;
-// parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
-// CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
-// parameters.CarbonCap_C = parameters.CarbonCap.* ones(nb_Sectors,nb_Households);
-// CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
-
-end 
+// Data for Households are in thousand of people
+Coef_HH_unitpeople = 10^3;
 
 
-if time_step == 2 
-parameters.Carbon_Tax_rate = Carbon_Tax_rate1;
-goal_reduc_IC = 0.15 * ones(nb_Sectors,nb_Sectors);
-goal_reduc_C = 0.15 * ones(nb_Sectors, nb_Households);
+ if Recycling_Option=="LSBasicNeed_Exo" 
+// Only certain classes of HH are exempted 
+	if nb_Households==10
+	///No exemption for the 20% richer income classes
+		parameters.Exo_HH(1,9:10)=0;
+	end 
+	
+	if unique(Exo_HH) == 1
+	warning("Exo_HH == 1 for each HH class ; the model is then running in a equivalent config to the LSBasicNeed options: no exemption for the unique HH")
+	end
+ end
 
-// Calcul indirect IC / direct C
-////  Carbon cap to be informed as a reduction cap (0.2 for 20% of reduction)
-// parameters.CarbonCap = 0.1 ;
-// parameters.CarbonCap_IC = parameters.CarbonCap.* ones(nb_Sectors,nb_Sectors);
-// CO2Emis_IC = (1-parameters.CarbonCap_IC).*BY.CO2Emis_IC;
-// parameters.CarbonCap_C = parameters.CarbonCap.* ones(nb_Sectors,nb_Households);
-// CO2Emis_C = (1-parameters.CarbonCap_C).*BY.CO2Emis_C;
+// sensitivity analysis 
+parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
+parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
 
-end 
-
-// u_param a clarifier
-parameters.u_param = BY.u_tot;
-
-
+if Fix_w == "True"
+	parameters.sigma_omegaU = 0;
+	parameters.Coef_real_wage = 1;
+end
 

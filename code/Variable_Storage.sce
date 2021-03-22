@@ -4,23 +4,33 @@
 
 // Put back some variables to "equation" from EcoT formats due to "outputs.sce"
 
-	if Country == 'France' then
-		BY.GFCF_byAgent(Indice_RestOfWorld)=[];
-		BY.Income_Tax = -Income_Tax(Indice_Households);
-		BY.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+if Country == 'France' then
 
-		ini.GFCF_byAgent(Indice_RestOfWorld)=[];
-		ini.Income_Tax = -Income_Tax(Indice_Households);
-		ini.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
-	end
+	BY.GFCF_byAgent(Indice_RestOfWorld)=[];
+	BY.Income_Tax = -Income_Tax(Indice_Households);
+	BY.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+	BY.Production_Tax_byAgent = Production_Tax_byAgent(Indice_Government);
+	BY.VA_Tax_byAgent = VA_Tax_byAgent(Indice_Government);
 
-	d.GFCF_byAgent(Indice_RestOfWorld)=[];
-	d.Income_Tax = -Income_Tax(Indice_Households);
-	d.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
-		
-	GFCF_byAgent(Indice_RestOfWorld)=[];
-	Income_Tax = -Income_Tax(Indice_Households);	
-	Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+	ini.GFCF_byAgent(Indice_RestOfWorld)=[];
+	ini.Income_Tax = -Income_Tax(Indice_Households);
+	ini.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+	ini.Production_Tax_byAgent = Production_Tax_byAgent(Indice_Government);
+	ini.VA_Tax_byAgent = VA_Tax_byAgent(Indice_Government);
+
+end
+
+d.GFCF_byAgent(Indice_RestOfWorld)=[];
+d.Income_Tax = -Income_Tax(Indice_Households);
+d.Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+d.Production_Tax_byAgent = Production_Tax_byAgent(Indice_Government);
+d.VA_Tax_byAgent = VA_Tax_byAgent(Indice_Government);
+	
+GFCF_byAgent(Indice_RestOfWorld)=[];
+Income_Tax = -Income_Tax(Indice_Households);	
+Corporate_Tax = - Corporate_Tax(Indice_Corporations);
+Production_Tax_byAgent = Production_Tax_byAgent(Indice_Government);
+VA_Tax_byAgent = VA_Tax_byAgent(Indice_Government);
 	
  if  Country<>"Brasil" then 
 
@@ -46,18 +56,6 @@
 
 
 	else
-
-		if Country == 'France' then
-			BY.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
-			BY.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);
-			BY.Gov_Direct_Tax= -d.Gov_Direct_Tax(Indice_Households);
-			BY.Corp_Direct_Tax= -d.Corp_Direct_Tax(Indice_Households);
-
-			ini.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
-			ini.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);
-			ini.Gov_Direct_Tax= -d.Gov_Direct_Tax(Indice_Households);
-			ini.Corp_Direct_Tax= -d.Corp_Direct_Tax(Indice_Households);
-		end
 	
 	d.Gov_social_transfers = d.Gov_social_transfers(Indice_Households);
 	d.Corp_social_transfers = d.Corp_social_transfers(Indice_Households);

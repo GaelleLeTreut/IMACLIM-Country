@@ -249,6 +249,22 @@ function y = H_Savings_Const_2(pM, Labour, w)
 endfunction
 
 
+function y = H_SavingsTot_Const_1(Household_savings, H_disposable_income, HH_saving_rate_agg) ;
+
+    /// Household savings constraint (Household_savings)
+    y1 = sum(Household_savings) - (sum(H_disposable_income) .* HH_saving_rate_agg) ;
+
+    y=y1';      
+endfunction
+
+
+function [y] = H_Savings_rate_Const_1(Household_saving_rate, delta_HH_saving_rate) ;
+
+    y1 = Household_saving_rate - (delta_HH_saving_rate + BY.Household_saving_rate) ;
+
+    y=y1';
+endfunction
+
 // Household gross fixed capital formation (by household class)
 // A proportion of disposable income is used directly by household classes to accumulate capital stocks (houses, lands, business goodwill of individual entrepreneurs, etc.)
 // The household gross fixed capital formation differs from household savings (if higher, they lend money in financial markets; if lower, they borrow in financial markets)
@@ -910,6 +926,19 @@ function Production_Tax = Production_Tax_Val_1(Production_Tax_rate, pY, Y)
 
 endfunction
 
+function y = ProductTax_rate_Const_1(Production_Tax_rate, tau_Production_Tax_rate);
+
+    y1 = Production_Tax_rate - tau_Production_Tax_rate*BY.Production_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = ProdTax_byAgent_Const_1(Production_Tax_byAgent, Production_Tax)
+
+    y = Production_Tax_byAgent - sum(Production_Tax)
+
+endfunction
+
 /// Labour Tax (by productive sector)
 
 function y = Labour_Tax_Const_1(Labour_Tax, Labour_Tax_rate, w, lambda, Y);
@@ -990,6 +1019,19 @@ function VA_Tax = VA_Tax_Val_1(VA_Tax_rate, pC, C, pG, G, pI, I)
 
     // Same rate for all items of domestic final demand
     VA_Tax = ( (VA_Tax_rate' ./ (1 + VA_Tax_rate')) .* (sum( pC .* C, "c") + sum(pG .* G, "c") + pI .* sum(I, "c")) )';
+
+endfunction
+
+function y = VA_Tax_rate_Const_1(VA_Tax_rate, tau_VA_Tax_rate);
+
+    y1 = VA_Tax_rate - tau_VA_Tax_rate*(BY.VA_Tax_rate<>0).*BY.VA_Tax_rate;
+    y = y1';
+
+endfunction
+
+function y = VA_Tax_byAgent_Const_1(VA_Tax_byAgent, VA_Tax)
+
+    y = VA_Tax_byAgent - sum(VA_Tax)
 
 endfunction
 
@@ -1227,7 +1269,7 @@ endfunction
 //// Opt 1 = function of net wage variation
 function [y] = Other_SocioBenef_Const_1(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle ) 
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf"
 		y1 = Other_SocioBenef - NetWage_variation * Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - NetWage_variation * Other_SocioBenef_param .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1238,7 +1280,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_1(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf"
 		Other_SocioBenef  = NetWage_variation * Other_SocioBenef_param ;
 	else	
 		Other_SocioBenef  = NetWage_variation * Other_SocioBenef_param .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1249,7 +1291,7 @@ endfunction
 //// Opt 2 = function of GDP/capita variation - > hometetic proj
 function [y] = Other_SocioBenef_Const_2(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
 	
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - (GDP / BY.GDP) * ( BY.Population ./ Population ).*  (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ).* Other_SocioBenef_param ;
@@ -1261,7 +1303,7 @@ endfunction
 
 function Other_SocioBenef = Other_SocioBenef_Val_2(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjRecycle )
 	
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* Other_SocioBenef_param;
 	else
 		Other_SocioBenef = (GDP / BY.GDP) * ( BY.Population ./ Population ) .* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) )  .* Other_SocioBenef_param
@@ -1273,7 +1315,7 @@ endfunction
 //// Opt 3 = constant
 function [y] = Other_SocioBenef_Const_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf )
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - BY.Other_SocioBenef;
 	else
 		y1 = Other_SocioBenef - BY.Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1285,7 +1327,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_3(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf )
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = BY.Other_SocioBenef;
 	else
 		Other_SocioBenef = BY.Other_SocioBenef.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) );
@@ -1296,7 +1338,7 @@ endfunction
 //// Opt 4 = function of CPI
 function [y] = Other_SocioBenef_Const_4(Other_SocioBenef, NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		y1 = Other_SocioBenef - CPI .* Other_SocioBenef_param ;
 	else
 		y1 = Other_SocioBenef - CPI .* Other_SocioBenef_param.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1308,7 +1350,7 @@ endfunction
 
 function [Other_SocioBenef] = Other_SocioBenef_Val_4(NetWage_variation, Other_SocioBenef_param, GDP, CPI, Population, AdjTransf ) ;
 
-	if ClosCarbRev <>"AdjTransf" 
+	if ClosCarbRev <>"AdjTransf" & ClosCarbRev <>"ExoAdjTransf" 
 		Other_SocioBenef = CPI .* Other_SocioBenef_param ;
 	else
 		Other_SocioBenef = CPI .* Other_SocioBenef_param.* (AdjRecycle.*ones(1,nb_Households).*Exo_HH + ones(1,nb_Households) ) ;
@@ -1673,13 +1715,17 @@ endfunction
 
 function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_Cut, w, lambda, Y, delta_LS_LT, Carbon_Tax_IC, Carbon_Tax_C, ClimPolCompensbySect, ClimPolicyCompens, NetLending, GFCF_byAgent, Government_savings, GDP, Carbon_Tax_M) ;
 		
-	 if ClosCarbRev=="AllLabTax"
+	 if ClosCarbRev=="AllLabTax" | ClosCarbRev=="ExoAdjTransf"
 	//All tax base after climate compensation ( for HH or sectors) for labour tax reduction
 		y1 = sum(Labour_Tax) - (..
 			sum((Labour_Tax_rate + Labour_Tax_Cut * ones(1, nb_Sectors)).* w .* lambda .* Y') - ..
 			delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) -delta_LS_I)..
 					) ;
-		y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        if ClosCarbRev=="AllLabTax"
+    		y1(1, 1+$ ) = AdjRecycle;
+        else 
+            y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        end
 
 	elseif ClosCarbRev=="CstNetLend"
 		if Recycling_Option=="PublicDeficit"|Recycling_Option==""
@@ -1690,6 +1736,16 @@ function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 			y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
 			y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
 		end
+
+    elseif ClosCarbRev=="CstPubDebt"
+        if Recycling_Option=="PublicDeficit"|Recycling_Option==""
+             y1 = Labour_Tax_Cut - 0 ;
+             y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        else 
+            //Part of remaining revenues from carbon tax for labour tax reduction under Public deficit constant 
+            y1 = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government)*(GDP/BY.GDP) ;
+            y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+        end
 		
 	elseif ClosCarbRev=="AdjTransf"
 		if Recycling_Option=="PublicDeficit"|Recycling_Option==""
@@ -1702,7 +1758,7 @@ function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 				delta_LS_LT*(sum(Carbon_Tax_IC) + sum(Carbon_Tax_C)+ sum(Carbon_Tax_M) + ClimPolicyCompens(Indice_Government) -delta_LS_I)..
 						) ;
 			// Public deficit constant		
-			y1(1, 1+$ ) = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
+			y1(1, 1+$ ) = NetFinancialDebt(Indice_Government) - BY.NetFinancialDebt(Indice_Government)*(GDP/BY.GDP) ;
 			// => AdjRecycle variable (scalar)  to adjust other social transfers
 		end
 	end 
@@ -2390,6 +2446,14 @@ function [y] =  Markup_Const_1(markup_rate) ;
     y=y1';
 endfunction
 
+function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
+
+    //  Fixed Markup ( markup_rate(nb_Sectors) )
+    y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
+
+    y=y1';
+endfunction
+
 // PAS POUR CALIBRAGE //
 // Transport margins rates
 function [y] =  Transp_MargRates_Const_1(Transp_margins_rates, Transp_margins) ;
@@ -2712,6 +2776,18 @@ function [Betta_proj]=Betta_Const_1(Betta_ref, pI, pBetta, Indice, Adjustment)
     
     //Betta_proj = matrix(y1, -1 , 1)
     Betta_proj = y1;
+
+endfunction
+
+function [y] = Betta_Const_2(Betta, tau_Betta) ;
+
+    y = Betta  - tau_Betta * BY.Betta;
+
+endfunction
+
+function [y] = I_ConsumpBudget_Const_1(I_Consumption_budget, I, pI);
+
+    y = I_Consumption_budget - sum(sum(I,"c") .* pI) ;
 
 endfunction
 
@@ -3936,6 +4012,16 @@ function [NetCompWages_byAgent, GOS_byAgent, Other_Transfers] = IncomeDistrib_Va
 
 endfunction
 
+function [NetCompWages_byAgent, GOS_byAgent] = IncomeDistrib_Val_3(GDP, Distribution_Shares, Labour_income, GrossOpSurplus)
+
+    // Amount of labour income received by each institutional agent: NetCompWages_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    NetCompWages_byAgent = Distribution_Shares(Indice_Labour_Income, : ) .* sum(Labour_income);
+
+    // Amount of Gross operating surplus received by each institutional agent: GOS_byAgent ( h1_index : hn_index + Government_index + businesses_index )
+    GOS_byAgent = Distribution_Shares(Indice_Non_Labour_Income, : ) .* sum(GrossOpSurplus);
+
+endfunction
+
 // For calibration - review
 // Distribution of incomes (according to the distribution shares)
 function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Transfers, GDP, Distribution_Shares, Labour_income, GrossOpSurplus) ;
@@ -3953,6 +4039,12 @@ function [y] = IncomeDistrib_Const_2(NetCompWages_byAgent, GOS_byAgent, Other_Tr
     y3 = matrix ( y3, -1, 1);
 
     y = [y1;y2;y3];
+
+endfunction
+
+function y = GOS_total_Const_1(GOS_total, GOS_byAgent)
+
+    y = GOS_total - sum(GOS_byAgent);
 
 endfunction
 
@@ -4068,6 +4160,17 @@ function Emission_Coef_M = CO2_intensity_M_Val_1(  CO2Emis_IC , IC)
 
 endfunction
 
+function y = CO2_Red_Const_1(IC, C)
+
+    CO2Emis_IC = CO2_intensity_IC_Val_1( Emission_Coef_IC , IC);
+    CO2Emis_C = CO2_intensity_C_Val_1(  Emission_Coef_C , C);
+
+    CO2Emis_IC_BY = CO2_intensity_IC_Val_1( Emission_Coef_IC , BY.IC);
+    CO2Emis_C_BY = CO2_intensity_C_Val_1(  Emission_Coef_C , BY.C);
+
+    y = sum(CO2Emis_IC) + sum(CO2Emis_C) + CO2_reduction - sum(CO2Emis_IC_BY) - sum(CO2Emis_C_BY);
+
+endfunction
 
 
 ///// Exogenous emissions

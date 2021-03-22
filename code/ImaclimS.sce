@@ -85,6 +85,34 @@ exec("Load_file_structure.sce");
 exec ("preambule.sce");
 exec("Dashboard.sce");
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+// few parameters to add in the Dashboard ??? 
+Recalibration = %F;
+Optimum_Recal = %F;
+// To be generalized if needed
+if Country_ISO == 'FRA'
+if Recalibration then 
+    BY_Recal = 2018;
+	Macro_nb = Macro_nb +  BY_Recal;
+	study = study + '_' + BY_Recal;
+	Scenario = Scenario + '_' + BY_Recal;
+
+	// check consistency with AGG_level
+	if BY_Recal == 2016 & AGG_type <> 'AGG_SNBC15' then 
+	    warning('Put AGG_type to AGG_SNBC15')
+	end
+	if BY_Recal == 2018 & AGG_type <> '30Sect' then 
+	    warning('Put AGG_type to 30Sect')
+	end
+end
+end
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 if Output_files
 
@@ -98,7 +126,7 @@ if Output_files
     end
 	
 	// GLT Temporary : specific name for FRA Simu
-	if Country_ISO <> 'FRA'&part(Macro_nb,1:length('Cov'))=="Cov"
+	if Country_ISO =='FRA'&part(Macro_nb,1:length('Cov'))=="Cov"
 	simu_name = simu_name+"_"+Macro_nb;
 	end
 	
@@ -122,10 +150,10 @@ if Output_files
     SAVEDIR_IOA = SAVEDIR + "outputs_IOA" + filesep();
     mkdir(SAVEDIR_IOA);	
 
-    // Save Dashbord.csv & System_Resol.csv in output
+    // Save Dashbord.csv & simulation elements in outputs
     copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
 	if study <> '' 
-    copyfile(STUDY_Country + study + ".sce", SAVEDIR);	
+    copyfile(STUDY_Country + study + ".sce", SAVEDIR);
 	end	
 	if Scenario <> '' 
 		if Country_ISO <> 'FRA'
@@ -134,13 +162,18 @@ if Output_files
 			copyfile(STUDY_Country + 'ProjScenario'+ AGG_type + ".csv", SAVEDIR);	
 		end
 	end
+	
     if Optimization_Resol then
         copyfile(SYST_RESOL + SystemOpt_Resol + ".csv", SAVEDIR);
     else
         copyfile(CODE + System_Resol + ".sce", SAVEDIR);
     end
-
-    // Record the name of the current run
+	
+    if Macro_nb<>'' then
+        copyfile(STUDY_Country +'Macro_Framework_'+ Macro_nb + ".csv", SAVEDIR);
+    end
+    
+	// Record the name of the current run
     if SIMU_MODE then
         current_run_name = simu_name;
     elseif Scenario <> '' then
@@ -288,6 +321,14 @@ printf("STEP 5: RESOLUTION AND EQUILIBRIUM... \n");
 // Loop initialisation for various time step calculation
 for time_step=1:Nb_Iter
 
+    // set up calibration to ini instead of BY
+    if Recalibration
+    if time_step > 1 & Country == 'France' & Recalibration
+
+        warning('need to set up calibration to ini instead of BY to use recalibration')
+
+    end
+    end
     // Loading different carbon tax diff for each time step ( to be informed in dashboard)
     if CarbonTaxDiff
         if AGG_type == ""
@@ -330,6 +371,9 @@ for time_step=1:Nb_Iter
     if Optimization_Resol then
         if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
             exec(STUDY_Country+study+".sce");
+            if Country == "France" & Recalibration & Optimum_Recal
+                exec('find_optimum.sce');
+            end
         end 
     else
         if part(System_Resol,1:length(Homo_Shortname))<> Homo_Shortname
@@ -337,7 +381,8 @@ for time_step=1:Nb_Iter
         end 
     end
 
-	
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+
 	// Give the year into file name instead of the time step
 	if isdef("Proj_Macro")
 	Name_time=	Proj_Macro.current_year(time_step);
@@ -380,14 +425,13 @@ for time_step=1:Nb_Iter
         exec("Check_Proj_Vol.sce");
     end
 
-
     ////////////////////////////////////////////////////////////
     // 	STEP 6: OUTPUT EXTRACTION AND RESULTS DISPLAY
     ////////////////////////////////////////////////////////////
     printf("STEP 6: RECORDING THE OUTPUTS... \n");
     exec(CODE+"outputs.sce");
     if time_step == 1
-        BY = ini; // ré-initialisation de BY sur ini car certaines variables de ini ne sont pas dans BY et nécessaire pour la suite (pour outputs_indice : BY.Carbon_Tax --> cela sera réglé quand update calibration de la taxe carbone ? )
+        BY = ini; 
 		//Save BY for full output template
 		ref = BY;
 		evol_ref = evol_init;
@@ -477,6 +521,14 @@ for time_step=1:Nb_Iter
         exec(CODE+"IOA_Run.sce");
     end
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+// Tests de contrôle recalibration 
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+    if Country == "France" & Recalibration
+        exec("Test_Recalib"+filesep()+"test_" + BY_Recal + ".sce");
+    end
+//%%%%%%%%%%%%%%%%%%%%%%%%%
+
     ////////////////////////////////////////////////////////////
     // 	STEP 8: VARIABLE STORAGE FOR RECURSIVE VERSION
     ////////////////////////////////////////////////////////////
@@ -485,7 +537,6 @@ for time_step=1:Nb_Iter
     else
         print(out,"Variable Storage not executed for the Nb_Iter = " + string(Nb_Iter));
     end
-
 
 end // Loop ending for for various time step calculation
 

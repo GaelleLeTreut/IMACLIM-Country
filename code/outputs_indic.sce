@@ -1081,7 +1081,7 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Lower class (F10-30)",										(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 2:3))];..
 ["Middle class (F30-70)",									(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 4:7))];..
 ["Upper class (F70-90)",										(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 8:9))];..
-["Rich (F95-100)",											(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 10))];..
+["Rich (F90-100)",											(QInd_Fish( ref.pC, ref.C, Out.pC, Out.C, :, 10))];..
 ];
 end
 
@@ -1098,7 +1098,7 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 ["Lower class (F10-30)",				    100*(sum(Out.H_disposable_income(2:3))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(2:3))/sum(ref.H_disposable_income))];..
 ["Middle class (F30-70)",				100*(sum(Out.H_disposable_income(4:7))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(4:7))/sum(ref.H_disposable_income))];..
 ["Upper class (F70-90)",					100*(sum(Out.H_disposable_income(8:9))/sum(Out.H_disposable_income)-sum(ref.H_disposable_income(8:9))/sum(ref.H_disposable_income))];..
-["Rich (F95-100)",				100*(Out.H_disposable_income(10)/sum(Out.H_disposable_income)-ref.H_disposable_income(10)/sum(ref.H_disposable_income))];..
+["Rich (F90-100)",				100*(Out.H_disposable_income(10)/sum(Out.H_disposable_income)-ref.H_disposable_income(10)/sum(ref.H_disposable_income))];..
  ];
 end
 

@@ -1,0 +1,24 @@
+//Names;;;;;Notes
+//;;;;;
+//Sectors;PrimEnergy;FinEnHTr;FinEnHRes;AllComp;
+sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;
+Coef_real_wage_sect;0;0;0;0;
+//;;;;;
+// Production;;;;;
+sigma_Phi;%nan;%nan;%nan;0.052;
+sigma_Theta;%nan;%nan;%nan;0.095639171247383;
+phi_L;0;0;0;0;
+phi_K;0;0;0;0;
+ConstrainedShare_Labour;0.8;0.8;0.8;0.75;
+ConstrainedShare_Capital;0.8;0.8;0.8;0.75;
+// Consumption;;;;;
+delta_C_parameter;0;0;0;0;
+//;;;;;
+//International trade parameters;;;;;
+sigma;1.2;1.2;1.2;1.2;
+sigma_X;0.42;0.42;0.42;0.42;
+sigma_M;0;0;0;1.9;
+delta_M_parameter;0;0;0;0;
+delta_X_parameter;0;0;0;0;
+delta_pM_parameter;0;0;0;0;
+CarbonTax_Diff_M;1;1;1;1;

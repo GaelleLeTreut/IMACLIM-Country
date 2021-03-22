@@ -1,0 +1,5 @@
+ConstrainedShared_IC;PrimEnergy;FinEnHTr;FinEnHRes;AllComp
+PrimEnergy;1;1;0.2;1
+FinEnHTr;1;1;0.8;0.75
+FinEnHRes;0.8;0.8;0.8;0.75
+AllComp;1;1;1;0.75

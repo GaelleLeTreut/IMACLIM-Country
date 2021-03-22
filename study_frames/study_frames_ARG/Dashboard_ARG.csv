@@ -38,11 +38,11 @@ AdjustKappaOnly;%F
 AdjustKappaWithSubst;%T
 // SELECT the scenario to run (soft_linking);
 // Scenario;
-Scenario;NDC
+// Scenario;NDC
 // Scenario;CCS
 // Scenario;HydNuc
 // Scenario;CCS_XgND
-// Scenario;CCS_XNDC
+Scenario;CCS_XNDC
 // Scenario;HdNC_XgND
 // Scenario;HdNC_XNDC
 // Scenario;EmisObj_NDC

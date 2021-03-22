@@ -471,6 +471,14 @@ ini.Corporate_Tax(1,[Indice_Households,Indice_RestOfWorld]) = 0;
 ini.Corporate_Tax(1,Indice_Government) = -ini.Corporate_Tax(Indice_Corporations);
 ini.GFCF_byAgent (Indice_RestOfWorld) = 0;
 
+ini.Production_Tax_byAgent(1, Indice_Government)= ini.Production_Tax_byAgent;
+ini.Production_Tax_byAgent(Indice_Corporations)= 0;
+ini.Production_Tax_byAgent(1,[Indice_Households,Indice_RestOfWorld]) = 0;
+
+ini.VA_Tax_byAgent(1, Indice_Government)= ini.VA_Tax_byAgent;
+ini.VA_Tax_byAgent(Indice_Corporations)= 0;
+ini.VA_Tax_byAgent(1,[Indice_Households,Indice_RestOfWorld]) = 0;
+
 if  Country<>"Brasil" then
     ini.Pensions(Indice_Households)= ini.Pensions;
     ini.Pensions([Indice_Corporations,Indice_Government,Indice_RestOfWorld]) = 0;
@@ -647,7 +655,7 @@ if time_step ==1
 execstr("BY." + fieldnames(ini) +" = ini." + fieldnames(ini) + ";");
 end
 
-evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax','Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP','NetLendingGov','I');
+evol_list = list('pIC','pFC','w','pL','pL', 'pK','pY', 'pM', 'p','alpha','lambda','kappa','CO2Emis_IC','CO2Emis_C','CO2Emis_X','CO2Emis_Sec'	,'Tot_CO2Emis_IC' ,'Tot_CO2Emis_C','DOM_CO2','IC_value','FC_value','OthPart_IOT','Carbon_Tax', 'Carbon_Tax_IC', 'Carbon_Tax_C', 'Supply','Uses','IC','FC','Y','OthQ','Ecotable','Total_taxes','HH_EnBill','Corp_EnBill','HH_EnConso','Corp_EnConso','NetLendingRoW_GDP','NetLendingGov','I');
 
 for ind=1:size(evol_list)
 	varname = evol_list(ind);
@@ -754,22 +762,22 @@ end
 /////////////////////////////////////////////////
 // IOT in value
 
-io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax, ini.Supply, ini.Uses,money_disp_adj , 1);
-io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax ,d.Supply, d.Uses, money_disp_adj , 1);
-io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , 1);
+io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax_IC, ini.Carbon_Tax_C, ini.Supply, ini.Uses,money_disp_adj , 1);
+io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax_IC, d.Carbon_Tax_C, d.Supply, d.Uses, money_disp_adj , 1);
+io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax_IC -1, evol_BY.Carbon_Tax_C -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , 1);
 
 if time_step ==1
 	io.evo = io.evoBY ;
 
 elseif time_step >1 
 
-	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax -1, evol.Supply-1, evol.Uses-1, 100 , 1);
+	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax_IC -1, evol.Carbon_Tax_C -1, evol.Supply-1, evol.Uses-1, 100 , 1);
 	if Country== 'Argentina'
-		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , 1);
+		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax_IC -1, evol_2015.Carbon_Tax_C -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , 1);
 	end
 	
 	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		io.evo18 = buildIot(evol_2018.IC_value-1 ,  evol_2018.FC_value-1 , evol_2018.OthPart_IOT-1 ,evol_2018.Carbon_Tax -1, evol_2018.Supply-1, evol_2018.Uses-1, 100 , 1);
+		io.evo18 = buildIot(evol_2018.IC_value-1 ,  evol_2018.FC_value-1 , evol_2018.OthPart_IOT-1 ,evol_2018.Carbon_Tax_IC -1, evol_2018.Carbon_Tax_C -1, evol_2018.Supply-1, evol_2018.Uses-1, 100 , 1);
 	end
 end
 

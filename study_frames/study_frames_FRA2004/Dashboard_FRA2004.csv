@@ -6,11 +6,15 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
 // SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_Static_JCH
+// SystemOpt_Resol;SystemOpt_Static_JCH_CTax
+// SystemOpt_Resol;SystemOpt_Static_temp
+// SystemOpt_Resol;SystemOpt_Static_temp_CTax
 SystemOpt_Resol;SystemOpt_Static_EC
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
-// study;Static_RunChoices
-study;Recursive_RunChoices
+study;Static_RunChoices
+// study;Recursive_RunChoices
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
 // SELECT option for Capital_Dynamics;
@@ -23,7 +27,8 @@ AGG_type;
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
-H_DISAGG;H20
+H_DISAGG;H10
+// H_DISAGG;H20
 // H_DISAGG;L6
 // SELECT the resolution mode;
 Resol_Mode;Static_comparative
@@ -47,14 +52,21 @@ CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%T
 Output_prints;%F
-"// SELECT the uses of carbon tax revenues (standard = ""PublicDeficit"" = """")";
+// SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
 Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
-// Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
+// Recycling_Option;ExactRestitution
+// Recycling_Option;GreenInvest
+// Recycling_Option;LabTax_GreenInvest
+// Recycling_Option;LabTax_PublicDeficit
+// Recycling_Option;LSBasicNeed
+// Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
-ClosCarbRev;CstNetLend
+// ClosCarbRev;CstNetLend
+ClosCarbRev;CstPubDebt
 // ClosCarbRev;AllLabTax
+// ClosCarbRev;AdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F

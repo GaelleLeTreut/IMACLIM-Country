@@ -25,6 +25,9 @@ var_resolution = [];
 
 // path
 file_eq_path = SYST_RESOL + SystemOpt_Resol + '.csv';
+if SystemOpt_Resol == 'SystemOpt_Static_Recalib'
+    file_eq_path = SYST_RESOL + SystemOpt_Resol + '_' + time_step + '.csv';
+end
 // read
 file_eq = read_csv(file_eq_path, ';');
 // remove blanks
