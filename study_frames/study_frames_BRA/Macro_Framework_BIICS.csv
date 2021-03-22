@@ -7,4 +7,4 @@ Retired;0.039938412;0.040221368;0.037337452;0.031529641;0.02567936;0.024898163;0
 GDP_world;0.034;0.034;0.034;0.027;0.027;0.024;0.024
 pM_CrudeOil;-0.156460161;0.148698355;0;0;0;0;0
 pM_NonFerrousMetals;-0.005;-0.005;-0.005;-0.005;-0.005;-0.01;-0.01
-units;mean_period_growth_rate_OrPercentforShare;;;;;;
+units;mean_yearly_growth_rate_OrPercentforShare;;;;;;
