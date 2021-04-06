@@ -24,9 +24,9 @@ end
 /////In this case; variation "homothetic" for all sectors (Mu) // (phi_L sectoral changes)
 // scal_Mu = 0.1 ;
 // if VAR_MU=="Mu_low"
-	// parameters.Mu = parameters.Mu.*(1+scal_Mu);
-	// parameters.phi_L = parameters.phi_L.*(1+scal_Mu);
+	// parameters.Mu = parameters.Mu.*(1-scal_Mu);
+	// parameters.phi_L = parameters.phi_L.*(1-scal_Mu);
 // elseif VAR_MU=="Mu_high"
-	//parameters.phi_L = parameters.phi_L.*(1-scal_Mu);
+	//parameters.phi_L = parameters.phi_L.*(1+scal_Mu);
 	// parameters.Mu = parameters.Mu.*(1+scal_Mu);
 // end
