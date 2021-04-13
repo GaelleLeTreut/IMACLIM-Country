@@ -52,7 +52,7 @@ Output_files;%T
 Output_prints;%F
 // SELECT a carbon tax recycling option (standard = PublicDeficit); 
 // Recycling_Option;PublicDeficit
-// Recycling_Option;LabTax
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;LabTax_LumpSumHH
 // Recycling_Option;ExactRestitution
@@ -60,13 +60,13 @@ Output_prints;%F
 // Recycling_Option;LabTax_GreenInvest
 // Recycling_Option;LabTax_PublicDeficit
 // Recycling_Option;LSBasicNeed
-Recycling_Option;LSBasicNeed_Exo
+// Recycling_Option;LSBasicNeed_Exo
 // Select a closure of public finance while recycling carbon revenues;
-// ClosCarbRev;CstNetLend
+ClosCarbRev;CstNetLend
 // ClosCarbRev;CstPubDebt
 // ClosCarbRev;AllLabTax
 // ClosCarbRev;AdjTransf
-ClosCarbRev;ExoAdjTransf
+// ClosCarbRev;ExoAdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F
 // Temporary for sensitivity analysis;
