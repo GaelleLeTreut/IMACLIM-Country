@@ -21,9 +21,9 @@ Exo_ShareI_GDP;%F
 Exo_u_tot;%F
 Exo_Kstock_Adj;%F
 // SELECT an aggregation sector profil by uncomment it;
-AGG_type;
+// AGG_type;
 // AGG_type;AGG_4SecB
-// AGG_type;AGG_17TME
+AGG_type;AGG_17TME
 // SELECT an households dissagregation profil by uncomment it;
 H_DISAGG;HH1
 // H_DISAGG;H10
