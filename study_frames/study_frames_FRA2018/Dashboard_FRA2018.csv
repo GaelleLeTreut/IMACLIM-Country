@@ -9,8 +9,8 @@ Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static_temp
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
-study;Static_RunChoices
-// study;MacroIncer_RunChoices
+// study;Static_RunChoices
+study;MacroIncer_RunChoices
 // study;Recursive_RunChoices
 // study;Covid_RunChoices
 // TELL if you want a capital dynamics;
@@ -21,12 +21,12 @@ Exo_ShareI_GDP;%F
 Exo_u_tot;%F
 Exo_Kstock_Adj;%F
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
-AGG_type;AGG_4SecB
-// AGG_type;AGG17
+AGG_type;
+// AGG_type;AGG_4SecB
+// AGG_type;AGG_17TME
 // SELECT an households dissagregation profil by uncomment it;
-// H_DISAGG;HH1
-H_DISAGG;H10
+H_DISAGG;HH1
+// H_DISAGG;H10
 // H_DISAGG;L5
 // SELECT the resolution mode;
 Resol_Mode;Static_comparative
