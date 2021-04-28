@@ -14,7 +14,8 @@ Row;NavalTransp;Commodities;NonEnerSect;NonHybridCommod;-
 Row;AirTransp;Commodities;NonEnerSect;NonHybridCommod;-
 Row;AgriForest_Fish;Commodities;NonEnerSect;NonHybridCommod;-
 Row;Food_industry;Commodities;NonEnerSect;NonHybridCommod;-
-Row;Composite;Commodities;NonEnerSect;NonHybridCommod;-
+Row;Construction;Commodities;NonEnerSect;NonHybridCommod;-
+Row;Compo;Commodities;NonEnerSect;NonHybridCommod;-
 Row;Labour_income;OthPart_IOT_AGG;Value_Added;-;-
 Row;Labour_Tax;OthPart_IOT_AGG;Value_Added;-;-
 Row;Capital_income;OthPart_IOT_AGG;Value_Added;-;-
@@ -39,7 +40,8 @@ Row;SpeMarg_NavalTransp;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_AirTransp;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_AgriForest_Fish;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_Food_industry;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
-Row;SpeMarg_Composite;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
+Row;SpeMarg_Construction;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
+Row;SpeMarg_Compo;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-
 Row;SpeMarg_H1;OthPart_IOT_AGG;SpeMarg;SpeMarg_FC;SpeMarg_C
 Row;SpeMarg_H2;OthPart_IOT_AGG;SpeMarg;SpeMarg_FC;SpeMarg_C
 Row;SpeMarg_H3;OthPart_IOT_AGG;SpeMarg;SpeMarg_FC;SpeMarg_C
@@ -74,7 +76,8 @@ Column;NavalTransp;Sectors;-;-;-
 Column;AirTransp;Sectors;-;-;-
 Column;AgriForest_Fish;Sectors;-;-;-
 Column;Food_industry;Sectors;-;-;-
-Column;Composite;Sectors;-;-;-
+Column;Construction;Sectors;-;-;-
+Column;Compo;Sectors;-;-;-
 Column;H1;FC;C;-;-
 Column;H2;FC;C;-;-
 Column;H3;FC;C;-;-
