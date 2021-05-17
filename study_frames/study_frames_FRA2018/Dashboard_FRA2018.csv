@@ -5,8 +5,8 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
-// SystemOpt_Resol;SystemOpt_Static
-SystemOpt_Resol;SystemOpt_Static_temp
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_Static_temp
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
 // study;Static_RunChoices
@@ -30,21 +30,23 @@ H_DISAGG;HH1
 // H_DISAGG;H10
 // H_DISAGG;L5
 // SELECT the resolution mode;
-Resol_Mode;Static_comparative
-// Resol_Mode;Dynamic_projection
+// Resol_Mode;Static_comparative
+Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;1
+Nb_Iter;2
 // SELECT a Macro framework to run;
-Macro_nb;
+// Macro_nb;
+Macro_nb;RefBC
 // Macro_nb;NDC
 // Macro_nb;Cov
 // SELECT which shock from the Macro framework you want to apply ;
-Demographic_shift;False
-Labour_product;False
-X_nonEnerg;False
-World_prices;False
+Demographic_shift;True
+Labour_product;True
+X_nonEnerg;True
+World_prices;True
 // SELECT the scenario to run (soft_linking);
-Scenario;
+Scenario;RefBC
+// Scenario;
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
