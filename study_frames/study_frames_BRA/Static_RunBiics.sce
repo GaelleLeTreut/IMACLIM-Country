@@ -102,3 +102,14 @@ if ( find("kappa"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.kappa.intens
 	end
 end 
 
+////////////////////////////////////
+///// Modification of Net Lending to GDP of Government Rate for DDS (based on the CPS) 
+////////////////////////////////////
+if  Scenario=="BIICS_DDS"
+
+Table_NetLendtoGDP_Gov= ["Year",2015,2020,2025,2030,2035,2040,2045,2050
+"Net Lending to GDP of Gov ",-0.077806299,-0.085662334,-0.087964933,-0.095561873,-0.101852334,-0.112052785,-0.12204064,-0.138155503];
+
+Exo_NetLendtoGDP_Gov = eval(Table_NetLendtoGDP_Gov(2,time_step+2)');
+
+end
