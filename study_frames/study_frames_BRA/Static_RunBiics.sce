@@ -26,10 +26,10 @@ end
 
 Carbon_Tax_rate2025 = 12.5*3.15e3; // reais*cambio / tCO2 
 Carbon_Tax_rate2030 = 25*3.15e3;
-Carbon_Tax_rate2035 = 37.5*3.15e3;
-Carbon_Tax_rate2040 = 50*3.15e3;
-Carbon_Tax_rate2045 = 75*3.15e3;
-Carbon_Tax_rate2050 = 100*3.15e3;
+Carbon_Tax_rate2035 = 35*3.15e3;
+Carbon_Tax_rate2040 = 45*3.15e3;
+Carbon_Tax_rate2045 = 55*3.15e3;
+Carbon_Tax_rate2050 = 65*3.15e3;
 
 //////////////////////////////////////////////////////
 ///////definição dos períodos
