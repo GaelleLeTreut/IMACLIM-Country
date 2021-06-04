@@ -17,7 +17,7 @@ function default_dashboard = new_default_dashboard()
 	'Capital_Dynamics','%F',..
     'AGG_type', '', ..
     'H_DISAGG', 'HH1', ..
-    'Resol_Mode', 'Dynamic_Projection', ..
+    'Resol_Mode', 'Dynamic_projection', ..
     'Nb_Iter', '1', ..
     'Macro_nb', '', ..
     'Demographic_shift', 'True', ..
@@ -32,6 +32,9 @@ function default_dashboard = new_default_dashboard()
 	'CarbonTaxDiff','%F',..
 	'Carbon_BTA','%F',..
     'Recycling_Option', '',..
-	'ClosCarbRev','CstNetLend');
+	'ClosCarbRev','CstNetLend',..
+	'VAR_MU','',..
+	'VAR_pM','',..
+	'VAR_Growth','');
     
 endfunction
