@@ -239,3 +239,7 @@ end
 if AdjustKappaOnly&AdjustKappaWithSubst
 	error( "You have to chose between adjusting kappa with or without keeping other substitution "); 
 end
+
+// Productivity
+
+//VAR_MU = eval(VAR_MU);

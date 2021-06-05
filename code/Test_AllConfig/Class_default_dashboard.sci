@@ -35,6 +35,7 @@ function default_dashboard = new_default_dashboard()
 	'ClosCarbRev','CstNetLend',..
 	'VAR_MU','',..
 	'VAR_pM','',..
-	'VAR_Growth','');
+	'VAR_Growth','',..
+	'VAR_Immo','')
     
 endfunction

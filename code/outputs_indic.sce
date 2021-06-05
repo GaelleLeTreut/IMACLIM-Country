@@ -1467,6 +1467,26 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ];
 end
 
+/// for MacroIncertitudes
+
+if Scenario=="RefBC"
+OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+["---Macro Incertitudes ---",								 ""																	];..
+//["Labour Productivity",							parameters.Mu						];..
+["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
+["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
+["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
+["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
+["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
+["World Growth Level_"+Index_NonEnerSect,		parameters.delta_X_parameter(:,Indice_NonEnerSect)'			];..
+//["World Growth Level_"+Index_NonEnerSect, 			sum(parameters.delta_X_parameter(:,Indice_NonEnerSect),"r")			];..
+["Productivity Variation",		VAR_MU		];..
+["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
+["World Growth Level Variation",		VAR_Growth	];..
+["Household saving rate Variation",		VAR_Immo	];..
+];
+end
+
 /// Temporary - to delete
 if Country=="Brasil"&Scenario=="PMR_Ten"
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);

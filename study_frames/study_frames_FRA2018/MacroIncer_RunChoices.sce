@@ -12,21 +12,55 @@ end
 
 
 
-////////EXAMPLES
+//////EXAMPLES
 
-////// To define and select by Dashboard_FRA2018
-/////VAR_MU;Mu_low
-/////VAR_MU;Mu_high
+// To define and select by Dashboard_FRA2018
+// VAR_MU;Mu_low
+// VAR_MU;Mu_high
 
 // VAR_MU="Mu_high";
-// Variante on Mu - Productivity
-/////For example , range of +/-10%
-/////In this case; variation "homothetic" for all sectors (Mu) // (phi_L sectoral changes)
-// scal_Mu = 0.1 ;
-// if VAR_MU=="Mu_low"
-	// parameters.Mu = parameters.Mu.*(1-scal_Mu);
-	// parameters.phi_L = parameters.phi_L.*(1-scal_Mu);
-// elseif VAR_MU=="Mu_high"
-	//parameters.phi_L = parameters.phi_L.*(1+scal_Mu);
-	// parameters.Mu = parameters.Mu.*(1+scal_Mu);
-// end
+//Variante on Mu - Productivity
+///For example , range of +/-10%
+///In this case; variation "homothetic" for all sectors (Mu) // (phi_L sectoral changes)
+scal_Mu = 0.1 ;
+if VAR_MU=="Mu_low"
+	//parameters.Mu = parameters.Mu.*(1-scal_Mu);
+	parameters.phi_L = parameters.phi_L.*(1-scal_Mu);
+elseif VAR_MU=="Mu_high"
+	//parameters.Mu = parameters.Mu.*(1+scal_Mu);
+	parameters.phi_L = parameters.phi_L.*(1+scal_Mu);
+end
+
+scal_pM = 0.1;
+
+if VAR_pM=="pM_low"
+	//parameters.delta_pM_parameter(Indice_OilS) = (1+parameters.delta_pM_parameter(Indice_OilS)).^time_since_ini*(1-scal_pM);
+	//parameters.delta_pM_parameter(Indice_GasS) = (1+parameters.delta_pM_parameter(Indice_GasS)).^time_since_ini*(1-scal_pM);
+	//parameters.delta_pM_parameter(Indice_CoalS) = (1+parameters.delta_pM_parameter(Indice_CoalS)).^time_since_ini*(1-scal_pM);
+	parameters.delta_pM_parameter(Indice_OilS) = parameters.delta_pM_parameter(Indice_OilS)*(1-scal_pM);
+	parameters.delta_pM_parameter(Indice_GasS) = parameters.delta_pM_parameter(Indice_GasS)*(1-scal_pM);
+	parameters.delta_pM_parameter(Indice_CoalS) = parameters.delta_pM_parameter(Indice_CoalS)*(1-scal_pM);
+elseif VAR_pM=="pM_high"
+	//parameters.delta_pM_parameter(Indice_OilS) = (1+parameters.delta_pM_parameter(Indice_OilS)).^time_since_ini*(1+scal_pM);
+	//parameters.delta_pM_parameter(Indice_GasS) = (1+parameters.delta_pM_parameter(Indice_GasS)).^time_since_ini*(1+scal_pM);
+	//parameters.delta_pM_parameter(Indice_CoalS) = (1+parameters.delta_pM_parameter(Indice_CoalS)).^time_since_ini*(1+scal_pM);
+	parameters.delta_pM_parameter(Indice_OilS) = parameters.delta_pM_parameter(Indice_OilS)*(1+scal_pM);
+	parameters.delta_pM_parameter(Indice_GasS) = parameters.delta_pM_parameter(Indice_GasS)*(1+scal_pM);
+	parameters.delta_pM_parameter(Indice_CoalS) = parameters.delta_pM_parameter(Indice_CoalS)*(1+scal_pM);
+end
+
+scal_Growth = 0.1;
+
+if VAR_Growth=="Growth_low"
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = parameters.delta_X_parameter(1,Indice_NonEnerSect)*(1-scal_Growth);
+elseif VAR_Growth=="Growth_high"
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = parameters.delta_X_parameter(1,Indice_NonEnerSect)*(1+scal_Growth);
+end
+
+scal_Immo = 0.1;
+
+if VAR_Immo=="Immo_low"
+	parameters.Household_saving_rate = BY.Household_saving_rate - 0.05;
+elseif VAR_Immo=="Immo_high"
+	parameters.Household_saving_rate = BY.Household_saving_rate + 0.05;
+end

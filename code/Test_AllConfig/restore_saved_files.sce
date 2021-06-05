@@ -14,7 +14,7 @@ exec('Load_paths.sce');
 if ~isdef('TEST_MODE') then
     getd(TEST_FULLCODE);
 end
-exec(TEST_FULLCODE + 'def_of_tests.sce');
+exec(TEST_FULLCODE + 'def_of_tests2.sce');
 
 // Load the files to restore
 saved_files = listfiles(SAVED_DATA);
