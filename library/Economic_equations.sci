@@ -2356,7 +2356,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_2(Theta, Phi, aIC, sigma, p
 endfunction
 
 /// function for assessing carbon tax resulting of a carbon cap
-function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y,Labour, Capital_consumption, IC)
+function [alpha, lambda, kappa] = Technical_Coef_Val_3(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, IC)
     test_pL = pL == 0;
     pIC = abs(pIC);
     pL = abs(pL);
@@ -2387,6 +2387,26 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_3(IC, Theta, Phi, aIC, sigm
     (FPI .^(sigma./(1 - sigma)))) ;
 
 
+endfunction
+
+//	Fixed technical coefficients including productivity
+function [alpha, lambda, kappa] = Technical_Coef_Val_4(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y) ;
+    alpha 	=  BY.alpha ;
+    lambda = BY.lambda.*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) ;
+    kappa 	= BY.kappa ;
+    
+    if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+    
 endfunction
 
 
