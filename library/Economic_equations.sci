@@ -2336,7 +2336,7 @@ endfunction
 
 
 //	Fixed technical coefficients
-function [alpha, lambda, kappa] = Technical_Coef_Val_2( aIC, sigma, pIC, aL, pL, aK, pK, Theta, Phi, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital,Labour, Capital_consumption, IC) ;
+function [alpha, lambda, kappa] = Technical_Coef_Val_2(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y) ;
     alpha 	=  BY.alpha ;
     lambda = BY.lambda ;
     kappa 	= BY.kappa ;
