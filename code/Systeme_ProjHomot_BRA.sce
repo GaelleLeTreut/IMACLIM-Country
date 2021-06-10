@@ -121,7 +121,7 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI,alpha, lambda, kappa,GrossOpSurplus,delta_LS
     M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter)
     p = Mean_price_Val_1(pY, pM, Y, M );
     // 	Specific to the homothetic projection: 
-    X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP);
+    X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
     pIC = pIC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p);
     pC = pC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate);
     pG = pG_price_Val_2(Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_G, Energy_Tax_rate_FC, OtherIndirTax_rate, p, Cons_Tax_rate) ;

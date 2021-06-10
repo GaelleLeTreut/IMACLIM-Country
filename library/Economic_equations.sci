@@ -2945,7 +2945,7 @@ function [y] = Exports_Const_1(X, pM, pX, sigma_X, delta_X_parameter);
 endfunction
 
 // Exports function
-function X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter);
+function X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
 
     pX = abs(pX);
     pM = abs(pM);
@@ -2959,13 +2959,25 @@ endfunction
 
 
 //	proj: les exports croient comme la croissance naturelle dans le pays à termes de l'échanges inchangés 
-function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP);
+function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
 
     delta_X_parameter = abs(delta_X_parameter);
     pX = abs(pX);
     pM = abs(pM);
     X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
 
+endfunction
+
+
+//	proj: les exports croient comme la production dans le pays à termes de l'échanges inchangés (et pas la croissance mondiale)
+function X = Exports_Val_3( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
+
+    delta_X_parameter = abs(delta_X_parameter);
+    pX = abs(pX);
+    pM = abs(pM);
+    // X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
+    X = BY.X * (Y/BY.Y) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
+	
 endfunction
 
 
