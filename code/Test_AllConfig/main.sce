@@ -5,7 +5,7 @@
 // -------------- *
 
 // Enable TEST_MODE in ImaclimS.sce
-TEST_MODE = %T;
+TEST_MODE = %F;
 
 // Parameters of the tests
 testing.countMax = 3;

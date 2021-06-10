@@ -1472,9 +1472,9 @@ end
 if Scenario=="RefBC"
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["---Macro Incertitudes ---",								 ""																	];..
-//["Labour Productivity",							parameters.Mu						];..
-["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
-["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
+["Labour Productivity",							parameters.Mu						];..
+//["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
+//["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
 ["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
 ["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
 ["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
@@ -1484,6 +1484,7 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
 ["World Growth Level Variation",		VAR_Growth	];..
 ["Household saving rate Variation",		VAR_Immo	];..
+["Sigma Variation",		VAR_sigma	];..
 ];
 end
 
