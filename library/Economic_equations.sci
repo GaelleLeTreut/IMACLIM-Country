@@ -2996,7 +2996,7 @@ function X = Exports_Val_3( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
     pX = abs(pX);
     pM = abs(pM);
     // X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
-    X = BY.X * (Y/BY.Y) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
+    X = BY.X .* (Y./BY.Y) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
 	
 endfunction
 
