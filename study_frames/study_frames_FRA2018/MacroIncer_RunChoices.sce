@@ -65,10 +65,25 @@ elseif VAR_Immo=="Immo_high"
 	parameters.Household_saving_rate = BY.Household_saving_rate + scal_Immo;
 end
 
-scal_sigma = 0.4;
 
-if VAR_sigma=="sigma_low"
-	parameters.sigma = parameters.sigma - scal_sigma;
-elseif VAR_sigma=="sigma_high"
-	parameters.sigma = parameters.sigma + scal_sigma;
+if  VAR_sigma<>""
+	if time_step == 1
+		scal_sigma = 0.4;
+			if VAR_sigma=="sigma_low"
+				parameters.sigma = parameters.sigma - scal_sigma;
+			elseif VAR_sigma=="sigma_high"
+				parameters.sigma = parameters.sigma + scal_sigma;
+			end
+	end	
+		sigma = parameters.sigma;
+		Coeff_forCES = (sum(BY.pIC.* (1 - ConstrainedShare_IC) .* BY.alpha,"r") + sum(BY.pL .* (1-ConstrainedShare_Labour) .* BY.lambda, "r") + BY.pK .* (1-ConstrainedShare_Capital) .* BY.kappa );
+		aIC = (ones(nb_Sectors,1)*Coeff_forCES<>0).*BY.pIC.* ((1 - ConstrainedShare_IC) .* BY.alpha) .^ (1 -(ones(nb_Sectors,1)*((sigma-1)./sigma))) .* (ones(nb_Sectors,1)*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0))).^(-1);
+		aL	=  (Coeff_forCES<>0).*BY.pL.* ((1 - ConstrainedShare_Labour) .* BY.lambda) .^ (1 -((sigma-1)./sigma)) .*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0)) .^(-1);
+		aK = (Coeff_forCES<>0) .* (BY.pK.* ((1 - ConstrainedShare_Capital) .* BY.kappa) .^ (1 -((sigma-1)./sigma)) .*((Coeff_forCES<>0).*Coeff_forCES + (Coeff_forCES==0)) .^(-1));
+		
+		x_aIC = matrix(aIC,nb_Sectors*nb_Commodities, 1) ;
+		x_aL = matrix(aL,nb_Sectors, 1);
+		x_aK = matrix(aK,nb_Sectors, 1);
+		
+		x_TechniCoef = [x_aIC;x_aL;x_aK];	
 end
