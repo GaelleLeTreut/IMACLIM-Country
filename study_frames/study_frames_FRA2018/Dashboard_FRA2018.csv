@@ -5,7 +5,8 @@ System_Resol;Systeme_ProjHomothetic
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 // * If Optimization_Resol == %T, System_Resol is ignored *;
 Optimization_Resol;%T
-SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_MacroInc
 // SystemOpt_Resol;SystemOpt_Static_temp
 // SystemOpt_Resol;SystemOpt_ProjHomo
 // SELECT a type of study (shock in parameters) by uncomment it;
@@ -75,7 +76,7 @@ CarbonTaxDiff;%F
 // Temporary for sensitivity analysis;
 Trade_elast_var;0.0
 Fix_w;False
-VAR_MU;Mu_high
+VAR_MU;
 VAR_pM;
 VAR_Growth;
 VAR_Immo;
