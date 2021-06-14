@@ -75,7 +75,7 @@ CarbonTaxDiff;%F
 // Temporary for sensitivity analysis;
 Trade_elast_var;0.0
 Fix_w;False
-VAR_MU;
+VAR_MU;Mu_high
 VAR_pM;
 VAR_Growth;
 VAR_Immo;
