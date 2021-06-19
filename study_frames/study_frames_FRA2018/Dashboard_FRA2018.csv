@@ -73,6 +73,9 @@ ClosCarbRev;CstNetLend
 // ClosCarbRev;ExoAdjTransf
 Carbon_BTA;%F
 CarbonTaxDiff;%F
+// SELECT a carbon tax recycling option (suppose that carbon tax recycling option are off);
+// ClosPubBudget;CstNetLend
+ClosPubBudget;CstConsumpt
 // Temporary for sensitivity analysis;
 Trade_elast_var;0.0
 Fix_w;False
