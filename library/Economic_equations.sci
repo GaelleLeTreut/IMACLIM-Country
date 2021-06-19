@@ -1842,6 +1842,20 @@ function G_Consumption_budget = G_ConsumpBudget_Val_3(G_pFish)
     
 endfunction
 
+/// To pilote bugdet finance through the dashboard
+function [y] = G_budget_clos_Const_1(G_Consumption_budget, GDP, NetLending) ;
+    /// Public consumption budget - constant in real terms
+	if ClosPubBudget=="CstConsumpt"
+		y1 = G_Consumption_budget - (GDP/BY.GDP) *  BY.G_Consumption_budget ;
+	elseif ClosPubBudget=="CstNetLend"
+		y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP);
+	elseif ClosPubBudget==""
+		error(out,"No closure on public budget had been selected")
+	end
+    y = y1' ;
+endfunction
+
+
 /// Balance between consumption budgets and expenditures
 function [y] = G_BudgetBalance_Const_1(G_Consumption_budget, G, pG) ;
 

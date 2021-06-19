@@ -183,6 +183,23 @@ if (size(ClosCarbRev,"r")<>[1]| size(ClosCarbRev,"r")<>[1])
     error ( "You have to choose one condition for the closure of public finance by recycling carbon tax revenues"); 
 end 
 
+////  Public Budget closure without carbon revenues 
+if ~isdef("ClosPubBudget")
+ClosPubBudget="";
+end 
+
+if (size(ClosPubBudget,"r")<>[1]| size(ClosPubBudget,"r")<>[1]) 
+    error ( "You have to choose one condition for the closure of public budget"); 
+end 
+
+if ClosPubBudget<>""
+print(out,"ClosPubBudget has been selected");
+	if ClosCarbRev<>"CstNetLend"|Recycling_Option<>"PublicDeficit";
+		ClosCarbRev=="CstNetLend";
+		Recycling_Option=="PublicDeficit";
+		print(out,"ClosCarbRev and Recycling_Option have been adapted to avoid labour tax cut");
+	end
+end 
 
 ////  Capital Dynamics
 if isdef("Capital_Dynamics") then
