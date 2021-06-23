@@ -114,6 +114,7 @@ brasil_scenPMR = new_country(name_bra, iso_bra, test_bra_scenPMR);
 ////test_fra_stat.Carbon_BTA = ['%T', '%F'];
 ////test_fra_stat.ClosCarbRev = ['CstNetLend','AllLabTax'];
 
+
 // france_stat = new_country(name_fra, iso_fra, test_fra_stat);
 
 // homothetic projection tests
@@ -160,23 +161,24 @@ iso_fra = 'FRA2018';
 test_fra_macro.System_Resol = ['Systeme_ProjHomothetic'];
 test_fra_macro.study = ['MacroIncer_RunChoices'];
 test_fra_macro.Optimization_Resol = ['%T'];
-test_fra_macro.SystemOpt_Resol = ['SystemOpt_Static'];
+test_fra_macro.SystemOpt_Resol = ['SystemOpt_MacroInc'];
 test_fra_macro.AGG_type = ['AGG_18TME'];
 test_fra_macro.H_DISAGG = ['HH1'];
-// test_fra_macro.Recycling_Option = ['LabTax'];
+test_fra_macro.Recycling_Option = ['PublicDeficit'];
 test_fra_macro.Nb_Iter = ['2'];
-test_fra_macro.Macro_nb = ['RefBC'];
+test_fra_macro.Macro_nb = ['RefBasCab'];
 test_fra_macro.Scenario = ['RefBC'];
 test_fra_macro.World_prices = ['True'];
 test_fra_macro.X_nonEnerg = ['True'];
 test_fra_macro.Output_files = ['%T'];
 test_fra_macro.VAR_MU = ['','Mu_low','Mu_high'];
-//test_fra_macro.VAR_pM = ['','pM_low','pM_high'];
-//test_fra_macro.VAR_Growth = ['','Growth_low','Growth_high'];
+test_fra_macro.VAR_pM = ['','pM_low','pM_high'];
+test_fra_macro.VAR_Growth = ['','Growth_low','Growth_high'];
 //test_fra_macro.VAR_Immo = ['','Immo_low','Immo_high'];
 //test_fra_macro.VAR_sigma = ['','sigma_low','sigma_high'];
 // test_fra_stat.Carbon_BTA = ['%T', '%F'];
-test_fra_stat.ClosCarbRev = ['AllLabTax'];
+test_fra_stat.ClosCarbRev = ['CstNetLend'];
+test_fra_stat.ClosPubBudget = ['CstNetLend','CstConsumpt'];
 
 france_macro = new_country(name_fra, iso_fra, test_fra_macro);
 
