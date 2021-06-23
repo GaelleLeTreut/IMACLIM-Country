@@ -176,9 +176,9 @@ test_fra_macro.VAR_pM = ['','pM_low','pM_high'];
 test_fra_macro.VAR_Growth = ['','Growth_low','Growth_high'];
 //test_fra_macro.VAR_Immo = ['','Immo_low','Immo_high'];
 //test_fra_macro.VAR_sigma = ['','sigma_low','sigma_high'];
-// test_fra_stat.Carbon_BTA = ['%T', '%F'];
-test_fra_stat.ClosCarbRev = ['CstNetLend'];
-test_fra_stat.ClosPubBudget = ['CstNetLend','CstConsumpt'];
+// test_fra_macro.Carbon_BTA = ['%T', '%F'];
+test_fra_macro.ClosCarbRev = ['CstNetLend'];
+test_fra_macro.ClosPubBudget = ['CstNetLend','CstConsumpt'];
 
 france_macro = new_country(name_fra, iso_fra, test_fra_macro);
 

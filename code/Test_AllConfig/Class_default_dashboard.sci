@@ -33,6 +33,7 @@ function default_dashboard = new_default_dashboard()
 	'Carbon_BTA','%F',..
     'Recycling_Option', '',..
 	'ClosCarbRev','CstNetLend',..
+	'ClosPubBudget','',..
 	'VAR_MU','',..
 	'VAR_pM','',..
 	'VAR_Growth','',..
