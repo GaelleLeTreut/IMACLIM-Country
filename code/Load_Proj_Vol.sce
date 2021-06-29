@@ -99,6 +99,21 @@ to_transpose = [
     'Labour_' + Scenario
 ];
 
+
+	// load Y, may be needed for proj intens
+Proj_Vol.Y.file = Proj_Vol.IC.file;
+Proj_Vol.Y.headers = 'Y';
+if ~Proj_Vol.IC.apply_proj & ( find("Capital_consumption"==fieldnames(Proj_Vol))<> [])
+	if 	Proj_Vol.Capital_consumption.intens 
+		Proj_Vol.Y.apply_proj = %T;
+	else
+		Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
+	end
+else 
+	Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
+end
+Proj_Vol.Y.can_be_agg =%T;
+
 for var = fieldnames(Proj_Vol)'
 
     if Proj_Vol(var).apply_proj then
@@ -128,11 +143,6 @@ for var = fieldnames(Proj_Vol)'
     end
 end
 
-// load Y, may be needed for proj intens
-Proj_Vol.Y.file = Proj_Vol.IC.file;
-Proj_Vol.Y.headers = 'Y';
-Proj_Vol.Y.apply_proj = Proj_Vol.IC.apply_proj;
-Proj_Vol.Y.can_be_agg =%T;
 
 for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
