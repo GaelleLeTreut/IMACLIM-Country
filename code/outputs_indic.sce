@@ -1118,14 +1118,10 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
  
   if Country == "Brasil"&(Scenario=="BIICS_CPS"|Scenario=="BIICS_DDS")
 OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
-["Electricity Consumption (toe/capita) "+Index_Households, (C(Indice_Electk,:)./Out.Population)'];..
-["Electricity Consumption (MWh/capita) "+Index_Households, (C(Indice_Electk,:)*(11.63)./Out.Population)'];..
+["electricity consumption (toe/capita) "+Index_Households, (C(Indice_Electk,:)./Out.Population)'];..
+["electricity consumption (MWh/capita) "+Index_Households, (C(Indice_Electk,:)*(11.63)./Out.Population)'];..
  ];
-/////["Purchasing Power (R$/capita) "+Index_Households, (Out.H_disposable_income./Out.HH_pFish/Out.Population)'];..
- ]; 
  end
-
-
  
 /////////////Sectoral tables
 
