@@ -63,7 +63,7 @@ Scenario;BIICS_DDS
 CO2_footprint;False
 // TELL if you want to create output files or prints in scilab console;
 Output_files;%T
-Output_prints;%F
+Output_prints;%T
 // SELECT the uses of carbon tax revenues;
 // Recycling_Option;
 // Recycling_Option;LabTax
