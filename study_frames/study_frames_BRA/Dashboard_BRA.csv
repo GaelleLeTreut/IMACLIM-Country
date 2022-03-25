@@ -14,8 +14,8 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 study;Static_RunBiics
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
-// TELL if you want labour_desag
-//Labour_desag;%T
+// TELL if you want labour_desag;
+Labour_desag;%T
 // SELECT option for Capital_Dynamics;
 // Exogenous share of investment to GDP or unemployment;
 // Exo_ShareI_GDP;%T

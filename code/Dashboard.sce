@@ -144,12 +144,12 @@ else
     Invest_matrix = %F;
 end
 
-//if isdef("Labour_desag") then
-//    Labour_desag = eval(Labour_desag);
-//else
-//    warning("No information about labour disaggregation : by default, labour is kept aggregated")
-//    Labour_desag = %F;
-//end
+if isdef("Labour_desag") then
+    Labour_desag = eval(Labour_desag);
+else
+    warning("No information about labour disaggregation : by default, labour is kept aggregated")
+    Labour_desag = %F;
+end
 
 if isdef("ScenAgg_IOT") then
     ScenAgg_IOT = eval(ScenAgg_IOT);
