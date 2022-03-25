@@ -278,10 +278,10 @@ if Invest_matrix then
 end
 
 //nb_size_I = 1;
-if Labour_matrix then
+//if Labour_desag then
 //    nb_size_I = nb_Sectors;
-    exec("Labour_Desag.sce");
-end
+//    exec("Labour_Desag.sce");
+//end
 
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
