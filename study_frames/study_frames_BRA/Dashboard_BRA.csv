@@ -24,6 +24,8 @@ Capital_Dynamics;%F
 // AGG_type;AGG_PMR19
 AGG_type;AGG_BIICS19
 // AGG_type;AGG_EnComp
+// TELL if you want labour_desag
+Labour_desag;%T
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
 // H_DISAGG;H3
