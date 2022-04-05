@@ -39,9 +39,12 @@ Row;WaterSewage;Commodities;NonEnerSect;AllExceptComp;NonHybridCommod;-;AllComp;
 Row;Education;Commodities;NonEnerSect;AllExceptComp;NonHybridCommod;-;AllComp;RestComp;Comp
 Row;Health;Commodities;NonEnerSect;AllExceptComp;NonHybridCommod;-;AllComp;RestComp;Comp
 Row;Composite;Commodities;NonEnerSect;-;NonHybridCommod;-;AllComp;RestComp;Comp
-Row;Labour_income;OthPart_IOT;Value_Added;-;-;-;-;-;-
-Row;Labour_Tax;OthPart_IOT;Value_Added;-;-;-;-;-;-
-Row;Labour_Corp_Tax;OthPart_IOT;Value_Added;-;-;-;-;-;-
+Row;Labour_income_formal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
+Row;Labour_income_informal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
+Row;Labour_Tax_formal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
+Row;Labour_Tax_informal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
+Row;Labour_Corp_Tax_formal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
+Row;Labour_Corp_Tax_informal;OthPart_IOT;Value_Added;Labour_income;-;-;-;-;-
 Row;Capital_income;OthPart_IOT;Value_Added;-;-;-;-;-;-
 Row;Production_Tax;OthPart_IOT;Value_Added;-;-;-;-;-;-
 Row;Profit_margin;OthPart_IOT;Value_Added;-;-;-;-;-;-

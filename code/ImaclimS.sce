@@ -262,9 +262,13 @@ end
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 printf("STEP 1: DATA... \n");
+
+
 exec("Loading_data.sce");
+//disp(IOT_Val,IndRow_IOT_Val,IndCol_IOT_Val)
 
 exec("IOT_DecompImpDom.sce");
+
 
 //Execute Households_Disagg.sce file if Index_HouseholdsDISAGG is defined
 if H_DISAGG <> "HH1"
@@ -279,7 +283,7 @@ end
 
 //nb_size_I = 1;
 if Labour_desag then
-    nb_size_I = nb_Sectors;
+//    nb_size_I = nb_Sectors;
     exec("Labour_Desag.sce");
 //end
 
@@ -291,9 +295,15 @@ if AGG_type <> ""
     end
 end
 
+pause
+
 exec("Hybridisation.sce" );
 
+pause
+
 exec("Loading_params.sce");
+
+pause
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //	STEP 2: CHECKING BENCHMARK DATA
