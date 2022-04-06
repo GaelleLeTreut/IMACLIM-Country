@@ -57,7 +57,7 @@ end
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// Defining matrix with dimension of each variable for Resolution file
-VarDimMat_resol = eval(Index_VarResol(2:$,2:3));
+VarDimMat_resol = evstr(Index_VarResol(2:$,2:3));
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -234,7 +234,7 @@ end
 //////SOLVEUR
 /////////////////////////////////////////////////
 count        = 0;
-countMax     = 30;
+countMax     = 3; // Valeur par defaut : 30
 vMax         = 10000000;
 vBest        = 10000000;
 sensib       = 1e-5;
@@ -334,7 +334,7 @@ end
 
 
 for var = [var_resol_out; var_resol_interm]'
-    d(var) = eval(var);
+    d(var) = evstr(var);
 end
 
 //execstr("d."+fieldnames(Deriv_Var_interm)+"= Deriv_Var_interm."+fieldnames(Deriv_Var_interm)+";");

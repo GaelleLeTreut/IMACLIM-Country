@@ -101,14 +101,14 @@ if (size(Resol_Mode,"r")<>[1]| size(Resol_Mode,"r")<>[1])
     error ( "various types of simulation mode have been selected in Dashboard.csv");
 end
 
-Nb_Iter = eval(Nb_Iter);
+Nb_Iter = evstr(Nb_Iter);
 
 if Nb_Iter<1
     error("the number of iteration should be positive");
 end
 
 if (size(Scenario,"r")<>[1]| size(Scenario,"r")<>[1])
-    error ( "various types of scenario have been selected in Dashboard.csv. The model isn't ready yet to run several Scenarios successively.");
+    error ( "various types of scenario have been selected in Dashboard.csv. The model isn t ready yet to run several Scenarios successively.");
 end
 
 if (size(Macro_nb,"r")<>[1]| size(Macro_nb,"r")<>[1])
@@ -124,35 +124,35 @@ if (size(CO2_footprint,"r")<>[1]| size(CO2_footprint,"r")<>[1])
 end
 
 if  isdef("Output_files") then
-Output_files = eval(Output_files);
+Output_files = evstr(Output_files);
 else 	
     warning("No information about if you want to create output files : by default, output files are created")
     Output_files = %T;
 end
 
 if  isdef("Output_prints") then
-Output_prints = eval(Output_prints);
+Output_prints = evstr(Output_prints);
 else 	
     warning("No information about if you want to print outputs: by default, there are no prints")
     Output_prints = %F;
 end
 
 if isdef("Invest_matrix") then
-    Invest_matrix = eval(Invest_matrix);
+    Invest_matrix = evstr(Invest_matrix);
 else
     warning("No information about investment disaggregation : by default, investment is kept aggregated")
     Invest_matrix = %F;
 end
 
 if isdef("ScenAgg_IOT") then
-    ScenAgg_IOT = eval(ScenAgg_IOT);
+    ScenAgg_IOT = evstr(ScenAgg_IOT);
 else
     warning("No information about aggregating volumes of scenarios : by default, not aggregation")
     ScenAgg_IOT = %F;
 end
 
 if isdef("Optimization_Resol") then
-    Optimization_Resol = eval(Optimization_Resol);
+    Optimization_Resol = evstr(Optimization_Resol);
     if ~isdef("SystemOpt_Resol") then
         error("In Dashboard : you need to define a SystemOpt_Resol because Optimization_Resol is %T.");
     end
@@ -162,14 +162,14 @@ else
 end
 
 if isdef("CarbonTaxDiff") then
-    CarbonTaxDiff = eval(CarbonTaxDiff);
+    CarbonTaxDiff = evstr(CarbonTaxDiff);
 else
     CarbonTaxDiff = %F;
 end
 
 ////  Border tax adjustment
 if isdef("Carbon_BTA") then
-    Carbon_BTA = eval(Carbon_BTA);
+    Carbon_BTA = evstr(Carbon_BTA);
 else
     Carbon_BTA = %F;
 end
@@ -203,28 +203,28 @@ end
 
 ////  Capital Dynamics
 if isdef("Capital_Dynamics") then
-    Capital_Dynamics = eval(Capital_Dynamics);
+    Capital_Dynamics = evstr(Capital_Dynamics);
 else
     Capital_Dynamics = %F;
 end
 
 /// Profil of invesment share to GDP in capital dynamics
 if isdef("Exo_ShareI_GDP") then
-    Exo_ShareI_GDP = eval(Exo_ShareI_GDP);
+    Exo_ShareI_GDP = evstr(Exo_ShareI_GDP);
 else
     Exo_ShareI_GDP = %F;
 end
 
 /// Profil of unemployment to calibrate capital dynamics
 if isdef("Exo_u_tot") then
-    Exo_u_tot = eval(Exo_u_tot);
+    Exo_u_tot = evstr(Exo_u_tot);
 else
     Exo_u_tot = %F;
 end
 
 /// Adjustment in capital stock compared to the perpetual inventory
 if isdef("Exo_Kstock_Adj") then
-    Exo_Kstock_Adj = eval(Exo_Kstock_Adj);
+    Exo_Kstock_Adj = evstr(Exo_Kstock_Adj);
 else
     Exo_Kstock_Adj = %F;
 end
@@ -242,13 +242,13 @@ end
 
 // Adjustment of kappa for non energy sectors according to energy intensity
 if isdef("AdjustKappaOnly") then
-    AdjustKappaOnly = eval(AdjustKappaOnly);
+    AdjustKappaOnly = evstr(AdjustKappaOnly);
 else
     AdjustKappaOnly = %F;
 end
 
 if isdef("AdjustKappaWithSubst") then
-    AdjustKappaWithSubst = eval(AdjustKappaWithSubst);
+    AdjustKappaWithSubst = evstr(AdjustKappaWithSubst);
 else
     AdjustKappaWithSubst = %F;
 end

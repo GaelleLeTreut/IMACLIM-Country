@@ -91,7 +91,7 @@ function y = eq_from_val(output_code,code)
     // Return the constraint
     y = [];
     for var = output_code
-        y = [y; matrix(eval(var + suff_save + '-' + var),-1,1)];
+        y = [y; matrix(evstr(var + suff_save + '-' + var),-1,1)];
     end
 
 endfunction

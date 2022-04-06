@@ -54,7 +54,7 @@ var_resol_head = 'Var_Resol';
 
 if file_eq(1)(1,1) == var_resol_head then
     // Load Var_Resol
-    Index_VarResol = eval(file_eq(1)(1,2));
+    Index_VarResol = evstr(file_eq(1)(1,2));
 else
     // Var_Resol is not defined
     error('You need to define ' + """" + var_resol_head + """" + ' at the beginning of SystemOpt_Resol csv file.');
@@ -245,7 +245,7 @@ while (fun_val_not_sorted <> list())
             current_size = 0;
             for var = fun.output'
                 ind = find(Index_VarResol(:,1) == var);
-                current_size = current_size + eval(Index_VarResol(ind,2) + '*' + Index_VarResol(ind,3));
+                current_size = current_size + evstr(Index_VarResol(ind,2) + '*' + Index_VarResol(ind,3));
             end
             size_outputs($+1) = current_size;
         end

@@ -91,6 +91,6 @@ if Output_files
     execstr("data = data_"+time_step+";")
     data.Indice_EnerSect=Indice_EnerSect;
     data.Indice_NonEnerSect=Indice_NonEnerSect;
-    save(SAVEDIR+"output_"+Name_time+".sav",BY, data);
+    save(SAVEDIR+"output_"+Name_time+".sav","BY", "data");
     clear data
 end

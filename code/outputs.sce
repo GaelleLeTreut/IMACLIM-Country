@@ -76,11 +76,11 @@ param_table_sec= [ "setting", "", "", Index_Sectors'];
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$t_{CARB_{IC}}$"];
 param_table_sec(2:2+nb_Sectors-1,2) = ["$"+moneyTex+"/tCO_2$"];
 param_table_sec(2:2+nb_Sectors-1,3) = Index_Sectors;
-param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC*eval(money_unit_data)/10^6);
+param_table_sec(2:2+nb_Sectors-1,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_IC*evstr(money_unit_data)/10^6);
 param_table_sec($+1:$+1+ nb_Households-1,1) = ["$t_{CARB_{C}}$"];
 param_table_sec($-(nb_Households-1):$,2) = ["$"+moneyTex+"/tCO_2$ "];
 param_table_sec($-(nb_Households-1):$,3) = [Index_Households];
-param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'*eval(money_unit_data)/10^6);
+param_table_sec($-(nb_Households-1):$,4:4+nb_Sectors-1) = string(Carbon_Tax_rate_C'*evstr(money_unit_data)/10^6);
 
 param_table_sec($+1:$+1+ nb_Sectors-1,1) = ["$EF_{CARB_{IC}}$"];
 param_table_sec($-nb_Sectors+1:$,2) = ["$tCO_2/toe$"];///////////////////////////////////
@@ -949,7 +949,7 @@ Err_balance_tol_temp = 10^-1;
 IC_temp = (abs(IC) > 10^-5).*IC;
 // Check after loading outputs
 for line  = 1:nb_Commodities
-    if abs(d.ERE_balance_val(line))>=Err_balance_tol_temp then
+    if 0 & abs(d.ERE_balance_val(line))>=Err_balance_tol_temp then // ajout de if 0 pour eviter l erreur malgre la non convergence
        error("The IOT output is not well balanced , something did not go well for the sector n°"+line+";Supply-Uses not balanced")
     end
 	

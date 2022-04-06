@@ -131,13 +131,13 @@ end
 if Index_SectorsAGG == Index_Sectors
     all_IND =list();
     for elt=1:size(Index_SectorsAGG,"r")
-        IND = eval("Indice_"+Index_SectorsAGG(elt));
+        IND = evstr("Indice_"+Index_SectorsAGG(elt));
         all_IND(1+$) = IND;
     end
 else all_IND =list();
     for elt=1:size(Index_SectorsAGG,"r")
         IndTempAGG=find(Index_SectorsAGG == Index_Sectors(elt));
-        IND = eval("Indice_"+Index_SectorsAGG(IndTempAGG));
+        IND = evstr("Indice_"+Index_SectorsAGG(IndTempAGG));
         all_IND(1+$) = IND;
         NEW_IND(elt) = IndTempAGG;
     end
@@ -226,13 +226,13 @@ for column = 1:nb_SectorsAGG
 
 
     //aggregation here by line..
-    initial_valueAGG.Y(column,:) = sum(initial_value.Y(all_IND(column)),:);
-    initial_valueAGG.M(column,:) = sum(initial_value.M(all_IND(column)),:);
-    initial_valueAGG.CO2Emis_C(column,:) = sum(initial_value.CO2Emis_C(all_IND(column),:),:);
+    initial_valueAGG.Y(column,:) = sum(initial_value.Y(all_IND(column)),'r');
+    initial_valueAGG.M(column,:) = sum(initial_value.M(all_IND(column)),'r');
+    initial_valueAGG.CO2Emis_C(column,:) = sum(initial_value.CO2Emis_C(all_IND(column),:),'r');
     if Country_ISO == "FRA"
         CO2Emis_C_2030_AGG(column,:) = sum(CO2Emis_C_2030(all_IND(column),:),:);
     end
-    initial_valueAGG.CO2Emis_X(column,:) = sum(initial_value.CO2Emis_X(all_IND(column)),:);
+    initial_valueAGG.CO2Emis_X(column,:) = sum(initial_value.CO2Emis_X(all_IND(column)),'r');
 
     // M_RoW_bySectReg = sum(M_RoW_bySectReg(all_IND(column)),:);
 

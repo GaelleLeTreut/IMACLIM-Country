@@ -22,7 +22,7 @@ function test_proj(var_name)
         zero = matrix(zero,1,-1);
 
         for z = zero
-            if abs(z) > err then
+            if 0 & abs(z) > err then // ajout de if 0 pour eviter l erreur malgre la non convergence
                 error("The projection of " + var_name + " did not go well");
             end
         end

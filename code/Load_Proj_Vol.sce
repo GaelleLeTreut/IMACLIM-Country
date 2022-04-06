@@ -119,16 +119,16 @@ for var = fieldnames(Proj_Vol)'
     if Proj_Vol(var).apply_proj then
 
         if Proj_Vol(var).file == 'IOT_Qtities' then
-            iot_qtities = eval('IOT_Qtities_' + Scenario + '_' + string(time_step));
+            iot_qtities = evstr('IOT_Qtities_' + Scenario + '_' + string(time_step));
 			
 		elseif Proj_Vol(var).file == 'IOT_CO2' then
-            iot_co2emis = eval('IOT_CO2_' + Scenario + '_' + string(time_step));
+            iot_co2emis = evstr('IOT_CO2_' + Scenario + '_' + string(time_step));
 
         elseif find(proj_files == Proj_Vol(var).file) then
                 
-            Proj_Vol(var).data = eval(Proj_Vol(var).file);
-            Proj_Vol(var).headline = eval('headline(""' + Proj_Vol(var).file + '"")');
-            Proj_Vol(var).headcol = eval('headcol(""' + Proj_Vol(var).file + '"")');
+            Proj_Vol(var).data = evstr(Proj_Vol(var).file);
+            Proj_Vol(var).headline = evstr('headline(""' + Proj_Vol(var).file + '"")');
+            Proj_Vol(var).headcol = evstr('headcol(""' + Proj_Vol(var).file + '"")');
 
             if or(Proj_Vol(var).headcol <> Proj_Vol(var).headers) then
                 error('Years of ' + Proj_Vol(var).file + ' are not consistent with current working years.')

@@ -98,7 +98,7 @@ Energy_Tax_rate_FC(1,Indice_NonEnerSect) = 0;
 //Other tax product
 OtherIndirTax_rate (1,Indice_HybridCommod) = initial_value.OtherIndirTax(Indice_HybridCommod) ./ (sum(initial_value.IC(Indice_HybridCommod,:),"c")+sum(initial_value.C(Indice_HybridCommod,:),"c")+sum(initial_value.G(Indice_HybridCommod,:),"c")+sum(initial_value.I(Indice_HybridCommod,:),"c"))';  
 
-OtherIndirTax_rate(1,Indice_NonHybridCommod) = initial_value.OtherIndirTax(Indice_NonHybridCommod). / (initial_value.Y(Indice_NonHybridCommod)'+initial_value.M(Indice_NonHybridCommod)' - (initial_value.X_value(Indice_NonHybridCommod)'./p_BeforeTaxes(Indice_NonHybridCommod)) ) ;
+OtherIndirTax_rate(1,Indice_NonHybridCommod) = initial_value.OtherIndirTax(Indice_NonHybridCommod) ./ (initial_value.Y(Indice_NonHybridCommod)'+initial_value.M(Indice_NonHybridCommod)' - (initial_value.X_value(Indice_NonHybridCommod)'./p_BeforeTaxes(Indice_NonHybridCommod)) ) ;
 
 
 // REVOIR COMMENT GERER CARBON TAX RATE

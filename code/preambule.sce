@@ -42,7 +42,7 @@
 ////           It also defines  the *USER CHOICE*  ETUDE                        /////
 /////////////////////////////////////////////////////////////////////////////////////
 
-stacksize(1e8);
+//stacksize(1e8);
 
 print(out, "=====PREAMBLE========");
 

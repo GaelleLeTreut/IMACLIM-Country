@@ -23,7 +23,7 @@ if time_step==1 then
 	
 	list_Worldprice = [];
 		for elt = 1:size(Indice_Worldprice,"c")
-		list_Worldprice(elt) = list_macro_var(eval(Indice_Worldprice(elt)));
+		list_Worldprice(elt) = list_macro_var(evstr(Indice_Worldprice(elt)));
 		end
 		
 	SectDefineWP = part(list_Worldprice,length(Index_Worldprice)+1:$);

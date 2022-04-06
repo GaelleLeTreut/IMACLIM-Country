@@ -107,7 +107,7 @@ else
 end
 
 OutputTable.CostDecomposCOMTable = [
-["Carbon Tax rate-"+money+"/tCO2", 		  		(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6 ];..
+["Carbon Tax rate-"+money+"/tCO2", 		  		(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6 ];..
 ["Recycling_Option", 		  					header];..
 ["Production Price Decomposition - Composite (%)",   				""	  				];..
 [CostDecompositionTable(2:$,1),CostDecompositionTable(2:$,$)]

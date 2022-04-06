@@ -472,7 +472,7 @@ end
 
 DataAccountTable(1,:)=[];
 DataAccountTable(:,1)=[];
-DataAccountTable=eval(DataAccountTable);
+DataAccountTable=evstr(DataAccountTable);
 indicEltDataAccountFC = 1;
 for elt=1:nb_DataAccount
     varname = Index_DataAccount(elt);
@@ -614,7 +614,7 @@ if Country=="France" then
     end
 
     if AGG_type <> ""
-        CoefCO2_reg = eval('CoefCO2_reg_'+string(AGG_type));
+        CoefCO2_reg = evstr('CoefCO2_reg_'+string(AGG_type));
     end
 
 

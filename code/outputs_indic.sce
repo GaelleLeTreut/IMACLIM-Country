@@ -942,7 +942,7 @@ OutputTable("MacroT_"+ref_name) = [ ["Macro results", "in %/"+ref_name];["Carbon
 
 OutputTable("MacroTExtend_evol_"+ref_name) = [ 
 ["Macro results", "in %/"+ref_name];.. 
-["Carbon Tax rate", (Out.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2"];.. 
+["Carbon Tax rate", (Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6+ money+"/tCO2"];.. 
 ["Recycling revenues options", Recycling_Option ];..
 ["Labour Tax cut", DispLabTabl];.. 
 ["Real GDP (Laspeyres)", (GDP_qLasp-1)*100];.. 
@@ -1048,7 +1048,7 @@ OutputTable("MacroT_Abs_"+Name_time) = [
 OutputTable("Equity_"+Name_time) = [
 ["Variables", 														"values_"+Name_time												];..
 ["Recycling revenues options", Recycling_Option 																					];..
-["Carbon Tax rate", (Out.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2" 											];..
+["Carbon Tax rate", (Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6+ money+"/tCO2" 											];..
 [ "Carbon Tax proceeds to lump-sum transfers in %", 100*divide(sum(Out.ClimPolicyCompens(Indice_Households)),sum(Out.Carbon_Tax),%nan)	];..
 ["Total CO2 emissions %/"+ref_name, 							(evol_ref.DOM_CO2-1)*100											];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
@@ -1120,7 +1120,7 @@ OutputTable("Equity_"+Name_time) = [OutputTable("Equity_"+Name_time);
 OutputTable("CompSectTable_"+ref_name) = [["Variation (%)", Index_Sectors']; ["Production Price", ((divide(Out.pY , ref.pY , %nan )-1)*100)']; ["Real Households consumption_"+Index_Households , ((divide(Out.C , ref.C , %nan )-1)*100)']; ["Exports in volume", ((divide(Out.X , ref.X , %nan )-1)*100)'];["Imports in volume", ((divide(Out.M , ref.M, %nan )-1)*100)'];["Trade balance ",((divide((Out.X_value' - Out.M_value),(ref.X_value' - ref.M_value),%nan))-1)*100]; ["Energy Cost share variation", (evol_ref.ENshare-1)*100 ]; [ " Energy/Labour cost variation" , (evol_ref.ShareEN_Lab-1)*100]; ["Labour", (divide(Out.Labour , ref.Labour, %nan )-1)*100]; ["Unitary Labour Cost variation", (evol_ref.Unit_Labcost-1)*100]; ["Net nominal wages", (divide(Out.w , ref.w, %nan )-1)*100]; ["Net real wages (Consumer Price Index)", (((Out.w./CPI)./(ref.w./ref.CPI))-1)*100];["Purchasing power of wages_"+Index_Households, divide((ones(nb_Households,1).*.Out.w)./Out.pC' , (ones(nb_Households,1).*.ref.w)./ref.pC', %nan )]];
 
 OutputTable.CompSectTable($+1,1)=  "Carbon Taxe rate";
-OutputTable.CompSectTable($,2)=  [(parameters.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2"];
+OutputTable.CompSectTable($,2)=  [(parameters.Carbon_Tax_rate*evstr(money_unit_data))/10^6+ money+"/tCO2"];
 OutputTable.CompSectTable($+1,1)=  "Revenue-reclycling option";
 OutputTable.CompSectTable($,2)=  [DispLabTabl] ;
 
@@ -1146,14 +1146,14 @@ OutputTable("Trade_Sect_Share_"+ref_name)  =  [["Variable/Sectoral value", Index
 OutputTable("EnerNonEnTable_"+ref_name) = [["Ratio", "Primary Energy", "Final Energy", "Non-energy goods"];["Production Price (Laspeyres)", (Y_PrimEn_pLasp-1)*100, (Y_FinEn_pLasp-1)*100, (Y_NonEn_pLasp-1)*100 ]; ["Real Households consumption (Laspeyres)", (C_PrimEn_qLasp-1)*100, (C_FinEn_qLasp-1)*100, (C_NonEn_qLasp-1)*100 ]; ["Exports in volume", (divide(sum(Out.X(Indice_PrimEnerSect,:)), sum(ref.X(Indice_PrimEnerSect,:)),%nan )-1)*100, (divide(sum(Out.X(Indice_FinEnerSect,:)), sum(ref.X(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(Out.X(Indice_NonEnerSect,:)), sum(ref.X(Indice_NonEnerSect,:)),%nan ) -1)*100 ];["Imports in volume", (divide(sum(Out.M(Indice_PrimEnerSect,:)), sum(ref.M(Indice_PrimEnerSect,:)),%nan)-1)*100, (divide(sum(Out.M(Indice_FinEnerSect,:)), sum(ref.M(Indice_FinEnerSect,:)),%nan )-1)*100 , (divide(sum(Out.M(Indice_NonEnerSect,:)), sum(ref.M(Indice_NonEnerSect,:)),%nan )-1)*100 ]];
 
 OutputTable.EnerNonEnTable($+1,1)=  "Carbon Taxe rate";
-OutputTable.EnerNonEnTable($,2)=  [[(parameters.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2"]];
+OutputTable.EnerNonEnTable($,2)=  [[(parameters.Carbon_Tax_rate*evstr(money_unit_data))/10^6+ money+"/tCO2"]];
 OutputTable.EnerNonEnTable($+1,1)=  "Revenue-reclycling option";
 OutputTable.EnerNonEnTable($,2)=  [DispLabTabl] ;
 
 if (Out.pX ./ ref.pX ) <> 1 
     OutputTable("Elasticities"+ref_name) = [ ["Elasticities" , Index_Sectors'];["Exports Price" , ((divide(Out.X , ref.X, %nan) - 1) ./ ((Out.pX ./ ref.pX) - 1))' ]; ["Exports - pX/pM ration" , ((divide(Out.X , ref.X , %nan) - 1) ./ (((Out.pX./Out.pM) ./ (ref.pX./ref.pM) ) - 1))' ];["Import/Output ratio" ,((divide(Out.M , Out.Y , %nan) ./ divide(ref.M , ref.Y , %nan) - 1) ./ ((Out.pM./Out.pY) ./ (ref.pM./ref.pY) - 1))']];
     OutputTable.Elasticities($+1,1)=  "Carbon Taxe rate";
-    OutputTable.Elasticities($,2)=  [[(parameters.Carbon_Tax_rate*eval(money_unit_data))/10^6+ money+"/tCO2"]];
+    OutputTable.Elasticities($,2)=  [[(parameters.Carbon_Tax_rate*evstr(money_unit_data))/10^6+ money+"/tCO2"]];
     OutputTable.Elasticities($+1,1)=  "Revenue-reclycling option";
     OutputTable.Elasticities($,2)=  [DispLabTabl] ;
 end
@@ -1337,7 +1337,7 @@ if AGG_type == "AGG_IndEner"
 	if OutputfilesBY
     csvWrite(CompAGG.ref,SAVEDIR+"CompAGG-"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
     csvWrite(CompAGG.run,SAVEDIR+"CompAGG-run_"+Name_time+"_"+simu_name+".csv", ';');
-    csvWrite(CompAGG.evol_ref,SAVEDIR+"CompAGG-evol_"+ref_name"_"+Name_time+"_"+simu_name+".csv", ';');
+    csvWrite(CompAGG.evol_ref,SAVEDIR+"CompAGG-evol_"+ref_name+"_"+Name_time+"_"+simu_name+".csv", ';');
 	end
 	end
 
@@ -1354,7 +1354,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
-["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*eval(money_unit_data))/10^6  				];..
+["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
 ["Labour productivity ",										parameters.Mu													];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
@@ -1396,7 +1396,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
 ["Real Trade Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
 ["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
-["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./eval("Y_"+Index_Sectors+"_pFish")	];..
+["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./evstr("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
 ["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
 ["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
@@ -1409,9 +1409,9 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pX pFish/"+ref_name,											X_pFish															];..
 ["pY pFish/"+ref_name,											Y_pFish															];..
 ["pY Energy pLasp/"+ref_name,									Y_En_pLasp														];..
-[string("pY "+Index_EnerSect +" pLasp/"+ref_name),				eval("Y_"+Index_EnerSect+"_pLasp")							];..
+[string("pY "+Index_EnerSect +" pLasp/"+ref_name),				evstr("Y_"+Index_EnerSect+"_pLasp")							];..
 ["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp													];..
-[string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				eval("Y_"+Index_NonEnerSect+"_pLasp")							];..
+[string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				evstr("Y_"+Index_NonEnerSect+"_pLasp")							];..
 ["pM pFish/"+ref_name,											M_pFish															];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
@@ -1454,7 +1454,7 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["---Capital Stock ---",								 ""																	];..
 ["Capital Endowment",							money_disp_adj.*Out.Capital_endowment							];..
 [string("Capital Cons - "+ Index_Sectors),		money_disp_adj.*Out.Capital_consumption'						];..
-[string("Real I - "+ Index_Sectors(ind_Inv)),	money_disp_adj.*sum(Out.I_value(ind_Inv,:),"c")./eval("I_"+Index_Sectors(ind_Inv)+"_pFish")	];..
+[string("Real I - "+ Index_Sectors(ind_Inv)),	money_disp_adj.*sum(Out.I_value(ind_Inv,:),"c")./evstr("I_"+Index_Sectors(ind_Inv)+"_pFish")	];..
 [string("Volume I - "+ Index_Sectors(ind_Inv)),	money_disp_adj.*sum(Out.I(ind_Inv,:),"c")											];..
 ];
 end

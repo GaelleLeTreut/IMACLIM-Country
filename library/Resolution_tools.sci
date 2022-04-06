@@ -59,8 +59,8 @@ function [variables_OnesValue] = OnesValue4variables (Imaclim_variables, list_va
     for ind_list = 1:nb_variables
 
         ind_row_Imaclim = find(Imaclim_variables==list_varTyp(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
         current_variables = ones(nb_RowCurrVariable,nb_ColCurrVariable);
 
         execstr("variables_OnesValue" + "." + list_varTyp(ind_list)+"=current_variables"+";")
@@ -78,8 +78,8 @@ function [variables_OnesValue] = ZerosValue4variables (Imaclim_variables, list_v
     for ind_list = 1:nb_variables
 
         ind_row_Imaclim = find(Imaclim_variables==list_varTyp(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
         current_variables = zeros(nb_RowCurrVariable,nb_ColCurrVariable);
 
         execstr("variables_OnesValue" + "." + list_varTyp(ind_list)+"=current_variables"+";")
@@ -98,8 +98,8 @@ function [variables_ThousandValue] = ThousandValue4variables (Imaclim_variables,
     for ind_list = 1:nb_variables
 
         ind_row_Imaclim = find(Imaclim_variables==list_varTyp(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
         current_variables = ones(nb_RowCurrVariable,nb_ColCurrVariable);
         current_variables = 10^3*current_variables;
 
@@ -126,7 +126,7 @@ function x = variables2X (Imaclim_variables, list_variables4X, variables_value)
     for ind_list = 1:nb_variables4X
 
         ind_row_Imaclim = find(Imaclim_variables==list_variables4X(ind_list));
-        nb_XRow4CurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2))*eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_XRow4CurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2))*evstr(Imaclim_variables(ind_row_Imaclim,3));
         execstr("current_variables"+"="+"variables_value" + "." + list_variables4X(ind_list)+";");
         x(prev_RowIndex:prev_RowIndex+nb_XRow4CurrVariable-1)= matrix(current_variables, nb_XRow4CurrVariable,1);
 
@@ -150,7 +150,7 @@ function [Table_Str_x2Exec] = variables2indiv_x (Imaclim_variables, list_variabl
     for ind_list = 1:nb_variables4each_x
 
         ind_row_Imaclim = find(Imaclim_variables==list_variables4each_x(ind_list));
-        nb_xRow4CurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2))*eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_xRow4CurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2))*evstr(Imaclim_variables(ind_row_Imaclim,3));
 
         Table_Str_x2Exec(ind_list) = "x_"+list_variables4each_x(ind_list)+"="+"matrix("+strSTRUCT+"."+list_variables4each_x(ind_list)+", "+nb_xRow4CurrVariable+",1)"+";"
 
@@ -187,8 +187,8 @@ function [variables_value] = X2variables (Imaclim_variables, list_variables4X, x
     for ind_list = 1:nb_variables4X
 
         ind_row_Imaclim = find(Imaclim_variables==list_variables4X(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
 
         Curr_Xpart = x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1);
         current_variables =  matrix(Curr_Xpart,nb_RowCurrVariable,nb_ColCurrVariable);
@@ -208,11 +208,24 @@ function [variables_value] = X2variablesRuben (RowNumCsVDerivVarList, structNumD
         ind_row_Imaclim = RowNumCsVDerivVarList(ind_list)
         nb_RowCurrVariable = VarDimMat(ind_row_Imaclim-1,1);
         nb_ColCurrVariable = VarDimMat(ind_row_Imaclim-1,2);
+        
+        // Version scilab 5.5.2 - on semble modifier le structNumDerivVar(ind_list)-ième élément
+        //variables_value = setfield(structNumDerivVar(ind_list) , matrix( x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1) , nb_RowCurrVariable,nb_ColCurrVariable ) , variables_value );
 
-        setfield(structNumDerivVar(ind_list) , matrix( x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1) , nb_RowCurrVariable,nb_ColCurrVariable ) , variables_value );
+        // Version scilab 6 où on modifie le structNumDerivVar(ind_list)-ième élément
+        //indice = fieldnames(variables_value)(structNumDerivVar(ind_list))
+        //new_value = matrix( x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1) , nb_RowCurrVariable,nb_ColCurrVariable )
+        //variables_value(indice) = new_value
+        
+        // Version scilab 6 où on modifie le ind_list-ième élément
+        indice = fieldnames(variables_value)(ind_list)
+        new_value = matrix( x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1) , nb_RowCurrVariable,nb_ColCurrVariable )
+        variables_value(indice) = new_value
+        //variables_value(fieldnames(variables_value)(ind_list)) = matrix( x(prev_RowIndex:prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable-1) , nb_RowCurrVariable,nb_ColCurrVariable )
 
         prev_RowIndex = prev_RowIndex+nb_RowCurrVariable*nb_ColCurrVariable ;
     end
+
 endfunction
 
 
@@ -226,10 +239,10 @@ function [variables_value] = indiv_x2varstruct (Imaclim_variables, list_variable
     for ind_list = 1:nb_variables4X
 
         ind_row_Imaclim = find(Imaclim_variables==list_variables4each_x(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
 
-        Curr_x = eval(x_name+list_variables4each_x(ind_list)+";");
+        Curr_x = evstr(x_name+list_variables4each_x(ind_list)+";");
 
         current_variables =  matrix(Curr_x,nb_RowCurrVariable,nb_ColCurrVariable);
         execstr("variables_value" + "." + list_variables4each_x(ind_list)+"=current_variables"+";")
@@ -245,10 +258,10 @@ function [variables_value] = indiv_x2variable (Imaclim_variables, x_name)
 
     variable = strsubst( x_name, "/^x_/","","r");
     ind_row_Imaclim = find(Imaclim_variables==variable);
-    nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-    nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+    nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+    nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
 
-    variables_value =  matrix(eval(x_name),nb_RowCurrVariable,nb_ColCurrVariable);
+    variables_value =  matrix(evstr(x_name),nb_RowCurrVariable,nb_ColCurrVariable);
 
 endfunction
 
@@ -279,7 +292,7 @@ function [Structure] = Variables2struct(list_Var)
     Table_Str2Exec = [];
 
     for elt=1:size(list_Var)
-        current_variables = eval (list_Var(elt));
+        current_variables = evstr (list_Var(elt));
         execstr("Structure" + "." +list_Var(elt)+"=current_variables"+";")
     end
 endfunction
@@ -380,17 +393,17 @@ function [Table_MixVar] = SubVar2Var(Imaclim_variables, list_Var, varargin);
 
     for elt = 1:length(list_Var)
         for i = 1:(j-1)
-            SubVarSuffix 	= eval("SubVar"+string(i)+"_Suffix");
+            SubVarSuffix 	= evstr("SubVar"+string(i)+"_Suffix");
             SubVarName 	= list_Var(elt)+SubVarSuffix ;
-            SubVarIndices	= eval("SubVar"+string(i)+"_Indices");
+            SubVarIndices	= evstr("SubVar"+string(i)+"_Indices");
 
             ind_row_Imaclim_Var = find( Imaclim_variables == list_Var(elt) );
-            nb_Row_Var = eval( Imaclim_variables(ind_row_Imaclim_Var,2) );
-            nb_Col_Var = eval( Imaclim_variables(ind_row_Imaclim_Var,3) );
+            nb_Row_Var = evstr( Imaclim_variables(ind_row_Imaclim_Var,2) );
+            nb_Col_Var = evstr( Imaclim_variables(ind_row_Imaclim_Var,3) );
 
             ind_row_Imaclim_SubVar = find( Imaclim_variables == SubVarName );
-            nb_Row_SubVar = eval( Imaclim_variables(ind_row_Imaclim_SubVar,2) );
-            nb_Col_SubVar = eval( Imaclim_variables(ind_row_Imaclim_SubVar,3) );
+            nb_Row_SubVar = evstr( Imaclim_variables(ind_row_Imaclim_SubVar,2) );
+            nb_Col_SubVar = evstr( Imaclim_variables(ind_row_Imaclim_SubVar,3) );
 
             if (nb_Row_Var == nb_Row_SubVar) & (nb_Col_Var == nb_Col_SubVar) then
                 disp("error: dimensions of "+list_Var(elt)+" and "+SubVarName+" are identical");
@@ -424,8 +437,8 @@ function Structure=AddOnesValue2struct (Imaclim_variables, list_varTyp, Structur
     for ind_list = 1:nb_variables
 
         ind_row_Imaclim = find(Imaclim_variables==list_varTyp(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
         current_variables = ones(nb_RowCurrVariable,nb_ColCurrVariable);
         execstr("Structure" + "." +list_varTyp(ind_list)+"=current_variables"+";")
 
@@ -444,8 +457,8 @@ function Structure=AddZerosValue2struct (Imaclim_variables, list_varTyp, Structu
     for ind_list = 1:nb_variables
 
         ind_row_Imaclim = find(Imaclim_variables==list_varTyp(ind_list));
-        nb_RowCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,2));
-        nb_ColCurrVariable = eval(Imaclim_variables(ind_row_Imaclim,3));
+        nb_RowCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,2));
+        nb_ColCurrVariable = evstr(Imaclim_variables(ind_row_Imaclim,3));
         current_variables = zeros(nb_RowCurrVariable,nb_ColCurrVariable);
         execstr("Structure" + "." +list_varTyp(ind_list)+"=current_variables"+";")
 

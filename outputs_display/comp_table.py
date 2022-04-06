@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+import sys
+sys.path.append('/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display')
+
 
 import os
 import read_outputs as ro
 import csv
+
 
 # TODO : def une fonction time_name et fold_name à personnaliser pour les cases du tableau
 # TODO : repérer les folders par des *indices* uniques et pas par leurs noms
@@ -179,7 +183,7 @@ if __name__ == '__main__':
 #
     working_file2, lines_to_remove2, save_path2 = data_macro_ratio()
     output_table(working_file2, lines_to_remove2, save_path2)
-    
+
     working_file3, lines_to_remove3, save_path3 = data_macro_abs()
     output_table(working_file3, lines_to_remove3, save_path3)
 
