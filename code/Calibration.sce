@@ -1858,16 +1858,12 @@ function [const_Carbon_Tax_rate_M] =fcalibCarbonTaxM_Const_1(x_Carbon_Tax_rate_M
 
     const_Carbon_Tax_rate_C = matrix(y1, nb_Sectors, 1);
 
+    // Renvoyer const_Carbon_Tax_rate_C ou const_Carbon_Tax_rate_M' ??
+    const_Carbon_Tax_rate_M = const_Carbon_Tax_rate_M'
+
 endfunction
 
-disp(fcalibCarbonTaxM_Const_1);
-disp(x_Carbon_Tax_rate_M);
-disp(list(fcalibCarbonTaxM_Const_1, Carbon_Tax_M, M, Emission_Coef_M, Index_Imaclim_VarCalib));
-pause
-//[x_Carbon_Tax_rate_M, const_Carbon_Tax_rate_M, info_calib_CarbTaxRateM] = fsolve(x_Carbon_Tax_rate_M, list(fcalibCarbonTaxM_Const_1, Carbon_Tax_M, M, Emission_Coef_M, Index_Imaclim_VarCalib));
-
-Carbon_Tax_rate_M = 10^-11;
-const_Carbon_Tax_rate_M = 10^-11;
+[x_Carbon_Tax_rate_M, const_Carbon_Tax_rate_M, info_calib_CarbTaxRateM] = fsolve(x_Carbon_Tax_rate_M, list(fcalibCarbonTaxM_Const_1, Carbon_Tax_M, M, Emission_Coef_M, Index_Imaclim_VarCalib));
 
 if norm(const_Carbon_Tax_rate_M) > sensib
     error( "review calib_Carbon_Tax_rate_M")
