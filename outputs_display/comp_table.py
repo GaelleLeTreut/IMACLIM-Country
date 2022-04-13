@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+
+# Paragraphe specifique a Jean Wolff
+import sys
+path = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display'
+sys.path.append(path)
+os.chdir(path)
+
 import read_outputs as ro
 import csv
 
