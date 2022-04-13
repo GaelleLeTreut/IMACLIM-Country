@@ -5,7 +5,7 @@ import csv
 
 # String data
 
-outputs_fold = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display/To_Display/'
+outputs_fold = 'To_Display/'
 time_prefix = 'Time_'
 
 def read_output_file(file_to_read):

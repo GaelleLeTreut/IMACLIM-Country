@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display')
-
 
 import os
 import read_outputs as ro
 import csv
-
 
 # TODO : def une fonction time_name et fold_name à personnaliser pour les cases du tableau
 # TODO : repérer les folders par des *indices* uniques et pas par leurs noms
