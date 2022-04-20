@@ -316,6 +316,16 @@ if find(fieldnames(Proj_Vol) == 'Capital_consumption') <> [] then
 	end
 end
 
+
+if find(fieldnames(Proj_Vol)=="I") <> []
+	if ~Invest_matrix & Proj_Vol.I.apply_proj
+		warning("Projection of Ii column canceled: no investment matrix described")
+		Proj_Vol.I.apply_proj= %F ;
+		
+	end
+end
+
+
 // HH consumption projection in case HH != 1 and size(Proj_Vol.C.val,2) == 1
 // prorata distribution on BY data
 // if ~(nb_Households == size(Proj_Vol.C.val,2))
