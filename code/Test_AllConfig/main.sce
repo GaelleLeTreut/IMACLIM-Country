@@ -4,8 +4,12 @@
 // Initialization *
 // -------------- *
 
+/// Selection of def of test files
+// def_test_file = 'def_of_tests.sce';
+def_test_file = 'def_of_MacroIncFRA.sce';
+
 // Enable TEST_MODE in ImaclimS.sce
-TEST_MODE = %F;
+TEST_MODE = %T;
 
 // Parameters of the tests
 testing.countMax = 3;
@@ -43,7 +47,7 @@ mkdir(NOT_WORKING + RunName);
 getd(TEST_FULLCODE);
 
 // Data for the tests
-exec(TEST_FULLCODE + 'def_of_tests.sce');
+exec(TEST_FULLCODE + def_test_file);
 
 
 // ------------- *
