@@ -208,8 +208,7 @@ for column = 1:nb_SectorsAGG
     initial_valueAGG.M_value(:,column) = sum(initial_value.M_value(:,all_IND(column)));
     initial_valueAGG.Y_value(:,column) = sum(initial_value.Y_value(:,all_IND(column)));
     initial_valueAGG.Output(:,column) = sum(initial_value.Output(:,all_IND(column)));
-    initial_valueAGG.Labour(:,column) = sum(initial_value.Labour(:,all_IND(column)));
-
+    initial_valueAGG.Labour(:,column) = sum(initial_value.Labour(:,all_IND(column)),"c");
     initial_valueAGG.Value_Added(:,column) = sum(initial_value.Value_Added(:,all_IND(column)),"c");
     initial_valueAGG.Margins(:,column) = sum(initial_value.Margins(:,all_IND(column)),"c");
     initial_valueAGG.MarginsDOM(:,column) = sum(initial_value.MarginsDOM(:,all_IND(column)),"c");

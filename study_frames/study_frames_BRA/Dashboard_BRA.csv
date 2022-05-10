@@ -14,15 +14,17 @@ SystemOpt_Resol;SystemOpt_Ref_BRA
 study;Static_RunBiics
 // TELL if you want a capital dynamics;
 Capital_Dynamics;%F
+// TELL if you want labour_desag;
+Labour_desag;%T
 // SELECT option for Capital_Dynamics;
 // Exogenous share of investment to GDP or unemployment;
 // Exo_ShareI_GDP;%T
 // Exo_u_tot;%F
 // Exo_Kstock_Adj;%T
 // SELECT an aggregation sector profil by uncomment it;
-// AGG_type;
+AGG_type;
 // AGG_type;AGG_PMR19
-AGG_type;AGG_BIICS19
+// AGG_type;AGG_BIICS19
 // AGG_type;AGG_EnComp
 // SELECT an households dissagregation profil by uncomment it;
 // H_DISAGG;HH1
@@ -56,8 +58,8 @@ World_prices;True
 // Scenario;PMR_CP4
 // Scenario;PMR_CP5
 // Scenario;PMR_CP6
-// Scenario;BIICS_CPS
-Scenario;BIICS_DDS
+Scenario;BIICS_CPS
+// Scenario;BIICS_DDS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
@@ -65,13 +67,14 @@ CO2_footprint;False
 Output_files;%T
 Output_prints;%F
 // SELECT the uses of carbon tax revenues;
-// Recycling_Option;
-Recycling_Option;LabTax
+Recycling_Option;
+// Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
 // Recycling_Option;LabTax_LumpSumHH
 // Select a closure of public finance while recycling carbon revenues;
 // ClosCarbRev;CstNetLend
-ClosCarbRev;AllLabTax
+ClosCarbRev;ExoNetLend
+// ClosCarbRev;AllLabTax
 Carbon_BTA;%F
 CarbonTaxDiff;%F

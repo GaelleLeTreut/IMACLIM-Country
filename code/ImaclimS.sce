@@ -277,6 +277,10 @@ if Invest_matrix then
     exec("Invest_Desag.sce");
 end
 
+if Labour_desag then
+    exec("Labour_Desag.sce");
+end
+
 //Execute agreagation.sce file if Index_SectorsAGG is defined
 if AGG_type <> ""
     exec("Aggregation.sce");
