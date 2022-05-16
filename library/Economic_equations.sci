@@ -1736,6 +1736,16 @@ function [y] = RevenueRecycling_Const_2(Labour_Tax, Labour_Tax_rate, Labour_Tax_
 			y1 = NetLending(Indice_Government) - BY.NetLending(Indice_Government)*(GDP/BY.GDP) ;
 			y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
 		end
+		
+	elseif ClosCarbRev=="ExoNetLend"
+		if Recycling_Option=="PublicDeficit"|Recycling_Option==""
+			 y1 = Labour_Tax_Cut - 0 ;
+			 y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+		else 
+			//Part of remaining revenues from carbon tax for labour tax reduction under Public deficit constant 
+			y1 = NetLending(Indice_Government) - GDP*Exo_NetLendtoGDP_Gov ;
+			y1(1, 1+$ ) = AdjRecycle - BY.AdjRecycle;
+		end
 
     elseif ClosCarbRev=="CstPubDebt"
         if Recycling_Option=="PublicDeficit"|Recycling_Option==""
