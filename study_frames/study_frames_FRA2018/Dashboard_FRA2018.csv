@@ -27,8 +27,8 @@ Exo_Kstock_Adj;%F
 // AGG_type;AGG_17TME
 AGG_type;AGG_18TME
 // SELECT an households dissagregation profil by uncomment it;
-H_DISAGG;HH1
-// H_DISAGG;H10
+// H_DISAGG;HH1
+H_DISAGG;H10
 // H_DISAGG;L5
 // SELECT the resolution mode;
 // Resol_Mode;Static_comparative
@@ -46,8 +46,8 @@ Labour_product;True
 X_nonEnerg;True
 World_prices;True
 // SELECT the scenario to run (soft_linking);
-Scenario;RefBC
-// Scenario;
+// Scenario;RefBC
+Scenario;
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False

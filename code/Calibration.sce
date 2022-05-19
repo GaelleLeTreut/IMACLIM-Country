@@ -1436,6 +1436,8 @@ if Country<>"Brasil"
     function [const_PensBenef_param] =fcal_PensBenef_Const_1(x_Pension_Benefits_param, Pension_Benefits, NetWage_variation, GDP, CPI, Population, Imaclim_VarCalib)
         Pension_Benefits_param= indiv_x2variable(Imaclim_VarCalib, "x_Pension_Benefits_param");
         const_PensBenef_param = Pension_Benefits_Const_1(Pension_Benefits, NetWage_variation, Pension_Benefits_param, GDP, CPI, Population)
+        // Ajout de cette ligne pour scilab 6 - pas sur du sens
+        const_PensBenef_param = const_PensBenef_param'
     endfunction
 
     x_Pension_Benefits_param = 1e6.*ones(1,nb_Households);
