@@ -1,5 +1,3 @@
-Row;Construction;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Composite;Construction
-Row;ChemicalPharma;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;ChemicalPharma;ChemicalPharma
 Aggregation_type;-;-;-;-;-;AGG_4SecB;AGG_17TME;AGG_18TME
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy;Oil;Oil
 Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Natural_gas
