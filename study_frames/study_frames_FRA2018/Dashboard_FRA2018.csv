@@ -45,6 +45,9 @@ Demographic_shift;True
 Labour_product;True
 X_nonEnerg;True
 World_prices;True
+// SELECT an Capital Flow representation by uncomment it;
+// Invest_matrix;%F
+Invest_matrix;%T
 // SELECT the scenario to run (soft_linking);
 // Scenario;RefBC
 Scenario;
