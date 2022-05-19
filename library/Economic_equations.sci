@@ -2833,6 +2833,15 @@ function [y] = Capital_Cost_Const_1(pK, pI, I, pRental) ;
 	if ~Capital_Dynamics
 		if Invest_matrix then
 			y = pK' - (sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r"))';
+
+			// Des éléments de sum(I,"r") sont nuls, alors la division ci-dessus
+			// donne des NaN dans y. On remplace ces NaN par des 0.
+			for line = 1:nb_Sectors
+				if isnan(y(line)) then
+					y(line) = 0;
+				end
+			end
+
 		else 
 			y = pK' - sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) ;
 		end
