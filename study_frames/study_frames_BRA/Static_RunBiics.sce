@@ -4,6 +4,20 @@
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 
+////////////////////////////////////
+///// Modification of Household saving rate 
+////////////////////////////////////
+// Exogenous info
+Table_Hsav_rate = ["Saving_rate",2015,2020,2025,2030,2035,2040,2045,2050;
+"HH1",-0.566,-0.4,-0.3,-0.25,-0.18,-0.18,-0.18,-0.1
+"HH2",-0.102,-0.04,0,0,0,0.03,0.03,0.04
+"HH3",0.064,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+"HH4",0.324,0.3,0.3,0.3,0.3,0.3,0.3,0.3];
+
+if H_DISAGG=="H4"
+parameters.Household_saving_rate = eval(Table_Hsav_rate(2:$,time_step+2)');
+end
+
 
 //////////////////////////////////////////////////////
 // 2030 - 25 dólares ; 2040 - 50 ; 2050 - 100
@@ -12,10 +26,10 @@
 
 Carbon_Tax_rate2025 = 12.5*3.15e3; // reais*cambio / tCO2 
 Carbon_Tax_rate2030 = 25*3.15e3;
-Carbon_Tax_rate2035 = 37.5*3.15e3;
-Carbon_Tax_rate2040 = 50*3.15e3;
-Carbon_Tax_rate2045 = 75*3.15e3;
-Carbon_Tax_rate2050 = 100*3.15e3;
+Carbon_Tax_rate2035 = 35*3.15e3;
+Carbon_Tax_rate2040 = 45*3.15e3;
+Carbon_Tax_rate2045 = 55*3.15e3;
+Carbon_Tax_rate2050 = 65*3.15e3;
 
 //////////////////////////////////////////////////////
 ///////definição dos períodos
@@ -88,3 +102,14 @@ if ( find("kappa"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.kappa.intens
 	end
 end 
 
+////////////////////////////////////
+///// Modification of Net Lending to GDP of Government Rate for DDS (based on the CPS) 
+////////////////////////////////////
+if  Scenario=="BIICS_DDS"
+
+Table_NetLendtoGDP_Gov= ["Year",2015,2020,2025,2030,2035,2040,2045,2050
+"Net Lending to GDP of Gov ",-0.077806299,-0.085662334,-0.087964933,-0.095561873,-0.101852334,-0.112052785,-0.12204064,-0.138155503];
+
+Exo_NetLendtoGDP_Gov = eval(Table_NetLendtoGDP_Gov(2,time_step+2)');
+
+end
