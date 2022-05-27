@@ -2714,10 +2714,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		
 			y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 			
-				// so far, only to inform the electric vector of investments
 				if is_projected('I') then
-					y1(:,Indice_ElecS) = apply_proj_eq(y1(:,Indice_ElecS), I(:,Indice_ElecS), 'I(:,Indice_ElecS)');
-					y1(:,Indice_ConstruS) = apply_proj_eq(y1(:,Indice_ConstruS), I(:,Indice_ConstruS), 'I(:,Indice_ConstruS)');
+					y1 = apply_proj_eq(y1, I, 'I');
 				end
 	
 			y = matrix(y1, -1 , 1)
@@ -2737,10 +2735,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		//Ventilated by BY Shares
 		y1 = I - ( ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I );
 		
-		// so far, only to inform the electric vector of investments
 		if is_projected('I') then
-				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
-				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I');
+				I = apply_proj_val(I, 'I');
 			end
 		
 			
@@ -2759,12 +2755,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 
-			// so far, only to inform the electric and the property business vectors of investments
 			if is_projected('I') then
-				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
-				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I'); // We use Construction instead of Property_business for the moment
-				//I(:,Indice_Property_business) = apply_proj_val(I(:,Indice_Property_business), 'I');
-
+				I = apply_proj_val(I, 'I');
 			end	
 
 		else
@@ -2783,11 +2775,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// I = "beta" Io 
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
-			// so far, only to inform the electric and the property business vectors of investments
 			if is_projected('I') then
-				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
-				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I'); // We use Construction instead of Property_business for the moment
-				//I(:,Indice_Property_business) = apply_proj_val(I(:,Indice_Property_business), 'I');
+				I = apply_proj_val(I, 'I');
 			end	
 	end
 

@@ -6,8 +6,8 @@ function test_proj(var_name)
     if (var_name <> 'I') & (var_name <> 'CO2Emis_C') & (var_name <> 'CO2Emis_IC') & (var_name <> 'M_Y') then
         difference = d(var_name) - Proj_Vol(var_name).val;
     elseif var_name == 'I'
-        if ~Invest_matrix then
-            difference = d(var_name)(:,Indice_ElecS) - Proj_Vol(var_name).val;
+        if Country == 'Argentina' then // The files .csv for the investment doesn't have the same format for Argentine and France
+            difference = d(var_name)(:,Indice_Elec) - Proj_Vol(var_name).val;
         else
             difference = d(var_name) - Proj_Vol(var_name).val;
         end
