@@ -234,7 +234,8 @@ end
 //////SOLVEUR
 /////////////////////////////////////////////////
 count        = 0;
-countMax     = 30;
+// countMax     = 30;
+countMax     = 1;
 vMax         = 10000000;
 vBest        = 10000000;
 sensib       = 1e-5;

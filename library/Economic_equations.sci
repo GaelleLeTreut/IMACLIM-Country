@@ -2716,7 +2716,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 			
 				// so far, only to inform the electric vector of investments
 				if is_projected('I') then
-					y1(:,Indice_Elec) = apply_proj_eq(y1(:,Indice_Elec), I(:,Indice_Elec), 'I(:,Indice_Elec)');
+					y1(:,Indice_ElecS) = apply_proj_eq(y1(:,Indice_ElecS), I(:,Indice_ElecS), 'I(:,Indice_ElecS)');
+					y1(:,Indice_ConstruS) = apply_proj_eq(y1(:,Indice_ConstruS), I(:,Indice_ConstruS), 'I(:,Indice_ConstruS)');
 				end
 	
 			y = matrix(y1, -1 , 1)
@@ -2738,7 +2739,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		
 		// so far, only to inform the electric vector of investments
 		if is_projected('I') then
-				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
+				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I');
 			end
 		
 			
@@ -2756,11 +2758,15 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-	
-				// so far, only to inform the electric vector of investments
-				if is_projected('I') then
-					I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
-				end
+
+			// so far, only to inform the electric and the property business vectors of investments
+			if is_projected('I') then
+				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
+				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I'); // We use Construction instead of Property_business for the moment
+				//I(:,Indice_Property_business) = apply_proj_val(I(:,Indice_Property_business), 'I');
+
+			end	
+
 		else
 			I = Betta * sum( kappa .* Y' );
 		end
@@ -2777,9 +2783,11 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// I = "beta" Io 
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
-			// so far, only to inform the electric vector of investments
+			// so far, only to inform the electric and the property business vectors of investments
 			if is_projected('I') then
-				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+				I(:,Indice_ElecS) = apply_proj_val(I(:,Indice_ElecS), 'I');
+				I(:,Indice_ConstruS) = apply_proj_val(I(:,Indice_ConstruS), 'I'); // We use Construction instead of Property_business for the moment
+				//I(:,Indice_Property_business) = apply_proj_val(I(:,Indice_Property_business), 'I');
 			end	
 	end
 
