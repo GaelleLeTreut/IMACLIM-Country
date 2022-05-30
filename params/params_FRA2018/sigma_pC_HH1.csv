@@ -21,11 +21,14 @@ Paper;-0.03
 Mining;-0.03
 Automobile;-0.03
 OthTranspEquip;-0.03
+OthEquip;-0.03
+Electronics;-0.03
+Food_industry;-0.03
+OthManuf;-0.03
 LandTransp;-0.03
 NavalTransp;-0.03
 AirTransp;-0.03
 Agri_Forestry;-0.03
 Fishing;-0.03
-Food_industry;-0.03
 Property_business;-0.03
 Comp;-0.03
