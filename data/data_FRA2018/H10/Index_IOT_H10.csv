@@ -1,4 +1,4 @@
-Aggregation_type;-;-;-;-;-;AGG_4SecB;AGG_19TME;AGG_22TME
+Aggregation_type;-;-;-;-;-;AGG_4SecB;AGG_18TME;AGG_22TME
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy;Oil;Oil
 Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Natural_gas
 Row;Crude_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Coal_lignite;Coal_lignite
@@ -30,7 +30,7 @@ Row;NavalTransp;Commodities;NonEnerSect;HybridCommod;-;AllComp;NavalTransp;Naval
 Row;AirTransp;Commodities;NonEnerSect;HybridCommod;-;AllComp;AirTransp;AirTransp
 Row;Agri_Forestry;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;AgriForest_Fish;AgriForest_Fish
 Row;Fishing;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;AgriForest_Fish;AgriForest_Fish
-Row;Property_business;Commodities;NonEnerSect;HybridCommod;-;AllComp;Property_business;Property_business
+Row;Property_business;Commodities;NonEnerSect;HybridCommod;-;AllComp;Compo;Property_business
 Row;Comp;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Compo
 Row;Labour_income;OthPart_IOT;Value_Added;-;-;-;-;-
 Row;Labour_Tax;OthPart_IOT;Value_Added;-;-;-;-;-
