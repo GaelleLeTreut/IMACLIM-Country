@@ -2724,9 +2724,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		
 			y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 			
-				// so far, only to inform the electric vector of investments
 				if is_projected('I') then
-					y1(:,Indice_Elec) = apply_proj_eq(y1(:,Indice_Elec), I(:,Indice_Elec), 'I(:,Indice_Elec)');
+					y1 = apply_proj_eq(y1, I, 'I');
 				end
 	
 			y = matrix(y1, -1 , 1)
@@ -2746,9 +2745,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 		//Ventilated by BY Shares
 		y1 = I - ( ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I );
 		
-		// so far, only to inform the electric vector of investments
 		if is_projected('I') then
-				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+				I = apply_proj_val(I, 'I');
 			end
 		
 			
@@ -2766,11 +2764,11 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
-	
-				// so far, only to inform the electric vector of investments
-				if is_projected('I') then
-					I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
-				end
+
+			if is_projected('I') then
+				I = apply_proj_val(I, 'I');
+			end	
+
 		else
 			I = Betta * sum( kappa .* Y' );
 		end
@@ -2787,9 +2785,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 		// I = "beta" Io 
 		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
 
-			// so far, only to inform the electric vector of investments
 			if is_projected('I') then
-				I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
+				I = apply_proj_val(I, 'I');
 			end	
 	end
 

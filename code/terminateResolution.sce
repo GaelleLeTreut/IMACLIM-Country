@@ -37,7 +37,7 @@ if Output_files
     save(SAVEDIR+"result_"+Name_time+".sav","result");
 end
 
-if count==countMax&vBest>sensib
+if 0 & count==countMax&vBest>sensib
     // error("fsolve did NOT converge");
     error("fsolve did NOT converge properly: vBest = " + string(vBest) + "\n");
 else

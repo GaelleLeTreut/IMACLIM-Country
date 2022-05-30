@@ -90,8 +90,9 @@ end
 
 proj_files = [
     'Capital_Cons_' + Scenario, ..
-    'Invest_Elec_' + Scenario, ..
-    'Labour_' + Scenario
+    'Invest_Elec_' + Scenario, .. // For Argentine
+    'Labour_' + Scenario, ..
+    'Invest_' + Scenario // For France
 ];
 
 to_transpose = [
@@ -124,6 +125,10 @@ for var = fieldnames(Proj_Vol)'
 		elseif Proj_Vol(var).file == 'IOT_CO2' then
             iot_co2emis = evstr('IOT_CO2_' + Scenario + '_' + string(time_step));
 
+        // To force the investment matrix
+        elseif Proj_Vol(var).file == 'Invest' then
+            mat_invest = evstr('Invest_' + Scenario + '_' + string(time_step));
+            
         elseif find(proj_files == Proj_Vol(var).file) then
                 
             Proj_Vol(var).data = evstr(Proj_Vol(var).file);
@@ -186,6 +191,25 @@ for var = fieldnames(Proj_Vol)'
                 end
             end
 
+        // Treatment for investment may need some changes
+        elseif Proj_Vol(var).file == 'Invest'
+            // IndexRow / IndexCol : Index of Invest_TimeStep
+            // Index_Commodities : aggregated commodities
+            // Index_CommoInit : desagregated commodities
+
+            // If Invest_TimeStep is not aggregated
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(mat_invest, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
+            // If Invest_TimeStep is aggregated
+            else
+                // Check that the aggregation is fine
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(mat_invest, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
+            
         elseif find(proj_files == Proj_Vol(var).file) <> [] then
             
 			    if proj_well_aggregated then

@@ -4,3 +4,4 @@ IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%
 X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%F;;%T
 M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%F;;%T
 Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_ElecS),list(1,Indice_NonEnerSect));%T;%T;%F
+I;"""Invest""";Index_Sectors_IC;list(list(1:nb_Sectors,Indice_ConstruS),list(1:nb_Sectors,Indice_ElecS));%T;;%T
