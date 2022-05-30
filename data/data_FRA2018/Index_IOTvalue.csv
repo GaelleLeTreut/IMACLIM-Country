@@ -21,10 +21,10 @@ Row;Paper;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Paper;Paper
 Row;Mining;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Compo
 Row;Automobile;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_transport;Auto_transport
 Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_transport;Auto_transport
-Row;OthEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Composite;OthEquip
-Row;Electronics;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Composite;Electronics
+Row;OthEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;OthEquip
+Row;Electronics;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Electronics
 Row;Food_industry;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Food_industry;Food_industry
-Row;OthManuf;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Composite;OthManuf
+Row;OthManuf;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;OthManuf
 Row;LandTransp;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;LandTransp;LandTransp
 Row;NavalTransp;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;NavalTransp;NavalTransp
 Row;AirTransp;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;AirTransp;AirTransp
