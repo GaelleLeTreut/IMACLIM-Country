@@ -1,7 +1,7 @@
-Row;Coal;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;-
-Row;CrudeOil;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;-
-Row;NaturalGas;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;-
-Row;FossilFuels;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;-
+Row;Coal;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;Coak
+Row;CrudeOil;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;Crudek
+Row;NaturalGas;Commodities;EnerSect;AllExceptComp;HybridCommod;PrimEnerSect;Naturk
+Row;FossilFuels;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;Fossilk
 Row;BioFuels;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;BioFuk
 Row;Electricity;Commodities;EnerSect;AllExceptComp;HybridCommod;FinEnerSect;Electk
 Row;PlantedForest;Commodities;NonEnerSect;AllExceptComp;HybridCommod;-;Plantk
