@@ -46,8 +46,8 @@ Labour_product;True
 X_nonEnerg;True
 World_prices;True
 // SELECT the scenario to run (soft_linking);
-// Scenario;RefBC
-Scenario;
+Scenario;RefBC
+// Scenario;
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
