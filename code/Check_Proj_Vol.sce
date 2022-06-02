@@ -26,7 +26,7 @@ function test_proj(var_name)
         zero = matrix(zero,1,-1);
 
         for z = zero
-            if 0 & abs(z) > err then
+            if abs(z) > err then
                 error("The projection of " + var_name + " did not go well");
             end
         end

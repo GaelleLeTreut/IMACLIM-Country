@@ -949,7 +949,7 @@ Err_balance_tol_temp = 10^-1;
 IC_temp = (abs(IC) > 10^-5).*IC;
 // Check after loading outputs
 for line  = 1:nb_Commodities
-    if 0 & abs(d.ERE_balance_val(line))>=Err_balance_tol_temp then
+    if abs(d.ERE_balance_val(line))>=Err_balance_tol_temp then
        error("The IOT output is not well balanced , something did not go well for the sector n°"+line+";Supply-Uses not balanced")
     end
 	
