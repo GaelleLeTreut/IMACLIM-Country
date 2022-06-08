@@ -33,6 +33,9 @@
 //////  knowledge of the CeCILL license and that you accept its terms.
 //////////////////////////////////////////////////////////////////////////////////
 
+// Number of decimals in the csv files that will be saved
+decimals = 10;
+
 if  Country=="Brasil" then
     money ="reais";
     moneyTex="R\dollar";
@@ -689,22 +692,22 @@ end
 /////////////////////////////////// BUILDING TABLES FOR outputs////////////////////////////////////////
 /////////////////////////////////////////////////
 //// Prices
-Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , 1);
-Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , 1);
-Prices.evoBY = buildPriceT( evol_BY.pIC-1 , evol_BY.pFC-1, evol_BY.w-1, evol_BY.pL-1, evol_BY.pK-1, evol_BY.pY-1, evol_BY.pM-1, evol_BY.p-1, 100 , 1);
+Prices.ini = buildPriceT( ini.pIC , ini.pFC, ini.w, ini.pL, ini.pK, ini.pY, ini.pM, ini.p, 1 , decimals);
+Prices.run = buildPriceT(  d.pIC , d.pFC, d.w, d.pL, d.pK, d.pY, d.pM, d.p, 1 , decimals);
+Prices.evoBY = buildPriceT( evol_BY.pIC-1 , evol_BY.pFC-1, evol_BY.w-1, evol_BY.pL-1, evol_BY.pK-1, evol_BY.pY-1, evol_BY.pM-1, evol_BY.p-1, 100 , decimals);
 
 if time_step ==1
 	Prices.evo = Prices.evoBY ;
 
 elseif time_step >1 
 
-	Prices.evo = buildPriceT( evol.pIC-1 , evol.pFC-1, evol.w-1, evol.pL-1, evol.pK-1, evol.pY-1, evol.pM-1, evol.p-1, 100 , 1);
+	Prices.evo = buildPriceT( evol.pIC-1 , evol.pFC-1, evol.w-1, evol.pL-1, evol.pK-1, evol.pY-1, evol.pM-1, evol.p-1, 100 , decimals);
 	if  Country== 'Argentina'
-		Prices.evo15 = buildPriceT( evol_2015.pIC-1 , evol_2015.pFC-1, evol_2015.w-1, evol_2015.pL-1, evol_2015.pK-1, evol_2015.pY-1, evol_2015.pM-1, evol_2015.p-1, 100 , 1);
+		Prices.evo15 = buildPriceT( evol_2015.pIC-1 , evol_2015.pFC-1, evol_2015.w-1, evol_2015.pL-1, evol_2015.pK-1, evol_2015.pY-1, evol_2015.pM-1, evol_2015.p-1, 100 , decimals);
 	end
 	
 	if  Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		Prices.evo18 = buildPriceT( evol_2018.pIC-1 , evol_2018.pFC-1, evol_2018.w-1, evol_2018.pL-1, evol_2018.pK-1, evol_2018.pY-1, evol_2018.pM-1, evol_2018.p-1, 100 , 1);
+		Prices.evo18 = buildPriceT( evol_2018.pIC-1 , evol_2018.pFC-1, evol_2018.w-1, evol_2018.pL-1, evol_2018.pK-1, evol_2018.pY-1, evol_2018.pM-1, evol_2018.p-1, 100 , decimals);
 	end
 	
 end
@@ -713,21 +716,21 @@ end
 /////////////////////////////////////////////////
 // Technical Coefficient
 
-TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , 1);
-TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , 1);
-TechCOef.evoBY = buildTechCoefT( evol_BY.alpha-1, evol_BY.lambda-1, evol_BY.kappa-1, 100 , 1);
+TechCOef.ini = buildTechCoefT( ini.alpha, ini.lambda, ini.kappa, 1 , decimals);
+TechCOef.run = buildTechCoefT(  d.alpha, d.lambda, d.kappa, 1 , decimals);
+TechCOef.evoBY = buildTechCoefT( evol_BY.alpha-1, evol_BY.lambda-1, evol_BY.kappa-1, 100 , decimals);
 
 if time_step ==1
 	TechCOef.evo = TechCOef.evoBY ;
 
 elseif time_step >1 
 
-	TechCOef.evo = buildTechCoefT( evol.alpha-1, evol.lambda-1, evol.kappa-1, 100 , 1);
+	TechCOef.evo = buildTechCoefT( evol.alpha-1, evol.lambda-1, evol.kappa-1, 100 , decimals);
 	if Country== 'Argentina'
-		TechCOef.evo15 = buildTechCoefT( evol_2015.alpha-1, evol_2015.lambda-1, evol_2015.kappa-1, 100 , 1);
+		TechCOef.evo15 = buildTechCoefT( evol_2015.alpha-1, evol_2015.lambda-1, evol_2015.kappa-1, 100 , decimals);
 	end
 	if  Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		TechCOef.evo18 = buildTechCoefT( evol_2018.alpha-1, evol_2018.lambda-1, evol_2018.kappa-1, 100 , 1);
+		TechCOef.evo18 = buildTechCoefT( evol_2018.alpha-1, evol_2018.lambda-1, evol_2018.kappa-1, 100 , decimals);
 	end
 	
 	
@@ -738,22 +741,22 @@ end
 /////////////////////////////////////////////////
 // Emissions table
 
-CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,1);
-CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , 1);
-CO2Emis.evoBY = buildEmisT( evol_BY.CO2Emis_IC-1 , evol_BY.CO2Emis_C-1, evol_BY.CO2Emis_X-1 , evol_BY.CO2Emis_Sec-1 ,evol_BY.Tot_CO2Emis_IC - 1,evol_BY.Tot_CO2Emis_C-1,evol_BY.DOM_CO2-1,100 , 1);
+CO2Emis.ini = buildEmisT( ini.CO2Emis_IC , ini.CO2Emis_C , ini.CO2Emis_X ,ini.CO2Emis_Sec,ini.Tot_CO2Emis_IC,ini.Tot_CO2Emis_C,ini.DOM_CO2,1 ,decimals);
+CO2Emis.run = buildEmisT(   d.CO2Emis_IC ,  d.CO2Emis_C ,   d.CO2Emis_X ,d.CO2Emis_Sec,d.Tot_CO2Emis_IC,d.Tot_CO2Emis_C,d.DOM_CO2, 1 , decimals);
+CO2Emis.evoBY = buildEmisT( evol_BY.CO2Emis_IC-1 , evol_BY.CO2Emis_C-1, evol_BY.CO2Emis_X-1 , evol_BY.CO2Emis_Sec-1 ,evol_BY.Tot_CO2Emis_IC - 1,evol_BY.Tot_CO2Emis_C-1,evol_BY.DOM_CO2-1,100 , decimals);
 
 if time_step ==1
 	CO2Emis.evo = CO2Emis.evoBY ;
 
 elseif time_step >1 
 
-	CO2Emis.evo = buildEmisT( evol.CO2Emis_IC-1 , evol.CO2Emis_C-1, evol.CO2Emis_X-1 , evol.CO2Emis_Sec-1 ,evol.Tot_CO2Emis_IC - 1,evol.Tot_CO2Emis_C-1,evol.DOM_CO2-1,100 , 1);
+	CO2Emis.evo = buildEmisT( evol.CO2Emis_IC-1 , evol.CO2Emis_C-1, evol.CO2Emis_X-1 , evol.CO2Emis_Sec-1 ,evol.Tot_CO2Emis_IC - 1,evol.Tot_CO2Emis_C-1,evol.DOM_CO2-1,100 , decimals);
 	if Country== 'Argentina'
-		CO2Emis.evo15 = buildEmisT( evol_2015.CO2Emis_IC-1 , evol_2015.CO2Emis_C-1, evol_2015.CO2Emis_X-1 , evol_2015.CO2Emis_Sec-1 ,evol_2015.Tot_CO2Emis_IC - 1,evol_2015.Tot_CO2Emis_C-1,evol_2015.DOM_CO2-1,100 , 1);
+		CO2Emis.evo15 = buildEmisT( evol_2015.CO2Emis_IC-1 , evol_2015.CO2Emis_C-1, evol_2015.CO2Emis_X-1 , evol_2015.CO2Emis_Sec-1 ,evol_2015.Tot_CO2Emis_IC - 1,evol_2015.Tot_CO2Emis_C-1,evol_2015.DOM_CO2-1,100 , decimals);
 	end
 	
 	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		CO2Emis.evo18 = buildEmisT( evol_2018.CO2Emis_IC-1 , evol_2018.CO2Emis_C-1, evol_2018.CO2Emis_X-1 , evol_2018.CO2Emis_Sec-1 ,evol_2018.Tot_CO2Emis_IC - 1,evol_2018.Tot_CO2Emis_C-1,evol_2018.DOM_CO2-1,100 , 1);
+		CO2Emis.evo18 = buildEmisT( evol_2018.CO2Emis_IC-1 , evol_2018.CO2Emis_C-1, evol_2018.CO2Emis_X-1 , evol_2018.CO2Emis_Sec-1 ,evol_2018.Tot_CO2Emis_IC - 1,evol_2018.Tot_CO2Emis_C-1,evol_2018.DOM_CO2-1,100 , decimals);
 	end
 	
 end
@@ -762,22 +765,22 @@ end
 /////////////////////////////////////////////////
 // IOT in value
 
-io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax_IC, ini.Carbon_Tax_C, ini.Supply, ini.Uses,money_disp_adj , 1);
-io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax_IC, d.Carbon_Tax_C, d.Supply, d.Uses, money_disp_adj , 1);
-io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax_IC -1, evol_BY.Carbon_Tax_C -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , 1);
+io.ini = buildIot( ini.IC_value , ini.FC_value , ini.OthPart_IOT ,ini.Carbon_Tax_IC, ini.Carbon_Tax_C, ini.Supply, ini.Uses,money_disp_adj , decimals);
+io.run = buildIot( d.IC_value ,   d.FC_value ,   d.OthPart_IOT ,d.Carbon_Tax_IC, d.Carbon_Tax_C, d.Supply, d.Uses, money_disp_adj , decimals);
+io.evoBY = buildIot(evol_BY.IC_value-1 ,  evol_BY.FC_value-1 , evol_BY.OthPart_IOT-1 ,evol_BY.Carbon_Tax_IC -1, evol_BY.Carbon_Tax_C -1, evol_BY.Supply-1, evol_BY.Uses-1, 100 , decimals);
 
 if time_step ==1
 	io.evo = io.evoBY ;
 
 elseif time_step >1 
 
-	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax_IC -1, evol.Carbon_Tax_C -1, evol.Supply-1, evol.Uses-1, 100 , 1);
+	io.evo = buildIot(evol.IC_value-1 ,  evol.FC_value-1 , evol.OthPart_IOT-1 ,evol.Carbon_Tax_IC -1, evol.Carbon_Tax_C -1, evol.Supply-1, evol.Uses-1, 100 , decimals);
 	if Country== 'Argentina'
-		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax_IC -1, evol_2015.Carbon_Tax_C -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , 1);
+		io.evo15 = buildIot(evol_2015.IC_value-1 ,  evol_2015.FC_value-1 , evol_2015.OthPart_IOT-1 ,evol_2015.Carbon_Tax_IC -1, evol_2015.Carbon_Tax_C -1, evol_2015.Supply-1, evol_2015.Uses-1, 100 , decimals);
 	end
 	
 	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		io.evo18 = buildIot(evol_2018.IC_value-1 ,  evol_2018.FC_value-1 , evol_2018.OthPart_IOT-1 ,evol_2018.Carbon_Tax_IC -1, evol_2018.Carbon_Tax_C -1, evol_2018.Supply-1, evol_2018.Uses-1, 100 , 1);
+		io.evo18 = buildIot(evol_2018.IC_value-1 ,  evol_2018.FC_value-1 , evol_2018.OthPart_IOT-1 ,evol_2018.Carbon_Tax_IC -1, evol_2018.Carbon_Tax_C -1, evol_2018.Supply-1, evol_2018.Uses-1, 100 , decimals);
 	end
 end
 
@@ -785,23 +788,23 @@ end
 /////////////////////////////////////////////////
 // IO in quantities table
 
-ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , 1);
-ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , 1);
-ioQ.evoBY = buildIotQ(   evol_BY.IC-1 ,   evol_BY.FC-1 ,   evol_BY.OthQ-1 , 100 , 1);
+ioQ.ini = buildIotQ( ini.IC , ini.FC , ini.OthQ , 1 , decimals);
+ioQ.run = buildIotQ(   d.IC ,   d.FC ,   d.OthQ , 1 , decimals);
+ioQ.evoBY = buildIotQ(   evol_BY.IC-1 ,   evol_BY.FC-1 ,   evol_BY.OthQ-1 , 100 , decimals);
 
 if time_step ==1
 	ioQ.evo = ioQ.evoBY ;
 
 elseif time_step >1 
 
-	ioQ.evo = buildIotQ(   evol.IC-1 ,   evol.FC-1 ,   evol.OthQ-1 , 100 , 1);
+	ioQ.evo = buildIotQ(   evol.IC-1 ,   evol.FC-1 ,   evol.OthQ-1 , 100 , decimals);
 
 		if Country== 'Argentina'
-			ioQ.evo15 = buildIotQ(   evol_2015.IC-1 ,   evol_2015.FC-1 ,   evol_2015.OthQ-1 , 100 , 1);
+			ioQ.evo15 = buildIotQ(   evol_2015.IC-1 ,   evol_2015.FC-1 ,   evol_2015.OthQ-1 , 100 , decimals);
 		end
 		
 		if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-			ioQ.evo18 = buildIotQ(   evol_2018.IC-1 ,   evol_2018.FC-1 ,   evol_2018.OthQ-1 , 100 , 1);
+			ioQ.evo18 = buildIotQ(   evol_2018.IC-1 ,   evol_2018.FC-1 ,   evol_2018.OthQ-1 , 100 , decimals);
 		end
 end
 
@@ -809,22 +812,22 @@ end
 /////////////////////////////////////////////////
 // Economic account table
 
-ecoT.ini = buildEcoTabl(ini.Ecotable , money_disp_adj , 1);
-ecoT.run = buildEcoTabl(d.Ecotable , money_disp_adj , 1);
-ecoT.evoBY = buildEcoTabl(evol_BY.Ecotable-1 ,100 , 1);
+ecoT.ini = buildEcoTabl(ini.Ecotable , money_disp_adj , decimals);
+ecoT.run = buildEcoTabl(d.Ecotable , money_disp_adj , decimals);
+ecoT.evoBY = buildEcoTabl(evol_BY.Ecotable-1 ,100 , decimals);
 
 if time_step ==1
 	ecoT.evo = ecoT.evoBY ;
 
 elseif time_step >1 
-ecoT.evo = buildEcoTabl(evol.Ecotable-1 ,100 , 1);
+ecoT.evo = buildEcoTabl(evol.Ecotable-1 ,100 , decimals);
 
 	if Country== 'Argentina'
-		ecoT.evo15 = buildEcoTabl(evol_2015.Ecotable-1 ,100 , 1);
+		ecoT.evo15 = buildEcoTabl(evol_2015.Ecotable-1 ,100 , decimals);
 	end
 	
 	if Country_ISO=="FRA" & (Macro_nb =="CovRef" |Macro_nb =="CovLow" |Macro_nb =="CovHigh")
-		ecoT.evo18 = buildEcoTabl(evol_2018.Ecotable-1 ,100 , 1);
+		ecoT.evo18 = buildEcoTabl(evol_2018.Ecotable-1 ,100 , decimals);
 	end
 	
 end
