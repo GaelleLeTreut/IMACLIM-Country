@@ -16,7 +16,7 @@ for i = 1:size(simu_file,1)
         & (simu_file(i,1) <> '' | simu_file(i,2) <> '' | simu_file(i,3) <> '') ..
         then
         if lines_kept == [] then
-            lines_kept($,:) = simu_file(i,:);
+            lines_kept = simu_file(i,:);
         else
             lines_kept($+1,:) = simu_file(i,:);
         end

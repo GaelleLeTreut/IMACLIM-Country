@@ -107,7 +107,7 @@ test_fra_stat.System_Resol = ['Systeme_Static'];
 test_fra_stat.study = ['Static_RunChoices'];
 test_fra_stat.Optimization_Resol = ['%T'];
 test_fra_stat.SystemOpt_Resol = ['SystemOpt_Static'];
-test_fra_stat.AGG_type = ['AGG_SNBC17', 'AGG_IndEner', ..
+test_fra_stat.AGG_type = ['AGG_SNBC18', 'AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_stat.H_DISAGG = ['HH1', 'H10'];
 test_fra_stat.Recycling_Option = ['PublicDeficit', 'LabTax'];
@@ -122,7 +122,7 @@ test_fra_homo.System_Resol = ['Systeme_ProjHomothetic'];
 test_fra_homo.Optimization_Resol = ['%T'];
 test_fra_homo.SystemOpt_Resol = ['SystemOpt_ProjHomo'];
 test_fra_homo.study = ['Recursive_RunChoices'];
-test_fra_homo.AGG_type = ['AGG_SNBC17','AGG_IndEner', ..
+test_fra_homo.AGG_type = ['AGG_SNBC18','AGG_IndEner', ..
 'AGG_MetMinEn', 'AGG_Ener1', 'AGG_Ener2', 'AGG_4Sec', 'AGG_3Sec', 'AGG_EnComp'];
 test_fra_homo.H_DISAGG = ['HH1', 'H10'];
 test_fra_homo.Macro_nb = ['NDC','2deg'];
@@ -133,7 +133,7 @@ france_homo = new_country(name_fra, iso_fra, test_fra_homo);
 test_fra_scen.System_Resol = ['Systeme_Static'];
 test_fra_scen.Optimization_Resol = ['%T'];
 test_fra_scen.SystemOpt_Resol = ['SystemOpt_Static'];
-test_fra_scen.AGG_type = ['AGG_SNBC17'];
+test_fra_scen.AGG_type = ['AGG_SNBC18'];
 test_fra_scen.Scenario = ['AME_desag', 'AMS_desag'];
 test_fra_scen.Macro_nb = ['NDC','2deg'];
 test_fra_scen.World_prices = ['True','False'];
