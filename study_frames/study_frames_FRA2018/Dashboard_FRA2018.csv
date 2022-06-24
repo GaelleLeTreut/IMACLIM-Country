@@ -34,10 +34,12 @@ H_DISAGG;HH1
 // Resol_Mode;Static_comparative
 Resol_Mode;Dynamic_projection
 // SELECT the number of iteration (Default=1);
-Nb_Iter;2
+Nb_Iter;3
 // SELECT a Macro framework to run;
 // Macro_nb;
-Macro_nb;RefBC
+// Macro_nb;RefBC
+Macro_nb;AME
+// Macro_nb;AMS
 // Macro_nb;NDC
 // Macro_nb;Cov
 // SELECT which shock from the Macro framework you want to apply ;
@@ -49,7 +51,9 @@ World_prices;True
 // Invest_matrix;%F
 Invest_matrix;%T
 // SELECT the scenario to run (soft_linking);
-Scenario;RefBC
+// Scenario;RefBC
+Scenario;AME
+// Scenario;AMS
 // Scenario;
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
