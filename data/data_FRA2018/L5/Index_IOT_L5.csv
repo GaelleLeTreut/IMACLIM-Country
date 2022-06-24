@@ -16,6 +16,7 @@ Row;NonFerrousMetals;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;NonFerrou
 Row;Cement;Commodities;NonEnerSect;HybridCommod;-;AllComp;Cement;Cement
 Row;OthMin;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;OthMin;OthMin
 Row;Construction;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Construction;Construction
+Row;CivilEngineering;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Construction;Construction
 Row;ChemicalPharma;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;ChemicalPharma;ChemicalPharma
 Row;Paper;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Paper;Paper
 Row;Mining;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Compo
@@ -57,6 +58,7 @@ Row;SpeMarg_NonFerrousMetals;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_Cement;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_OthMin;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_Construction;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
+Row;SpeMarg_CivilEngineering;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_ChemicalPharma;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_Paper;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
 Row;SpeMarg_Mining;OthPart_IOT;SpeMarg;SpeMarg_IC;-;-;-;-
@@ -103,6 +105,7 @@ Column;NonFerrousMetals;Sectors;-;-;-;-;-;-
 Column;Cement;Sectors;-;-;-;-;-;-
 Column;OthMin;Sectors;-;-;-;-;-;-
 Column;Construction;Sectors;-;-;-;-;-;-
+Column;CivilEngineering;Sectors;-;-;-;-;-;-
 Column;ChemicalPharma;Sectors;-;-;-;-;-;-
 Column;Paper;Sectors;-;-;-;-;-;-
 Column;Mining;Sectors;-;-;-;-;-;-
