@@ -58,8 +58,8 @@ World_prices;True
 // Scenario;PMR_CP4
 // Scenario;PMR_CP5
 // Scenario;PMR_CP6
-// Scenario;BIICS_CPS
-Scenario;BIICS_DDS
+ Scenario;BIICS_CPS
+//Scenario;BIICS_DDS
 // TELL if you want to realise a carbon footprint analysis;
 // CO2_footprint;True
 CO2_footprint;False
@@ -68,10 +68,10 @@ Output_files;%T
 Output_prints;%T
 // SELECT the uses of carbon tax revenues;
 // Recycling_Option;
-// Recycling_Option;LabTax
+Recycling_Option;LabTax
 // Recycling_Option;LumpSumHH
 // Recycling_Option;ExactRestitution
-Recycling_Option;LabTax_LumpSumHH
+// Recycling_Option;LabTax_LumpSumHH
 // Select a closure of public finance while recycling carbon revenues;
 // ClosCarbRev;CstNetLend
 ClosCarbRev;ExoNetLend
