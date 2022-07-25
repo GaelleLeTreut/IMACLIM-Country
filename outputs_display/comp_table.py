@@ -201,3 +201,26 @@ if __name__ == '__main__':
     
 #    working_file2, lines_to_remove2, save_path2 = data_macro_2015()
 #    output_table(working_file2, lines_to_remove2, save_path2)
+
+
+# ON EXTRAIT LES QUELQUES VALEURS QUI NOUS INTERESSENT DU FULL TEMPLATE
+import pandas as pd
+df = pd.read_csv(save_path4, sep=';')
+
+# On renomme les colonnes et on met les années dans le bon ordre
+df = df.rename(columns={'Unnamed: 0': 'variables', 'AME':'2030', 'AME.1':'2040', 'AME.2':'2050', 'AME.3':'2018'})
+df = df[['variables', '2018', '2030', '2040', '2050']]
+
+var = ['Nominal GDP', 'Real GDP', 'Real C', 'Real G', 'Real I', 'Real X', 'Real M', 'Real Y', 'Labour ThousandFTE', 'Unemployment % points/BY']
+
+df = df[df['variables'].isin(var)]
+
+#df['a'] = df['a'].str.replace(',', '.').astype(float)
+
+for col in df.columns[1:]:
+    df[col] = df[col].str.replace('.', ',')
+
+save_path7 = 'MacroTables/donnees_pertinentes.csv'
+df.to_csv(save_path7, sep=';', index=False)
+
+
