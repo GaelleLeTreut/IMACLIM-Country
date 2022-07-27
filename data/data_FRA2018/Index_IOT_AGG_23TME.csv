@@ -1,4 +1,4 @@
-Row;Crude_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;Crude_oilS
+Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;Crude_oilS
 Row;Liquid_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;OilS
 Row;Gas_fuels;Commodities;EnerSect;HybridCommod;PrimEnerSect;GasS
 Row;Solid_fuels;Commodities;EnerSect;HybridCommod;PrimEnerSect;CoalS
