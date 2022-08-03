@@ -62,7 +62,7 @@ Row;Energy_Tax_FC;OthPart_IOT_AGG;Taxes;-;-;-
 Row;ClimPolCompensbySect;OthPart_IOT_AGG;Taxes;-;-;-
 Row;OtherIndirTax;OthPart_IOT_AGG;Taxes;-;-;-
 Column;Crude_oil;Sectors;NonSupplierSect;-;-;-
-Column;Liquid_fuels;Sectors;NonSupplierSect;-;-;-
+Column;Liquid_fuels;Sectors;-;-;-;-
 Column;Gas_fuels;Sectors;NonSupplierSect;-;-;-
 Column;Solid_fuels;Sectors;-;-;-;-
 Column;Elec_heating;Sectors;-;-;-;-
