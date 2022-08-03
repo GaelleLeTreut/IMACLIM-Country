@@ -2359,6 +2359,186 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
 endfunction
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+
+
+
+
+
+
+
+
+    // Bidouille de Jean
+    coefs2030 = [-0.313983198632388;0.0144102922878099;-0.0244849815946637;0.0163052506809181;-0.0724256012051915;-0.0261235797271872;0.0791985532853715;-0.126919312739347;-0.106174103124167;-0.0432335763914999;-0.0241252749084972;0.105919856068243;-0.0179597213880345;-0.106174103124167]
+    
+    coefs2040 = [-0.390226388941879;0.0393607562745867;-0.143786947185276;0.0200873468669311;-0.170774631029352;-0.143659985362804;0.102721617907681;-0.358437142331309;-0.237013948305757;-0.12309005992884;-0.0758139724622115;0.0960336935887101;-0.0362731395548294;-0.237013948305757]
+    
+    coefs2050 = [-0.442409483422024;0.0534680790942662;-0.301506333768045;0.0292763637092;-0.269030365851248;-0.258928957371103;0.11655507879719;-0.542125367863691;-0.350537010052853;0;-0.110649983492601;0.0817828284499629;-0.054027415703701;-0.350537010052853]
+    
+    if Scenario == "AME" then
+        // On force des kappas constants
+        kappa = BY.kappa;
+        
+    elseif Scenario == "AMS" then
+        // On force des kappas constants
+        kappa = BY.kappa;
+        
+    elseif 0 & Scenario == "AMS" then
+        
+        // Secteurs energetiques
+        nb_secteur_energ = 4;
+        kappa(1:nb_secteur_energ) = BY.kappa(1:nb_secteur_energ);
+        
+        // Secteurs non energetiques
+        vecteur_de_1 = ones(1 , nb_Sectors-nb_secteur_energ);
+        kappas_BY_non_energ = BY.kappa(nb_secteur_energ+1 : nb_Sectors)
+        
+        if time_step == 1 then
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.15 .* coefs2030') .* kappas_BY_non_energ;
+        elseif time_step == 2 then
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.15 .* coefs2040') .* kappas_BY_non_energ;
+        elseif time_step == 3 then
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.15 .* coefs2050') .* kappas_BY_non_energ;
+        end
+        
+    end
+    
+
+
+
+
+
+//
+//	if ~Capital_Dynamics
+//			
+//		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+//				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+//				(FPI .^(sigma./(1 - sigma)))) ;
+//		
+//		
+//		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
+//		if AdjustKappaOnly|AdjustKappaWithSubst
+//			
+//			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+//			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
+//				 
+//			if AdjustKappaOnly
+//			
+//					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
+//					
+//			elseif AdjustKappaWithSubst
+//				
+//					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
+//			end 
+//	
+//		end 
+//		
+//	elseif Capital_Dynamics
+//	// Unique price of capital
+//	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+//				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+//				(FPI .^(sigma./(1 - sigma)))) ;
+//
+//	end
+
+
+
+
+
+
+
+    
+    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+
+endfunction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //	Fixed technical coefficients
 function [alpha, lambda, kappa] = Technical_Coef_Val_2(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y) ;
     alpha 	=  BY.alpha ;
