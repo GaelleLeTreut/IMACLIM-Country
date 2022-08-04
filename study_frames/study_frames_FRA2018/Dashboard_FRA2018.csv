@@ -4,7 +4,7 @@ Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
 study;Static_RunChoices
 Capital_Dynamics;%F
-AGG_type;AGG_19TME
+AGG_type;AGG_23TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Nb_Iter;3
