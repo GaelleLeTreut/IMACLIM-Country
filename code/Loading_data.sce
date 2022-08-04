@@ -177,19 +177,7 @@ for col_row=1:size(Row_Column,"r")
         if H_DISAGG == "HH1" & Index_AGG_type <> "" & (sizeC_TableTemp-i) == (Index_AGG_type - 1)
             Index_SectorsAGG = list_varname;
             Ind_AGG = Index;
-
         end
-
-        // Creation of aggregation list sector
-        // SizeR_list_varname = size(list_varname,"r");
-        // for elt = 1:SizeR_list_varname-1
-        // if list_varname(elt) == ["Aggregation"]
-        // list_varname(elt) = [];
-        // Index(elt) =[];
-        // Index_SectorsAGG = list_varname;
-        // Ind_AGG = Index;
-        // end
-        // end
 
         SizeR_list_varname = size(list_varname,"r");
 
@@ -202,6 +190,46 @@ for col_row=1:size(Row_Column,"r")
             execstr("nb_"+list_varname(elt)+"=size(Index_Temp,1);")
         end
 
+    end
+end
+
+
+
+// The loop above update sectors' indices (and especially Indice_Compo) for each sectoral aggregation, finishing by AGG18.
+// Thus we do another iteration of the loop, but for the right aggregation column : we fix the value of i.
+// This is an unsustainable correction.
+if Index_AGG_type <> ""
+    i = sizeC_TableTemp - Index_AGG_type + 1; // i is set so the right AGG column is selected
+    [list_varnameTemp,Index] = unique(TableTemp(:,sizeC_TableTemp-i));
+    list_varname = [];
+
+    //Deleting "-" in list_varname
+    SizeR_list_varnameTemp = size(list_varnameTemp,"r");
+    for j=1:SizeR_list_varnameTemp
+
+        if list_varnameTemp(j) <> ["-"]
+            list_varname(1+$) = list_varnameTemp(j);
+        elseif list_varnameTemp(j) == ["-"]
+            Index(j) = [];
+        end
+    end
+
+    // Creation of aggregation list sector if there is no HH desagregation ( if there is HH disaggregation Index_SectorsA        GG is defined after this disaggregation)	
+    if H_DISAGG == "HH1" & Index_AGG_type <> "" & (sizeC_TableTemp-i) == (Index_AGG_type - 1)
+        Index_SectorsAGG = list_varname;
+        Ind_AGG = Index;
+    end
+
+    SizeR_list_varname = size(list_varname,"r");
+
+    //for each category of column, creating the corresponding index
+    for elt=1:SizeR_list_varname;
+        Ind_Temp= find(TableTemp(:,sizeC_TableTemp-i)==list_varname(elt));
+        
+        execstr("Indice_"+list_varname(elt)+"=Ind_Temp;")
+        Index_Temp = TableTemp(Ind_Temp,1);
+        execstr("Index_"+list_varname(elt)+"=Index_Temp;")
+        execstr("nb_"+list_varname(elt)+"=size(Index_Temp,1);")
     end
 end
 
