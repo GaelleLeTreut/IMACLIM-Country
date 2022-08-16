@@ -1,4 +1,4 @@
-;Crude_oil;Liquid_fuels;Gas_fuels;Solid_fuels;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_transport;OthEquip;Electronics;Food_industry;OthManuf;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Construction;Property_business;Compo
+;Crude_oil;Liquid_fuels;Gas_fuels;Solid_fuels;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_indus;OthEquip;Electronics;Food_industry;OthManuf;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Construction;Property_business;Compo
 Crude_oil;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Liquid_fuels;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Gas_fuels;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
@@ -10,7 +10,7 @@ Cement;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 OthMin;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 ChemicalPharma;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Paper;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-Auto_transport;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Auto_indus;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 OthEquip;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Electronics;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Food_industry;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1

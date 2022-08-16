@@ -1,6 +1,6 @@
 //Names;;;;;Notes;;;;;;;;;;;;;;;;;
 //;;;;;;;;;;;;;;;;;;;;;;
-//Sectors;Oil;Natural_gas;Coal_lignite;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_transport;OthEquip;Electronics;Food_industry;OthManuf;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Construction;Property_business;Compo
+//Sectors;Oil;Natural_gas;Coal_lignite;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_indus;OthEquip;Electronics;Food_industry;OthManuf;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Construction;Property_business;Compo
 sigma_omegaU_sect;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1;-0.1
 Coef_real_wage_sect;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 //;;;;;;;;;;;;;;;;;;;;;;

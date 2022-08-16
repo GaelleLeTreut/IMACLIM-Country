@@ -1,4 +1,4 @@
-;Oil;Natural_gas;Coal_lignite;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_transport;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Food_industry;Construction;Compo
+;Oil;Natural_gas;Coal_lignite;Elec_heating;Steel_Iron;NonFerrousMetals;Cement;OthMin;ChemicalPharma;Paper;Auto_indus;LandTransp;NavalTransp;AirTransp;AgriForest_Fish;Food_industry;Construction;Compo
 Oil;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Natural_gas;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Coal_lignite;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
@@ -9,7 +9,7 @@ Cement;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 OthMin;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 ChemicalPharma;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 Paper;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-Auto_transport;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+Auto_indus;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 LandTransp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 NavalTransp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 AirTransp;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1

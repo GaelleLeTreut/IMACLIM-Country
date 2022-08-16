@@ -8,7 +8,7 @@ Row;Cement;Commodities;NonEnerSect;NonHybridCommod;-;CementS
 Row;OthMin;Commodities;NonEnerSect;NonHybridCommod;-;OthMinS
 Row;ChemicalPharma;Commodities;NonEnerSect;NonHybridCommod;-;PharmaS
 Row;Paper;Commodities;NonEnerSect;NonHybridCommod;-;PaperS
-Row;Auto_transport;Commodities;NonEnerSect;NonHybridCommod;-;AutoS
+Row;Auto_indus;Commodities;NonEnerSect;NonHybridCommod;-;AutoS
 Row;LandTransp;Commodities;NonEnerSect;NonHybridCommod;-;LandS
 Row;NavalTransp;Commodities;NonEnerSect;NonHybridCommod;-;NavalS
 Row;AirTransp;Commodities;NonEnerSect;NonHybridCommod;-;AirS
@@ -34,7 +34,7 @@ Row;SpeMarg_Cement;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_OthMin;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_ChemicalPharma;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_Paper;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
-Row;SpeMarg_Auto_transport;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
+Row;SpeMarg_Auto_indus;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_LandTransp;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_NavalTransp;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
 Row;SpeMarg_AirTransp;OthPart_IOT_AGG;SpeMarg;SpeMarg_IC;-;-
@@ -61,7 +61,7 @@ Column;Cement;Sectors;-;-;-;-
 Column;OthMin;Sectors;-;-;-;-
 Column;ChemicalPharma;Sectors;-;-;-;-
 Column;Paper;Sectors;-;-;-;-
-Column;Auto_transport;Sectors;-;-;-;-
+Column;Auto_indus;Sectors;-;-;-;-
 Column;LandTransp;Sectors;-;-;-;-
 Column;NavalTransp;Sectors;-;-;-;-
 Column;AirTransp;Sectors;-;-;-;-
