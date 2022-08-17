@@ -129,7 +129,7 @@ df4["unemployment_target"] = np.where(df4["unemployment"].astype(float) <= 0, 1,
 df4["all_goals"] = np.where( (df4["energy_ktoe_BY"].astype(float) <= 1.05) & (df4["unemployment"].astype(float) <= 0) & (df4["Real_GDP_BY"].astype(float) >= 0.95), 1, 0)
 
 
-######################## Scenario type
+######################## Scenario type ###############################
 df4['Scenario_type'] = df4['Scenario'].map(mapping_scenarios,na_action='ignore')
 df4['Scenario_type'].fillna(df4['Scenario'], inplace=True)
 test = df4['Scenario_type'].str.replace(r'\S3_\d+', 'S3', regex=True)
@@ -186,8 +186,6 @@ df4.drop('---Quantities Index Fisher ---', axis=1, inplace=True)
 df4.drop('---Quantities Index Laspeyres ---', axis=1, inplace=True)
 df4.drop('---Real terms at Millions of euro BY---', axis=1, inplace=True)
 df4.drop('---Prices Index ratio/BY---', axis=1, inplace=True)
-
-
 
 df4.to_csv("/Users/rdo2/Dropbox/PC/Documents/posttraitement/df4_" + current_date_and_time_string +".csv" ,sep=";")
 
