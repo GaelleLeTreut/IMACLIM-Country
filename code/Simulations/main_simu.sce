@@ -108,7 +108,7 @@ mkdir(save_rec_runchoice);
 TEST_MODE = %T;
 
 // Parameters of the simulations
-testing.countMax = 5;
+testing.countMax = 10;
 testing.debug_mode = %T;
 
 SIMU_MODE = %T;
@@ -121,6 +121,9 @@ Current_Simu_Name = '';
 for simu = simulation_list
     
     Current_Simu_Name = simu(simu_name_head);
+    printf("\n------------ START SIMULATION : ------------")
+    disp(Current_Simu_Name)
+    printf("\n")
 
     // ------------------------------------- *
     // Write the dashboard of the simulation *
@@ -302,7 +305,7 @@ for simu = simulation_list
             try
                 launch_ImaclimS();
             catch
-                printf("simulation error")
+                printf("\n------------ Simulation error ! :( ------------\n")
             end
             cd(SIMUS);
             // Restore recursive runchoice
@@ -313,7 +316,7 @@ for simu = simulation_list
         try
             launch_ImaclimS();
         catch
-            printf("simulation error")
+            printf("\n------------ Simulation error ! :( ------------\n")
         end
         cd(SIMUS);
     end
