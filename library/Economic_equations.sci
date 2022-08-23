@@ -487,7 +487,7 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     if is_projected('C') then
         y1 = apply_proj_eq(y1,C,'C');
     end
-	
+
 	// Remaining budget goes to composite
     Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
 	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
@@ -521,6 +521,33 @@ function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sig
     
 endfunction
 
+function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+	y1 = zeros(nb_Commodities, nb_Households) ;
+	
+	// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	if size(sigma_ConsoBudget,"r")==1
+	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
+	end
+
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
+    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* C_per_capita(1:nb_Sectors-1, time_step) * Population + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* C_per_capita(1:nb_Sectors-1, time_step) * Population .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./ (CPI*Population)) ./ ((Population_rexp_base(2,time_step) .*.ones(nb_Sectors-1, 1))./ (Population_rexp_base(3,time_step) * Population_rexp_base(1,time_step)) ) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
+
+	/// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+
+	// Remaining budget goes to composite
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
+	
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////    B.2 Corporations
@@ -1852,6 +1879,13 @@ function G_Consumption_budget = G_ConsumpBudget_Val_3(G_pFish)
     
 endfunction
 
+function G_Consumption_budget = G_ConsumpBudget_Val_4(G_pFish, Mu, Labour_force, time_since_BY)
+
+    /// Public consumption budget - Indexed on natural GDP growth
+    G_Consumption_budget = (G_pFish / BY.G_pFish *  BY.G_Consumption_budget)*(1 + Proj_Macro.Labour_force(time_step) + Mu + Proj_Macro.Labour_force(time_step)*Mu ).^(parameters.time_since_BY) ;
+    
+endfunction
+
 /// To pilote bugdet finance through the dashboard
 function [y] = G_budget_clos_Const_1(G_Consumption_budget, GDP, NetLending) ;
     /// Public consumption budget - constant in real terms
@@ -2772,7 +2806,7 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 					I(:,Indice_Elec) = apply_proj_val(I(:,Indice_Elec), 'I');
 				end
 		else
-			I = Betta * sum( kappa .* Y' );
+            I = Betta * sum( kappa .* Y' );
 		end
 		
 	elseif Capital_Dynamics
@@ -2967,7 +3001,7 @@ function M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter);
        Proj_param.M.ind_of_proj = Proj_Vol.M_Y.ind_of_proj;
        M = apply_proj_val(M, 'M', Proj_param)
     end
-    
+
 endfunction
 
 
@@ -3000,7 +3034,6 @@ function X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
     end
 
 endfunction
-
 
 //	proj: les exports croient comme la croissance naturelle dans le pays à termes de l'échanges inchangés 
 function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
