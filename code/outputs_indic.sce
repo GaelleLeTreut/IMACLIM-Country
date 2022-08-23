@@ -1364,7 +1364,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
 ["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
-["Labour productivity ",										parameters.Mu													];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
 ["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
@@ -1477,23 +1476,48 @@ end
 
 /// for MacroIncertitudes
 
-if Scenario=="RefBC"
-OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
-["---Macro Incertitudes ---",								 ""																	];..
-["Labour Productivity",							parameters.Mu						];..
-//["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
-//["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
-["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
-["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
-["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
-["World Growth Level_"+Index_NonEnerSect,		parameters.delta_X_parameter(:,Indice_NonEnerSect)'			];..
-//["World Growth Level_"+Index_NonEnerSect, 			sum(parameters.delta_X_parameter(:,Indice_NonEnerSect),"r")			];..
-["Productivity Variation",		VAR_MU		];..
-["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
-["World Growth Level Variation",		VAR_Growth	];..
-["Household saving rate Variation",		VAR_Immo	];..
-["Sigma Variation",		VAR_sigma	];..
-];
+if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
+    OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+    ["---Macro Incertitudes ---",			 ""																						];..
+    ["VAR_sigma_M",		VAR_sigma_M	];..
+    ["sigma_M",		max(Deriv_Exogenous.sigma_M)	];..
+    ["VAR_saving",		VAR_saving	];..
+    ["Household_saving_rate",		Household_saving_rate	];..							 
+    ["VAR_Mu",		VAR_Mu		];..
+    ["Labour_productivity ",										parameters.Mu													];..
+    ["VAR_coef_real_wage",		VAR_coef_real_wage		];..
+    ["Real_wage_coeffient",		parameters.Coef_real_wage		];..
+    ["VAR_sigma_omegaU",		VAR_sigma_omegaU		];..
+    ["Sigma_wage_curve",		parameters.sigma_omegaU		];..
+    ["VAR_C_basic_need",		VAR_C_basic_need		];..
+    ["C_basic_need",		mean(parameters.ConstrainedShare_C)		];..
+    ["trade_drive",		trade_drive		];..
+    ["eq_G_ConsumpBudget",	eq_G_ConsumpBudget		];..
+    ["VAR_sigma_pC",	VAR_sigma_pC		];..
+    ["sigma_pC",	max(parameters.sigma_pC)		];..
+    ["VAR_sigma_X",	VAR_sigma_X		];..
+    ["sigma_X",	max(sigma_X)		];..
+    ["VAR_sigma",	VAR_sigma		];..
+    ["sigma",	max(sigma)		];..
+    ["VAR_import_enersect",	VAR_import_enersect		];..
+    ["VAR_population",	VAR_population		];..
+    ["Population",	Population		];..
+    ["VAR_emis",	VAR_emis		];..
+    ["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
+    ["CPI", CPI];..
+    ["Rexp", Consumption_budget];.. 
+    // ["Labour Productivity",							parameters.Mu						];..
+    // //["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
+    // //["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
+    // ["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
+    // ["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
+    // ["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
+    // ["World Growth Level_"+Index_NonEnerSect,		parameters.delta_X_parameter(:,Indice_NonEnerSect)'			];..
+    // //["World Growth Level_"+Index_NonEnerSect, 			sum(parameters.delta_X_parameter(:,Indice_NonEnerSect),"r")			];..
+    // ["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
+    // ["World Growth Level Variation",		VAR_Growth	];..
+
+    ];
 end
 
 /// Temporary - to delete
