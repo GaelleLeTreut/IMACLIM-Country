@@ -2429,7 +2429,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
         // On force des kappas constants
         kappa = BY.kappa;
         
-    elseif Scenario == "AMS" then
+    elseif Scenario == "AMS" | Scenario == "AMS_converge" then
         // Secteurs energetiques
         nb_secteur_energ = 5;
         kappa(1:nb_secteur_energ) = BY.kappa(1:nb_secteur_energ);
@@ -2439,11 +2439,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
         kappas_BY_non_energ = BY.kappa(nb_secteur_energ+1 : nb_Sectors)
         
         if time_step == 1 then
-            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.3 .* coefs2030') .* kappas_BY_non_energ;
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - elast_subst_energy_by_capital .* coefs2030') .* kappas_BY_non_energ;
         elseif time_step == 2 then
-            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.3 .* coefs2040') .* kappas_BY_non_energ;
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - elast_subst_energy_by_capital .* coefs2040') .* kappas_BY_non_energ;
         elseif time_step == 3 then
-            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - 0.3 .* coefs2050') .* kappas_BY_non_energ;
+            kappa(nb_secteur_energ+1 : nb_Sectors) = (vecteur_de_1 - elast_subst_energy_by_capital .* coefs2050') .* kappas_BY_non_energ;
         end
         
     end

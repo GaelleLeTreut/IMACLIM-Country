@@ -1,4 +1,4 @@
-﻿Component;Name
+Component;Name
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
@@ -8,13 +8,14 @@ AGG_type;AGG_23TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Nb_Iter;3
-Macro_nb;AME
+Macro_nb;AMS
 Demographic_shift;True
 Labour_product;True
 World_prices;True
 X_nonEnerg;True
 Invest_matrix;%T
-Scenario;AME
+Scenario;AMS_converge
+Energetic_constraints;True
 CO2_footprint;False
 Output_files;%T
 Output_prints;%F
@@ -30,3 +31,4 @@ VAR_Immo;
 VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
+elast_subst_energy_by_capital;0.15

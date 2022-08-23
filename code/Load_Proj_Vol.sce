@@ -100,6 +100,12 @@ to_transpose = [
     'Labour_' + Scenario
 ];
 
+// On laisse toujours projection_scenario.csv à %T pour C et IC, et on choisit dans le dashboard si on les applique ou non grâce à Energetic_constraints.
+// Cela permet de lancer des simulations par batch.
+if Energetic_constraints <> 'True' then
+    Proj_Vol('C')('apply_proj') = %F;
+    Proj_Vol('IC')('apply_proj') = %F;
+end 
 
 	// load Y, may be needed for proj intens
 Proj_Vol.Y.file = Proj_Vol.IC.file;
