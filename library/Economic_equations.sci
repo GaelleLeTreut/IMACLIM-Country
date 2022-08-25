@@ -2425,6 +2425,9 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     
     coefs2050 = [-0.442409483422024;0.144704993256443;-0.301506333768045;-0.0302653819951442;-0.269030365851248;-0.258928957371103;0.11655507879719;0.0128470246563515;0.11655507879719;0.0817828284499629;0.11655507879719;-0.542125367863691;0;0;-0.110649983492601;-0.054027415703701;-0.350537010052853;-0.350537010052853];
     
+    // Conversion du string issu du dashboard en double
+    elast_subst_energy_by_capital = strtod (elast_subst_energy_by_capital);
+
     if Scenario == "AME" then
         // On force des kappas constants
         kappa = BY.kappa;

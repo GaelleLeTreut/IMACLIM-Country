@@ -72,7 +72,7 @@ for folder_name in next(os.walk('.'))[1]:
     # On met les années dans le bon ordre
     try:
         df = df[['Variables', '2018', '2030', '2040', '2050']]
-    except KeyError:
+    except:
         print('WARNING :', simu_name, 'n\'a probablement pas convergé.', '\n')
     
     # On remplace les . par des ,
@@ -109,6 +109,5 @@ for i in range(len(df_global)):
     # On enregistre le donnees_pertinentes.csv
     save_name2 = df.simu + ' - donnees_pertinentes.csv'
     donnees_pertinentes = df.df_donnees_pertinentes
-    
     donnees_pertinentes.to_csv(save_name2, sep=';', index=False)
 
