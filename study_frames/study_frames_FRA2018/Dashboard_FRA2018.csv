@@ -8,13 +8,13 @@ AGG_type;AGG_23TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Nb_Iter;3
-Macro_nb;AMS
+Macro_nb;AME
 Demographic_shift;True
 Labour_product;True
 World_prices;True
 X_nonEnerg;True
 Invest_matrix;%T
-Scenario;AMS_converge
+Scenario;AME
 Energetic_constraints;True
 CO2_footprint;False
 Output_files;%T
