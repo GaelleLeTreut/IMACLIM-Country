@@ -2,8 +2,9 @@ Component;Name
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
-study;Static_RunChoices
+study;SNBC3_RunChoices
 Capital_Dynamics;%F
+//AGG_type;
 AGG_type;AGG_23TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
@@ -32,3 +33,5 @@ VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
 elast_subst_energy_by_capital;0.15
+emissions_bioenergy;True
+forced_kappas;True
