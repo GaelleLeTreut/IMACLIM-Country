@@ -310,6 +310,14 @@ d.Y_value = value(d.pY,d.Y)';
 //Calcul Emissions
 ///////////////////////
 
+// REDUCING THE EMISSIONS FACTORS BY THE PROPORTION OF BIOENERGY
+if emissions_bioenergy == 'True' then
+	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
+	bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
+	bioenergy_proportions = repmat(bioenergy_proportions(:,time_step)', nb_Sectors, 1)'; // Reproduction of the column corresponding to time_step
+	d.Emission_Coef_IC(Indice_EnerSect, :) = d.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
+end
+
 //Initial value
 CO2_IC_Initval =  [["CO2_IC_Initval"; Index_Commodities ],[Index_Sectors';ini.CO2Emis_IC]];
 CO2_FC_Initval = [["CO2_C_Initval"; Index_Commodities ] ,["C"  ;sum(ini.CO2Emis_C,"c") ]];
