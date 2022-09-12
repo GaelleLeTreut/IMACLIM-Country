@@ -79,7 +79,7 @@ initial_value.M(Indice_NonHybridCommod,1) = initial_value.M_value(1,Indice_NonHy
 
 // Transport and trade margin rates 
 Transp_margins_rates = initial_value.Transp_margins ./ (initial_value.Y_value + initial_value.M_value); 
-Trade_margins_rates = initial_value. Trade_margins ./ (initial_value.Y_value + initial_value.M_value);
+Trade_margins_rates = initial_value.Trade_margins ./ (initial_value.Y_value + initial_value.M_value);
 
 // Price before all taxes 
 p_BeforeTaxes = initial_value.p .* ( ones(1, nb_Sectors) +  Transp_margins_rates + Trade_margins_rates ) ;
@@ -176,7 +176,7 @@ initial_value.pG(Indice_NonHybridCommod,1) = p_AllTax_WithoutSpeM(1,Indice_NonHy
 // pX = Value/ Quantites, if quantities=0 then pX = p_BeforeTaxes for hybrid commodities
 initial_value.pX(Indice_HybridCommod,1) = ((initial_value.X_value(Indice_HybridCommod,:).*(initial_value.X(Indice_HybridCommod,:)<>0)) ./ ( initial_value.X(Indice_HybridCommod,:).*(initial_value.X(Indice_HybridCommod,:)<>0) + (initial_value.X(Indice_HybridCommod,:)==0))) + p_BeforeTaxes(1,Indice_HybridCommod)'.*(initial_value.X(Indice_HybridCommod,:)==0) ;
 
-//pX =  for non hybrid commodities
+//pX = p_BeforeTaxes for non hybrid commodities
 initial_value.pX(Indice_NonHybridCommod,1) = p_BeforeTaxes(1,Indice_NonHybridCommod)';
 
 
@@ -187,7 +187,7 @@ initial_value.pY(Indice_HybridCommod,1) = ((initial_value.Y_value(:,Indice_Hybri
 
 initial_value.pFC =[initial_value.pC,initial_value.pG,initial_value.pI,initial_value.pX];
 /////////////////////////////////////////////////////////// 
-//Calculation of specific margis rate 
+// Calculation of specific margin rates
 ///////////////////////////////////////////////////////////
 // SpeMarg_IC euro/toe en intermediate consumption
 if Country=="Brasil" then
@@ -260,6 +260,7 @@ tot_OthPart_IOT = sum (initial_value.OthPart_IOT, "r");
 print(out,"test equilibrium on specific margins after hybridization\n");
 for column  = 1:nb_Commodities
     if abs(sum(initial_value.SpeMarg(:,column)))>=Err_balance_tol then
+        disp('************ ' + Index_Commodities(column)+" to balance: "+sum(initial_value.SpeMarg(:,column))+"\n")
         print(out, Index_Commodities(column)+" to balance: "+sum(initial_value.SpeMarg(:,column))+"\n");
         print(out, 100*sum(initial_value.SpeMarg(:,column))/initial_value.Y_value(column) + " percentage of production"+"\n")
         print(out, 100*sum(initial_value.SpeMarg(:,column))/(initial_value.Y_value(column) + initial_value.M_value(column)) + " percentage of supply"+"\n"+"\n")
