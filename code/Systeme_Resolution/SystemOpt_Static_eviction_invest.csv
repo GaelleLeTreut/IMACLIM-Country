@@ -46,7 +46,7 @@ I_pFish;I_pFish_Val_1;pI, I;
 //////////////////////    Income generation and usage - Institutional agents accounts;;;
 ////// Households;;;
 H_disposable_income;H_Income_Val_1;NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax;
-Household_savings;H_Savings_Val_1;H_disposable_income, Household_saving_rate;
+//Household_savings;H_Savings_Val_1;H_disposable_income, Household_saving_rate;
 Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate;// 1 : share o disposable income / 2 : constant in real term
 ;H_Investment_Const_1;GFCF_byAgent, H_disposable_income, H_Invest_propensity;// Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier
 //;H_Investment_Const_2;GFCF_byAgent,pC,C;
@@ -139,7 +139,7 @@ ClimPolCompensbySect;S_ClimCompensat_Val_3;GDP, delta_LS_S;
 Labour_Tax_rate;Labour_Taxe_rate_Val_1;LabTaxRate_BeforeCut, Labour_Tax_Cut;
 ;;;
 //////////////////////  Commercial balance;;;
-//;Trade_Balance_Const_2;pM, pX, X, M, GDP;"//  1-évolution proportionnelle au PIB ""réel"" (GDP/CPI) / 2-... au PIB nominal"
+;Trade_Balance_Const_2;pM, pX, X, M, GDP;"//  1-évolution proportionnelle au PIB ""réel"" (GDP/CPI) / 2-... au PIB nominal"
 "////////////////////// Public finance ""closure""";;;
 // Government_closure;Public_finance_Val_1;;
 //;G_closure_Const_1;Income_Tax_rate, Other_Direct_Tax_param, Pension_Benefits_param, UnemployBenefits_param, Other_SocioBenef_param, Corporate_Tax_rate, Production_Tax_rate, LabTaxRate_BeforeCut, BudgetShare_GConsump, Energy_Tax_rate_IC, Energy_Tax_rate_FC, Carbon_Tax_rate, G_Consumption_budget, G_invest_propensity;
