@@ -107,6 +107,14 @@ if Energetic_constraints <> 'True' then
     Proj_Vol('IC')('apply_proj') = %F;
 end 
 
+// On laisse toujours projection_scenario.csv à %T pour X et M, et on choisit dans le dashboard si on les applique ou non grâce à Imports_constraints.
+// Cela permet de lancer des simulations par batch.
+if Imports_constraints <> 'True' then
+    Proj_Vol('X')('apply_proj') = %F;
+    Proj_Vol('M')('apply_proj') = %F;
+end 
+
+
 	// load Y, may be needed for proj intens
 Proj_Vol.Y.file = Proj_Vol.IC.file;
 Proj_Vol.Y.headers = 'Y';
