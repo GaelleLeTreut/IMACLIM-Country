@@ -18,7 +18,8 @@ df_global = pd.DataFrame(columns=['simu', 'df_fulltemplate', 'df_donnees_pertine
 i=0
 
 # Set current directory
-my_path = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display/To_Display'
+#my_path = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display/To_Display'
+my_path = "C:/Users/jeanw\OneDrive\Documents\GitHub\IMACLIM-Country\outputs_display\To_Display"
 os.chdir(my_path)
 
 # Pour lister les sous-dossiers
@@ -77,7 +78,7 @@ for folder_name in next(os.walk('.'))[1]:
     
     # On remplace les . par des ,
     for col in df.columns[1:]:
-        df[col] = df[col].astype(str).str.replace('.', ',')
+        df[col] = df[col].astype(str).str.replace('.', ',', regex=True)
     
     # On sélectionne les variables les plus intéressantes (pour les 'donnees_pertinentes')
     df2 = df[df['Variables'].isin(var)]
@@ -90,7 +91,8 @@ for folder_name in next(os.walk('.'))[1]:
     os.chdir('..')
 
 # On va dans le dossier où on écrira nos fichiers
-my_path = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display/MacroTables'
+#my_path = '/Users/jean/Documents/GitHub/IMACLIM-Country/outputs_display/MacroTables'
+my_path = "C:/Users/jeanw\OneDrive\Documents\GitHub\IMACLIM-Country\outputs_display\MacroTables"
 
 # Set current directory
 os.chdir(my_path)
@@ -109,5 +111,5 @@ for i in range(len(df_global)):
     # On enregistre le donnees_pertinentes.csv
     save_name2 = df.simu + ' - donnees_pertinentes.csv'
     donnees_pertinentes = df.df_donnees_pertinentes
-    donnees_pertinentes.to_csv(save_name2, sep=';', index=False)
+    #donnees_pertinentes.to_csv(save_name2, sep=';', index=False)
 
