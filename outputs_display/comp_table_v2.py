@@ -97,6 +97,11 @@ my_path = "C:/Users/jeanw\OneDrive\Documents\GitHub\IMACLIM-Country\outputs_disp
 # Set current directory
 os.chdir(my_path)
 
+# On supprime les fichiers csv qui sont déjà dans MacroTables
+files = glob.glob(my_path + '/*.csv')
+for f in files:
+    os.remove(f)
+
 # On parcourt les lignes de df_global
 for i in range(len(df_global)):
 
