@@ -305,6 +305,7 @@ for simu = simulation_list
             try
                 launch_ImaclimS();
             catch
+                disp(lasterror())
                 printf("\n------------ Simulation error ! :( ------------\n")
             end
             cd(SIMUS);
@@ -316,6 +317,7 @@ for simu = simulation_list
         try
             launch_ImaclimS();
         catch
+            disp(lasterror())
             printf("\n------------ Simulation error ! :( ------------\n")
         end
         cd(SIMUS);
