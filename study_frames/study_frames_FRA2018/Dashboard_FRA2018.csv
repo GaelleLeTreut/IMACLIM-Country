@@ -1,6 +1,6 @@
 Component;Name
 Scenario;AME
-Macro_nb;AME
+Macro_nb;SNBC3
 Nb_Iter;3
 elast_subst_energy_by_capital;0
 Energetic_constraints;True
