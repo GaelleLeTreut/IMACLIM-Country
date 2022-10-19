@@ -1,7 +1,7 @@
 Component;Name
-Scenario;AME
-Macro_nb;SNBC3
-Nb_Iter;3
+Scenario;AME2035
+Macro_nb;SNBC3_2035
+Nb_Iter;4
 elast_subst_energy_by_capital;0
 Energetic_constraints;True
 forced_kappas;True
