@@ -1,8 +1,8 @@
 Component;Name
-Scenario;AME2035
-Macro_nb;SNBC3_2035
-Nb_Iter;4
-elast_subst_energy_by_capital;0
+Scenario;AMS
+Macro_nb;SNBC3
+Nb_Iter;3
+elast_subst_energy_by_capital;0.3
 Energetic_constraints;True
 forced_kappas;True
 emissions_bioenergy;True
