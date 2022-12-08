@@ -123,7 +123,7 @@ w;Wage_Variation_Val_1;NetWage_variation;
 // ;MeanWageVar_Const_1;w, lambda, Y, NetWage_variation;
 ////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
-I;Invest_demand_Val_1;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
+I;Invest_demand_Val_3;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
 Capital_endowment;Capital_Dynamic_Val_1;;
 ;;;

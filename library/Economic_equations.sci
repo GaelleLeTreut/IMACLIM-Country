@@ -2465,7 +2465,13 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
 
     // CAPITAL INTENSITY IS INCREASED IN PROPORTION TO THE DECREASE IN TECHNICAL COEFFICIENTS (AMS VS. AME)
     if forced_kappas == 'True' then
-        elast_subst_energy_by_capital = strtod (elast_subst_energy_by_capital); // String (from dashboard) to double conversion
+       
+        if ~isdef('time_step') then
+            elast_subst_energy_by_capital = strtod (elast_subst_energy_by_capital_1); // We consider the first time_step's value for BY
+        else
+            elast_subst_energy_by_capital = strtod (evstr('elast_subst_energy_by_capital_' + time_step)); // String (from dashboard) to double conversion
+        end
+
         if elast_subst_energy_by_capital == 0 then
             kappa = BY.kappa;
         else
@@ -2805,7 +2811,8 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 		if Invest_matrix then
 		
-			y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+            y1 = I - Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+			//y1 = I - 0.9 * Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 			
 				if is_projected('I') then
 					y1 = apply_proj_eq(y1, I, 'I');
@@ -2879,6 +2886,56 @@ endfunction
 function [I] = Invest_demand_Val_2(pI, I_pFish) ;
 
     I = BY.I.*BY.pI.*I_pFish ./ pI ;
+
+endfunction
+
+function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
+    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+	if ~Capital_Dynamics
+    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+		if Invest_matrix then
+			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+
+
+            // PRISE EN COMPTE ACTIFS ECHOUES
+            // Le producteur prend en compte le coût de remboursement des emprunts utilisés pour investir dans des actifs échoués.
+            // Les kappas prennent en compte ces coûts, mais ils ne correspondent pas à de l'investissement.
+            // Or l'investissement est directement proportionnel aux kappas.
+            // On réduit donc l'investissement selon la part (estimée très grossièrement) que l'on estime être liée aux actifs échoués.
+            // En début de période en suppose beaucoup d'actifs échoués, puis plus aucun en fin de période.
+            if stranded_assets == 'True' then
+                share_of_stranded_asset_costs = strtod (evstr('share_of_stranded_asset_costs_' + time_step)); // String (from dashboard) to double conversion
+                I = I * (1-share_of_stranded_asset_costs);
+            end
+
+
+            
+			if is_projected('I') then
+				I = apply_proj_val(I, 'I');
+			end	
+
+		else
+			I = Betta * sum( kappa .* Y' );
+		end
+		
+	elseif Capital_Dynamics
+	// If Capital Market - Investment is a share of GDP - Give the repartition of I
+			if ~Exo_ShareI_GDP
+				ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+			else 
+				ShareI_GDP = Proj_Macro.ShareI_GDP(time_step);
+			end		
+		
+		//Ventilated by BY Shares
+		// I = "beta" Io 
+		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
+
+			if is_projected('I') then
+				I = apply_proj_val(I, 'I');
+			end	
+	end
 
 endfunction
 
