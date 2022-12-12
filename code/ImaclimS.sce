@@ -425,21 +425,7 @@ for time_step=1:Nb_Iter
         bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
 
         Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
-        
-        disp(time_step)
-        disp('energy tax rate ic :')
-        disp(Energy_Tax_rate_IC(2))
     end
-
-    // if time_step==1 then
-    //     Energy_Tax_rate_IC(2) = 0.67 * 652.25553
-    // elseif time_step==2 then
-    //     Energy_Tax_rate_IC(2) = 0.67 * 652.25553
-    // elseif time_step==3 then
-    //     Energy_Tax_rate_IC(2) = 0.5 * 652.25553
-    // elseif time_step==4 then
-    //     Energy_Tax_rate_IC(2) = 0.33 * 652.25553
-    // end
 
     /// RESOLUTION
     if Optimization_Resol then
