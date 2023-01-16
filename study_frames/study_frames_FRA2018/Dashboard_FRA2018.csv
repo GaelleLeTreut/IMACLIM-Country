@@ -4,11 +4,11 @@ Macro_nb;SNBC3_2035
 Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
-forced_kappas;True
-elast_subst_energy_by_capital_1;0.3
-elast_subst_energy_by_capital_2;0.3
-elast_subst_energy_by_capital_3;0.3
-elast_subst_energy_by_capital_4;0.3
+forced_kappas;False
+elast_subst_energy_by_capital_1;0
+elast_subst_energy_by_capital_2;0
+elast_subst_energy_by_capital_3;0
+elast_subst_energy_by_capital_4;0
 Energetic_constraints;True
 emissions_bioenergy;True
 Imports_constraints;True
@@ -18,6 +18,7 @@ share_of_stranded_asset_costs_1;0.05
 share_of_stranded_asset_costs_2;0.04
 share_of_stranded_asset_costs_3;0.025
 share_of_stranded_asset_costs_4;0
+forced_invest;False
 SystemOpt_Resol;SystemOpt_Static
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
