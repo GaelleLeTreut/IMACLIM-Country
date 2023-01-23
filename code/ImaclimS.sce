@@ -127,6 +127,13 @@ if Output_files
 		simu_name='';
     elseif 	SCENARIO_INCREMENT==%T
 	    simu_name=Scenario+"_"+nb_tests;
+        // if SystemOpt_Resol == "SystemOpt_johansen_full"
+        //     simu_name=Scenario+"_"+nb_tests+"jh_full";
+        // elseif SystemOpt_Resol == "SystemOpt_johansen_half"
+        //     simu_name=Scenario+"_"+nb_tests+"jh_half";
+        // elseif SystemOpt_Resol == "SystemOpt_constrained_invest"
+        //     simu_name=Scenario+"_"+nb_tests+"ci";
+        // end
 	else
 		simu_name=Scenario;
     end
