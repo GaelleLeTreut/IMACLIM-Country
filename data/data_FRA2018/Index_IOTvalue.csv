@@ -1,6 +1,6 @@
 Aggregation_type;-;-;-;-;-;AGG_4SecB;AGG_18TME;AGG_19TME;AGG_22TME
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy;Oil;Oil;Oil
-Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Natural_gas;Natural_gas
+Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Gas_heating;Natural_gas
 Row;Crude_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Coal_lignite;Coal_lignite;Coal_lignite
 Row;Coke;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Coal_lignite;Coal_lignite;Coal_lignite
 Row;Gasoline;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr;Oil;Oil;Oil
@@ -9,8 +9,8 @@ Row;Jetfuel;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHTr;Oil;Oil;Oil
 Row;Road_diesel;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr;Oil;Oil;Oil
 Row;Heating_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Oil
 Row;Other_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Oil
-Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating
-Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating
+Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Electricity;Elec_heating
+Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Gas_heating;Elec_heating
 Row;Steel_Iron;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Steel_Iron;Steel_Iron;Steel_Iron
 Row;NonFerrousMetals;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals
 Row;Cement;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Cement;Cement;Cement
