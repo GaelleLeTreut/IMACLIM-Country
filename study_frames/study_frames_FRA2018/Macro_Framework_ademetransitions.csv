@@ -1,12 +1,12 @@
 reference_year;2018;2030
 current_year;2030;2050
-GDP;0.013;0.013
+GDP;0.005;0.005
 GDP_world;0.013;0.013
 Population;0.002853074;0.001674388
 Labour_force;-0.000878075;-0.000878075
 Retired;0.014897502;0.014897502
-pM_Oil;0.050475389;0.019529516
-pM_Natural_gas;0.033826552;0.017485127
-pM_Coal_lignite;0.041672389;0.011735716
-pM_Elec_heating;0.000650549583333333;-0.0337104311
+pM_Oil;0.072668228;0.019529516 
+pM_Gas_heating;0.073566267;0.017485127
+pM_Coal_lignite;0.063860125;0.011735716
+pM_Electricity;0;0
 units;mean_yearly_growth_rate;mean_yearly_growth_rate

@@ -131,39 +131,6 @@ elseif VAR_Mu=="low"
 elseif VAR_Mu=="high"
 	parameters.Mu = 0.013
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="constant"
-	parameters.Mu = 0
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t1"
-	parameters.Mu = 0.001
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t2"
-	parameters.Mu = 0.002
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t3"
-	parameters.Mu = 0.003
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t4"
-	parameters.Mu = 0.004
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t5"
-	parameters.Mu = 0.005
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t6"
-	parameters.Mu = 0.006
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t7"
-	parameters.Mu = 0.007
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t8"
-	parameters.Mu = 0.008
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t9"
-	parameters.Mu = 0.009
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="t10"
-	parameters.Mu = 0.01
-	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
 ////////////////////////////////////////
@@ -231,14 +198,14 @@ if VAR_import_enersect=="high"
 
 	if time_step == 1
 
-		parameters.delta_pM_parameter(Indice_OilS) = 0.127154385;		
-		parameters.delta_pM_parameter(Indice_GasS) = 0.104082573;
-		parameters.delta_pM_parameter(Indice_CoalS) = 0.11283111;
+		parameters.delta_pM_parameter(Indice_OilS) = 0.115332476;		
+		parameters.delta_pM_parameter(Indice_GasS) = 0.080337383;
+		parameters.delta_pM_parameter(Indice_CoalS) = 0.104889472;
 
-// old
-//		parameters.delta_pM_parameter(Indice_OilS) = 0.115332476;		
-//		parameters.delta_pM_parameter(Indice_GasS) = 0.080337383;
-//		parameters.delta_pM_parameter(Indice_CoalS) = 0.104889472;
+//		markup_rate(1) = 0.5;
+//		markup_rate(2) = 0.5;
+//		markup_rate(3) = 0.0073918;
+//		markup_rate(4) = 0.5;
 
 	elseif time_step == 2
 
@@ -252,14 +219,9 @@ elseif VAR_import_enersect=="low"
 
 	if time_step == 1
 
-		parameters.delta_pM_parameter(Indice_OilS) = -0.066891327;
-		parameters.delta_pM_parameter(Indice_GasS) = 0.02885052;
-		parameters.delta_pM_parameter(Indice_CoalS) = -0.042104935;
-
-// old
-//		parameters.delta_pM_parameter(Indice_OilS) = -0.005541574;
-//		parameters.delta_pM_parameter(Indice_GasS) = 0.066290058;
-//		parameters.delta_pM_parameter(Indice_CoalS) = -0.009309006;
+		parameters.delta_pM_parameter(Indice_OilS) = -0.005541574;
+		parameters.delta_pM_parameter(Indice_GasS) = 0.066290058;
+		parameters.delta_pM_parameter(Indice_CoalS) = -0.009309006;
 
 	elseif time_step == 2
 
@@ -342,16 +304,8 @@ if Scenario=='S2' |  Scenario=='S3'
 	Deriv_Exogenous.Emission_Coef_C = Emission_Coef_C;
 	Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
 	// Gas
-	Deriv_Exogenous.Emission_Coef_C(2,:) = Emis_Coef_Gas(time_step);
-//	Deriv_Exogenous.Emission_Coef_IC(2,:) = Emis_Coef_Gas(time_step);
-    
-	if time_step == 1
-	Deriv_Exogenous.Emission_Coef_IC(2,:) = BY.Emission_Coef_IC(2,:) * 0.85
-	Deriv_Exogenous.Emission_Coef_C(2,:) = BY.Emission_Coef_C(2,:) * 0.85
-	elseif time_step == 2
-	Deriv_Exogenous.Emission_Coef_IC(2,:) = Deriv_Exogenous.Emission_Coef_IC(2,:) * 0.18
-	Deriv_Exogenous.Emission_Coef_C(2,:) = BY.Emission_Coef_C(2,:) * 0.18
-	end
+	Deriv_Exogenous.Emission_Coef_C(Indice_Gas_heating,:) = Emis_Coef_Gas(time_step);
+	Deriv_Exogenous.Emission_Coef_IC(Indice_Gas_heating,:) = Emis_Coef_Gas(time_step);
 
     // Liquid fuels
 	// X & C

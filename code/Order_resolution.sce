@@ -98,6 +98,15 @@ for fun = file_eq
     // Record the name
     fun_struct.name = fun(2);
 
+    if (eq_G_ConsumpBudget=="G_ConsumpBudget_Val_4") & (id == 58)
+
+        fun_struct.name = "G_ConsumpBudget_Val_4";
+        fun_struct.args = ["G_pFish", "Mu", "Labour_force", "time_since_BY"]' ;
+    else
+        fun_struct.name = fun(2);
+
+    end
+
     // Save the function : Val or Eq
     if fun_struct.output == [] then
         fun_struct.output = null();
@@ -107,8 +116,6 @@ for fun = file_eq
     end
 
 end
-
-
 
 // --------------------------- *
 // Begin to sort the functions *
