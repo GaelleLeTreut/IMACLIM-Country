@@ -103,7 +103,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
-alpha, lambda, kappa;Technical_Coef_Val_5;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
+alpha, lambda, kappa;Technical_Coef_Val_6;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
 ////// International trade;;;
 M;Imports_Val_1;pM, pY, Y, sigma_M, delta_M_parameter;// check const_1, const_3 & const_4
 X;Exports_Val_1;pM, pX, sigma_X, delta_X_parameter, GDP, Y;// const 3 : homothetic projection et const_2 static projection

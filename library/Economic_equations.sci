@@ -2432,7 +2432,9 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_4(Theta, Phi, aIC, sigma, p
     
 endfunction
 
-
+// Pour diminuer les valeurs des kappas selon les gains d'efficacité énergétiques, 
+// en supposant une simple élasticité de substitution entre énergie et capital.
+// Seul le bloc "if forced_kappas == 'True'" est ajouté.
 function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
     test_pL = pL == 0;
     pIC = abs(pIC);
@@ -2481,6 +2483,97 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     
             vecteur_of_ones = ones(1 , nb_Sectors); // Vectors with ones to do (1 - ...) * ...
             kappa = (vecteur_of_ones - elast_subst_energy_by_capital .* technical_coef_differences') .* BY.kappa;
+        end
+    end
+    
+
+    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+
+endfunction
+
+
+
+// Pour forcer des valeurs de kappas simplement
+// Seul le bloc "if forced_kappas == 'True'" est ajouté.
+function [alpha, lambda, kappa] = Technical_Coef_Val_6(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+
+    // WE FORCE EXTERNAL VALUES FOR KAPPAS
+    if forced_kappas == 'True' then
+        scenario_is_AME = grep(Scenario,'AME')
+        // Si scénario AME
+        if scenario_is_AME == 1 then
+            kappa = BY.kappa;
+        // Si scénario AMS    
+        else
+            kappas_filename = 'Kappas_' + Scenario;
+            kappas_data = evstr(kappas_filename);
+
+            kappa = kappas_data(:,time_step)'; // Select the column corresponding to time_step
+            
+            //kappa = BY.kappa;
+            //kappa(Indice_NonEnerSect) = kappas_data(:,time_step)'(Indice_NonEnerSect); // Select the column corresponding to time_step
+            //kappa(Indice_ElecS) = kappas_data(:,time_step)'(Indice_ElecS); // Select the column corresponding to time_step
         end
     end
     
@@ -2889,6 +2982,8 @@ function [I] = Invest_demand_Val_2(pI, I_pFish) ;
 
 endfunction
 
+// AVEC PRISE EN COMPTE D'ACTIFS ECHOUES
+// Seul le bloc "if stranded_assets == 'True'" est ajouté.
 function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
