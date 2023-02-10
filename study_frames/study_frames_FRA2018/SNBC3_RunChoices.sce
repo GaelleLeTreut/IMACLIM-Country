@@ -124,15 +124,15 @@ end
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// OLD - CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
 // pY(gaz) valait 40 fois pM(gaz) en 2050, donnant une facture de gaz de 100 milliards dans l'AMS !
 // Le ratio Labour_income / Yq est 50 fois supérieur pour le gaz_fuel que pour le liquid_fuel. Alors on divise la plupart des variables
 // de gaz_fuels par 50
 
-if pY_ini_gaz_controlled == 'True' then
+if pY_ini_gaz_controlled_run_choices == 'True' then
     disp(time_step)
     if time_step == 1 then
-        diviseur = 1000;
+        diviseur = 100;
 
         //disp(alpha(1:nb_Sectors, Indice_GasS))
         
@@ -168,3 +168,13 @@ if pY_ini_gaz_controlled == 'True' then
 
 end
 
+//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
+if Spe_margs_Profit_margin_gaz_reduced == 'True' then
+    Deriv_Exogenous.markup_rate = markup_rate;
+    Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+
+    Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+end
