@@ -1455,6 +1455,13 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["M qFish",														M_qFish										 					];..
 ["Y qFish",														Y_qFish										 					];..
 ["X qFish",														X_qFish								 							];..
+["---Energy and non energy trade balance ---",								 ""																	];..
+["Real X Energy",															money_disp_adj.*sum(Out.X_value(1:nb_EnerSect))/X_pFish							];..
+["Real X Non Energy",															money_disp_adj.*sum(Out.X_value(nb_EnerSect+1:nb_Sectors))/X_pFish							];..
+["Real M Energy",															money_disp_adj.*sum(Out.M_value(1:nb_EnerSect))/M_pFish							];..
+["Real M Non Energy",															money_disp_adj.*sum(Out.M_value(nb_EnerSect+1:nb_Sectors))/M_pFish							];..
+["Real Trade Balance Energy",											    money_disp_adj.*(sum(Out.X_value(1:nb_EnerSect))/X_pFish - sum(Out.M_value(1:nb_EnerSect))/M_pFish)];..
+["Real Trade Balance Non Energy",											    money_disp_adj.*(sum(Out.X_value(nb_EnerSect+1:nb_Sectors))/X_pFish - sum(Out.M_value(nb_EnerSect+1:nb_Sectors))/M_pFish)];..
 ];
 
 if Capital_Dynamics
