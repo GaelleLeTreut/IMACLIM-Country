@@ -1,25 +1,47 @@
 Component;Name
-Scenario;AMS2035
+//;
+// Parametres qui dependent de AME ou AMS;
+Scenario;AME2035
+//;
+//;
+// Parametres SNBC 3;
+//;
 Macro_nb;SNBC3_2035
 Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
 forced_kappas;True
+Energetic_constraints;True
+emissions_bioenergy;True
+Imports_constraints;True
+SystemOpt_Resol;SystemOpt_Static
+//SystemOpt_Resol;SystemOpt_Static_eviction_invest
+//;
+//;
+// Implementations recentes;
+//;
+pY_ini_gaz_controlled_eco_eq;True
+Spe_margs_Profit_margin_gaz_reduced;True
+//;
+//;
+// Anciennes implementations - a supprimer;
+//;
+energy_prices_controlled;False
+pY_ini_gaz_controlled_run_choices;False
 elast_subst_energy_by_capital_1;0.3
 elast_subst_energy_by_capital_2;0.3
 elast_subst_energy_by_capital_3;0.3
 elast_subst_energy_by_capital_4;0.3
-Energetic_constraints;True
-emissions_bioenergy;True
-Imports_constraints;True
 ticpe_bioenergy;False
+ticgn_controlled;False
 stranded_assets;False
 share_of_stranded_asset_costs_1;0.05
 share_of_stranded_asset_costs_2;0.04
 share_of_stranded_asset_costs_3;0.025
 share_of_stranded_asset_costs_4;0
-SystemOpt_Resol;SystemOpt_Static
-//SystemOpt_Resol;SystemOpt_Static_eviction_invest
+//;
+//;
+//;
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 study;SNBC3_RunChoices
