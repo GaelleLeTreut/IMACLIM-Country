@@ -170,9 +170,11 @@ end
 
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
 if Spe_margs_Profit_margin_gaz_reduced == 'True' then
+    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
     Deriv_Exogenous.markup_rate = markup_rate;
     Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 
+    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
     Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
     Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
     Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
