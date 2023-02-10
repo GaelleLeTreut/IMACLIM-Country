@@ -2616,6 +2616,110 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_6(Theta, Phi, aIC, sigma, p
 endfunction
 
 
+
+function [alpha, lambda, kappa] = Technical_Coef_Val_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+
+    // WE FORCE EXTERNAL VALUES FOR KAPPAS
+    if forced_kappas == 'True' then
+        scenario_is_AME = grep(Scenario,'AME')
+        // Si scénario AME
+        if scenario_is_AME == 1 then
+            kappa = BY.kappa;
+            
+        // Si scénario AMS    
+        else
+            kappas_filename = 'Kappas_' + Scenario;
+            kappas_data = evstr(kappas_filename);
+
+            kappa = kappas_data(:,time_step)'; // Select the column corresponding to time_step
+            
+            //kappa = BY.kappa;
+            //kappa(Indice_NonEnerSect) = kappas_data(:,time_step)'(Indice_NonEnerSect); // Select the column corresponding to time_step
+            //kappa(Indice_ElecS) = kappas_data(:,time_step)'(Indice_ElecS); // Select the column corresponding to time_step
+        end
+    end
+    
+
+    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+
+    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    if pY_ini_gaz_controlled_eco_eq == 'True' then
+        diviseur = 100;
+        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
+        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+
+        //alpha(1:nb_EnerSect,Indice_GasS) = alpha(1:nb_EnerSect,Indice_GasS) ./ 6;
+        
+        //Proj_Vol('alpha').val(1:nb_Sectors,Indice_GasS) = alpha(1:nb_Sectors,Indice_GasS);
+    end
+endfunction
+
+
+
+
+
 //Labour productivity semi-endogenous (power sector)
 function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, Mu_b, time_period,Indice)
 //    A = phi_L_a;
