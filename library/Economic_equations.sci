@@ -3223,7 +3223,14 @@ endfunction
 
 function pK = Capital_Cost_Val_2(pRental)
 
-pK = pRental.*ones(1,nb_Sectors);	
+    pK = pRental.*ones(1,nb_Sectors);	
+
+endfunction
+
+function pK = Capital_Cost_Val_3(pRental, scal_pK)
+
+    pK = pRental.*ones(1,nb_Sectors).*scal_pK;  
+
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

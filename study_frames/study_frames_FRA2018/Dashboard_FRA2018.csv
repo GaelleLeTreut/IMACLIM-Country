@@ -16,6 +16,8 @@ emissions_bioenergy;True
 Imports_constraints;True
 SystemOpt_Resol;SystemOpt_Static
 //SystemOpt_Resol;SystemOpt_Static_eviction_invest
+// SystemOpt_Resol;SystemOpt_Static_neoclassical
+//SystemOpt_Resol;SystemOpt_Static_johansen
 //;
 //;
 // Implementations recentes;
