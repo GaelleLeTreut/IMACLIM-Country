@@ -92,12 +92,14 @@ proj_files = [
     'Capital_Cons_' + Scenario, ..
     'Invest_Elec_' + Scenario, .. // For Argentine
     'Labour_' + Scenario, ..
-    'Invest_' + Scenario // For France
+    'Invest_' + Scenario, .. // For France
+    'Kappas_' + Scenario
 ];
 
 to_transpose = [
     'Capital_Cons_' + Scenario, ..
-    'Labour_' + Scenario
+    'Labour_' + Scenario, ..
+    'Kappas_' + Scenario
 ];
 
 // On laisse toujours projection_scenario.csv à %T pour C et IC, et on choisit dans le dashboard si on les applique ou non grâce à Energetic_constraints.

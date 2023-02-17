@@ -2646,6 +2646,37 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_7(Theta, Phi, aIC, sigma, p
     ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
     (FPI .^(sigma./(1 - sigma)))) ;
 
+    if ~Capital_Dynamics
+			
+		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+		
+		
+		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
+		if AdjustKappaOnly|AdjustKappaWithSubst
+			
+			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
+				 
+			if AdjustKappaOnly
+			
+					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
+					
+			elseif AdjustKappaWithSubst
+				
+					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
+			end 
+	
+		end 
+		
+	elseif Capital_Dynamics
+	// Unique price of capital
+	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+
+	end
 
     // WE FORCE EXTERNAL VALUES FOR KAPPAS
     if forced_kappas == 'True' then
@@ -2706,7 +2737,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_7(Theta, Phi, aIC, sigma, p
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
     if pY_ini_gaz_controlled_eco_eq == 'True' then
         diviseur = 100;
-        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
+        //kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
 
