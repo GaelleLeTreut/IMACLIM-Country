@@ -169,7 +169,7 @@ if pY_ini_gaz_controlled_run_choices == 'True' then
 end
 
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if Spe_margs_Profit_margin_gaz_reduced == 'True' then
+if pY_gas_reduced == 'True' then
     // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
     Deriv_Exogenous.markup_rate = markup_rate;
     Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
