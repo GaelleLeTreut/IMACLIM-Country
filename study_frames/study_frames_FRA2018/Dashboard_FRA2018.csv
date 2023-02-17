@@ -10,7 +10,6 @@ Macro_nb;SNBC3_2035
 Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
-forced_kappas;False
 Energetic_constraints;True
 emissions_bioenergy;True
 Imports_constraints;True
