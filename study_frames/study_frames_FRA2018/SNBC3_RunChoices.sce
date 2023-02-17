@@ -124,49 +124,6 @@ end
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////// OLD - CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-// pY(gaz) valait 40 fois pM(gaz) en 2050, donnant une facture de gaz de 100 milliards dans l'AMS !
-// Le ratio Labour_income / Yq est 50 fois supérieur pour le gaz_fuel que pour le liquid_fuel. Alors on divise la plupart des variables
-// de gaz_fuels par 50
-
-if pY_ini_gaz_controlled_run_choices == 'True' then
-    disp(time_step)
-    if time_step == 1 then
-        diviseur = 100;
-
-        //disp(alpha(1:nb_Sectors, Indice_GasS))
-        
-        Deriv_Exogenous.alpha = alpha;
-        Deriv_Exogenous.alpha(1:nb_Sectors,Indice_GasS) = alpha(1:nb_Sectors, Indice_GasS) ./ diviseur;
-
-        // We put the new value of alpha in Proj_Vol, to pass the test on wether the projection went well or not
-        Proj_Vol('alpha').val = Deriv_Exogenous.alpha;
-        disp('toto')
-        disp(lambda(Indice_GasS))
-        
-        Deriv_Exogenous.lambda = lambda;
-        Deriv_Exogenous.lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
-        
-        disp(kappa(Indice_GasS))
-
-        Deriv_Exogenous.kappa = kappa;
-        Deriv_Exogenous.kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
-        
-        // Changing the Profit_margin gives an unbalanced IOT
-        //Deriv_Exogenous.Profit_margin = Profit_margin;
-        //Deriv_Exogenous.Profit_margin(Indice_GasS) = Profit_margin(Indice_GasS) / diviseur;
-    else
-        disp(alpha(1:nb_Sectors, Indice_GasS))
-        disp(lambda(Indice_GasS))
-        disp(kappa(Indice_GasS))
-        
-        Deriv_Exogenous.alpha = alpha;
-        Proj_Vol('alpha').val = alpha;
-        Deriv_Exogenous.lambda = lambda;
-        Deriv_Exogenous.kappa = kappa;
-    end
-
-end
 
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
 if pY_gas_reduced == 'True' then

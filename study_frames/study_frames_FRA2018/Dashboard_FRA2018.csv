@@ -25,7 +25,6 @@ pY_gas_reduced;True
 // Anciennes implementations;
 //;
 energy_prices_controlled;False
-pY_ini_gaz_controlled_run_choices;False
 ticpe_bioenergy;False
 ticgn_controlled;False
 stranded_assets;False
