@@ -48,7 +48,8 @@ proj_file = STUDY_Country + file_name;
 
 // Read the parameter's file
 // [headers columns , headers rows , values]
-[param_names, proj_variables, param_values] = read_csv_table(proj_file,';');
+// Third argument '!//!' is used to not consider commented lines (which contain //) in Projection_Scenario.csv
+[param_names, proj_variables, param_values] = read_csv_table(proj_file,';','!//!');
 
 // Define and check if the headers are consistent
 head_col.file = 'file';
