@@ -11,7 +11,7 @@ Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
 emissions_bioenergy;True
-SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_Static_neokeynesien
 //SystemOpt_Resol;SystemOpt_Static_eviction_invest
 // SystemOpt_Resol;SystemOpt_Static_neoclassical
 //SystemOpt_Resol;SystemOpt_Static_johansen
