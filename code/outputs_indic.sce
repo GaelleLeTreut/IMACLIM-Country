@@ -1456,12 +1456,18 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Y qFish",														Y_qFish										 					];..
 ["X qFish",														X_qFish								 							];..
 ["---Energy and non energy trade balance ---",								 ""																	];..
-["Real X Energy",															money_disp_adj.*sum(Out.X_value(1:nb_EnerSect))/X_pFish							];..
-["Real X Non Energy",															money_disp_adj.*sum(Out.X_value(nb_EnerSect+1:nb_Sectors))/X_pFish							];..
-["Real M Energy",															money_disp_adj.*sum(Out.M_value(1:nb_EnerSect))/M_pFish							];..
-["Real M Non Energy",															money_disp_adj.*sum(Out.M_value(nb_EnerSect+1:nb_Sectors))/M_pFish							];..
-["Real Trade Balance Energy",											    money_disp_adj.*(sum(Out.X_value(1:nb_EnerSect))/X_pFish - sum(Out.M_value(1:nb_EnerSect))/M_pFish)];..
-["Real Trade Balance Non Energy",											    money_disp_adj.*(sum(Out.X_value(nb_EnerSect+1:nb_Sectors))/X_pFish - sum(Out.M_value(nb_EnerSect+1:nb_Sectors))/M_pFish)];..
+["Nominal X Energy",															money_disp_adj.*sum(Out.X_value(1:nb_EnerSect))							];..
+["Nominal X Non Energy",															money_disp_adj.*sum(Out.X_value(nb_EnerSect+1:nb_Sectors))							];..
+["Nominal M Energy",															money_disp_adj.*sum(Out.M_value(1:nb_EnerSect))							];..
+["Nominal M Non Energy",															money_disp_adj.*sum(Out.M_value(nb_EnerSect+1:nb_Sectors))							];..
+["Nominal Trade Balance Energy",											    money_disp_adj.*(sum(-Out.X_value(1:nb_EnerSect)) - sum(Out.M_value(1:nb_EnerSect)))];..
+["Nominal Trade Balance Non Energy",											    money_disp_adj.*(sum(Out.X_value(nb_EnerSect+1:nb_Sectors)) - sum(Out.M_value(nb_EnerSect+1:nb_Sectors)))];..
+["--- Household Energy Bill ---",								 ""																	];..
+["Real C Energy",											    money_disp_adj.*sum(Out.C_value(Indice_EnerSect, :)) / C_En_pFish];..
+["Real C Non Energy",											    money_disp_adj.*sum(Out.C_value(Indice_NonEnerSect, :))/C_NonEn_pFish];..
+["Share C Energy",											    (sum(Out.C_value(Indice_EnerSect, :)) / C_En_pFish ) /(sum(Out.C_value)/C_pFish)];..
+["--- Total bill Of Each Energy ---",								 ""																	];..
+["Nominal total bill "+Index_EnerSect,											money_disp_adj.* (Out.Y_value(Indice_EnerSect)' + Out.M_value(Indice_EnerSect)' - Out.X_value(Indice_EnerSect))];..
 ];
 
 if Capital_Dynamics
