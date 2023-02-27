@@ -20,7 +20,7 @@ SystemOpt_Resol;SystemOpt_Static_neokeynesien
 // Implementations recentes;
 //;
 pY_gas_reduced;True
-//;
+skip_calibration;True
 //;
 // Anciennes implementations;
 //;
