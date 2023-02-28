@@ -1543,3 +1543,39 @@ if Output_files
 end
 
 
+// Creation of a fulltemplate with every time_step
+// We store fulltemplate of each year in variables named fulltemplate_BY, fulltemplate_1, fulltemplate_2 etc.
+// We then concatenate these variables in concatenation
+if ~OutputfilesBY
+    // Case of base year
+    fulltemplate_BY = OutputTable("FullTemplate_"+ref_name);
+else
+    for time_step_tmp = 1:Nb_Iter
+        if time_step == time_step_tmp
+
+            // Creation of fulltemplate_i
+            fulltemplate = OutputTable('FullTemplate_'+ref_name);
+            execstr ( "fulltemplate_" + time_step + " = fulltemplate");
+
+            // If we are in the last time_step, we concatenate the fulltemplates
+            if time_step == Nb_Iter
+                concatenation = fulltemplate_BY;
+                i = 1;
+                for j = 1:Nb_Iter
+                    
+                    // In order to skip 2035 in the case of SNBC 3
+                    if j == strtod(Time_step_non_etudie)
+                        continue
+                    end
+
+                    execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
+                    i = i+1;
+                end
+                
+                // Save the concatenated fulltemplate
+                SAVEDIR_CONCAT = OUTPUT + runName + '\';
+                csvWrite(concatenation,SAVEDIR_CONCAT+"FullTemplate_"+simu_name+".csv", ';', ',');
+            end
+        end
+    end
+end

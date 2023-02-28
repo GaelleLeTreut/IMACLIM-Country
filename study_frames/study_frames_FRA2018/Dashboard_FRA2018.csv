@@ -21,6 +21,7 @@ SystemOpt_Resol;SystemOpt_Static_neokeynesien
 //;
 pY_gas_reduced;True
 skip_calibration;True
+Time_step_non_etudie;2
 //;
 // Anciennes implementations;
 //;
