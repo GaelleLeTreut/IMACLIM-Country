@@ -155,4 +155,4 @@ Capital_endowment;1;1;calib
 share_Ii;nb_Commodities;nb_size_I;calib
 ShareI_GDP;1;1;calib
 pRental;1;1;calib
-scal_pK;1;nb_Households;calib
+scal_pK;1;1;calib
