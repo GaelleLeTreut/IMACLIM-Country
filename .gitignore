@@ -1,7 +1,8 @@
 # ignore the directory outputs and all its content
 outputs
 study_frames/Country_Selection.csv
-
+.venv
+MacroTables
 code/Test_AllConfig/Saved_Data/*
 code/Test_AllConfig/Not_working_dashboards/*
 
