@@ -1401,7 +1401,8 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
 ["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
-["Real Trade Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real_Trade_Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real_Trade_Balance_BY",											(money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)) / (money_disp_adj.*(sum(BY.X_value)-sum(BY.M_value)))];..
 ["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
 ["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./evstr("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
@@ -1420,6 +1421,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp													];..
 [string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				evstr("Y_"+Index_NonEnerSect+"_pLasp")							];..
 ["pM pFish/"+ref_name,											M_pFish															];..
+["real_effective_exchange_rate"+ref_name,						C_pFish / M_pFish												];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
 ["Energy price/"+ref_name,										IC_Ener_pFish														];..
@@ -1479,10 +1481,11 @@ end
 if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
     OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
     ["---Macro Incertitudes ---",			 ""																						];..
-    ["VAR_sigma_M",		VAR_sigma_M	];..
-    ["sigma_M",		max(Deriv_Exogenous.sigma_M)	];..
+    ["VAR_sigma_MX",		VAR_sigma_MX	];..
+//    ["sigma_M",		max(Deriv_Exogenous.sigma_M)	];..
+    ["sigma_X",	max(sigma_X)		];..
     ["VAR_saving",		VAR_saving	];..
-    ["Household_saving_rate",		Household_saving_rate	];..							 
+    ["Household_saving_rate",		Out.Household_saving_rate	];..							 
     ["VAR_Mu",		VAR_Mu		];..
     ["Labour_productivity ",										parameters.Mu													];..
     ["VAR_coef_real_wage",		VAR_coef_real_wage		];..
@@ -1493,19 +1496,39 @@ if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
     ["C_basic_need",		mean(parameters.ConstrainedShare_C)		];..
     ["trade_drive",		trade_drive		];..
     ["eq_G_ConsumpBudget",	eq_G_ConsumpBudget		];..
-    ["VAR_sigma_pC",	VAR_sigma_pC		];..
+    ["VAR_sigma_pC",	"NC"		];..
     ["sigma_pC",	max(parameters.sigma_pC)		];..
-    ["VAR_sigma_X",	VAR_sigma_X		];..
-    ["sigma_X",	max(sigma_X)		];..
-    ["VAR_sigma",	VAR_sigma		];..
+    ["VAR_sigma",	"NC"			];..
     ["sigma",	max(sigma)		];..
     ["VAR_import_enersect",	VAR_import_enersect		];..
     ["VAR_population",	VAR_population		];..
-    ["Population",	Population		];..
-    ["VAR_emis",	VAR_emis		];..
+    ["Population",	Out.Population		];..
+    ["Labour_force",	Out.Labour_force		];..
+    ["VAR_emis",	"NC"		];..
     ["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
-    ["CPI", CPI];..
-    ["Rexp", Consumption_budget];.. 
+    ["CPI", Out.CPI];..
+    ["Rexp", Out.Consumption_budget];.. 
+    ["H_disposable_income", Out.H_disposable_income];..
+    ["H_Labour_Income", Out.NetCompWages_byAgent(3)];..
+    ["H_Non_Labour_Income", Out.GOS_byAgent(3)];.. 
+    ["Pensions", Out.Pensions(3)];..
+    ["Unemployment_transfers", Out.Unemployment_transfers(3)];.. 
+    ["Other_social_transfers", Out.Other_social_transfers(3)];..
+    ["Other_Transfers", Out.Other_Transfers(3)];.. 
+    ["ClimPolicyCompens", Out.ClimPolicyCompens(3)];..
+    ["Property_income", Out.Property_income(3)];..
+    ["Income_Tax", Out.Income_Tax(3)];.. 
+    ["Other_Direct_Tax", Out.Other_Direct_Tax(3)];..
+    ["GDP_pLasp", GDP_pLasp];.. 
+    ["GDP_pPaas", GDP_pPaas];..
+    ["pc*C", sum(Out.pC.*ref.C)];..
+    ["pG*G", sum(Out.pG.*ref.G)];..
+    ["pI*I", sum(Out.pI.*ref.I)];..
+    ["pX*X", sum(Out.pX.*ref.X)];..
+    ["pM*M", sum(Out.pM.*ref.M)];..   
+//    ["H_Other_Income", Out.H_Other_Income];.. 
+//    ["H_Property_income", Out.H_Property_income];..
+//    ["H_Tax_Payments",Income_Tax + Other_Direct_Tax];.. 
     // ["Labour Productivity",							parameters.Mu						];..
     // //["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
     // //["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
@@ -1554,3 +1577,36 @@ if Output_files
 end
 
 
+// Creation of a fulltemplate with every time_step
+// We store fulltemplate of each year in variables named fulltemplate_BY, fulltemplate_1, fulltemplate_2 etc.
+// We then concatenate these variables in concatenation
+if ~OutputfilesBY
+    // Case of base year
+    fulltemplate_BY = OutputTable("FullTemplate_"+ref_name);
+else
+    for time_step_tmp = 1:Nb_Iter
+        if time_step == time_step_tmp
+            // Creation of fulltemplate_i
+            fulltemplate = OutputTable('FullTemplate_'+ref_name);
+            execstr ( "fulltemplate_" + time_step + " = fulltemplate");
+            // If we are in the last time_step, we concatenate the fulltemplates
+            if time_step == Nb_Iter
+                concatenation = fulltemplate_BY;
+                i = 1;
+                for j = 1:Nb_Iter
+                    
+                    // In order to skip 2035 in the case of SNBC 3
+                    if j == strtod(Time_step_non_etudie)
+                        continue
+                    end
+                    execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
+                    i = i+1;
+                end
+                
+                // Save the concatenated fulltemplate
+                SAVEDIR_CONCAT = OUTPUT + runName + '\';
+                csvWrite(concatenation,SAVEDIR_CONCAT+"FullTemplate_"+simu_name+".csv", ';', ',');
+            end
+        end
+    end
+end
