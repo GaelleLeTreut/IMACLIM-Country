@@ -109,7 +109,22 @@ if Scenario=='AMS2035' & ticgn_controlled=='True' then
 
 end
 
-//////////////////////////////////////////////// INACTIF - EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
+    // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
+    if ticpe_bioenergy == 'True' then
+        bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
+        bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
+        bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
+
+        bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
+
+        Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
+        Deriv_Exogenous.Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
+    end
+    
+
+//////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
 // On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
 if emissions_bioenergy == 'True' then
