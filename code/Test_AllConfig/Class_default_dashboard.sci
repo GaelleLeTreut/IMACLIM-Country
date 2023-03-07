@@ -48,6 +48,8 @@ function default_dashboard = new_default_dashboard()
 	'eq_G_ConsumpBudget','ref',..
 	'VAR_import_enersect','ref',..
 	'VAR_population','ref',..
-	'VAR_emis','ref')
+	'VAR_emis','ref',..
+	'Spe_margs_Profit_margin_gaz_reduced','false',..
+	'pY_ini_gaz_controlled_eco_eq', 'false')
     
 endfunction
