@@ -23,9 +23,9 @@ Carbon_BTA;%F
 Recycling_Option;
 ClosCarbRev;CstNetLend
 ClosPubBudget;
-VAR_Mu;low
-VAR_sigma_MX;high
-VAR_saving;high
+VAR_Mu;ref
+VAR_sigma_MX;ref
+VAR_saving;ref
 VAR_sigma_omegaU;ademevalue
 VAR_coef_real_wage;ref
 VAR_C_basic_need;low
@@ -33,8 +33,12 @@ VAR_sigma_ConsoBudget;ref
 VAR_sigma_pC;ref
 VAR_sigma;ref
 VAR_delta_pM;ref
-trade_drive;exports_detailed_high
+trade_drive;exports_detailed
 eq_G_ConsumpBudget;G_ConsumpBudget_Val_4
-VAR_import_enersect;high
+VAR_import_enersect;ref
 VAR_population;ref
 VAR_emis;ref
+Spe_margs_Profit_margin_gaz_reduced;true
+pY_ini_gaz_controlled_eco_eq;true
+skip_calibration;True
+Time_step_non_etudie;9999
