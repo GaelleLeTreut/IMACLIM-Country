@@ -22,7 +22,8 @@ parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
 parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
 
 //////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
-
+parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
+parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
 
 //////////////////////////////////////////////// GESTION DES KAPPAS  /////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,14 +112,13 @@ end
 //////////////////////////////////////////////// INACTIF - EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
 // On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
-// --> doute si utiliser d.Emission_Coef_IC ou juste Emission_Coef_IC 
-if emissions_bioenergy == 'True' & 0 then
+if emissions_bioenergy == 'True' then
     Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
 
 	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
 	bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
 	bioenergy_proportions = repmat(bioenergy_proportions(:,time_step)', nb_Sectors, 1)'; // Reproduction of the column corresponding to time_step
-	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
+	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = BY.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
 end
 
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////

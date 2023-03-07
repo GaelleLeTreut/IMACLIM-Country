@@ -3834,8 +3834,6 @@ endfunction
 // Wage setting (implicitly determines the overall variation of net wages : NetWage_variation )
 //	Wage curve on the level of the economy-wide mean nominal wage
 function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage); 
-    Coef_real_wage = strtod(Coef_real_wage_dashboard);
-    sigma_omegaU = strtod(sigma_omegaU_dashboard);
 
     w=abs(w);
     lambda = abs(lambda);
