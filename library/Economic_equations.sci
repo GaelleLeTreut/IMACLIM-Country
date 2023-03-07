@@ -354,11 +354,9 @@ function y = H_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, ti
 	
 endfunction
 
-
 // Household consumption (by products, by household class)
 // Aggregated demand functions (may not assume identical and perfect aggregation preferences, identical constraints and maximisation programs)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 /// Household Total consumption budget
 function y = ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate) ;
@@ -373,6 +371,13 @@ function Consumption_budget = ConsumBudget_Val_1(H_disposable_income, Household_
 
     /// Source of consumption budget - Share of disposable income (by household class)
     Consumption_budget = H_disposable_income .* (1 - Household_saving_rate);
+	
+endfunction
+
+function Consumption_budget = ConsumBudget_Val_2(H_disposable_income, Household_savings)
+
+    /// Source of consumption budget - Share of disposable income (by household class)
+    Consumption_budget = H_disposable_income - Household_savings;
 	
 endfunction
 
@@ -2390,6 +2395,14 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
         kappa = apply_proj_val(kappa, 'kappa');
     end
 
+    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    if pY_ini_gaz_controlled_eco_eq == 'true' then
+        diviseur = 100;
+//        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
+        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+    end
+
 endfunction
 
 
@@ -2807,6 +2820,7 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 				end
 		else
             I = Betta * sum( kappa .* Y' );
+//            I = Betta * 0.93 * sum( kappa .* Y' );
 		end
 		
 	elseif Capital_Dynamics
@@ -2922,6 +2936,11 @@ endfunction
 function pK = Capital_Cost_Val_2(pRental)
 
 pK = pRental.*ones(1,nb_Sectors);	
+endfunction
+
+function pK = Capital_Cost_Val_3(pRental, scal_pK)
+
+    pK = pRental.*ones(1,nb_Sectors).*scal_pK;	
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3073,6 +3092,21 @@ function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
 endfunction
 
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_3( pM, pX, X, M, GDP);
+
+  y = (sum(pX(Indice_NonEnerSect).*X(Indice_NonEnerSect)) - sum(pM(Indice_NonEnerSect).*M(Indice_NonEnerSect)))/GDP - (sum(ini.pX(Indice_NonEnerSect).*ini.X(Indice_NonEnerSect)) - sum(ini.pM(Indice_NonEnerSect).*ini.M(Indice_NonEnerSect)))/ini.GDP
+  
+endfunction
+
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_4( pM, pX, X, M, GDP);
+
+    y = (sum(pX(5).*X(5)) - sum(pM(5).*M(5)))/GDP - (sum(ini.pX(5).*ini.X(5)) - sum(ini.pM(5).*ini.M(5)))/ini.GDP
+  
+endfunction
+  
+  
 
 // Market closure (adjustment of supply or demand in quantities)
 
