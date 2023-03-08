@@ -1468,6 +1468,9 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Share C Energy",											    (sum(Out.C_value(Indice_EnerSect, :)) / C_En_pFish ) /(sum(Out.C_value)/C_pFish)];..
 ["--- Total bill Of Each Energy ---",								 ""																	];..
 ["Nominal total bill "+Index_EnerSect,											money_disp_adj.* (Out.Y_value(Indice_EnerSect)' + Out.M_value(Indice_EnerSect)' - Out.X_value(Indice_EnerSect))];..
+["--- International and domestic energy prices values ---",								 ""																	];..
+[string("pY "+ Index_EnerSect +" - milliers euros / ktoe"),								Out.pY(Indice_EnerSect,:)												];..
+[string("pM "+ Index_EnerSect +" - milliers euros / ktoe"),								Out.pM(Indice_EnerSect,:)												];..
 ];
 
 if Capital_Dynamics
