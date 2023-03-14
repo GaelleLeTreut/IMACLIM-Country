@@ -4,22 +4,49 @@
 //         exec(STUDY_Country+study+".sce");
 
 
-//////////////////////////////////////////////// OLD - A SUPPRIMER ?  /////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
-// update carbon tax rate
-// parameters.Carbon_Tax_rate = 110000;
+// On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
+if emissions_bioenergy == 'True' then
+    Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
 
-// Basic Need  in ktep/UC
-BasicNeed = zeros(nb_Sectors,1);
-// Put in sectoral parameters 
-BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
+	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
+	bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
+	bioenergy_proportions = repmat(bioenergy_proportions(:,time_step)', nb_Sectors, 1)'; // Reproduction of the column corresponding to time_step
+	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = BY.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
+end
 
-// Data for Households are in thousand of people
-Coef_HH_unitpeople = 10^3;
+//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
+if pY_gas_reduced == 'True' then
+    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
+    Deriv_Exogenous.markup_rate = markup_rate;
+    Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 
-// sensitivity analysis 
-parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
-parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
+    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+    Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+
+end
+
+
+//////////////////////////////////////////////// OLD - A SUPPRIMER /////////////////////////////////////////////////////////////////////////////////////
+
+// // update carbon tax rate
+// // parameters.Carbon_Tax_rate = 110000;
+
+// // Basic Need  in ktep/UC
+// BasicNeed = zeros(nb_Sectors,1);
+// // Put in sectoral parameters 
+// BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
+
+// // Data for Households are in thousand of people
+// Coef_HH_unitpeople = 10^3;
+
+// // sensitivity analysis 
+// parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
+// parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
 
 //////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
 parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
@@ -28,8 +55,45 @@ parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
 //////////////////////////////////////////////// GESTION DES KAPPAS  /////////////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
+    // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
+    if ticpe_bioenergy == 'True' then
+        bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
+        bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
+        bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
+
+        bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
+
+        Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
+        Deriv_Exogenous.Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
+    end
+
+//////////////////////////////////////////////// INACTIF - CONTROLE DE LA TICGN (TICPE pour le gaz) /////////////////////////////////////////////////////////////////////////////////////
+if Scenario=='AMS2035' & ticgn_controlled=='True' then
+
+    // Get the initial value of the TICGN rate
+    BY_ticgn_rate = BY.Energy_Tax_rate_IC(1,Indice_GasS);
+
+    // Calculate the new value of the TICGN rate, depending on time_step
+    if time_step == 1
+        new_ticgn_rate = BY_ticgn_rate * 2.61; // Multiplier's values come from "Prix - AME2021_V 17 - avec calculs.xlsx"
+	elseif time_step == 2
+        new_ticgn_rate = BY_ticgn_rate * 3.84;
+    elseif time_step == 3
+        new_ticgn_rate = BY_ticgn_rate * 3.42;
+    elseif time_step == 4
+        new_ticgn_rate = BY_ticgn_rate * 2.29;
+	end
+
+    // Force the new value of TICGN rate
+    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
+    Deriv_Exogenous.Energy_Tax_rate_IC(1,Indice_GasS) = new_ticgn_rate;
+
+end
+
+
+//////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
 // On fait varier les coefficients techniques de liquid_fuels et de gas_fuels dans l'AMS,
 // pour obtenir en sortie des écarts de prix par rapport à l'AME similaires à ceux des données de la DGEC
 if Scenario=='AMS2035' & energy_prices_controlled=='True' then
@@ -85,70 +149,8 @@ if Scenario=='AMS2035' & energy_prices_controlled=='True' then
 end
 
 
-//////////////////////////////////////////////// INACTIF - CONTROLE DE LA TICGN (TICPE pour le gaz) /////////////////////////////////////////////////////////////////////////////////////
-
-if Scenario=='AMS2035' & ticgn_controlled=='True' then
-
-    // Get the initial value of the TICGN rate
-    BY_ticgn_rate = BY.Energy_Tax_rate_IC(1,Indice_GasS);
-
-    // Calculate the new value of the TICGN rate, depending on time_step
-    if time_step == 1
-        new_ticgn_rate = BY_ticgn_rate * 2.61; // Multiplier's values come from "Prix - AME2021_V 17 - avec calculs.xlsx"
-	elseif time_step == 2
-        new_ticgn_rate = BY_ticgn_rate * 3.84;
-    elseif time_step == 3
-        new_ticgn_rate = BY_ticgn_rate * 3.42;
-    elseif time_step == 4
-        new_ticgn_rate = BY_ticgn_rate * 2.29;
-	end
-
-    // Force the new value of TICGN rate
-    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
-    Deriv_Exogenous.Energy_Tax_rate_IC(1,Indice_GasS) = new_ticgn_rate;
-
-end
-
-
-//////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
-    // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
-    if ticpe_bioenergy == 'True' then
-        bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
-        bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
-        bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
-
-        bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
-
-        Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
-        Deriv_Exogenous.Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
-    end
-    
-
-//////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
-
-// On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
-if emissions_bioenergy == 'True' then
-    Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
-
-	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
-	bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
-	bioenergy_proportions = repmat(bioenergy_proportions(:,time_step)', nb_Sectors, 1)'; // Reproduction of the column corresponding to time_step
-	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = BY.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
-end
-
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 
 
 
-//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if pY_gas_reduced == 'True' then
-    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-    Deriv_Exogenous.markup_rate = markup_rate;
-    Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 
-    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-    Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
-end
