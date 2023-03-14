@@ -1,1 +1,1 @@
-simu_file_name = 'SimuSNBC3_2035_sensibilite_invest.csv';
+simu_file_name = 'SimuSNBC3_consolidation_run1_AMS.csv';
