@@ -11,8 +11,8 @@ df = pd.read_csv('/Users/rdo2/Dropbox/PC/Documents/GitHub/IMACLIM-Country/output
 ########## end input data  
 
 ############## parameters
-nb_scenarios_S2 = 613
-nb_scenarios_S3 = 633
+nb_scenarios_S2 = 242
+nb_scenarios_S3 = 242
 years = [2018,2030,2050]
 mapping_scenarios = {"S2_1" : "S2ref", 
                      "S3_1" : "S3ref",
@@ -234,6 +234,8 @@ df4 = pd.concat([results_year[0], results_year[1], results_year[2], results_year
 
 ################################# Scénarios qui atteignent les objectifs #########################################################
 
+df4 = df4[df4['VAR_sigma_omegaU'] == "ademevalue"]
+
 df4["gdp_goal_ref"] = np.where(df4["Real_GDP_BY_ref"].astype(float) >= 1, 1, 0)
 
 df4["energy_goal_ref"] = np.where(df4["energy_ktoe_BY_ref"].astype(float) <= 1, 1, 0)
@@ -245,7 +247,7 @@ df4["unemployment_target_ref"] = np.where(df4["unemployment_BY_ref"].astype(floa
 
 df4["e_h_consumption_goal_ref"] = np.where(df4["e_h_consumption_BY_ref"].astype(float) >= 1, 1, 0)
 
-df4["all_goals_ref"] = np.where( (df4["energy_ktoe_BY_ref"].astype(float) <= 1) &
+df4["all_goals_ref"] = np.where( (df4["energy_ktoe_BY_ref"].astype(float) <= 1.005) &
                              (df4["Real_GDP_hab_BY_ref"].astype(float) >= 1), 1, 0)
 
 
@@ -508,6 +510,9 @@ for index, year in enumerate(years) :
     print("S2", e_h_consumption_score_S2.round(1), "%")
     print("S3", e_h_consumption_score_S3.round(1), "%")
     print()
+
+#    print(df4["VAR_sigma_omegaU"].unique())
+#    exit()
 
     print("all_goals_ref_score")
     all_goals_ref_score_S2 = (df4.loc[(df4['Scenario_type'] == "S2") & (df4['year'] == year), 'all_goals_ref'].sum() / (nb_scenarios_S2-1))*100
