@@ -2596,6 +2596,8 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     if pY_gas_reduced == 'True' then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        // diviseur = 20;
+        // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
     end
 
@@ -3972,6 +3974,8 @@ function w = Wage_Variation_Val_1(NetWage_variation)
 
     w = NetWage_variation * BY.w;
 
+    // Baisser coût du travail du gaz
+    // w(Indice_GasS) = w(Indice_GasS) / 16;
 endfunction
 
    function y = MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
