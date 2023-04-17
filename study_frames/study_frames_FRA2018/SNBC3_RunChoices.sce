@@ -52,6 +52,59 @@ end
 parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
 parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
 
+//////////////////////////////////////////////// CARBON TAX EU-ETS  /////////////////////////////////////////////////////////////////////////////////////
+if Carbone_ETS == "True"
+    // En € / MtCO2
+    if time_step==1 then
+        parameters.Carbon_Tax_rate = 76000;
+    elseif time_step==2 then
+        parameters.Carbon_Tax_rate = 77900;
+    elseif time_step==3 then
+        parameters.Carbon_Tax_rate = 80800;
+    elseif time_step==4 then
+        parameters.Carbon_Tax_rate = 152000;
+    end
+
+    // Pour définir des taxes carbones différentes selon les secteurs
+    CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
+    parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
+    // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+    Deriv_Exogenous.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+
+    CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
+    parameters.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename); // Useless ?
+    // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+    Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+
+end
+
+//////////////////////////////////////////////// TRANSFERT MA PRIME RENOV  /////////////////////////////////////////////////////////////////////////////////////
+
+if MaPrimRenov == "True"
+    MPR_share = 0.25; // Share of housedolds' consumption paid by the public sector
+else
+    MPR_share = 0;
+end
+
+
+//////////////////////////////////////////////// TRANSFERT BONUS VEHICULES  /////////////////////////////////////////////////////////////////////////////////////
+if Bonus_vehicule_dashboard == "True"
+    if Scenario == "AMS"
+        Bonus_vehicules_share = 0.02; // Share of housedolds' consumption paid by the public sector
+    elseif Scenario == 'AME'
+        if time_step==1
+            Bonus_vehicules_share = 0.02;
+        else
+            Bonus_vehicules_share = 0;
+        end
+    else
+        disp("TRANSFERT BONUS VEHICULES : SCENARIO NON TRAITE")
+    end
+else
+    Bonus_vehicules_share = 0;
+end
+
+
 //////////////////////////////////////////////// GESTION DES KAPPAS  /////////////////////////////////////////////////////////////////////////////////////
 
 

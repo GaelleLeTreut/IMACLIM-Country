@@ -136,6 +136,36 @@ function H_disposable_income = H_Income_Val_2(NetCompWages_byAgent, GOS_byAgent,
     
 endfunction
 
+
+
+
+// With MaPrimRenov subvention from Government to households
+function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
+
+    // Income by sources, redistribution and tax payments
+    H_Labour_Income     = NetCompWages_byAgent (Indice_Households) ;
+    H_Non_Labour_Income = GOS_byAgent (Indice_Households) ;
+    H_Social_Transfers  = Pensions + Unemployment_transfers + Other_social_transfers;
+    H_Other_Income      = Other_Transfers(Indice_Households) + ClimPolicyCompens(Indice_Households);
+    H_Property_income   = Property_income(Indice_Households) ;
+    H_Tax_Payments      = Income_Tax + Other_Direct_Tax;
+
+    // WE CONSIDER MA PRIM RENOV TRANSFER
+    T_MPR = MPR_share * C_value(Indice_ConstruS);
+
+    // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
+    Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
+
+    // After tax household classes disposable income constraint (H_disposable_income)
+    // H_disposable_income = (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
+    H_disposable_income = T_MPR + Bonus_vehicules + (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
+
+endfunction
+
+
+
+
+
 /// Pensions by household class
 function y = Pensions_Const_1(Pensions, Pension_Benefits, Retired)
 
@@ -794,6 +824,37 @@ function G_disposable_income = G_income_Val_2(Income_Tax, Gov_Direct_Tax, Corpor
     
 endfunction
 
+
+// With MaPrimRenov subvention from Government to households
+
+function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
+
+    // For one government. Distribution among different government must otherwise be specified.
+
+    // Income by sources, redistribution and tax revenue
+    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
+
+    G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
+    G_Other_Income      =  Other_Transfers (Indice_Government) ;
+    G_Property_income   =  Property_income(Indice_Government) ;
+    G_Social_Transfers  =  sum(Pensions + Unemployment_transfers + Other_social_transfers) ;
+    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
+	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
+
+    // WE CONSIDER MA PRIM RENOV TRANSFER
+    T_MPR = MPR_share * C_value(Indice_ConstruS);
+
+    // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
+    Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
+
+    // After tax disposable income constraint (H_disposable_income)
+    G_disposable_income = -T_MPR -Bonus_vehicules + (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
+
+endfunction
+
+
+
+
 /// Financial transfers from/to Government
 function [y] = G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt);
 
@@ -1395,7 +1456,7 @@ function CarbonTax_Diff_IC = CTax_rate_IC_Val_2(Carbon_Tax_rate, Carbon_Tax_rate
 	
 	Carbon_Tax_rate_IC = abs(Carbon_Tax_rate_IC);
 	CarbonTax_Diff_IC = (CO2Emis_IC==0).*0;
-	CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate
+	CarbonTax_Diff_IC = CarbonTax_Diff_IC + (CO2Emis_IC<>0) .* Carbon_Tax_rate_IC./Carbon_Tax_rate;
 
 endfunction
 
