@@ -72,7 +72,7 @@ end
 d.Carbon_Tax_rate_C=(CO2Emis_C <> 0) .* (d.Carbon_Tax_rate_C) +(CO2Emis_C == 0).* (d.Carbon_Tax_rate.*ones(nb_Sectors,nb_Households));
 d.Carbon_Tax_rate_IC=(CO2Emis_IC <> 0) .* (d.Carbon_Tax_rate_IC) +(CO2Emis_IC == 0).* (d.Carbon_Tax_rate.*ones(nb_Sectors,nb_Sectors));
 d.CarbonTax_Diff_C = (CO2Emis_C <> 0) .* d.CarbonTax_Diff_C +(CO2Emis_C == 0).*BY.CarbonTax_Diff_C;
-d.CarbonTax_Diff_IC = (CO2Emis_IC <> 0) .* d.CarbonTax_Diff_IC +(CO2Emis_IC == 0).*BY.CarbonTax_Diff_IC;
+// d.CarbonTax_Diff_IC = (CO2Emis_IC <> 0) .* d.CarbonTax_Diff_IC +(CO2Emis_IC == 0).*BY.CarbonTax_Diff_IC;
 
 
 param_table_sec= [ "setting", "", "", Index_Sectors'];
