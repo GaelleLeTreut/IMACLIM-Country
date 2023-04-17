@@ -1471,6 +1471,13 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["--- International and domestic energy prices values ---",								 ""																	];..
 [string("pY "+ Index_EnerSect +" - milliers euros / ktoe"),								Out.pY(Indice_EnerSect,:)												];..
 [string("pM "+ Index_EnerSect +" - milliers euros / ktoe"),								Out.pM(Indice_EnerSect,:)												];..
+[string("Prix de vente pondere "+ Index_EnerSect +" - milliers euros / ktoe"),								(sum(Out.pIC(Indice_EnerSect,1:nb_Sectors).*Out.IC(Indice_EnerSect,1:nb_Sectors),'c')+Out.pC(Indice_EnerSect).*Out.C(Indice_EnerSect))./(sum(Out.IC(Indice_EnerSect,1:nb_Sectors), 'c')+Out.C(Indice_EnerSect))												];..
+[string("Prix de vente pondere sans C "+ Index_EnerSect +" - milliers euros / ktoe"),								sum(Out.pIC(Indice_EnerSect,1:nb_Sectors).*Out.IC(Indice_EnerSect,1:nb_Sectors),'c')./sum(Out.IC(Indice_EnerSect,1:nb_Sectors), 'c')												];..
+["--- Quantities : energy production ---",								 ""																	];..
+[string("Y "+ Index_EnerSect +" - ktoe"),								Out.Y(Indice_EnerSect,:)												];..
+["--- Carbon Tax value - millions euros courants ---",								 ""																	];..
+["Total carbon tax",								money_disp_adj.*sum(Out.Carbon_Tax)												];..
+[string("Carbon tax "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
 ];
 
 if Capital_Dynamics
