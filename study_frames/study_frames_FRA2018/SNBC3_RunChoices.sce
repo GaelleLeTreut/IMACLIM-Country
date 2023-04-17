@@ -37,24 +37,6 @@ if pY_gas_reduced == 'True' then
 
 end
 
-
-//////////////////////////////////////////////// OLD - A SUPPRIMER /////////////////////////////////////////////////////////////////////////////////////
-
-// // update carbon tax rate
-// // parameters.Carbon_Tax_rate = 110000;
-
-// // Basic Need  in ktep/UC
-// BasicNeed = zeros(nb_Sectors,1);
-// // Put in sectoral parameters 
-// BasicNeed_HH = (BasicNeed .*.ones(1,nb_Households));
-
-// // Data for Households are in thousand of people
-// Coef_HH_unitpeople = 10^3;
-
-// // sensitivity analysis 
-// parameters.sigma_X = parameters.sigma_X * (1+strtod(Trade_elast_var));
-// parameters.sigma_M = parameters.sigma_M * (1+strtod(Trade_elast_var));
-
 //////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
 parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
 parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
