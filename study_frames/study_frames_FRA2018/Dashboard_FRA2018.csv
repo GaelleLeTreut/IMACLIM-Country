@@ -6,6 +6,8 @@ Scenario;AME
 //;
 // Parametres SNBC 3;
 //;
+Carbon_BTA;%F
+Recycling_Option;
 Macro_nb;SNBC3
 Nb_Iter;4
 Coef_real_wage_dashboard;1
@@ -56,8 +58,6 @@ CO2_footprint;False
 Output_files;%T
 Output_prints;%F
 CarbonTaxDiff;%F
-Carbon_BTA;%F
-Recycling_Option;
 ClosCarbRev;CstNetLend
 ClosPubBudget;
 VAR_MU;
