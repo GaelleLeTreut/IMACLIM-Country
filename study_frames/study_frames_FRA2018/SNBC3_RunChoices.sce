@@ -77,21 +77,33 @@ end
 
 
 //////////////////////////////////////////////// TRANSFERT BONUS VEHICULES  /////////////////////////////////////////////////////////////////////////////////////
+
+Bonus_vehicules_share = 0;
+
 if Bonus_vehicule_dashboard == "True"
     if Scenario == "AMS"
-        Bonus_vehicules_share = 0.02; // Share of housedolds' consumption paid by the public sector
+
+        if time_step==1 then
+            Bonus_vehicules_share = 0.068; // Share of housedolds' consumption paid by the public sector
+        elseif time_step==2 then
+            Bonus_vehicules_share = 0.1;
+        elseif time_step==3 then
+            Bonus_vehicules_share = 0.1;
+        elseif time_step==4 then
+            Bonus_vehicules_share = 0.1;
+        end
+
     elseif Scenario == 'AME'
         if time_step==1
-            Bonus_vehicules_share = 0.02;
+            Bonus_vehicules_share = 0.052;
         else
             Bonus_vehicules_share = 0;
         end
     else
         disp("TRANSFERT BONUS VEHICULES : SCENARIO NON TRAITE")
     end
-else
-    Bonus_vehicules_share = 0;
-end
+end 
+
 
 
 //////////////////////////////////////////////// GESTION DES KAPPAS  /////////////////////////////////////////////////////////////////////////////////////
