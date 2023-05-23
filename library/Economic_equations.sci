@@ -151,7 +151,8 @@ function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent,
     H_Tax_Payments      = Income_Tax + Other_Direct_Tax;
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
-    T_MPR = MPR_share * C_value(Indice_ConstruS);
+    // A share of the investment of Property_business in construction is transfered to households
+    T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
 
     // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
     Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
@@ -842,7 +843,8 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
 	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
-    T_MPR = MPR_share * C_value(Indice_ConstruS);
+    // A share of the investment of Property_business in construction is transfered to households
+    T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
 
     // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
     Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);

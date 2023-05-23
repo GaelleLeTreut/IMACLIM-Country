@@ -70,10 +70,23 @@ end
 //////////////////////////////////////////////// TRANSFERT MA PRIME RENOV  /////////////////////////////////////////////////////////////////////////////////////
 
 if MaPrimRenov == "True"
-    MPR_share = 0.25; // Share of housedolds' consumption paid by the public sector
-else
-    MPR_share = 0;
-end
+    if Scenario == "AMS"
+        if time_step==1 then
+            MPR_share = 0.076; // Share of property_bus invest in construction paid by the public sector
+        elseif time_step==2 then
+            MPR_share = 0.076;
+        elseif time_step==3 then
+            MPR_share = 0.054;
+        elseif time_step==4 then
+            MPR_share = 0.014;
+        end
+
+    elseif Scenario == 'AME'
+        MPR_share = 0;
+    else
+        disp("TRANSFERT MA PRIME RENOV : SCENARIO NON TRAITE")
+    end
+end 
 
 
 //////////////////////////////////////////////// TRANSFERT BONUS VEHICULES  /////////////////////////////////////////////////////////////////////////////////////
