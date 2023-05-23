@@ -6,8 +6,6 @@ Scenario;AME
 //;
 // Parametres SNBC 3;
 //;
-Carbon_BTA;%F
-Recycling_Option;
 Macro_nb;SNBC3
 Nb_Iter;4
 Coef_real_wage_dashboard;1
@@ -18,6 +16,13 @@ SystemOpt_Resol;SystemOpt_Static_neokeynesien
 // SystemOpt_Resol;SystemOpt_Static_neoclassical
 //SystemOpt_Resol;SystemOpt_Static_johansen
 //;
+// Taxe carbone;
+Carbone_ETS;False
+Carbon_BTA;%F
+CarbonTaxDiff;%F
+Recycling_Option;
+ClosCarbRev;CstNetLend
+ClosPubBudget;
 //;
 // Implementations recentes;
 //;
@@ -25,7 +30,6 @@ pY_gas_reduced;True
 skip_calibration;True
 Time_step_non_etudie;2
 MaPrimRenov;False
-Carbone_ETS;False
 Bonus_vehicule_dashboard;False
 //;
 // Anciennes implementations;
@@ -57,9 +61,6 @@ Invest_matrix;%T
 CO2_footprint;False
 Output_files;%T
 Output_prints;%F
-CarbonTaxDiff;%F
-ClosCarbRev;CstNetLend
-ClosPubBudget;
 VAR_MU;
 VAR_pM;
 VAR_Growth;
