@@ -1475,9 +1475,14 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 [string("Prix de vente pondere sans C "+ Index_EnerSect +" - milliers euros / ktoe"),								sum(Out.pIC(Indice_EnerSect,1:nb_Sectors).*Out.IC(Indice_EnerSect,1:nb_Sectors),'c')./sum(Out.IC(Indice_EnerSect,1:nb_Sectors), 'c')												];..
 ["--- Quantities : energy production ---",								 ""																	];..
 [string("Y "+ Index_EnerSect +" - ktoe"),								Out.Y(Indice_EnerSect,:)												];..
+["--- Mesures sous-jacentes : transferts - millions euros courants ---",								 ""																	];..
+["Bonus ecologique vehicules particuliers",								money_disp_adj.*Bonus_vehicules_share * C_value(Indice_AutoS)												];..
+["Ma Prime Renov",								money_disp_adj.*MPR_share * C_value(Indice_ConstruS)												];..
 ["--- Carbon Tax value - millions euros courants ---",								 ""																	];..
-["Total carbon tax",								money_disp_adj.*sum(Out.Carbon_Tax)												];..
-[string("Carbon tax "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
+["Total carbon tax (C)",								money_disp_adj.*sum(Out.Carbon_Tax_C)												];..
+["Total carbon tax (IC)",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
+[string("Carbon tax (C + IC) "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
+[string("Border adjustment tax "+ Index_Sectors),								money_disp_adj.*Out.Carbon_Tax_M(Indice_Sectors)'												];..
 ];
 
 if Capital_Dynamics
