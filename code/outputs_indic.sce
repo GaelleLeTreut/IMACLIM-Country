@@ -1483,6 +1483,16 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Total carbon tax (IC)",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
 [string("Carbon tax (C + IC) "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
 [string("Border adjustment tax "+ Index_Sectors),								money_disp_adj.*Out.Carbon_Tax_M(Indice_Sectors)'												];..
+["--- Composantes du budget public ---",								 ""																	];..
+["Nominal G_Tax_revenue", money_disp_adj.*G_Tax_revenue];..
+["Nominal G_Non_Labour_Income", money_disp_adj.*G_Non_Labour_Income];..
+["Nominal G_Other_Income", money_disp_adj.*G_Other_Income];..
+["Nominal G_Property_income", money_disp_adj.*G_Property_income];..
+["Nominal G_Social_Transfers", -money_disp_adj.*G_Social_Transfers];..
+["Nominal G_Compensations", -money_disp_adj.*G_Compensations];..
+["Nominal T_MPR", -money_disp_adj.*T_MPR];..
+["Nominal Bonus_vehicules", -money_disp_adj.*Bonus_vehicules];..
+["Nominal G_disposable_income", money_disp_adj.*sum(Out.G_disposable_income)];..
 ];
 
 if Capital_Dynamics

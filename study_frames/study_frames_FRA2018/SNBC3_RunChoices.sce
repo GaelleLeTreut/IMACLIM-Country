@@ -69,6 +69,8 @@ end
 
 //////////////////////////////////////////////// TRANSFERT MA PRIME RENOV  /////////////////////////////////////////////////////////////////////////////////////
 
+MPR_share = 0;
+
 if MaPrimRenov == "True"
     if Scenario == "AMS"
         if time_step==1 then
@@ -215,6 +217,17 @@ if Scenario=='AMS2035' & energy_prices_controlled=='True' then
     //Proj_Vol('alpha').val = alpha_new;
 end
 
+//////////////////////////////////////////////// COMPOSANTES DU BUDGET PUBLIC  /////////////////////////////////////////////////////////////////////////////////////
+
+// On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
+global G_Tax_revenue
+global G_Non_Labour_Income
+global G_Other_Income
+global G_Property_income
+global G_Social_Transfers
+global G_Compensations
+global T_MPR
+global Bonus_vehicules
 
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 

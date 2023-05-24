@@ -829,17 +829,26 @@ endfunction
 // With MaPrimRenov subvention from Government to households
 
 function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
-
     // For one government. Distribution among different government must otherwise be specified.
 
-    // Income by sources, redistribution and tax revenue
-    G_Tax_revenue   = sum(Income_Tax + Other_Direct_Tax) + sum( Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
+    // On spécifie que l'on modifie les variables globales (définies dans le RunChoices)
+    // Et ce pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
+    global G_Tax_revenue
+    global G_Non_Labour_Income
+    global G_Other_Income
+    global G_Property_income
+    global G_Social_Transfers
+    global G_Compensations
+    global T_MPR
+    global Bonus_vehicules
 
-    G_Non_Labour_Income =  GOS_byAgent (Indice_Government) ;
-    G_Other_Income      =  Other_Transfers (Indice_Government) ;
-    G_Property_income   =  Property_income(Indice_Government) ;
-    G_Social_Transfers  =  sum(Pensions + Unemployment_transfers + Other_social_transfers) ;
-    G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
+    // Income by sources, redistribution and tax revenue
+    G_Tax_revenue = sum(Income_Tax + Other_Direct_Tax) + sum(Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
+    G_Non_Labour_Income = GOS_byAgent (Indice_Government) ;
+    G_Other_Income = Other_Transfers (Indice_Government) ;
+    G_Property_income = Property_income(Indice_Government) ;
+    G_Social_Transfers = sum(Pensions + Unemployment_transfers + Other_social_transfers) ;
+    G_Compensations = sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) ;
 	// G_Compensations     =  sum(ClimPolicyCompens(Indice_Households)) + sum(ClimPolicyCompens(Indice_Corporations)) + sum (ClimPolCompensbySect) ;
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
