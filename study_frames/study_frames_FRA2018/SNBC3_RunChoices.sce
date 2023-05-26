@@ -103,13 +103,13 @@ MPR_share = 0;
 if MaPrimRenov == "True"
     if Scenario == "AMS"
         if time_step==1 then
-            MPR_share = 0.076; // Share of property_bus invest in construction paid by the public sector
+            MPR_share = 0.145; // Share of property_bus invest in construction paid by the public sector
         elseif time_step==2 then
-            MPR_share = 0.076;
+            MPR_share = 0.147;
         elseif time_step==3 then
-            MPR_share = 0.054;
+            MPR_share = 0.104;
         elseif time_step==4 then
-            MPR_share = 0.014;
+            MPR_share = 0.024;
         end
 
     elseif Scenario == 'AME'
