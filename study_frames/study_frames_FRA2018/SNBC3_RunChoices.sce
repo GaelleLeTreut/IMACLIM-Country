@@ -54,17 +54,46 @@ if Carbone_ETS == "True"
         parameters.Carbon_Tax_rate = 152000;
     end
 
-    // Pour définir des taxes carbones différentes selon les secteurs
-    CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
-    parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
-    // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
-    Deriv_Exogenous.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+    if Scenario == 'AME'
+        // Pour définir des taxes carbones différentes selon les secteurs
+        CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
+        parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
+        // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+        Deriv_Exogenous.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
 
-    CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
-    parameters.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename); // Useless ?
-    // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
-    Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+        CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
+        parameters.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename); // Useless ?
+        // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+        Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
 
+    elseif Scenario == 'AMS'
+        // PRIX DU CARBONE PLUS FAIBLE EN 2030 SUR LE PERIMETRE DE L'ETS 2
+        if time_step == 2
+            // Pour définir des taxes carbones différentes selon les secteurs
+            CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_2030_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
+            parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
+            // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+            Deriv_Exogenous.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+
+            CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_2030_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
+            parameters.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename); // Useless ?
+            // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+            Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);  
+        else
+            // Pour définir des taxes carbones différentes selon les secteurs
+            CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
+            parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
+            // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+            Deriv_Exogenous.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+
+            CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
+            parameters.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename); // Useless ?
+            // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+            Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+        end
+    else
+        error('Scenario non traite pour l ETS')
+    end
 end
 
 //////////////////////////////////////////////// TRANSFERT MA PRIME RENOV  /////////////////////////////////////////////////////////////////////////////////////
