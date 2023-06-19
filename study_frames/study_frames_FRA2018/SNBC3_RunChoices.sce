@@ -43,16 +43,22 @@ parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
 
 //////////////////////////////////////////////// CARBON TAX EU-ETS  /////////////////////////////////////////////////////////////////////////////////////
 if Carbone_ETS == "True"
-    // En € / MtCO2
+    
+    // Carbon_Tax_rate en €2018 / MtCO2, même s'il est appliqué en € courant
     if time_step==1 then
-        parameters.Carbon_Tax_rate = 76000;
+        parameters.Carbon_Tax_rate = 80000;
     elseif time_step==2 then
-        parameters.Carbon_Tax_rate = 77900;
+        parameters.Carbon_Tax_rate = 82000;
     elseif time_step==3 then
-        parameters.Carbon_Tax_rate = 80800;
+        parameters.Carbon_Tax_rate = 85000;
     elseif time_step==4 then
-        parameters.Carbon_Tax_rate = 152000;
+        parameters.Carbon_Tax_rate = 160000;
     end
+
+    // On rentre les valeurs en €2020 en dur, que l'on déflate pour avoir des €2018
+    inflation_2018_2020 = 0.027;
+    parameters.Carbon_Tax_rate = parameters.Carbon_Tax_rate * (1-inflation_2018_2020);
+
 
     if Scenario == 'AME'
         // Pour définir des taxes carbones différentes selon les secteurs
@@ -91,6 +97,40 @@ if Carbone_ETS == "True"
             // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
             Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         end
+
+    elseif Scenario == 'AMS_high_ETS'
+        parameters.Carbon_Tax_rate = 1000;
+
+        // Pour définir des taxes carbones différentes selon les ETS 1 et 2
+
+        // Trajectoire de coûts du carbone à 410€ en 2050 pour l'ETS1 dans l'AMS
+        // Carbon_Tax_rate en €2018 / MtCO2, même s'il est appliqué en € courant
+        prix_carbone_ets_1_AMS = [80, 120, 250, 410];
+        prix_carbone_ets_2 = [80, 82, 85, 160];
+
+        // Pour tester
+        // prix_carbone_ets_1_AMS = prix_carbone_ets_2
+
+        // On rentre les valeurs en €2020 en dur, que l'on déflate pour avoir des €2018
+        inflation_2018_2020 = 0.027;
+        prix_carbone_ets_1_AMS = prix_carbone_ets_1_AMS .* (1-inflation_2018_2020);
+        prix_carbone_ets_2 = prix_carbone_ets_2 .* (1-inflation_2018_2020);
+
+        CarbonTax_Diff_IC_ETS1_filename = 'CarbonTax_Diff_IC_ETS1_' + Scenario; 
+        CarbonTax_Diff_IC_ETS2_filename = 'CarbonTax_Diff_IC_ETS2_' + Scenario; 
+
+        parameters.CarbonTax_Diff_IC = prix_carbone_ets_1_AMS(time_step) * evstr(CarbonTax_Diff_IC_ETS1_filename) + ..
+                                        prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_IC_ETS2_filename);
+        // CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename);
+        Deriv_Exogenous.CarbonTax_Diff_IC = prix_carbone_ets_1_AMS(time_step) * evstr(CarbonTax_Diff_IC_ETS1_filename) + ..
+                                        prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_IC_ETS2_filename);
+
+
+        CarbonTax_Diff_C_filename = 'CarbonTax_Diff_C_' + Scenario; // Creation of a string like "CarbonTax_Diff_C_AME"
+        parameters.CarbonTax_Diff_C = prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_C_filename); // Useless ?
+        // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
+        Deriv_Exogenous.CarbonTax_Diff_C = prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_C_filename);
+        
     else
         error('Scenario non traite pour l ETS')
     end
