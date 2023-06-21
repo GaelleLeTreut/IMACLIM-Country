@@ -1490,8 +1490,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal G_Property_income", money_disp_adj.*G_Property_income];..
 ["Nominal G_Social_Transfers", -money_disp_adj.*G_Social_Transfers];..
 ["Nominal G_Compensations", -money_disp_adj.*G_Compensations];..
-["Nominal T_MPR", -money_disp_adj.*T_MPR];..
-["Nominal Bonus_vehicules", -money_disp_adj.*Bonus_vehicules];..
 ["Nominal G_disposable_income", money_disp_adj.*sum(Out.G_disposable_income)];..
 ];
 

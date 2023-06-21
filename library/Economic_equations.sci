@@ -152,14 +152,14 @@ function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent,
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
-    T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
+    // T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
 
     // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
-    Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
+    // Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
 
     // After tax household classes disposable income constraint (H_disposable_income)
-    // H_disposable_income = (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
-    H_disposable_income = T_MPR + Bonus_vehicules + (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
+    H_disposable_income = (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
+    // H_disposable_income = T_MPR + Bonus_vehicules + (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
 
 endfunction
 
@@ -853,13 +853,14 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
-    T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
+    // T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
 
     // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
-    Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
+    // Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
 
     // After tax disposable income constraint (H_disposable_income)
-    G_disposable_income = -T_MPR -Bonus_vehicules + (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
+    G_disposable_income = (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
+    // G_disposable_income = -T_MPR -Bonus_vehicules + (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
 
 endfunction
 
@@ -1778,7 +1779,8 @@ endfunction
 
 function Labour_Tax_Cut = RevenueRecycling_Val_1()
 
-    // The constraint is used for the calculation of the tax rebate (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
+    // The constraint is used for the calculation of the tax rebate
+    // (Labour_Tax_Cut, cf. Labour_Tax_constraint above).
     // Same rebate for all sectors.
     Labour_Tax_Cut = 0;
     
@@ -2537,27 +2539,22 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     (FPI .^(sigma./(1 - sigma)))) ;
 
     if ~Capital_Dynamics
-			
 		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
 				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
 				(FPI .^(sigma./(1 - sigma)))) ;
 		
-		
 		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
 		if AdjustKappaOnly|AdjustKappaWithSubst
-			
+
 			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+            
 			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
 				 
 			if AdjustKappaOnly
-			
 					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
-					
 			elseif AdjustKappaWithSubst
-				
 					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
 			end 
-	
 		end 
 		
 	elseif Capital_Dynamics
@@ -2565,7 +2562,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
 	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
 				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
 				(FPI .^(sigma./(1 - sigma)))) ;
-
 	end
 
     // Proj structure for parameters
@@ -2938,11 +2934,10 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 endfunction
 
 function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
-    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
-    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
 	if ~Capital_Dynamics
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
-    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation,
+    // and 2) the composition of the fixed capital formation
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 
@@ -3090,7 +3085,6 @@ endfunction
 function pK = Capital_Cost_Val_1(pI, I, pRental)
 
 	if ~Capital_Dynamics
-		
 		if Invest_matrix then
 			pK = sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r");
 		else 
@@ -3098,10 +3092,8 @@ function pK = Capital_Cost_Val_1(pI, I, pRental)
 		end
 		
 	elseif Capital_Dynamics
-	// Unique rental price
-	
+	    // Unique rental price
 		pK = pRental.*ones(1,nb_Sectors);	
-		
 	end
     
 endfunction
@@ -4384,7 +4376,8 @@ endfunction
 function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 	if Capital_Dynamics
 		
-		// If exogenous unemployment rate, capital stock constraint is substitute for an unemployment rate constraint
+		// If exogenous unemployment rate, capital stock constraint is substitute for an ..
+        // unemployment rate constraint
 		if ~Exo_u_tot
 			if ~Exo_Kstock_Adj 
 				y = Capital_endowment - sum (kappa.*Y');
