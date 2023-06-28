@@ -141,7 +141,7 @@ end
 MPR_share = 0;
 
 if MaPrimRenov == "True"
-    if Scenario == "AMS"
+    if Scenario == "AMS" | Scenario == "AMS_high_ETS"
         if time_step==1 then
             MPR_share = 0.145; // Share of property_bus invest in construction paid by the public sector
         elseif time_step==2 then
@@ -165,7 +165,7 @@ end
 Bonus_vehicules_share = 0;
 
 if Bonus_vehicule_dashboard == "True"
-    if Scenario == "AMS"
+    if Scenario == "AMS" | Scenario == "AMS_high_ETS"
 
         if time_step==1 then
             Bonus_vehicules_share = 0.068; // Share of housedolds' consumption paid by the public sector
