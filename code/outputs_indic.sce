@@ -1473,24 +1473,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 [string("pM "+ Index_EnerSect +" - milliers euros / ktoe"),								Out.pM(Indice_EnerSect,:)												];..
 [string("Prix de vente pondere "+ Index_EnerSect +" - milliers euros / ktoe"),								(sum(Out.pIC(Indice_EnerSect,1:nb_Sectors).*Out.IC(Indice_EnerSect,1:nb_Sectors),'c')+Out.pC(Indice_EnerSect).*Out.C(Indice_EnerSect))./(sum(Out.IC(Indice_EnerSect,1:nb_Sectors), 'c')+Out.C(Indice_EnerSect))												];..
 [string("Prix de vente pondere sans C "+ Index_EnerSect +" - milliers euros / ktoe"),								sum(Out.pIC(Indice_EnerSect,1:nb_Sectors).*Out.IC(Indice_EnerSect,1:nb_Sectors),'c')./sum(Out.IC(Indice_EnerSect,1:nb_Sectors), 'c')												];..
-["--- Quantities : energy production ---",								 ""																	];..
-[string("Y "+ Index_EnerSect +" - ktoe"),								Out.Y(Indice_EnerSect,:)												];..
-["--- Mesures sous-jacentes : transferts - millions euros courants ---",								 ""																	];..
-["Bonus ecologique vehicules particuliers",								money_disp_adj.*Bonus_vehicules_share * C_value(Indice_AutoS)												];..
-["Ma Prime Renov",								money_disp_adj.*MPR_share * C_value(Indice_ConstruS)												];..
-["--- Carbon Tax value - millions euros courants ---",								 ""																	];..
-["Total carbon tax (C)",								money_disp_adj.*sum(Out.Carbon_Tax_C)												];..
-["Total carbon tax (IC)",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
-[string("Carbon tax (C + IC) "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
-[string("Border adjustment tax "+ Index_Sectors),								money_disp_adj.*Out.Carbon_Tax_M(Indice_Sectors)'												];..
-["--- Composantes du budget public ---",								 ""																	];..
-["Nominal G_Tax_revenue", money_disp_adj.*G_Tax_revenue];..
-["Nominal G_Non_Labour_Income", money_disp_adj.*G_Non_Labour_Income];..
-["Nominal G_Other_Income", money_disp_adj.*G_Other_Income];..
-["Nominal G_Property_income", money_disp_adj.*G_Property_income];..
-["Nominal G_Social_Transfers", -money_disp_adj.*G_Social_Transfers];..
-["Nominal G_Compensations", -money_disp_adj.*G_Compensations];..
-["Nominal G_disposable_income", money_disp_adj.*sum(Out.G_disposable_income)];..
 ];
 
 if Capital_Dynamics

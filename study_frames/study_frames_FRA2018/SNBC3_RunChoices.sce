@@ -284,3 +284,6 @@ global Bonus_vehicules
 // end
 
 
+
+
+Proj_Vol.IC.apply_proj = %F;
