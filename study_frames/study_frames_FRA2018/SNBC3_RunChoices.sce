@@ -131,6 +131,10 @@ if Carbone_ETS == "True"
         // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         Deriv_Exogenous.CarbonTax_Diff_C = prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_C_filename);
         
+        Deriv_Exogenous.CarbonTax_Diff_M = 0.4 * prix_carbone_ets_1_AMS(time_step);
+        parameters.CarbonTax_Diff_M = 0.4 * prix_carbone_ets_1_AMS(time_step);
+
+
     else
         error('Scenario non traite pour l ETS')
     end
