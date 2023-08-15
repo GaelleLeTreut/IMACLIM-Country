@@ -9,10 +9,16 @@ function y = apply_proj_eq(eq, var_value, var_name)
     
     // apply the projection
     y = eq;
-    for ind = Proj_Vol(var_name).ind_of_proj
-        y(ind(1),ind(2)) = var_value(ind(1),ind(2)) - proj_value(ind(1),ind(2));
-    end
+    if var_name <> 'pY'
+        for ind = Proj_Vol(var_name).ind_of_proj
+            y(ind(1),ind(2)) = var_value(ind(1),ind(2)) - proj_value(ind(1),ind(2));
+        end
 
+    elseif var_name == 'pY'
+        for ind = Proj_Vol(var_name).ind_of_proj
+            y(ind(2),ind(1)) = var_value(ind(1),ind(2)) - proj_value(ind(1),ind(2));
+        end
+    end
 endfunction
 
 function var_proj = apply_proj_val(var_value, var_name, Proj_Vol)
@@ -30,4 +36,14 @@ function var_proj = apply_proj_val(var_value, var_name, Proj_Vol)
         var_proj(ind(1),ind(2)) = proj_value(ind(1),ind(2));
     end
 
+    // if var_name <> 'pY'
+    //     for ind = Proj_Vol(var_name).ind_of_proj
+    //         var_proj(ind(1),ind(2)) = proj_value(ind(1),ind(2));
+    //     end
+
+    // elseif var_name == 'pY'
+    //     for ind = Proj_Vol(var_name).ind_of_proj
+    //         var_proj(ind(2),ind(1)) = proj_value(ind(2),ind(1));
+    //     end
+    // end
 endfunction

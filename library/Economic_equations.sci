@@ -2660,6 +2660,17 @@ function pY =  Production_price_Val_1(alpha, pIC, pL, lambda, pK, kappa, markup_
 
 endfunction
 
+// If we apply a projection for pY, it is the markup rate that adjusts. Otherwise, the markup rate is kept constant.
+function y = Production_price_forced_Const_1(pY)
+    y1 = BY.markup_rate - markup_rate;
+    
+    if is_projected('pY') then
+        y1 = apply_proj_eq(y1, pY, 'pY');
+    end
+
+    y = y1';
+endfunction
+
 // PAS POUR CALIBRAGE //
 // Mark-up
 function [y] =  Markup_Const_1(markup_rate) ;

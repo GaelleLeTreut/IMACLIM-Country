@@ -8,3 +8,4 @@ Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year)
 I;"""Invest""";Index_Sectors_IC;list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));%F;;%F
 kappa;"""Kappas_""+Scenario";string(Proj_Macro.current_year);list(list(1,1:nb_Sectors));%T;;%F
 //kappa;"""Kappas_""+Scenario";string(Proj_Macro.current_year);list(list(1,1:nb_Sectors-1));%T;;%F
+pY;"""Production_prices""";string(Proj_Macro.current_year);list(list(Indice_ElecS,1),list(Indice_AutoS, 1),list(Indice_ConstruS, 1));%T;;%F

@@ -94,7 +94,8 @@ proj_files = [
     'Invest_Elec_' + Scenario, .. // For Argentine
     'Labour_' + Scenario, ..
     'Invest_' + Scenario, .. // For France
-    'Kappas_' + Scenario
+    'Kappas_' + Scenario, ..
+    'Production_prices'
 ];
 
 to_transpose = [
