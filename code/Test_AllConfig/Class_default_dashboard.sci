@@ -50,6 +50,8 @@ function default_dashboard = new_default_dashboard()
 	'VAR_population','ref',..
 	'VAR_emis','ref',..
 	'Spe_margs_Profit_margin_gaz_reduced','false',..
-	'pY_ini_gaz_controlled_eco_eq', 'false')
-    
+	'pY_ini_gaz_controlled_eco_eq', 'false',..
+	'skip_calibration','True',..
+	'Time_step_non_etudie','9999')
+ 
 endfunction
