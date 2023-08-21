@@ -154,6 +154,40 @@ GDP_pLasp = (sum(Out.pC.*ref.C)+sum(Out.pG.*ref.G)+sum(Out.pI.*ref.I)+sum(Out.pX
 GDP_pPaas = Out.GDP / (sum(ref.pC.*Out.C)+sum(ref.pG.*Out.G)+sum(ref.pI.*Out.I)+sum(ref.pX.*Out.X)-sum(ref.pM.*Out.M)); 
 GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas);
 
+// if time_step ==1
+
+//     save('GDP_pLasp_2030_2018', GDP_pLasp_2030_2018);
+//     GDP_pFish_chained = 
+
+// end
+
+ 
+if time_step ==1
+
+    GDP_pLasp_2030_2018 = (sum(Out.pC.*ref.C)+sum(Out.pG.*ref.G)+sum(Out.pI.*ref.I)+sum(Out.pX.*ref.X)-sum(Out.pM.*ref.M))/ref.GDP ;
+    GDP_pPaas_2030_2018 = Out.GDP / (sum(ref.pC.*Out.C)+sum(ref.pG.*Out.G)+sum(ref.pI.*Out.I)+sum(ref.pX.*Out.X)-sum(ref.pM.*Out.M)); 
+    GDP_pFish_2030_2018 = sqrt(GDP_pLasp_2030_2018*GDP_pPaas_2030_2018);
+
+    GDP_pLasp_chained = GDP_pLasp_2030_2018 ;
+    GDP_pPaas_chained = GDP_pPaas_2030_2018 ;
+    GDP_pFish_chained = GDP_pFish_2030_2018 ;
+
+end
+
+if time_step ==2
+
+    // Price indices (Laspeyres, Paasche and Fisher) - GDP
+    GDP_pLasp_2050_2030 = (sum(Out.pC.*ini.C)+sum(Out.pG.*ini.G)+sum(Out.pI.*ini.I)+sum(Out.pX.*ini.X)-sum(Out.pM.*ini.M))/ini.GDP ;
+    GDP_pPaas_2050_2030 = Out.GDP / (sum(ini.pC.*Out.C)+sum(ini.pG.*Out.G)+sum(ini.pI.*Out.I)+sum(ini.pX.*Out.X)-sum(ini.pM.*Out.M)); 
+    GDP_pFish_2050_2030 = sqrt(GDP_pLasp_2050_2030*GDP_pPaas_2050_2030);
+
+    GDP_pLasp_chained = GDP_pLasp_2030_2018 * GDP_pLasp_2050_2030 ;
+    GDP_pPaas_chained = GDP_pPaas_2030_2018 * GDP_pPaas_2050_2030 ;
+    GDP_pFish_chained = GDP_pFish_2030_2018 * GDP_pFish_2050_2030 ;
+
+end
+
+
 // Approximation Real_GDP (Nominal GDP / GDP Fisher Price Index )
 GDP_qFish_app = Out.GDP / GDP_pFish;
 
@@ -1396,6 +1430,11 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["HH saving - % ",	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
+["Real_GDP_Laspeyres",												money_disp_adj.*Out.GDP/GDP_pLasp								];..
+["Real_GDP_Paasche",												money_disp_adj.*Out.GDP/GDP_pPaas								];..
+["Real GDP_chained",												money_disp_adj.*Out.GDP/GDP_pFish_chained									];..
+["Real_GDP_Laspeyres_chained",										money_disp_adj.*Out.GDP/GDP_pLasp_chained								];..
+["Real_GDP_Paasche_chained",										money_disp_adj.*Out.GDP/GDP_pPaas_chained								];..
 ["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
 ["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
@@ -1409,6 +1448,8 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
 ["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
 ["---Prices Index ratio/"+ref_name+"---",						 ""																	];..
+["GDP pPaas/"+ref_name,											GDP_pPaas							  								];..
+["GDP pLasp/"+ref_name,											GDP_pLasp							  								];..
 ["Price Fisher Index/"+ref_name, 								""																	];..
 ["GDP pFish/"+ref_name,											GDP_pFish							  								];..
 ["pC pFish/"+ref_name,											C_pFish															];..
