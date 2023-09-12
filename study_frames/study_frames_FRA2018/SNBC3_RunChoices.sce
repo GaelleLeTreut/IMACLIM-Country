@@ -3,6 +3,10 @@
 //     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
 //         exec(STUDY_Country+study+".sce");
 
+//////////////////// POUR FAIRE TOURNER LE MODELE A SEULEMENT 2 SECTEURS ////////////////////
+if AGG_type == "AGG_2TME" then
+    Indice_FinEnerSect = 1; // Est uniquement utilise dans outputs_indic.sce
+end
 
 //////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 

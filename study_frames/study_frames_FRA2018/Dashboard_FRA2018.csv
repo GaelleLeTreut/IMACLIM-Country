@@ -26,7 +26,7 @@ ClosPubBudget;
 //;
 // Implementations recentes;
 //;
-pY_gas_reduced;True
+pY_gas_reduced;False
 skip_calibration;True
 Time_step_non_etudie;999
 MaPrimRenov;False
@@ -48,9 +48,9 @@ share_of_stranded_asset_costs_4;0
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 study;SNBC3_RunChoices
-Capital_Dynamics;%T
-//AGG_type;
-AGG_type;AGG_23TME
+Capital_Dynamics;%F
+//AGG_type;AGG_23TME
+AGG_type;AGG_2TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Demographic_shift;True
