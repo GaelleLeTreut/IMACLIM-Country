@@ -1,7 +1,7 @@
 Component;Name
 //;
 // Parametres qui dependent de AME ou AMS;
-Scenario;AME
+Scenario;TESTKP
 //;
 //;
 // Parametres SNBC 3;
@@ -9,7 +9,7 @@ Scenario;AME
 Macro_nb;SNBC3
 Nb_Iter;7
 Coef_real_wage_dashboard;1
-sigma_omegaU_dashboard;-10
+sigma_omegaU_dashboard;-0.1
 emissions_bioenergy;False
 // SystemOpt_Resol;SystemOpt_Static_neokeynesien
 //SystemOpt_Resol;SystemOpt_Static_eviction_invest
@@ -49,8 +49,13 @@ System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 study;SNBC3_RunChoices
 Capital_Dynamics;%T
+// SELECT option for Capital_Dynamics;
+// Exogenous share of investment to GDP or unemployment;
+Exo_ShareI_GDP;%T
+Exo_u_tot;%T
+Exo_Kstock_Adj;%F
 //AGG_type;AGG_23TME
-AGG_type;AGG_2TME
+AGG_type;AGG_4SecB
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Demographic_shift;True
@@ -68,3 +73,4 @@ VAR_Immo;
 VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
+stable_growth;True

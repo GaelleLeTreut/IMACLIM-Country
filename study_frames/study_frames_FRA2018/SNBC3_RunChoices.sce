@@ -3,6 +3,11 @@
 //     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
 //         exec(STUDY_Country+study+".sce");
 
+
+if stable_growth == "True" then
+     Deriv_Exogenous.pC = pC *1.2;
+end
+
 //////////////////// POUR FAIRE TOURNER LE MODELE A SEULEMENT 2 SECTEURS ////////////////////
 if AGG_type == "AGG_2TME" then
     Indice_FinEnerSect = 1; // Est uniquement utilise dans outputs_indic.sce
@@ -288,6 +293,3 @@ global Bonus_vehicules
 // end
 
 
-
-
-Proj_Vol.IC.apply_proj = %F;

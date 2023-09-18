@@ -3354,6 +3354,8 @@ function [pM] = pM_price_Val_1(pY);
     pM(1:Index_Services-1) = BY.pM(1:Index_Services-1).*(pY(1:Index_Services-1)./BY.pY(1:Index_Services-1));
     pM(Index_Services) = BY.pM(Index_Services);
 
+//    pM(1:3) = BY.pM(1:3);
+
 endfunction 
 
 // Import price : forcing from macro context
@@ -4378,7 +4380,7 @@ function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 		
 		// If exogenous unemployment rate, capital stock constraint is substitute for an ..
         // unemployment rate constraint
-		if ~Exo_u_tot
+		if Exo_u_tot
 			if ~Exo_Kstock_Adj 
 				y = Capital_endowment - sum (kappa.*Y');
 			else
@@ -4394,6 +4396,11 @@ function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
 	end
 endfunction
 
+function y = u_tot_exo_Const_1 (Capital_endowment, kappa, Y, pRental)
+
+    y =  u_tot - Proj_Macro.u_tot (time_step) ;
+
+endfunction
 
 ///  Used to calibrate a trajectory of Invesment that stabilise unemployment
 // - > substitute with the equation of capital  stock : capital endowment is caculated to maintain a unemployment constant

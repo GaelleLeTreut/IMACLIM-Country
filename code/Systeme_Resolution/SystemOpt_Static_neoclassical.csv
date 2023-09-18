@@ -117,7 +117,7 @@ Y;MarketBalance_Val_1;IC, C, G, I, X, M;
 Labour;Employment_Val_1;lambda, Y;
 ;LabourByWorker_Const_1;LabourByWorker_coef, u_tot, Labour_force, lambda, Y;
 // For Mean wage curve: ;;;
-;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
+//;Mean_wage_Const_1;u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real_wage;
 w;Wage_Variation_Val_1;NetWage_variation;
 // For Sectoral wage curve:;;;
 // w;Wage_Val_1;u_tot, lambda, Y, sigma_omegaU_sect, CPI, Coef_real_wage_sect, phi_L;
@@ -126,6 +126,7 @@ w;Wage_Variation_Val_1;NetWage_variation;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_3;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
+;u_tot_exo_Const_1;Capital_endowment, kappa, Y, pRental;
 Capital_endowment;Capital_Dynamic_Val_1;;
 ;;;
 ////////////////////// Carbon tax policies;;;

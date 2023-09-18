@@ -1,8 +1,8 @@
 reference_year;2018;2020;2025;2030;2035;2040;2045
 current_year;2020;2025;2030;2035;2040;2045;2050
-GDP;0.006;0.006;0.006;0.006;0.006;0.006;0.006
-GDP_world;0.006;0.006;0.006;0.006;0.006;0.006;0.006
-Population;0.005;0.005;0.005;0.005;0.005;0.005;0.005
+GDP;0.005;0.005;0.005;0.005;0.005;0.005;0.005
+GDP_world;0;0;0;0;0;0;0
+Population;0;0;0;0;0;0;0
 Labour_force;0.005;0.005;0.005;0.005;0.005;0.005;0.005
 Retired;0;0;0;0;0;0;0
 pM_Crude_oil;0;0;0;0;0;0;0
@@ -10,4 +10,6 @@ pM_Liquid_fuels;0;0;0;0;0;0;0
 pM_Gas_fuels;0;0;0;0;0;0;0
 pM_Solid_fuels;0;0;0;0;0;0;0
 pM_Elec_heating;0;0;0;0;0;0;0
+u_tot;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649
+ShareI_GDP;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085
 units;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate

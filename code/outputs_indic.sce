@@ -1490,6 +1490,7 @@ OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
 ["---Capital consumption if U exo (if not,should be equal)--",			 ""																						];..
 ["Capital Consumption",						money_disp_adj.*sum(Out.kappa.*Out.Y')														];..
 ["Diff K Consumption and inventory in %",	((sum(Out.kappa.*Out.Y') - Out.Capital_endowment ) / Out.Capital_endowment)*100				];..
+["pK",						mean(pK)														];..
 ];
 end
 

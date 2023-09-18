@@ -1,9 +1,8 @@
 variable;file;headers;indexes_of_proj;apply_the_proj;Intens;Can be agg
-C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%F;;%T
-//C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));%T;;%T
-IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors), list(Indice_EnerSect,Indice_HybridCommod));%F;%T;%T
-//X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%F;;%T
-//M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%F;%T;%T
+C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households));%T;%F;%T
+IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors), list(Indice_EnerSect,Indice_HybridCommod));%T;%F;%T
+X;"""IOT_Qtities""";"""X""";list(list(Indice_EnerSect,1));%T;%F;%T
+M;"""IOT_Qtities""";"""M""";list(list(Indice_EnerSect,1));%T;%F;%T
 //Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_ElecS),list(1,Indice_AutoS),list(1,Indice_ConstruS));%F;%T;%F
 //I;"""Invest""";Index_Sectors_IC;list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));%F;;%F
 //kappa;"""Kappas_""+Scenario";string(Proj_Macro.current_year);list(list(1,1:nb_Sectors));%F;;%F
