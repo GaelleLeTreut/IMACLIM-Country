@@ -66,11 +66,11 @@ end
 if Labour_product == "True"
 	if time_step == 1 
 		for elt = 1:Nb_Iter
-			GDP_index(elt) = prod((1 + Proj_Macro.GDP(1:elt)).^(Proj_Macro.current_year(1:elt) - Proj_Macro.reference_year(1:elt)));
+			GDP_index(elt) = prod((1 + Proj_Macro.Labour_force(1:elt) + Proj_Macro.Mu(1:elt)).^(Proj_Macro.current_year(1:elt) - Proj_Macro.reference_year(1:elt)));
 		end
 	// Last step with same growth ( use for capital dynamics)
 		if Capital_Dynamics
-			GDP_index($+1) = GDP_index($)*( 1 + Proj_Macro.GDP(Nb_Iter) )  ;	
+			GDP_index($+1) = GDP_index($)*( 1 + Proj_Macro.Labour_force(Nb_Iter) + Proj_Macro.Mu(Nb_Iter) )  ;	
 		end 
 
 	end

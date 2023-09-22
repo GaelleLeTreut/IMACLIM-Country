@@ -1,12 +1,12 @@
 Component;Name
 //;
 // Parametres qui dependent de AME ou AMS;
-Scenario;TESTKP
+Scenario;TESTKPC
 //;
 //;
 // Parametres SNBC 3;
 //;
-Macro_nb;SNBC3
+Macro_nb;SNBC3_test
 Nb_Iter;7
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
@@ -73,4 +73,4 @@ VAR_Immo;
 VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
-stable_growth;True
+stable_growth;false

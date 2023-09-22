@@ -2882,6 +2882,16 @@ function [SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I] =  SpeMarg_Val_1(S
 
 endfunction
 
+function SpeMarg_rates_X = SpeMarg_rates_Val_1(p, Transp_margins_rates, Trade_margins_rates) 
+
+    SpeMarg_rates_X = BY.SpeMarg_rates_X';
+
+    SpeMarg_rates_X(1:3) = (BY.pX(1:3) ./ p'(1:3)) - ones(3, 1) - Transp_margins_rates'(1:3) -  Trade_margins_rates'(1:3);
+
+    SpeMarg_rates_X = SpeMarg_rates_X';
+
+endfunction
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   C.3  Investment decision
@@ -3115,7 +3125,7 @@ endfunction
 
 function pK = Capital_Cost_Val_3(pRental, scal_pK)
 
-    pK = pRental.*ones(1,nb_Sectors).*scal_pK;  
+    pK = pRental.*ones(1,nb_Sectors) .* scal_pK; 
 
 endfunction
 
@@ -3238,6 +3248,10 @@ function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
     pX = abs(pX);
     pM = abs(pM);
     X = (ones(nb_Sectors, 1) + delta_X_parameter').^time_since_BY .* BY.X * (GDP/BY.GDP) .* ( (BY.pX ./ BY.pM) .* (pM ./ pX) ) .^ sigma_X'
+
+    if is_projected('X') then
+        X = apply_proj_val(X, 'X');
+    end
 
 endfunction
 
@@ -3411,6 +3425,20 @@ function pIC = pIC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMa
 	
 endfunction
 
+function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_1(p, Transp_margins_rates, Trade_margins_rates) 
+
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+
+    SpeMarg_rates_IC = BY.SpeMarg_rates_IC';
+
+//    SpeMarg_rates_IC(1:3,:) = (BY.pIC(1:3,:) - Indirect_tax_rates(1:3,:)) ./ (ones(1, nb_Sectors).*.p'(1:3)) - ones(3,4,1) - ones(1,4).*. (Transp_margins_rates'(1:3) + Trade_margins_rates'(1:3))
+    SpeMarg_rates_IC(1:4,1:3) = (BY.pIC(1:4,1:3) - Indirect_tax_rates(1:4,1:3)) ./ (ones(1,3).*.p'(1:4)) - ones(4,3,1) - ones(1,3).*. (Transp_margins_rates'(1:4) + Trade_margins_rates'(1:4))
+
+    SpeMarg_rates_IC = SpeMarg_rates_IC';
+
+endfunction
+
+
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
 function y = pIC_price_Const_2(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
 
@@ -3551,6 +3579,19 @@ function pC = pC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMarg
 
     // Household consumption price: pC (nb_Commodities, nb_Households)
     pC = ( (ones(1, nb_Households).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates) .* (1 + (ones( 1, nb_Households).*.VA_Tax_rate') ) ;
+
+endfunction
+
+function SpeMarg_rates_C = SpeMarg_rates_C_Val_1(p, Transp_margins_rates, Trade_margins_rates) 
+
+    Indirect_tax_rates =  (ones(nb_Households,1) .*. ( Energy_Tax_rate_FC + OtherIndirTax_rate ) )' + Carbon_Tax_rate_C .* Emission_Coef_C  ;
+
+    SpeMarg_rates_C = BY.SpeMarg_rates_C';
+
+    SpeMarg_rates_C(1:3) = (BY.pC(1:3) ./ (1 + (ones( 1, nb_Households).*.VA_Tax_rate'(1:3)) ) - Indirect_tax_rates(1:3)) ./ p'(1:3) - ones(3, 1) - Transp_margins_rates'(1:3) -  Trade_margins_rates'(1:3);
+
+    SpeMarg_rates_C = SpeMarg_rates_C';
+
 endfunction
 
 
@@ -4363,7 +4404,7 @@ function y = Capital_Dynamic_Const_1 ( Capital_endowment )
 endfunction
 
 ///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
-function Capital_endowment = Capital_Dynamic_Val_1 ( )
+function Capital_endowment = Capital_Dynamic_Val_1 ()
 	
 	if Capital_Dynamics
 		Capital_endowment = ini.Capital_endowment * ( 1- depreciation_rate ) + sum (ini.I);
@@ -4372,7 +4413,6 @@ function Capital_endowment = Capital_Dynamic_Val_1 ( )
 	end
 	
 endfunction
-
 
 //  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
 function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)

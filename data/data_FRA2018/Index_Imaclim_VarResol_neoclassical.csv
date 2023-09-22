@@ -97,3 +97,6 @@ pRental;1;1;Var;0;%inf
 Capital_endowment;1;1;Var;0;%inf
 AdjRecycle;1;1;Var;0;%inf
 scal_pK;1;1;Var;0;%inf
+SpeMarg_rates_X;nb_Commodities;1;Var;-1;1
+SpeMarg_rates_C;nb_Commodities;1;Var;-1;1
+SpeMarg_rates_IC;nb_Commodities;nb_Sectors;Var;-1;1

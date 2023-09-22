@@ -5,7 +5,8 @@
 
 
 if stable_growth == "True" then
-     Deriv_Exogenous.pC = pC *1.2;
+	parameters.Mu = 0.0;
+	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
 //////////////////// POUR FAIRE TOURNER LE MODELE A SEULEMENT 2 SECTEURS ////////////////////
