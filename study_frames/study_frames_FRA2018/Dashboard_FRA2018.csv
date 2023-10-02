@@ -26,7 +26,7 @@ ClosPubBudget;
 //;
 // Implementations recentes;
 //;
-pY_gas_reduced;True
+pY_gas_reduced;False
 skip_calibration;True
 Time_step_non_etudie;2
 MaPrimRenov;False

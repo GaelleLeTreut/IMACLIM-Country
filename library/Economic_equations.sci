@@ -3426,7 +3426,26 @@ function pIC = pIC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMa
     // Intermediate consumption price: pIC (Sm_index, Sm_index)
     pIC = ( (ones(1, nb_Sectors).*.p') .* ( 1 + margins_rates ) + Indirect_tax_rates ) ;
 	
+    if is_projected('pIC') then
+        pIC = apply_proj_val(pIC,'pIC');
+    end
+
 endfunction
+
+
+function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_1(pIC, p, Transp_margins_rates, Trade_margins_rates) 
+    Indirect_tax_rates = ones(1,nb_Sectors).*.(Energy_Tax_rate_IC' + OtherIndirTax_rate') + Carbon_Tax_rate_IC .* Emission_Coef_IC ;
+    SpeMarg_rates_IC = BY.SpeMarg_rates_IC';
+    
+    if is_projected('pIC') then
+        for ind = Proj_Vol('pIC').ind_of_proj
+            SpeMarg_rates_IC(ind(1), ind(2)) = (pIC(ind(1), ind(2)) - Indirect_tax_rates(ind(1), ind(2))) ./ p'(ind(1)) - 1 - (Transp_margins_rates'(ind(1)) + Trade_margins_rates'(ind(1)));
+        end
+    end
+
+    SpeMarg_rates_IC = SpeMarg_rates_IC';
+endfunction
+
 
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
 function y = pIC_price_Const_2(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
