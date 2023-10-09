@@ -9,6 +9,20 @@ if stable_growth == "True" then
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
+if price_hike =="True"
+
+        if time_step == 1
+
+		parameters.delta_pM_parameter(1:3) = 0.4142135;		
+
+        else
+        
+        parameters.delta_pM_parameter(1:3) = 0.0;
+        
+        end
+
+end
+
 //////////////////// POUR FAIRE TOURNER LE MODELE A SEULEMENT 2 SECTEURS ////////////////////
 if AGG_type == "AGG_2TME" then
     Indice_FinEnerSect = 1; // Est uniquement utilise dans outputs_indic.sce

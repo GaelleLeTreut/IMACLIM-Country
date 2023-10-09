@@ -11,6 +11,6 @@ pM_Liquid_fuels;0;0;0;0;0;0;0
 pM_Gas_fuels;0;0;0;0;0;0;0
 pM_Solid_fuels;0;0;0;0;0;0;0
 pM_Elec_heating;0;0;0;0;0;0;0
-u_tot;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649;0.0966649
 ShareI_GDP;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085;0.2353085
 units;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate
+

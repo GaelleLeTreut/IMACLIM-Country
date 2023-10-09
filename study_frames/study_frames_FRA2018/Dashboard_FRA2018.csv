@@ -1,7 +1,7 @@
 Component;Name
 //;
 // Parametres qui dependent de AME ou AMS;
-Scenario;TESTKPC2
+Scenario;TESTKPC
 //;
 //;
 // Parametres SNBC 3;
@@ -74,3 +74,4 @@ VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
 stable_growth;false
+price_hike;false

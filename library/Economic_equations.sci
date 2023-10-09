@@ -2886,7 +2886,7 @@ function SpeMarg_rates_X = SpeMarg_rates_Val_1(p, Transp_margins_rates, Trade_ma
 
     SpeMarg_rates_X = BY.SpeMarg_rates_X';
 
-    SpeMarg_rates_X(1:3) = (BY.pX(1:3) ./ p'(1:3)) - ones(3, 1) - Transp_margins_rates'(1:3) -  Trade_margins_rates'(1:3);
+    SpeMarg_rates_X(1:3) = ( BY.pX(1:3) ./ p'(1:3)) - ones(3, 1) - Transp_margins_rates'(1:3) -  Trade_margins_rates'(1:3);
 
     SpeMarg_rates_X = SpeMarg_rates_X';
 
@@ -2936,7 +2936,6 @@ function [y] = Invest_demand_Const_1(Betta, I, kappa, Y, GDP, pI)
 				I = apply_proj_val(I, 'I');
 			end
 		
-			
 		y = matrix(y1, -1 , 1);
 		
 	end
@@ -2996,7 +2995,6 @@ function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 
-
             // PRISE EN COMPTE ACTIFS ECHOUES
             // Le producteur prend en compte le coût de remboursement des emprunts utilisés pour investir dans des actifs échoués.
             // Les kappas prennent en compte ces coûts, mais ils ne correspondent pas à de l'investissement.
@@ -3008,8 +3006,6 @@ function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
                 I = I * (1-share_of_stranded_asset_costs);
             end
 
-
-            
 			if is_projected('I') then
 				I = apply_proj_val(I, 'I');
 			end	
@@ -3342,7 +3338,7 @@ endfunction
 
 function Capital_consumption = Capital_Consump_Val_1(Y, kappa)
 
-    Capital_consumption = ( kappa .* Y' );
+    Capital_consumption = ( kappa .* Y' ) ;
 
 endfunction
 
@@ -3431,8 +3427,8 @@ function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_1(p, Transp_margins_rates, Trad
 
     SpeMarg_rates_IC = BY.SpeMarg_rates_IC';
 
-//    SpeMarg_rates_IC(1:3,:) = (BY.pIC(1:3,:) - Indirect_tax_rates(1:3,:)) ./ (ones(1, nb_Sectors).*.p'(1:3)) - ones(3,4,1) - ones(1,4).*. (Transp_margins_rates'(1:3) + Trade_margins_rates'(1:3))
-    SpeMarg_rates_IC(1:4,1:3) = (BY.pIC(1:4,1:3) - Indirect_tax_rates(1:4,1:3)) ./ (ones(1,3).*.p'(1:4)) - ones(4,3,1) - ones(1,3).*. (Transp_margins_rates'(1:4) + Trade_margins_rates'(1:4))
+    SpeMarg_rates_IC(1:3,:) = (BY.pIC(1:3,:) - Indirect_tax_rates(1:3,:)) ./ (ones(1, nb_Sectors).*.p'(1:3)) - ones(3,4,1) - ones(1,4).*. (Transp_margins_rates'(1:3) + Trade_margins_rates'(1:3))
+//    SpeMarg_rates_IC(1:4,1:3) = (BY.pIC(1:4,1:3) - Indirect_tax_rates(1:4,1:3)) ./ (ones(1,3).*.p'(1:4)) - ones(4,3,1) - ones(1,3).*. (Transp_margins_rates'(1:4) + Trade_margins_rates'(1:4))
 
     SpeMarg_rates_IC = SpeMarg_rates_IC';
 
@@ -4016,9 +4012,9 @@ function [y] = Wage_Variation_Const_1(w, NetWage_variation) ;
     y=y1';
 endfunction
 
-function w = Wage_Variation_Val_1(NetWage_variation)
+function w = Wage_Variation_Val_1(NetWage_variation,scal_pK)
 
-    w = NetWage_variation * BY.w;
+    w = NetWage_variation * BY.w * scal_pK;
 
     // Baisser coût du travail du gaz
     // w(Indice_GasS) = w(Indice_GasS) / 16;
@@ -4172,7 +4168,7 @@ function GrossOpSurplus = GrossOpSurplus_Val_1(Capital_income, Profit_margin, Tr
     SpeMarg_C =  SpeMarg_rates_C .* ( (ones(1, nb_Households).*.p') .* C)';
     SpeMarg_X = SpeMarg_rates_X .* ( p' .* X )';
     SpeMarg_I= SpeMarg_rates_I .* ( p' .* sum(I,"c"))';
-	 SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
+	SpeMarg_G= SpeMarg_rates_G .* ( p' .* G)';
 
     GrossOpSurplus = Capital_income + Profit_margin + Trade_margins + Transp_margins + sum(SpeMarg_IC, "r") + sum(SpeMarg_C, "r") + SpeMarg_X + SpeMarg_I +SpeMarg_G;
 
@@ -4413,6 +4409,25 @@ function Capital_endowment = Capital_Dynamic_Val_1 ()
 	end
 	
 endfunction
+
+// ///  Capital Stock endowment: inter period calculation of Capital_endowment (1,1)
+// function Capital_consumption = Capital_Dynamic_Val_2 (scal_K)
+	
+// 	if Capital_Dynamics
+// 		Capital_consumption = ini.Capital_consumption .* scal_K;
+// 	else 	
+// 		Capital_endowment = BY.Capital_endowment ; 
+// 	end
+	
+// endfunction
+
+/// Trade balance constant to GDP growth
+function y = Capital_pK_Const_1( pI, pK);
+
+    y = (sum(pK) ./ sum(pI)) - (sum(BY.pK) ./ sum(BY.pI));
+  
+endfunction
+
 
 //  Demands of capital productions balance out capital endowment K adjusting r as rental price (r unique price)
 function y = Capital_Market_Const_1 (Capital_endowment, kappa, Y, pRental)
