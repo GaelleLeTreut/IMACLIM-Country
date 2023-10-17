@@ -3447,6 +3447,16 @@ function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_1(pIC, p, Transp_margins_rates,
 endfunction
 
 
+function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_2(pIC, p, Transp_margins_rates, Trade_margins_rates) 
+    SpeMarg_rates_IC = BY.SpeMarg_rates_IC;
+    
+    if is_projected('SpeMarg_rates_IC') then
+        SpeMarg_rates_IC = apply_proj_val(SpeMarg_rates_IC,'SpeMarg_rates_IC');
+    end
+
+endfunction
+
+
 // Purchase price (Intermediate consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
 function y = pIC_price_Const_2(pIC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p, Cons_Tax_rate)
 
