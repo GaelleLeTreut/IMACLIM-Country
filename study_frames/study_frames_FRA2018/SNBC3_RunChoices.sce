@@ -27,10 +27,10 @@ if pY_gas_reduced == 'True' then
     // BY.w(Indice_GasS) = 40000; // avant valait 61390.52
 
     // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-    Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;

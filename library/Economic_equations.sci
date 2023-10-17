@@ -2607,9 +2607,11 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     if pY_gas_reduced == 'True' then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
-        // diviseur = 20;
-        // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+        if evstr(pY_gas_reduced_et_alphas_gaz_pas_forces) then
+            // Les alphas des intrants du gaz calibres sont beaucoup trop eleves, alors si on n'en force pas des exogenes plus faible, on les divise.
+            alpha(1:nb_EnerSect,Indice_GasS) = alpha(1:nb_EnerSect,Indice_GasS) ./ diviseur;
+        end
     end
 
 endfunction
@@ -2664,6 +2666,11 @@ endfunction
 function y = Production_price_forced_Const_1(pY)
     y1 = BY.markup_rate - markup_rate;
     
+    if pY_gas_reduced == 'True' then
+        // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
+        y1(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10 - markup_rate(Indice_GasS);
+    end
+
     if is_projected('pY') then
         y1 = apply_proj_eq(y1, pY, 'pY');
     end
@@ -3450,6 +3457,14 @@ endfunction
 function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_2(pIC, p, Transp_margins_rates, Trade_margins_rates) 
     SpeMarg_rates_IC = BY.SpeMarg_rates_IC;
     
+    if pY_gas_reduced == 'True' then
+        // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+        SpeMarg_rates_IC(Indice_GasS, Indice_OilS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+    end
+
     if is_projected('SpeMarg_rates_IC') then
         SpeMarg_rates_IC = apply_proj_val(SpeMarg_rates_IC,'SpeMarg_rates_IC');
     end
