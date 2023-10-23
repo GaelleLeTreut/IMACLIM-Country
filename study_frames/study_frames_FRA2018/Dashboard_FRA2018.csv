@@ -2,12 +2,12 @@ Component;Name
 //;
 // Parametres qui dependent de AME ou AMS;
 Scenario;AME
+Macro_nb;SNBC3
+Nb_Iter;4
 //;
 //;
 // Parametres SNBC 3;
 //;
-Macro_nb;SNBC3
-Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
 emissions_bioenergy;True
@@ -25,7 +25,7 @@ ClosCarbRev;CstNetLend
 ClosPubBudget;
 //;
 // Implementations recentes;
-"pY_gas_reduced";True
+pY_gas_reduced;True
 pY_gas_reduced_et_alphas_gaz_pas_forces;%F
 skip_calibration;True
 Time_step_non_etudie;2
