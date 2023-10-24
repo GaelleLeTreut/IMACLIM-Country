@@ -46,6 +46,10 @@ if ~isdef('SIMU_MODE') then
     SIMU_MODE = %F;
 end
 
+if ~isdef('SCENARIO_INCREMENT') then
+    SCENARIO_INCREMENT = %F;
+end
+
 // debug mode
 debug_mode = %T;
 
@@ -121,6 +125,15 @@ if Output_files
         simu_name = Current_Simu_Name;
 	elseif 	Scenario==""
 		simu_name='';
+    elseif 	SCENARIO_INCREMENT==%T
+	    simu_name=Scenario+"_"+nb_tests;
+        // if SystemOpt_Resol == "SystemOpt_johansen_full"
+        //     simu_name=Scenario+"_"+nb_tests+"jh_full";
+        // elseif SystemOpt_Resol == "SystemOpt_johansen_half"
+        //     simu_name=Scenario+"_"+nb_tests+"jh_half";
+        // elseif SystemOpt_Resol == "SystemOpt_constrained_invest"
+        //     simu_name=Scenario+"_"+nb_tests+"ci";
+        // end
 	else
 		simu_name=Scenario;
     end
@@ -140,7 +153,7 @@ if Output_files
 	if Scenario==""
 	    runName =Country_ISO + '_' + mydate()+'_'+ SystemOpt_Resol + "_" + Recycling_Option
 	else
-		runName = Country_ISO + '_' + mydate() + '_' + simu_name + '_' + syst_name + '_' + study;
+		runName = simu_name + '_' + Country_ISO + '_' + mydate() + '_' + syst_name + '_' + study;
 	end 
 	
     SAVEDIR = OUTPUT + runName + filesep();
@@ -300,9 +313,8 @@ printf("STEP 2: CHECKING CONSISTENCY of BENCHMARK DATA... \n");
 exec("Checks_loads.sce");
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-//	STEP 3: CALIBRATION
+//  STEP 3: CALIBRATION
 /////////////////////////////////////////////////////////////////////////////////////////////
-
 printf("STEP 3: CODE CALIBRATION... \n");
 exec("Check_CalibSyst.sce");
 
