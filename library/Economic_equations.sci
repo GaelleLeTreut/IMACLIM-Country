@@ -2615,7 +2615,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     if pY_gas_reduced == 'True' then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
-        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+        //alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
         if evstr(pY_gas_reduced_et_alphas_gaz_pas_forces) then
             // Les alphas des intrants du gaz calibres sont beaucoup trop eleves, alors si on n'en force pas des exogenes plus faible, on les divise.
             alpha(1:nb_EnerSect,Indice_GasS) = alpha(1:nb_EnerSect,Indice_GasS) ./ diviseur;
