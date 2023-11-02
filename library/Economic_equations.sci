@@ -2815,6 +2815,23 @@ function [y] = SpeMarg_rates_Const_1(SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_
 
 endfunction
 
+function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_2(pIC, p, Transp_margins_rates, Trade_margins_rates) 
+    SpeMarg_rates_IC = BY.SpeMarg_rates_IC;
+    
+    if pY_gas_reduced == 'True' then
+        // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+        // SpeMarg_rates_IC(Indice_GasS, Indice_OilS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+        SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+    end
+
+    if is_projected('SpeMarg_rates_IC') then
+        SpeMarg_rates_IC = apply_proj_val(SpeMarg_rates_IC,'SpeMarg_rates_IC');
+    end
+
+endfunction
+
 // A UTILISER POUR LE CALIBRAGE
 // Specific margin rates on hydrid sector purchases
 
