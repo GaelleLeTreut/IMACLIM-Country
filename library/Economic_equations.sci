@@ -2647,6 +2647,10 @@ function y =  Production_price_Const_1(pY, alpha, pIC, pL, lambda, pK, kappa, ma
 	// Mark-up pricing rule ( pY(nb_Sectors) ). The formula enables the use of different types of labour and capital inputs
     y1 = pY' - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY' + markup_rate .* pY')  ;
 
+    if is_projected('pY') then
+        y1 = apply_proj_eq(y1, pY, 'pY');
+    end
+
     y=y1';
 endfunction
 
@@ -2676,6 +2680,23 @@ function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
     y1 = markup_rate - tau_markup_rate*BY.markup_rate ;
 
     y=y1';
+endfunction
+
+function markup_rate =  Markup_Val_3(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y) ;
+    markup_rate =  BY.markup_rate;
+    
+    if pY_gas_reduced == 'True' then
+        // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
+        // markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+    end
+
+    if is_projected('pY') then
+        markup_rate_tmp = ones(1,nb_Sectors) - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY') ./ pY';
+
+        for ind = Proj_Vol('pY').ind_of_proj
+            markup_rate(ind(1)) = markup_rate_tmp(ind(1));
+        end
+    end
 endfunction
 
 // PAS POUR CALIBRAGE //

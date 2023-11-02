@@ -19,18 +19,18 @@ end
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
 if pY_gas_reduced == 'True' then
     // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-    Deriv_Exogenous.markup_rate = markup_rate;
-    Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+    // Deriv_Exogenous.markup_rate = markup_rate;
+    // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 
     // Baisser le lambda du gaz pour avoir une intensité en emploi similaire à celle du liquid et de l'élec
     // BY.lambda(Indice_GasS) = 0.002; // avant valait 0.012. Divise par 6
     // BY.w(Indice_GasS) = 40000; // avant valait 61390.52
 
     // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-    Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-    Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
     // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;

@@ -94,7 +94,10 @@ proj_files = [
     'Invest_Elec_' + Scenario, .. // For Argentine
     'Labour_' + Scenario, ..
     'Invest_' + Scenario, .. // For France
-    'Kappas_' + Scenario
+    'Kappas_' + Scenario, ..
+    'Production_prices', ..
+    'Intermediate_prices', ..
+    'Spemargin_rates'
 ];
 
 to_transpose = [
@@ -130,7 +133,13 @@ for var = fieldnames(Proj_Vol)'
         // To force the investment matrix
         elseif Proj_Vol(var).file == 'Invest' then
             mat_invest = evstr('Invest_' + Scenario + '_' + string(time_step));
-            
+        
+        elseif Proj_Vol(var).file == 'Intermediate_prices' then
+            mat_prices = evstr('Intermediate_prices' + '_' + string(time_step));
+
+        elseif Proj_Vol(var).file == 'Spemargin_rates' then
+            mat_spemarg_rates = evstr('Spemargin_rates' + '_' + string(time_step));
+
         elseif find(proj_files == Proj_Vol(var).file) then
                 
             Proj_Vol(var).data = evstr(Proj_Vol(var).file);
@@ -212,6 +221,34 @@ for var = fieldnames(Proj_Vol)'
                 end
             end
             
+        elseif Proj_Vol(var).file == 'Intermediate_prices'
+
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(mat_prices, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
+
+            else
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(mat_prices, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
+
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end        
+     
+        elseif Proj_Vol(var).file == 'Spemargin_rates'
+
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(mat_spemarg_rates, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
+
+            else
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(mat_spemarg_rates, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
+
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end 
+
         elseif find(proj_files == Proj_Vol(var).file) <> [] then
             
 			    if proj_well_aggregated then

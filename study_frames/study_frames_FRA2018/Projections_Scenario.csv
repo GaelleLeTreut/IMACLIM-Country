@@ -9,3 +9,4 @@ I;"""Invest""";Index_Sectors_IC;list(list(Indice_ConstruS,Indice_PropertyS),list
 I;"""Invest""";Index_Sectors_IC;list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));%T;;%F
 kappa;"""Kappas_""+Scenario";string(Proj_Macro.current_year);list(list(1,1:nb_Sectors));%T;;%F
 //kappa;"""Kappas_""+Scenario";string(Proj_Macro.current_year);list(list(1,1:nb_Sectors-1));%T;;%F
+pY;"""Production_prices""";string(Proj_Macro.current_year);list(list(Indice_SteelIronS,1),list(Indice_NonMetalsS, 1),list(Indice_CementS, 1),list(Indice_OthMinS, 1),list(Indice_PharmaS, 1),list(Indice_PaperS, 1));%T;;%F
