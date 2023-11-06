@@ -4379,6 +4379,20 @@ endfunction
 ///////   D.2  Capital market
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function capacity_utilization_rate = capacity_utilization_rate_Val_1(Capital_endowment, Capital_consumption)
+
+    // Distribution Matrix for n households classes (hn_index), 1 aggregated government and 1 aggregated business, and 3 different sources of incomes (Labour, Non-labour (gross operating surpluses), and other transfers)
+    capacity_utilization_rate = sum(Capital_consumption) / Capital_endowment ;
+
+endfunction
+
+function y = Mean_pK_Const_1(pRental, capacity_utilization_rate, sigma_capa); 
+
+    capacity_utilization_rate = abs(capacity_utilization_rate);
+	
+	y = mean(pK)  - ( mean(BY.pK) * ((capacity_utilization_rate / BY.capacity_utilization_rate)^(sigma_capa))) ;
+      
+endfunction
 
 ///  Calibration of Capital Consumption according to Capital Stock endowment
 function Capital_consumption = CapitalCons_Dyn_Val_0 ( Capital_income, Capital_endowment)
