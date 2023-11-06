@@ -130,9 +130,11 @@ Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_3;Betta, kappa, Y, GDP, pI;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
 ;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
 ;u_tot_exo_Const_1;Capital_endowment, kappa, Y, pRental;
-//Capital_endowment;Capital_Dynamic_Val_1;;
+Capital_endowment;Capital_Dynamic_Val_1;;
 //Capital_consumption;Capital_Dynamic_Val_2;scal_K;
-;Capital_pK_Const_1;pI, pK;
+//;Capital_pK_Const_1;pI, pK;
+//capacity_utilization_rate;capacity_utilization_rate_Val_1;Capital_endowment, Capital_consumption;
+//;Mean_pK_Const_1;pK, capacity_utilization_rate, sigma_capa;
 ;;;
 ////////////////////// Carbon tax policies;;;
 Carbon_Tax_rate_IC;CTax_rate_IC_Val_1;Carbon_Tax_rate, CarbonTax_Diff_IC;
