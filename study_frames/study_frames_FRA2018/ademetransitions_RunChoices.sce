@@ -18,8 +18,12 @@ end
 
 //////////////////////////////////////////////////// IMPORTATIONS ///////////////////////////////////////////////////////////////
 
+if VAR_sigma_MX != "neutral"
+
 // delta_M forcé pour les carburants liquides et le gaz
 parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
+
+end
 
 //////////////////////////////////////////////////// EXPORTATIONS ///////////////////////////////////////////////////////////////
 
@@ -68,6 +72,10 @@ elseif trade_drive=='exports_detailed_high'
 		parameters.delta_X_parameter(19) =  0.02133961 ;
 
 	end
+
+elseif trade_drive=='neutral'
+
+	parameters.delta_X_parameter(1:11) = 0;
 
 end
 
@@ -248,7 +256,7 @@ elseif VAR_Mu=="low"
 elseif VAR_Mu=="high"
 	parameters.Mu = 0.013
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-elseif VAR_Mu=="zero"
+elseif VAR_Mu=="neutral"
 	parameters.Mu = 0
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
