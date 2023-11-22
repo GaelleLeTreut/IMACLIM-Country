@@ -157,7 +157,7 @@ if Output_files
 	end	
 	if Scenario <> '' 
 		if Country_ISO <> 'FRA'
-			copyfile(STUDY_Country + "Projections_Scenario" + ".csv", SAVEDIR);	
+			copyfile(STUDY_Country + "Projections_Scenario_" + Proj_scenario + ".csv", SAVEDIR);	
 		else
 			copyfile(STUDY_Country + 'ProjScenario'+ AGG_type + ".csv", SAVEDIR);	
 		end

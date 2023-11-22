@@ -42,7 +42,7 @@ end
 if Country_ISO == 'FRA'
     file_name = 'ProjScenario'  + AGG_type + '.csv';
 else
-    file_name = 'Projections_Scenario.csv';
+    file_name = 'Projections_Scenario_' + Proj_scenario + '.csv';
 end
 proj_file = STUDY_Country + file_name;
 

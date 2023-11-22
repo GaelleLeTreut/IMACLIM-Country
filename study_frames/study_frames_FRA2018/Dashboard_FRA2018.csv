@@ -7,6 +7,7 @@ Scenario;AME
 // Parametres SNBC 3;
 //;
 Macro_nb;SNBC3
+Proj_scenario;SNBC3
 Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
