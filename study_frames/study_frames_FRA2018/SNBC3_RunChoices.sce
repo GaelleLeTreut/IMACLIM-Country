@@ -333,21 +333,16 @@ global Bonus_vehicules
 if Scenario == 'AME'
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
     Proj_Vol.I.apply_proj = %F;
-    Proj_Vol.pY.apply_proj = %F;
-    Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
 end
 
 if Scenario == 'AMS' // Config de Projections_Scenario_SNBC3.csv
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
     Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
-    Proj_Vol.pY.apply_proj = %F;
-    Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
 end
 
 if Scenario == 'AME_TISE'
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
-    Proj_Vol.I.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors), ..
-    list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
+    Proj_Vol.I.apply_proj = %F;
 end
 
 if Scenario == 'AMS_TISE' // Config de Projections_Scenario_TISE.csv
