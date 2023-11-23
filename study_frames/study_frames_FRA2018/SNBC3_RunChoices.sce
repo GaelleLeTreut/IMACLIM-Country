@@ -351,3 +351,54 @@ if Scenario == 'AMS_TISE' // Config de Projections_Scenario_TISE.csv
     list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
 end
 
+
+//////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
+
+// Productivite du travail : on met les valeurs qui sont normalement calculees dans macro_framework.sce
+if Labour_product =='True' & Demographic_shift <> 'True'
+    if time_step == 1
+        parameters.Mu = 0.0063541;
+    elseif time_step == 2
+        parameters.Mu = 0.0083716;
+    elseif time_step == 3
+        parameters.Mu = 0.0110542;
+    else 
+        error
+    end
+
+    parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+end
+
+// Desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
+if proj_alpha == 'false'
+    Proj_Vol.alpha.apply_proj = %F;
+end 
+
+if proj_c == 'false'
+    Proj_Vol.C.apply_proj = %F;
+end 
+
+if proj_kappa == 'false'
+    Proj_Vol.kappa.apply_proj = %F;
+end
+
+if proj_imports == 'false'
+    Proj_Vol.M_Y.apply_proj = %F;
+end
+
+if proj_exports == 'false'
+    Proj_Vol.X.apply_proj = %F;
+end
+
+if proj_invest == 'false'
+    Proj_Vol.I.apply_proj = %F;
+end
+
+if proj_pY == 'false'
+    Proj_Vol.pY.apply_proj = %F;
+end
+
+if proj_spemarg_rates_IC == 'false'
+    Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
+end
+

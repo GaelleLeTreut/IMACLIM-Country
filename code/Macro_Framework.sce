@@ -60,6 +60,8 @@ if Demographic_shift == "True"
             Deriv_Exogenous.Retired =  ((1+Proj_Macro.Retired(time_step)).^(parameters.time_since_ini))*ini.Retired;
         end 
     end
+else
+	Deriv_Exogenous.Labour_force = BY.Labour_force;
 end
 
 // Set up macroeconomic context

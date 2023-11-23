@@ -1,1 +1,1 @@
-simu_file_name = 'SimuSNBC3_recyclage_taxe_carbone_AMS.csv';
+simu_file_name = 'Simu_pas_a_pas.csv';

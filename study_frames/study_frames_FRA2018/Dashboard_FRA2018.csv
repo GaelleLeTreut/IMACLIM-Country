@@ -69,3 +69,11 @@ VAR_Immo;
 VAR_sigma;
 Trade_elast_var;0.0
 Fix_w;False
+proj_alpha;true
+proj_imports;true
+proj_exports;true
+proj_kappa;true
+proj_c;true
+proj_invest;true
+proj_pY;true
+proj_spemarg_rates_IC;true
