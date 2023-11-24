@@ -60,7 +60,7 @@ if Carbone_ETS == "True"
     parameters.Carbon_Tax_rate = parameters.Carbon_Tax_rate * (1-inflation_2018_2020);
 
 
-    if Scenario == 'AME'
+    if Scenario == 'AME' | Scenario =='AME_TISE'
         // Pour définir des taxes carbones différentes selon les secteurs
         CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
         parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
@@ -72,7 +72,7 @@ if Carbone_ETS == "True"
         // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
 
-    elseif Scenario == 'AMS'
+    elseif Scenario == 'AMS' | Scenario == 'AMS_TISE'
         // PRIX DU CARBONE PLUS FAIBLE EN 2030 SUR LE PERIMETRE DE L'ETS 2
         if time_step == 2
             // Pour définir des taxes carbones différentes selon les secteurs
