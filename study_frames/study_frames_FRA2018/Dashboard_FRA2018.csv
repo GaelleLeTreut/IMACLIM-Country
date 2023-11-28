@@ -20,6 +20,8 @@ SystemOpt_Resol;SystemOpt_Static_neokeynesien
 // Taxe carbone;
 Carbone_ETS;False
 Carbon_BTA;%F
+Scenario_ETS;none
+// Scenario_ETS;AMS_TISE_high_ETS
 CarbonTaxDiff;%F
 Recycling_Option;
 ClosCarbRev;CstNetLend

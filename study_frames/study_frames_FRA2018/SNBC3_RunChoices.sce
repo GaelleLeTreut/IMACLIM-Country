@@ -72,7 +72,7 @@ if Carbone_ETS == "True"
         // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
 
-    elseif Scenario == 'AMS' | Scenario == 'AMS_TISE'
+    elseif Scenario == 'AMS' | (Scenario == 'AMS_TISE' & Scenario_ETS <> 'AMS_TISE_high_ETS')
         // PRIX DU CARBONE PLUS FAIBLE EN 2030 SUR LE PERIMETRE DE L'ETS 2
         if time_step == 2
             // Pour définir des taxes carbones différentes selon les secteurs
@@ -98,7 +98,7 @@ if Carbone_ETS == "True"
             Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         end
 
-    elseif Scenario == 'AMS_high_ETS'
+    elseif Scenario == 'AMS_high_ETS' | Scenario_ETS == 'AMS_TISE_high_ETS'
         parameters.Carbon_Tax_rate = 1000;
 
         // Pour définir des taxes carbones différentes selon les ETS 1 et 2
@@ -116,8 +116,13 @@ if Carbone_ETS == "True"
         prix_carbone_ets_1_AMS = prix_carbone_ets_1_AMS .* (1-inflation_2018_2020);
         prix_carbone_ets_2 = prix_carbone_ets_2 .* (1-inflation_2018_2020);
 
-        CarbonTax_Diff_IC_ETS1_filename = 'CarbonTax_Diff_IC_ETS1_' + Scenario; 
-        CarbonTax_Diff_IC_ETS2_filename = 'CarbonTax_Diff_IC_ETS2_' + Scenario; 
+        CarbonTax_Diff_IC_ETS1_filename = 'CarbonTax_Diff_IC_ETS1_' + Scenario;
+        CarbonTax_Diff_IC_ETS2_filename = 'CarbonTax_Diff_IC_ETS2_' + Scenario;
+
+        if Scenario == 'AMS_TISE'
+            CarbonTax_Diff_IC_ETS1_filename = CarbonTax_Diff_IC_ETS1_filename + '_high_ETS';
+            CarbonTax_Diff_IC_ETS2_filename = CarbonTax_Diff_IC_ETS2_filename + '_high_ETS';
+        end
 
         parameters.CarbonTax_Diff_IC = prix_carbone_ets_1_AMS(time_step) * evstr(CarbonTax_Diff_IC_ETS1_filename) + ..
                                         prix_carbone_ets_2(time_step) * evstr(CarbonTax_Diff_IC_ETS2_filename);
