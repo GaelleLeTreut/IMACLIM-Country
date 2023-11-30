@@ -79,4 +79,50 @@ function launch_ImaclimS()
     
 endfunction
 
+function skip_calib(skip_calibration)
 
+    printf('%s\n', '1');
+    if ~(skip_calibration == "True")
+        printf('%s\n', '1');
+        // Get all variable names before calibration
+        save('sauvegarde_variables_pre_calibration');
+        [variable_names,types,dims,vols] = listvarinfile('sauvegarde_variables_pre_calibration');
+        printf('%s\n', '2');
+        // Execute Calibration.sce
+        exec("Calibration.sce");
+        
+        // Get all variable names after calibration
+        save('sauvegarde_variables_post_calibration');
+        [variable_names2,types,dims,vols] = listvarinfile('sauvegarde_variables_post_calibration');
+        printf('%s\n', '3');
+        // Function to check if a string is in a list
+        function [res] = check_string_in_list(list, string)
+            for i=1:length(length(list))
+                if list(i) == string then
+                    res = %t;
+                    return;
+                end
+            end
+            res = %f;
+        endfunction
+        
+        // Select every variable created in calibration
+        variables_to_load = []
+        printf('%s\n', '4');
+        for i = 1:length(length(variable_names2))
+            if ~check_string_in_list(variable_names, variable_names2(i)) then
+                variables_to_load = [variables_to_load, variable_names2(i)];
+            end
+        end
+        pause
+        // Save all variables created in calibration. It creates a binary file in IMACLIM-Country/code/
+        printf('%s\n', 'test1');
+        save('sauvegarde_variables_post_calibration', variables_to_load);
+        printf('%s\n', 'test2');
+    else
+        printf("Calibration skipped \n");
+        // Load all variables created in calibration
+        load('sauvegarde_variables_post_calibration');
+    end
+
+endfunction

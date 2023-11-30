@@ -385,11 +385,9 @@ function y = H_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, ti
 	
 endfunction
 
-
 // Household consumption (by products, by household class)
 // Aggregated demand functions (may not assume identical and perfect aggregation preferences, identical constraints and maximisation programs)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 /// Household Total consumption budget
 function y = ConsumBudget_Const_1(Consumption_budget, H_disposable_income, Household_saving_rate) ;
@@ -404,6 +402,13 @@ function Consumption_budget = ConsumBudget_Val_1(H_disposable_income, Household_
 
     /// Source of consumption budget - Share of disposable income (by household class)
     Consumption_budget = H_disposable_income .* (1 - Household_saving_rate);
+	
+endfunction
+
+function Consumption_budget = ConsumBudget_Val_2(H_disposable_income, Household_savings)
+
+    /// Source of consumption budget - Share of disposable income (by household class)
+    Consumption_budget = H_disposable_income - Household_savings;
 	
 endfunction
 
@@ -518,7 +523,7 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     if is_projected('C') then
         y1 = apply_proj_eq(y1,C,'C');
     end
-	
+
 	// Remaining budget goes to composite
     Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
 	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
@@ -552,6 +557,33 @@ function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sig
     
 endfunction
 
+function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+	y1 = zeros(nb_Commodities, nb_Households) ;
+	
+	// IF only one elasticities for all sectors ( in Brazil, sectoral differenciation) 
+	if size(sigma_ConsoBudget,"r")==1
+	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
+	end
+
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
+    y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
+(ConstrainedShare_C(1:nb_Sectors-1, :) .* C_per_capita(1:nb_Sectors-1, time_step) * Population + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* C_per_capita(1:nb_Sectors-1, time_step) * Population .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./ (CPI*Population)) ./ ((Population_rexp_base(2,time_step) .*.ones(nb_Sectors-1, 1))./ (Population_rexp_base(3,time_step) * Population_rexp_base(1,time_step)) ) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
+
+	/// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+
+	// Remaining budget goes to composite
+    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
+	
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////    B.2 Corporations
@@ -1924,6 +1956,13 @@ function G_Consumption_budget = G_ConsumpBudget_Val_3(G_pFish)
     
 endfunction
 
+function G_Consumption_budget = G_ConsumpBudget_Val_4(G_pFish, Mu, Labour_force, time_since_BY)
+
+    /// Public consumption budget - Indexed on natural GDP growth
+    G_Consumption_budget = (G_pFish / BY.G_pFish *  BY.G_Consumption_budget)*(1 + Proj_Macro.Labour_force(time_step) + Mu + Proj_Macro.Labour_force(time_step)*Mu ).^(parameters.time_since_BY) ;
+    
+endfunction
+
 /// To pilote bugdet finance through the dashboard
 function [y] = G_budget_clos_Const_1(G_Consumption_budget, GDP, NetLending) ;
     /// Public consumption budget - constant in real terms
@@ -2426,6 +2465,14 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
 
     if is_projected('kappa') then
         kappa = apply_proj_val(kappa, 'kappa');
+    end
+
+    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    if pY_ini_gaz_controlled_eco_eq == 'true' then
+        diviseur = 100;
+//        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
+        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
     end
 
 endfunction
@@ -2989,7 +3036,8 @@ function I = Invest_demand_Val_1(Betta, kappa, Y, GDP, pI)
 			end	
 
 		else
-			I = Betta * sum( kappa .* Y' );
+            I = Betta * sum( kappa .* Y' );
+//            I = Betta * 0.93 * sum( kappa .* Y' );
 		end
 		
 	elseif Capital_Dynamics
@@ -3165,6 +3213,11 @@ function pK = Capital_Cost_Val_3(pRental, scal_pK)
 
 endfunction
 
+function pK = Capital_Cost_Val_3(pRental, scal_pK)
+
+    pK = pRental.*ones(1,nb_Sectors).*scal_pK;	
+endfunction
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////   D)  Market Functioning
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3242,7 +3295,7 @@ function M = Imports_Val_1 (pM, pY, Y, sigma_M, delta_M_parameter);
        Proj_param.M.ind_of_proj = Proj_Vol.M_Y.ind_of_proj;
        M = apply_proj_val(M, 'M', Proj_param)
     end
-    
+
 endfunction
 
 
@@ -3275,7 +3328,6 @@ function X = Exports_Val_1( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
     end
 
 endfunction
-
 
 //	proj: les exports croient comme la croissance naturelle dans le pays à termes de l'échanges inchangés 
 function X = Exports_Val_2( pM, pX, sigma_X, delta_X_parameter, GDP, Y);
@@ -3315,6 +3367,21 @@ function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
 endfunction
 
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_3( pM, pX, X, M, GDP);
+
+  y = (sum(pX(Indice_NonEnerSect).*X(Indice_NonEnerSect)) - sum(pM(Indice_NonEnerSect).*M(Indice_NonEnerSect)))/GDP - (sum(ini.pX(Indice_NonEnerSect).*ini.X(Indice_NonEnerSect)) - sum(ini.pM(Indice_NonEnerSect).*ini.M(Indice_NonEnerSect)))/ini.GDP
+  
+endfunction
+
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_4( pM, pX, X, M, GDP);
+
+    y = (sum(pX(5).*X(5)) - sum(pM(5).*M(5)))/GDP - (sum(ini.pX(5).*ini.X(5)) - sum(ini.pM(5).*ini.M(5)))/ini.GDP
+  
+endfunction
+  
+  
 
 // Market closure (adjustment of supply or demand in quantities)
 

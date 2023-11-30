@@ -1,0 +1,72 @@
+nb_scenarios: 415
+
+years: [2018,2030,2050]
+
+variables_table: ["values_2018","values_2030","values_2050"]
+
+columns2create: [['energy_ktoe_BY','energy_ktoe'],
+                  ['Real_GDP_BY','Real_GDP'],                    
+                  ['C_energy_ktoe_BY','C_energy_ktoe'],
+                  ['IC_energy_ktoe_without_energy_BY','IC_energy_ktoe_without_energy'],
+                  ['Real_C_BY','Real_C'],
+                  ['Real_G_BY','Real_G'],
+                  ['Real_I_BY','Real_I'],
+                  ['Real_X_BY','Real_X'],
+                  ['Real_M_BY','Real_M'],
+                  ['Real_Y_BY','Real_Y']]
+
+columns2create_ref: [['energy_ktoe_BY_ref','energy_ktoe'],
+                  ['Real_GDP_BY_ref','Real_GDP'],                    
+                  ['C_energy_ktoe_BY_ref','C_energy_ktoe'],
+                  ['IC_energy_ktoe_without_energy_BY_ref','IC_energy_ktoe_without_energy'],
+                  ['unemployment_BY_ref','unemployment'],
+                  ['e_h_consumption_BY_ref','e_h_consumption'],
+                  ['Real_M_BY_ref','Real_M']]
+
+columns2create_ref: [["C_energy_ktoe_rstd","C_energy_ktoe"],
+                     ["IC_energy_ktoe_without_energy_rstd","IC_energy_ktoe_without_energy"],
+                     ["energy_ktoe_rstd","energy_ktoe"],
+                     ["Real_GDP_rstd",""Real_GDP"],
+                     ["unemployment_rstd","unemployment"]]
+
+mapping_variables: {"Real GDP": "Real_GDP",
+            "Real C": "Real_C",
+            "Real G": "Real_G",
+            "Real I": "Real_I",
+            "Real X": "Real_X",
+            "Real M": "Real_M",
+            "Real Y": "Real_Y",
+            "Unemployment % points/BY": "unemployment",
+            "IC - Energy ktoe": "IC_energy_ktoe",
+            "C - Energy - ktoe": "C_energy_ktoe",
+            "	Energy in Households consumption": "e_h_consumption"}
+
+mapping_scenarios: {"S2_55" : "S2ref", 
+                     "S3_55" : "S3ref"}
+
+mapping_scenarios_2: {"S2ref" : "S2", 
+                       "S3ref" : "S3", 
+                       "S2" : "S2", 
+                       "S3" : "S3"}
+
+mapping_score_type: {"C_energy" : "Energy",
+                      "C_energy_rstd" : "Energy",
+                      "IC_energy_without_energy" : "Energy", 
+                      "IC_energy_rstd" : "Energy",
+                      "Energy" : "Energy", 
+                      "Energy_rstd" : "Energy",
+                      "Unemployment" : "Economy",
+                      "Unemployment_rstd" : "Economy",
+                      "GDP" : "Economy",
+                      "GDP_rstd" : "Economy",
+                      "e_h_consumption" : "Economy",
+                      "all_goals_ref" : "all"}
+
+
+scenarios_selection: [["S2","S2_1_2018","S2_1_2030","S2_1_2050"], ["S3","S3_1_2018","S3_1_2030","S3_1_2050"]]
+
+score_years: ["2030","2050"]
+score_scenarios: ["S2","S3"]
+
+position: 1
+position_2: 4

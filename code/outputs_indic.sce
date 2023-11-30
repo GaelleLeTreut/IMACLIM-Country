@@ -154,6 +154,40 @@ GDP_pLasp = (sum(Out.pC.*ref.C)+sum(Out.pG.*ref.G)+sum(Out.pI.*ref.I)+sum(Out.pX
 GDP_pPaas = Out.GDP / (sum(ref.pC.*Out.C)+sum(ref.pG.*Out.G)+sum(ref.pI.*Out.I)+sum(ref.pX.*Out.X)-sum(ref.pM.*Out.M)); 
 GDP_pFish = sqrt(GDP_pLasp*GDP_pPaas);
 
+// if time_step ==1
+
+//     save('GDP_pLasp_2030_2018', GDP_pLasp_2030_2018);
+//     GDP_pFish_chained = 
+
+// end
+
+ 
+if time_step ==1
+
+    GDP_pLasp_2030_2018 = (sum(Out.pC.*ref.C)+sum(Out.pG.*ref.G)+sum(Out.pI.*ref.I)+sum(Out.pX.*ref.X)-sum(Out.pM.*ref.M))/ref.GDP ;
+    GDP_pPaas_2030_2018 = Out.GDP / (sum(ref.pC.*Out.C)+sum(ref.pG.*Out.G)+sum(ref.pI.*Out.I)+sum(ref.pX.*Out.X)-sum(ref.pM.*Out.M)); 
+    GDP_pFish_2030_2018 = sqrt(GDP_pLasp_2030_2018*GDP_pPaas_2030_2018);
+
+    GDP_pLasp_chained = GDP_pLasp_2030_2018 ;
+    GDP_pPaas_chained = GDP_pPaas_2030_2018 ;
+    GDP_pFish_chained = GDP_pFish_2030_2018 ;
+
+end
+
+if time_step ==2
+
+    // Price indices (Laspeyres, Paasche and Fisher) - GDP
+    GDP_pLasp_2050_2030 = (sum(Out.pC.*ini.C)+sum(Out.pG.*ini.G)+sum(Out.pI.*ini.I)+sum(Out.pX.*ini.X)-sum(Out.pM.*ini.M))/ini.GDP ;
+    GDP_pPaas_2050_2030 = Out.GDP / (sum(ini.pC.*Out.C)+sum(ini.pG.*Out.G)+sum(ini.pI.*Out.I)+sum(ini.pX.*Out.X)-sum(ini.pM.*Out.M)); 
+    GDP_pFish_2050_2030 = sqrt(GDP_pLasp_2050_2030*GDP_pPaas_2050_2030);
+
+    GDP_pLasp_chained = GDP_pLasp_2030_2018 * GDP_pLasp_2050_2030 ;
+    GDP_pPaas_chained = GDP_pPaas_2030_2018 * GDP_pPaas_2050_2030 ;
+    GDP_pFish_chained = GDP_pFish_2030_2018 * GDP_pFish_2050_2030 ;
+
+end
+
+
 // Approximation Real_GDP (Nominal GDP / GDP Fisher Price Index )
 GDP_qFish_app = Out.GDP / GDP_pFish;
 
@@ -1364,7 +1398,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
 ["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
-["Labour productivity ",										parameters.Mu													];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
 ["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
@@ -1397,18 +1430,26 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["HH saving - % ",	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
+["Real_GDP_Laspeyres",												money_disp_adj.*Out.GDP/GDP_pLasp								];..
+["Real_GDP_Paasche",												money_disp_adj.*Out.GDP/GDP_pPaas								];..
+["Real GDP_chained",												money_disp_adj.*Out.GDP/GDP_pFish_chained									];..
+["Real_GDP_Laspeyres_chained",										money_disp_adj.*Out.GDP/GDP_pLasp_chained								];..
+["Real_GDP_Paasche_chained",										money_disp_adj.*Out.GDP/GDP_pPaas_chained								];..
 ["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
 ["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
 ["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
-["Real Trade Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real_Trade_Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real_Trade_Balance_BY",											(money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)) / (money_disp_adj.*(sum(BY.X_value)-sum(BY.M_value)))];..
 ["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
 ["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./evstr("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
 ["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
 ["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
 ["---Prices Index ratio/"+ref_name+"---",						 ""																	];..
+["GDP pPaas/"+ref_name,											GDP_pPaas							  								];..
+["GDP pLasp/"+ref_name,											GDP_pLasp							  								];..
 ["Price Fisher Index/"+ref_name, 								""																	];..
 ["GDP pFish/"+ref_name,											GDP_pFish							  								];..
 ["pC pFish/"+ref_name,											C_pFish															];..
@@ -1421,6 +1462,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp													];..
 [string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				evstr("Y_"+Index_NonEnerSect+"_pLasp")							];..
 ["pM pFish/"+ref_name,											M_pFish															];..
+["real_effective_exchange_rate"+ref_name,						C_pFish / M_pFish												];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
 ["Energy price/"+ref_name,										IC_Ener_pFish														];..
@@ -1515,23 +1557,69 @@ end
 
 /// for MacroIncertitudes
 
-if Scenario=="RefBC"
-OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
-["---Macro Incertitudes ---",								 ""																	];..
-["Labour Productivity",							parameters.Mu						];..
-//["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
-//["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
-["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
-["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
-["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
-["World Growth Level_"+Index_NonEnerSect,		parameters.delta_X_parameter(:,Indice_NonEnerSect)'			];..
-//["World Growth Level_"+Index_NonEnerSect, 			sum(parameters.delta_X_parameter(:,Indice_NonEnerSect),"r")			];..
-["Productivity Variation",		VAR_MU		];..
-["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
-["World Growth Level Variation",		VAR_Growth	];..
-["Household saving rate Variation",		VAR_Immo	];..
-["Sigma Variation",		VAR_sigma	];..
-];
+if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
+    OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
+    ["---Macro Incertitudes ---",			 ""																						];..
+    ["VAR_sigma_MX",		VAR_sigma_MX	];..
+//    ["sigma_M",		max(Deriv_Exogenous.sigma_M)	];..
+    ["sigma_X",	max(sigma_X)		];..
+    ["VAR_saving",		VAR_saving	];..
+    ["Household_saving_rate",		Out.Household_saving_rate	];..							 
+    ["VAR_Mu",		VAR_Mu		];..
+    ["Labour_productivity ",										parameters.Mu													];..
+    ["VAR_coef_real_wage",		VAR_coef_real_wage		];..
+    ["Real_wage_coeffient",		parameters.Coef_real_wage		];..
+    ["VAR_sigma_omegaU",		VAR_sigma_omegaU		];..
+    ["Sigma_wage_curve",		parameters.sigma_omegaU		];..
+    ["VAR_C_basic_need",		VAR_C_basic_need		];..
+    ["C_basic_need",		mean(parameters.ConstrainedShare_C)		];..
+    ["trade_drive",		trade_drive		];..
+    ["eq_G_ConsumpBudget",	eq_G_ConsumpBudget		];..
+    ["VAR_sigma_pC",	"NC"		];..
+    ["sigma_pC",	max(parameters.sigma_pC)		];..
+    ["VAR_sigma",	"NC"			];..
+    ["sigma",	max(sigma)		];..
+    ["VAR_import_enersect",	VAR_import_enersect		];..
+    ["VAR_population",	VAR_population		];..
+    ["Population",	Out.Population		];..
+    ["Labour_force",	Out.Labour_force		];..
+    ["VAR_emis",	"NC"		];..
+    ["	Energy in Households consumption", ref.Ener_C_ValueShare*(C_En_qLasp-1)*100];.. 
+    ["CPI", Out.CPI];..
+    ["Rexp", Out.Consumption_budget];.. 
+    ["H_disposable_income", Out.H_disposable_income];..
+    ["H_Labour_Income", Out.NetCompWages_byAgent(3)];..
+    ["H_Non_Labour_Income", Out.GOS_byAgent(3)];.. 
+    ["Pensions", Out.Pensions(3)];..
+    ["Unemployment_transfers", Out.Unemployment_transfers(3)];.. 
+    ["Other_social_transfers", Out.Other_social_transfers(3)];..
+    ["Other_Transfers", Out.Other_Transfers(3)];.. 
+    ["ClimPolicyCompens", Out.ClimPolicyCompens(3)];..
+    ["Property_income", Out.Property_income(3)];..
+    ["Income_Tax", Out.Income_Tax(3)];.. 
+    ["Other_Direct_Tax", Out.Other_Direct_Tax(3)];..
+    ["GDP_pLasp", GDP_pLasp];.. 
+    ["GDP_pPaas", GDP_pPaas];..
+    ["pc*C", sum(Out.pC.*ref.C)];..
+    ["pG*G", sum(Out.pG.*ref.G)];..
+    ["pI*I", sum(Out.pI.*ref.I)];..
+    ["pX*X", sum(Out.pX.*ref.X)];..
+    ["pM*M", sum(Out.pM.*ref.M)];..   
+//    ["H_Other_Income", Out.H_Other_Income];.. 
+//    ["H_Property_income", Out.H_Property_income];..
+//    ["H_Tax_Payments",Income_Tax + Other_Direct_Tax];.. 
+    // ["Labour Productivity",							parameters.Mu						];..
+    // //["Labour Productivity_"+Index_EnerSect,							parameters.phi_L(:,Indice_EnerSect)'						];..
+    // //["Labour Productivity_"+Index_NonEnerSect,							parameters.phi_L(:,Indice_NonEnerSect)'						];..
+    // ["Prices Oil", 			parameters.delta_pM_parameter(Indice_OilS)			];..
+    // ["Prices Gas", 			parameters.delta_pM_parameter(Indice_GasS)	      	];..
+    // ["Prices Coal", 			parameters.delta_pM_parameter(Indice_CoalS)		];..	
+    // ["World Growth Level_"+Index_NonEnerSect,		parameters.delta_X_parameter(:,Indice_NonEnerSect)'			];..
+    // //["World Growth Level_"+Index_NonEnerSect, 			sum(parameters.delta_X_parameter(:,Indice_NonEnerSect),"r")			];..
+    // ["Prices Oil/Gas/Coal Variation",		VAR_pM			];..
+    // ["World Growth Level Variation",		VAR_Growth	];..
+
+    ];
 end
 
 /// Temporary - to delete
@@ -1592,7 +1680,6 @@ else
                     if j == strtod(Time_step_non_etudie)
                         continue
                     end
-
                     execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
                     i = i+1;
                 end

@@ -1,5 +1,7 @@
 # ignore the directory outputs and all its content
+.venv
 outputs
+MacroTables
 study_frames/Country_Selection.csv
 .venv
 MacroTables

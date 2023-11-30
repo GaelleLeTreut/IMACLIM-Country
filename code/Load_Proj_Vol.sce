@@ -43,6 +43,9 @@ if Country_ISO == 'FRA'
     file_name = 'ProjScenario'  + AGG_type + '.csv';
 else
     file_name = 'Projections_Scenario_' + Proj_scenario + '.csv';
+    if SystemOpt_Resol == 'SystemOpt_neoclassical_full' | SystemOpt_Resol == 'SystemOpt_neoclassical_partial'
+        file_name = 'Projections_Scenario_neoclassical.csv';
+    end
 end
 proj_file = STUDY_Country + file_name;
 

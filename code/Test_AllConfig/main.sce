@@ -9,7 +9,9 @@
 def_test_file = 'def_of_MacroIncFRA.sce';
 
 // Enable TEST_MODE in ImaclimS.sce
-TEST_MODE = %T;
+TEST_MODE = %F;
+
+SCENARIO_INCREMENT = %T;
 
 // Parameters of the tests
 testing.countMax = 3;
@@ -72,41 +74,51 @@ for country = countries
     
     // List of all the dashboards to test
     dashboards = create_dashboards(country.dashboard);
-    
-    // Test each dashboard
-    for dash = dashboards
-        
-        nb_tests = nb_tests + 1;
-        
-        // Display the current test information
-        printf('%s\n', country.name);
-        for var = fieldnames(country.test)'
-            ind = find(dash(:,1) == var);
-            printf('    %s = ""%s""\n', var, dash(ind,2));
-        end
-        
-        printf('\nTESTING ..\n\n');
 
-        // Write the dashboard to test
-        csvWrite(dash, STUDY + country.study_frames + country.dashboard_file,";");
-        
-        // Run ImaclimS.sce. If an error is raised, save the dashboard
-        cd(CODE);
-        try
-            launch_ImaclimS();
-        catch
-            printf('\n************** ERROR **************\n');
-            nb_errors = nb_errors + 1;
-            csvWrite(dash, NOT_WORKING + RunName + filesep() + ..
-            string(nb_errors) + '_' + country.dashboard_file,";");
-        end
-        cd(TEST_FULLCODE);
-        
-        disp('-------------------------------------------');
-        
-    end
-    
+    save('C:\Users\rdo2\Dropbox\PC\Documents\GitHub\IMACLIM-Country\code\Test_AllConfig\dashboards.dat',"dashboards")
+
 end
+    
+//     // Test each dashboard
+//     for dash = dashboards
+        
+//         nb_tests = nb_tests + 1;
+
+//         filename = fullfile('C:\Users\rdo2\Dropbox\PC\Documents\GitHub\IMACLIM-Country\code\Test_AllConfig\'', "data.csv");
+
+//         csvWrite(dash, filename,";");
+
+//     end
+        
+// //         // Display the current test information
+// //         printf('%s\n', country.name);
+//         for var = fieldnames(country.test)'
+//             ind = find(dash(:,1) == var);
+//             printf('    %s = ""%s""\n', var, dash(ind,2));
+//         end
+        
+//         printf('\nTESTING ..\n\n');
+
+//         // Write the dashboard to test
+        
+        
+//         // Run ImaclimS.sce. If an error is raised, save the dashboard
+//         cd(CODE);
+//         try
+//             launch_ImaclimS();
+//         catch
+//             printf('\n************** ERROR **************\n');
+//             nb_errors = nb_errors + 1;
+//             csvWrite(dash, NOT_WORKING + RunName + filesep() + ..
+//             string(nb_errors) + '_' + country.dashboard_file,";");
+//         end
+//         cd(TEST_FULLCODE);
+        
+//         disp('-------------------------------------------');
+        
+//     end
+    
+// end
 
 
 // -------------------------------- *
