@@ -178,7 +178,7 @@ if time_step ==2
 
     // Price indices (Laspeyres, Paasche and Fisher) - GDP
     GDP_pLasp_2050_2030 = (sum(Out.pC.*ini.C)+sum(Out.pG.*ini.G)+sum(Out.pI.*ini.I)+sum(Out.pX.*ini.X)-sum(Out.pM.*ini.M))/ini.GDP ;
-    GDP_pPaas_2050_2030 = Out.GDP / (sum(ini.pC.*Out.C)+sum(ini.pG.*Out.G)+sum(ini.pI.*Out.I)+sum(ini.pX.*Out.X)-sum(ini.pM.*Out.M)); 
+    GDP_pPaas_2050_2030 = Out.GDP / (sum(ini.pC.*Out.C)+sum(ini.pG.*Out.G)+sum(ini.pI.*sum(Out.I,'c'))+sum(ini.pX.*Out.X)-sum(ini.pM.*Out.M)); // somme de Out.I pour le cas Invest_matrix=%T
     GDP_pFish_2050_2030 = sqrt(GDP_pLasp_2050_2030*GDP_pPaas_2050_2030);
 
     GDP_pLasp_chained = GDP_pLasp_2030_2018 * GDP_pLasp_2050_2030 ;

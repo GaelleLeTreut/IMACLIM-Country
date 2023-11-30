@@ -1,6 +1,6 @@
 Aggregation_type;-;-;-;-;-;AGG_4SecB;AGG_18TME;AGG_22TME;AGG_23TME;AGG_19TME;AGG_24TME
 Row;Crude_oil;Commodities;EnerSect;HybridCommod;PrimEnerSect;PrimEnergy;Oil;Oil;Crude_oil;Oil;Crude_oil
-Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Natural_gas;Gas_fuels;Natural_gas;Gas_fuels
+Row;Natural_gas;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Natural_gas;Natural_gas;Gas_fuels;Gas_heating;Gas_fuels
 Row;Crude_coal;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Coal_lignite;Coal_lignite;Solid_fuels;Coal_lignite;Solid_fuels
 Row;Coke;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHRes;Coal_lignite;Coal_lignite;Solid_fuels;Coal_lignite;Solid_fuels
 Row;Gasoline;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
@@ -9,8 +9,8 @@ Row;Jetfuel;Commodities;EnerSect;HybridCommod;PrimEnerSect;FinEnHTr;Oil;Oil;Liqu
 Row;Road_diesel;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
 Row;Heating_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
 Row;Other_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
-Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Elec_heating;Elec_heating
-Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Elec_heating;Elec_heating
+Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Electricity;Elec_heating
+Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Electricity;Elec_heating
 Row;Steel_Iron;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Steel_Iron;Steel_Iron;Steel_Iron;Steel_Iron;Steel_Iron
 Row;NonFerrousMetals;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals
 Row;Cement;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Cement;Cement;Cement;Cement;Cement
@@ -20,8 +20,8 @@ Row;CivilEngineering;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Construct
 Row;ChemicalPharma;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;ChemicalPharma;ChemicalPharma;ChemicalPharma;ChemicalPharma;ChemicalPharma
 Row;Paper;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Paper;Paper;Paper;Paper;Paper
 Row;Mining;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Compo;Compo;ManufacturedGoods;Compo
-Row;Automobile;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_indus;Auto_indus;Auto_indus;Auto_indus;Automobile
-Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_indus;Auto_indus;Auto_indus;Auto_indus;OthTranspEquip
+Row;Automobile;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_indus;Auto_indus;Auto_indus;Auto_transport;Automobile
+Row;OthTranspEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Auto_indus;Auto_indus;Auto_indus;Auto_transport;OthTranspEquip
 Row;OthEquip;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;OthEquip;OthEquip;ManufacturedGoods;OthEquip
 Row;Electronics;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Compo;Electronics;Electronics;ManufacturedGoods;Electronics
 Row;Food_industry;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Food_industry;Food_industry;Food_industry;Food_industry;Food_industry
