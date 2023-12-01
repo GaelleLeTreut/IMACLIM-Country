@@ -1548,7 +1548,7 @@ end
 
 /// for MacroIncertitudes
 
-if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
+if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3" | Scenario=="S2test" | Scenario=="S3test"
     OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
     ["---Macro Incertitudes ---",			 ""																						];..
     ["VAR_sigma_MX",		VAR_sigma_MX	];..
@@ -1595,7 +1595,10 @@ if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3"
     ["pG*G", sum(Out.pG.*ref.G)];..
     ["pI*I", sum(Out.pI.*ref.I)];..
     ["pX*X", sum(Out.pX.*ref.X)];..
-    ["pM*M", sum(Out.pM.*ref.M)];..   
+    ["pM*M", sum(Out.pM.*ref.M)];..
+    ["proj_alpha", proj_alpha];.. 
+    ["proj_c", proj_c];..      
+    ["proj_kappa", proj_kappa];.. 
 //    ["H_Other_Income", Out.H_Other_Income];.. 
 //    ["H_Property_income", Out.H_Property_income];..
 //    ["H_Tax_Payments",Income_Tax + Other_Direct_Tax];.. 

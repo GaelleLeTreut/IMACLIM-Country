@@ -1,4 +1,4 @@
 variable;file;headers;indexes_of_proj;apply_the_proj;Intens;Can be agg
-C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households),list(Indice_FoodS,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PaperS,1:nb_Households),list(Indice_AirS,1:nb_Households),list(Indice_LandS,1:nb_Households),list(Indice_ConstruS,1:nb_Households),list(Indice_AgriS,1:nb_Households),list(Indice_PharmaS,1:nb_Households),list(Indice_ManuS,1:nb_Households));%F;;%T
+C;"""IOT_Qtities""";Index_Headers_H;list(list(Indice_EnerSect,1:nb_Households),list(Indice_FoodS,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PaperS,1:nb_Households),list(Indice_AirS,1:nb_Households),list(Indice_LandS,1:nb_Households),list(Indice_ConstruS,1:nb_Households),list(Indice_AgriS,1:nb_Households),list(Indice_PharmaS,1:nb_Households),list(Indice_ManuS,1:nb_Households));%T;%F;%T
 IC;"""IOT_Qtities""";Index_Sectors_IC;list(list(Indice_EnerSect,1:nb_Sectors));%T;%T;%F
 Capital_consumption;"""Capital_Cons_""+Scenario";string(Proj_Macro.current_year);list(list(1,Indice_EnerSect), list(1,Indice_NonEnerSect));%T;%T;%F

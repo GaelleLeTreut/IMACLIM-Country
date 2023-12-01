@@ -5,7 +5,7 @@ from tools import *
 from pandas import DataFrame
 
 # ########## input data
-df = pd.read_csv('/Users/rdo2/Dropbox/PC/Documents/GitHub/IMACLIM-Country/outputs_display/MacroTables/FullTemplate_BY_byStep.csv', sep =";", header=None)
+df = pd.read_csv('/Users/douda/Documents/GitHub/IMACLIM-Country/outputs_display/MacroTables/FullTemplate_BY_byStep.csv', sep =";", header=None)
 # # ademe = pd.read_excel("/Users/rdo2/Dropbox/PC/Documents/GitHub/IMACLIM-Country/MacroTables/ADEME.xlsx",skiprows=0,sheet_name="Feuil1")
 # ########## end input data  
 
@@ -13,8 +13,8 @@ df = pd.read_csv('/Users/rdo2/Dropbox/PC/Documents/GitHub/IMACLIM-Country/output
 nb_scenarios_S2 = 242
 nb_scenarios_S3 = 242
 years = [2018,2030,2050]
-mapping_scenarios = {"S2_1" : "S2ref", 
-                     "S3_1" : "S3ref",
+mapping_scenarios = {"S2test_1" : "S2ref", 
+                     "S3test_1" : "S3ref",
                      "sTEND_1" : "TENDref"}
 mapping_variantes = {"S2" : "Variantes S2", 
                      "S3" : "Variantes S3",

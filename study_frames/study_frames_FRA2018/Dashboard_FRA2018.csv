@@ -74,7 +74,7 @@ proj_pY;true
 proj_spemarg_rates_IC;true
 VAR_Mu;ref
 VAR_sigma_MX;ref
-VAR_saving;ref
+VAR_saving;neutral
 VAR_sigma_omegaU;ademevalue
 VAR_coef_real_wage;ref
 VAR_C_basic_need;low

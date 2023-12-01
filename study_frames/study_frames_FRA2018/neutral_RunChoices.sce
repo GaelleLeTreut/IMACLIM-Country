@@ -1,28 +1,115 @@
-////////////////////////////////////////                                    ////////////////////////////////////////
-////////////////////////////////////////                                    ////////////////////////////////////////
-////////////////////////////////////////          Default settings          ////////////////////////////////////////
-////////////////////////////////////////									////////////////////////////////////////
-////////////////////////////////////////									////////////////////////////////////////
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////          Model settings          ////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
 
-Bonus_vehicules_share = 0;
-MPR_share = 0;
+// //////////////////////////////////////////////////// Macroeconomic closure  //////////////////////////////////////////////////////////////////////
+
+// if SystemOpt_Resol == "SystemOpt_johansen_full" 
+
+// 	VAR_saving = "johansen_full";
+// 	closure = "johansen";
+
+// elseif SystemOpt_Resol == "SystemOpt_Static" 
+
+// 	closure = "postkeynesian";
+
+// elseif SystemOpt_Resol == "SystemOpt_neoclassical_full" 
+
+// 	closure = "neoclassical";
+
+// end
+
+// // //////////////////////////////////////////////////// Wage curve  //////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////
+// // Elasticity
+// ////////////////////////////////////////
+// if VAR_sigma_omegaU=='ref'
+
+// 	parameters.sigma_omegaU = -0.1;
+
+// elseif VAR_sigma_omegaU=='ademevalue'
+
+// 	parameters.sigma_omegaU = -1.8;
+
+// end
+
+// ////////////////////////////////////////
+// // Wage curve real wage coefficient
+// ////////////////////////////////////////
+
+// if VAR_coef_real_wage=='ref'
+
+// 	parameters.Coef_real_wage = 1;
+
+// elseif VAR_coef_real_wage=='low'
+
+// 	parameters.Coef_real_wage = 0;
+
+// end
+
+// // //////////////////////////////////////////////////// Households consumption basic need  //////////////////////////////////////////////
+
+// if VAR_C_basic_need == 'ref'
+
+// 	parameters.ConstrainedShare_C = ones(nb_Sectors,nb_Households) * 0.8;
+
+// elseif VAR_C_basic_need == 'low'
+
+// 	parameters.ConstrainedShare_C = zeros(nb_Sectors,nb_Households);
+
+// end
+
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////          Policy shocks           ////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
 
 
-////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
-// Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-if 0 & Spe_margs_Profit_margin_gaz_reduced == 'true' then
-	Deriv_Exogenous.markup_rate = markup_rate;
-	Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
-// Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-	Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
-end
+if proj_alpha == 'false'
+
+	Proj_Vol.alpha.apply_proj = %F; 	
+end 
+
+if proj_c == 'false'
+
+Proj_Vol.C.apply_proj = %F; 	
+end 
+
+if proj_kappa == 'false'
+
+Proj_Vol.kappa.apply_proj = %F; 	
+end 
+
+
+parameters.sigma_ConsoBudget(1:18) = -50;
+
+
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////                                    ////////////////////////////////////////
+// ////////////////////////////////////////          Context shocks           ////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
+// ////////////////////////////////////////									////////////////////////////////////////
+
+// ////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
+// // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
+// if Spe_margs_Profit_margin_gaz_reduced == 'true' then
+// 	Deriv_Exogenous.markup_rate = markup_rate;
+// 	Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+// // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+// 	Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+// 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+// 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+// 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+// end
+
 
 //////////////////////////////////////////////////// IMPORTATIONS ///////////////////////////////////////////////////////////////
 
-if VAR_sigma_MX != "neutral"
+if VAR_sigma_MX == "ref"
 
 // delta_M forcé pour les carburants liquides et le gaz
 parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
@@ -79,35 +166,10 @@ elseif trade_drive=='exports_detailed_high'
 
 elseif trade_drive=='neutral'
 
-	parameters.delta_X_parameter(1:11) = 0;
+	parameters.delta_X_parameter(1:19) = 0;
 
 end
 
-//////////////////////////////////////////////////// Households consumption basic need  //////////////////////////////////////////////
-
-if VAR_C_basic_need == 'ref'
-
-	parameters.ConstrainedShare_C = ones(nb_Sectors,nb_Households) * 0.8;
-
-elseif VAR_C_basic_need == 'low'
-
-	parameters.ConstrainedShare_C = zeros(nb_Sectors,nb_Households);
-
-end
-
-////////////////////////////////////////
-// Wage curve real wage coefficient
-////////////////////////////////////////
-
-if VAR_coef_real_wage=='ref'
-
-	parameters.Coef_real_wage = 1;
-
-elseif VAR_coef_real_wage=='low'
-
-	parameters.Coef_real_wage = 0;
-
-end
 
 //////////////////////////////////////////////// Emissions  /////////////////////////////////////////////////////////////////////////////////////
 
@@ -182,10 +244,6 @@ end
 if  VAR_saving=="low"
 	
 	Deriv_Exogenous.Household_saving_rate = evstr(0.11);
-
-elseif  VAR_saving=="ref"
-	
-	Deriv_Exogenous.Household_saving_rate = evstr(0.14);
 
 elseif VAR_saving=="high"
 
@@ -265,7 +323,7 @@ elseif VAR_Mu=="neutral"
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
-//////////////////////////////////////////////////// Fossil import prices  ///////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////// Fossil import prices  ///////////////////////////////////////////////////////////
 
 if VAR_import_enersect=="high"
 
@@ -300,154 +358,48 @@ elseif VAR_import_enersect=="low"
 	
 	end
 
-end
+elseif VAR_import_enersect=="ref"
 
-////////////////////////////////////////                                     ////////////////////////////////////////
-////////////////////////////////////////                                     ////////////////////////////////////////
-////////////////////////////////////////          Economy uncertainty        ////////////////////////////////////////
-////////////////////////////////////////									 ////////////////////////////////////////
-////////////////////////////////////////									 ////////////////////////////////////////
+	if time_step == 1
 
+		parameters.delta_pM_parameter(Indice_OilS) = 0.072668228;
+		parameters.delta_pM_parameter(Indice_GasS) = 0.073566267;
+		parameters.delta_pM_parameter(Indice_CoalS) = 0.063860125;
 
-//////////////////////////////////////////////////// Wage curve  //////////////////////////////////////////////////////////////////////
+	elseif time_step == 2
 
-////////////////////////////////////////
-// Elasticity
-////////////////////////////////////////
-if VAR_sigma_omegaU=='ref'
-
-	parameters.sigma_omegaU = -0.1;
-
-elseif VAR_sigma_omegaU=='ademevalue'
-
-	parameters.sigma_omegaU = -1.8;
-
-end
-//////////////////////////////////////////////////// Macroeconomic closure  //////////////////////////////////////////////////////////////////////
-
-if SystemOpt_Resol == "SystemOpt_johansen_full" 
-
-	VAR_saving = "johansen_full";
-	closure = "johansen";
-
-elseif SystemOpt_Resol == "SystemOpt_Static" 
-
-	closure = "postkeynesian";
-
-elseif SystemOpt_Resol == "SystemOpt_neoclassical_full" 
-
-	closure = "neoclassical";
+		parameters.delta_pM_parameter(Indice_OilS) = 0.019529516 ;
+		parameters.delta_pM_parameter(Indice_GasS) = 0.017485127;
+		parameters.delta_pM_parameter(Indice_CoalS) = 0.011735716;
+	
+	end
 
 end
 
-//////////////////////////////////////////////////// Import-export price elasticity  //////////////////////////////////////////////////////////////////////
-
-if VAR_sigma_MX=="ref"
-	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-elseif  VAR_sigma_MX=="low"
-	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
-elseif  VAR_sigma_MX=="low_MX"
-	Deriv_Exogenous.sigma_M = [0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,0,1,1];
-	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
-elseif  VAR_sigma_MX=="high"
-	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
-elseif  VAR_sigma_MX=="high_MX"
-	Deriv_Exogenous.sigma_M = [0,0,0,0,2.5,2.5,2.5,2.5,2.5,2.5,2.5,0,0,0,2.5,2.5,0,2.5,2.5];
-	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
-end
-
-
-if Scenario=='S2' |  Scenario=='S2test'
-	parameters.sigma_ConsoBudget(1:18) = 0;
-end
-
-// ////////////////////////////////////////
-// // Modification of consumption income elasticity
-// ////////////////////////////////////////
-
-// if VAR_sigma_ConsoBudget=="low"
-// 	parameters.sigma_ConsoBudget(5:19) = 0.2;
-// end
-
-// ////////////////////////////////////////
-// // Modification of consumption price elasticity
-// ////////////////////////////////////////
-
-// if VAR_sigma_pC=="low"
-// 	parameters.sigma_pC(5:19) = -0.06;
-// end
-
-// ////////////////////////////////////////
-// // Modification of CES production function elasticity
-// ////////////////////////////////////////
-
-// if VAR_sigma=="high"
-// 	Deriv_Exogenous.sigma = [1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,0,1.2,1.2];
-// end
-
-// ////////////////////////////////////////
-// // Modification of delta_pM 
-// ////////////////////////////////////////
-
-// if VAR_delta_pM=="high"
-// 	Deriv_Exogenous.delta_pM_parameter = [0,0,0,0,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0];
+// ////////////////////////////////////////                                     ////////////////////////////////////////
+// ////////////////////////////////////////                                     ////////////////////////////////////////
+// ////////////////////////////////////////          Economy uncertainty        ////////////////////////////////////////
+// ////////////////////////////////////////									 ////////////////////////////////////////
+// ////////////////////////////////////////									 ////////////////////////////////////////
 // end
 
 
-// if VAR_pM=="pM_low"
-// 	//parameters.delta_pM_parameter(Indice_OilS) = (1+parameters.delta_pM_parameter(Indice_OilS)).^time_since_ini*(1-scal_pM);
-// 	//parameters.delta_pM_parameter(Indice_GasS) = (1+parameters.delta_pM_parameter(Indice_GasS)).^time_since_ini*(1-scal_pM);
-// 	//parameters.delta_pM_parameter(Indice_CoalS) = (1+parameters.delta_pM_parameter(Indice_CoalS)).^time_since_ini*(1-scal_pM);
-// 	parameters.delta_pM_parameter(Indice_OilS) = parameters.delta_pM_parameter(Indice_OilS)*(1-scal_pM);
-// 	parameters.delta_pM_parameter(Indice_GasS) = parameters.delta_pM_parameter(Indice_GasS)*(1-scal_pM);
-// 	parameters.delta_pM_parameter(Indice_CoalS) = parameters.delta_pM_parameter(Indice_CoalS)*(1-scal_pM);
-// elseif VAR_pM=="pM_high"
-// 	//parameters.delta_pM_parameter(Indice_OilS) = (1+parameters.delta_pM_parameter(Indice_OilS)).^time_since_ini*(1+scal_pM);
-// 	//parameters.delta_pM_parameter(Indice_GasS) = (1+parameters.delta_pM_parameter(Indice_GasS)).^time_since_ini*(1+scal_pM);
-// 	//parameters.delta_pM_parameter(Indice_CoalS) = (1+parameters.delta_pM_parameter(Indice_CoalS)).^time_since_ini*(1+scal_pM);
-// 	parameters.delta_pM_parameter(Indice_OilS) = parameters.delta_pM_parameter(Indice_OilS)*(1+scal_pM);
-// 	parameters.delta_pM_parameter(Indice_GasS) = parameters.delta_pM_parameter(Indice_GasS)*(1+scal_pM);
-// 	parameters.delta_pM_parameter(Indice_CoalS) = parameters.delta_pM_parameter(Indice_CoalS)*(1+scal_pM);
+// //////////////////////////////////////////////////// Import-export price elasticity  //////////////////////////////////////////////////////////////////////
+
+// if VAR_sigma_MX=="ref"
+// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+// elseif  VAR_sigma_MX=="low"
+// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
+// elseif  VAR_sigma_MX=="low_MX"
+// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,0,1,1];
+// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
+// elseif  VAR_sigma_MX=="high"
+// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
+// elseif  VAR_sigma_MX=="high_MX"
+// 	Deriv_Exogenous.sigma_M = [0,0,0,0,2.5,2.5,2.5,2.5,2.5,2.5,2.5,0,0,0,2.5,2.5,0,2.5,2.5];
+// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
 // end
 
-
-// if ( find("alpha"==fieldnames(Proj_Vol))<> [] ) & Proj_Vol.alpha.intens
-
-// 		Proj_Vol.alpha.apply_proj = %T; 
-// 		Proj_Vol.alpha.ind_of_proj = list(list(Indice_OilS,1:nb_Sectors),list(Indice_GasS,1:nb_Sectors),list(Indice_CoalS,1:nb_Sectors),list(Indice_ElecS,1:nb_Sectors));
-
-// 		Proj_Vol.IC.apply_proj = %T; 
-// 		Proj_Vol.IC.intens = %F;
-// 		Proj_Vol.IC.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS,1:nb_Sectors),list(Indice_CementS,1:nb_Sectors),list(Indice_OthMinS,1:nb_Sectors),list(Indice_PharmaS,1:nb_Sectors),list(Indice_PaperS,1:nb_Sectors));
-		
-// end 
-
-
-// Exports_Val_2 : comme la croissance naturelle dans le pays à termes de l'échanges inchangés 
-//if  VAR_choice_X=="second"
-//	fun_resolution_val(1).name = "Imports_Val_2";
-//end
-
-// if Scenario =="S2" | Scenario =="S3"
-
-// 	if time_step==1
-
-// 		CarbonTax_Diff_IC = [0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030,0.030].*.ones(nb_Sectors,1);
-// 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC;
-
-// 		parameters.Carbon_Tax_rate = 0.2e6
-
-// 	elseif time_step==2
-
-// 		CarbonTax_Diff_IC = [0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090,0.090].*.ones(nb_Sectors,1);
-// 		parameters.CarbonTax_Diff_IC = CarbonTax_Diff_IC; 
-
-// 		parameters.Carbon_Tax_rate = 1.0e6
-
-// 	end
-// end
-
-// old
 
