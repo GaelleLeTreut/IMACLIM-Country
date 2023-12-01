@@ -52,6 +52,9 @@ function default_dashboard = new_default_dashboard()
 	'Spe_margs_Profit_margin_gaz_reduced','false',..
 	'pY_ini_gaz_controlled_eco_eq', 'false',..
 	'skip_calibration','True',..
-	'Time_step_non_etudie','9999')
+    'Time_step_non_etudie','9999',..
+	'proj_alpha','false',..
+    'proj_c','false',..
+    'proj_kappa','false')
  
 endfunction

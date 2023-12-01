@@ -4,7 +4,7 @@ import os
 
 # Paragraphe specifique a Jean Wolff
 import sys
-path = '/Users/rdo2/Dropbox/PC/Documents/GitHub/IMACLIM-Country/outputs_display'
+path = '/Users/douda/Documents/GitHub/IMACLIM-Country/outputs_display'
 sys.path.append(path)
 os.chdir(path)
 
