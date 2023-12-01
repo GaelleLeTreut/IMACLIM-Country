@@ -50,7 +50,7 @@ share_of_stranded_asset_costs_4;0
 //;
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
-study;SNBC3_RunChoices
+study;ademetransitions_RunChoices
 Capital_Dynamics;%F
 //AGG_type;
 AGG_type;AGG_19TME

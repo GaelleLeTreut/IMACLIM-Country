@@ -1398,6 +1398,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
 ["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
+["Labour productivity ",										parameters.Mu													];..
 ["GDP Decomposition Laspeyres Quantities", 					""																	];..
 ["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
 ["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
@@ -1430,26 +1431,18 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["HH saving - % ",	    							(sum(Out.Household_savings)/sum(Out.H_disposable_income))			];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
-["Real_GDP_Laspeyres",												money_disp_adj.*Out.GDP/GDP_pLasp								];..
-["Real_GDP_Paasche",												money_disp_adj.*Out.GDP/GDP_pPaas								];..
-["Real GDP_chained",												money_disp_adj.*Out.GDP/GDP_pFish_chained									];..
-["Real_GDP_Laspeyres_chained",										money_disp_adj.*Out.GDP/GDP_pLasp_chained								];..
-["Real_GDP_Paasche_chained",										money_disp_adj.*Out.GDP/GDP_pPaas_chained								];..
 ["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
 ["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
 ["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
 ["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
 ["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
 ["Real_Trade_Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
-["Real_Trade_Balance_BY",											(money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)) / (money_disp_adj.*(sum(BY.X_value)-sum(BY.M_value)))];..
 ["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
 ["Real Y_"+Index_Sectors,									        money_disp_adj.*(Out.Y_value')./evstr("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
 ["Real Net-of-tax effective wages",								(Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI				];..
 ["Real GFCF_"+Index_DomesticAgents,							money_disp_adj.*(Out.GFCF_byAgent(Indice_DomesticAgents)/I_pFish)'	];..
 ["---Prices Index ratio/"+ref_name+"---",						 ""																	];..
-["GDP pPaas/"+ref_name,											GDP_pPaas							  								];..
-["GDP pLasp/"+ref_name,											GDP_pLasp							  								];..
 ["Price Fisher Index/"+ref_name, 								""																	];..
 ["GDP pFish/"+ref_name,											GDP_pFish							  								];..
 ["pC pFish/"+ref_name,											C_pFish															];..
@@ -1462,7 +1455,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["pY Non-Energy pLasp/"+ref_name,								Y_NonEn_pLasp													];..
 [string("pY "+Index_NonEnerSect +" pLasp/"+ref_name),				evstr("Y_"+Index_NonEnerSect+"_pLasp")							];..
 ["pM pFish/"+ref_name,											M_pFish															];..
-["real_effective_exchange_rate"+ref_name,						C_pFish / M_pFish												];..
 ["Labour price/"+ref_name,										L_pFish															];..
 ["Capital price/"+ref_name,										K_pFish															];..
 ["Energy price/"+ref_name,										IC_Ener_pFish														];..
@@ -1525,16 +1517,15 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Total carbon tax (IC)",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
 [string("Carbon tax (C + IC) "+ Index_EnerSect),								money_disp_adj.*Out.Carbon_Tax(Indice_EnerSect)'												];..
 [string("Border adjustment tax "+ Index_Sectors),								money_disp_adj.*Out.Carbon_Tax_M(Indice_Sectors)'												];..
-["--- Composantes du budget public ---",								 ""																	];..
-["Nominal G_Tax_revenue", money_disp_adj.*G_Tax_revenue];..
-["Nominal G_Non_Labour_Income", money_disp_adj.*G_Non_Labour_Income];..
-["Nominal G_Other_Income", money_disp_adj.*G_Other_Income];..
-["Nominal G_Property_income", money_disp_adj.*G_Property_income];..
-["Nominal G_Social_Transfers", -money_disp_adj.*G_Social_Transfers];..
-["Nominal G_Compensations", -money_disp_adj.*G_Compensations];..
-["Nominal T_MPR", -money_disp_adj.*T_MPR];..
-["Nominal Bonus_vehicules", -money_disp_adj.*Bonus_vehicules];..
-["Nominal G_disposable_income", money_disp_adj.*sum(Out.G_disposable_income)];..
+["Real_GDP_Laspeyres",												money_disp_adj.*Out.GDP/GDP_pLasp								];..
+["Real_GDP_Paasche",												money_disp_adj.*Out.GDP/GDP_pPaas								];..
+["Real GDP_chained",												money_disp_adj.*Out.GDP/GDP_pFish_chained									];..
+["Real_GDP_Laspeyres_chained",										money_disp_adj.*Out.GDP/GDP_pLasp_chained								];..
+["Real_GDP_Paasche_chained",										money_disp_adj.*Out.GDP/GDP_pPaas_chained								];..
+["Real_Trade_Balance_BY",											(money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)) / (money_disp_adj.*(sum(BY.X_value)-sum(BY.M_value)))];..
+["GDP pPaas/"+ref_name,											GDP_pPaas							  								];..
+["GDP pLasp/"+ref_name,											GDP_pLasp							  								];..
+["real_effective_exchange_rate"+ref_name,						C_pFish / M_pFish												];..
 ];
 
 if Capital_Dynamics
