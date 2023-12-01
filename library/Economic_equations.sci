@@ -2476,7 +2476,8 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     end
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
-    if pY_ini_gaz_controlled_eco_eq == 'true' then
+    // TODO
+    if 0 & pY_ini_gaz_controlled_eco_eq == 'true' then
         diviseur = 100;
 //        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;

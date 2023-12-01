@@ -7,12 +7,13 @@ Scenario;S2
 // Parametres SNBC 3;
 //;
 Macro_nb;ademetransitions
-Proj_scenario;ademetransitions
+Proj_scenario;branche_macro_incertitudes
 Nb_Iter;2
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
 emissions_bioenergy;False
-SystemOpt_Resol;SystemOpt_Static_neokeynesien
+SystemOpt_Resol;SystemOpt_Static
+// SystemOpt_Resol;SystemOpt_Static_neokeynesien
 //SystemOpt_Resol;SystemOpt_Static_eviction_invest
 // SystemOpt_Resol;SystemOpt_Static_neoclassical
 //SystemOpt_Resol;SystemOpt_Static_johansen
@@ -68,7 +69,7 @@ proj_alpha;true
 proj_imports;true
 proj_exports;true
 proj_kappa;true
-proj_c;true
+proj_c;false
 proj_invest;true
 proj_pY;true
 proj_spemarg_rates_IC;true
