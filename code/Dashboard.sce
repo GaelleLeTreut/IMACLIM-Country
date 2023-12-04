@@ -64,16 +64,17 @@ for elt=1:size(listStudyCSVfiles)
 end
 
 /// DASHBOARD FILES
-
-execstr( "Dashboard_Country = Dashboard_"+Country_ISO ); 
-Dashboard_component = Dashboard_Country(2:$,1);
-
-// execstr("Dashboard_component = Dashboard_"+Country_ISO+"(2:$,1)");
-
-for elt=1:size(Dashboard_component,"r");
-    indtemp= find(Dashboard_Country(:,1)==Dashboard_component(elt));
-    valtemp = Dashboard_Country(indtemp,2);
-    execstr(Dashboard_component(elt)+"=valtemp;")		
+if ~isdef("launched_from_main") then
+    execstr( "Dashboard_Country = Dashboard_"+Country_ISO ); 
+    Dashboard_component = Dashboard_Country(2:$,1);
+    
+    // execstr("Dashboard_component = Dashboard_"+Country_ISO+"(2:$,1)");
+    
+    for elt=1:size(Dashboard_component,"r");
+        indtemp= find(Dashboard_Country(:,1)==Dashboard_component(elt));
+        valtemp = Dashboard_Country(indtemp,2);
+        execstr(Dashboard_component(elt)+"=valtemp;")		
+    end
 end
 
 if (size(H_DISAGG,"r")<>[1]| size(H_DISAGG,"r")<>[1])

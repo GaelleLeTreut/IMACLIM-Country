@@ -347,7 +347,7 @@ if ~(skip_calibration == "True")
     endfunction
     
     // Select every variable created in calibration
-    variables_to_load = []
+    variables_to_load = [];
     for i = 1:length(length(variable_names2))
         if ~check_string_in_list(variable_names, variable_names2(i)) then
             variables_to_load = [variables_to_load, variable_names2(i)];

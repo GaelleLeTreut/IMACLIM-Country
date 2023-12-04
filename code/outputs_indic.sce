@@ -1671,7 +1671,7 @@ else
                 for j = 1:Nb_Iter
                     
                     // In order to skip 2035 in the case of SNBC 3
-                    if j == strtod(Time_step_non_etudie)
+                    if j == Time_step_non_etudie
                         continue
                     end
                     execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
