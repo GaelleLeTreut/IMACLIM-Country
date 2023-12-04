@@ -540,7 +540,8 @@ Trade_pFish = sqrt(abs(Trade_pLasp*Trade_pPaas));
 
 ////////////////////////////////////////////////////////////
 //	Variations of macroeconomic identities in real terms at the aggregated level 
-//
+// TOCLEAN
+// 
 //		Additive property is required for the decomposition of quantity indices : Laspeyres index must be used! ( Important Rq: this property is altered for chained indices ) 
 //		But for one time period, and indices = 1 at initial state, we have the additive property: 
 //			Laspeyres Quantity index (for the aggregate of components i) = sum (wi * Laspeyres Quantity index for component i)

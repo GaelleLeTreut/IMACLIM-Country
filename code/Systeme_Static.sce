@@ -134,6 +134,7 @@ endfunction
 function [Constraints_Deriv] = f_resolution ( X_Deriv_Var_init, VarDimMat, RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , listDeriv_Var)
 
     // Création des variables à partir de x et de info_structure_x
+    // TOCLEAN
     [Deriv_variables] = X2variablesRuben (RowNumCsVDerivVarList, structNumDerivVar , Deriv_variablesStart , VarDimMat, listDeriv_Var, X_Deriv_Var_init)
 
     // Affectation des valeurs aux noms de variables,  pour les variables du solveur, les valeurs calibrées, et les parametres

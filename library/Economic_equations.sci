@@ -452,6 +452,7 @@ endfunction
 
 // Val not possible : this function depends on C
 function y = H_demand_Const_1(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+    // TOCLEAN
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
@@ -508,6 +509,7 @@ endfunction
 ///	Linear demand function with price and income elasticities for all goods - 
 // Val not possible : this function depends on C
 function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+    // TOCLEAN
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
@@ -536,6 +538,7 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 endfunction
 
 function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
+    // TOCLEAN
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
@@ -562,6 +565,7 @@ function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sig
 endfunction
 
 function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
+    // TOCLEAN
     signRuben = sign(pC);
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
@@ -1003,7 +1007,7 @@ function Direct_Tax = OthDirTax_rate_Val_1(Labour_income, Direct_Tax_rate) ;
 	
 endfunction
 
-
+// TOCLEAN
  ///	VOIR AJOUTER AUSSI SOUS CETTE FORME PROJ
 
 /// Corporate Tax (by Corporations)
@@ -1676,7 +1680,7 @@ endfunction
 ////// LUMP SUM TRANSFERT -Compensation to institutional agents
 // PAS POUR CALIBRAGE //
 
-
+// TOCLEAN
 /// Transfert to institutional agents // A REVOIR : Un transfert sur les agents HH devrait être suffisant! Le transfert sur les sociétés se fait dans une autre fonction
 
 function [y] = ClimCompensat_Const_1(ClimPolicyCompens, GDP, delta_LS_H, ClimPolCompensbySect);
@@ -2476,7 +2480,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
     end
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
-    // TODO
+    // TOCLEAN
     if 0 & pY_ini_gaz_controlled_eco_eq == 'true' then
         diviseur = 100;
 //        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
@@ -2773,6 +2777,7 @@ function [y] =  Transp_MargRates_Const_2(Transp_margins_rates, Transp_margins, d
     y=y1';
 endfunction
 
+// TOCLEAN
 // /!\ Décomposition de Transp_MargRates_Const_2 en 2 fonctions !!
 function Transp_margins_rates = Transp_MargRates_Val_2(delta_TranspMargins_rate)
     
@@ -2822,6 +2827,7 @@ function [y] =  Trade_MargRates_Const_2(Trade_margins, Trade_margins_rates, delt
 
 endfunction
 
+// TOCLEAN
 // /!\ Décomposition de Trade_MargRates_Const_2 en 2 fonctions !!
 function Trade_margins_rates = Trade_MargRates_Val_2(delta_TradeMargins_rate)
     
@@ -3642,7 +3648,7 @@ endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
 function [y] = pC_price_Const_1(pC, Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-
+    // TOCLEAN
     // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
 
     //  Trade, transport and specific margins for energy
@@ -3660,7 +3666,7 @@ endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, and indirect tax
 function pC = pC_price_Val_1( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate) ;
-
+    // TOCLEAN
     // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
 
     //  Trade, transport and specific margins for energy
@@ -3676,7 +3682,7 @@ endfunction
 
 // Purchase price (Households Final consumptions) after trade, transport and energy margins, indirect tax and tax on consumption (Brazil)
 function pC = pC_price_Val_2( Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, Cons_Tax_rate) ;
-
+    // TOCLEAN
     // Rq: A modifier si l'on considère des marges ou taxes ou coefficients d'émission différents selon les classes de ménages
 
     //  Trade, transport and specific margins for energy
@@ -3985,6 +3991,7 @@ function u = HH_Unemployment_Val_1(u_tot)
 
 endfunction
 
+// TOCLEAN
 /// Rq : Si l'on prend en compte du progrès technique sur le travail récupéré par les salaires, et que l'on ne veut pas que la hausse des salaires induite change le niveau de chômage de long terme, alors il faut corriger les wages curves (diviser le salaire qui entre dans la wage curve par la hausse de la productivité) : 1/(1+Mhu)^t
 
 // PAS POUR CALIBRAGE !

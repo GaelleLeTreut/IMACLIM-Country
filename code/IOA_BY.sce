@@ -39,14 +39,16 @@
 //////////////////////////////////////////////////////////////////////
 
 
-
+// TOCLEAN
 // A t' on besoin de calculer les marges IMP DOM etc dans la décomposition pour les réagrégé apres?
 // On peut le calculer directement ICI
 // La décomposition sert alors uniquement à retrouver les taux agregé 
 
+// TOCLEAN
 // Probleme les taux a l'instant initial ne vont pas permettre de garder un equilibre sur les import...
 // voir comment gérer cela
 
+// TOCLEAN
 // IL faut calculer les output les IC DOM et IMP, et les FC DOM et IMP
 // Calculation of IC_valueIMP et FC_valueIMP (tables of imports) : multiplication of IC_value and FC_value by respectively IC_Import_rate and FC_Import_rate
 //IC_valueDOM et FC_valueDOM are then deduced 
@@ -69,6 +71,7 @@ function [ioa ] = IOA(  CO2Emis_IC, CO2Emis_C,IC_value, IC_valueIMP,IC_valueDOM,
 
     // Emissions intensity: Emis_fact_DOM :calculation of emissions intensity vector for domestic production
     ioa.Emis_fact_DOM = divide( ioa.Emis_Sect, Output, 0);
+    // TOCLEAN
     // Hypothèse A REVOIR : intensité des importations == à celle de la France
     ioa.Emis_fact_IMP = ioa.Emis_fact_DOM ;
 

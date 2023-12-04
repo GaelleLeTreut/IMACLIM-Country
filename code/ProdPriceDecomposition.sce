@@ -72,7 +72,7 @@ LabourTaxEffect_Cost = (1/2)* ( BY.w .* BY.lambda ./ BY.Cost_Structure + Out.w .
 //	Profit margin and tax on production effects
 //	Price-cost wedge
 BY.PriceCost_wedge 	= ones(1, nb_Sectors) - BY.markup_rate - BY.Production_Tax_rate;
-Out.PriceCost_wedge   	= ones(1, nb_Sectors) - Out.markup_rate - Production_Tax_rate;		// Rq: modifier si Production_Tax_rate est variable: Out.Production_Tax_rate
+Out.PriceCost_wedge   	= ones(1, nb_Sectors) - Out.markup_rate - Production_Tax_rate;// TOCLEAN		// Rq: modifier si Production_Tax_rate est variable: Out.Production_Tax_rate
 
 MarginEffect_Cost = (1/2)* ( BY.PriceCost_wedge ./ Out.PriceCost_wedge - Out.PriceCost_wedge ./ BY.PriceCost_wedge );
 

@@ -198,7 +198,7 @@ function [variables_value] = X2variables (Imaclim_variables, list_variables4X, x
     end
 endfunction
 
-
+// TOCLEAN
 function [variables_value] = X2variablesRuben (RowNumCsVDerivVarList, structNumDerivVar , variables_value  , VarDimMat, list_variables4X, x)
 
     nb_variables4X = size(list_variables4X);
@@ -317,6 +317,7 @@ function [Const2Exec, VarRefNames] = Const4VarRef(structure1, varargin)
     Table = [];
     VarRefNames = list();
 
+    // TOCLEAN
     //	Rq: Peut être qu'on peut éviter une boucle avec la fonction intersect ou du type
     //	Search where are Grandeurs and compute Table
     for elt = 1:size(VarNames_structure(1),"r")
@@ -337,6 +338,7 @@ function [Const2Exec, VarRefNames] = Const4VarRef(structure1, varargin)
         if isempty(Location) then
             Table(elt) = "0";
         elseif length(Location) <> 1 then
+            // TOCLEAN
             //	Rq: ici il faudra une procédure d'erreur, pour sortir de la fonction ou bien autre chose
             //	pour l'instant on renvoie juste '0'
             disp("error:"+Structure(1)(Location(1))+" is both defined as initial value and calibrated parameter") ;

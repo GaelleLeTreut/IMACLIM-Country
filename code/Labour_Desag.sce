@@ -41,6 +41,7 @@ clear("L_ratio_str", "L_ratio", "sensib", "col");
 //////////////////////////////////////////////////////////////////////////////
 ////	Value added desegregation for the labour part
 
+// TOCLEAN
 ///Désagréger le travail dans la valeur ajoutée
 // -> Labour_income , Labour_Corp_Tax, Labour_Tax
 // Juste pour test technique !! : utiliser les cvs de désagrégation ( a noter que si <> de brésil c'est une autre strucuture)
@@ -56,7 +57,7 @@ initial_value.Labour_income = Labour_income;
 initial_value.Labour_Tax = Labour_Tax;
 initial_value.Labour_Corp_Tax = Labour_Corp_Tax;
 
-
+// TOCLEAN
 // Changer la structure initial_value.Value_Added (et les index associés?)
 // new_Value_Added = [Labour_income; Labour_Tax;Labour_Corp_Tax;initial_value.Capital_income;initial_value.Production_Tax;initial_value.Profit_margin];
 // initial_value.Value_Added = new_Value_Added;
@@ -66,6 +67,7 @@ initial_value.Labour_Corp_Tax = Labour_Corp_Tax;
 Index_Imaclim_VarCalib(find("w"==Index_Imaclim_VarCalib(:,1)),2) = string(nb_Labour_classes);
 Index_Imaclim_VarCalib(find("lambda"==Index_Imaclim_VarCalib(:,1)),2) = string(nb_Labour_classes);
 
+// TOCLEAN
 /// Problem cohérence calibration exemple : 
 // Employment by productive sector
 // function [y] = Employment_Const_1(Labour, lambda, Y) ;

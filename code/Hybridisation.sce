@@ -100,7 +100,7 @@ OtherIndirTax_rate (1,Indice_HybridCommod) = initial_value.OtherIndirTax(Indice_
 
 OtherIndirTax_rate(1,Indice_NonHybridCommod) = initial_value.OtherIndirTax(Indice_NonHybridCommod) ./ (initial_value.Y(Indice_NonHybridCommod)'+initial_value.M(Indice_NonHybridCommod)' - (initial_value.X_value(Indice_NonHybridCommod)'./p_BeforeTaxes(Indice_NonHybridCommod)) ) ;
 
-
+// TOCLEAN
 // REVOIR COMMENT GERER CARBON TAX RATE
 // Carbon_Tax_rate_IC = 
 

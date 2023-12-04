@@ -336,6 +336,7 @@ function [nam, combi, wasdone , wasTooManySubs, isdoubledone]=classify_dirlist(a
         combi(i)=run_name2combi(svdr2rid( sd));
     end
 
+    // TOCLEAN
     //Sorting everything by combi (which is probably the same than by name in get_listdir) -> it's not if combi is written in hexadecimal!!!
     [combi,k]=gsort(combi,'g','i');
     wasdone  = wasdone(k);

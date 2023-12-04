@@ -44,6 +44,7 @@ print(out,"Substep 1: DISAGGREGATION of HOUSEHOLDS...")
 // READ CSV FILES
 //////////////////////////////////////////////////////////////////
 
+// TOCLEAN
 // Defining nb of households, if disaggregation
 // if H_DISAGG == "HH1"
 // nb_HouseholdsTEMP = nb_Households;
@@ -115,6 +116,7 @@ end
 
 //////////////	DISAGGREGATION - HOUSEHOLDS ECONOMIC ACCOUNT  
 
+// TOCLEAN
 //	'DataAccount_rate_H10.csv' is the file containing distribution keys for the disaggregation of the Households Economic Account 
 //	(CHANGE NOM CAR PLUSIEURS FILES)
 
@@ -286,6 +288,7 @@ end
 //////////////	DISAGGREGATION - INPUT-OUTPUT TABLE in PRICES
 
 //	Location2, LocationIndex and ValueNamesDISAG do not change if the structure of the IOT matrix in price is the same than the IOT matrix in quantities and values
+// TOCLEAN
 // DEMANDER A GAELLE COMMENT ELLE CREER LA MATRICE EN PRIX 
 
 //	Build the disaggregated IOT

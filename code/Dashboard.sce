@@ -85,6 +85,7 @@ if (size(AGG_type,"r")<>[1]| size(AGG_type,"r")<>[1])
     error ( "various types of aggregation profiles of sectors have been selected in Dashboard.csv");
 end
 
+// TOCLEAN
 // définir pour l'instant dans le dashboard le niveau d'agregation retenu
 // puis écrire ici si Agg pas défini, on le met à "null" par défaut ( faire afficher : niveau d'aggregation choisi par défaut car non défini)
 

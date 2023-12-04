@@ -36,6 +36,7 @@
 print(out,"Substep 2: AGGREGATION of DATA...")
 //print(out,"IMACLIM-S is running at aggregated level: "+AGG_type)
 
+// TOCLEAN
 /// A REPRENDRE SI AGREGATION DIFFERENTES ENTRE SECTEUR ET COMMODITIES.... AGGREGATION SYMETRIQUE EN LIGNE ET COLONNE
 
 if AGG_type == ""
@@ -44,7 +45,7 @@ else
     nb_SectorsTEMP = size(Index_SectorsAGG,"r");
 end
 
-
+// TOCLEAN
 // Reorganizing Index_SectorAGG in right order
 //+ SOUCIS d'ordre d'aggregation
 // SOUCIS  : l'ordre des secteurs AGG doit etre le meme que celui du fichier index ( par premier ordre d'apparition faudrait changer cela...)
@@ -124,7 +125,7 @@ end
 ///// COMPARING ORDER IN NEW SECTORS ORGANIZATION BETWEEN IOT_VALUE FILES (by apparition order) AND IOT_AGG in order to respect the one choosen in IOT_AGG
 ////////////////////////////////////////////////////////////////////////////////////
 
-
+// TOCLEAN
 // SI index sectors == index sectors AGG on fait comme ca si non il faut changer l'orde de all IND
 // Repère les lignes / colonne dans le format initial à agréger ensemble
 
@@ -507,6 +508,7 @@ for i = 1:size(listInitValAGG,"r")
     execstr("initial_value."+listInitValAGG(i)+"=initial_valueAGG."+listInitValAGG(i)+";")
 end
 
+// TOCLEAN
 // Deleting initial_valueAGG structure
 // initial_valueAGG = null();
 // clear initial_valueAGG

@@ -119,6 +119,7 @@ end
 
 //	Etape 1 du calibrage
 //	Calcule des paramètres calibrés à partir de certaines équations de la librairy Imaclim
+// TOCLEAN
 //	Rq : pour l'instant choix des équations à la main.
 //	On pourrait envisager d'affecter une équation à un paramètre calibré dans le fichier .csv
 
@@ -1614,6 +1615,7 @@ count=0;
 ///////////////////////////
 
 // 	Constraints to execute for variables_ref in calib
+// TOCLEAN
 // Rq: vérifier que dans tous les cas, VarRefNames(i) correspond bien à la bonne contrainte dans Const2Exec(i,1)
 //[Const2Exec, VarRefNames] = Const4VarRef(calib, initial_value, parameters) ;
 //for i= Const2Exec
