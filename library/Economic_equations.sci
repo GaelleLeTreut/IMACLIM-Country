@@ -152,6 +152,7 @@ function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent,
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
+    //TOCLEAN
     if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
         T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
     else
@@ -873,6 +874,7 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
 
     // On spécifie que l'on modifie les variables globales (définies dans le RunChoices)
     // Et ce pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
+    // TOCLEAN
     global G_Tax_revenue
     global G_Non_Labour_Income
     global G_Other_Income
@@ -893,6 +895,7 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
+    //TOCLEAN
     if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
         T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
     else
@@ -2664,6 +2667,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     end
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    //TOCLEAN
     if pY_gas_reduced == 'True' then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;

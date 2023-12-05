@@ -10,6 +10,7 @@ MPR_share = 0;
 
 ////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
 // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
+//TOCLEAN
 if 0 & Spe_margs_Profit_margin_gaz_reduced == 'true' then
 	Deriv_Exogenous.markup_rate = markup_rate;
 	Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;

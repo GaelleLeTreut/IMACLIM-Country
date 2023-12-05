@@ -206,6 +206,7 @@ end
 
 //////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
 // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
+//TOCLEAN
 if 0 & ticpe_bioenergy == 'True' then
     bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
     bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
@@ -299,6 +300,7 @@ end
 //////////////////////////////////////////////// COMPOSANTES DU BUDGET PUBLIC  /////////////////////////////////////////////////////////////////////////////////////
 
 // On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
+// TOCLEAN
 global G_Tax_revenue
 global G_Non_Labour_Income
 global G_Other_Income
