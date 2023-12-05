@@ -1393,9 +1393,29 @@ Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.Cl
 //////////////////////////
 
 OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time												];..
-["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
+["---SYNTHESE (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
+["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
+["Unemployment % points",							Out.u_tot*100										];..
+["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
+["CPI (pC pFish)", Out.CPI];..
+["C - Energy - ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
+["IC - Energy ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
+["Nominal carbon tax on C ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_C)												];..
+["Nominal carbon tax on IC ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
+["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real G / real PIB",															sum(Out.G_value)/G_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real C / real PIB",															sum(Out.C_value)/Out.CPI / (Out.GDP/GDP_pFish)							];..
+["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
+["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
+["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
+["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
+["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
+["Real_Trade_Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
+["--- Divers ---",		 	""																];..
+["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
 ["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
 ["Labour productivity ",										parameters.Mu													];..
