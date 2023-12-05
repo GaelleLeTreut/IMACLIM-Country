@@ -10,7 +10,7 @@ Row;Road_diesel;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHTr;Oil;Oil;L
 Row;Heating_oil;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
 Row;Other_fuels;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Oil;Oil;Liquid_fuels;Oil;Liquid_fuels
 Row;Electricity;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Electricity;Elec_heating
-Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Electricity;Elec_heating
+Row;HeatGeoSol_Th;Commodities;EnerSect;HybridCommod;FinEnerSect;FinEnHRes;Elec_heating;Elec_heating;Elec_heating;Gas_heating;Elec_heating
 Row;Steel_Iron;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Steel_Iron;Steel_Iron;Steel_Iron;Steel_Iron;Steel_Iron
 Row;NonFerrousMetals;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals;NonFerrousMetals
 Row;Cement;Commodities;NonEnerSect;NonHybridCommod;-;AllComp;Cement;Cement;Cement;Cement;Cement
