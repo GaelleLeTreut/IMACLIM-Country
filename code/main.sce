@@ -1,3 +1,5 @@
+clear
+
 Scenario = 'S2';
 
 skip_calibration = 'True';
