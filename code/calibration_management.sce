@@ -1,5 +1,5 @@
 // If skip_calibration != 'True', we execute Calibration.sce, then we save all variables created during Calibration.sce in
-// a binary file named "sauvegarde_variables_post_calibration", in IMACLIM-Country/code/
+// a binary file named "sauvegarde_variables_calibration_" + AGG_type ('AGG_23TME' for example), in IMACLIM-Country/code/
 // If skip_calibration = 'True', we only load this binary file.
 if skip_calibration <> "True"
 
