@@ -34,7 +34,7 @@ if skip_calibration <> "True"
     end
 
     // Save all variables created in calibration. It creates a binary file in IMACLIM-Country/code/
-    save('sauvegarde_variables_calibration', variables_to_load);
+    save('sauvegarde_variables_calibration_' + AGG_type, variables_to_load);
 
     // Delete the temporary files created
     mdelete('sauvegarde_variables_pre_calibration');
@@ -44,5 +44,5 @@ else
     printf("Calibration skipped \n");
 
     // Load all variables created in calibration
-    load('sauvegarde_variables_calibration');
+    load('sauvegarde_variables_calibration_' + AGG_type);
 end
