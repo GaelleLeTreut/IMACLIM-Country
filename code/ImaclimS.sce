@@ -164,7 +164,13 @@ if Output_files
     mkdir(SAVEDIR_IOA);	
 
     // Save Dashbord.csv & simulation elements in outputs
-    copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+    // On sauvegarde dashboard.csv dans /outputs si on l utilise. Sinon on sauvegarde default.sce
+    if ~isdef("launched_from_main") then
+        copyfile(STUDY_Country + "Dashboard_" + Country_ISO + ".csv", SAVEDIR);
+    else
+        copyfile(CODE + "default.sce", SAVEDIR);
+    end
+
 	if study <> '' 
     copyfile(STUDY_Country + study + ".sce", SAVEDIR);
 	end	
