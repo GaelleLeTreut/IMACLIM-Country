@@ -133,7 +133,6 @@ countMax = 5;
 vBest = 10000000;
 Null_Val = 10^-10;
 
-
 function [const_Unemploy] =fcalib_Unemploy_Const_1(x_u_tot, Unemployed, Labour_force, Imaclim_VarCalib)
     u_tot= indiv_x2variable(Imaclim_VarCalib, "x_u_tot");
     const_Unemploy = Unemployment_Const_1(u_tot, Unemployed, Labour_force);
@@ -1874,8 +1873,79 @@ else
     Carbon_Tax_rate_M = (abs(Carbon_Tax_rate_M) > %eps).*Carbon_Tax_rate_M;
 end
 
+function [const_alpha_sigma] =fcalib_alpha_sigma_Const_1(x_alpha_sigma, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
 
+    alpha_sigma = indiv_x2variable(Imaclim_VarCalib, "x_alpha_sigma");
 
+    const_alpha_sigma = H_demand_Const_4(Consumption_budget, alpha_sigma, sigma_demand, efficiency_coeff, C, pC);
+
+endfunction
+
+[x_alpha_sigma, const_alpha_sigma, info_calib_alpha_sigma] = fsolve(x_alpha_sigma, list(fcalib_alpha_sigma_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
+
+if norm(const_Carbon_Tax_rate_M) > sensib
+    error( "review calib_alpha_sigma")
+else
+    alpha_sigma= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_sigma");
+end
+
+sum_alpha = sum(alpha_sigma);
+
+for i = 1:nb_Sectors
+    alpha_sigma(i) = alpha_sigma(i) / sum_alpha;
+end 
+
+pause
+
+// function [const_alpha_share_budget] =fcalib_alpha_share_budget_Const_1(x_alpha_share_budget, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
+
+//     alpha_share_budget = indiv_x2variable(Imaclim_VarCalib, "x_alpha_share_budget");
+
+//     const_alpha_share_budget = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC);
+
+// endfunction
+
+// [x_alpha_share_budget, const_alpha_share_budget, info_calib_alpha_share_budget] = fsolve(x_alpha_share_budget, list(fcalib_alpha_share_budget_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
+
+// if norm(const_Carbon_Tax_rate_M) > sensib
+//     error( "review calib_alpha_share_budget")
+// else
+//     alpha_share_budget= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_share_budget");
+// end
+
+// sum_alpha = sum(alpha_share_budget);
+
+// for i = 1:nb_Sectors
+//     alpha_share_budget(i) = alpha_share_budget(i) / sum_alpha;
+// end 
+
+// for i = 1:nb_Sectors
+
+//     alpha_p = zeros(nb_Sectors,1);
+
+//     for j = 1:nb_Sectors
+//         if j ~= i
+//             alpha_p(j,1) = (alpha_share_budget(j).^ sigma_demand);
+//         end
+//     end
+
+//     alpha_share_budget(i) = (1 - sum(alpha_p) ).^(1/sigma_demand);
+
+// end 
+
+// function [const_alpha_share_budget_norm] =fcalib_alpha_share_budget_Const_2(x_alpha_share_budget, sigma_demand, Imaclim_VarCalib)
+
+//     alpha_share_budget= indiv_x2variable(Imaclim_VarCalib, "x_alpha_share_budget");
+//     const_alpha_share_budget_norm = alpha_share_budget_Const_1(alpha_share_budget, sigma_demand);
+// endfunction
+
+// [x_alpha_share_budget, const_alpha_share_budget_norm, info_calib_alpha_share_budget] = fsolve(x_alpha_share_budget, list(fcalib_alpha_share_budget_Const_2, sigma_demand, Index_Imaclim_VarCalib));
+
+// if norm(const_Carbon_Tax_rate_M) > sensib
+//     error( "review calib_alpha_share_budget")
+// else
+//     alpha_share_budget = indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_share_budget");
+// end
 
 /// Replace all calibrated variables by correct value into calib structure
 calib = Variables2struct(list_calib);

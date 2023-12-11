@@ -29,3 +29,6 @@ phi_K;1;nb_Sectors;Param
 delta_pM_parameter;1;nb_Sectors;Param
 delta_C_parameter;1;nb_Sectors;Param
 CarbonTax_Diff_M;1;nb_Sectors;Param
+sigma_demand;1;1;Param
+efficiency_coeff;1;1;Param
+C_calib;nb_Commodities;nb_Households;Param

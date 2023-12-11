@@ -156,3 +156,4 @@ share_Ii;nb_Commodities;nb_size_I;calib
 ShareI_GDP;1;1;calib
 pRental;1;1;calib
 scal_pK;1;1;calib
+alpha_sigma;1;nb_Sectors;calib
