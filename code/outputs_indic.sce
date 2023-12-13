@@ -1393,6 +1393,27 @@ Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.Cl
 //////////////////////////
 
 OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time												];..
+["---SYNTHESE V2 (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
+["Natural growth",														GDP_index(time_step)									];..
+["Labour productivity (1 + Mu)^time_since_BY",														(1+parameters.Mu)^time_since_BY									];..
+["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
+["Non-energy output",														sum(Out.Y(Indice_NonEnerSect))									];..
+["Energy output",														sum(Out.Y(Indice_EnerSect))									];..
+["Non-energy consumption (C+G)",														sum(Out.C(Indice_NonEnerSect,:)) + sum(Out.G(Indice_NonEnerSect,:))									];..
+["Energy consumption (C + IC) (ktoe)",														sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,:))									];..
+["Unemployment rate",							Out.u_tot*100										];..
+["Volume of investment",														sum(Out.I_value)									];..
+["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
+["CPI (pC pFish)", Out.CPI];..
+["Emissions - MtCO2",											Out.DOM_CO2															];..
+["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real G / real PIB",															sum(Out.G_value)/G_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real C / real PIB",															sum(Out.C_value)/Out.CPI / (Out.GDP/GDP_pFish)							];..
+["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
+["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
+["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
+["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
+["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
 ["---SYNTHESE (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
