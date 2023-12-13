@@ -1,6 +1,6 @@
 clear
 
-Scenario = 'S2';
+Scenario = 'AME';
 
 skip_calibration = 'True';
 
