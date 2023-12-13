@@ -35,7 +35,7 @@ proj_pY = 'true';
 proj_spemarg_rates_IC = 'true';
 
 
-// Valeur par défaut des developpements de Jean (pour ne pas affecter les autres simulations)
+// Valeurs par défaut (developpements faits par Jean)
 pY_gas_reduced = 'False';
 emissions_bioenergy = 'False';
 Scenario_ETS = '';
@@ -45,7 +45,7 @@ Bonus_vehicule_dashboard = 'False';
 stranded_assets = 'False';
 
 
-// Valeur par défaut des developpements de Remy (pour ne pas affecter les autres simulations)
+// Valeurs par défaut (developpements faits par Remy)
 eq_G_ConsumpBudget = '';
 
 
