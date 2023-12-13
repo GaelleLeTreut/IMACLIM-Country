@@ -3294,7 +3294,7 @@ endfunction
 function [y] = Imports_Const_1(M, pM, pY, Y, sigma_M, delta_M_parameter)
 
 	pY=abs(pY);
-    y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter) .* Y' .* (BY.M' ./ BY.Y' ) ).^(1 ./sigma_M)  .*  (BY.pM' ./ BY.pY') .* (pY' ./ pM') );
+    y1 = ( M'.^ (1 ./sigma_M)) -  ( ( (1 + delta_M_parameter).^time_since_BY .* Y' .* (BY.M' ./ BY.Y' ) ).^(1 ./sigma_M)  .*  (BY.pM' ./ BY.pY') .* (pY' ./ pM') );
     y=y1';
 
 endfunction
@@ -4054,7 +4054,7 @@ function y = Mean_wage_Const_1(u_tot, w, lambda, Y, sigma_omegaU, CPI, Coef_real
       
 endfunction
 
-//	Fixed economy-wide mean wage
+//	Fixed economy-wide mean wage : salaires indexés sur les prix, sans effet de la productivité du travail ni du taux de chômage
 function y = Mean_wage_Const_2(u_tot, w, lambda, Y, sigma_omegaU)
 
     w=abs(w);
