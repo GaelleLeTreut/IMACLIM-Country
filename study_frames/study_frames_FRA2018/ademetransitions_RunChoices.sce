@@ -4,6 +4,26 @@
 ////////////////////////////////////////									////////////////////////////////////////
 ////////////////////////////////////////									////////////////////////////////////////
 
+
+if proj_alpha == 'false'
+
+	Proj_Vol.alpha.apply_proj = %F; 	
+end 
+
+if proj_c == 'false'
+
+Proj_Vol.C.apply_proj = %F; 
+
+end 
+
+if proj_kappa == 'false'
+
+Proj_Vol.kappa.apply_proj = %F;
+
+end 
+
+
+
 Bonus_vehicules_share = 0;
 MPR_share = 0;
 
