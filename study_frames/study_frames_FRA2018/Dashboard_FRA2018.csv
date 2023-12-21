@@ -14,7 +14,7 @@ Labour_product;True
 World_prices;True
 X_nonEnerg;True
 Invest_matrix;%F
-Scenario;S3test
+Scenario;S2
 CO2_footprint;False
 Output_files;%T
 Output_prints;%F
@@ -25,7 +25,7 @@ ClosCarbRev;CstNetLend
 ClosPubBudget;
 VAR_Mu;ref
 VAR_sigma_MX;ref
-VAR_saving;ref
+VAR_saving;neutral
 VAR_sigma_omegaU;ademevalue
 VAR_coef_real_wage;ref
 VAR_C_basic_need;low
@@ -42,6 +42,6 @@ Spe_margs_Profit_margin_gaz_reduced;false
 pY_ini_gaz_controlled_eco_eq;false
 skip_calibration;False
 Time_step_non_etudie;9999
-proj_alpha;false
+proj_alpha;true
 proj_c;false
-proj_kappa;false
+proj_kappa;true
