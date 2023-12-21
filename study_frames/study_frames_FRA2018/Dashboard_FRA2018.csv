@@ -2,7 +2,7 @@ Component;Name
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
-study;ademetransitions_RunChoices
+study;ademetransitionsmaster_RunChoices
 Capital_Dynamics;%F
 AGG_type;AGG_19TME
 H_DISAGG;HH1
