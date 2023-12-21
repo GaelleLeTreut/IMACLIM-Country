@@ -1873,51 +1873,51 @@ else
     Carbon_Tax_rate_M = (abs(Carbon_Tax_rate_M) > %eps).*Carbon_Tax_rate_M;
 end
 
-function [const_alpha_sigma] =fcalib_alpha_sigma_Const_1(x_alpha_sigma, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
+function [const_alpha_share_budget] =fcalib_alpha_share_budget_Const_1(x_alpha_share_budget, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
 
-    alpha_sigma = indiv_x2variable(Imaclim_VarCalib, "x_alpha_sigma");
+    alpha_share_budget = indiv_x2variable(Imaclim_VarCalib, "x_alpha_share_budget");
 
-    const_alpha_sigma = H_demand_Const_4(Consumption_budget, alpha_sigma, sigma_demand, efficiency_coeff, C, pC);
+    const_alpha_share_budget = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC);
 
 endfunction
 
-[x_alpha_sigma, const_alpha_sigma, info_calib_alpha_sigma] = fsolve(x_alpha_sigma, list(fcalib_alpha_sigma_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
+[x_alpha_share_budget, const_alpha_share_budget, info_calib_alpha_share_budget] = fsolve(x_alpha_share_budget, list(fcalib_alpha_share_budget_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
 
 if norm(const_Carbon_Tax_rate_M) > sensib
-    error( "review calib_alpha_sigma")
+    error( "review calib_alpha_share_budget")
 else
-    alpha_sigma= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_sigma");
+    alpha_share_budget= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_share_budget");
 end
 
-sum_alpha = sum(alpha_sigma);
+sum_alpha = sum(alpha_share_budget);
 
 for i = 1:nb_Sectors
-    alpha_sigma(i) = alpha_sigma(i) / sum_alpha;
+    alpha_share_budget(i) = alpha_share_budget(i) / sum_alpha;
+
 end 
 
-pause
+// function [const_alpha_sigma] =fcalib_alpha_sigma_Const_1(x_alpha_sigma, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
 
-// function [const_alpha_share_budget] =fcalib_alpha_share_budget_Const_1(x_alpha_share_budget, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
+//     alpha_sigma = indiv_x2variable(Imaclim_VarCalib, "x_alpha_sigma");
 
-//     alpha_share_budget = indiv_x2variable(Imaclim_VarCalib, "x_alpha_share_budget");
-
-//     const_alpha_share_budget = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC);
+//     const_alpha_sigma = H_demand_Const_4(Consumption_budget, alpha_sigma, sigma_demand, efficiency_coeff, C, pC);
 
 // endfunction
 
-// [x_alpha_share_budget, const_alpha_share_budget, info_calib_alpha_share_budget] = fsolve(x_alpha_share_budget, list(fcalib_alpha_share_budget_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
+// [x_alpha_sigma, const_alpha_sigma, info_calib_alpha_sigma] = fsolve(x_alpha_sigma, list(fcalib_alpha_sigma_Const_1, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Index_Imaclim_VarCalib));
 
 // if norm(const_Carbon_Tax_rate_M) > sensib
-//     error( "review calib_alpha_share_budget")
+//     error( "review calib_alpha_sigma")
 // else
-//     alpha_share_budget= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_share_budget");
+//     alpha_sigma= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_sigma");
 // end
 
-// sum_alpha = sum(alpha_share_budget);
+// sum_alpha = sum(alpha_sigma);
 
 // for i = 1:nb_Sectors
-//     alpha_share_budget(i) = alpha_share_budget(i) / sum_alpha;
+//     alpha_sigma(i) = alpha_sigma(i) / sum_alpha;
 // end 
+
 
 // for i = 1:nb_Sectors
 

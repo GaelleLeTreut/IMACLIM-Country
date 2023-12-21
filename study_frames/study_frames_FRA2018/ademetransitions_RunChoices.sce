@@ -4,6 +4,23 @@
 ////////////////////////////////////////									////////////////////////////////////////
 ////////////////////////////////////////									////////////////////////////////////////
 
+if proj_alpha == 'false'
+
+	Proj_Vol.alpha.apply_proj = %F; 	
+end 
+
+if proj_c == 'false'
+
+Proj_Vol.C.apply_proj = %F; 
+
+end 
+
+if proj_kappa == 'false'
+
+Proj_Vol.kappa.apply_proj = %F;
+
+end 
+
 ////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
 // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
 if Spe_margs_Profit_margin_gaz_reduced == 'true' then

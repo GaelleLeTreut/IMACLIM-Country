@@ -4,6 +4,17 @@
 // ////////////////////////////////////////									////////////////////////////////////////
 // ////////////////////////////////////////									////////////////////////////////////////
 
+
+
+if  Scenario=='S2test' 
+
+	parameters.efficiency_coeff = efficiency_coeff_file(1,time_step);
+
+	parameters.alpha_share_budget(:) = alpha_share_budget_file(1:2,time_step)';
+
+end
+
+
 // //////////////////////////////////////////////////// Macroeconomic closure  //////////////////////////////////////////////////////////////////////
 
 // if SystemOpt_Resol == "SystemOpt_johansen_full" 
@@ -76,14 +87,15 @@ end
 
 if proj_c == 'false'
 
-Proj_Vol.C.apply_proj = %F; 	
+Proj_Vol.C.apply_proj = %F; 
+
 end 
 
 if proj_kappa == 'false'
 
-Proj_Vol.kappa.apply_proj = %F; 	
-end 
+Proj_Vol.kappa.apply_proj = %F;
 
+end 
 
 parameters.sigma_ConsoBudget(1:18) = -50;
 
