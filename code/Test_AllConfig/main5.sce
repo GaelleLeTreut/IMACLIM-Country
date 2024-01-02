@@ -63,7 +63,7 @@ save_file(country_selection, STUDY);
 nb_errors = 0;
 // nb_tests = 0;
 load("C:\Users\douda\Documents\GitHub\IMACLIM-Country\code\Test_AllConfig\dashboards.dat")
-group = list(129:160)
+group = list(161:200)
 
 for country = countries
     
