@@ -554,42 +554,6 @@ function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     y = matrix(y1 .* signRuben, -1 , 1) ;
 endfunction
 
-///	CES (Cobb-Douglas if sigma_demand = 1)
-function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC) ;
-    signRuben = sign(pC);
-    pC = abs ( pC);
-	Consumption_budget = abs(Consumption_budget);
-
-	y1 = zeros(nb_Commodities, nb_Households) ;
-    for i = 1:nb_Sectors
-
-        alpha_p = zeros(nb_Sectors,1)
-        
-        for j = 1:nb_Sectors
-                
-            if j == i
-                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff) .^(1-sigma_demand));
-                else
-                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand);
-                end
-        end
-
-            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p));
-
-        end
-    
-	//// Warning code: assuming that the last sector in the matrix is the composite one 
-
-	/// Replace C by the one that are informed if so
-    if is_projected('C') then
-        y1 = apply_proj_eq(y1,C,'C');
-    end
-	
-    y = matrix(y1 .* signRuben, -1 , 1) ;
-
-endfunction
-
-
 // ///	CES (Cobb-Douglas if sigma_demand = 1)
 // function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC) ;
 //     signRuben = sign(pC);
@@ -600,37 +564,20 @@ endfunction
 //     for i = 1:nb_Sectors
 
 //         alpha_p = zeros(nb_Sectors,1)
-
-//         if  i == 1 | i == 2 | i == 3 | i == 4
-
-//             for j = 1:nb_Sectors
-//                 if j == i
-//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff) .^(1-sigma_demand))
+        
+//         for j = 1:nb_Sectors
+                
+//             if j == i
+//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff) .^(1-sigma_demand));
 //                 else
-//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand)
+//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand);
 //                 end
-//             end
+//         end
 
-//             y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
-
-//         else
-
-//             for j = 1:nb_Sectors
-
-//                 if j == 1 | j == 2 | j == 3 | j == 4
-
-//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff).^(1-sigma_demand)
-//                 else
-//                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * (pC(j,:) .^(1-sigma_demand))
-//                 end
-//             end
-
-//             y1(i,:) = C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p))
+//             y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p));
 
 //         end
     
-//     end
-
 // 	//// Warning code: assuming that the last sector in the matrix is the composite one 
 
 // 	/// Replace C by the one that are informed if so
@@ -642,6 +589,58 @@ endfunction
 
 // endfunction
 
+
+///	CES (Cobb-Douglas if sigma_demand = 1)
+function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC) ;
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+	y1 = zeros(nb_Commodities, nb_Households) ;
+    for i = 1:nb_Sectors
+
+        alpha_p = zeros(nb_Sectors,1)
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            for j = 1:nb_Sectors
+                if j == i
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff) .^(1-sigma_demand))
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand)
+                end
+            end
+
+            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
+
+        else
+
+            for j = 1:nb_Sectors
+
+                if j == 1 | j == 2 | j == 3 | j == 4
+
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff).^(1-sigma_demand)
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * (pC(j,:) .^(1-sigma_demand))
+                end
+            end
+
+            y1(i,:) = C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p))
+
+        end
+    
+    end
+
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
+
+	/// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+	
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////    B.2 Corporations

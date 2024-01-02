@@ -1889,10 +1889,12 @@ else
     alpha_share_budget= indiv_x2variable (Index_Imaclim_VarCalib, "x_alpha_share_budget");
 end
 
-sum_alpha = sum(alpha_share_budget);
+sum_alpha = sum(alpha_share_budget.^sigma_demand);
 
 for i = 1:nb_Sectors
-    alpha_share_budget(i) = alpha_share_budget(i) / sum_alpha;
+    alpha_share_budget(i) = alpha_share_budget(i).^sigma_demand ./ sum_alpha;
+
+    alpha_share_budget(i) = alpha_share_budget(i).^(1/sigma_demand);
 
 end 
 

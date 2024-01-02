@@ -2,7 +2,7 @@ Component;Name
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
 SystemOpt_Resol;SystemOpt_Static
-study;ademetransitionsmaster_RunChoices
+study;neutral_RunChoices
 Capital_Dynamics;%F
 AGG_type;AGG_19TME
 H_DISAGG;HH1
@@ -14,7 +14,7 @@ Labour_product;True
 World_prices;True
 X_nonEnerg;True
 Invest_matrix;%F
-Scenario;S2
+Scenario;S2test
 CO2_footprint;False
 Output_files;%T
 Output_prints;%F
@@ -24,7 +24,7 @@ Recycling_Option;
 ClosCarbRev;CstNetLend
 ClosPubBudget;
 VAR_Mu;ref
-VAR_sigma_MX;ref
+VAR_sigma_MX;neutral
 VAR_saving;neutral
 VAR_sigma_omegaU;ademevalue
 VAR_coef_real_wage;ref
@@ -33,7 +33,7 @@ VAR_sigma_ConsoBudget;ref
 VAR_sigma_pC;ref
 VAR_sigma;ref
 VAR_delta_pM;ref
-trade_drive;exports_detailed
+trade_drive;ref
 eq_G_ConsumpBudget;G_ConsumpBudget_Val_4
 VAR_import_enersect;ref
 VAR_population;ref

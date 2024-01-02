@@ -10,7 +10,7 @@ if  Scenario=='S2test'
 
 	parameters.efficiency_coeff = efficiency_coeff_file(1,time_step);
 
-	parameters.alpha_share_budget(:) = alpha_share_budget_file(1:2,time_step)';
+//	parameters.alpha_share_budget(:) = alpha_share_budget_file(1:2,time_step)';
 
 end
 
