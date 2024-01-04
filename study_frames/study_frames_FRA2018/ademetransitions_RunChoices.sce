@@ -21,6 +21,18 @@ Proj_Vol.kappa.apply_proj = %F;
 
 end 
 
+if  Scenario=='S2' | Scenario=='S3'
+
+	parameters.efficiency_coeff = efficiency_coeff_file(1,time_step);
+
+end
+
+if  Scenario=='S2' 
+
+	parameters.alpha_share_budget(:) = alpha_share_budget_file(:,time_step)';
+
+end
+
 ////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
 // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
 if Spe_margs_Profit_margin_gaz_reduced == 'true' then

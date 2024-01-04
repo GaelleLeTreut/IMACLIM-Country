@@ -611,8 +611,6 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
                 end
             end
 
-            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
-
         else
 
             for j = 1:nb_Sectors
@@ -625,11 +623,24 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
                 end
             end
 
-            y1(i,:) = C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p))
-
         end
     
     end
+
+    for i = 1:nb_Sectors
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
+        
+        else
+
+            y1(i,:) = C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p))
+    
+        end
+        
+    end
+
 
 	//// Warning code: assuming that the last sector in the matrix is the composite one 
 
