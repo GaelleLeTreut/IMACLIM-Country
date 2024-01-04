@@ -150,10 +150,11 @@ if Output_files
         syst_name = System_Resol;
     end
 	
+    datehour = mydate();
 	if Scenario==""
-	    runName =Country_ISO + '_' + mydate()+'_'+ SystemOpt_Resol + "_" + Recycling_Option
+	    runName =Country_ISO + '_' + datehour +'_'+ SystemOpt_Resol + "_" + Recycling_Option
 	else
-		runName = simu_name + '_' + Country_ISO + '_' + mydate() + '_' + syst_name + '_' + study;
+		runName = simu_name + '_' + Country_ISO + '_' + datehour + '_' + syst_name + '_' + study;
 	end 
 	
     SAVEDIR = OUTPUT + runName + filesep();
@@ -566,5 +567,7 @@ end // Loop ending for for various time step calculation
 if Output_files
     diary(0);
 end
+
+exec("Update_metadata_excel.sce");
 
 printf('\n------------ Done ! :) ------------\n');

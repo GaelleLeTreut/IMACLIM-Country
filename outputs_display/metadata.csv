@@ -1,0 +1,13 @@
+numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+6.0;"Excel métadonnées
+";master_merging_all_france_2;b0680e8f29;C:\Users\jeanw\Documents\IMACLIM-Country;AME;FRA2018;20240104_15h57m35;Model version;;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3325223,5;5908130;93322,348;2789635,5;151348,76;4,0400604;9,187e+08;50729,074;1,2174217;157,65997
+5.0;"Update config : AME en scénario par défaut
+";master_merging_all_france_2;a7a398f8cc;True;AME;FRA2018;20240103_17h13m17;Model version;;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3325223,5;5908130;93322,348;2789635,5;151348,76;4,0400604;9,187e+08;50729,074;1,2174217;157,65997
+4.0;"Update config : AME en scénario par défaut
+";master_merging_all_france_2;a7a398f8cc;True;AMS;FRA2018;20240103_17h11m10;Model version;Commentaire;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3288441,7;5895724,7;118432,86;2833031,7;126974,84;3,8191306;9,93E+08;51015,162;1,2764765;11,809315
+3.0;"Update config : AME en scénario par défaut
+";master_merging_all_france_2;a7a398f8cc;True;AMS;FRA2018;20240103_16h53m57;Model version;Commentaire;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3288441,7;5895724,7;118432,86;2833031,7;126974,84;3,8191306;9,93E+08;51015,162;1,2764765;11,809315
+2.0;"Update config : AME en scénario par défaut
+";master_merging_all_france_2;a7a398f8cc;True;AME;FRA2018;20240103_16h03m44;Model version;Commentaire;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3325223,5;5908130;93322,348;2789635,5;151348,76;4,0400604;9,19E+08;50729,074;1,2174217;157,65997
+1.0;"Update config : AME en scénario par défaut
+";master_merging_all_france_2;a7a398f8cc;True;AME;FRA2018;20240103_16h03m44;Model version;Commentaire;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3325223,5;5908130;93322,348;2789635,5;151348,76;4,0400604;9,19E+08;50729,074;1,2174217;157,65997
