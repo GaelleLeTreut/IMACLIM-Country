@@ -58,7 +58,7 @@ colonnes_metadonnees = new_row_df.columns
 valeurs_metadonnees = new_row_df.iloc[0].tolist()
 
 # Ajouter les informations Git
-new_row_df.insert(0, 'uncommited_changes', repo_path)
+new_row_df.insert(0, 'uncommited_changes', uncommited_changes)
 new_row_df.insert(0, 'SHA', sha)
 new_row_df.insert(0, 'branch_name', branch_name)
 new_row_df.insert(0, 'last_commit', last_commit)

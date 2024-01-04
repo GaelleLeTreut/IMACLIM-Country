@@ -1,11 +1,21 @@
-// Ecrire dans l'interpréteur python pour connaître le chemin d'accès à python :
+
+// Pour pouvoir exécuter du python depuis Scilab : ajouter python au path si nécessaire
+
+// 1/ Connaître le chemin d'accès à python
 // >>> import os
 // >>> import sys
 // >>> os.path.dirname(sys.executable)
-// 'C:\Users\jeanw\anaconda3'
+// 'c:\\users\\jeanw\\anaconda3'
 
-// Ajouter le chemin d'accès de python aux paramètres du PC :
-// Chercher "Variables d'environnement" dans les paramètres. Ajouter une nouvelle variable système : l'appeler par exemple PythonPath, et renseigner le chemin d'accès de python (par exemple 'C:\Users\jeanw\anaconda3')
+
+// 2/ Préciser ce chemin d'accès dans les paramètres
+
+// Chercher "Variables d'environnement" dans les "Paramètres système avancés"
+// Cliquer sur "Variables d'environnement", puis dans les variables système, cliquer sur "Nouvelle"
+// En nom, mettre par exemple PythonPath
+// En valeur, mettre le chemin d'accès à python ('c:\\users\\jeanw\\anaconda3')
+
+
 
 // Calculate some variables
 Real_GDP_metadata = money_disp_adj .* Out.GDP ./ GDP_pFish;
@@ -48,8 +58,9 @@ else
 end
 if file_updated==%t
     // Exécution du code python pour ajouter la ligne a l'excel recapitulatif des simulations
-    cd(PARENT + "outputs_display\");
-    unix_s("C:\Users\jeanw\anaconda3\python update_metadata_file.py");
+    cd(PARENT);
+    PythonPath = mgetl(PARENT + "outputs_display\" + "metadata_python_path.txt");
+    unix_s(PythonPath + " update_metadata_file.py");
 end
 
 cd(CODE);
