@@ -75,7 +75,7 @@ for country = countries
     // List of all the dashboards to test
     dashboards = create_dashboards(country.dashboard);
 
-    save('C:\Users\rdo2\Dropbox\PC\Documents\GitHub\IMACLIM-Country\code\Test_AllConfig\dashboards.dat',"dashboards")
+    save(CODE + 'Test_AllConfig\dashboards.dat',"dashboards")
 
 end
     

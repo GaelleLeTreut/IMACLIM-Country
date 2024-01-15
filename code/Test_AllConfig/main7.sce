@@ -4,6 +4,8 @@
 // Initialization *
 // -------------- *
 
+Commentary = '';
+
 /// Selection of def of test files
 // def_test_file = 'def_of_tests.sce';
 def_test_file = 'def_of_MacroIncFRA.sce';
@@ -62,7 +64,7 @@ save_file(country_selection, STUDY);
 
 nb_errors = 0;
 // nb_tests = 0;
-load("C:\Users\douda\Documents\GitHub\IMACLIM-Country\code\Test_AllConfig\dashboards.dat")
+load(CODE + "Test_AllConfig\dashboards.dat")
 group = list(193:224)
 
 for country = countries
