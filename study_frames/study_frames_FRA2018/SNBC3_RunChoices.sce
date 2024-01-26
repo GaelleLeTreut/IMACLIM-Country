@@ -363,19 +363,39 @@ end
 
 //////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
 
-// Productivite du travail : on met les valeurs qui sont normalement calculees dans macro_framework.sce
-if Labour_product =='True' & Demographic_shift <> 'True'
-    if time_step == 1
-        parameters.Mu = 0.0063541;
-    elseif time_step == 2
-        parameters.Mu = 0.0083716;
-    elseif time_step == 3
-        parameters.Mu = 0.0110542;
-    else 
-        error
+// TOCLEAN
+// Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
+if Scenario == 'AME_TISE'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0083716;
+        elseif time_step == 3
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
     end
 
-    parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+elseif Scenario == 'AME'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0076591;
+        elseif time_step == 3
+            parameters.Mu = 0.0083716;
+        elseif time_step == 4
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+    end
 end
 
 // Desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
