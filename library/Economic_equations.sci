@@ -890,14 +890,14 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
     // On spécifie que l'on modifie les variables globales (définies dans le RunChoices)
     // Et ce pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
     // TOCLEAN
-    global G_Tax_revenue
-    global G_Non_Labour_Income
-    global G_Other_Income
-    global G_Property_income
-    global G_Social_Transfers
-    global G_Compensations
-    global T_MPR
-    global Bonus_vehicules
+    // global G_Tax_revenue
+    // global G_Non_Labour_Income
+    // global G_Other_Income
+    // global G_Property_income
+    // global G_Social_Transfers
+    // global G_Compensations
+    // global T_MPR
+    // global Bonus_vehicules
 
     // Income by sources, redistribution and tax revenue
     G_Tax_revenue = sum(Income_Tax + Other_Direct_Tax) + sum(Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;

@@ -797,6 +797,55 @@ IC_pPaas = PInd_Paas( ref.pIC, ref.IC, Out.pIC, Out.IC, :, :);
 IC_pFish = PInd_Fish( ref.pIC, ref.IC, Out.pIC, Out.IC, :, :);
 
 
+////////////////////////
+//////////// Public budget desagregation
+////////////////////////
+
+if OutputfilesBY == %F
+    Out.G_Tax_revenue = sum(BY.Income_Tax(Indice_Government) + BY.Other_Direct_Tax(Indice_Government)) + sum(BY.Corporate_Tax(Indice_Government)) + sum(BY.Production_Tax + BY.Labour_Tax + BY.OtherIndirTax + BY.VA_Tax) + sum(BY.Energy_Tax_IC) + sum(BY.Carbon_Tax_IC) + sum(BY.Energy_Tax_FC) + sum(BY.Carbon_Tax_C) + sum(BY.Carbon_Tax_M) ;
+    Out.G_Non_Labour_Income = BY.GOS_byAgent (Indice_Government) ;
+    Out.G_Other_Income = BY.Other_Transfers (Indice_Government) ;
+    Out.G_Property_income = BY.Property_income(Indice_Government) ;
+    Out.G_Social_Transfers = sum(BY.Pensions(Indice_Government) + BY.Unemployment_transfers(Indice_Government) + BY.Other_social_transfers(Indice_Government)) ;
+    Out.G_Compensations = sum(BY.ClimPolicyCompens(Indice_Households)) + sum(BY.ClimPolicyCompens(Indice_Corporations)) ;
+
+    T_MPR = 0;
+    Bonus_vehicules = 0;
+else
+    Out.G_Tax_revenue = sum(Out.Income_Tax(Indice_Government) + Out.Other_Direct_Tax(Indice_Government)) + sum(Out.Corporate_Tax(Indice_Government)) + sum(Out.Production_Tax + Out.Labour_Tax + Out.OtherIndirTax + Out.VA_Tax) + sum(Out.Energy_Tax_IC) + sum(Out.Carbon_Tax_IC) + sum(Out.Energy_Tax_FC) + sum(Out.Carbon_Tax_C) + sum(Out.Carbon_Tax_M) ;
+    Out.G_Non_Labour_Income = Out.GOS_byAgent (Indice_Government) ;
+    Out.G_Other_Income = Out.Other_Transfers (Indice_Government) ;
+    Out.G_Property_income = Out.Property_income(Indice_Government) ;
+    Out.G_Social_Transfers = sum(Out.Pensions(Indice_Government) + Out.Unemployment_transfers(Indice_Government) + Out.Other_social_transfers(Indice_Government)) ;
+    Out.G_Compensations = sum(Out.ClimPolicyCompens(Indice_Households)) + sum(Out.ClimPolicyCompens(Indice_Corporations)) ;
+
+    // WE CONSIDER MA PRIM RENOV TRANSFER
+    // A share of the investment of Property_business in construction is transfered to households
+    //TOCLEAN
+    if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
+        T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
+    else
+        T_MPR = 0;
+    end
+
+    // // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
+    Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
+
+end
+
+
+////////////////////////
+//////////// Labour productivity and natural growth
+////////////////////////
+
+if OutputfilesBY == %F
+    Out.GDP_index = 1;
+
+else
+    Out.GDP_index = GDP_index(time_step);
+end
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////  COMPARAISON TABLE FOR OUTPUT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1394,16 +1443,24 @@ Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.Cl
 
 OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time												];..
 ["---SYNTHESE V2 (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
-["Natural growth",														GDP_index(time_step)									];..
-["Labour productivity (1 + Mu)^time_since_BY",														(1+parameters.Mu)^time_since_BY									];..
+["Population",	Out.Population		];..
+["Natural growth",														Out.GDP_index									];..
+["Labour productivity (1 + Mu)^time_since_BY", (1+Out.Mu)^Out.time_since_BY];..
 ["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
 ["Non-energy output",														sum(Out.Y(Indice_NonEnerSect))									];..
 ["Energy output",														sum(Out.Y(Indice_EnerSect))									];..
 ["Non-energy consumption (C+G)",														sum(Out.C(Indice_NonEnerSect,:)) + sum(Out.G(Indice_NonEnerSect,:))									];..
 ["Energy consumption (C + IC) (ktoe)",														sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,:))									];..
+["Households Energy consumption (ktoe)", sum(Out.C(Indice_EnerSect,:))];..
+["Households Energy consumption (Millions of euro)", money_disp_adj*sum(Out.C_value(Indice_EnerSect,:))];..
+["Households Non-energy consumption (pseudoquantities)", sum(Out.C(Indice_NonEnerSect,:))];..
 ["Unemployment rate",							Out.u_tot*100										];..
-["Volume of investment",														sum(Out.I_value)									];..
+["Unemployment transfers", money_disp_adj*Out.Unemployment_transfers(Indice_Households)];..
 ["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
+["H_Labour_Income", money_disp_adj*Out.NetCompWages_byAgent(3)];..
+["H_Non_Labour_Income", money_disp_adj*Out.GOS_byAgent(3)];.. 
+["Pensions", money_disp_adj*Out.Pensions(3)];..
+["Volume of investment", sum(Out.I)];..
 ["CPI (pC pFish)", Out.CPI];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
 ["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
@@ -1466,6 +1523,14 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal GDP-"+Index_Sectors,									money_disp_adj.*sum(Out.GDP_sect,"r")'						];..
 ["GFCF_"+Index_DomesticAgents,									money_disp_adj.*Out.GFCF_byAgent(Indice_DomesticAgents)'		];..
 ["Disposable income_"+Index_InstitAgents,						money_disp_adj.*Out.Disposable_Income'							];..
+["G_Tax_revenue", money_disp_adj.*Out.G_Tax_revenue];..
+["G_Non_Labour_Income", money_disp_adj.*Out.G_Non_Labour_Income];..
+["G_Other_Income", money_disp_adj.*Out.G_Other_Income];..
+["G_Property_income", money_disp_adj.*Out.G_Property_income];..
+["G_Social_Transfers", money_disp_adj.*Out.G_Social_Transfers];..
+["G_Compensations", money_disp_adj.*Out.G_Compensations];..
+["G_T_MPR", money_disp_adj.*T_MPR];..
+["G_Bonus_vehicules", money_disp_adj.*Bonus_vehicules];..
 ["Net Lending_"+Index_InstitAgents,							money_disp_adj.*Out.NetLending'									];..
 ["Country Deficit/GDP-ratio/"+ref_name, 					evol_ref.NetLendingRoW_GDP 										];..
 ["Net Debt"+Index_InstitAgents,									money_disp_adj.*Out.NetFinancialDebt'								];..

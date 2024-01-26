@@ -301,14 +301,14 @@ end
 
 // On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
 // TOCLEAN
-global G_Tax_revenue
-global G_Non_Labour_Income
-global G_Other_Income
-global G_Property_income
-global G_Social_Transfers
-global G_Compensations
-global T_MPR
-global Bonus_vehicules
+// global G_Tax_revenue
+// global G_Non_Labour_Income
+// global G_Other_Income
+// global G_Property_income
+// global G_Social_Transfers
+// global G_Compensations
+// global T_MPR
+// global Bonus_vehicules
 
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 
