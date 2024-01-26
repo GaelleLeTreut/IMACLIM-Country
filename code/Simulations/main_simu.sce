@@ -6,6 +6,8 @@ cd('..');
 exec('Load_file_structure.sce');
 cd(SIMUS);
 
+eq_G_ConsumpBudget = '';
+Commentary = '';
 
 // ----------------------------- *
 // Data structure initialisation *
