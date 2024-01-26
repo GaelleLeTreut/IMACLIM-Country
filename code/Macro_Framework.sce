@@ -79,6 +79,8 @@ if Labour_product == "True"
 	parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)* BY.LabourByWorker_coef/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	//parameters.Mu = (GDP_index(time_step)/(sum(Deriv_Exogenous.Labour_force)*(1-BY.u_tot)/(sum(BY.Labour))))^(1/parameters.time_since_BY)-1;
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+else
+	GDP_index = ones(1, Nb_Iter);
 end
 
 //Set imported prices as Macro_framework
