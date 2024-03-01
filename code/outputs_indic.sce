@@ -1442,58 +1442,9 @@ Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.Cl
 //////////////////////////
 
 OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time												];..
-["---SYNTHESE V2 (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
-["Population",	Out.Population		];..
-["Natural growth",														Out.GDP_index									];..
-["Labour productivity (1 + Mu)^time_since_BY", (1+Out.Mu)^Out.time_since_BY];..
-["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
-["Non-energy output",														sum(Out.Y(Indice_NonEnerSect))									];..
-["Energy output",														sum(Out.Y(Indice_EnerSect))									];..
-["Non-energy consumption (C+G)",														sum(Out.C(Indice_NonEnerSect,:)) + sum(Out.G(Indice_NonEnerSect,:))									];..
-["Energy consumption (C + IC) (ktoe)",														sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,:))									];..
-["Households Energy consumption (ktoe)", sum(Out.C(Indice_EnerSect,:))];..
-["Households Energy consumption (Millions of euro)", money_disp_adj*sum(Out.C_value(Indice_EnerSect,:))];..
-["Households Non-energy consumption (pseudoquantities)", sum(Out.C(Indice_NonEnerSect,:))];..
-["Unemployment rate",							Out.u_tot*100										];..
-["Unemployment transfers", money_disp_adj*Out.Unemployment_transfers(Indice_Households)];..
-["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
-["H_Labour_Income", money_disp_adj*Out.NetCompWages_byAgent(3)];..
-["H_Non_Labour_Income", money_disp_adj*Out.GOS_byAgent(3)];.. 
-["Pensions", money_disp_adj*Out.Pensions(3)];..
-["Volume of investment", sum(Out.I)];..
-["CPI (pC pFish)", Out.CPI];..
-["Emissions - MtCO2",											Out.DOM_CO2															];..
-["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
-["Ratio real G / real PIB",															sum(Out.G_value)/G_pFish / (Out.GDP/GDP_pFish)							];..
-["Ratio real C / real PIB",															sum(Out.C_value)/Out.CPI / (Out.GDP/GDP_pFish)							];..
-["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
-["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
-["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
-["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
-["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
-["---SYNTHESE (real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
-["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
+["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
 ["Emissions - MtCO2",											Out.DOM_CO2															];..
 ["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
-["Unemployment % points",							Out.u_tot*100										];..
-["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
-["CPI (pC pFish)", Out.CPI];..
-["C - Energy - ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
-["IC - Energy ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
-["Nominal carbon tax on C ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_C)												];..
-["Nominal carbon tax on IC ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
-["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
-["Ratio real G / real PIB",															sum(Out.G_value)/G_pFish / (Out.GDP/GDP_pFish)							];..
-["Ratio real C / real PIB",															sum(Out.C_value)/Out.CPI / (Out.GDP/GDP_pFish)							];..
-["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
-["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
-["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
-["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
-["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
-["Real_Trade_Balance",											    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
-["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
-["--- Divers ---",		 	""																];..
-["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
 ["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
 ["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
 ["Labour productivity ",										parameters.Mu													];..
@@ -1523,14 +1474,6 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["Nominal GDP-"+Index_Sectors,									money_disp_adj.*sum(Out.GDP_sect,"r")'						];..
 ["GFCF_"+Index_DomesticAgents,									money_disp_adj.*Out.GFCF_byAgent(Indice_DomesticAgents)'		];..
 ["Disposable income_"+Index_InstitAgents,						money_disp_adj.*Out.Disposable_Income'							];..
-["G_Tax_revenue", money_disp_adj.*Out.G_Tax_revenue];..
-["G_Non_Labour_Income", money_disp_adj.*Out.G_Non_Labour_Income];..
-["G_Other_Income", money_disp_adj.*Out.G_Other_Income];..
-["G_Property_income", money_disp_adj.*Out.G_Property_income];..
-["G_Social_Transfers", money_disp_adj.*Out.G_Social_Transfers];..
-["G_Compensations", money_disp_adj.*Out.G_Compensations];..
-["G_T_MPR", money_disp_adj.*T_MPR];..
-["G_Bonus_vehicules", money_disp_adj.*Bonus_vehicules];..
 ["Net Lending_"+Index_InstitAgents,							money_disp_adj.*Out.NetLending'									];..
 ["Country Deficit/GDP-ratio/"+ref_name, 					evol_ref.NetLendingRoW_GDP 										];..
 ["Net Debt"+Index_InstitAgents,									money_disp_adj.*Out.NetFinancialDebt'								];..
@@ -1632,7 +1575,69 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",			"values_"+Name_time						
 ["GDP pPaas/"+ref_name,											GDP_pPaas							  								];..
 ["GDP pLasp/"+ref_name,											GDP_pLasp							  								];..
 ["real_effective_exchange_rate"+ref_name,						C_pFish / M_pFish												];..
+["--- Decomposition budget public ---", ""];..
+["G_Tax_revenue", money_disp_adj.*Out.G_Tax_revenue];..
+["G_Non_Labour_Income", money_disp_adj.*Out.G_Non_Labour_Income];..
+["G_Other_Income", money_disp_adj.*Out.G_Other_Income];..
+["G_Property_income", money_disp_adj.*Out.G_Property_income];..
+["G_Social_Transfers", money_disp_adj.*Out.G_Social_Transfers];..
+["G_Compensations", money_disp_adj.*Out.G_Compensations];..
+["G_T_MPR", money_disp_adj.*T_MPR];..
+["G_Bonus_vehicules", money_disp_adj.*Bonus_vehicules];..
 ];
+
+
+OutputTable("Summary_"+ref_name)=[["Variables",			"values_"+Name_time												];..
+["--- Real terms at "+money_disp_unit+money+" "+ref_name+") ---", ""																	];..
+["Population",	Out.Population		];..
+["Natural growth",														Out.GDP_index									];..
+["Labour productivity (1 + Mu)^time_since_BY", (1+Out.Mu)^Out.time_since_BY];..
+["Real GDP",														money_disp_adj.*Out.GDP/GDP_pFish									];..
+["Non-energy output",														sum(Out.Y(Indice_NonEnerSect))									];..
+["Energy output",														sum(Out.Y(Indice_EnerSect))									];..
+["Non-energy consumption (C+G)",														sum(Out.C(Indice_NonEnerSect,:)) + sum(Out.G(Indice_NonEnerSect,:))									];..
+["Energy consumption (C + IC) (ktoe)",														sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,:))									];..
+["Households Energy consumption (ktoe)", sum(Out.C(Indice_EnerSect,:))];..
+["Households Energy consumption (Millions of euro)", money_disp_adj*sum(Out.C_value(Indice_EnerSect,:))];..
+["Households Non-energy consumption (pseudoquantities)", sum(Out.C(Indice_NonEnerSect,:))];..
+["Unemployment rate",							Out.u_tot*100										];..
+["Unemployment transfers", money_disp_adj*Out.Unemployment_transfers(Indice_Households)];..
+["Real Net-of-tax wages",										Out.omega/Out.CPI														];..
+["H_Labour_Income", money_disp_adj*Out.NetCompWages_byAgent(3)];..
+["H_Non_Labour_Income", money_disp_adj*Out.GOS_byAgent(3)];.. 
+["Pensions", money_disp_adj*Out.Pensions(3)];..
+["Volume of investment", sum(Out.I)];..
+["CPI (pC pFish)", Out.CPI];..
+["Emissions - MtCO2",											Out.DOM_CO2															];..
+["Ratio real I / real PIB",															sum(Out.I_value)/I_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real G / real PIB",															sum(Out.G_value)/G_pFish / (Out.GDP/GDP_pFish)							];..
+["Ratio real C / real PIB",															sum(Out.C_value)/Out.CPI / (Out.GDP/GDP_pFish)							];..
+["Real C",															money_disp_adj.*sum(Out.C_value)/Out.CPI							];..
+["Real G",															money_disp_adj.*sum(Out.G_value)/G_pFish							];..
+["Real I",															money_disp_adj.*sum(Out.I_value)/I_pFish							];..
+["Real X",															money_disp_adj.*sum(Out.X_value)/X_pFish							];..
+["Real M",															money_disp_adj.*sum(Out.M_value)/M_pFish							];..
+["--- Divers ---", ""																	];..
+["Emissions - MtCO2",											Out.DOM_CO2															];..
+["Emissions - %/"+ref_name,										(evol_ref.DOM_CO2-1)*100											];..
+["C - Energy - ktoe",												sum(Out.C(Indice_EnerSect,:))										];..
+["IC - Energy ktoe",												sum(Out.IC(Indice_EnerSect,:))										];..
+["Nominal carbon tax on C ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_C)												];..
+["Nominal carbon tax on IC ("+money_disp_unit+money+")",								money_disp_adj.*sum(Out.Carbon_Tax_IC)												];..
+["Real Y",															money_disp_adj.*sum(Out.Y_value)/Y_pFish							];..
+["Labour Tax Cut",												-Out.Labour_Tax_Cut													];..
+["Carbon Tax rate-"+money+"/tCO2", 		  						(Out.Carbon_Tax_rate*evstr(money_unit_data))/10^6  				];..
+["Energy Tax "+money_disp_unit+money,							(sum(Out.Energy_Tax_FC) + sum(Out.Energy_Tax_IC)).*money_disp_adj];..
+["Labour productivity ",										parameters.Mu													];..
+["GDP Decomposition Laspeyres Quantities", 					""																	];..
+["Real GDP LaspQ ratio/"+ref_name,								GDP_qLasp															];..
+["GDP Decomp - C",												(sum(ref.C_value)/ref.GDP) * C_qLasp							];..
+["GDP Decomp - G",												(sum(ref.G_value)/ref.GDP) * G_qLasp							];..
+["GDP Decomp - I",												(sum(ref.I_value)/ref.GDP) * I_qLasp							];..
+["GDP Decomp - X",												(sum(ref.X_value)/ref.GDP) * X_qLasp							];..
+["GDP Decomp - M",												(sum(ref.M_value)/ref.GDP) * M_qLasp							];
+];
+
 
 if Capital_Dynamics
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
@@ -1722,6 +1727,7 @@ if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3" | Scenario=="S2test" | Sce
     ];
 end
 
+// TOCLEAN
 /// Temporary - to delete
 if Country=="Brasil"&Scenario=="PMR_Ten"
 OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
@@ -1761,6 +1767,7 @@ end
 // We then concatenate these variables in concatenation
 if ~OutputfilesBY
     // Case of base year
+    summary_BY = OutputTable("Summary_"+ref_name);
     fulltemplate_BY = OutputTable("FullTemplate_"+ref_name);
 else
     for time_step_tmp = 1:Nb_Iter
@@ -1770,9 +1777,13 @@ else
             fulltemplate = OutputTable('FullTemplate_'+ref_name);
             execstr ( "fulltemplate_" + time_step + " = fulltemplate");
 
+            Summary = OutputTable('Summary_'+ref_name);
+            execstr ( "Summary_" + time_step + " = Summary");
+
             // If we are in the last time_step, we concatenate the fulltemplates
             if time_step == Nb_Iter
                 concatenation = fulltemplate_BY;
+                concatenation_summary = summary_BY;
                 i = 1;
                 for j = 1:Nb_Iter
                     
@@ -1781,12 +1792,14 @@ else
                         continue
                     end
                     execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
+                    execstr("concatenation_summary(:,2+i) = Summary_" + j + "(:,2)");
                     i = i+1;
                 end
                 
                 // Save the concatenated fulltemplate
                 SAVEDIR_CONCAT = OUTPUT + runName + '\';
                 csvWrite(concatenation,SAVEDIR_CONCAT+"FullTemplate_"+simu_name+".csv", ';', ',');
+                csvWrite(concatenation_summary,SAVEDIR_CONCAT+"Summary_"+simu_name+".csv", ';', ',');
             end
         end
     end
