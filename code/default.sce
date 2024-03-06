@@ -54,7 +54,7 @@ eq_G_ConsumpBudget = '';
 
 // Scenarios SNBC3 run 1
 if Scenario == 'AME' | Scenario == 'AMS'
-    Macro_nb = 'SNBC3';
+    Macro_nb = 'SNBC3_run2_avec_2035';
     Proj_scenario = 'SNBC3';
     Nb_Iter = 4;
     emissions_bioenergy = 'True';
