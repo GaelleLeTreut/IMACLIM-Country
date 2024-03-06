@@ -52,13 +52,8 @@ eq_G_ConsumpBudget = '';
 
 //////////////// CONFIG DASHBOARD SELON SCENARIOS ////////////////
 
-scenarios_SNBC3_run1 = ['AME', 'AMS'];
-scenarios_SNBC3_run2 = ['AME_run2', 'AMS_run2'];
-scenarios_SNBC3_TISE = ['AME_TISE', 'AMS_TISE'];
-scenarios_Ademe_transitions = ['S2', 'S3'];
-
 // Scenarios SNBC3 run 1
-if grep(scenarios_SNBC3_run1, Scenario) > 0
+if Scenario == 'AME' | Scenario == 'AMS'
     Macro_nb = 'SNBC3';
     Proj_scenario = 'SNBC3';
     Nb_Iter = 4;
@@ -71,7 +66,7 @@ if grep(scenarios_SNBC3_run1, Scenario) > 0
     Invest_matrix = '%T';
 
 // Scenarios SNBC3 run 2
-elseif grep(scenarios_SNBC3_run2, Scenario) > 0
+elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
     Macro_nb = 'SNBC3_run2';
     Proj_scenario = 'SNBC3_run2';
     Nb_Iter = 3;
@@ -85,7 +80,7 @@ elseif grep(scenarios_SNBC3_run2, Scenario) > 0
 
 
 // Scenarios Decarbonation industrie
-elseif grep(scenarios_SNBC3_TISE, Scenario) > 0
+elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
     study = 'SNBC3_RunChoices';
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
     AGG_type = 'AGG_23TME';
@@ -103,7 +98,7 @@ elseif grep(scenarios_SNBC3_TISE, Scenario) > 0
 
 
 // Scenarios Ademe incertitudes
-elseif grep(scenarios_Ademe_transitions, Scenario) > 0
+elseif Scenario == 'S2' | Scenario == 'S3'
     Macro_nb = 'ademetransitions';
     Proj_scenario = 'branche_macro_incertitudes';
     Nb_Iter = 2;
