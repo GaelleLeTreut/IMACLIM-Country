@@ -349,8 +349,10 @@ if Scenario == 'AMS' // Config de Projections_Scenario_SNBC3.csv
 end
 
 if Scenario == 'AME_run2'
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
-    Proj_Vol.I.apply_proj = %F;
+    // Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households));
+    // Proj_Vol.I.apply_proj = %F;
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
 end
 
 if Scenario == 'AMS_run2' // Config de Projections_Scenario_SNBC3.csv
