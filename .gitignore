@@ -26,3 +26,6 @@ outputs_display/metadata_python_path.txt
 
 python_path.txt
 code/output_folder_path.txt
+
+outputs_display/Isolated_Shocks/*
+outputs_display/isolated_shocks_output.csv
