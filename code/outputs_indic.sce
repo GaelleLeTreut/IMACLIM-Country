@@ -1441,6 +1441,7 @@ Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.Cl
 ///////////// TEMPLATE
 //////////////////////////
 
+SAVEDIR_CONCAT = OUTPUT + runName;
 exec(CODE+"outputs_full_template.sce");
 
 
@@ -1465,11 +1466,11 @@ exec(CODE+"outputs_full_template.sce");
 // En valeur, mettre le chemin d'accès à python ('c:\\users\\jeanw\\anaconda3')
 
 
+if time_step == Nb_Iter then
+    // On enregistre le nom du dossier output dans un fichier .txt
+    csvWrite(SAVEDIR_CONCAT, CODE+"\output_folder_path.txt");
 
-// On enregistre le nom du dossier output dans un fichier .txt
-SAVEDIR_CONCAT = OUTPUT + runName;
-csvWrite(SAVEDIR_CONCAT, CODE+"\output_folder_path.txt");
-
-// On execute temporal_analysis.py, qui utilise le fichier .txt pour savoir quel dossier output traiter 
-PythonPath = mgetl(PARENT + "python_path.txt");
-unix_s(PythonPath + " temporal_analysis.py");
+    // On execute temporal_analysis.py, qui utilise le fichier .txt pour savoir quel dossier output traiter 
+    PythonPath = mgetl(PARENT + "python_path.txt");
+    unix_s(PythonPath + " temporal_analysis.py");
+end
