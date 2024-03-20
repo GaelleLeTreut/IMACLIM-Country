@@ -1,6 +1,18 @@
 repertoire_racine = r"C:\Users\jeanw\Documents\IMACLIM-Country\outputs_display"
 
 
+# "Energy consumption (C + IC) (ktoe)": "Consommation énergétique (C+IC) - en ktep", soustraire IC par l'énergie !!!
+renaming_dict = {
+    'Real GDP': 'PIB réel',
+    "Population": "Population",
+    "Ratio I / PIB (nominal)": "Ratio I / PIB (nominal)",
+    "Ratio G / PIB (nominal)": "Ratio G / PIB (nominal)",
+    "Ratio C / PIB (nominal)": "Ratio C / PIB (nominal)",
+    "Unemployment % points/BY": "Taux de chômage",
+    "Net DebtGovernment": "Dette de l'état"
+    }
+
+
 
 # Library imports
 import os
@@ -8,81 +20,142 @@ import pandas as pd
 import re
 import numpy as np
 
-# Fonction pour lister tous les FullTemplate
-def lister_fichiers_csv(repertoire):
-    fichiers_csv = []
-    for dossier_racine, _, fichiers in os.walk(repertoire):
-        for fichier in fichiers:
-            if fichier.endswith(".csv") and "FullTemplate_" in fichier and "FullTemplate_BY" not in fichier:
-                fichiers_csv.append(os.path.join(dossier_racine, fichier))
-    return fichiers_csv
 
-# Liste pour stocker les chemins des fichiers CSV qui correspondent aux critères
-fichiers_csv_correspondants = lister_fichiers_csv(repertoire_racine + '\Isolated_Shocks')
-
-# Créer un dictionnaire pour stocker les valeurs de "values_2050" pour chaque fichier
+# CREATION D'UN DATAFRAME POUR CHAQUE SIMULATION AVEC LES VALEURS SOUHAITEES
+# Créer un dictionnaire pour stocker les valeurs de "values_2050" pour chaque simulation
 valeurs_par_fichier = {}
 
-# Parcourir tous les fichiers CSV correspondants
-for fichier in fichiers_csv_correspondants:
-    try:
-        # Lire le fichier CSV
-        df = pd.read_csv(fichier, on_bad_lines='skip', sep=';')
+# List all folders in the base directory
+base_dir = repertoire_racine + '\Isolated_Shocks'
+folders = [folder for folder in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, folder))]
 
-        # Extraire la partie du nom du fichier entre "FullTemplate_" et ".csv"
-        nom_fichier_match = re.search(r"FullTemplate_(.+)\.csv", fichier)
-        if nom_fichier_match:
-            nom_fichier = nom_fichier_match.group(1)
-        else:
-            raise ValueError(f"Le format du nom du fichier {fichier} n'est pas conforme.")
+# Initialize an empty list to store concatenated dataframes
+#list_dfs = []
+
+# Créer un dictionnaire pour stocker les valeurs pour chaque simulation
+dict_dfs = {}
+
+# Iterate through each folder
+for folder in folders:
+    # Get the path to the current folder
+    folder_path = os.path.join(base_dir, folder)
+
+    # List all files in the current folder
+    fichiers = os.listdir(folder_path)
+
+    # Looking for FullTemplate and Summary
+    for fichier in fichiers:
+
+        fichier_path = os.path.join(folder_path, fichier)
+
+        if fichier.endswith(".csv") and "FullTemplate_" in fichier and "FullTemplate_BY" not in fichier:
+            df1 = pd.read_csv(fichier_path, on_bad_lines='skip', sep=';', decimal=',')
+            # print(fichier)
+
+            # Extraire la partie du nom du fichier entre "FullTemplate_" et ".csv"
+            nom_simulation_match = re.search(r"FullTemplate_(.+)\.csv", fichier)
+            if nom_simulation_match:
+                nom_simulation = nom_simulation_match.group(1)
+            else:
+                raise ValueError(f"Le format du nom du fichier {fichier} n'est pas conforme.")
+
+        elif fichier.endswith(".csv") and "Summary_" in fichier:
+            df2 = pd.read_csv(fichier_path, on_bad_lines='skip', sep=';', decimal=',')
+            # print(fichier)
+
+    # print(nom_simulation)
+    # print("\n")
+
+    # Concatenate the dataframes
+    df = pd.concat([df1, df2])
+
+    # Renommer les variables
+    df['Variables'] = df['Variables'].replace(renaming_dict)
+
+    # Selectionner les variables
+    selected_rows = df[df["Variables"].isin(renaming_dict.values())]
+
+    # Supprimer les duplicatas
+    selected_rows = selected_rows.drop_duplicates(subset='Variables')
+
+    # Renommer les colonnes d'années en 2018, 2030, 2040 et 2050
+    selected_rows = selected_rows.rename(columns={'values_2018': '2018', 'values_2030': '2030', 'values_2040': '2040', 'values_2050': '2050'})
+
+    #selected_rows = selected_rows["values_2050"].replace(',', '.')
+
+    # On met "Variable" en index
+    selected_rows.set_index('Variables', inplace=True)
+
+    # Calculer le PIB réel par tête
+    selected_rows.loc['PIB réel par tête'] = selected_rows.loc['PIB réel'] / selected_rows.loc['Population']
+
+    # print(selected_rows)
+    # print("\n")
+
+    # On enregistre le dataframe de la simulation sans_rien à part
+    if nom_simulation == 'sans_rien':
+        df_sans_rien = selected_rows
+    else:
+        dict_dfs[nom_simulation] = [selected_rows]
 
 
-        # Extraire les valeurs de PIB réel et de population en 2050
-        pib_2050 = df[df['Variables'] == 'Real GDP']['values_2050'].values[0]
-        pop_2050 = df[df['Variables'] == 'Population']['values_2050'].values[0]
 
-        # Convertir les valeurs en type numérique
-        pib_2050 = pib_2050.replace(',', '.')
-        pib_2050 = float(pib_2050)
-        pop_2050 = pop_2050.replace(',', '.')
-        pop_2050 = float(pop_2050)
+# CREATION D'UN DATAFRAME POUR CHAQUE VARIABLE ET CALCUL DE LA VARIATION PAR RAPPORT A
+# LA SIMULATION A VIDE
+dict_of_df_by_variable = {}
 
-        # Calculer le PIB réel par tête
-        valeur_2050 = pib_2050 / pop_2050
+for variable in df_sans_rien.index:
+    df_by_variable = pd.DataFrame(columns = ['Simulation', 'Ecart_Pourcentage', 'Valeur 2050'])
 
-        # Ajouter la valeur au dictionnaire
-        valeurs_par_fichier[nom_fichier] = valeur_2050
+    ecart_pourcentage = 0
+    df_by_variable.loc[0] = ['sans_rien', ecart_pourcentage, df_sans_rien['2050'].loc[variable]]
 
-    except (pd.errors.ParserError, IndexError) as e:
-        print(f"Erreur lors de la lecture du fichier {fichier}: {e}")
+    # print('\n')
+    # print(variable)
 
-# Créer un DataFrame à partir du dictionnaire
-df_final = pd.DataFrame(list(valeurs_par_fichier.items()), columns=['Simulation', 'Valeur_2050'])
+    for simu in dict_dfs:
+        print(simu)
 
-# Calculer le pourcentage de variation par rapport à la simu "sans rien"
-df_final['Ecart_Pourcentage'] = (df_final['Valeur_2050'] / df_final[df_final["Simulation"]=="sans_rien"].Valeur_2050.values - 1)
+        df_simu = dict_dfs[simu][0]
 
-# Renommer la colonne 'Valeur_2050'
-df_final = df_final.rename(columns={'Valeur_2050': 'PIB_reel_par_tete_2050'})
+        valeur_2050 = df_simu['2050'].loc[variable]
+        ecart_pourcentage = valeur_2050 / df_sans_rien['2050'].loc[variable] - 1
+        df_by_variable.loc[len(df_by_variable)] = [simu, ecart_pourcentage, valeur_2050]
 
-# Ajouter une colonne 'Type_de_choc' en fonction de la colonne 'Simulation'
-conditions = [
-    df_final['Simulation'].isin(['prix_import_fossiles', 'croissance_mondiale', 'population', 'productivite']),
-    df_final['Simulation'].isin(['exportations_energetiques', 'coefs_techniques_energetiques', 'importations', 'kappa', 'consommation_des_menages', 'investissement', 'prix_de_production', 'prix_de_production_et_marges_specifiques', 'coefs_techniques_et_imports', 'CBAM']),
-    (df_final['Simulation'] == 'sans_rien') | (df_final['Simulation'] == 'ensemble')
-]
 
-valeurs = ['Context_shock', 'Policy_shock', '_']
-df_final['Type_de_choc'] = np.select(conditions, valeurs, default='_')
+    # print(df_by_variable)
 
-# Échanger les colonnes de place
-df_final = df_final[['Type_de_choc', 'Simulation', 'PIB_reel_par_tete_2050','Ecart_Pourcentage']]
+    # Ajouter une colonne 'Type_de_choc' en fonction de la colonne 'Simulation'
+    conditions = [
+        df_by_variable['Simulation'].isin(['prix_import_fossiles', 'croissance_mondiale', 'population', 'productivite']),
+        df_by_variable['Simulation'].isin(['exportations_energetiques', 'coefs_techniques_energetiques', 'importations', 'kappa', 'consommation_des_menages', 'investissement', 'prix_de_production', 'prix_de_production_et_marges_specifiques', 'coefs_techniques_et_imports', 'CBAM']),
+        (df_by_variable['Simulation'] == 'sans_rien') | (df_by_variable['Simulation'] == 'ensemble')
+    ]
 
-# Trier les lignes d'abord selon 'Type_de_choc', puis selon 'Ecart_Pourcentage' croissant
-df_final = df_final.sort_values(by=['Type_de_choc', 'Ecart_Pourcentage'])
+    valeurs = ['Context_shock', 'Policy_shock', '_']
+    df_by_variable['Type_de_choc'] = np.select(conditions, valeurs, default='_')
 
-# Afficher le DataFrame résultant
-print(df_final)
+    # Échanger les colonnes de place
+    df_by_variable = df_by_variable[['Type_de_choc', 'Simulation','Ecart_Pourcentage', 'Valeur 2050']]
 
-df_final.to_csv(repertoire_racine + '/isolated_shocks_output.csv', sep=';', index=False, decimal=',')
+    # Trier les lignes d'abord selon 'Type_de_choc', puis selon 'Ecart_Pourcentage' croissant
+    df_by_variable = df_by_variable.sort_values(by=['Type_de_choc', 'Ecart_Pourcentage'])
+
+    # Afficher le DataFrame résultant
+    print(df_by_variable)
+
+    # On ajoute le df dans le dict
+    dict_of_df_by_variable[variable] = df_by_variable
+
+
+# SAVE DATA
+writer = pd.ExcelWriter(repertoire_racine + '/isolated_shocks_output.xlsx', engine='xlsxwriter')
+
+for variable in dict_of_df_by_variable:
+    df_tmp = dict_of_df_by_variable[variable]
+    df_tmp.to_excel(writer, sheet_name = variable, index=False)
+
+writer.close()
+
+
 

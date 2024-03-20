@@ -28,4 +28,4 @@ python_path.txt
 code/output_folder_path.txt
 
 outputs_display/Isolated_Shocks/*
-outputs_display/isolated_shocks_output.csv
+outputs_display/isolated_shocks_output.xlsx
