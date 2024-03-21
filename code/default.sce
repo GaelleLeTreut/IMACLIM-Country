@@ -98,7 +98,7 @@ elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
 
 
 // Scenarios Decarbonation industrie - deuxieme iteration
-elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2'
+elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AME_TESI' | Scenario == 'AMS_TESI'
     study = 'TESI_RunChoices';
     SystemOpt_Resol = 'SystemOpt_Static_TESI';
     AGG_type = 'AGG_23TME';
@@ -112,7 +112,7 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2'
     
     Carbone_ETS = 'True';
     Carbon_BTA = '%T';
-    Scenario_ETS = 'AMS_TISE_high_ETS';
+    Scenario_ETS = 'AMS_TESI_high_ETS';
 
 
 // Scenarios Ademe incertitudes

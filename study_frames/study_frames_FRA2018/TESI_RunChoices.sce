@@ -61,7 +61,7 @@ if Carbone_ETS == "True"
     parameters.Carbon_Tax_rate = parameters.Carbon_Tax_rate * (1-inflation_2018_2020);
 
 
-    if Scenario == 'AME' | Scenario =='AME_TISE' | Scenario =='AME_TESI_iter2'
+    if Scenario == 'AME' | Scenario =='AME_TISE' | Scenario =='AME_TESI_iter2' | Scenario =='AME_TESI'
         // Pour définir des taxes carbones différentes selon les secteurs
         CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
         parameters.CarbonTax_Diff_IC = evstr(CarbonTax_Diff_IC_filename); // Useless
@@ -73,7 +73,7 @@ if Carbone_ETS == "True"
         // CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
 
-    elseif Scenario == 'AMS' | (Scenario == 'AMS_TISE' & Scenario_ETS <> 'AMS_TISE_high_ETS') | (Scenario == 'AMS_TESI_iter2' & Scenario_ETS <> 'AMS_TISE_high_ETS')
+    elseif Scenario == 'AMS' | (Scenario == 'AMS_TISE' & Scenario_ETS <> 'AMS_TESI_high_ETS') | (Scenario == 'AMS_TESI_iter2' & Scenario_ETS <> 'AMS_TESI_high_ETS') | (Scenario == 'AMS_TESI' & Scenario_ETS <> 'AMS_TESI_high_ETS')
         // PRIX DU CARBONE PLUS FAIBLE EN 2030 SUR LE PERIMETRE DE L'ETS 2
         if time_step == 2
             // Pour définir des taxes carbones différentes selon les secteurs
@@ -120,7 +120,7 @@ if Carbone_ETS == "True"
         CarbonTax_Diff_IC_ETS1_filename = 'CarbonTax_Diff_IC_ETS1_' + Scenario;
         CarbonTax_Diff_IC_ETS2_filename = 'CarbonTax_Diff_IC_ETS2_' + Scenario;
 
-        if Scenario == 'AMS_TISE' | Scenario == 'AMS_TESI_iter2' 
+        if Scenario == 'AMS_TISE' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AMS_TESI' 
             CarbonTax_Diff_IC_ETS1_filename = CarbonTax_Diff_IC_ETS1_filename + '_high_ETS';
             CarbonTax_Diff_IC_ETS2_filename = CarbonTax_Diff_IC_ETS2_filename + '_high_ETS';
         end
@@ -360,13 +360,13 @@ if Scenario == 'AMS_run2' // Config de Projections_Scenario_SNBC3.csv
     Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
 end
 
-if Scenario == 'AME_TISE' | Scenario == 'AME_TESI_iter2'
+if Scenario == 'AME_TISE' | Scenario == 'AME_TESI_iter2' | Scenario == 'AME_TESI'
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
     Proj_Vol.I.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors), ..
     list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
 end
 
-if Scenario == 'AMS_TISE' | Scenario == 'AMS_TESI_iter2' // Config de Projections_Scenario_TISE.csv
+if Scenario == 'AMS_TISE' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AMS_TESI' // Config de Projections_Scenario_TISE.csv
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
     Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS),list(Indice_SteelIronS,1:nb_Sectors), ..
     list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
@@ -377,7 +377,7 @@ end
 
 // TOCLEAN
 // Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
-if Scenario == 'AME_TISE' | Scenario == 'AME_TESI_iter2'
+if Scenario == 'AME_TISE' | Scenario == 'AME_TESI_iter2' | Scenario == 'AME_TESI'
     if Labour_product =='True' & Demographic_shift <> 'True'
         if time_step == 1
             parameters.Mu = 0.0063541;
