@@ -1471,6 +1471,7 @@ if time_step == Nb_Iter then
     csvWrite(SAVEDIR_CONCAT, CODE+"\output_folder_path.txt");
 
     // On execute temporal_analysis.py, qui utilise le fichier .txt pour savoir quel dossier output traiter 
-    PythonPath = mgetl(PARENT + "python_path.txt");
-    unix_s(PythonPath + " temporal_analysis.py");
+    // PythonPath = mgetl(PARENT + "python_path.txt");
+    // unix_s(PythonPath + " temporal_analysis.py");
+    unix_s("python temporal_analysis.py");
 end
