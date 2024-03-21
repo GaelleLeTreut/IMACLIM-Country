@@ -99,7 +99,7 @@ if Carbone_ETS == "True"
             Deriv_Exogenous.CarbonTax_Diff_C = evstr(CarbonTax_Diff_C_filename);
         end
 
-    elseif Scenario == 'AMS_high_ETS' | Scenario_ETS == 'AMS_TISE_high_ETS'
+    elseif Scenario == 'AMS_high_ETS' | Scenario_ETS == 'AMS_TESI_high_ETS'
         parameters.Carbon_Tax_rate = 1000;
 
         // Pour définir des taxes carbones différentes selon les ETS 1 et 2
