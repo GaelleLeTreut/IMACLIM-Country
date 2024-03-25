@@ -5,9 +5,9 @@ repertoire_racine = r"C:\Users\jeanw\Documents\IMACLIM-Country\outputs_display"
 renaming_dict = {
     'Real GDP': 'PIB réel',
     "Population": "Population",
-    "Ratio I / PIB (nominal)": "Ratio I / PIB (nominal)",
-    "Ratio G / PIB (nominal)": "Ratio G / PIB (nominal)",
-    "Ratio C / PIB (nominal)": "Ratio C / PIB (nominal)",
+    "Ratio I / PIB (nominal)": "Ratio I sur PIB (nominal)",
+    "Ratio G / PIB (nominal)": "Ratio G sur PIB (nominal)",
+    "Ratio C / PIB (nominal)": "Ratio C sur PIB (nominal)",
     "Unemployment % points/BY": "Taux de chômage",
     "Net DebtGovernment": "Dette de l'état"
     }
