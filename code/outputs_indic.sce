@@ -1519,7 +1519,7 @@ end
 
 /// for MacroIncertitudes
 
-if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3" | Scenario=="S2test" | Scenario=="S3test"
+if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3" | Scenario=="S2test" | Scenario=="S3pref" | Scenario=="neutral" | Scenario=="neutralpref"
     OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
     ["---Macro Incertitudes ---",			 ""																						];..
     ["VAR_sigma_MX",		VAR_sigma_MX	];..

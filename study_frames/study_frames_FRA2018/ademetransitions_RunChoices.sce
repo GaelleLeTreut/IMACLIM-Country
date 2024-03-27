@@ -21,21 +21,36 @@ Proj_Vol.kappa.apply_proj = %F;
 
 end 
 
-if  Scenario=='S2' | Scenario=='S3'
+// if  Scenario=='S2' | Scenario=='S3' | Scenario=='S3pref'
 
-	parameters.efficiency_coeff = efficiency_coeff_file(1,time_step);
+// 	parameters.efficiency_coeff(:) = efficiency_coeff_file(:,time_step);
 
-end
+// end
 
-if  Scenario=='S2' 
+// if  Scenario=='S3'
 
-	parameters.alpha_share_budget(:) = alpha_share_budget_file(:,time_step)';
+// 	// parameters.alpha_share_budget(:) = alpha_share_budget_file_test_energy(:,time_step)';
+// 	// parameters.alpha_demand(:) = alpha_file(:,time_step);
+// 	// parameters.beta_demand(:) = beta_file(:,time_step);
+// 	// parameters.gamma_demand(:) = gamma_file(:,time_step);
+// 	parameters.mu_demand(:) = mu_dfile(:,time_step);
 
-end
+// 	// if time_step == 0
+// 	// 	parameters.alpha(:) = alpha_beta_by(:,1);
+// 	// 	parameters.beta(:) = alpha_beta_by(:,2);
+// 	// end
+
+
+// elseif Scenario=='S3pref'
+
+// 	parameters.alpha_share_budget(:) = alpha_share_budget_file_test_energy_3(:,time_step)';
+
+// end
 
 ////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
 // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
 if Spe_margs_Profit_margin_gaz_reduced == 'true' then
+
 	Deriv_Exogenous.markup_rate = markup_rate;
 	Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
@@ -43,11 +58,12 @@ if Spe_margs_Profit_margin_gaz_reduced == 'true' then
 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
 	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+
 end
 
 //////////////////////////////////////////////////// IMPORTATIONS ///////////////////////////////////////////////////////////////
 
-if VAR_sigma_MX != "neutral"
+if VAR_sigma_MX ~= "neutral"
 
 // delta_M forcé pour les carburants liquides et le gaz
 parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
@@ -105,6 +121,63 @@ elseif trade_drive=='exports_detailed_high'
 elseif trade_drive=='neutral'
 
 	parameters.delta_X_parameter(1:11) = 0;
+
+elseif trade_drive=='ssp2'
+
+	if time_step == 1
+
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.027;
+	
+		elseif time_step == 2
+	
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.027;
+	
+	end
+
+elseif trade_drive=='ssp5'
+
+	if time_step == 1
+
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.036;
+	
+		elseif time_step == 2
+	
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.041;
+	
+	end
+
+elseif trade_drive=='ssp3'
+
+	if time_step == 1
+
+	parameters.delta_X_parameter(1:4) = 0;
+	parameters.delta_X_parameter(5:19) = 0.023
+
+	elseif time_step == 2
+
+	parameters.delta_X_parameter(1:4) = 0;
+	parameters.delta_X_parameter(5:19) = 0.018;
+
+	end
+
+
+elseif trade_drive=='gdp_world_high'
+
+	if time_step == 1
+
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.022;
+	
+	elseif time_step == 2
+	
+		parameters.delta_X_parameter(1:4) = 0;
+		parameters.delta_X_parameter(5:19) = 0.026;
+
+	end
 
 end
 
@@ -385,7 +458,7 @@ end
 
 
 if Scenario=='S2' |  Scenario=='S2test'
-	parameters.sigma_ConsoBudget(1:18) = 0;
+	parameters.sigma_ConsoBudget(1:18) = 0.3;
 end
 
 // ////////////////////////////////////////
