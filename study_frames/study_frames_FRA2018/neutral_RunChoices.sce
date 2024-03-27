@@ -4,17 +4,6 @@
 // ////////////////////////////////////////									////////////////////////////////////////
 // ////////////////////////////////////////									////////////////////////////////////////
 
-
-
-if  Scenario=='S2test' 
-
-	parameters.efficiency_coeff = efficiency_coeff_file(1,time_step);
-
-//	parameters.alpha_share_budget(:) = alpha_share_budget_file(1:2,time_step)';
-
-end
-
-
 // //////////////////////////////////////////////////// Macroeconomic closure  //////////////////////////////////////////////////////////////////////
 
 // if SystemOpt_Resol == "SystemOpt_johansen_full" 
@@ -87,17 +76,23 @@ end
 
 if proj_c == 'false'
 
-Proj_Vol.C.apply_proj = %F; 
+	Proj_Vol.C.apply_proj = %F; 
 
 end 
 
 if proj_kappa == 'false'
 
-Proj_Vol.kappa.apply_proj = %F;
+	Proj_Vol.kappa.apply_proj = %F;
 
 end 
 
-parameters.sigma_ConsoBudget(1:18) = -50;
+if Scenario == 'neutral' | Scenario == 'neutralpref'
+
+	// delta_M forcé pour les carburants liquides et le gaz
+	parameters.mu_demand(:) = mu_file(:,time_step);
+	parameters.Cmin(:) = cmin_file(:,time_step);
+
+end
 
 
 // ////////////////////////////////////////                                    ////////////////////////////////////////
@@ -132,47 +127,29 @@ end
 
 if  trade_drive=='exports_detailed' 
 
-	parameters.delta_X_parameter(1:11) = delta_X_file(1:11,time_step)';
-	parameters.delta_X_parameter(16) = delta_X_file(16,time_step)';
-	parameters.delta_X_parameter(18) = delta_X_file(18,time_step)';
+	parameters.delta_X_parameter(1:19) = 0.013;
 
 elseif trade_drive=='exports_detailed_low' 
 
-	parameters.delta_X_parameter(1:11) = delta_X_file_low(1:11,time_step)';
-	parameters.delta_X_parameter(16) = delta_X_file_low(16,time_step)';
-	parameters.delta_X_parameter(18) = delta_X_file_low(18,time_step)';
-
 	if time_step == 1
 
-		parameters.delta_X_parameter(12:15) = 0.008679232 ;
-		parameters.delta_X_parameter(17) = 0.008679232 ;
-		parameters.delta_X_parameter(19) =  0.008679232 ;
+		parameters.delta_X_parameter(1:19) = 0.008679232 ;
 
 	elseif time_step == 2
 
-		parameters.delta_X_parameter(12:15) = 0.001771701 ;
-		parameters.delta_X_parameter(17) = 0.001771701 ;
-		parameters.delta_X_parameter(19) =  0.001771701 ;
+		parameters.delta_X_parameter(1:19) = 0.001771701 ;
 
 	end
 
 elseif trade_drive=='exports_detailed_high'
 
-	parameters.delta_X_parameter(1:11) = delta_X_file_high(1:11,time_step)';
-	parameters.delta_X_parameter(16) = delta_X_file_high(16,time_step)';
-	parameters.delta_X_parameter(18) = delta_X_file_high(18,time_step)';
-
 	if time_step == 1
 
-		parameters.delta_X_parameter(12:15) = 0.0171270873928357;
-		parameters.delta_X_parameter(17) = 0.0171270873928357;
-		parameters.delta_X_parameter(19) =  0.0171270873928357 ;
+		parameters.delta_X_parameter(1:19) = 0.0171270873928357;
 
 	elseif time_step == 2
 
-		parameters.delta_X_parameter(12:15) = 0.02133961;
-		parameters.delta_X_parameter(17) = 0.02133961 ;
-		parameters.delta_X_parameter(19) =  0.02133961 ;
+		parameters.delta_X_parameter(1:19) = 0.02133961;
 
 	end
 
@@ -332,6 +309,10 @@ elseif VAR_Mu=="high"
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 elseif VAR_Mu=="neutral"
 	parameters.Mu = 0
+	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+elseif VAR_Mu=="test"
+	parameters.Mu = 0.001254004465585890
+
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 end
 
