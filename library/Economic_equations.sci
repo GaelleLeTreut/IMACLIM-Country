@@ -540,7 +540,7 @@ function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
 	//// Warning code: assuming that the last sector in the matrix is the composite one 
     y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
-(ConstrainedShare_C(1:nb_Sectors-1, :) .* C_per_capita(1:nb_Sectors-1, time_step) * Population + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* C_per_capita(1:nb_Sectors-1, time_step) * Population .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./ (CPI*Population)) ./ ((Population_rexp_base(2,time_step) .*.ones(nb_Sectors-1, 1))./ (Population_rexp_base(3,time_step) * Population_rexp_base(1,time_step)) ) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
+    (ConstrainedShare_C(1:nb_Sectors-1, :) .* C_per_capita(1:nb_Sectors-1, time_step) * Population + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* C_per_capita(1:nb_Sectors-1, time_step) * Population .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./ (CPI*Population)) ./ ((Population_rexp_base(2,time_step) .*.ones(nb_Sectors-1, 1))./ (Population_rexp_base(3,time_step) * Population_rexp_base(1,time_step)) ) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
 	/// Replace C by the one that are informed if so
     if is_projected('C') then
@@ -605,7 +605,7 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
 
             for j = 1:nb_Sectors
                 if j == i
-                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff) .^(1-sigma_demand))
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff(i)) .^(1-sigma_demand))
                 else
                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand)
                 end
@@ -617,7 +617,7 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
 
                 if j == 1 | j == 2 | j == 3 | j == 4
 
-                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff).^(1-sigma_demand)
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff(j)).^(1-sigma_demand)
                 else
                     alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * (pC(j,:) .^(1-sigma_demand))
                 end
@@ -631,7 +631,7 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
 
         if  i == 1 | i == 2 | i == 3 | i == 4
 
-            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
+            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff(i)^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
         
         else
 
@@ -650,6 +650,207 @@ function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_dema
     end
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
+
+///	CES (Cobb-Douglas if sigma_demand = 1)
+function y = H_demand_Const_5(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC) ;
+    signRuben = sign(pC);
+    pC = abs(abs ( pC) - abs(pcref(1:19,time_step)));
+	Consumption_budget = abs(Consumption_budget);
+
+	y1 = zeros(nb_Commodities, nb_Households) ;
+    for i = 1:nb_Sectors
+
+        alpha_p = zeros(nb_Sectors,1)
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            for j = 1:nb_Sectors
+                if j == i
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff(i,time_step)) .^(1-sigma_demand))
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand)
+                end
+            end
+
+        else
+
+            for j = 1:nb_Sectors
+
+                if j == 1 | j == 2 | j == 3 | j == 4
+
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff(j,time_step)).^(1-sigma_demand)
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * (pC(j,:) .^(1-sigma_demand))
+                end
+            end
+
+        end
+    
+    end
+
+    for i = 1:nb_Sectors
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            y1(i,:) =  C(i,:) - (consumption_reference(i,time_step) +  ( (Consumption_budget - consumption_budget(1,time_step)) .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff(i,time_step)^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p)))
+        
+        else
+
+            y1(i,:) = C(i,:) -  (consumption_reference(i,time_step) + ( (Consumption_budget - consumption_budget(1,time_step)) .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p)))
+    
+        end
+
+        // if  i == 1 | i == 2 | i == 3 | i == 4
+
+        //     y1(i,:) =  C(i,:) - consumption_reference(i,time_step) 
+        
+        // else
+
+        //     y1(i,:) = C(i,:) -  consumption_reference(i,time_step) 
+            
+        // end
+        
+    end
+
+
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
+
+	/// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+	
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
+
+///	CES (Cobb-Douglas if sigma_demand = 1)
+function y = H_demand_Const_4(Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC) ;
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+	y1 = zeros(nb_Commodities, nb_Households) ;
+    for i = 1:nb_Sectors
+
+        alpha_p = zeros(nb_Sectors,1)
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            for j = 1:nb_Sectors
+                if j == i
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * ((pC(j,:) ./ efficiency_coeff(i)) .^(1-sigma_demand))
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* pC(j,:).^(1-sigma_demand)
+                end
+            end
+
+        else
+
+            for j = 1:nb_Sectors
+
+                if j == 1 | j == 2 | j == 3 | j == 4
+
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) .* (pC(j,:) ./ efficiency_coeff(j)).^(1-sigma_demand)
+                else
+                    alpha_p(j,1) = (alpha_share_budget(j).^(sigma_demand)) * (pC(j,:) .^(1-sigma_demand))
+                end
+            end
+
+        end
+    
+    end
+
+    for i = 1:nb_Sectors
+
+        if  i == 1 | i == 2 | i == 3 | i == 4
+
+            y1(i,:) =  C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((efficiency_coeff(i)^(1-sigma_demand).*pC(i,:).^sigma_demand) * sum(alpha_p))
+        
+        else
+
+            y1(i,:) = C(i,:) - (Consumption_budget .* (alpha_share_budget(i).^ sigma_demand)) ./ ((pC(i,:)^sigma_demand) * sum(alpha_p))
+    
+        end
+        
+    end
+
+
+	//// Warning code: assuming that the last sector in the matrix is the composite one 
+
+	/// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+	
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
+
+///	AIDS
+function y = H_demand_Const_6(Consumption_budget, CPI, pC, alpha_demand, beta_demand, gamma_demand);
+
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+    y1 = zeros(nb_Commodities, nb_Households) ;
+
+    for i = 1:nb_Sectors
+
+        gamma_term = zeros(nb_Sectors,1)
+
+        for j = 1:nb_Sectors
+            if j ~= i
+                gamma_term(j,1) = gamma_demand(i)*pC(j)
+            end
+        end
+
+        y1(i,:) =  C(i,:) - ((Consumption_budget ./ pC(i,:)) * ( alpha_demand(i) + sum(gamma_term) + beta_demand(i) * log(Consumption_budget / CPI)))
+
+    end
+
+    /// Replace C by the one that are informed if so
+    if is_projected('C') then
+        y1 = apply_proj_eq(y1,C,'C');
+    end
+
+    y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
+
+///	LES
+function y = H_demand_Const_7(Consumption_budget, pC, mu_demand, Cmin);
+
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+    y1 = zeros(nb_Commodities, nb_Households) ;
+
+    for i = 1:nb_Sectors
+
+        second_term = zeros(nb_Sectors,1)
+
+        for j = 1:nb_Sectors
+            if j ~= i
+                second_term(j,1) = pC(j)*Cmin(j)
+            end
+        end
+
+    y1(i,:) =  C(i,:) - Cmin(i) - (mu_demand(i) / pC(i)) * (Consumption_budget - sum(second_term))
+
+    end
+
+
+/// Replace C by the one that are informed if so
+if is_projected('C') then
+    y1 = apply_proj_eq(y1,C,'C');
+end
+
+y = matrix(y1 .* signRuben, -1 , 1) ;
 
 endfunction
 

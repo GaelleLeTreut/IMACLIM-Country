@@ -1898,6 +1898,24 @@ for i = 1:nb_Sectors
 
 end 
 
+//////////////////////////////////////////// LES calibration //////////////////////////////////////////////////////////////
+
+function [const_Cmin] =fcalib_Cmin_Const_1(x_Cmin, Consumption_budget, pC, mu_demand, Imaclim_VarCalib)
+
+    Cmin= indiv_x2variable(Imaclim_VarCalib, "x_Cmin");
+    const_Cmin =  H_demand_Const_7(Consumption_budget, pC, mu_demand, Cmin);
+
+endfunction
+
+[x_Cmin, const_Cmin, info_calib_Cmin] = fsolve(x_Cmin, list(fcalib_Cmin_Const_1, Consumption_budget, pC, mu_demand, Index_Imaclim_VarCalib));
+
+if norm(const_Cmin) > sensib
+    error( "review calib_Cmin")
+else
+    Cmin= indiv_x2variable (Index_Imaclim_VarCalib, "x_Cmin");
+end
+
+
 // function [const_alpha_sigma] =fcalib_alpha_sigma_Const_1(x_alpha_sigma, Consumption_budget, sigma_demand, efficiency_coeff, C, pC, Imaclim_VarCalib)
 
 //     alpha_sigma = indiv_x2variable(Imaclim_VarCalib, "x_alpha_sigma");
