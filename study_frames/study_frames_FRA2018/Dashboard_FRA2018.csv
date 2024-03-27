@@ -1,19 +1,19 @@
 Component;Name
 //;
 // Parametres qui dependent de AME ou AMS;
-Scenario;S2
+Scenario;AME
 //;
 //;
 // Parametres SNBC 3;
 //;
-Macro_nb;ademetransitions
-Proj_scenario;branche_macro_incertitudes
-Nb_Iter;2
+Macro_nb;SNBC3
+Proj_scenario;SNBC3
+Nb_Iter;4
 Coef_real_wage_dashboard;1
 sigma_omegaU_dashboard;-0.1
-emissions_bioenergy;False
-SystemOpt_Resol;SystemOpt_Static
-// SystemOpt_Resol;SystemOpt_Static_neokeynesien
+emissions_bioenergy;True
+// SystemOpt_Resol;SystemOpt_Static
+SystemOpt_Resol;SystemOpt_Static_neokeynesien
 //SystemOpt_Resol;SystemOpt_Static_eviction_invest
 // SystemOpt_Resol;SystemOpt_Static_neoclassical
 //SystemOpt_Resol;SystemOpt_Static_johansen
@@ -30,9 +30,9 @@ ClosPubBudget;
 //;
 // Implementations recentes;
 //;
-pY_gas_reduced;False
+pY_gas_reduced;True
 skip_calibration;True
-Time_step_non_etudie;999
+Time_step_non_etudie;2
 MaPrimRenov;False
 Bonus_vehicule_dashboard;False
 //;
@@ -51,17 +51,17 @@ share_of_stranded_asset_costs_4;0
 //;
 System_Resol;Systeme_ProjHomothetic
 Optimization_Resol;%T
-study;ademetransitions_RunChoices
+study;SNBC3_RunChoices
 Capital_Dynamics;%F
 //AGG_type;
-AGG_type;AGG_19TME
+AGG_type;AGG_23TME
 H_DISAGG;HH1
 Resol_Mode;Dynamic_projection
 Demographic_shift;True
 Labour_product;True
 World_prices;True
 X_nonEnerg;True
-Invest_matrix;%F
+Invest_matrix;%T
 CO2_footprint;False
 Output_files;%T
 Output_prints;%F
@@ -69,7 +69,7 @@ proj_alpha;true
 proj_imports;true
 proj_exports;true
 proj_kappa;true
-proj_c;false
+proj_c;true
 proj_invest;true
 proj_pY;true
 proj_spemarg_rates_IC;true

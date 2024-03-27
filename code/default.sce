@@ -52,13 +52,9 @@ eq_G_ConsumpBudget = '';
 
 //////////////// CONFIG DASHBOARD SELON SCENARIOS ////////////////
 
-scenarios_SNBC3 = ['AME', 'AMS'];
-scenarios_SNBC3_TISE = ['AME_TISE', 'AMS_TISE'];
-scenarios_Ademe_transitions = ['S2', 'S3'];
-
-// Scenarios SNBC3
-if grep(scenarios_SNBC3, Scenario) > 0
-    Macro_nb = 'SNBC3';
+// Scenarios SNBC3 run 1
+if Scenario == 'AME' | Scenario == 'AMS'
+    Macro_nb = 'SNBC3_run2_avec_2035';
     Proj_scenario = 'SNBC3';
     Nb_Iter = 4;
     emissions_bioenergy = 'True';
@@ -69,15 +65,28 @@ if grep(scenarios_SNBC3, Scenario) > 0
     AGG_type = 'AGG_23TME';
     Invest_matrix = '%T';
 
+// Scenarios SNBC3 run 2
+elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
+    Macro_nb = 'SNBC3_run2';
+    Proj_scenario = 'SNBC3_run2';
+    Nb_Iter = 3;
+    emissions_bioenergy = 'False';
+    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+    pY_gas_reduced = 'True';
+    Time_step_non_etudie = 999;
+    study = 'SNBC3_RunChoices';
+    AGG_type = 'AGG_23TME';
+    Invest_matrix = '%T';
+
 
 // Scenarios Decarbonation industrie
-elseif grep(scenarios_SNBC3_TISE, Scenario) > 0
-    study = 'SNBC3_RunChoices';
-    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
+    study = 'TESI_RunChoices';
+    SystemOpt_Resol = 'SystemOpt_Static_TESI';
     AGG_type = 'AGG_23TME';
     Invest_matrix = '%T';
     Macro_nb = 'SNBC3_sans_2035';
-    Proj_scenario = 'TISE';
+    Proj_scenario = 'TESI';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced = 'True';
@@ -88,8 +97,26 @@ elseif grep(scenarios_SNBC3_TISE, Scenario) > 0
     Scenario_ETS = 'AMS_TISE_high_ETS';
 
 
+// Scenarios Decarbonation industrie - deuxieme iteration
+elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AME_TESI' | Scenario == 'AMS_TESI'
+    study = 'TESI_RunChoices';
+    SystemOpt_Resol = 'SystemOpt_Static_TESI';
+    AGG_type = 'AGG_23TME';
+    Invest_matrix = '%T';
+    Macro_nb = 'SNBC3_sans_2035';
+    Proj_scenario = 'TESI';
+    Nb_Iter = 3;
+    emissions_bioenergy = 'True';
+    pY_gas_reduced = 'True';
+    Time_step_non_etudie = 999;
+    
+    Carbone_ETS = 'True';
+    Carbon_BTA = '%T';
+    Scenario_ETS = 'AMS_TESI_high_ETS';
+
+
 // Scenarios Ademe incertitudes
-elseif grep(scenarios_Ademe_transitions, Scenario) > 0
+elseif Scenario == 'S2' | Scenario == 'S3'
     Macro_nb = 'ademetransitions';
     Proj_scenario = 'branche_macro_incertitudes';
     Nb_Iter = 2;

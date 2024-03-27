@@ -59,8 +59,9 @@ end
 if file_updated==%t
     // Exécution du code python pour ajouter la ligne a l'excel recapitulatif des simulations
     cd(PARENT);
-    PythonPath = mgetl(PARENT + "outputs_display\" + "metadata_python_path.txt");
-    unix_s(PythonPath + " update_metadata_file.py");
+    // PythonPath = mgetl(PARENT + "python_path.txt");
+    // unix_s(PythonPath + " update_metadata_file.py");
+    unix_s("python update_metadata_file.py");
 end
 
 cd(CODE);

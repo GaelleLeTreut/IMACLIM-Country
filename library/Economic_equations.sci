@@ -361,6 +361,15 @@ function y = H_NetDebt_Const_1(NetFinancialDebt, NetLending, Property_income, ti
 	y=y1';		
 endfunction
 
+function y = H_NetDebt_Const_4(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+
+    /// Household net Debt constraint (NetFinancialDebt)
+    // On retranche à la dette initiale la moyenne de la CAF du pas de temps initial et de la CAF du pas de temps courant, multipliée par le nombre d'années écoulées
+    y1 = NetFinancialDebt(Indice_Households) - ( ini.NetFinancialDebt(Indice_Households) - time_since_ini * (ini.NetLending(Indice_Households) + NetLending(Indice_Households))/2 ) ;
+
+	y=y1';
+endfunction
+
 function y = H_NetDebt_Const_2(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
 
     /// Household net Debt constraint (NetFinancialDebt)
@@ -371,18 +380,18 @@ endfunction
 
 /// Household net Debt constraint (NetFinancialDebt) from De Lauretis
 function y = H_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
-	// Gross net lending at BY and currend
-	Gross_NetLending0 = BY.NetLending(Indice_Households) - BY.Property_income(Indice_Households);
+	// Gross net lending at BY and current
+	Gross_NetLending_BY = BY.NetLending(Indice_Households) - BY.Property_income(Indice_Households);
 	Gross_NetLending= NetLending(Indice_Households) - Property_income(Indice_Households);
 		
     /// Household net Debt constraint (NetFinancialDebt)
-    Incr_GrossNetLending = (Gross_NetLending - Gross_NetLending0)./time_since_BY ; 
+    Incr_GrossNetLending = (Gross_NetLending - Gross_NetLending_BY)./time_since_BY ; 
 
 	TermDebt0 = [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Households))^time_since_BY ].* BY.NetFinancialDebt(Indice_Households);
 	
 	Term1 = 0;
 	for elt=0:time_since_BY-1
-		Term1 = Term1 + [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Households))^elt ].* [- Gross_NetLending0 - (time_since_BY - 1 - elt)*Incr_GrossNetLending  ] ; 
+		Term1 = Term1 + [ ((1/(1+Inflation_rate)) + interest_rate(Indice_Households))^elt ].* [- Gross_NetLending_BY - (time_since_BY - 1 - elt)*Incr_GrossNetLending  ] ; 
 	end
 	
 	y1 = NetFinancialDebt(Indice_Households) - ( TermDebt0 + Term1 ) ;
@@ -521,7 +530,8 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 	if size(sigma_ConsoBudget,"r")==1
 	sigma_ConsoBudget = sigma_ConsoBudget .*. ones(nb_Sectors, 1);
 	end
-
+    
+    // TOCLEAN
 	//// Warning code: assuming that the last sector in the matrix is the composite one 
     y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
@@ -776,7 +786,12 @@ function y = Corp_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income,
 	
 endfunction
 
-
+function y = Corp_NetDebt_Const_4(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+    /// Household net lending constraint (NetLending(Indice_Households))
+    // On retranche à la dette initiale la moyenne de la CAF du pas de temps initial et de la CAF du pas de temps courant, multipliée par le nombre d'années écoulées
+    y1 = NetFinancialDebt(Indice_Corporations) - (ini.NetFinancialDebt(Indice_Corporations) - time_since_ini * (ini.NetLending(Indice_Corporations) + NetLending(Indice_Corporations))/2 ) ;
+	y=y1';		
+endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////    B.3 Public administrations
@@ -875,14 +890,14 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
     // On spécifie que l'on modifie les variables globales (définies dans le RunChoices)
     // Et ce pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
     // TOCLEAN
-    global G_Tax_revenue
-    global G_Non_Labour_Income
-    global G_Other_Income
-    global G_Property_income
-    global G_Social_Transfers
-    global G_Compensations
-    global T_MPR
-    global Bonus_vehicules
+    // global G_Tax_revenue
+    // global G_Non_Labour_Income
+    // global G_Other_Income
+    // global G_Property_income
+    // global G_Social_Transfers
+    // global G_Compensations
+    // global T_MPR
+    // global Bonus_vehicules
 
     // Income by sources, redistribution and tax revenue
     G_Tax_revenue = sum(Income_Tax + Other_Direct_Tax) + sum(Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
@@ -905,7 +920,7 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
     // WE CONSIDER BONUS ECOLOGIC FOR VEHICULES TRANSFER
     Bonus_vehicules = Bonus_vehicules_share * C_value(Indice_AutoS);
 
-    // After tax disposable income constraint (H_disposable_income)
+    // After tax disposable income constraint
     G_disposable_income = -T_MPR -Bonus_vehicules + (G_Tax_revenue + G_Non_Labour_Income + G_Other_Income + G_Property_income - G_Social_Transfers - G_Compensations);
 
 endfunction
@@ -2137,6 +2152,14 @@ function y = G_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, ti
 	
 endfunction
 
+function y = G_NetDebt_Const_4(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini);
+
+    /// Government net lending constraint (NetLending(Indice_Government))
+    // On retranche à la dette initiale la moyenne de la CAF du pas de temps initial et de la CAF du pas de temps courant, multipliée par le nombre d'années écoulées
+    y1 = NetFinancialDebt(Indice_Government) - (ini.NetFinancialDebt(Indice_Government) - time_since_ini * (ini.NetLending(Indice_Government) + NetLending(Indice_Government))/2);
+	
+	y  = y1' ;
+endfunction
 
 // Public finance "closure"
 // Set of variables and exogenous constraints that balances the government account
@@ -3968,7 +3991,7 @@ function Unemployed = HH_Employment_Val_1(u, Labour_force)
     Unemployed = (u .* Labour_force);
 
 endfunction
-
+// TOCLEAN
 //  Ajouter une contrainte pour le nombre d'employed ?
 
 // Unemployment rate and Number of unemployed by household class

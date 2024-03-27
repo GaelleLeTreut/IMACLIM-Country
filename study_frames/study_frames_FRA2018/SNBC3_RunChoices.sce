@@ -301,14 +301,14 @@ end
 
 // On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
 // TOCLEAN
-global G_Tax_revenue
-global G_Non_Labour_Income
-global G_Other_Income
-global G_Property_income
-global G_Social_Transfers
-global G_Compensations
-global T_MPR
-global Bonus_vehicules
+// global G_Tax_revenue
+// global G_Non_Labour_Income
+// global G_Other_Income
+// global G_Property_income
+// global G_Social_Transfers
+// global G_Compensations
+// global T_MPR
+// global Bonus_vehicules
 
 //////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
 
@@ -348,6 +348,18 @@ if Scenario == 'AMS' // Config de Projections_Scenario_SNBC3.csv
     Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
 end
 
+if Scenario == 'AME_run2'
+    // Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households));
+    // Proj_Vol.I.apply_proj = %F;
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
+end
+
+if Scenario == 'AMS_run2' // Config de Projections_Scenario_SNBC3.csv
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
+end
+
 if Scenario == 'AME_TISE'
     Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
     Proj_Vol.I.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors), ..
@@ -363,19 +375,39 @@ end
 
 //////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
 
-// Productivite du travail : on met les valeurs qui sont normalement calculees dans macro_framework.sce
-if Labour_product =='True' & Demographic_shift <> 'True'
-    if time_step == 1
-        parameters.Mu = 0.0063541;
-    elseif time_step == 2
-        parameters.Mu = 0.0083716;
-    elseif time_step == 3
-        parameters.Mu = 0.0110542;
-    else 
-        error
+// TOCLEAN
+// Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
+if Scenario == 'AME_TISE'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0083716;
+        elseif time_step == 3
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
     end
 
-    parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+elseif Scenario == 'AME'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0076591;
+        elseif time_step == 3
+            parameters.Mu = 0.0083716;
+        elseif time_step == 4
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+    end
 end
 
 // Desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
