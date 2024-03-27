@@ -99,8 +99,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;;;
 ////////////////////// Production and consumption choices;;;
 ////// Households consumption choices;;;
-;H_demand_Const_4;Consumption_budget, alpha_share_budget, sigma_demand, efficiency_coeff, C, pC;
-//;H_demand_Const_2;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
+;H_demand_Const_3;Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget;
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
