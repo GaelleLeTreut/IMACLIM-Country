@@ -157,3 +157,5 @@ ShareI_GDP;1;1;calib
 pRental;1;1;calib
 scal_pK;1;1;calib
 alpha_share_budget;1;nb_Sectors;calib
+efficiency_coeff;1;4;calib
+Cmin;1;nb_Sectors;calib
