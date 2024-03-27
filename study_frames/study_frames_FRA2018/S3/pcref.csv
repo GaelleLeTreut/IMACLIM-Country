@@ -1,0 +1,20 @@
+sector;2030;2050
+Oil;   2179.9912;   1771.2019
+Gas_heating;   2643.9291;   3852.6896
+Coal_lignite;   644.49816;   716.66257
+Electricity;   2644.2429;   3187.6996
+Steel_Iron;   1326.2612;   1342.9262
+NonFerrousMetals;   1174.5804;   1235.9159
+Cement;   1529.9004;   1767.7795
+OthMin;   1716.9588;   1850.0568
+ChemicalPharma;   1563.8675;   1647.3692
+Paper;   1581.5028;   1681.4897
+Auto_transport;   1328.1913;   1404.2724
+LandTransp;   649.32781;   679.88080
+NavalTransp;   1078.6434;   1065.7047
+AirTransp;   1097.1300;   1100.8019
+AgriForest_Fish;   1401.4945;   1558.8892
+Food_industry;   1540.5412;   1690.9393
+Construction;   1119.7387;   1289.7102
+ManufacturedGoods;   1539.1493;   1632.0375
+Compo;   945.19367;   1103.4769

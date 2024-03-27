@@ -1,2 +1,5 @@
 var;2030;2050
-efficiency_coeff;1.27;1.90
+oil;1.21;1.66
+gas;1.21;1.66
+coal;1.21;1.66
+electricity;1.21;1.66
