@@ -367,6 +367,8 @@ if ~OutputfilesBY
  // Case of base year
  summary_BY = OutputTable("Summary_"+ref_name);
  fulltemplate_BY = OutputTable("FullTemplate_"+ref_name);
+ G_budget_BY = OutputTable("G_budget_decomp_"+ref_name);
+
 else
  for time_step_tmp = 1:Nb_Iter
  if time_step == time_step_tmp
@@ -378,10 +380,14 @@ else
  Summary = OutputTable('Summary_'+ref_name);
  execstr ( "Summary_" + time_step + " = Summary");
 
+ G_budget = OutputTable('G_budget_decomp_'+ref_name);
+ execstr ( "G_budget_" + time_step + " = G_budget");
+
  // If we are in the last time_step,    we concatenate the fulltemplates
  if time_step == Nb_Iter
  concatenation = fulltemplate_BY;
  concatenation_summary = summary_BY;
+ concatenation_G_budget = G_budget_BY;
  i = 1;
  for j = 1:Nb_Iter
  
@@ -391,6 +397,7 @@ else
  end
  execstr("concatenation(:,2+i) = fulltemplate_" + j + "(:,2)");
  execstr("concatenation_summary(:,2+i) = Summary_" + j + "(:,2)");
+ execstr("concatenation_G_budget(:,2+i) = G_budget_" + j + "(:,2)");
  i = i+1;
  end
  
@@ -398,6 +405,7 @@ else
  // SAVEDIR_CONCAT = OUTPUT + runName + '\';
  csvWrite(concatenation,SAVEDIR_CONCAT+"\FullTemplate_"+simu_name+".csv", ';', ',');
  csvWrite(concatenation_summary,SAVEDIR_CONCAT+"\Summary_"+simu_name+".csv", ';', ',');
+ csvWrite(concatenation_G_budget,SAVEDIR_CONCAT+"\G_budget_"+simu_name+".csv", ';', ',');
  end
  end
  end

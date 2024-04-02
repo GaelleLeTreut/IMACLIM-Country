@@ -1438,7 +1438,48 @@ end
 Out.GDP_sect = Out.Labour_income + Out.Labour_Tax +  Out.Production_Tax - Out.ClimPolCompensbySect + Out.GrossOpSurplus + Out.OtherIndirTax + Out.VA_Tax + Out.Energy_Tax_IC + Out.Energy_Tax_FC + Out.Carbon_Tax;
 
 //////////////////////////
-///////////// TEMPLATE
+///////////// PUBLIC BUDGET DECOMPOSITION
+//////////////////////////
+
+OutputTable("G_budget_decomp_"+ref_name)=[["Variables",    "values_"+Name_time];..
+["--- Revenus du public ---",    ""];..
+["GOS_byAgent",    money_disp_adj.*Out.GOS_byAgent(Indice_Government)];..
+["InsuranceContrib_byAgent",    money_disp_adj.*Out.InsuranceContrib_byAgent(Indice_Government)];..
+["Production_Tax_byAgent",    money_disp_adj.*Out.Production_Tax_byAgent(Indice_Government)];..
+["Energ_Tax_byAgent",    money_disp_adj.*Out.Energ_Tax_byAgent(Indice_Government)];..
+["OtherIndirTax_byAgent",    money_disp_adj.*Out.OtherIndirTax_byAgent(Indice_Government)];..
+["VA_Tax_byAgent",    money_disp_adj.*Out.VA_Tax_byAgent(Indice_Government)];..
+["--- Transferts du public ---",    ""];..
+["Property_income",    money_disp_adj.*Out.Property_income(Indice_Government)];..
+["Unemployment_transfers",    money_disp_adj.*Out.Unemployment_transfers(Indice_Government)];..
+["Pensions",    money_disp_adj.*Out.Pensions(Indice_Government)];..
+["Other_social_transfers",    money_disp_adj.*Out.Other_social_transfers(Indice_Government)];..
+["Other_Transfers",    money_disp_adj.*Out.Other_Transfers(Indice_Government)];..
+["Income_Tax",    money_disp_adj.*Out.Income_Tax(Indice_Government)];..
+["Corporate_Tax",	money_disp_adj.*Out.Corporate_Tax(Indice_Government)];..
+["Other_Direct_Tax",	money_disp_adj.*Out.Other_Direct_Tax(Indice_Government)];..
+["--- Total budget disponible ---",    ""];..
+["G_disposable_income",	money_disp_adj.*Out.G_disposable_income];..
+["--- Utilisation du revenu ---",    ""];..
+["Depenses (FC_byAgent)",	money_disp_adj.*Out.FC_byAgent(Indice_Government)];..
+["Epargne",	money_disp_adj.*Out.Government_savings];..
+["--- Investissement ---",    ""];..
+["Investissement",	money_disp_adj.*Out.GFCF_byAgent(Indice_Government)];..
+["--- Deficit et dette ---",    ""];..
+["NetLending",	money_disp_adj.*Out.NetLending(Indice_Government)];..
+["Interest_rate",	interest_rate(Indice_Government)];..
+["NetFinancialDebt",	money_disp_adj.*Out.NetFinancialDebt(Indice_Government)];..
+["--- Taxes sur l energie ---",    ""];..
+["Energy_Tax_IC",	money_disp_adj.*sum(Out.Energy_Tax_IC)];..
+["Energy_Tax_FC",	money_disp_adj.*sum(Out.Energy_Tax_FC)];..
+];
+
+if Output_files
+    csvWrite(OutputTable("G_budget_decomp_"+ref_name),SAVEDIR+"G_budget_decomp_"+Name_time+"_"+simu_name+".csv", ';');
+end
+
+//////////////////////////
+///////////// FULL TEMPLATE
 //////////////////////////
 
 SAVEDIR_CONCAT = OUTPUT + runName;
