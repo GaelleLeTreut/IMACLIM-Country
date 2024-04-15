@@ -2321,6 +2321,13 @@ function y = RoW_NetDebt_Const_3(NetFinancialDebt, NetLending, Property_income, 
 	
 endfunction
 
+function y = RoW_NetDebt_Const_4(NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini) ;
+    /// Rest of world net lending constraint (NetLending(Indice_Households))
+    // On retranche à la dette initiale la moyenne de la CAF du pas de temps initial et de la CAF du pas de temps courant, multipliée par le nombre d'années écoulées
+    y1 = NetFinancialDebt(Indice_RestOfWorld) - (ini.NetFinancialDebt(Indice_RestOfWorld) - time_since_ini * (ini.NetLending(Indice_RestOfWorld) + NetLending(Indice_RestOfWorld))/2 ) ;
+	y=y1';		
+endfunction
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // C)  Trade-offs in productive systems
