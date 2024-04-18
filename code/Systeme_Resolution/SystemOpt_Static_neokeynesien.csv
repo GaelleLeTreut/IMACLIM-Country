@@ -96,7 +96,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ////// Rest of the world;;;
 ;RoW_NetLending_Const_1;NetLending, pM, M, pX, X, Property_income, Other_Transfers;
 ;RoW_PropTranf_Const_2;Property_income;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
-;RoW_NetDebt_Const_1;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
+;RoW_NetDebt_Const_4;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 //;Interest_rate_Const_1;interest_rate, delta_interest_rate;
 ;;;
 ////////////////////// Production and consumption choices;;;
