@@ -210,6 +210,7 @@ OutputTable("Summary_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Ratio I / PIB (nominal)",    sum(Out.I_value) / Out.GDP ];..
 ["Ratio G / PIB (nominal)",    sum(Out.G_value) / Out.GDP ];..
 ["Ratio C / PIB (nominal)",    sum(Out.C_value) / Out.GDP ];..
+["Ratio X-M / PIB (nominal)",    (sum(Out.X_value) - sum(Out.M_value)) / Out.GDP ];..
 ["Real C",    money_disp_adj.*sum(Out.C_value)/Out.CPI];..
 ["Real G",    money_disp_adj.*sum(Out.G_value)/G_pFish];..
 ["Real I",    money_disp_adj.*sum(Out.I_value)/I_pFish];..
