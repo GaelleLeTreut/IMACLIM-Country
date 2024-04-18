@@ -604,6 +604,39 @@ function y = H_demand_Const_3(Consumption_budget, C, ConstrainedShare_C, pC, CPI
     y = matrix(y1 .* signRuben, -1 , 1) ;
 endfunction
 
+///	LES
+function y = H_demand_Const_4(Consumption_budget, pC, mu_demand, Cmin);
+
+    signRuben = sign(pC);
+    pC = abs ( pC);
+	Consumption_budget = abs(Consumption_budget);
+
+    y1 = zeros(nb_Commodities, nb_Households) ;
+
+    for i = 1:nb_Sectors
+
+        second_term = zeros(nb_Sectors,1)
+
+        for j = 1:nb_Sectors
+            if j ~= i
+                second_term(j,1) = pC(j)*Cmin(j)
+            end
+        end
+
+    y1(i,:) =  C(i,:) - Cmin(i) - (mu_demand(i) / pC(i)) * (Consumption_budget - sum(second_term))
+
+    end
+
+
+/// Replace C by the one that are informed if so
+if is_projected('C') then
+    y1 = apply_proj_eq(y1,C,'C');
+end
+
+y = matrix(y1 .* signRuben, -1 , 1) ;
+
+endfunction
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////    B.2 Corporations
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

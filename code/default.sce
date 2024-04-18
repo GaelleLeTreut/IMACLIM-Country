@@ -71,7 +71,7 @@ elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
     Proj_scenario = 'SNBC3_run2';
     Nb_Iter = 3;
     emissions_bioenergy = 'False';
-    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+    SystemOpt_Resol = 'SystemOpt_Static_neokeynesienlesdemand';
     pY_gas_reduced = 'True';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
