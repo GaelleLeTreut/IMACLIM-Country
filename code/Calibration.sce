@@ -1876,8 +1876,22 @@ else
     Carbon_Tax_rate_M = (abs(Carbon_Tax_rate_M) > %eps).*Carbon_Tax_rate_M;
 end
 
+//////////////////////////////////////////// LES calibration //////////////////////////////////////////////////////////////
 
+function [const_Cmin] =fcalib_Cmin_Const_1(x_Cmin, Consumption_budget, pC, mu_demand, Imaclim_VarCalib)
 
+    Cmin= indiv_x2variable(Imaclim_VarCalib, "x_Cmin");
+    const_Cmin =  H_demand_Const_4(Consumption_budget, pC, mu_demand, Cmin);
+
+endfunction
+
+[x_Cmin, const_Cmin, info_calib_Cmin] = fsolve(x_Cmin, list(fcalib_Cmin_Const_1, Consumption_budget, pC, mu_demand, Index_Imaclim_VarCalib));
+
+if norm(const_Cmin) > sensib
+    error( "review calib_Cmin")
+else
+    Cmin= indiv_x2variable (Index_Imaclim_VarCalib, "x_Cmin");
+end
 
 /// Replace all calibrated variables by correct value into calib structure
 calib = Variables2struct(list_calib);
