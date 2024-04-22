@@ -962,7 +962,7 @@ endfunction
 
 
 /// Financial transfers from/to Government
-function [y] = G_PropTransf_Const_1(Property_income, interest_rate, NetFinancialDebt);
+function [y] = G_PropTranf_Const_1(Property_income, interest_rate, NetFinancialDebt);
 
     // Financial transfers are negative if Corporations hold net financial debts ( i.e. NetFinancialDebt(Indice_Government) > 0 )
     y1 = Property_income(Indice_Government) + interest_rate(Indice_Government) .* NetFinancialDebt(Indice_Government) ;
@@ -971,7 +971,7 @@ function [y] = G_PropTransf_Const_1(Property_income, interest_rate, NetFinancial
 endfunction
 
 ///	proj: il faut que ça varie comme le PIB pour homothétie
-function y = G_PropTransf_Const_2(Property_income, GDP) ;
+function y = G_PropTranf_Const_2(Property_income, GDP) ;
 
     // Financial transfers are positive if Household classes hold net financial assets ( i.e. NetFinancialDebt(Indice_Households) < 0 )
     y = (Property_income(Indice_Government) - (GDP/BY.GDP) * BY.Property_income(Indice_Government))';
