@@ -90,7 +90,7 @@ G_Consumption_budget;G_ConsumpBudget_Val_2;GDP;//  G_ConsumpBudget_Const_1 :Use 
 G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ;G_investment_Const_2;GFCF_byAgent, G_disposable_income, G_invest_propensity, GDP;// Contribution à la FBCF du gov : 1-part constante du revenu / 2-indexation de la FBCF des gouv sur le PIB  / 3-constant en réel + Carbon Tax Revenu (option dashboard)
 ;G_NetLending_Const_1;NetLending, GFCF_byAgent, Government_savings;
-;G_PropTranf_Const_1;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
+;G_PropTransf_Const_2;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;G_NetDebt_Const_4;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Rest of the world;;;
