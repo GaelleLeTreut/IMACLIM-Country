@@ -191,7 +191,7 @@ OutputTable("Summary_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Non-energy output",    sum(Out.Y(Indice_NonEnerSect))];..
 ["Energy output",    sum(Out.Y(Indice_EnerSect))];..
 ["Non-energy consumption (C+G)",    sum(Out.C(Indice_NonEnerSect,:)) + sum(Out.G(Indice_NonEnerSect,:))];..
-["Energy consumption (C + IC) (ktoe)",    sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,:))];..
+["Energy consumption (C + IC except energy) (ktoe)",    sum(Out.C(Indice_EnerSect,:)) + sum(Out.IC(Indice_EnerSect,Indice_NonEnerSect))];..
 ["Households Energy consumption (ktoe)",    sum(Out.C(Indice_EnerSect,:))];..
 ["Households Energy consumption (Millions of euro)",    money_disp_adj*sum(Out.C_value(Indice_EnerSect,:))];..
 ["Households Non-energy consumption (pseudoquantities)",    sum(Out.C(Indice_NonEnerSect,:))];..
@@ -220,7 +220,8 @@ OutputTable("Summary_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Emissions - MtCO2",    Out.DOM_CO2];..
 ["Emissions - %/"+ref_name,    (evol_ref.DOM_CO2-1)*100];..
 ["C - Energy - ktoe",    sum(Out.C(Indice_EnerSect,:))];..
-["IC - Energy ktoe",    sum(Out.IC(Indice_EnerSect,:))];..
+["IC except for energy production - Energy ktoe",    sum(Out.IC(Indice_EnerSect,Indice_NonEnerSect))];..
+["IC for energy production - Energy ktoe",    sum(Out.IC(Indice_EnerSect,Indice_EnerSect))];..
 ["Nominal carbon tax on C ("+money_disp_unit+money+")",    money_disp_adj.*sum(Out.Carbon_Tax_C)];..
 ["Nominal carbon tax on IC ("+money_disp_unit+money+")",    money_disp_adj.*sum(Out.Carbon_Tax_IC)];..
 ["Real Y",    money_disp_adj.*sum(Out.Y_value)/Y_pFish];..

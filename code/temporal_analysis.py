@@ -56,7 +56,7 @@ renaming_dict = {
     "Non-energy output": "Production non énergétique",
     "Energy output": "Production énergétique",
     "Non-energy consumption (C+G)": "Consommation non énergétique (C+G)",
-    "Energy consumption (C + IC) (ktoe)": "Consommation énergétique (C+IC) - en ktep",
+    "Energy consumption (C + IC except energy) (ktoe)": "Consommation énergétique (hors production d'énergie) - en ktep",
     "Households Energy consumption (ktoe)": "Consommation énergétique des ménages (ktep)",
     "Households Non-energy consumption (pseudoquantities)": "Consommation non énergétique des ménages (pseudoquantités)",
     "Emissions - MtCO2": "Emissions - MtCO2",

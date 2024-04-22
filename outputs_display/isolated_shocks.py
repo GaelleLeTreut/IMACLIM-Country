@@ -4,6 +4,7 @@ repertoire_racine = r"C:\Users\douda\Documents\GitHub\IMACLIM-Country\outputs_di
 # "Energy consumption (C + IC) (ktoe)": "Consommation énergétique (C+IC) - en ktep", soustraire IC par l'énergie !!!
 renaming_dict = {
     'Real GDP': 'PIB réel',
+    "Energy consumption (C + IC except energy) (ktoe)": "Consommation énergétique (hors production d'énergie) - en ktep",
     "Population": "Population",
     "Ratio I / PIB (nominal)": "Ratio I sur PIB (nominal)",
     "Ratio G / PIB (nominal)": "Ratio G sur PIB (nominal)",
