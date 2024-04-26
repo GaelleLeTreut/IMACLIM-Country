@@ -53,7 +53,7 @@ Consumption_budget;ConsumBudget_Val_1;H_disposable_income, Household_saving_rate
 ;H_Investment_Const_1;GFCF_byAgent, H_disposable_income, H_Invest_propensity;// Contribution à la FBCF des ménages : 1-part constante du revenu / 2-proportionnellement à la consommation finale en biens immobilier
 //;H_Investment_Const_2;GFCF_byAgent,pC,C;
 ;H_NetLending_Const_1;NetLending, GFCF_byAgent, Household_savings;
-;H_PropTranf_Const_2;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
+;H_PropTranf_Const_2;Property_income, GDP;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;H_NetDebt_Const_4;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Firms;;;
@@ -62,7 +62,7 @@ Corporations_savings;Corp_savings_Val_1;Corp_disposable_income;
 //;Corp_investment_Const_1;GFCF_byAgent, Corp_disposable_income, Corp_invest_propensity;//Corp_investment_Const_1 : part constante du revenu (cas avec taux d'intérêts variables)
 ;MacroClosure_Const_1;GFCF_byAgent, pI, I;/// MacroClosure_Const_1 : CORP fourni le reliquat (cas avec taux d'intérêts constants)
 ;Corp_NetLending_Const_1;NetLending, GFCF_byAgent, Corporations_savings;
-;Corp_PropTranf_Const_2;Property_income, interest_rate, NetFinancialDebt;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
+;Corp_PropTranf_Const_2;Property_income, GDP;// const_1 as interest of Debt / const_2 indexation on GDP (except RoW balanced to have sum = 0)
 ;Corp_NetDebt_Const_4;NetFinancialDebt, NetLending, Property_income, time_since_BY, time_since_ini;// Const_1 : Linear growth of Debts from ini / Const_2 : equal to BY
 ;;;
 ////// Public Administration;;;
