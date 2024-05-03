@@ -1,6 +1,6 @@
 clear
 
-Scenario = 'AME_run2';
+Scenario = 'AME_run2test';
 
 skip_calibration = 'True';
 
