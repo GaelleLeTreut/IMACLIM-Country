@@ -53,7 +53,7 @@ eq_G_ConsumpBudget = '';
 //////////////// CONFIG DASHBOARD SELON SCENARIOS ////////////////
 
 // Scenarios SNBC3 run 1
-if Scenario == 'AME' | Scenario == 'AMS'
+if Scenario == 'AME' | Scenario == 'AMS' 
     Macro_nb = 'SNBC3_run2_avec_2035';
     Proj_scenario = 'SNBC3';
     Nb_Iter = 4;
@@ -90,7 +90,9 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test'
     AGG_type = 'AGG_23TME';
     Invest_matrix = '%T';
     proj_kappa = 'false';
-    proj_invest = 'false';
+    proj_invest = 'true';
+    proj_pY = 'false';
+    proj_spemarg_rates_IC = 'false';
 
 
 // Scenarios Decarbonation industrie
