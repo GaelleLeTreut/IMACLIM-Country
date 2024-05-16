@@ -3,8 +3,8 @@
 //     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
 //         exec(STUDY_Country+study+".sce");
 
-// parameters.mu_demand(:) = mu_file(:,time_step);
-// parameters.Cmin(:) = cmin_file(:,time_step);
+parameters.mu_demand(:) = mu_file(:,time_step);
+parameters.Cmin(:) = cmin_file(:,time_step);
 
 //////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
