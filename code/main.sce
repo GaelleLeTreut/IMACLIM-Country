@@ -1,6 +1,6 @@
 clear
 
-Scenario = 'AME_consolide';
+Scenario = 'AMS_run20606';
 
 skip_calibration = 'True';
 

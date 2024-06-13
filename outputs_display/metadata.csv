@@ -1,4 +1,210 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+109.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240611_15h51m20;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3520014,5;6139023,4;120328,01;2636642,1;211165,8;6,1474699;8,287e+08;49671,085;1,0344219;139,35942
+108.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240611_15h49m19;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3485387,3;6092167,4;118654,37;2614004,4;223998,95;6,7296699;8,263e+08;49223,661;1,0543252;309,06477
+107.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240611_09h20m24;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3385267,5;5903604,7;135122,4;2530792,5;256587,07;8,8386429;8,695e+08;47899,914;1,085038;146,48552
+106.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240611_09h17m58;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3370161,5;5881481,1;135108,83;2520234,7;260137,64;9,1394388;8,636e+08;47739,881;1,0868017;369,76772
+105.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240611_07h54m52;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3363762,4;5872385,9;135479,75;2515843,5;262943;9,25627;8,612e+08;47679,28;1,087171;374,41113
+104.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240611_07h53m43;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3374003,7;5889643,1;133719,35;2521919,6;256809,81;9,0872991;8,658e+08;47767,202;1,088398;146,389
+103.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_21h44m02;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3371023,1;5883574;135650,64;2521891,2;263475,29;9,1048809;8,712e+08;47757,97;1,0895518;146,79736
+102.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_21h42m53;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3361064,2;5868633,1;135425,94;2513281,2;262940,29;9,3174232;8,563e+08;47647,894;1,0859896;373,66177
+101.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_21h37m21;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3362691,1;5870967,1;135459,35;2514486;263015,53;9,2906268;8,587e+08;47661,619;1,0863898;373,77627
+100.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_21h35m23;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3363079,4;5871575,5;135468,84;2514862,4;263038,99;9,2806053;8,593e+08;47666,763;1,0865643;146,49527
+99.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_21h28m51;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3363079,4;5871575,5;135468,84;2514862,4;263038,99;9,2806053;8,593e+08;47666,763;1,0865643;146,49527
+98.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_21h26m42;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3362691,1;5870967,1;135459,35;2514486;263015,53;9,2906268;8,587e+08;47661,619;1,0863898;373,77627
+97.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_21h19m11;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3322691;5810963,6;134524,18;2474121,5;260639,68;10,403478;7,898e+08;47125,442;1,0633991;369,74603
+96.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_21h17m50;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3320101,1;5807018,5;134463,42;2471541,5;260485,87;10,4777;7,855e+08;47091,952;1,0619292;144,3966
+95.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_21h09m47;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3223864,7;5650811,2;132245,97;2385196,1;255085,34;13,115522;6,571e+08;46046,299;1,0237471;140,57471
+94.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_21h08m32;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3245471,7;5686196,9;132745,04;2404436,6;256301,47;12,490205;6,858e+08;46271,793;1,0325075;362,6825
+93.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_20h58m41;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3414958,1;5959114,1;132699,41;2558552,8;250450,45;8,1760827;8,789e+08;48274,609;1,0833337;143,448
+92.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_20h57m21;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3395661,7;5929456,9;132360,73;2541764,9;254758,53;8,5571536;8,659e+08;48055,196;1,0815241;355,21741
+91.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_20h46m39;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3372969,6;5905483,7;135466,23;2512034,6;261874,21;8,9654871;7,978e+08;47831,709;1,0416798;145,16302
+90.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_20h45m24;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3367203,2;5881381;135312,81;2516406,8;262444,18;9,1652232;8,502e+08;47726,434;1,0786419;372,77018
+89.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_20h40m36;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3439378,9;5994106,1;124331,38;2578408,2;233236,08;7,7695779;8,654e+08;48521,425;1,0826498;143,87699
+88.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_20h38m44;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3446021,3;6022929,3;122661,55;2582219,5;236372,5;7,5284149;8,303e+08;48674,661;1,067426;333,67651
+87.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_20h25m42;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3442893,9;6004668,5;124424,26;2580964,7;233380,59;7,6680656;8,556e+08;48585,28;1,0784358;143,79356
+86.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_20h21m27;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3467719,7;6087330,4;123203,09;2598382,3;237302,99;6,9326017;7,716e+08;49077,639;1,0416743;334,44281
+85.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_14h12m28;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3389069,1;6082256,3;117735,14;2725856,6;122347,52;5,6691043;7,817e+08;50075,102;1,0920935;10,800547
+84.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_12h04m27;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3389069,1;6082256,3;117735,14;2725856,6;122347,52;5,6691043;7,817e+08;50075,102;1,0920935;10,800547
+83.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_12h03m41;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3388416,9;6035993,3;102825,69;2596146;168014,18;6,9548893;5,936e+08;49061,889;0,9886239;182,85859
+82.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_11h47m11;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3460201,2;6057998,2;116962,74;2543655,7;190196,13;8,4263426;6,016e+08;48129,281;0,9535853;118,03515
+81.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_11h46m21;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3431890,3;6038715,9;107428,09;2523898,9;198162,66;8,6627147;5,677e+08;47996,314;0,9496965;265,61653
+80.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_11h44m00;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3421092,8;6017796;109332,54;2514958;201133,39;8,9076579;5,687e+08;47862,672;0,9526026;269,81129
+79.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_11h42m54;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3432057,7;6002637,2;111685,61;2513750,7;180375,35;9,0894665;5,919e+08;47766,063;0,9514697;127,28982
+78.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240610_08h38m05;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3432057,7;6002637,2;111685,61;2513750,7;180375,35;9,0894665;5,919e+08;47766,063;0,9514697;127,28982
+77.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240610_08h36m42;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3421092,8;6017796;109332,54;2514958;201133,39;8,9076579;5,687e+08;47862,672;0,9526026;269,81129
+76.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240608_17h20m55;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3310179,9;5812286;121512,07;2436778;223669,74;11,277402;5,805e+08;46746,853;0,9628324;135,71982
+75.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240608_17h19m06;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3347574,6;5900476,7;119638,4;2470487,6;227781,23;10,194031;5,731e+08;47221,382;0,9662708;320,70909
+74.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240608_17h11m54;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3347574,6;5900476,7;119638,4;2470487,6;227781,23;10,194031;5,731e+08;47221,382;0,9662708;320,70909
+73.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240608_17h08m20;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3347574,6;5900476,7;119638,4;2470487,6;227781,23;10,194031;5,731e+08;47221,382;0,9662708;320,70909
+72.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240608_17h02m11;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3266329,7;5737060,9;133068,94;2413615,2;254756,26;11,816119;6,519e+08;46529,223;0,9964558;140,5309
+71.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240608_16h59m07;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3266329,7;5737060,9;133068,94;2413615,2;254756,26;11,816119;6,519e+08;46529,223;0,9964558;140,5309
+70.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240608_16h39m15;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3266329,7;5737060,9;133068,94;2413615,2;254756,26;11,816119;6,519e+08;46529,223;0,9964558;140,5309
+69.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240607_17h48m06;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3266329,7;5737060,9;133068,94;2413615,2;254756,26;11,816119;6,519e+08;46529,223;0,9964558;140,5309
+68.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240607_17h47m05;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3250779,9;5698807,5;131732,91;2408665,7;253456,74;12,292969;6,837e+08;46345,504;1,0273915;360,77543
+67.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240607_17h45m46;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3310179,9;5812286;121512,07;2436778;223669,74;11,277402;5,805e+08;46746,853;0,9628324;135,71982
+66.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240607_17h44m55;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3347574,6;5900476,7;119638,4;2470487,6;227781,23;10,194031;5,731e+08;47221,382;0,9662708;320,70909
+65.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240607_17h43m21;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3378343,2;5913371;110526,86;2483829,5;190421,46;10,019226;5,846e+08;47303,129;0,9523668;128,16508
+64.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240607_17h42m25;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3385800,9;5960768,2;112467,6;2496525,1;209358,11;9,4715154;5,690e+08;47569,802;0,9569228;282,53089
+63.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240607_17h40m25;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3421092,8;6017796;109332,54;2514958;201133,39;8,9076579;5,687e+08;47862,672;0,9526026;269,81129
+62.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240607_17h24m39;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3432057,7;6002637,2;111685,61;2513750,7;180375,35;9,0894665;5,919e+08;47766,063;0,9514697;127,28982
+61.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240607_17h17m59;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3457563,4;6053833,1;116934,44;2540741,8;190156,53;8,4852689;5,961e+08;48095,753;0,9515231;117,97446
+60.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240607_17h16m52;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3429278,1;6034681,3;107397,5;2521141,7;198107,44;8,7202988;5,625e+08;47964,526;0,9476977;265,52205
+59.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_20h30m36;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3494045,8;6140624,1;185503,98;2612954,9;198126,72;7,4150466;6,594e+08;48748,572;0,9906246;113,5949
+58.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_20h28m43;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3437095;6038132,3;115752,26;2529630;207974,3;8,6640839;5,659e+08;47995,556;0,9515968;268,3439
+57.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_20h20m37;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3374840,2;6046079,9;119531,88;2670195,8;124203,92;6,2834861;6,624e+08;49562,502;1,0345866;10,843246
+56.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_20h19m23;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3386419;6032630,6;102842,62;2592885,3;168073,11;7,0099233;5,871e+08;49023,235;0,9858055;182,95503
+55.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_17h09m25;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3168962,6;5730329,7;167960,64;2472814;179422,98;12,141393;6,768e+08;46403,04;1,1561441;100,82483
+54.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_17h08m39;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3425017,3;6021988,7;115513,05;2523590,8;207370,72;8,8367172;5,665e+08;47900,957;0,9566508;267,43661
+53.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_16h48m47;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3328298;5968090,9;175184,75;2661003;187812,07;6,5753658;7,073e+08;49337,972;1,098541;110,24109
+52.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_16h47m12;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3297527,2;5927759,2;108719,21;2615335,2;192323,34;6,9701352;6,151e+08;49051,147;1,0513552;245,66339
+51.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_15h14m26;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3310887,3;6005679;112099,62;2779218,5;116379,75;5,5277678;8,115e+08;50201,687;1,1637989;10,513383
+50.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_15h13m37;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3312028,3;5973106,5;99995,042;2659933,7;162638,26;6,5063061;6,262e+08;49390,093;1,0557497;176,3331
+49.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_14h38m32;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3270119,8;5912365,3;115044,98;2544439,6;119543,42;7,7148336;7,438e+08;48555,746;1,0589455;10,702805
+48.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run20606;FRA2018;20240606_14h06m51;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3270119,8;5912365,3;115044,98;2544439,6;119543,42;7,7148336;7,438e+08;48555,746;1,0589455;10,702805
+47.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run20606;FRA2018;20240606_14h02m49;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3338290,9;5985070,6;101236,03;2617276;164929,18;6,9159162;6,088e+08;49089,467;1,0194665;179,09956
+46.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_13h57m20;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3287235;5869615,4;102423,19;2368361,5;167655,65;9,7237433;5,498e+08;47444,944;0,9299254;182,73578
+45.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_13h55m07;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3562929,8;6268319;183429,64;2717854,8;196499,3;6,0621693;8,745e+08;49740,539;1,075328;103,93621
+44.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h44m12;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3562929,8;6268319;183429,64;2717854,8;196499,3;6,0621693;8,745e+08;49740,539;1,075328;103,93621
+43.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h39m52;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3224486,9;5815524,4;117998;2307918,2;122687,16;10,21632;6,835e+08;47211,07;0,9697021;10,865488
+42.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h24m25;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3224486,9;5815524,4;117998;2307918,2;122687,16;10,21632;6,835e+08;47211,07;0,9697021;10,865488
+41.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_11h23m28;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3287235;5869615,4;102423,19;2368361,5;167655,65;9,7237433;5,498e+08;47444,944;0,9299254;182,73578
+40.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h19m20;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3562929,8;6268319;183429,64;2717854,8;196499,3;6,0621693;8,745e+08;49740,539;1,075328;103,93621
+39.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_11h18m14;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3441453,6;6071241,7;117041,55;2576821;206316,98;8,1665742;5,844e+08;48280,226;0,9694172;262,36171
+38.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h08m38;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3470637,8;6094633;118659,71;2587401,2;189282,35;8,1746588;6,105e+08;48275,449;0,9638693;111,38413
+37.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_11h07m46;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3433782,7;6067992,4;108330,45;2569264,8;196146,48;8,2179415;5,786e+08;48249,963;0,964747;259,65121
+36.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h05m33;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3443568,9;6045129,1;112214,31;2563769,6;177259,53;8,7363275;6,017e+08;47955,718;0,9621756;119,16239
+35.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_11h04m23;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3423820,2;6051276,3;109788,71;2563704,6;197916,45;8,3974642;5,799e+08;48145,807;0,9674647;262,46388
+34.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_11h01m18;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3391860,9;5959991,6;111087,6;2537222,9;187197,42;9,57843;5,951e+08;47516,436;0,9639501;120,34721
+33.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_11h00m31;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3389562,5;5996737,1;112837,57;2547005,6;206033,81;8,9038209;5,804e+08;47864,734;0,9721043;275,13065
+32.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_10h58m10;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3327777,7;5854898,6;121241,72;2486417,1;218946,05;10,804643;5,895e+08;46947,476;0,9728144;128,01191
+31.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_10h57m12;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3354894,9;5934798,2;119440,95;2518292,5;223207,8;9,5949651;5,835e+08;47508,241;0,9797643;310,98353
+30.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_10h54m46;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3283513,2;5775688;133023,87;2452422;250638,11;11,468641;6,601e+08;46668,312;1,0027617;132,79654
+29.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_10h53m41;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3260349,4;5728895,6;131962,82;2438145,6;249985,03;11,898239;6,921e+08;46497,009;1,0333702;352,64293
+28.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_10h00m22;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3394983,3;5962727,5;110584,48;2538580;186677,48;9,5338783;6,059e+08;47538,594;0,9660001;120,49534
+27.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_09h59m20;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3387684;5993200,7;113172,6;2546120,7;206646,99;8,9236812;5,851e+08;47854,07;0,9739076;275,8437
+26.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_09h42m14;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3353050,5;5931344;119780,8;2517443,1;223832,71;9,6151661;5,879e+08;47498,25;0,9815142;311,71591
+25.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_09h41m12;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3331035,6;5858024,5;120756,74;2487847,5;218466,31;10,755677;5,997e+08;46968,805;0,9747051;128,16081
+24.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240606_09h40m06;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3259627,8;5743205,7;131844;2431754,3;248513,88;12,259191;5,978e+08;46358,258;0,9802916;131,55841
+23.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240606_09h39m14;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3288918,7;5827342,8;133167,85;2464974;251844,21;10,935969;5,869e+08;46890,792;0,9863368;354,00169
+22.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_18h44m32;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3292455,5;5831130,7;134023,1;2465243,7;254429,48;10,907762;5,870e+08;46902,903;0,9863035;355,65505
+21.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_18h43m44;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3261763,6;5744748,9;132682,33;2430881,7;251740,53;12,257862;5,980e+08;46358,761;0,980787;131,73889
+20.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_18h37m56;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3261763,6;5744748,9;132682,33;2430881,7;251740,53;12,257862;5,980e+08;46358,761;0,980787;131,73889
+19.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_18h34m35;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3292455,5;5831130,7;134023,1;2465243,7;254429,48;10,907762;5,870e+08;46902,903;0,9863035;355,65505
+18.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_18h21m39;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3261310,6;5728801,6;133182,41;2437380,5;253238,37;11,904735;6,932e+08;46494,472;1,0343047;355,04758
+17.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_18h20m26;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3286629,8;5778720,8;133279,99;2451861,6;253244,1;11,459708;6,599e+08;46671,949;1,0027633;133,0185
+16.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_18h03m45;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3362255,3;5886168,9;135655,65;2524703,2;259014,73;9,110905;8,640e+08;47754,812;1,0872843;137,75316
+15.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_18h02m46;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3362255,3;5886168,9;135655,65;2524703,2;259014,73;9,110905;8,640e+08;47754,812;1,0872843;364,23465
+14.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_17h50m56;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3284577,8;5777297,8;132432;2452747,7;249979,97;11,459211;6,595e+08;46672,151;1,0021799;132,83149
+13.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_17h50m09;Model version;;SNBC3_run2;SNBC3test2_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3258053;5725308,4;132326,54;2437155,3;250643,73;11,931047;6,928e+08;46484,208;1,0342184;353,38542
+12.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_15h58m46;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3167486,2;5624135,6;137677,24;2303686,6;235379,43;11,987439;7,487e+08;46462,294;1,0379601;282,47058
+11.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_15h58m39;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3215510,1;5755400,6;219328,14;2361662,5;236303,32;9,702337;1,116e+09;47455,402;1,1612745;21,564134
+10.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_15h30m45;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3215510,1;5755400,6;219328,14;2361662,5;236303,32;9,702337;1,116e+09;47455,402;1,1612745;21,564134
+9.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AME_run2testbis;FRA2018;20240605_15h27m23;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3167486,2;5624135,6;137677,24;2303686,6;235379,43;11,987439;7,487e+08;46462,294;1,0379601;282,47058
+8.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;True;AMS_run2testbis;FRA2018;20240605_15h22m19;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3215510,1;5755400,6;219328,14;2361662,5;236303,32;9,702337;1,116e+09;47455,402;1,1612745;21,564134
+7.0;"Decarb_indus itération 4
+";master_merging_all_france_2;5dc691c08d;False;AME_run2testbis;FRA2018;20240605_15h13m00;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesienlesdemand;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3166627,9;5616028,3;143945,25;2301911,7;243593,44;12,09024;7,487e+08;46422,636;1,0397444;282,12842
 6.0;"Excel métadonnées
 ";master_merging_all_france_2;b0680e8f29;C:\Users\jeanw\Documents\IMACLIM-Country;AME;FRA2018;20240104_15h57m35;Model version;;SNBC3;SNBC3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;4;AGG_23TME;True;True;True;True;T;3325223,5;5908130;93322,348;2789635,5;151348,76;4,0400604;9,187e+08;50729,074;1,2174217;157,65997
 5.0;"Update config : AME en scénario par défaut

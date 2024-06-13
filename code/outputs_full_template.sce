@@ -179,7 +179,78 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["G_T_MPR",    money_disp_adj.*T_MPR];..
 ["G_Bonus_vehicules",    money_disp_adj.*Bonus_vehicules];..
 ["Population",	Out.Population];
+["--- Production price - Compo ---",    ""];..
+["IC_Energy_price - Compo",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(23)];
+["IC_Other_price - Compo",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(23)];
+["Labour price - Compo",	sum(Out.pL .* Out.lambda,"r")(23)];
+["Capital price - Compo",	sum(Out.pK .* Out.kappa, "r")(23)];
+["Production tax - Compo",	(Out.Production_Tax_rate .* Out.pY')(23)];
+["Markup rate - Compo",	(Out.markup_rate .* Out.pY')(23)]
+["--- Sectoral shock - Compo ---",    ""];..
+["IC_Energy_price - Compo",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(23)];
+["IC_Other_price - Compo",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(23)];
+["Labour price - Compo",	sum(BY.pL .* Out.lambda,"r")(23)];
+["Capital price - Compo",	sum(BY.pK .* Out.kappa, "r")(23)];
+["Production tax - Compo",	(Out.Production_Tax_rate .* Out.pY')(23)];
+["Markup rate - Compo",	(Out.markup_rate .* Out.pY')(23)]
+["--- Production price - Steel Iron ---",    ""];..
+["IC_Energy_price - Steel Iron",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
+["IC_Other_price - Steel Iron",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(6)];
+["Labour price - Steel Iron",	sum(Out.pL .* Out.lambda,"r")(6)];
+["Capital price - Steel Iron",	sum(Out.pK .* Out.kappa, "r")(6)];
+["Production tax - Steel Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
+["Markup rate - Steel Iron",	(Out.markup_rate .* Out.pY')(6)];
+["--- Sectoral shock - Steel Iron ---",    ""];..
+["IC_Energy_price - Steel Iron",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
+["IC_Other_price - Steel Iron",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(6)];
+["Labour price - Steel Iron",	sum(BY.pL .* Out.lambda,"r")(6)];
+["Capital price - Steel Iron",	sum(BY.pK .* Out.kappa, "r")(6)];
+["Production tax - Steel Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
+["Markup rate - Steel Iron",	(Out.markup_rate .* Out.pY')(6)];
+["--- Production price - Property_business ---",    ""];..
+["IC_Energy_price - Property_business",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
+["IC_Other_price - Property_business",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(22)];
+["Labour price - Property_business",	sum(Out.pL .* Out.lambda,"r")(22)];
+["Capital price - Property_business",	sum(Out.pK .* Out.kappa, "r")(22)];
+["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
+["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)];
+["--- Sectoral shock - Property_business ---",    ""];..
+["IC_Energy_price - Property_business",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
+["IC_Other_price - Property_business",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(22)];
+["Labour price - Property_business",	sum(BY.pL .* Out.lambda,"r")(22)];
+["Capital price - Property_business",	sum(BY.pK .* Out.kappa, "r")(22)];
+["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
+["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)];
+["--- Production price - Land_transport ---",    ""];..
+["IC_Energy_price - Land_transport",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
+["IC_Other_price - Land_transport",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(17)];
+["Labour price - Land_transport",	sum(Out.pL .* Out.lambda,"r")(17)];
+["Capital price - Land_transport",	sum(Out.pK .* Out.kappa, "r")(17)];
+["Production tax - Land_transport",	(Out.Production_Tax_rate .* Out.pY')(17)];
+["Markup rate - Land_transport",	(Out.markup_rate .* Out.pY')(17)]
+["--- Sectoral shock - Land_transport ---",    ""];..
+["IC_Energy_price - Land_transport",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
+["IC_Other_price - Land_transport",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(17)];
+["Labour price - Land_transport",	sum(BY.pL .* Out.lambda,"r")(17)];
+["Capital price - Land_transport",	sum(BY.pK .* Out.kappa, "r")(17)];
+["Production tax - Land_transport",	(Out.Production_Tax_rate .* Out.pY')(17)];
+["Markup rate - Land_transport",	(Out.markup_rate .* Out.pY')(17)]
+["--- Production price - Elec_heating ---",    ""];..
+["IC_Energy_price - Elec_heating",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
+["IC_Other_price - Elec_heating",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(5)];
+["Labour price - Elec_heating",	sum(Out.pL .* Out.lambda,"r")(5)];
+["Capital price - Elec_heating",	sum(Out.pK .* Out.kappa, "r")(5)];
+["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
+["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)];
+["--- Sectoral shock - Elec_heating ---",    ""];..
+["IC_Energy_price - Elec_heating",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
+["IC_Other_price - Elec_heating",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(5)];
+["Labour price - Elec_heating",	sum(BY.pL .* Out.lambda,"r")(5)];
+["Capital price - Elec_heating",	sum(BY.pK .* Out.kappa, "r")(5)];
+["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
+["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)];
 ];
+
 
 
 OutputTable("Summary_"+ref_name)=[["Variables",    "values_"+Name_time];..
