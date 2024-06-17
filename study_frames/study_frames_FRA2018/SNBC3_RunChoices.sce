@@ -374,6 +374,11 @@ if Scenario == 'AMS_TISE' // Config de Projections_Scenario_TISE.csv
     list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
 end
 
+// On ne force jamais les ratio M sur Y industriels dans l AME
+if Scenario == 'AME_run20606'
+    Proj_Vol.M_Y.ind_of_proj = list(list(Indice_EnerSect,1));
+end
+
 
 //////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
 
