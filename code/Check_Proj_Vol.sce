@@ -12,8 +12,14 @@ function test_proj(var_name)
             difference = d(var_name) - Proj_Vol(var_name).val;
         end
     elseif var_name == 'M_Y'
-        Y_temp = d.Y(Proj_Vol.M_Y.ind_of_proj(1)(1))
-        difference = d.M(Proj_Vol.M_Y.ind_of_proj(1)(1))./ ((Y_temp>%eps).*Y_temp  + (Y_temp<%eps)*1) - Proj_Vol(var_name).val(Proj_Vol.M_Y.ind_of_proj(1)(1))
+        difference = d.M ./ d.Y;
+
+        for ind = Proj_Vol(var_name).ind_of_proj
+            for ind2 = ind(1)
+                difference(ind2) = difference(ind2) - Proj_Vol(var_name).val(ind2);
+            end
+        end
+
         clear Y_temp
 	elseif var_name == "CO2Emis_IC"
 		difference = d.Emission_Coef_IC.*d.IC - Proj_Vol(var_name).val;
