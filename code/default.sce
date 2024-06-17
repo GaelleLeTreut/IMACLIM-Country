@@ -36,14 +36,14 @@ proj_spemarg_rates_IC = 'true';
 
 
 // Valeurs par défaut (developpements faits par Jean)
-pY_gas_reduced = 'False';
 emissions_bioenergy = 'False';
 Scenario_ETS = '';
 Time_step_non_etudie = '999';
 MaPrimRenov = 'False';
 Bonus_vehicule_dashboard = 'False';
 stranded_assets = 'False';
-
+pY_gas_reduced_v1 = 'False';
+pY_gas_reduced_v2 = 'False';
 
 // Valeurs par défaut (developpements faits par Remy)
 eq_G_ConsumpBudget = '';
@@ -59,7 +59,7 @@ if Scenario == 'AME' | Scenario == 'AMS'
     Nb_Iter = 4;
     emissions_bioenergy = 'True';
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
-    pY_gas_reduced = 'True';
+    pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 2;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -72,7 +72,7 @@ elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
     Nb_Iter = 3;
     emissions_bioenergy = 'False';
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
-    pY_gas_reduced = 'True';
+    pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -84,7 +84,7 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesienlesdemand';
-    pY_gas_reduced = 'True';
+    pY_gas_reduced_v2 = 'True';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -109,7 +109,7 @@ elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
     Proj_scenario = 'TESI';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
-    pY_gas_reduced = 'True';
+    pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 999;
     
     Carbone_ETS = 'True';
@@ -127,7 +127,7 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario ==
     Proj_scenario = 'TESI';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
-    pY_gas_reduced = 'True';
+    pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 999;
     
     Carbone_ETS = 'True';

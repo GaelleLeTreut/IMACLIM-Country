@@ -2731,12 +2731,17 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
     //TOCLEAN
-    if pY_gas_reduced == 'True' then
+    if pY_gas_reduced_v1 == 'True' then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
         // diviseur = 20;
         // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+
+    elseif pY_gas_reduced_v2 == 'True' then
+        lambda(Indice_GasS) = 0.001;
+        kappa(Indice_GasS) = 0.1;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ 10;
     end
 
 endfunction
@@ -2812,7 +2817,7 @@ endfunction
 function markup_rate =  Markup_Val_3(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y) ;
     markup_rate =  BY.markup_rate;
     
-    if pY_gas_reduced == 'True' then
+    if pY_gas_reduced_v1 == 'True' then
         // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
         // markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
     end
@@ -2947,12 +2952,18 @@ endfunction
 function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_2(pIC, p, Transp_margins_rates, Trade_margins_rates) 
     SpeMarg_rates_IC = BY.SpeMarg_rates_IC;
     
-    if pY_gas_reduced == 'True' then
+    if pY_gas_reduced_v1 == 'True' then
         // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
         // SpeMarg_rates_IC(Indice_GasS, Indice_OilS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+
+    elseif pY_gas_reduced_v2 == 'True' then
+        // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+        SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
+        SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
+        SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;
     end
 
     if is_projected('SpeMarg_rates_IC') then
