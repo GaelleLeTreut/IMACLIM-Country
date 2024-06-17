@@ -99,7 +99,7 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_spemarg_rates_IC = 'true';
 
 
-// Scenarios Decarbonation industrie
+// Scenarios Decarbonation industrie - OLD
 elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
     study = 'TESI_RunChoices';
     SystemOpt_Resol = 'SystemOpt_Static_TESI';
@@ -118,7 +118,7 @@ elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
 
 
 // Scenarios Decarbonation industrie - deuxieme iteration
-elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AME_TESI' | Scenario == 'AMS_TESI'
+elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario == 'AME_TESI' | Scenario == 'AMS_TESI' | Scenario == 'AME_M3_CBAM_TESI' | Scenario == 'AMS_M3_CBAM_TESI' | Scenario =='AME_M3_CBAM_TESI'
     study = 'TESI_RunChoices';
     SystemOpt_Resol = 'SystemOpt_Static_TESI';
     AGG_type = 'AGG_23TME';
@@ -134,6 +134,22 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario ==
     Carbon_BTA = '%T';
     Scenario_ETS = 'AMS_TESI_high_ETS';
 
+// Sans CBAM : on desactive juste Carbon_BTA
+elseif Scenario == 'AME_M3_sans_CBAM_TESI' | Scenario == 'AMS_M3_sans_CBAM_TESI' | Scenario == 'AME_normal_sans_CBAM_TESI' | Scenario == 'AMS_normal_sans_CBAM_TESI' | Scenario =='AME_normal_sans_CBAM_TESI' | Scenario =='AME_M3_sans_CBAM_TESI'
+    study = 'TESI_RunChoices';
+    SystemOpt_Resol = 'SystemOpt_Static_TESI';
+    AGG_type = 'AGG_23TME';
+    Invest_matrix = '%T';
+    Macro_nb = 'SNBC3_sans_2035';
+    Proj_scenario = 'TESI';
+    Nb_Iter = 3;
+    emissions_bioenergy = 'True';
+    pY_gas_reduced_v1 = 'True';
+    Time_step_non_etudie = 999;
+    
+    Carbone_ETS = 'True';
+    Carbon_BTA = '%F';
+    Scenario_ETS = 'AMS_TESI_high_ETS';
 
 // Scenarios Ademe incertitudes
 elseif Scenario == 'S2' | Scenario == 'S3'
