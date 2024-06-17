@@ -95,7 +95,7 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_c = 'true';
     proj_kappa = 'true';
     proj_invest = 'true';
-    proj_pY = 'false';
+    proj_pY = 'true';
     proj_spemarg_rates_IC = 'false';
 
 
