@@ -19,7 +19,7 @@ if emissions_bioenergy == 'True' then
 end
 
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if pY_gas_reduced == 'True' then
+if pY_gas_reduced_v1 == 'True' then
     // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
     // Deriv_Exogenous.markup_rate = markup_rate;
     // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
