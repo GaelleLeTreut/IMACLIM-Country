@@ -97,6 +97,8 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_invest = 'true';
     proj_pY = 'true';
     proj_spemarg_rates_IC = 'false';
+    reindustrialisation_imports_bool = %T;
+    reindustrialisation_exports_bool = %T;
 
 
 // Scenarios Decarbonation industrie - OLD

@@ -450,3 +450,24 @@ if proj_spemarg_rates_IC == 'false'
     Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
 end
 
+
+//////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
+
+
+if reindustrialisation_imports_bool & strstr(Scenario, 'AMS') <> ""
+    imports_tendanciels = evstr('reindustrialisation_imports');
+    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+    
+    for ind = list(Indice_NonMetalsS, Indice_PharmaS, Indice_PaperS)
+        parameters.delta_M_parameter(ind) = imports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
+    end
+end
+
+if reindustrialisation_exports_bool & strstr(Scenario, 'AMS') <> ""
+    exports_tendanciels = evstr('reindustrialisation_exports');
+    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+
+    for ind = list(Indice_SteelIronS, Indice_CementS)
+        parameters.delta_X_parameter(ind) = (1 + parameters.delta_X_parameter(ind)) * exports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
+    end 
+end
