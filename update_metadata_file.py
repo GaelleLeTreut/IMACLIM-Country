@@ -43,7 +43,11 @@ metadata_path = repo_path + '/outputs_display/metadata.csv'
 new_row_path = repo_path + '/outputs_display/metadata_new_row.csv'
 
 # Lire la dernière ligne de metadata.csv si le fichier n'est pas vide
-metadata_df = pd.read_csv(metadata_path, sep=';')
+if os.path.isfile(metadata_path):
+    metadata_df = pd.read_csv(metadata_path, sep=';')
+else :
+    metadata_df = pd.DataFrame()
+
 if metadata_df.empty:
     dernier_numero_simulation = 0
 else:
