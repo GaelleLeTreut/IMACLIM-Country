@@ -65,22 +65,9 @@ if Scenario == 'AME' | Scenario == 'AMS'
     AGG_type = 'AGG_23TME';
     Invest_matrix = '%T';
 
-// Scenarios SNBC3 run 2
-elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2' 
+elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
     Macro_nb = 'SNBC3_run2';
     Proj_scenario = 'SNBC3_run2';
-    Nb_Iter = 3;
-    emissions_bioenergy = 'False';
-    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
-    pY_gas_reduced_v1 = 'True';
-    Time_step_non_etudie = 999;
-    study = 'SNBC3_RunChoices';
-    AGG_type = 'AGG_23TME';
-    Invest_matrix = '%T';
-
-elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AME_run20606' | Scenario == 'AMS_run20606' 
-    Macro_nb = 'SNBC3_run2';
-    Proj_scenario = 'SNBC3test_run2';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced_v2 = 'True';
@@ -99,24 +86,6 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_spemarg_rates_IC = 'false';
     reindustrialisation_imports_bool = %T;
     reindustrialisation_exports_bool = %T;
-
-
-// Scenarios Decarbonation industrie - OLD
-elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
-    study = 'TESI_RunChoices';
-    SystemOpt_Resol = 'SystemOpt_Static_TESI';
-    AGG_type = 'AGG_23TME';
-    Invest_matrix = '%T';
-    Macro_nb = 'SNBC3_sans_2035';
-    Proj_scenario = 'TESI';
-    Nb_Iter = 3;
-    emissions_bioenergy = 'True';
-    pY_gas_reduced_v1 = 'True';
-    Time_step_non_etudie = 999;
-    
-    Carbone_ETS = 'True';
-    Carbon_BTA = '%T';
-    Scenario_ETS = 'AMS_TISE_high_ETS';
 
 
 // Scenarios Decarbonation industrie - deuxieme iteration
