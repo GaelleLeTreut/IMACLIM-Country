@@ -82,7 +82,7 @@ endfunction
 function skip_calib(skip_calibration)
 
     printf('%s\n', '1');
-    if ~(skip_calibration == "True")
+    if ~skip_calibration
         printf('%s\n', '1');
         // Get all variable names before calibration
         save('sauvegarde_variables_pre_calibration');

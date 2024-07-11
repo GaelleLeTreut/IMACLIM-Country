@@ -2547,7 +2547,7 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
     // TOCLEAN
-    if 0 & pY_ini_gaz_controlled_eco_eq == 'true' then
+    if 0 & pY_ini_gaz_controlled_eco_eq then
         diviseur = 100;
 //        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
@@ -2731,14 +2731,14 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
 
     // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
     //TOCLEAN
-    if pY_gas_reduced_v1 == 'True' then
+    if pY_gas_reduced_v1 then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
         // diviseur = 20;
         // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
 
-    elseif pY_gas_reduced_v2 == 'True' then
+    elseif pY_gas_reduced_v2 then
         lambda(Indice_GasS) = 0.001;
         kappa(Indice_GasS) = 0.1;
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ 10;
@@ -2817,7 +2817,7 @@ endfunction
 function markup_rate =  Markup_Val_3(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y) ;
     markup_rate =  BY.markup_rate;
     
-    if pY_gas_reduced_v1 == 'True' then
+    if pY_gas_reduced_v1 then
         // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
         // markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
     end
@@ -2952,14 +2952,14 @@ endfunction
 function SpeMarg_rates_IC = SpeMarg_rates_IC_Val_2(pIC, p, Transp_margins_rates, Trade_margins_rates) 
     SpeMarg_rates_IC = BY.SpeMarg_rates_IC;
     
-    if pY_gas_reduced_v1 == 'True' then
+    if pY_gas_reduced_v1 then
         // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
         // SpeMarg_rates_IC(Indice_GasS, Indice_OilS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
         SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
 
-    elseif pY_gas_reduced_v2 == 'True' then
+    elseif pY_gas_reduced_v2 then
         // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
         SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
         SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
@@ -3160,7 +3160,7 @@ function [I] = Invest_demand_Val_2(pI, I_pFish) ;
 endfunction
 
 // AVEC PRISE EN COMPTE D'ACTIFS ECHOUES
-// Seul le bloc "if stranded_assets == 'True'" est ajouté.
+// Seul le bloc "if stranded_assets" est ajouté.
 function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
     // Capital expansion coefficient ( Betta ( nb_Sectors) ).
     // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
@@ -3177,7 +3177,7 @@ function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
             // Or l'investissement est directement proportionnel aux kappas.
             // On réduit donc l'investissement selon la part (estimée très grossièrement) que l'on estime être liée aux actifs échoués.
             // En début de période en suppose beaucoup d'actifs échoués, puis plus aucun en fin de période.
-            if stranded_assets == 'True' then
+            if stranded_assets then
                 share_of_stranded_asset_costs = strtod (evstr('share_of_stranded_asset_costs_' + time_step)); // String (from dashboard) to double conversion
                 I = I * (1-share_of_stranded_asset_costs);
             end

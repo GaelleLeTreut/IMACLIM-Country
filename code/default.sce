@@ -25,25 +25,25 @@ Output_prints = '%F';
 
 
 // Pour pouvoir desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
-proj_alpha = 'true';
-proj_imports = 'true';
-proj_exports = 'true';
-proj_kappa = 'true';
-proj_c = 'true';
-proj_invest = 'true';
-proj_pY = 'true';
-proj_spemarg_rates_IC = 'true';
+proj_alpha = %T;
+proj_imports = %T;
+proj_exports = %T;
+proj_kappa = %T;
+proj_c = %T;
+proj_invest = %T;
+proj_pY = %T;
+proj_spemarg_rates_IC = %T;
 
 
 // Valeurs par défaut (developpements faits par Jean)
-emissions_bioenergy = 'False';
+emissions_bioenergy = %F;
 Scenario_ETS = '';
 Time_step_non_etudie = '999';
-MaPrimRenov = 'False';
-Bonus_vehicule_dashboard = 'False';
-stranded_assets = 'False';
-pY_gas_reduced_v1 = 'False';
-pY_gas_reduced_v2 = 'False';
+MaPrimRenov = %F;
+Bonus_vehicule_dashboard = %F;
+stranded_assets = %F;
+pY_gas_reduced_v1 = %F;
+pY_gas_reduced_v2 = %F;
 
 // Valeurs par défaut (developpements faits par Remy)
 eq_G_ConsumpBudget = '';
@@ -57,9 +57,9 @@ if Scenario == 'AME' | Scenario == 'AMS'
     Macro_nb = 'SNBC3_run2_avec_2035';
     Proj_scenario = 'SNBC3';
     Nb_Iter = 4;
-    emissions_bioenergy = 'True';
+    emissions_bioenergy = %T;
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
-    pY_gas_reduced_v1 = 'True';
+    pY_gas_reduced_v1 = %T;
     Time_step_non_etudie = 2;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -69,21 +69,21 @@ elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
     Macro_nb = 'SNBC3_run2';
     Proj_scenario = 'SNBC3_run2';
     Nb_Iter = 3;
-    emissions_bioenergy = 'True';
-    pY_gas_reduced_v2 = 'True';
+    emissions_bioenergy = %T;
+    pY_gas_reduced_v2 = %T;
     SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
     Invest_matrix = '%T';
-    proj_alpha = 'true';
-    proj_imports = 'true';
-    proj_exports = 'true';
-    proj_c = 'true';
-    proj_kappa = 'true';
-    proj_invest = 'true';
-    proj_pY = 'true';
-    proj_spemarg_rates_IC = 'false';
+    proj_alpha = %T;
+    proj_imports = %T;
+    proj_exports = %T;
+    proj_c = %T;
+    proj_kappa = %T;
+    proj_invest = %T;
+    proj_pY = %T;
+    proj_spemarg_rates_IC = %F;
     reindustrialisation_imports_bool = %T;
     reindustrialisation_exports_bool = %T;
 
@@ -97,8 +97,8 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario ==
     Macro_nb = 'SNBC3_sans_2035';
     Proj_scenario = 'TESI';
     Nb_Iter = 3;
-    emissions_bioenergy = 'True';
-    pY_gas_reduced_v1 = 'True';
+    emissions_bioenergy = %T;
+    pY_gas_reduced_v1 = %T;
     Time_step_non_etudie = 999;
     
     Carbone_ETS = 'True';
@@ -114,8 +114,8 @@ elseif Scenario == 'AME_M3_sans_CBAM_TESI' | Scenario == 'AMS_M3_sans_CBAM_TESI'
     Macro_nb = 'SNBC3_sans_2035';
     Proj_scenario = 'TESI';
     Nb_Iter = 3;
-    emissions_bioenergy = 'True';
-    pY_gas_reduced_v1 = 'True';
+    emissions_bioenergy = %T;
+    pY_gas_reduced_v1 = %T;
     Time_step_non_etudie = 999;
     
     Carbone_ETS = 'True';
