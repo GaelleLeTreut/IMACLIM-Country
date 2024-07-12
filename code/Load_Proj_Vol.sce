@@ -100,7 +100,9 @@ proj_files = [
     'Kappas_' + Scenario, ..
     'Production_prices', ..
     'Intermediate_prices', ..
-    'Spemargin_rates'
+    'Spemargin_rates', ..
+    'households_consumption', ..
+    'exports'
 ];
 
 to_transpose = [
