@@ -23,7 +23,7 @@ listIOTfiles = list();
 
 for elt=1:size(listCSVfiles)
     // Read all Index csv files and gives them the name of the file itself
-	if strstr(listCSVfiles(elt),"IOT_") <> "" then
+	if (strstr(listCSVfiles(elt),"IOT_") <> "") | (strstr(listCSVfiles(elt),"Alphas_") <> "") then
 
         listIOTfiles($+1)= listCSVfiles(elt);
 
