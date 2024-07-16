@@ -9,7 +9,7 @@ parameters.Cmin(:) = cmin_file(:,time_step);
 //////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
 // On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
-if emissions_bioenergy == %T then
+if emissions_bioenergy then
     Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
 
 	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
@@ -19,7 +19,7 @@ if emissions_bioenergy == %T then
 end
 
 //////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if pY_gas_reduced_v1 == %T then
+if pY_gas_reduced_v1 then
     // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
     // Deriv_Exogenous.markup_rate = markup_rate;
     // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
@@ -209,7 +209,7 @@ end
 //////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
 // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
 //TOCLEAN
-if 0 & ticpe_bioenergy == %T then
+if 0 & ticpe_bioenergy then
     bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
     bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
     bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
@@ -221,7 +221,7 @@ if 0 & ticpe_bioenergy == %T then
 end
 
 //////////////////////////////////////////////// INACTIF - CONTROLE DE LA TICGN (TICPE pour le gaz) /////////////////////////////////////////////////////////////////////////////////////
-if Scenario=='AMS2035' & ticgn_controlled==%T then
+if Scenario=='AMS2035' & ticgn_controlled then
 
     // Get the initial value of the TICGN rate
     BY_ticgn_rate = BY.Energy_Tax_rate_IC(1,Indice_GasS);
@@ -247,7 +247,7 @@ end
 //////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
 // On fait varier les coefficients techniques de liquid_fuels et de gas_fuels dans l'AMS,
 // pour obtenir en sortie des écarts de prix par rapport à l'AME similaires à ceux des données de la DGEC
-if Scenario=='AMS2035' & energy_prices_controlled==%T then
+if Scenario=='AMS2035' & energy_prices_controlled then
 
     // Get the initial value of the alphas for liquid_fuels and gas_fuels
     alpha_init = Proj_Vol('alpha').val;
@@ -373,7 +373,7 @@ end
 // TOCLEAN
 // Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
 if Scenario == 'AME_TISE'
-    if Labour_product ==%T & Demographic_shift <> "True"
+    if Labour_product == 'True' & Demographic_shift <> "True"
         if time_step == 1
             parameters.Mu = 0.0063541;
         elseif time_step == 2
@@ -388,7 +388,7 @@ if Scenario == 'AME_TISE'
     end
 
 elseif Scenario == 'AME'
-    if Labour_product ==%T & Demographic_shift <> "True"
+    if Labour_product == 'True' & Demographic_shift <> "True"
         if time_step == 1
             parameters.Mu = 0.0063541;
         elseif time_step == 2
