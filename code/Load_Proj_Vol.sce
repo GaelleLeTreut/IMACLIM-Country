@@ -103,7 +103,8 @@ proj_files = [
     'Spemargin_rates', ..
     'households_consumption', ..
     'exports', ..
-    'import_ratios'
+    'import_ratios', ..
+    'Alphas'
 ];
 
 to_transpose = [
@@ -133,6 +134,9 @@ for var = fieldnames(Proj_Vol)'
         if Proj_Vol(var).file == 'IOT_Qtities' then
             iot_qtities = evstr('IOT_Qtities_' + Scenario + '_' + string(time_step));
 			
+        elseif Proj_Vol(var).file == 'Alphas' then
+            mat_alphas = evstr('Alphas_' + Scenario + '_' + string(time_step));
+
 		elseif Proj_Vol(var).file == 'IOT_CO2' then
             iot_co2emis = evstr('IOT_CO2_' + Scenario + '_' + string(time_step));
 
@@ -188,6 +192,22 @@ for var = fieldnames(Proj_Vol)'
                     error('Scenario aggregation is not consistent with working aggregation.');
                 end
             end
+
+        elseif Proj_Vol(var).file == 'Alphas'
+
+            // If IOT_Qtities_TimeStep is not aggregated
+            if proj_desaggregated then
+                Proj_Vol(var).val = fill_table(mat_alphas, IndexRow, IndexCol, Index_CommoInit, Proj_Vol(var).headers);
+            // If IOT_Qtities_TimeStep is aggregated
+            else
+                // Check that the aggregation is fine
+                if proj_well_aggregated then
+                    Proj_Vol(var).val = fill_table(mat_alphas, IndexRow, IndexCol, Index_Commodities, Proj_Vol(var).headers);
+                else
+                    error('Scenario aggregation is not consistent with working aggregation.');
+                end
+            end
+
 		elseif Proj_Vol(var).file == 'IOT_CO2'
             
             // IndexRow / IndexCol : Index of IOT_Qtities_TimeStep
