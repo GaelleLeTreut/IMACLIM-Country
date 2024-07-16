@@ -398,20 +398,6 @@ if Scenario=="TEND" | Scenario=="S2" | Scenario=="S3" | Scenario=="S2test" | Sce
 ];
 end
 
-// TOCLEAN
-/// Temporary - to delete
-if Country=="Brasil"&Scenario=="PMR_Ten"
-OutputTable("FullTemplate_"+ref_name)=[OutputTable("FullTemplate_"+ref_name);
-["---Y pseudo quantities --",    ""];..
-["Yten_"+Index_Sectors,    Out.Y];..
-["---Y objectif pseudo quantities --",    ""];..
-["Yobj_"+Index_Sectors,    Y_obj.val];..
-["---Yobj/Yten --",    ""];..
-["RatioYobj/Yten"+Index_Sectors,    Y_obj.val./Out.Y];..
-];
-end
-
-
 ////////////////////////////////////////SPECIFIC CASES OUTPUT for country studies 
 //FRANCE 
 if Country == "France"

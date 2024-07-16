@@ -100,11 +100,6 @@ end
 //////// Exportation in volume 
 // Export growth of non-energy sectors as GDP_world
 if X_nonEnerg == "True"
-	// TOCLEAN : pour décarbonation industrie, on conserve "l'erreur" pour la première série d'itérations
-	if SystemOpt_Resol == 'SystemOpt_Static_TESI' then
-		parameters.delta_X_parameter(1,Indice_NonEnerSect) = ones(parameters.delta_X_parameter(1,Indice_NonEnerSect))*Proj_Macro.GDP_world(time_step);
-	end
-
 	if time_step == 1 	
 		for elt = 1:Nb_Iter
 			GDP_world_index(elt) = prod((1 + Proj_Macro.GDP_world(1:elt)).^(Proj_Macro.current_year(1:elt) - Proj_Macro.reference_year(1:elt)));
@@ -112,12 +107,7 @@ if X_nonEnerg == "True"
 		end
 	end
 		
-	// TOCLEAN : pour décarbonation industrie, on conserve "l'erreur" pour la première série d'itérations
-	if SystemOpt_Resol == 'SystemOpt_Static_TESI' then
-		delta_X_parameter_indBY(time_step,:) =[zeros(1,nb_EnerSect) ((ones(1,nb_NonEnerSect).*GDP_world_index(time_step)).^(1/parameters.time_since_BY) - 1)];
-	else
-		parameters.delta_X_parameter(1,Indice_NonEnerSect) = (GDP_world_index(time_step) ^ (1/parameters.time_since_BY) - 1) * ones(parameters.delta_X_parameter(1,Indice_NonEnerSect));	
-	end
+	parameters.delta_X_parameter(1,Indice_NonEnerSect) = (GDP_world_index(time_step) ^ (1/parameters.time_since_BY) - 1) * ones(parameters.delta_X_parameter(1,Indice_NonEnerSect));
 end
 
 

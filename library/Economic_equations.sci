@@ -152,8 +152,7 @@ function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent,
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
-    //TOCLEAN
-    if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
+    if exists('Indice_PropertyS') & exists('Indice_ConstruS')
         T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
     else
         T_MPR = 0;
@@ -920,18 +919,6 @@ endfunction
 function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corporate_Tax, Production_Tax, Labour_Tax, Energy_Tax_IC, Energy_Tax_FC, OtherIndirTax, VA_Tax, Carbon_Tax_IC, Carbon_Tax_C, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, Property_income , ClimPolicyCompens, ClimPolCompensbySect, Carbon_Tax_M)
     // For one government. Distribution among different government must otherwise be specified.
 
-    // On spécifie que l'on modifie les variables globales (définies dans le RunChoices)
-    // Et ce pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
-    // TOCLEAN
-    // global G_Tax_revenue
-    // global G_Non_Labour_Income
-    // global G_Other_Income
-    // global G_Property_income
-    // global G_Social_Transfers
-    // global G_Compensations
-    // global T_MPR
-    // global Bonus_vehicules
-
     // Income by sources, redistribution and tax revenue
     G_Tax_revenue = sum(Income_Tax + Other_Direct_Tax) + sum(Corporate_Tax ) + sum(Production_Tax + Labour_Tax + OtherIndirTax + VA_Tax) + sum(Energy_Tax_IC) + sum(Carbon_Tax_IC) + sum(Energy_Tax_FC) + sum(Carbon_Tax_C) + sum(Carbon_Tax_M) ;
     G_Non_Labour_Income = GOS_byAgent (Indice_Government) ;
@@ -943,8 +930,7 @@ function G_disposable_income = G_income_Val_3(Income_Tax, Other_Direct_Tax, Corp
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
-    //TOCLEAN
-    if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
+    if exists('Indice_PropertyS') & exists('Indice_ConstruS')
         T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
     else
         T_MPR = 0;
@@ -2545,15 +2531,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_1(Theta, Phi, aIC, sigma, p
         kappa = apply_proj_val(kappa, 'kappa');
     end
 
-    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
-    // TOCLEAN
-    if 0 & pY_ini_gaz_controlled_eco_eq then
-        diviseur = 100;
-//        kappa(Indice_GasS) = kappa(Indice_GasS) / diviseur;
-        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
-        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
-    end
-
 endfunction
 
 //	Fixed technical coefficients
@@ -2734,8 +2711,6 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
     if pY_gas_reduced_v1 then
         diviseur = 100;
         lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
-        // diviseur = 20;
-        // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
         alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
 
     elseif pY_gas_reduced_v2 then

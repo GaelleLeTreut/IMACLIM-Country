@@ -16,27 +16,6 @@ if emissions_bioenergy == 'True' then
 	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = BY.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
 end
 
-//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if pY_gas_reduced_v1 == 'True' then
-    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-    // Deriv_Exogenous.markup_rate = markup_rate;
-    // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
-
-    // Baisser le lambda du gaz pour avoir une intensité en emploi similaire à celle du liquid et de l'élec
-    // BY.lambda(Indice_GasS) = 0.002; // avant valait 0.012. Divise par 6
-    // BY.w(Indice_GasS) = 40000; // avant valait 61390.52
-
-    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-    // Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;
-
-end
-
 //////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
 parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
 parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
@@ -49,10 +28,8 @@ if Carbone_ETS == "True"
     if time_step==1 then
         parameters.Carbon_Tax_rate = 80000;
     elseif time_step==2 then
-        parameters.Carbon_Tax_rate = 82000;
-    elseif time_step==3 then
         parameters.Carbon_Tax_rate = 85000;
-    elseif time_step==4 then
+    elseif time_step==3 then
         parameters.Carbon_Tax_rate = 160000;
     end
 
@@ -60,7 +37,7 @@ if Carbone_ETS == "True"
     inflation_2018_2020 = 0.027;
     parameters.Carbon_Tax_rate = parameters.Carbon_Tax_rate * (1-inflation_2018_2020);
 
-
+    // pause
     if Scenario == 'AME' | Scenario =='AME_TISE' | Scenario =='AME_TESI_iter2' | Scenario =='AME_TESI' | Scenario =='AME_M3_CBAM_TESI' | Scenario =='AME_normal_sans_CBAM_TESI' | Scenario =='AME_M3_sans_CBAM_TESI'
         // Pour définir des taxes carbones différentes selon les secteurs
         CarbonTax_Diff_IC_filename = 'CarbonTax_Diff_IC_' + Scenario; // Creation of a string like "CarbonTax_Diff_IC_AME"
@@ -106,8 +83,8 @@ if Carbone_ETS == "True"
 
         // Trajectoire de coûts du carbone à 410€ en 2050 pour l'ETS1 dans l'AMS
         // Carbon_Tax_rate en €2018 / MtCO2, même s'il est appliqué en € courant
-        prix_carbone_ets_1_AMS = [80, 120, 250, 410];
-        prix_carbone_ets_2 = [80, 82, 85, 160];
+        // prix_carbone_ets_1_AMS = [80, 120, 250, 410];
+        // prix_carbone_ets_2 = [80, 82, 85, 160];
 
         // Pour tester
         // prix_carbone_ets_1_AMS = prix_carbone_ets_2
@@ -206,7 +183,6 @@ end
 
 //////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
 // REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
-//TOCLEAN
 if 0 & ticpe_bioenergy == 'True' then
     bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
     bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
@@ -241,77 +217,6 @@ if Scenario=='AMS2035' & ticgn_controlled=='True' then
 
 end
 
-
-//////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
-// On fait varier les coefficients techniques de liquid_fuels et de gas_fuels dans l'AMS,
-// pour obtenir en sortie des écarts de prix par rapport à l'AME similaires à ceux des données de la DGEC
-if Scenario=='AMS2035' & energy_prices_controlled=='True' then
-
-    // Get the initial value of the alphas for liquid_fuels and gas_fuels
-    alpha_init = Proj_Vol('alpha').val;
-    alpha_liquid_init = alpha_init(1:5, Indice_OilS);
-    alpha_gas_init = alpha_init(1:5, Indice_GasS);
-    
-    // Calculate the new values of the alphas, depending on time_step
-    // VALEURS DE MULTIPLICATEURS JUSQU'AU 8 FEVRIER 17H
-    // if time_step == 1
-    //     alpha_liquid_new = alpha_liquid_init * 0.95;
-    //     alpha_gas_new = alpha_gas_init * 2.30;
-	// elseif time_step == 2
-    //     alpha_liquid_new = alpha_liquid_init * 0.95;
-    //     alpha_gas_new = alpha_gas_init * 2.30;
-    // elseif time_step == 3
-    //     alpha_liquid_new = alpha_liquid_init * 0.67;
-    //     alpha_gas_new = alpha_gas_init * 1.53;
-    // elseif time_step == 4
-    //     alpha_liquid_new = alpha_liquid_init * 0.24;
-    //     alpha_gas_new = alpha_gas_init * 1.52;
-	// end
-
-    // VALEURS DE MULTIPLICATEURS APRES LE 8 FEVRIER 17H
-    if time_step == 1
-        alpha_liquid_new = alpha_liquid_init * 0.95;
-        alpha_gas_new = alpha_gas_init * 2.30;
-	elseif time_step == 2
-        alpha_liquid_new = alpha_liquid_init * 0.95;
-        alpha_gas_new = alpha_gas_init * 2.30;
-    elseif time_step == 3
-        alpha_liquid_new = alpha_liquid_init * 0.67;
-        alpha_gas_new = alpha_gas_init * 1.53;
-    elseif time_step == 4
-        alpha_liquid_new = alpha_liquid_init * 0.24;
-        alpha_gas_new = alpha_gas_init * 1.52;
-	end
-
-
-    // Force the new values of the alphas for liquid_fuels and gas_fuels
-    alpha_new = alpha_init;
-    alpha_new(1:5, Indice_OilS) = alpha_liquid_new;
-    alpha_new(1:5, Indice_GasS) = alpha_gas_new;
-    //Deriv_Exogenous.alpha = alpha_new;
-    Proj_Vol('alpha').val = alpha_new;
-    
-    // After the resolution, there is a test on wether the projection went well or not,
-    // line 442 of ImaclimS.sce, calling Check_Proj_Vol.sce".
-    // We put the new values of alpha in Proj_Vol to succeed this test.
-    //Proj_Vol('alpha').val = alpha_new;
-end
-
-//////////////////////////////////////////////// COMPOSANTES DU BUDGET PUBLIC  /////////////////////////////////////////////////////////////////////////////////////
-
-// On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
-// TOCLEAN
-// global G_Tax_revenue
-// global G_Non_Labour_Income
-// global G_Other_Income
-// global G_Property_income
-// global G_Social_Transfers
-// global G_Compensations
-// global T_MPR
-// global Bonus_vehicules
-
-//////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////// ELASTICITE PRIX AUX IMPORTATIONS  /////////////////////////////////////////////////////////////////////////////////////
 indices_indus_sect = [6:11];
 
@@ -326,31 +231,6 @@ elseif Scenario == 'AME_M3_sans_CBAM_TESI' | Scenario == 'AMS_M3_sans_CBAM_TESI'
 elseif Scenario == 'AME_normal_sans_CBAM_TESI' | Scenario == 'AMS_normal_sans_CBAM_TESI' then
 
 end
-
-
-//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET EXPORTS  /////////////////////////////////////////////////////////////////////////////////////
-
-// new_sigma_X = 0.8; // Initial parameter is 0.42
-
-// for i=1:nb_Sectors
-//     if sigma_X(i) <> 0
-//         sigma_X(i) = new_sigma_X;
-//     end
-// end
-
-// Deriv_Exogenous.sigma_X = sigma_X;
-
-//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET IMPORTS  /////////////////////////////////////////////////////////////////////////////////////
-
-// new_sigma_M = 0.8; // Initial parameter is 1.9
-
-// for i=1:nb_Sectors
-//     if sigma_M(i) <> 0
-//         sigma_M(i) = sigma_M;
-//     end
-// end
-
-
 
 //////////////////////////////////////////////// PROJECTIONS SELON LES SCENARIOS /////////////////////////////////////////////////////////////////////////////////////
 if Scenario == 'AME'

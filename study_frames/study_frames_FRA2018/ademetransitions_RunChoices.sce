@@ -28,19 +28,6 @@ Bonus_vehicules_share = 0;
 MPR_share = 0;
 
 
-////////////////////////////////////////////// contrôle de pY gaz par rapport à pM gaz /////////////////////////////////////////////////////
-// Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-//TOCLEAN
-if 0 & Spe_margs_Profit_margin_gaz_reduced == 'true' then
-	Deriv_Exogenous.markup_rate = markup_rate;
-	Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
-// Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-	Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-	Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
-end
-
 //////////////////////////////////////////////////// IMPORTATIONS ///////////////////////////////////////////////////////////////
 
 if VAR_sigma_MX != "neutral"

@@ -821,8 +821,7 @@ else
 
     // WE CONSIDER MA PRIM RENOV TRANSFER
     // A share of the investment of Property_business in construction is transfered to households
-    //TOCLEAN
-    if 0 & exists('Indice_PropertyS') & exists('Indice_ConstruS')
+    if exists('Indice_PropertyS') & exists('Indice_ConstruS')
         T_MPR = MPR_share * I_value(Indice_ConstruS, Indice_PropertyS);
     else
         T_MPR = 0;
