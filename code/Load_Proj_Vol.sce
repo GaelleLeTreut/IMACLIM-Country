@@ -102,7 +102,8 @@ proj_files = [
     'Intermediate_prices', ..
     'Spemargin_rates', ..
     'households_consumption', ..
-    'exports'
+    'exports', ..
+    'import_ratios'
 ];
 
 to_transpose = [
