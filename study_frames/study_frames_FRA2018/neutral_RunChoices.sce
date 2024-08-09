@@ -26,29 +26,57 @@
 // ////////////////////////////////////////
 // // Elasticity
 // ////////////////////////////////////////
-// if VAR_sigma_omegaU=='ref'
+if VAR_sigma_omegaU=='ref'
 
-// 	parameters.sigma_omegaU = -0.1;
+	parameters.sigma_omegaU = -0.1;
 
-// elseif VAR_sigma_omegaU=='ademevalue'
+elseif VAR_sigma_omegaU=='ademevalue'
 
-// 	parameters.sigma_omegaU = -1.8;
+	parameters.sigma_omegaU = -1.8;
 
-// end
+elseif VAR_sigma_omegaU=='-0.2'
+
+	parameters.sigma_omegaU = -0.2;
+
+elseif VAR_sigma_omegaU=='-0.3'
+
+	parameters.sigma_omegaU = -0.3;
+
+elseif VAR_sigma_omegaU=='-0.4'
+
+	parameters.sigma_omegaU = -0.4;
+
+elseif VAR_sigma_omegaU=='-0.5'
+
+	parameters.sigma_omegaU = -0.5;
+
+elseif VAR_sigma_omegaU=='-0.9'
+
+	parameters.sigma_omegaU = -0.9;
+
+elseif VAR_sigma_omegaU=='-1.3'
+
+	parameters.sigma_omegaU = -1.3;
+
+elseif VAR_sigma_omegaU=='-1.7'
+
+	parameters.sigma_omegaU = -1.7;
+
+end
 
 // ////////////////////////////////////////
 // // Wage curve real wage coefficient
 // ////////////////////////////////////////
 
-// if VAR_coef_real_wage=='ref'
+if VAR_coef_real_wage=='ref'
 
-// 	parameters.Coef_real_wage = 1;
+	parameters.Coef_real_wage = 1;
 
-// elseif VAR_coef_real_wage=='low'
+elseif VAR_coef_real_wage=='low'
 
-// 	parameters.Coef_real_wage = 0;
+	parameters.Coef_real_wage = 0;
 
-// end
+end
 
 // // //////////////////////////////////////////////////// Households consumption basic need  //////////////////////////////////////////////
 
@@ -88,7 +116,6 @@ end
 
 if Scenario == 'neutral' | Scenario == 'neutralpref'
 
-	// delta_M forcé pour les carburants liquides et le gaz
 	parameters.mu_demand(:) = mu_file(:,time_step);
 	parameters.Cmin(:) = cmin_file(:,time_step);
 
@@ -116,12 +143,12 @@ end
 
 //////////////////////////////////////////////////// IMPORTATIONS ///////////////////////////////////////////////////////////////
 
-if VAR_sigma_MX == "ref"
+// if VAR_sigma_MX == "ref"
 
-// delta_M forcé pour les carburants liquides et le gaz
-parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
+// // delta_M forcé pour les carburants liquides et le gaz
+// parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
 
-end
+// end
 
 //////////////////////////////////////////////////// EXPORTATIONS ///////////////////////////////////////////////////////////////
 
@@ -307,6 +334,9 @@ elseif VAR_Mu=="low"
 elseif VAR_Mu=="high"
 	parameters.Mu = 0.013
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+elseif VAR_Mu=="veryhigh"
+	parameters.Mu = 0.03
+	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
 elseif VAR_Mu=="neutral"
 	parameters.Mu = 0
 	parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
@@ -379,20 +409,20 @@ end
 
 // //////////////////////////////////////////////////// Import-export price elasticity  //////////////////////////////////////////////////////////////////////
 
-// if VAR_sigma_MX=="ref"
-// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-// elseif  VAR_sigma_MX=="low"
-// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
-// elseif  VAR_sigma_MX=="low_MX"
-// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,0,1,1];
-// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
-// elseif  VAR_sigma_MX=="high"
-// 	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
-// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
-// elseif  VAR_sigma_MX=="high_MX"
-// 	Deriv_Exogenous.sigma_M = [0,0,0,0,2.5,2.5,2.5,2.5,2.5,2.5,2.5,0,0,0,2.5,2.5,0,2.5,2.5];
-// 	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
-// end
+if VAR_sigma_MX=="ref"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+elseif  VAR_sigma_MX=="low"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
+elseif  VAR_sigma_MX=="low_MX"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,0,1,1];
+	Deriv_Exogenous.sigma_X = [0,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0,0,0,0.1,0.1,0,0.1,0.1];
+elseif  VAR_sigma_MX=="high"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,1.9,0,1.9,1.9];
+	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
+elseif  VAR_sigma_MX=="high_MX"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,2.5,2.5,2.5,2.5,2.5,2.5,2.5,0,0,0,2.5,2.5,0,2.5,2.5];
+	Deriv_Exogenous.sigma_X = [0,0,0,0,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0,0,0,0.9,0.9,0,0.9,0.9];
+end
 
 
