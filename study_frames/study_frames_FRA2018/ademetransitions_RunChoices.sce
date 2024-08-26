@@ -457,9 +457,9 @@ elseif  VAR_sigma_MX=="high_MX"
 end
 
 
-// if Scenario=='S2' |  Scenario=='S2test'
-// 	parameters.sigma_ConsoBudget(1:18) = 0.3;
-// end
+if Scenario=='S2' |  Scenario=='S2test'
+	parameters.sigma_ConsoBudget(1:18) = 0;
+end
 
 // ////////////////////////////////////////
 // // Modification of consumption income elasticity
