@@ -66,6 +66,7 @@ pC;nb_Commodities;nb_Households;Var_interm;0;%inf
 pG;nb_Commodities;nb_Government;Var_interm;0;%inf
 pI;nb_Commodities;1;Var_interm;0;%inf
 CPI;1;1;Var_interm;0;%inf
+MPI;1;1;Var_interm;0;%inf
 GDP_pFish;1;1;Var_interm;0;%inf
 G_pFish;1;1;Var_interm;0;%inf
 I_pFish;1;1;Var_interm;0;%inf
@@ -96,4 +97,6 @@ Carbon_Tax_rate_M;1;nb_Sectors;Var;0;%inf
 pRental;1;1;Var;0;%inf
 Capital_endowment;1;1;Var;0;%inf
 AdjRecycle;1;1;Var;0;%inf
-scal_pK;1;1;Var;0;%inf
+markup_rate;1;nb_Sectors;Var;-1;1
+SpeMarg_rates_IC;nb_Commodities;nb_Sectors;Var;-%inf;%inf
+scal_I;1;1;Var_interm;0;%inf

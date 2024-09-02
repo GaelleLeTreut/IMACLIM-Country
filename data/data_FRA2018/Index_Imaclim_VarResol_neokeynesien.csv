@@ -66,6 +66,7 @@ pC;nb_Commodities;nb_Households;Var_interm;0;%inf
 pG;nb_Commodities;nb_Government;Var_interm;0;%inf
 pI;nb_Commodities;1;Var_interm;0;%inf
 CPI;1;1;Var_interm;0;%inf
+MPI;1;1;Var_interm;0;%inf
 GDP_pFish;1;1;Var_interm;0;%inf
 G_pFish;1;1;Var_interm;0;%inf
 I_pFish;1;1;Var_interm;0;%inf

@@ -2000,7 +2000,7 @@ endfunction
 function G_Consumption_budget = G_ConsumpBudget_Val_2(GDP)
 
     /// Public consumption budget - Proportion of GDP
-    G_Consumption_budget = (GDP/BY.GDP) *  BY.G_Consumption_budget;
+    G_Consumption_budget = (GDP/BY.GDP) * BY.G_Consumption_budget;
     
 endfunction
 
@@ -2025,6 +2025,14 @@ function G_Consumption_budget = G_ConsumpBudget_Val_4(G_pFish, Mu, Labour_force,
     G_Consumption_budget = (G_pFish / BY.G_pFish *  BY.G_Consumption_budget)*(1 + Proj_Macro.Labour_force(time_step) + Mu + Proj_Macro.Labour_force(time_step)*Mu ).^(parameters.time_since_BY) ;
     
 endfunction
+
+function G_Consumption_budget = G_ConsumpBudget_Val_5(GDP)
+
+    /// Public consumption budget - Proportion of GDP
+    G_Consumption_budget = 0.2704 * GDP;
+    
+endfunction
+
 
 /// To pilote bugdet finance through the dashboard
 function [y] = G_budget_clos_Const_1(G_Consumption_budget, GDP, NetLending) ;
@@ -3182,13 +3190,61 @@ function I = Invest_demand_Val_3(Betta, kappa, Y, GDP, pI)
                 I = I * (1-share_of_stranded_asset_costs);
             end
 
-
-            
 			if is_projected('I') then
 				I = apply_proj_val(I, 'I');
 			end	
 
 		else
+			I = Betta * sum( kappa .* Y' );
+		end
+		
+	elseif Capital_Dynamics
+	// If Capital Market - Investment is a share of GDP - Give the repartition of I
+			if ~Exo_ShareI_GDP
+				ShareI_GDP = BY.ShareI_GDP * ( GDP_index(time_step + 1) / GDP_index(time_step)  -  ( 1 - depreciation_rate) ) * ( BY.Capital_endowment./ sum(BY.I) ) ;
+			else 
+				ShareI_GDP = Proj_Macro.ShareI_GDP(time_step);
+			end		
+		
+		//Ventilated by BY Shares
+		// I = "beta" Io 
+		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
+
+			if is_projected('I') then
+				I = apply_proj_val(I, 'I');
+			end	
+	end
+
+endfunction
+
+function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
+    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+	if ~Capital_Dynamics
+    // Capital expansion coefficient ( Betta ( nb_Sectors) ).
+    // This coefficient gives : 1) The incremental level of investment as a function of capital depreciation, and 2) the composition of the fixed capital formation
+		if Invest_matrix then
+			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
+
+            I(:,:) =  I(:,:) * scal_I ; 
+
+            // PRISE EN COMPTE ACTIFS ECHOUES
+            // Le producteur prend en compte le coût de remboursement des emprunts utilisés pour investir dans des actifs échoués.
+            // Les kappas prennent en compte ces coûts, mais ils ne correspondent pas à de l'investissement.
+            // Or l'investissement est directement proportionnel aux kappas.
+            // On réduit donc l'investissement selon la part (estimée très grossièrement) que l'on estime être liée aux actifs échoués.
+            // En début de période en suppose beaucoup d'actifs échoués, puis plus aucun en fin de période.
+            if stranded_assets == 'True' then
+                share_of_stranded_asset_costs = strtod (evstr('share_of_stranded_asset_costs_' + time_step)); // String (from dashboard) to double conversion
+                I = I * (1-share_of_stranded_asset_costs);
+            end
+
+			if is_projected('I') then
+				I = apply_proj_val(I, 'I');
+			end	
+
+		else
+
 			I = Betta * sum( kappa .* Y' );
 		end
 		
@@ -3302,13 +3358,33 @@ endfunction
 
 function pK = Capital_Cost_Val_3(pRental, scal_pK)
 
-    pK = pRental.*ones(1,nb_Sectors).*scal_pK;  
+    pK = pRental.*ones(1,nb_Sectors) + scal_pK;  
 
 endfunction
 
-function pK = Capital_Cost_Val_3(pRental, scal_pK)
+function pK = Capital_Cost_Val_4(pI, I, pRental)
 
-    pK = pRental.*ones(1,nb_Sectors).*scal_pK;	
+	if ~Capital_Dynamics
+		
+		if Invest_matrix then
+			pK = sum((pI*ones(1,nb_Sectors)).* I,"r") ./ sum(I,"r") ;
+		else 
+			pK = ( sum(pI .* I) ./ (ones(nb_Sectors, 1).*.sum(I)) )' ;
+		end
+		
+	elseif Capital_Dynamics
+	// Unique rental price
+	
+		pK = pRental.*ones(1,nb_Sectors);	
+		
+	end
+    
+endfunction
+
+function pK = Capital_Cost_Val_5(scal_pK)
+
+    pK = scal_pK;  
+
 endfunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3847,6 +3923,7 @@ function pI = pI_price_Val_1( Transp_margins_rates, Trade_margins_rates,SpeMarg_
 
     // Investment price: pI (nb_Sectors)
     pI = ( p' .* ( ones(nb_Commodities, 1) + margins_rates) + Indirect_tax_rates) .* (ones(nb_Commodities, 1) + VA_Tax_rate') ;
+    
 endfunction
 
 // Purchase price (Investment) after trade, transport and indirect tax (no investment of energy)
@@ -3860,6 +3937,20 @@ function pI = pI_price_Val_2( Transp_margins_rates, Trade_margins_rates,SpeMarg_
 
     // Investment price: pI (nb_Sectors)
     pI = ( p' .* ( ones(nb_Commodities, 1) + margins_rates) + Indirect_tax_rates) .* (ones(nb_Commodities, 1) + Cons_Tax_rate') ;
+    
+endfunction
+
+// Purchase price (Investment) after trade, transport and indirect tax (no investment of energy)
+function pI = pI_price_Val_3( Transp_margins_rates, Trade_margins_rates,SpeMarg_rates_I,OtherIndirTax_rate, Energy_Tax_rate_FC, p, VA_Tax_rate,scal_pK) ;
+
+    //  Trade and transport and specific margins
+    margins_rates = Transp_margins_rates' + Trade_margins_rates' + SpeMarg_rates_I'
+
+    // Indirect tax
+    Indirect_tax_rates = OtherIndirTax_rate'+Energy_Tax_rate_FC' ;
+
+    // Investment price: pI (nb_Sectors)
+    pI = ( p' .* ( ones(nb_Commodities, 1) + margins_rates) + Indirect_tax_rates) .* (ones(nb_Commodities, 1) + VA_Tax_rate') * scal_pK ;
     
 endfunction
 
@@ -3885,6 +3976,15 @@ function CPI = CPI_Val_1( pC, C)
 	C=abs(C);
 	pC=abs(pC);
 	CPI = sqrt( sum(pC .* C) ./ sum(BY.pC .* C) .* sum(pC .* BY.C) ./ sum(BY.pC .* BY.C) );
+	
+endfunction
+
+// Import price index (MPI) - Fisher Index
+function MPI = MPI_Val_1( pM, M)
+
+	M=abs(M);
+	pM=abs(pM);
+	MPI = sqrt( sum(pM .* M) ./ sum(BY.pM .* M) .* sum(pM .* BY.M) ./ sum(BY.pM .* BY.M) );
 	
 endfunction
 
@@ -4188,7 +4288,15 @@ function w = Wage_Variation_Val_1(NetWage_variation)
     // w(Indice_GasS) = w(Indice_GasS) / 16;
 endfunction
 
-   function y = MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
+function w = Wage_Variation_Val_2(NetWage_variation,scal_pK)
+
+    w = NetWage_variation * BY.w * scal_pK;
+
+    // Baisser coût du travail du gaz
+    // w(Indice_GasS) = w(Indice_GasS) / 16;
+endfunction
+
+function y = MeanWageVar_Const_1( w, lambda, Y, NetWage_variation)
 
     w=abs(w);
     lambda = abs(lambda);

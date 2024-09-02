@@ -1,0 +1,13 @@
+reference_year;2018;2030;2040
+current_year;2030;2040;2050
+GDP;0.00;0.0;0.0
+GDP_world;0.0;0.0;0.0
+Population;0.00;0.0;0.0
+Labour_force;0.00;0.0;0.0
+Retired;0.00;0.0;0.0
+pM_Crude_oil;0.00;0.0;0.0
+pM_Liquid_fuels;0.00;0.0;0.0
+pM_Gas_fuels;0.00;0.0;0.0
+pM_Solid_fuels;0.00;0.0;0.0
+pM_Elec_heating;0;0;0
+units;mean_yearly_growth_rate;mean_yearly_growth_rate;mean_yearly_growth_rate

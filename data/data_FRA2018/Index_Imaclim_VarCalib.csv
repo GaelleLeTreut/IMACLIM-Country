@@ -87,6 +87,7 @@ ClimPolCompensbySect;1;nb_Sectors;InitVal
 G_disposable_income;1;nb_Government;calib
 Income_Tax_rate;1;nb_Households;calib
 CPI;1;1;calib
+MPI;1;1;calib
 GDP_pFish;1;1;calib
 G_pFish;1;1;calib
 I_pFish;1;1;calib
@@ -155,5 +156,5 @@ Capital_endowment;1;1;calib
 share_Ii;nb_Commodities;nb_size_I;calib
 ShareI_GDP;1;1;calib
 pRental;1;1;calib
-scal_pK;1;1;calib
+scal_I;1;1;calib
 Cmin;1;nb_Sectors;calib

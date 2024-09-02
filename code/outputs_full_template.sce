@@ -249,6 +249,9 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Capital price - Elec_heating",	sum(BY.pK .* Out.kappa, "r")(5)];
 ["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
 ["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)];
+["CPI",	(Out.CPI )];
+["MPI",	(Out.MPI )];
+["REER", (Out.CPI / Out.MPI)];
 ];
 
 

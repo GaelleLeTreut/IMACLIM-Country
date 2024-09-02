@@ -40,6 +40,7 @@ GrossOpSurplus;GrossOpSurplus_Val_1;Capital_income, Profit_margin, Trade_margins
 SpeMarg_IC,SpeMarg_C,SpeMarg_G,SpeMarg_X,SpeMarg_I;SpeMarg_Val_1;SpeMarg_rates_IC, SpeMarg_rates_C, SpeMarg_rates_G, SpeMarg_rates_X, SpeMarg_rates_I, p, alpha, Y, C, X, G, I;
 ;;;
 CPI;CPI_Val_1;pC, C;// defined in relation to BY
+MPI;MPI_Val_1;pM, M;// defined in relation to BY
 GDP_pFish;GDP_pFish_Val_1;pC, C, pG, G, pI, I, pX, X, pM, M, GDP;
 G_pFish;G_pFish_Val_1;pG, G;
 I_pFish;I_pFish_Val_1;pI, I;
