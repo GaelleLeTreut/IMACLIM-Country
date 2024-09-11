@@ -454,7 +454,7 @@ end
 //////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
 
 
-if reindustrialisation_imports_bool & strstr(Scenario, 'AMS') <> ""
+if reindustrialisation_imports_bool =='True' & strstr(Scenario, 'AMS') <> ""
     imports_tendanciels = evstr('reindustrialisation_imports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
     
@@ -463,7 +463,7 @@ if reindustrialisation_imports_bool & strstr(Scenario, 'AMS') <> ""
     end
 end
 
-if reindustrialisation_exports_bool & strstr(Scenario, 'AMS') <> ""
+if reindustrialisation_exports_bool =='True' & strstr(Scenario, 'AMS') <> ""
     exports_tendanciels = evstr('reindustrialisation_exports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
 
