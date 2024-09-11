@@ -17,44 +17,20 @@ iso_fra = 'FRA2018';
 
 //// MacroIncer resolution tests
 test_fra_macro.System_Resol = ['Systeme_ProjHomothetic'];
-test_fra_macro.study = ['neutral_RunChoices'];
+test_fra_macro.study = ['SNBC3_RunChoices'];
 test_fra_macro.Optimization_Resol = ['%T'];
-test_fra_macro.SystemOpt_Resol = ['SystemOpt_Static']
-test_fra_macro.AGG_type = ['AGG_19TME'];
+test_fra_macro.SystemOpt_Resol = ['SystemOpt_Static_neokeynesien']
+test_fra_macro.AGG_type = ['AGG_23TME'];
 test_fra_macro.H_DISAGG = ['HH1'];
-test_fra_macro.Nb_Iter = ['2'];
-test_fra_macro.Macro_nb = ['neutral'];
-test_fra_macro.Scenario = ['S3test'];
-test_fra_macro.World_prices = ['True'];
-test_fra_macro.X_nonEnerg = ['True'];
-test_fra_macro.Output_files = ['%T'];
-test_fra_macro.eq_G_ConsumpBudget = ['G_ConsumpBudget_Val_4'];
-test_fra_macro.VAR_coef_real_wage = ['ref'];
-test_fra_macro.VAR_C_basic_need = ['low'];
-test_fra_macro.VAR_emis = ['ref'];
-test_fra_macro.VAR_Mu = ['neutral','ref'];
-test_fra_macro.VAR_saving = ['neutral'];
-test_fra_macro.VAR_population = ['neutral','ref'];
-test_fra_macro.VAR_import_enersect = ['neutral','ref'];
-test_fra_macro.trade_drive = ['neutral','exports_detailed'];
-test_fra_macro.VAR_sigma_omegaU = ['ademevalue']
-test_fra_macro.VAR_sigma_MX = ['neutral','ref'];
-test_fra_macro.Spe_margs_Profit_margin_gaz_reduced = ['false'];
-test_fra_macro.pY_ini_gaz_controlled_eco_eq = ['false'];
-test_fra_macro.proj_alpha = ['false','true'];
-test_fra_macro.proj_c = ['false','true'];
-test_fra_macro.proj_kappa = ['false','true'];
-test_fra_macro.Time_step_non_etudie = ['9999'];
-// test_fra_macro.VAR_sigma_ConsoBudget = ['ref'];
-// test_fra_macro.VAR_sigma_pC = ['ref'];
-// test_fra_macro.VAR_delta_pM = ['ref'];
-// test_fra_macro.VAR_choice_X = [''];
-// test_fra_macro.Recycling_Option = ['LabTax'];
-// test_fra_macro.VAR_pM = ['','pM_low','pM_high'];
-// test_fra_macro.VAR_Growth = ['','Growth_low','Growth_high'];
-// test_fra_macro.VAR_Immo = ['','Immo_low','Immo_high'];
-// test_fra_stat.Carbon_BTA = ['%T', '%F'];
-// test_fra_stat.ClosCarbRev = ['CstNetLend','AllLabTax'];
+test_fra_macro.Nb_Iter = ['3'];
+test_fra_macro.Macro_nb = ['SNBC3_run2'];
+test_fra_macro.Scenario = ['AME_run20606'];
+test_fra_macro.Proj_scenario = ['SNBC3test_run21'];
+test_fra_macro.proj_alpha = ['true'];
+test_fra_macro.proj_c = ['false'];
+test_fra_macro.proj_kappa = ['true'];
+// test_fra_macro.Proj_scenario = ['SNBC3test_run21','SNBC3test_run22','SNBC3test_run23','SNBC3test_run24','SNBC3test_run25','SNBC3test_run26','SNBC3test_run27','SNBC3test_run28','SNBC3test_run29','SNBC3test_run230','SNBC3test_run231'];
+
 
 france_macro = new_country(name_fra, iso_fra, test_fra_macro);
 

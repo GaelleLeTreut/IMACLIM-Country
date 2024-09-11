@@ -10,52 +10,54 @@ function default_dashboard = new_default_dashboard()
     //                      values by default
     
     default_dashboard = struct( ..
-    'System_Resol', 'System_StatRed', ..
-    'Optimization_Resol', '%T', ..
-    'SystemOpt_Resol', 'SystemOpt_Static', ..
-    'study', 'Recursive_RunChoices', ..
-    'Proj_scenario', 'branche_macro_incertitudes', ..
-	'Capital_Dynamics','%F',..
-    'AGG_type', '', ..
-    'H_DISAGG', 'HH1', ..
-    'Resol_Mode', 'Dynamic_projection', ..
-    'Nb_Iter', '1', ..
-    'Macro_nb', '', ..
-    'Demographic_shift', 'True', ..
-    'Labour_product', 'True', ..
-    'World_prices', 'False', ..
-	'X_nonEnerg', 'False', ..
-    'Invest_matrix', '%F', ..
-    'Scenario', '', ..
-    'CO2_footprint', 'False', ..
-    'Output_files', '%F', ..
-	'Output_prints', '%F', ..
-	'CarbonTaxDiff','%F',..
-	'Carbon_BTA','%F',..
-    'Recycling_Option', '',..
-	'ClosCarbRev','CstNetLend',..
-	'ClosPubBudget','',..
-	'VAR_Mu','ref',..
-	'VAR_sigma_MX','ref',..
-	'VAR_saving','ref',..
-    'VAR_sigma_omegaU','ref',..
-    'VAR_coef_real_wage','ref',..
-    'VAR_C_basic_need','ref',..
-	'VAR_sigma_ConsoBudget','ref',..
-	'VAR_sigma_pC','ref',..
-	'VAR_sigma','ref',..
-	'VAR_delta_pM','ref',..
-	'trade_drive','ref',..
-	'eq_G_ConsumpBudget','ref',..
-	'VAR_import_enersect','ref',..
-	'VAR_population','ref',..
-	'VAR_emis','ref',..
-	'Spe_margs_Profit_margin_gaz_reduced','false',..
-	'pY_ini_gaz_controlled_eco_eq', 'false',..
+    'Carbone_ETS' , 'False', ..
+    'Carbon_BTA' , '%F', ..
+    'CarbonTaxDiff' , '%F', ..
+    'Recycling_Option' , '', ..
+    'ClosCarbRev' , 'CstNetLend', ..
+    'ClosPubBudget' , '', ..
+    'System_Resol' , 'Systeme_ProjHomothetic', ..
+    'Optimization_Resol' , '%T', ..
+    'Capital_Dynamics' , '%F', ..
+    'H_DISAGG' , 'HH1', ..
+    'Resol_Mode' , 'Dynamic_projection', ..
+    'Demographic_shift' , 'True', ..
+    'Labour_product' , 'True', ..
+    'World_prices' , 'True', ..
+    'X_nonEnerg' , 'True', ..
+    'Invest_matrix' , '%F', ..
+    'CO2_footprint' , 'False', ..
+    'Output_files' , '%T', ..
+    'Output_prints' , '%F', ..
+    'Scenario_ETS' , '', ..
+    'MaPrimRenov' , 'False', ..
+    'stranded_assets' , 'False', ..
+    'pY_gas_reduced_v1' , 'False', ..
+    'eq_G_ConsumpBudget' , '', ..
 	'skip_calibration','True',..
-    'Time_step_non_etudie','9999',..
+    'Macro_nb', 'SNBC3_run2', ..
+    'Proj_scenario', 'SNBC3test_run2', ..
+    'Nb_Iter', '3', ..
+    'emissions_bioenergy', 'True', ..
+    'pY_gas_reduced_v2', 'True', ..
+    'SystemOpt_Resol', 'SystemOpt_Static_neokeynesien', ..
+    'Time_step_non_etudie','999',..
+    'study', 'SNBC3_RunChoices', ..
+    'AGG_type', 'AGG_23TME', ..
+    'Invest_matrix', '%T', ..
 	'proj_alpha','false',..
+    'proj_imports','false',..
+    'proj_exports','false',..
     'proj_c','false',..
-    'proj_kappa','false')
+    'proj_kappa','false',..
+    'proj_invest','false',..
+    'proj_pY', 'true' ,..
+    'proj_spemarg_rates_IC','false',..
+    'reindustrialisation_imports_bool','False',..
+    'reindustrialisation_exports_bool','False', ..
+	'Coef_real_wage_dashboard','1', ..
+	'sigma_omegaU_dashboard','-0.1', ..
+	'Bonus_vehicule_dashboard','False', ..
+	'Scenario','')
  
 endfunction
