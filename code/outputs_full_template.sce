@@ -252,6 +252,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["CPI",	(Out.CPI )];
 ["MPI",	(Out.MPI )];
 ["REER", (Out.CPI / Out.MPI)];
+["Real I without constraint",    money_disp_adj.*(sum(Out.I_value) - sum(Out.I_value(:,5)) - Out.I_value(12,17) - Out.I_value(12,23) - Out.I_value(21,17) - Out.I_value(21,22) - Out.I_value(21,23))  / I_pFish];..
 ];
 
 
