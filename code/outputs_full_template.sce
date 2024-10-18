@@ -178,7 +178,338 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["G_Compensations",    money_disp_adj.*Out.G_Compensations];..
 ["G_T_MPR",    money_disp_adj.*T_MPR];..
 ["G_Bonus_vehicules",    money_disp_adj.*Bonus_vehicules];..
-["Population",	Out.Population];
+["Population",	Out.Population];..
+////////////// 1 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Crude_oil ---",    ""];..
+["IC_Energy_price - Crude_oil",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(1)];..
+["IC_Other_price - Crude_oil",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(1)];..
+["Labour price - Crude_oil",	sum(Out.pL .* Out.lambda,"r")(1)];..
+["Capital price - Crude_oil",	sum(Out.pK .* Out.kappa, "r")(1)];..
+["Production tax - Crude_oil",	(Out.Production_Tax_rate .* Out.pY')(1)];..
+["Markup rate - Crude_oil",	(Out.markup_rate .* Out.pY')(1)];..
+["--- Decomposition pY a prix constants - Crude_oil ---",    ""];..
+["IC_Energy_price - Crude_oil",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(1)];..
+["IC_Other_price - Crude_oil",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(1)];..
+["Labour price - Crude_oil",	sum(BY.pL .* Out.lambda,"r")(1)];..
+["Capital price - Crude_oil",	sum(BY.pK .* Out.kappa, "r")(1)];..
+["Production tax - Crude_oil",	(Out.Production_Tax_rate .* Out.pY')(1)];..
+["Markup rate - Crude_oil",	(Out.markup_rate .* Out.pY')(1)];..
+////////////// 2 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Liquid_fuels ---",    ""];..
+["IC_Energy_price - Liquid_fuels",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(2)];..
+["IC_Other_price - Liquid_fuels",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(2)];..
+["Labour price - Liquid_fuels",	sum(Out.pL .* Out.lambda,"r")(2)];..
+["Capital price - Liquid_fuels",	sum(Out.pK .* Out.kappa, "r")(2)];..
+["Production tax - Liquid_fuels",	(Out.Production_Tax_rate .* Out.pY')(2)];..
+["Markup rate - Liquid_fuels",	(Out.markup_rate .* Out.pY')(2)];..
+["--- Decomposition pY a prix constants - Liquid_fuels ---",    ""];..
+["IC_Energy_price - Liquid_fuels",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(2)];..
+["IC_Other_price - Liquid_fuels",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(2)];..
+["Labour price - Liquid_fuels",	sum(BY.pL .* Out.lambda,"r")(2)];..
+["Capital price - Liquid_fuels",	sum(BY.pK .* Out.kappa, "r")(2)];..
+["Production tax - Liquid_fuels",	(Out.Production_Tax_rate .* Out.pY')(2)];..
+["Markup rate - Liquid_fuels",	(Out.markup_rate .* Out.pY')(2)];..
+////////////// 3 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Gas_fuels ---",    ""];..
+["IC_Energy_price - Gas_fuels",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(3)];
+["IC_Other_price - Gas_fuels",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(3)];
+["Labour price - Gas_fuels",	sum(Out.pL .* Out.lambda,"r")(3)];
+["Capital price - Gas_fuels",	sum(Out.pK .* Out.kappa, "r")(3)];
+["Production tax - Gas_fuels",	(Out.Production_Tax_rate .* Out.pY')(3)];
+["Markup rate - Gas_fuels",	(Out.markup_rate .* Out.pY')(3)];
+["--- Decomposition pY a prix constants - Gas_fuels ---",    ""];..
+["IC_Energy_price - Gas_fuels",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(3)];
+["IC_Other_price - Gas_fuels",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(3)];
+["Labour price - Gas_fuels",	sum(BY.pL .* Out.lambda,"r")(3)];
+["Capital price - Gas_fuels",	sum(BY.pK .* Out.kappa, "r")(3)];
+["Production tax - Gas_fuels",	(Out.Production_Tax_rate .* Out.pY')(3)];
+["Markup rate - Gas_fuels",	(Out.markup_rate .* Out.pY')(3)];
+////////////// 4 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Solid_fuels ---",    ""];..
+["IC_Energy_price - Solid_fuels",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(4)];
+["IC_Other_price - Solid_fuels",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(4)];
+["Labour price - Solid_fuels",	sum(Out.pL .* Out.lambda,"r")(4)];
+["Capital price - Solid_fuels",	sum(Out.pK .* Out.kappa, "r")(4)];
+["Production tax - Solid_fuels",	(Out.Production_Tax_rate .* Out.pY')(4)];
+["Markup rate - Solid_fuels",	(Out.markup_rate .* Out.pY')(4)];
+["--- Decomposition pY a prix constants - Solid_fuels ---",    ""];..
+["IC_Energy_price - Solid_fuels",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(4)];
+["IC_Other_price - Solid_fuels",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(4)];
+["Labour price - Solid_fuels",	sum(BY.pL .* Out.lambda,"r")(4)];
+["Capital price - Solid_fuels",	sum(BY.pK .* Out.kappa, "r")(4)];
+["Production tax - Solid_fuels",	(Out.Production_Tax_rate .* Out.pY')(4)];
+["Markup rate - Solid_fuels",	(Out.markup_rate .* Out.pY')(4)];
+////////////// 5 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Elec_heating ---",    ""];..
+["IC_Energy_price - Elec_heating",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
+["IC_Other_price - Elec_heating",	sum(Out.pIC(6:6,:) .* Out.alpha(6:6,:),"r")(5)];
+["Labour price - Elec_heating",	sum(Out.pL .* Out.lambda,"r")(5)];
+["Capital price - Elec_heating",	sum(Out.pK .* Out.kappa, "r")(5)];
+["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
+["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)]
+["--- Decomposition pY a prix constants - Elec_heating ---",    ""];..
+["IC_Energy_price - Elec_heating",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
+["IC_Other_price - Elec_heating",	sum(BY.pIC(6:6,:) .* Out.alpha(6:6,:),"r")(5)];
+["Labour price - Elec_heating",	sum(BY.pL .* Out.lambda,"r")(5)];
+["Capital price - Elec_heating",	sum(BY.pK .* Out.kappa, "r")(5)];
+["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
+["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)]
+////////////// 6 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Steel_Iron ---",    ""];..
+["IC_Energy_price - Steel_Iron",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
+["IC_Other_price - Steel_Iron",	sum(Out.pIC(6:6,:) .* Out.alpha(6:6,:),"r")(6)];
+["Labour price - Steel_Iron",	sum(Out.pL .* Out.lambda,"r")(6)];
+["Capital price - Steel_Iron",	sum(Out.pK .* Out.kappa, "r")(6)];
+["Production tax - Steel_Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
+["Markup rate - Steel_Iron",	(Out.markup_rate .* Out.pY')(6)]
+["--- Decomposition pY a prix constants - Steel_Iron ---",    ""];..
+["IC_Energy_price - Steel_Iron",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
+["IC_Other_price - Steel_Iron",	sum(BY.pIC(6:6,:) .* Out.alpha(6:6,:),"r")(6)];
+["Labour price - Steel_Iron",	sum(BY.pL .* Out.lambda,"r")(6)];
+["Capital price - Steel_Iron",	sum(BY.pK .* Out.kappa, "r")(6)];
+["Production tax - Steel_Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
+["Markup rate - Steel_Iron",	(Out.markup_rate .* Out.pY')(6)]
+////////////// 7 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - NonFerrousMetals ---",    ""];..
+["IC_Energy_price - NonFerrousMetals",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(7)];
+["IC_Other_price - NonFerrousMetals",	sum(Out.pIC(6:7,:) .* Out.alpha(6:7,:),"r")(7)];
+["Labour price - NonFerrousMetals",	sum(Out.pL .* Out.lambda,"r")(7)];
+["Capital price - NonFerrousMetals",	sum(Out.pK .* Out.kappa, "r")(7)];
+["Production tax - NonFerrousMetals",	(Out.Production_Tax_rate .* Out.pY')(7)];
+["Markup rate - NonFerrousMetals",	(Out.markup_rate .* Out.pY')(7)]
+["--- Decomposition pY a prix constants - NonFerrousMetals ---",    ""];..
+["IC_Energy_price - NonFerrousMetals",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(7)];
+["IC_Other_price - NonFerrousMetals",	sum(BY.pIC(6:7,:) .* Out.alpha(6:7,:),"r")(7)];
+["Labour price - NonFerrousMetals",	sum(BY.pL .* Out.lambda,"r")(7)];
+["Capital price - NonFerrousMetals",	sum(BY.pK .* Out.kappa, "r")(7)];
+["Production tax - NonFerrousMetals",	(Out.Production_Tax_rate .* Out.pY')(7)];
+["Markup rate - NonFerrousMetals",	(Out.markup_rate .* Out.pY')(7)]
+////////////// 8 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Cement ---",    ""];..
+["IC_Energy_price - Cement",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(8)];
+["IC_Other_price - Cement",	sum(Out.pIC(6:8,:) .* Out.alpha(6:8,:),"r")(8)];
+["Labour price - Cement",	sum(Out.pL .* Out.lambda,"r")(8)];
+["Capital price - Cement",	sum(Out.pK .* Out.kappa, "r")(8)];
+["Production tax - Cement",	(Out.Production_Tax_rate .* Out.pY')(8)];
+["Markup rate - Cement",	(Out.markup_rate .* Out.pY')(8)]
+["--- Decomposition pY a prix constants - Cement ---",    ""];..
+["IC_Energy_price - Cement",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(8)];
+["IC_Other_price - Cement",	sum(BY.pIC(6:8,:) .* Out.alpha(6:8,:),"r")(8)];
+["Labour price - Cement",	sum(BY.pL .* Out.lambda,"r")(8)];
+["Capital price - Cement",	sum(BY.pK .* Out.kappa, "r")(8)];
+["Production tax - Cement",	(Out.Production_Tax_rate .* Out.pY')(8)];
+["Markup rate - Cement",	(Out.markup_rate .* Out.pY')(8)]
+////////////// 9 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - OthMin ---",    ""];..
+["IC_Energy_price - OthMin",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(9)];
+["IC_Other_price - OthMin",	sum(Out.pIC(6:9,:) .* Out.alpha(6:9,:),"r")(9)];
+["Labour price - OthMin",	sum(Out.pL .* Out.lambda,"r")(9)];
+["Capital price - OthMin",	sum(Out.pK .* Out.kappa, "r")(9)];
+["Production tax - OthMin",	(Out.Production_Tax_rate .* Out.pY')(9)];
+["Markup rate - OthMin",	(Out.markup_rate .* Out.pY')(9)]
+["--- Decomposition pY a prix constants - OthMin ---",    ""];..
+["IC_Energy_price - OthMin",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(9)];
+["IC_Other_price - OthMin",	sum(BY.pIC(6:9,:) .* Out.alpha(6:9,:),"r")(9)];
+["Labour price - OthMin",	sum(BY.pL .* Out.lambda,"r")(9)];
+["Capital price - OthMin",	sum(BY.pK .* Out.kappa, "r")(9)];
+["Production tax - OthMin",	(Out.Production_Tax_rate .* Out.pY')(9)];
+["Markup rate - OthMin",	(Out.markup_rate .* Out.pY')(9)]
+////////////// 10 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - ChemicalPharma ---",    ""];..
+["IC_Energy_price - ChemicalPharma",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(10)];
+["IC_Other_price - ChemicalPharma",	sum(Out.pIC(6:10,:) .* Out.alpha(6:10,:),"r")(10)];
+["Labour price - ChemicalPharma",	sum(Out.pL .* Out.lambda,"r")(10)];
+["Capital price - ChemicalPharma",	sum(Out.pK .* Out.kappa, "r")(10)];
+["Production tax - ChemicalPharma",	(Out.Production_Tax_rate .* Out.pY')(10)];
+["Markup rate - ChemicalPharma",	(Out.markup_rate .* Out.pY')(10)]
+["--- Decomposition pY a prix constants - ChemicalPharma ---",    ""];..
+["IC_Energy_price - ChemicalPharma",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(10)];..
+["IC_Other_price - ChemicalPharma",	sum(BY.pIC(6:10,:) .* Out.alpha(6:10,:),"r")(10)];..
+["Labour price - ChemicalPharma",	sum(BY.pL .* Out.lambda,"r")(10)];..
+["Capital price - ChemicalPharma",	sum(BY.pK .* Out.kappa, "r")(10)];..
+["Production tax - ChemicalPharma",	(Out.Production_Tax_rate .* Out.pY')(10)];..
+["Markup rate - ChemicalPharma",	(Out.markup_rate .* Out.pY')(10)];..
+////////////// 11 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Paper ---",    ""];..
+["IC_Energy_price - Paper",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(11)];
+["IC_Other_price - Paper",	sum(Out.pIC(6:11,:) .* Out.alpha(6:11,:),"r")(11)];
+["Labour price - Paper",	sum(Out.pL .* Out.lambda,"r")(11)];
+["Capital price - Paper",	sum(Out.pK .* Out.kappa, "r")(11)];
+["Production tax - Paper",	(Out.Production_Tax_rate .* Out.pY')(11)];
+["Markup rate - Paper",	(Out.markup_rate .* Out.pY')(11)]
+["--- Decomposition pY a prix constants - Paper ---",    ""];..
+["IC_Energy_price - Paper",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(11)];
+["IC_Other_price - Paper",	sum(BY.pIC(6:11,:) .* Out.alpha(6:11,:),"r")(11)];
+["Labour price - Paper",	sum(BY.pL .* Out.lambda,"r")(11)];
+["Capital price - Paper",	sum(BY.pK .* Out.kappa, "r")(11)];
+["Production tax - Paper",	(Out.Production_Tax_rate .* Out.pY')(11)];
+["Markup rate - Paper",	(Out.markup_rate .* Out.pY')(11)]
+////////////// 12 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Auto_indus ---",    ""];..
+["IC_Energy_price - Auto_indus",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(12)];
+["IC_Other_price - Auto_indus",	sum(Out.pIC(6:12,:) .* Out.alpha(6:12,:),"r")(12)];
+["Labour price - Auto_indus",	sum(Out.pL .* Out.lambda,"r")(12)];
+["Capital price - Auto_indus",	sum(Out.pK .* Out.kappa, "r")(12)];
+["Production tax - Auto_indus",	(Out.Production_Tax_rate .* Out.pY')(12)];
+["Markup rate - Auto_indus",	(Out.markup_rate .* Out.pY')(12)]
+["--- Decomposition pY a prix constants - Auto_indus ---",    ""];..
+["IC_Energy_price - Auto_indus",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(12)];
+["IC_Other_price - Auto_indus",	sum(BY.pIC(6:12,:) .* Out.alpha(6:12,:),"r")(12)];
+["Labour price - Auto_indus",	sum(BY.pL .* Out.lambda,"r")(12)];
+["Capital price - Auto_indus",	sum(BY.pK .* Out.kappa, "r")(12)];
+["Production tax - Auto_indus",	(Out.Production_Tax_rate .* Out.pY')(12)];
+["Markup rate - Auto_indus",	(Out.markup_rate .* Out.pY')(12)]
+////////////// 13 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - OthEquip ---",    ""];..
+["IC_Energy_price - OthEquip",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(13)];
+["IC_Other_price - OthEquip",	sum(Out.pIC(6:13,:) .* Out.alpha(6:13,:),"r")(13)];
+["Labour price - OthEquip",	sum(Out.pL .* Out.lambda,"r")(13)];
+["Capital price - OthEquip",	sum(Out.pK .* Out.kappa, "r")(13)];
+["Production tax - OthEquip",	(Out.Production_Tax_rate .* Out.pY')(13)];
+["Markup rate - OthEquip",	(Out.markup_rate .* Out.pY')(13)]
+["--- Decomposition pY a prix constants - OthEquip ---",    ""];..
+["IC_Energy_price - OthEquip",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(13)];
+["IC_Other_price - OthEquip",	sum(BY.pIC(6:13,:) .* Out.alpha(6:13,:),"r")(13)];
+["Labour price - OthEquip",	sum(BY.pL .* Out.lambda,"r")(13)];
+["Capital price - OthEquip",	sum(BY.pK .* Out.kappa, "r")(13)];
+["Production tax - OthEquip",	(Out.Production_Tax_rate .* Out.pY')(13)];
+["Markup rate - OthEquip",	(Out.markup_rate .* Out.pY')(13)]
+////////////// 14 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Electronics ---",    ""];..
+["IC_Energy_price - Electronics",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(14)];
+["IC_Other_price - Electronics",	sum(Out.pIC(6:14,:) .* Out.alpha(6:14,:),"r")(14)];
+["Labour price - Electronics",	sum(Out.pL .* Out.lambda,"r")(14)];
+["Capital price - Electronics",	sum(Out.pK .* Out.kappa, "r")(14)];
+["Production tax - Electronics",	(Out.Production_Tax_rate .* Out.pY')(14)];
+["Markup rate - Electronics",	(Out.markup_rate .* Out.pY')(14)]
+["--- Decomposition pY a prix constants - Electronics ---",    ""];..
+["IC_Energy_price - Electronics",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(14)];
+["IC_Other_price - Electronics",	sum(BY.pIC(6:14,:) .* Out.alpha(6:14,:),"r")(14)];
+["Labour price - Electronics",	sum(BY.pL .* Out.lambda,"r")(14)];
+["Capital price - Electronics",	sum(BY.pK .* Out.kappa, "r")(14)];
+["Production tax - Electronics",	(Out.Production_Tax_rate .* Out.pY')(14)];
+["Markup rate - Electronics",	(Out.markup_rate .* Out.pY')(14)]
+////////////// 15 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Food_industry ---",    ""];..
+["IC_Energy_price - Food_industry",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(15)];
+["IC_Other_price - Food_industry",	sum(Out.pIC(6:15,:) .* Out.alpha(6:15,:),"r")(15)];
+["Labour price - Food_industry",	sum(Out.pL .* Out.lambda,"r")(15)];
+["Capital price - Food_industry",	sum(Out.pK .* Out.kappa, "r")(15)];
+["Production tax - Food_industry",	(Out.Production_Tax_rate .* Out.pY')(15)];
+["Markup rate - Food_industry",	(Out.markup_rate .* Out.pY')(15)]
+["--- Decomposition pY a prix constants - Food_industry ---",    ""];..
+["IC_Energy_price - Food_industry",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(15)];
+["IC_Other_price - Food_industry",	sum(BY.pIC(6:15,:) .* Out.alpha(6:15,:),"r")(15)];
+["Labour price - Food_industry",	sum(BY.pL .* Out.lambda,"r")(15)];
+["Capital price - Food_industry",	sum(BY.pK .* Out.kappa, "r")(15)];
+["Production tax - Food_industry",	(Out.Production_Tax_rate .* Out.pY')(15)];
+["Markup rate - Food_industry",	(Out.markup_rate .* Out.pY')(15)]
+////////////// 16 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - OthManuf ---",    ""];..
+["IC_Energy_price - OthManuf",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(16)];
+["IC_Other_price - OthManuf",	sum(Out.pIC(6:16,:) .* Out.alpha(6:16,:),"r")(16)];
+["Labour price - OthManuf",	sum(Out.pL .* Out.lambda,"r")(16)];
+["Capital price - OthManuf",	sum(Out.pK .* Out.kappa, "r")(16)];
+["Production tax - OthManuf",	(Out.Production_Tax_rate .* Out.pY')(16)];
+["Markup rate - OthManuf",	(Out.markup_rate .* Out.pY')(16)]
+["--- Decomposition pY a prix constants - OthManuf ---",    ""];..
+["IC_Energy_price - OthManuf",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(16)];
+["IC_Other_price - OthManuf",	sum(BY.pIC(6:16,:) .* Out.alpha(6:16,:),"r")(16)];
+["Labour price - OthManuf",	sum(BY.pL .* Out.lambda,"r")(16)];
+["Capital price - OthManuf",	sum(BY.pK .* Out.kappa, "r")(16)];
+["Production tax - OthManuf",	(Out.Production_Tax_rate .* Out.pY')(16)];
+["Markup rate - OthManuf",	(Out.markup_rate .* Out.pY')(16)]
+////////////// 17 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - LandTransp ---",    ""];..
+["IC_Energy_price - LandTransp",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
+["IC_Other_price - LandTransp",	sum(Out.pIC(6:17,:) .* Out.alpha(6:17,:),"r")(17)];
+["Labour price - LandTransp",	sum(Out.pL .* Out.lambda,"r")(17)];
+["Capital price - LandTransp",	sum(Out.pK .* Out.kappa, "r")(17)];
+["Production tax - LandTransp",	(Out.Production_Tax_rate .* Out.pY')(17)];
+["Markup rate - LandTransp",	(Out.markup_rate .* Out.pY')(17)]
+["--- Decomposition pY a prix constants - LandTransp ---",    ""];..
+["IC_Energy_price - LandTransp",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
+["IC_Other_price - LandTransp",	sum(BY.pIC(6:17,:) .* Out.alpha(6:17,:),"r")(17)];
+["Labour price - LandTransp",	sum(BY.pL .* Out.lambda,"r")(17)];
+["Capital price - LandTransp",	sum(BY.pK .* Out.kappa, "r")(17)];
+["Production tax - LandTransp",	(Out.Production_Tax_rate .* Out.pY')(17)];
+["Markup rate - LandTransp",	(Out.markup_rate .* Out.pY')(17)]
+////////////// 18 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - NavalTransp ---",    ""];..
+["IC_Energy_price - NavalTransp",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(18)];
+["IC_Other_price - NavalTransp",	sum(Out.pIC(6:18,:) .* Out.alpha(6:18,:),"r")(18)];
+["Labour price - NavalTransp",	sum(Out.pL .* Out.lambda,"r")(18)];
+["Capital price - NavalTransp",	sum(Out.pK .* Out.kappa, "r")(18)];
+["Production tax - NavalTransp",	(Out.Production_Tax_rate .* Out.pY')(18)];
+["Markup rate - NavalTransp",	(Out.markup_rate .* Out.pY')(18)]
+["--- Decomposition pY a prix constants - NavalTransp ---",    ""];..
+["IC_Energy_price - NavalTransp",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(18)];
+["IC_Other_price - NavalTransp",	sum(BY.pIC(6:18,:) .* Out.alpha(6:18,:),"r")(18)];
+["Labour price - NavalTransp",	sum(BY.pL .* Out.lambda,"r")(18)];
+["Capital price - NavalTransp",	sum(BY.pK .* Out.kappa, "r")(18)];
+["Production tax - NavalTransp",	(Out.Production_Tax_rate .* Out.pY')(18)];
+["Markup rate - NavalTransp",	(Out.markup_rate .* Out.pY')(18)]
+////////////// 19 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - AirTransp ---",    ""];..
+["IC_Energy_price - AirTransp",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(19)];
+["IC_Other_price - AirTransp",	sum(Out.pIC(6:19,:) .* Out.alpha(6:19,:),"r")(19)];
+["Labour price - AirTransp",	sum(Out.pL .* Out.lambda,"r")(19)];
+["Capital price - AirTransp",	sum(Out.pK .* Out.kappa, "r")(19)];
+["Production tax - AirTransp",	(Out.Production_Tax_rate .* Out.pY')(19)];
+["Markup rate - AirTransp",	(Out.markup_rate .* Out.pY')(19)]
+["--- Decomposition pY a prix constants - AirTransp ---",    ""];..
+["IC_Energy_price - AirTransp",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(19)];
+["IC_Other_price - AirTransp",	sum(BY.pIC(6:19,:) .* Out.alpha(6:19,:),"r")(19)];
+["Labour price - AirTransp",	sum(BY.pL .* Out.lambda,"r")(19)];
+["Capital price - AirTransp",	sum(BY.pK .* Out.kappa, "r")(19)];
+["Production tax - AirTransp",	(Out.Production_Tax_rate .* Out.pY')(19)];
+["Markup rate - AirTransp",	(Out.markup_rate .* Out.pY')(19)]
+////////////// 20 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - AgriForest_Fish ---",    ""];..
+["IC_Energy_price - AgriForest_Fish",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(20)];
+["IC_Other_price - AgriForest_Fish",	sum(Out.pIC(6:20,:) .* Out.alpha(6:20,:),"r")(20)];
+["Labour price - AgriForest_Fish",	sum(Out.pL .* Out.lambda,"r")(20)];
+["Capital price - AgriForest_Fish",	sum(Out.pK .* Out.kappa, "r")(20)];
+["Production tax - AgriForest_Fish",	(Out.Production_Tax_rate .* Out.pY')(20)];
+["Markup rate - AgriForest_Fish",	(Out.markup_rate .* Out.pY')(20)]
+["--- Decomposition pY a prix constants - AgriForest_Fish ---",    ""];..
+["IC_Energy_price - AgriForest_Fish",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(20)];
+["IC_Other_price - AgriForest_Fish",	sum(BY.pIC(6:20,:) .* Out.alpha(6:20,:),"r")(20)];
+["Labour price - AgriForest_Fish",	sum(BY.pL .* Out.lambda,"r")(20)];
+["Capital price - AgriForest_Fish",	sum(BY.pK .* Out.kappa, "r")(20)];
+["Production tax - AgriForest_Fish",	(Out.Production_Tax_rate .* Out.pY')(20)];
+["Markup rate - AgriForest_Fish",	(Out.markup_rate .* Out.pY')(20)]
+////////////// 21 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Construction ---",    ""];..
+["IC_Energy_price - Construction",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(21)];
+["IC_Other_price - Construction",	sum(Out.pIC(6:21,:) .* Out.alpha(6:21,:),"r")(21)];
+["Labour price - Construction",	sum(Out.pL .* Out.lambda,"r")(21)];
+["Capital price - Construction",	sum(Out.pK .* Out.kappa, "r")(21)];
+["Production tax - Construction",	(Out.Production_Tax_rate .* Out.pY')(21)];
+["Markup rate - Construction",	(Out.markup_rate .* Out.pY')(21)]
+["--- Decomposition pY a prix constants - Construction ---",    ""];..
+["IC_Energy_price - Construction",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(21)];
+["IC_Other_price - Construction",	sum(BY.pIC(6:21,:) .* Out.alpha(6:21,:),"r")(21)];
+["Labour price - Construction",	sum(BY.pL .* Out.lambda,"r")(21)];
+["Capital price - Construction",	sum(BY.pK .* Out.kappa, "r")(21)];
+["Production tax - Construction",	(Out.Production_Tax_rate .* Out.pY')(21)];
+["Markup rate - Construction",	(Out.markup_rate .* Out.pY')(21)]
+////////////// 22 ////////////////////////////////////////////////////////////////////////////
+["--- Decomposition pY - Property_business ---",    ""];..
+["IC_Energy_price - Property_business",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
+["IC_Other_price - Property_business",	sum(Out.pIC(6:22,:) .* Out.alpha(6:22,:),"r")(22)];
+["Labour price - Property_business",	sum(Out.pL .* Out.lambda,"r")(22)];
+["Capital price - Property_business",	sum(Out.pK .* Out.kappa, "r")(22)];
+["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
+["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)]
+["--- Decomposition pY a prix constants - Property_business ---",    ""];..
+["IC_Energy_price - Property_business",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
+["IC_Other_price - Property_business",	sum(BY.pIC(6:22,:) .* Out.alpha(6:22,:),"r")(22)];
+["Labour price - Property_business",	sum(BY.pL .* Out.lambda,"r")(22)];
+["Capital price - Property_business",	sum(BY.pK .* Out.kappa, "r")(22)];
+["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
+["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)]
+////////////// 23 ////////////////////////////////////////////////////////////////////////////
 ["--- Decomposition pY - Compo ---",    ""];..
 ["IC_Energy_price - Compo",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(23)];
 ["IC_Other_price - Compo",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(23)];
@@ -193,62 +524,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Capital price - Compo",	sum(BY.pK .* Out.kappa, "r")(23)];
 ["Production tax - Compo",	(Out.Production_Tax_rate .* Out.pY')(23)];
 ["Markup rate - Compo",	(Out.markup_rate .* Out.pY')(23)]
-["--- Decomposition pY - Steel Iron ---",    ""];..
-["IC_Energy_price - Steel Iron",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
-["IC_Other_price - Steel Iron",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(6)];
-["Labour price - Steel Iron",	sum(Out.pL .* Out.lambda,"r")(6)];
-["Capital price - Steel Iron",	sum(Out.pK .* Out.kappa, "r")(6)];
-["Production tax - Steel Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
-["Markup rate - Steel Iron",	(Out.markup_rate .* Out.pY')(6)];
-["--- Decomposition pY a prix constants - Steel Iron ---",    ""];..
-["IC_Energy_price - Steel Iron",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(6)];
-["IC_Other_price - Steel Iron",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(6)];
-["Labour price - Steel Iron",	sum(BY.pL .* Out.lambda,"r")(6)];
-["Capital price - Steel Iron",	sum(BY.pK .* Out.kappa, "r")(6)];
-["Production tax - Steel Iron",	(Out.Production_Tax_rate .* Out.pY')(6)];
-["Markup rate - Steel Iron",	(Out.markup_rate .* Out.pY')(6)];
-["--- Decomposition pY - Property_business ---",    ""];..
-["IC_Energy_price - Property_business",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
-["IC_Other_price - Property_business",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(22)];
-["Labour price - Property_business",	sum(Out.pL .* Out.lambda,"r")(22)];
-["Capital price - Property_business",	sum(Out.pK .* Out.kappa, "r")(22)];
-["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
-["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)];
-["--- Decomposition pY a prix constants - Property_business ---",    ""];..
-["IC_Energy_price - Property_business",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(22)];
-["IC_Other_price - Property_business",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(22)];
-["Labour price - Property_business",	sum(BY.pL .* Out.lambda,"r")(22)];
-["Capital price - Property_business",	sum(BY.pK .* Out.kappa, "r")(22)];
-["Production tax - Property_business",	(Out.Production_Tax_rate .* Out.pY')(22)];
-["Markup rate - Property_business",	(Out.markup_rate .* Out.pY')(22)];
-["--- Decomposition pY - Land_transport ---",    ""];..
-["IC_Energy_price - Land_transport",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
-["IC_Other_price - Land_transport",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(17)];
-["Labour price - Land_transport",	sum(Out.pL .* Out.lambda,"r")(17)];
-["Capital price - Land_transport",	sum(Out.pK .* Out.kappa, "r")(17)];
-["Production tax - Land_transport",	(Out.Production_Tax_rate .* Out.pY')(17)];
-["Markup rate - Land_transport",	(Out.markup_rate .* Out.pY')(17)]
-["--- Decomposition pY a prix constants - Land_transport ---",    ""];..
-["IC_Energy_price - Land_transport",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(17)];
-["IC_Other_price - Land_transport",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(17)];
-["Labour price - Land_transport",	sum(BY.pL .* Out.lambda,"r")(17)];
-["Capital price - Land_transport",	sum(BY.pK .* Out.kappa, "r")(17)];
-["Production tax - Land_transport",	(Out.Production_Tax_rate .* Out.pY')(17)];
-["Markup rate - Land_transport",	(Out.markup_rate .* Out.pY')(17)]
-["--- Decomposition pY - Elec_heating ---",    ""];..
-["IC_Energy_price - Elec_heating",	sum(Out.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
-["IC_Other_price - Elec_heating",	sum(Out.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(5)];
-["Labour price - Elec_heating",	sum(Out.pL .* Out.lambda,"r")(5)];
-["Capital price - Elec_heating",	sum(Out.pK .* Out.kappa, "r")(5)];
-["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
-["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)];
-["--- Decomposition pY a prix constants - Elec_heating ---",    ""];..
-["IC_Energy_price - Elec_heating",	sum(BY.pIC(1:5,:) .* Out.alpha(1:5,:),"r")(5)];
-["IC_Other_price - Elec_heating",	sum(BY.pIC(6:23,:) .* Out.alpha(6:23,:),"r")(5)];
-["Labour price - Elec_heating",	sum(BY.pL .* Out.lambda,"r")(5)];
-["Capital price - Elec_heating",	sum(BY.pK .* Out.kappa, "r")(5)];
-["Production tax - Elec_heating",	(Out.Production_Tax_rate .* Out.pY')(5)];
-["Markup rate - Elec_heating",	(Out.markup_rate .* Out.pY')(5)];
+////////////// 23 ////////////////////////////////////////////////////////////////////////////
 ["CPI",	(Out.CPI )];
 ["MPI",	(Out.MPI )];
 ["REER", (Out.CPI / Out.MPI)];

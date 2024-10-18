@@ -1,3 +1,38 @@
+// if VAR_sigma_CES == '0.85' then
+
+//     parameters.sigma = [0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85];
+
+// elseif VAR_sigma_CES == '0.9' then
+
+//     parameters.sigma = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
+
+// end
+
+// if VAR_ConstrainedShare_Capital == '0.8' then
+
+//     parameters.ConstrainedShare_Capital = [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8];
+
+// elseif VAR_ConstrainedShare_Capital == '0.9' then
+
+//     Deriv_Exogenous.ConstrainedShare_Capital = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
+
+// end
+
+
+// if VAR_sigma_KE == '-0.15' then
+    
+//     kappa(1,6) = kappa015(6,time_step);
+//     kappa(1,7) = kappa015(7,time_step);
+//     kappa(1,11) = kappa015(11,time_step);
+//     kappa(1,15) = kappa015(15,time_step);
+//     kappa(1,18) = kappa015(18,time_step);
+//     kappa(1,19) = kappa015(19,time_step);
+//     kappa(1,20) = kappa015(20,time_step);
+
+// end
+
+
+
 // Est exécuté ligne 377 d'ImaclimS.sce :
 // if Optimization_Resol then
 //     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
@@ -426,7 +461,7 @@ if proj_c == 'false'
     Proj_Vol.C.apply_proj = %F;
 end 
 
-if proj_kappa == 'false'
+if proj_kappa == 'false' | Proj_scenario == 'SNBC3test_run21' | Proj_scenario == 'SNBC3test_run22' | Proj_scenario == 'SNBC3test_run23' | Proj_scenario == 'SNBC3test_run24' | Proj_scenario == 'SNBC3test_irun21' | Proj_scenario == 'SNBC3test_irun22'| Proj_scenario == 'SNBC3test_irun23' | Proj_scenario == 'SNBC3test_irun24' | Proj_scenario == 'SNBC3test_irun28' | Proj_scenario == 'SNBC3test_irun29' | Proj_scenario == 'SNBC3test_irun210' | Proj_scenario == 'SNBC3test_irun212' | Proj_scenario == 'SNBC3test_irun213' | Proj_scenario == 'SNBC3test_irun214' | Proj_scenario == 'SNBC3test_irun216' | Proj_scenario == 'SNBC3test_irun221' 
     Proj_Vol.kappa.apply_proj = %F;
 end
 

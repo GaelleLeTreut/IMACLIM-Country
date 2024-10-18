@@ -58,6 +58,9 @@ function default_dashboard = new_default_dashboard()
 	'Coef_real_wage_dashboard','1', ..
 	'sigma_omegaU_dashboard','-0.1', ..
 	'Bonus_vehicule_dashboard','False', ..
+	'VAR_sigma_CES','', ..
+	'VAR_ConstrainedShare_Capital','', ..
+	'VAR_sigma_KE','', ..
 	'Scenario','')
  
 endfunction

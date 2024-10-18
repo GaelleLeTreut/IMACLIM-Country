@@ -1,4 +1,48 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+197.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241017_14h58m58;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3487637,5;6188052,9;118918,11;2798701,1;123052,35;4,0563871;8,813e+08;51779,678;1,1339285;10,411628
+196.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241017_14h18m01;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3409288,2;6083091,8;118676,8;2688607,6;122816,77;6,0631013;6,817e+08;49739,774;1,057424;10,41315
+195.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241014_11h52m34;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3409288,2;6083091,8;118676,8;2688607,6;122816,77;6,0631013;6,817e+08;49739,774;1,057424;10,41315
+194.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241014_11h47m43;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3364884,3;5961926,1;100148,22;2566063,6;163350,92;7,8583023;6,201e+08;48466,361;1,001736;176,34312
+193.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241013_17h03m50;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3360755,4;5952934,7;100061,38;2564390,5;163204,07;7,8637031;6,212e+08;48463,032;1,0034525;176,18816
+192.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241013_16h58m04;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3400699,5;6065798,8;118453,53;2684056,8;122586,67;6,0959736;6,819e+08;49712,887;1,0598678;10,407119
+191.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241013_16h51m50;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3390694,7;6047540,4;118223,46;2678544,7;122349,43;6,1484372;6,828e+08;49670,304;1,0631627;10,400797
+190.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241013_16h47m11;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3354548,4;5942309,3;99970,962;2561059;163052,59;7,9005859;6,212e+08;48440,36;1,0051965;176,03815
+189.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241012_19h02m59;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3364884,3;5961926,1;100148,22;2566063,6;163350,92;7,8583023;6,201e+08;48466,361;1,001736;176,34312
+188.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241012_19h01m39;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3409288,2;6083091,8;118676,8;2688607,6;122816,77;6,0631013;6,817e+08;49739,774;1,057424;10,41315
+187.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241012_18h57m57;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3364884,3;5961926,1;100148,22;2566063,6;163350,92;7,8583023;6,201e+08;48466,361;1,001736;176,34312
+186.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241012_18h56m49;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3367025,9;5992234;114951,67;2647681,3;118973,54;6,9053065;6,607e+08;49097,004;1,0393392;10,312127
+185.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241012_18h55m29;Model version;;SNBC3_run2;SNBC3test_run223;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3367025,9;5992234;114951,67;2647681,3;118973,54;6,9053065;6,607e+08;49097,004;1,0393392;10,312127
+184.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241012_18h53m45;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3367025,8;5992229,7;114951,49;2647680,5;118973,34;6,9053456;6,607e+08;49096,976;1,0393391;10,312112
+183.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241012_18h41m38;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3367025,8;5992229,7;114951,49;2647680,5;118973,34;6,9053456;6,607e+08;49096,976;1,0393391;10,312112
+182.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241007_17h58m05;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3578888,9;6201182,8;118507,73;2687168,1;191114,5;5,4196516;8,770e+08;50300,946;1,0527187;127,8076
+181.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AME_run20606;FRA2018;20241007_17h55m51;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3514342,2;6123825,3;106727,39;2640570,6;197905,93;6,3738401;8,534e+08;49491,791;1,0649889;267,51133
+180.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241004_11h50m25;Model version;;SNBC3_run2;SNBC3test_run24;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3373691,8;5884103,4;147811,67;2524404,6;296351,16;8,9509284;8,573e+08;47839,483;1,0855831;135,6159
+179.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241004_11h44m06;Model version;;SNBC3_run2;SNBC3test_run24;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3318148,5;5404790,2;144113,88;2585318,2;291614,42;14,30965;1,937e+09;45646,805;1,6047257;148,69154
+178.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241004_11h38m52;Model version;;SNBC3_run2;SNBC3test_run24;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3373691,8;5884103,4;147811,67;2524404,6;296351,16;8,9509284;8,573e+08;47839,483;1,0855831;135,6159
+177.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241004_11h32m36;Model version;;SNBC3_run2;SNBC3test_run24;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3318148,5;5404790,2;144113,88;2585318,2;291614,42;14,30965;1,937e+09;45646,805;1,6047257;148,69154
+176.0;"update_reindustrialisation_bool
+";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241004_11h23m45;Model version;;SNBC3_run2;SNBC3test_run24;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3318148,5;5404790,2;144113,88;2585318,2;291614,42;14,30965;1,937e+09;45646,805;1,6047257;148,69154
 175.0;"Forcer imports exports tendanciels
 ";2024_06_27_livrable_SNBC3;0ccf0a26dc;True;AMS_run20606;FRA2018;20240902_18h39m37;Model version;;SNBC3_run2;SNBC3test_run2;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3409288,3;6083087,5;118676,61;2688606,8;122816,57;6,0631389;6,817e+08;49739,743;1,0574239;91,066642
 174.0;"Forcer imports exports tendanciels

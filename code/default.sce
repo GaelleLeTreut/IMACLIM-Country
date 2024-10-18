@@ -80,7 +80,7 @@ elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
 
 elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AME_run20606' | Scenario == 'AMS_run20606' 
     Macro_nb = 'SNBC3_run2';
-    Proj_scenario = 'SNBC3test_run2';
+    Proj_scenario = 'SNBC3test_runall';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced_v2 = 'True';
@@ -94,11 +94,11 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_exports = 'true';
     proj_c = 'true';
     proj_kappa = 'true';
-    proj_invest = 'true';
+    proj_invest = 'false';
     proj_pY = 'true';
     proj_spemarg_rates_IC = 'false';
-    reindustrialisation_imports_bool = %T;
-    reindustrialisation_exports_bool = %T;
+    reindustrialisation_imports_bool = 'True';
+    reindustrialisation_exports_bool = 'True';
 
 
 // Scenarios Decarbonation industrie - OLD

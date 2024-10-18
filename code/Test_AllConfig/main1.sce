@@ -4,7 +4,7 @@
 // Initialization *
 // -------------- *
 
-Commentary = '';
+// Commentary = '';
 
 /// Selection of def of test files
 // def_test_file = 'def_of_tests.sce';
