@@ -84,7 +84,7 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced_v2 = 'True';
-    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+    SystemOpt_Resol = 'SystemOpt_Static_neoclassical';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -131,7 +131,6 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario ==
     emissions_bioenergy = 'True';
     pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 999;
-    
     Carbone_ETS = 'True';
     Carbon_BTA = '%T';
     Scenario_ETS = 'AMS_TESI_high_ETS';

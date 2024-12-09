@@ -1,83 +1,287 @@
-// if VAR_sigma_CES == '0.85' then
-
-//     parameters.sigma = [0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85];
-
-// elseif VAR_sigma_CES == '0.9' then
-
-//     parameters.sigma = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
-
-// end
-
-// if VAR_ConstrainedShare_Capital == '0.8' then
-
-//     parameters.ConstrainedShare_Capital = [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8];
-
-// elseif VAR_ConstrainedShare_Capital == '0.9' then
-
-//     Deriv_Exogenous.ConstrainedShare_Capital = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
-
-// end
-
-
-// if VAR_sigma_KE == '-0.15' then
-    
-//     kappa(1,6) = kappa015(6,time_step);
-//     kappa(1,7) = kappa015(7,time_step);
-//     kappa(1,11) = kappa015(11,time_step);
-//     kappa(1,15) = kappa015(15,time_step);
-//     kappa(1,18) = kappa015(18,time_step);
-//     kappa(1,19) = kappa015(19,time_step);
-//     kappa(1,20) = kappa015(20,time_step);
-
-// end
-
-
-
-// Est exécuté ligne 377 d'ImaclimS.sce :
-// if Optimization_Resol then
-//     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
-//         exec(STUDY_Country+study+".sce");
-
-parameters.mu_demand(:) = mu_file(:,time_step);
-parameters.Cmin(:) = cmin_file(:,time_step);
+//////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
+parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
+parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
 
 //////////////////////////////////////////////// EMISSIONS  /////////////////////////////////////////////////////////////////////////////////////
 
 // On réduit les facteurs d'émissions selon la proportion de bioénergie utilisée
 if emissions_bioenergy == 'True' then
     Deriv_Exogenous.Emission_Coef_IC = Emission_Coef_IC;
-
 	bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
 	bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
 	bioenergy_proportions = repmat(bioenergy_proportions(:,time_step)', nb_Sectors, 1)'; // Reproduction of the column corresponding to time_step
 	Deriv_Exogenous.Emission_Coef_IC(Indice_EnerSect, :) = BY.Emission_Coef_IC(Indice_EnerSect, :) .* (ones(5 , nb_Sectors) - bioenergy_proportions); // Reducing the emissions factors by the proportions of bioenergy
 end
 
-//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
-if pY_gas_reduced_v1 == 'True' then
-    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
-    // Deriv_Exogenous.markup_rate = markup_rate;
-    // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+//////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
+// REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
+//TOCLEAN
+if 0 & ticpe_bioenergy == 'True' then
+    bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
+    bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
+    bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
 
-    // Baisser le lambda du gaz pour avoir une intensité en emploi similaire à celle du liquid et de l'élec
-    // BY.lambda(Indice_GasS) = 0.002; // avant valait 0.012. Divise par 6
-    // BY.w(Indice_GasS) = 40000; // avant valait 61390.52
+    bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
 
-    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
-    // Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
-    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;
+    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
+    Deriv_Exogenous.Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
+end
+
+// On ne force jamais les ratio M sur Y industriels dans l AME
+if Scenario == 'AME_run20606'
+    Proj_Vol.M_Y.ind_of_proj = list(list(Indice_EnerSect,1));
+end
+
+
+// Desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
+if proj_alpha == 'false'
+    Proj_Vol.alpha.apply_proj = %F;
+end 
+
+if proj_c == 'false'
+    Proj_Vol.C.apply_proj = %F;
+end 
+
+if proj_kappa == 'false' | Proj_scenario == 'SNBC3test_run21' | Proj_scenario == 'SNBC3test_run22' | Proj_scenario == 'SNBC3test_run23' | Proj_scenario == 'SNBC3test_run24' | Proj_scenario == 'SNBC3test_irun21' | Proj_scenario == 'SNBC3test_irun22'| Proj_scenario == 'SNBC3test_irun23' | Proj_scenario == 'SNBC3test_irun24' | Proj_scenario == 'SNBC3test_irun28' | Proj_scenario == 'SNBC3test_irun29' | Proj_scenario == 'SNBC3test_irun210' | Proj_scenario == 'SNBC3test_irun212' | Proj_scenario == 'SNBC3test_irun213' | Proj_scenario == 'SNBC3test_irun214' | Proj_scenario == 'SNBC3test_irun216' | Proj_scenario == 'SNBC3test_irun221' 
+    Proj_Vol.kappa.apply_proj = %F;
+end
+
+if proj_imports == 'false'
+    Proj_Vol.M_Y.apply_proj = %F;
+end
+
+if proj_exports == 'false'
+    Proj_Vol.X.apply_proj = %F;
+end
+
+if proj_invest == 'false'
+    Proj_Vol.I.apply_proj = %F;
+end
+
+if proj_pY == 'false'
+    Proj_Vol.pY.apply_proj = %F;
+end
+
+if proj_spemarg_rates_IC == 'false'
+    Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
+end
+
+
+//////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
+
+
+if reindustrialisation_imports_bool =='True' & strstr(Scenario, 'AMS') <> ""
+    imports_tendanciels = evstr('reindustrialisation_imports');
+    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+    
+    for ind = list(Indice_NonMetalsS, Indice_PharmaS, Indice_PaperS)
+        parameters.delta_M_parameter(ind) = imports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
+    end
+end
+
+if reindustrialisation_exports_bool =='True' & strstr(Scenario, 'AMS') <> ""
+    exports_tendanciels = evstr('reindustrialisation_exports');
+    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+
+    for ind = list(Indice_SteelIronS, Indice_CementS)
+        parameters.delta_X_parameter(ind) = (1 + parameters.delta_X_parameter(ind)) * exports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
+    end 
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
+
+// TOCLEAN
+// Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
+if Scenario == 'AME_TISE'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0083716;
+        elseif time_step == 3
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+    end
+
+elseif Scenario == 'AME'
+    if Labour_product =='True' & Demographic_shift <> 'True'
+        if time_step == 1
+            parameters.Mu = 0.0063541;
+        elseif time_step == 2
+            parameters.Mu = 0.0076591;
+        elseif time_step == 3
+            parameters.Mu = 0.0083716;
+        elseif time_step == 4
+            parameters.Mu = 0.0110542;
+        else 
+            erreur
+        end
+
+        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
+    end
+end
+
+//////////////////////////////////////////////// PROJECTIONS SELON LES SCENARIOS /////////////////////////////////////////////////////////////////////////////////////
+if Scenario == 'AME'
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
+    Proj_Vol.I.apply_proj = %F;
+end
+
+if Scenario == 'AMS' // Config de Projections_Scenario_SNBC3.csv
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
+end
+
+if Scenario == 'AME_run2'
+    // Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households));
+    // Proj_Vol.I.apply_proj = %F;
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_ConstruS,Indice_CompoS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
+end
+
+if Scenario == 'AMS_run2' // Config de Projections_Scenario_SNBC3.csv
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_ConstruS,Indice_CompoS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
+end
+
+if Scenario == 'AME_TISE'
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
+    Proj_Vol.I.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors), ..
+    list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
+end
+
+if Scenario == 'AMS_TISE' // Config de Projections_Scenario_TISE.csv
+    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
+    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS),list(Indice_SteelIronS,1:nb_Sectors), ..
+    list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// COMPOSANTES DU BUDGET PUBLIC  /////////////////////////////////////////////////////////////////////////////////////
+
+// On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
+// TOCLEAN
+// global G_Tax_revenue
+// global G_Non_Labour_Income
+// global G_Other_Income
+// global G_Property_income
+// global G_Social_Transfers
+// global G_Compensations
+// global T_MPR
+// global Bonus_vehicules
+
+//////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET EXPORTS  /////////////////////////////////////////////////////////////////////////////////////
+
+// new_sigma_X = 0.8; // Initial parameter is 0.42
+
+// for i=1:nb_Sectors
+//     if sigma_X(i) <> 0
+//         sigma_X(i) = new_sigma_X;
+//     end
+// end
+
+// Deriv_Exogenous.sigma_X = sigma_X;
+
+//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET IMPORTS  /////////////////////////////////////////////////////////////////////////////////////
+
+// new_sigma_M = 0.8; // Initial parameter is 1.9
+
+// for i=1:nb_Sectors
+//     if sigma_M(i) <> 0
+//         sigma_M(i) = sigma_M;
+//     end
+// end
+
+
+//////////////////////////////////////////////// INACTIF - CONTROLE DE LA TICGN (TICPE pour le gaz) /////////////////////////////////////////////////////////////////////////////////////
+if Scenario=='AMS2035' & ticgn_controlled=='True' then
+
+    // Get the initial value of the TICGN rate
+    BY_ticgn_rate = BY.Energy_Tax_rate_IC(1,Indice_GasS);
+
+    // Calculate the new value of the TICGN rate, depending on time_step
+    if time_step == 1
+        new_ticgn_rate = BY_ticgn_rate * 2.61; // Multiplier's values come from "Prix - AME2021_V 17 - avec calculs.xlsx"
+	elseif time_step == 2
+        new_ticgn_rate = BY_ticgn_rate * 3.84;
+    elseif time_step == 3
+        new_ticgn_rate = BY_ticgn_rate * 3.42;
+    elseif time_step == 4
+        new_ticgn_rate = BY_ticgn_rate * 2.29;
+	end
+
+    // Force the new value of TICGN rate
+    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
+    Deriv_Exogenous.Energy_Tax_rate_IC(1,Indice_GasS) = new_ticgn_rate;
 
 end
 
-//////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
-parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
-parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
+//////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
+// On fait varier les coefficients techniques de liquid_fuels et de gas_fuels dans l'AMS,
+// pour obtenir en sortie des écarts de prix par rapport à l'AME similaires à ceux des données de la DGEC
+if Scenario=='AMS2035' & energy_prices_controlled=='True' then
 
+    // Get the initial value of the alphas for liquid_fuels and gas_fuels
+    alpha_init = Proj_Vol('alpha').val;
+    alpha_liquid_init = alpha_init(1:5, Indice_OilS);
+    alpha_gas_init = alpha_init(1:5, Indice_GasS);
+
+    // VALEURS DE MULTIPLICATEURS 
+    if time_step == 1
+        alpha_liquid_new = alpha_liquid_init * 0.95;
+        alpha_gas_new = alpha_gas_init * 2.30;
+	elseif time_step == 2
+        alpha_liquid_new = alpha_liquid_init * 0.95;
+        alpha_gas_new = alpha_gas_init * 2.30;
+    elseif time_step == 3
+        alpha_liquid_new = alpha_liquid_init * 0.67;
+        alpha_gas_new = alpha_gas_init * 1.53;
+    elseif time_step == 4
+        alpha_liquid_new = alpha_liquid_init * 0.24;
+        alpha_gas_new = alpha_gas_init * 1.52;
+	end
+
+
+    // Force the new values of the alphas for liquid_fuels and gas_fuels
+    alpha_new = alpha_init;
+    alpha_new(1:5, Indice_OilS) = alpha_liquid_new;
+    alpha_new(1:5, Indice_GasS) = alpha_gas_new;
+    //Deriv_Exogenous.alpha = alpha_new;
+    Proj_Vol('alpha').val = alpha_new;
+    
+    // After the resolution, there is a test on wether the projection went well or not,
+    // line 442 of ImaclimS.sce, calling Check_Proj_Vol.sce".
+    // We put the new values of alpha in Proj_Vol to succeed this test.
+    //Proj_Vol('alpha').val = alpha_new;
+end
 
 //////////////////////////////////////////////// CARBON TAX EU-ETS  /////////////////////////////////////////////////////////////////////////////////////
 if Carbone_ETS == "True"
@@ -235,274 +439,65 @@ if Bonus_vehicule_dashboard == "True"
     end
 end 
 
+//////////////////////////////////////////////// CONTROLE pY GAZ PAR RAPPORT A pM GAZ  /////////////////////////////////////////////////////////////////////////////////////
+// if pY_gas_reduced_v1 == 'True' then
+    // Baisser le taux de Profit_margin pour avoir un taux proche de celui du pétrole
+    // Deriv_Exogenous.markup_rate = markup_rate;
+    // Deriv_Exogenous.markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
 
+    // Baisser le lambda du gaz pour avoir une intensité en emploi similaire à celle du liquid et de l'élec
+    // BY.lambda(Indice_GasS) = 0.002; // avant valait 0.012. Divise par 6
+    // BY.w(Indice_GasS) = 40000; // avant valait 61390.52
 
-//////////////////////////////////////////////// GESTION DES KAPPAS  /////////////////////////////////////////////////////////////////////////////////////
+    // Baisser les taux de marges spécifiques appliqués par les secteurs énergétiques pour leurs ventes au gaz
+    // Deriv_Exogenous.SpeMarg_rates_IC = SpeMarg_rates_IC;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.87;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_GasS) = -0.5;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_CoalS) = -0.5;
+    // Deriv_Exogenous.SpeMarg_rates_IC(Indice_GasS, Indice_ElecS) = -0.5;
 
-
-
-//////////////////////////////////////////////// INACTIF ET NON TESTE - BAISSER LA TICPE  /////////////////////////////////////////////////////////////////////////////////////
-// REDUCING THE TICPE TAX BY THE PROPORTION OF BIOENERGY - ONLY FOR LIQUID_FUELS
-//TOCLEAN
-if 0 & ticpe_bioenergy == 'True' then
-    bioenergy_proportions_filename = 'bioenergy_proportions_' + Scenario; // Creation of a string like "bioenergy_proportions_AME"
-    bioenergy_proportions = evstr(bioenergy_proportions_filename); // Get the value of the var named bioenergy_proportions_AME
-    bioenergy_proportion_liquid_fuels = bioenergy_proportions(2,time_step); // Select liquid_fuels' value for time_step
-
-    bioenergy_taxe_rate = 0.33 * Energy_Tax_rate_IC(2); // We suppose bioenergy is 3 times less taxed
-
-    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
-    Deriv_Exogenous.Energy_Tax_rate_IC(2) = bioenergy_taxe_rate * bioenergy_proportion_liquid_fuels + Energy_Tax_rate_IC(2) * (1-bioenergy_proportion_liquid_fuels); // Weighted calculation
-end
-
-//////////////////////////////////////////////// INACTIF - CONTROLE DE LA TICGN (TICPE pour le gaz) /////////////////////////////////////////////////////////////////////////////////////
-if Scenario=='AMS2035' & ticgn_controlled=='True' then
-
-    // Get the initial value of the TICGN rate
-    BY_ticgn_rate = BY.Energy_Tax_rate_IC(1,Indice_GasS);
-
-    // Calculate the new value of the TICGN rate, depending on time_step
-    if time_step == 1
-        new_ticgn_rate = BY_ticgn_rate * 2.61; // Multiplier's values come from "Prix - AME2021_V 17 - avec calculs.xlsx"
-	elseif time_step == 2
-        new_ticgn_rate = BY_ticgn_rate * 3.84;
-    elseif time_step == 3
-        new_ticgn_rate = BY_ticgn_rate * 3.42;
-    elseif time_step == 4
-        new_ticgn_rate = BY_ticgn_rate * 2.29;
-	end
-
-    // Force the new value of TICGN rate
-    Deriv_Exogenous.Energy_Tax_rate_IC = Energy_Tax_rate_IC;
-    Deriv_Exogenous.Energy_Tax_rate_IC(1,Indice_GasS) = new_ticgn_rate;
-
-end
-
-
-//////////////////////////////////////////////// OLD - CONTROLE DES PRIX DE L'ENERGIE  /////////////////////////////////////////////////////////////////////////////////////
-// On fait varier les coefficients techniques de liquid_fuels et de gas_fuels dans l'AMS,
-// pour obtenir en sortie des écarts de prix par rapport à l'AME similaires à ceux des données de la DGEC
-if Scenario=='AMS2035' & energy_prices_controlled=='True' then
-
-    // Get the initial value of the alphas for liquid_fuels and gas_fuels
-    alpha_init = Proj_Vol('alpha').val;
-    alpha_liquid_init = alpha_init(1:5, Indice_OilS);
-    alpha_gas_init = alpha_init(1:5, Indice_GasS);
-    
-    // Calculate the new values of the alphas, depending on time_step
-    // VALEURS DE MULTIPLICATEURS JUSQU'AU 8 FEVRIER 17H
-    // if time_step == 1
-    //     alpha_liquid_new = alpha_liquid_init * 0.95;
-    //     alpha_gas_new = alpha_gas_init * 2.30;
-	// elseif time_step == 2
-    //     alpha_liquid_new = alpha_liquid_init * 0.95;
-    //     alpha_gas_new = alpha_gas_init * 2.30;
-    // elseif time_step == 3
-    //     alpha_liquid_new = alpha_liquid_init * 0.67;
-    //     alpha_gas_new = alpha_gas_init * 1.53;
-    // elseif time_step == 4
-    //     alpha_liquid_new = alpha_liquid_init * 0.24;
-    //     alpha_gas_new = alpha_gas_init * 1.52;
-	// end
-
-    // VALEURS DE MULTIPLICATEURS APRES LE 8 FEVRIER 17H
-    if time_step == 1
-        alpha_liquid_new = alpha_liquid_init * 0.95;
-        alpha_gas_new = alpha_gas_init * 2.30;
-	elseif time_step == 2
-        alpha_liquid_new = alpha_liquid_init * 0.95;
-        alpha_gas_new = alpha_gas_init * 2.30;
-    elseif time_step == 3
-        alpha_liquid_new = alpha_liquid_init * 0.67;
-        alpha_gas_new = alpha_gas_init * 1.53;
-    elseif time_step == 4
-        alpha_liquid_new = alpha_liquid_init * 0.24;
-        alpha_gas_new = alpha_gas_init * 1.52;
-	end
-
-
-    // Force the new values of the alphas for liquid_fuels and gas_fuels
-    alpha_new = alpha_init;
-    alpha_new(1:5, Indice_OilS) = alpha_liquid_new;
-    alpha_new(1:5, Indice_GasS) = alpha_gas_new;
-    //Deriv_Exogenous.alpha = alpha_new;
-    Proj_Vol('alpha').val = alpha_new;
-    
-    // After the resolution, there is a test on wether the projection went well or not,
-    // line 442 of ImaclimS.sce, calling Check_Proj_Vol.sce".
-    // We put the new values of alpha in Proj_Vol to succeed this test.
-    //Proj_Vol('alpha').val = alpha_new;
-end
-
-//////////////////////////////////////////////// COMPOSANTES DU BUDGET PUBLIC  /////////////////////////////////////////////////////////////////////////////////////
-
-// On définit des variables globales pour y avoir accès dans Output_Indic et les afficher dans le fullTemplate
-// TOCLEAN
-// global G_Tax_revenue
-// global G_Non_Labour_Income
-// global G_Other_Income
-// global G_Property_income
-// global G_Social_Transfers
-// global G_Compensations
-// global T_MPR
-// global Bonus_vehicules
-
-//////////////////////////////////////////////// ACTIFS ECHOUES  /////////////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET EXPORTS  /////////////////////////////////////////////////////////////////////////////////////
-
-// new_sigma_X = 0.8; // Initial parameter is 0.42
-
-// for i=1:nb_Sectors
-//     if sigma_X(i) <> 0
-//         sigma_X(i) = new_sigma_X;
-//     end
 // end
 
-// Deriv_Exogenous.sigma_X = sigma_X;
+// if VAR_sigma_CES == '0.85' then
 
-//////////////////////////////////////////////// ELASTICITE ENTRE PRODUCTION ET IMPORTS  /////////////////////////////////////////////////////////////////////////////////////
+//     parameters.sigma = [0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85];
 
-// new_sigma_M = 0.8; // Initial parameter is 1.9
+// elseif VAR_sigma_CES == '0.9' then
 
-// for i=1:nb_Sectors
-//     if sigma_M(i) <> 0
-//         sigma_M(i) = sigma_M;
-//     end
+//     parameters.sigma = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
+
+// end
+
+// if VAR_ConstrainedShare_Capital == '0.8' then
+
+//     parameters.ConstrainedShare_Capital = [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8];
+
+// elseif VAR_ConstrainedShare_Capital == '0.9' then
+
+//     Deriv_Exogenous.ConstrainedShare_Capital = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9];
+
 // end
 
 
-
-//////////////////////////////////////////////// PROJECTIONS SELON LES SCENARIOS /////////////////////////////////////////////////////////////////////////////////////
-if Scenario == 'AME'
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
-    Proj_Vol.I.apply_proj = %F;
-end
-
-if Scenario == 'AMS' // Config de Projections_Scenario_SNBC3.csv
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
-    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
-end
-
-if Scenario == 'AME_run2'
-    // Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households));
-    // Proj_Vol.I.apply_proj = %F;
-    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_ConstruS,Indice_CompoS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
-end
-
-if Scenario == 'AMS_run2' // Config de Projections_Scenario_SNBC3.csv
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
-    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_ConstruS,Indice_CompoS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS));
-end
-
-if Scenario == 'AME_TISE'
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households));
-    Proj_Vol.I.ind_of_proj = list(list(Indice_SteelIronS,1:nb_Sectors),list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors), ..
-    list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
-end
-
-if Scenario == 'AMS_TISE' // Config de Projections_Scenario_TISE.csv
-    Proj_Vol.C.ind_of_proj = list(list(Indice_EnerSect,1:nb_Households),list(Indice_AutoS,1:nb_Households),list(Indice_PropertyS,1:nb_Households));
-    Proj_Vol.I.ind_of_proj = list(list(Indice_ConstruS,Indice_PropertyS),list(Indice_AutoS,Indice_LandS),list(Indice_ConstruS,Indice_LandS),list(1:nb_Sectors,Indice_ElecS),list(Indice_SteelIronS,1:nb_Sectors), ..
-    list(Indice_NonMetalsS, 1:nb_Sectors),list(Indice_CementS, 1:nb_Sectors),list(Indice_OthMinS, 1:nb_Sectors),list(Indice_PharmaS, 1:nb_Sectors),list(Indice_PaperS, 1:nb_Sectors));
-end
-
-// On ne force jamais les ratio M sur Y industriels dans l AME
-if Scenario == 'AME_run20606'
-    Proj_Vol.M_Y.ind_of_proj = list(list(Indice_EnerSect,1));
-end
-
-
-//////////////////////////////////////////////// POUR SIMULATIONS PAS A PAS  /////////////////////////////////////////////////////////////////////////////////////
-
-// TOCLEAN
-// Productivite du travail quand Demographic_shift est désactivé : on met les valeurs qui sont normalement calculees dans macro_framework.sce
-if Scenario == 'AME_TISE'
-    if Labour_product =='True' & Demographic_shift <> 'True'
-        if time_step == 1
-            parameters.Mu = 0.0063541;
-        elseif time_step == 2
-            parameters.Mu = 0.0083716;
-        elseif time_step == 3
-            parameters.Mu = 0.0110542;
-        else 
-            erreur
-        end
-
-        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-    end
-
-elseif Scenario == 'AME'
-    if Labour_product =='True' & Demographic_shift <> 'True'
-        if time_step == 1
-            parameters.Mu = 0.0063541;
-        elseif time_step == 2
-            parameters.Mu = 0.0076591;
-        elseif time_step == 3
-            parameters.Mu = 0.0083716;
-        elseif time_step == 4
-            parameters.Mu = 0.0110542;
-        else 
-            erreur
-        end
-
-        parameters.phi_L = ones(parameters.phi_L).*parameters.Mu;
-    end
-end
-
-// Desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
-if proj_alpha == 'false'
-    Proj_Vol.alpha.apply_proj = %F;
-end 
-
-if proj_c == 'false'
-    Proj_Vol.C.apply_proj = %F;
-end 
-
-if proj_kappa == 'false' | Proj_scenario == 'SNBC3test_run21' | Proj_scenario == 'SNBC3test_run22' | Proj_scenario == 'SNBC3test_run23' | Proj_scenario == 'SNBC3test_run24' | Proj_scenario == 'SNBC3test_irun21' | Proj_scenario == 'SNBC3test_irun22'| Proj_scenario == 'SNBC3test_irun23' | Proj_scenario == 'SNBC3test_irun24' | Proj_scenario == 'SNBC3test_irun28' | Proj_scenario == 'SNBC3test_irun29' | Proj_scenario == 'SNBC3test_irun210' | Proj_scenario == 'SNBC3test_irun212' | Proj_scenario == 'SNBC3test_irun213' | Proj_scenario == 'SNBC3test_irun214' | Proj_scenario == 'SNBC3test_irun216' | Proj_scenario == 'SNBC3test_irun221' 
-    Proj_Vol.kappa.apply_proj = %F;
-end
-
-if proj_imports == 'false'
-    Proj_Vol.M_Y.apply_proj = %F;
-end
-
-if proj_exports == 'false'
-    Proj_Vol.X.apply_proj = %F;
-end
-
-if proj_invest == 'false'
-    Proj_Vol.I.apply_proj = %F;
-end
-
-if proj_pY == 'false'
-    Proj_Vol.pY.apply_proj = %F;
-end
-
-if proj_spemarg_rates_IC == 'false'
-    Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
-end
-
-
-//////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
-
-
-if reindustrialisation_imports_bool =='True' & strstr(Scenario, 'AMS') <> ""
-    imports_tendanciels = evstr('reindustrialisation_imports');
-    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+// if VAR_sigma_KE == '-0.15' then
     
-    for ind = list(Indice_NonMetalsS, Indice_PharmaS, Indice_PaperS)
-        parameters.delta_M_parameter(ind) = imports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
-    end
-end
+//     kappa(1,6) = kappa015(6,time_step);
+//     kappa(1,7) = kappa015(7,time_step);
+//     kappa(1,11) = kappa015(11,time_step);
+//     kappa(1,15) = kappa015(15,time_step);
+//     kappa(1,18) = kappa015(18,time_step);
+//     kappa(1,19) = kappa015(19,time_step);
+//     kappa(1,20) = kappa015(20,time_step);
 
-if reindustrialisation_exports_bool =='True' & strstr(Scenario, 'AMS') <> ""
-    exports_tendanciels = evstr('reindustrialisation_exports');
-    time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
+// end
 
-    for ind = list(Indice_SteelIronS, Indice_CementS)
-        parameters.delta_X_parameter(ind) = (1 + parameters.delta_X_parameter(ind)) * exports_tendanciels(ind, time_step) ^ (1/time_since_BY_tmp) - 1;
-    end 
-end
+
+// Est exécuté ligne 377 d'ImaclimS.sce :
+// if Optimization_Resol then
+//     if part(SystemOpt_Resol,1:length(OptHomo_Shortname))<> OptHomo_Shortname
+//         exec(STUDY_Country+study+".sce");
+
+// parameters.mu_demand(:) = mu_file(:,time_step);
+// parameters.Cmin(:) = cmin_file(:,time_step);

@@ -2,7 +2,7 @@ clear
 
 Scenario = 'AMS_run20606';
 
-skip_calibration = 'True';
+skip_calibration = 'false';
 
 Commentary = ''; // Pour l excel recapitulatif
 

@@ -1,4 +1,10 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+200.0;"update_sectoral_technical_shocks
+";2024_06_27_livrable_SNBC3;88a671ef0b;True;AMS_run20606;FRA2018;20241209_16h52m32;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neoclassical;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3387793,8;6044626,5;118616,37;2674780,7;122763,26;6,2901461;6,685e+08;49557,252;1,0586318;10,420278
+199.0;"update_sectoral_technical_shocks
+";2024_06_27_livrable_SNBC3;88a671ef0b;True;AMS_run20606;FRA2018;20241206_09h08m28;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3487637,5;6188052,9;118918,11;2798701,1;123052,35;4,0563871;8,813e+08;51779,678;1,1339285;10,411628
+198.0;"update_sectoral_technical_shocks
+";2024_06_27_livrable_SNBC3;88a671ef0b;True;AMS_TESI;FRA2018;20241203_21h26m10;Model version;;SNBC3_sans_2035;TESI;SystemOpt_Static_TESI;TESI_RunChoices;3;AGG_23TME;True;True;True;True;T;3337160,7;5890317,4;136861,91;2789050,8;148919,24;4,4558912;9,675e+08;50234,52;1,2354225;14,573497
 197.0;"update_reindustrialisation_bool
 ";2024_06_27_livrable_SNBC3;089d13a757;True;AMS_run20606;FRA2018;20241017_14h58m58;Model version;;SNBC3_run2;SNBC3test_runall;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3487637,5;6188052,9;118918,11;2798701,1;123052,35;4,0563871;8,813e+08;51779,678;1,1339285;10,411628
 196.0;"update_reindustrialisation_bool
