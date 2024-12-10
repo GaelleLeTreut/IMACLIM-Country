@@ -11,6 +11,8 @@ code/Test_AllConfig/Not_working_dashboards/*
 code/Simulations/Save_Var_Resol/*
 code/Simulations/Save_System_Resol/*
 
+study_frames/study_frames_FRA2018/.*
+
 outputs_display/.*
 outputs_display/_*
 outputs_display/To_Display/*
