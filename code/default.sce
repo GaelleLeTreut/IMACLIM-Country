@@ -102,7 +102,7 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
 
 elseif Scenario == 'AME_run3' | Scenario == 'AMS_run3' 
     Macro_nb = 'SNBC3_run3';
-    Proj_scenario = 'SNBC3test_run3';
+    Proj_scenario = 'SNBC3test_run31alpha';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced_v2 = 'True';

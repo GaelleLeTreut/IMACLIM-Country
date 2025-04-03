@@ -1,4 +1,6 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+209.0;"update_constrained_share_capital
+";SNBC3_run3;e88d3e102c;True;AME_run3;FRA2018;20250403_12h05m19;Model version;;SNBC3_run3;SNBC3test_run31alpha;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3198265,8;5668296,9;145025,42;2436030,5;246358,35;11,543149;6,336e+08;46638,101;1,030478;286,8683
 208.0;"update_SNBC3_runChoices
 ";SNBC3_run3;6684699430;False;AMS_run3;FRA2018;20250403_11h39m08;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3409288,3;6083087,5;118676,61;2688606,8;122816,57;6,0631389;6,817e+08;49739,743;1,0574239;10,413135
 207.0;"update_SNBC3_runChoices
