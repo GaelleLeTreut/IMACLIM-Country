@@ -1,8 +1,8 @@
 clear
 
-Scenario = 'AMS_run20606';
+Scenario = 'AME_run3';
 
-skip_calibration = 'false';
+skip_calibration = 'True';
 
 Commentary = ''; // Pour l excel recapitulatif
 

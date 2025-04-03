@@ -80,11 +80,11 @@ elseif Scenario == 'AME_run2' | Scenario == 'AMS_run2'
 
 elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AME_run20606' | Scenario == 'AMS_run20606' 
     Macro_nb = 'SNBC3_run2';
-    Proj_scenario = 'SNBC3test_runall';
+    Proj_scenario = 'SNBC3test_run2';
     Nb_Iter = 3;
     emissions_bioenergy = 'True';
     pY_gas_reduced_v2 = 'True';
-    SystemOpt_Resol = 'SystemOpt_Static_neoclassical';
+    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
     Time_step_non_etudie = 999;
     study = 'SNBC3_RunChoices';
     AGG_type = 'AGG_23TME';
@@ -94,12 +94,33 @@ elseif Scenario == 'AME_run2test' | Scenario == 'AMS_run2test' | Scenario == 'AM
     proj_exports = 'true';
     proj_c = 'true';
     proj_kappa = 'true';
-    proj_invest = 'false';
+    proj_invest = 'true';
     proj_pY = 'true';
     proj_spemarg_rates_IC = 'false';
-    reindustrialisation_imports_bool = 'True';
-    reindustrialisation_exports_bool = 'True';
+    reindustrialisation_imports_bool = %T;
+    reindustrialisation_exports_bool = %T;
 
+elseif Scenario == 'AME_run3' | Scenario == 'AMS_run3' 
+    Macro_nb = 'SNBC3_run3';
+    Proj_scenario = 'SNBC3test_run3';
+    Nb_Iter = 3;
+    emissions_bioenergy = 'True';
+    pY_gas_reduced_v2 = 'True';
+    SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+    Time_step_non_etudie = 999;
+    study = 'SNBC3_RunChoices';
+    AGG_type = 'AGG_23TME';
+    Invest_matrix = '%T';
+    proj_alpha = 'true';
+    proj_imports = 'true';
+    proj_exports = 'true';
+    proj_c = 'true';
+    proj_kappa = 'true';
+    proj_invest = 'true';
+    proj_pY = 'true';
+    proj_spemarg_rates_IC = 'false';
+    reindustrialisation_imports_bool = %T;
+    reindustrialisation_exports_bool = %T;
 
 // Scenarios Decarbonation industrie - OLD
 elseif Scenario == 'AME_TISE' | Scenario == 'AMS_TISE'
@@ -131,6 +152,7 @@ elseif Scenario == 'AME_TESI_iter2' | Scenario == 'AMS_TESI_iter2' | Scenario ==
     emissions_bioenergy = 'True';
     pY_gas_reduced_v1 = 'True';
     Time_step_non_etudie = 999;
+    
     Carbone_ETS = 'True';
     Carbon_BTA = '%T';
     Scenario_ETS = 'AMS_TESI_high_ETS';
