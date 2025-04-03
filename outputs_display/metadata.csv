@@ -1,4 +1,30 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+222.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_16h30m28;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+221.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_16h22m09;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3530764,2;6126659,2;143607,68;2647349,7;228615,37;6,2463641;9,065e+08;49591,879;1,0858967;278,41096
+220.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_16h19m02;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364701;5961639,4;100145,34;2565984,1;163345,7;7,8602384;6,201e+08;48465,167;1,0018036;176,33738
+219.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_15h42m00;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3365197,4;5962252,2;100146,92;2566414,4;163347,65;7,8529599;6,204e+08;48469,658;1,0017892;176,33964
+218.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_15h24m46;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+217.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_15h12m44;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+216.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_15h04m34;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+215.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_14h56m35;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+214.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_14h40m31;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices2;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+213.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_14h37m30;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+212.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_14h16m27;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoicesok;3;AGG_23TME;True;True;True;True;T;3422125,6;6012031,9;102420,49;2569042,9;167833,79;8,591563;6,175e+08;48035,915;0,9815568;183,25754
+211.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;True;AME_run3;FRA2018;20250403_14h14m41;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3364884,3;5961925,8;100148,21;2566063,5;163350,9;7,8583052;6,201e+08;48466,36;1,001736;176,3431
+210.0;"updates_simulations_run3
+";SNBC3_run3;e2a348cd4b;False;AME_run3;FRA2018;20250403_14h08m49;Model version;;SNBC3_run3;SNBC3test_run31alpha;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3243122,3;5705413;146933,57;2438634,1;250087,52;12,241445;6,323e+08;46364,974;1,0144112;293,09785
 209.0;"update_constrained_share_capital
 ";SNBC3_run3;e88d3e102c;True;AME_run3;FRA2018;20250403_12h05m19;Model version;;SNBC3_run3;SNBC3test_run31alpha;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3198265,8;5668296,9;145025,42;2436030,5;246358,35;11,543149;6,336e+08;46638,101;1,030478;286,8683
 208.0;"update_SNBC3_runChoices
