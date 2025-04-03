@@ -1,4 +1,6 @@
 numero_simulation;last_commit;branch_name;SHA;uncommited_changes;Scenario;Country;Datehour;Model version;Commentary;Macro_nb;Proj_scenario;SystemOpt_Resol;study;Nb_Iter;AGG_type;Demographic_shift;Labour_product;World_prices;X_nonEnerg;Invest_matrix;Real_GDP_metadata;Non_energy_output_metadata;Energy_output_metadata;Non_energy_consumption_metadata;Energy_consumption_metadata;Unemployment_rate_metadata;Volume_of_investment_metadata;Real_Net_of_tax_wages_metadata;CPI_metadata;Emissions_MtCO2_metadata
+205.0;"updates_run3
+";SNBC3_run3;53d7f1ddd2;False;AME_run3;FRA2018;20250403_10h42m35;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3365197,4;5962252,2;100146,92;2566414,4;163347,65;7,8529599;6,204e+08;48469,658;1,0017892;176,33964
 204.0;"delete_study_frames_FRA2018_files
 ";SNBC3_run3;fe63f218e0;True;AME_run3;FRA2018;20250403_10h30m00;Model version;;SNBC3_run3;SNBC3test_run3;SystemOpt_Static_neokeynesien;SNBC3_RunChoices;3;AGG_23TME;True;True;True;True;T;3422486,8;6012414,8;102420,4;2569415,6;167832,8;8,5859045;6,178e+08;48039,08;0,9816061;183,25757
 203.0;"delete_study_frames_FRA2018_files
