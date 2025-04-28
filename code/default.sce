@@ -48,11 +48,11 @@ eq_G_ConsumpBudget = '';
 
 //////////////// CONFIG DASHBOARD SELON SCENARIOS ////////////////
 Macro_nb = 'SNBC3_run3';
-Proj_scenario = 'SNBC3test_run3';
+Proj_scenario = 'SNBC3_run3';
 Nb_Iter = 3;
 emissions_bioenergy = 'True';
 pY_gas_reduced_v2 = 'True';
-SystemOpt_Resol = 'SystemOpt_Static_neokeynesien';
+SystemOpt_Resol = 'SystemOpt_Static_johansen';
 Time_step_non_etudie = 999;
 study = 'SNBC3_RunChoices2';
 AGG_type = 'AGG_23TME';
@@ -65,9 +65,11 @@ proj_kappa = 'true';
 proj_invest = 'true';
 proj_pY = 'true';
 proj_spemarg_rates_IC = 'true';
-reindustrialisation_imports_bool = %F;
-reindustrialisation_exports_bool = %F;
-
+reindustrialisation_imports_bool = 'True';
+reindustrialisation_exports_bool = 'True';
+auto_c = "99";
+const_c = "99";
+VAR_saving = "null";
 
 
 

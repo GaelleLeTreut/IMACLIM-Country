@@ -61,6 +61,8 @@ function default_dashboard = new_default_dashboard()
 	'VAR_sigma_CES','', ..
 	'VAR_ConstrainedShare_Capital','', ..
 	'VAR_sigma_KE','', ..
-	'Scenario','')
+	'Scenario','',..
+	'auto_c','',..
+	'const_c','')
  
 endfunction

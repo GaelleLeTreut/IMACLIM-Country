@@ -1,3 +1,99 @@
+if  VAR_saving=="low"
+	
+	Deriv_Exogenous.Household_saving_rate = evstr(0.11);
+
+elseif  VAR_saving=="ref"
+	
+	Deriv_Exogenous.Household_saving_rate = evstr(0.14);
+
+elseif VAR_saving=="high"
+
+	Deriv_Exogenous.Household_saving_rate = evstr(0.166);
+
+end
+
+if proj_c == 'true' & Scenario =='AMS_run3' & time_step == 3
+
+    if auto_c == "1"
+
+        Proj_Vol.C.val(12) =64713
+    
+    elseif auto_c == "2"
+    
+        Proj_Vol.C.val(12) = 57523
+
+    elseif auto_c == "3"
+
+        Proj_Vol.C.val(12) = 50332
+
+    elseif auto_c == "4"
+
+        Proj_Vol.C.val(12) = 43142
+
+    elseif auto_c == "5"
+
+        Proj_Vol.C.val(12) = 35952
+
+    elseif auto_c == "6"
+
+        Proj_Vol.C.val(12) = 28761
+
+    elseif auto_c == "7"
+
+        Proj_Vol.C.val(12) = 21571
+    
+    elseif auto_c == "8"
+
+        Proj_Vol.C.val(12) = 14380
+    
+    elseif auto_c == "9"
+
+        Proj_Vol.C.val(12) = 7190
+
+    end
+end 
+
+if proj_c == 'true' & Scenario =='AMS_run3' & time_step == 3
+
+    if const_c == "1"
+
+        Proj_Vol.C.val(21) = 16019
+    
+    elseif const_c == "2"
+    
+        Proj_Vol.C.val(21) = 14239
+
+    elseif const_c == "3"
+
+        Proj_Vol.C.val(21) = 12459 
+
+    elseif const_c == "4"
+
+        Proj_Vol.C.val(21) = 10679 
+
+    elseif const_c == "5"
+
+        Proj_Vol.C.val(21) = 8900
+
+    elseif const_c == "6"
+
+        Proj_Vol.C.val(21) = 7120 
+
+    elseif const_c == "7"
+
+        Proj_Vol.C.val(21) = 5340  
+    
+    elseif const_c == "8"
+
+        Proj_Vol.C.val(21) = 13560 
+    
+    elseif const_c == "9"
+
+        Proj_Vol.C.val(21) = 1780 
+
+    end
+end 
+
 //////////////////////////////////////////////// WAGE CURVE  /////////////////////////////////////////////////////////////////////////////////////
 parameters.Coef_real_wage = strtod(Coef_real_wage_dashboard);
 parameters.sigma_omegaU = strtod(sigma_omegaU_dashboard);
@@ -78,7 +174,7 @@ end
 //////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
 
 
-if reindustrialisation_imports_bool =='True' & strstr(Scenario, 'AMS') <> ""
+if reindustrialisation_imports_bool =='True' & (Scenario == "AMS_run3" | Scenario == "AMScst_run3") <> ""
     imports_tendanciels = evstr('reindustrialisation_imports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
     
@@ -87,7 +183,7 @@ if reindustrialisation_imports_bool =='True' & strstr(Scenario, 'AMS') <> ""
     end
 end
 
-if reindustrialisation_exports_bool =='True' & strstr(Scenario, 'AMS') <> ""
+if reindustrialisation_exports_bool =='True' & (Scenario == "AMS_run3" | Scenario == "AMScst_run3") <> ""
     exports_tendanciels = evstr('reindustrialisation_exports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
 

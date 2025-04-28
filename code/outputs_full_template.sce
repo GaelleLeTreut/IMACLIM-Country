@@ -74,7 +74,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["HH saving - % ",	 (sum(Out.Household_savings)/sum(Out.H_disposable_income))];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---",    ""];..
 ["Real GDP",    money_disp_adj.*Out.GDP/GDP_pFish];..
-["Real C",    money_disp_adj.*sum(Out.C_value)/Out.CPI];..
+["Real C",    money_disp_adj.*sum(Out.C_value)/C_pFish];..
 ["Real G",    money_disp_adj.*sum(Out.G_value)/G_pFish];..
 ["Real I",    money_disp_adj.*sum(Out.I_value)/I_pFish];..
 ["Real X",    money_disp_adj.*sum(Out.X_value)/X_pFish];..
