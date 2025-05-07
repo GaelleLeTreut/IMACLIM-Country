@@ -26,7 +26,7 @@ eq_G_ConsumpBudget;
 skip_calibration;True
 Macro_nb;SNBC3_run3
 Proj_scenario;SNBC3_run3
-Nb_Iter;3
+Nb_Iter;2
 emissions_bioenergy;True
 pY_gas_reduced_v2;True
 SystemOpt_Resol;SystemOpt_Static_neokeynesien

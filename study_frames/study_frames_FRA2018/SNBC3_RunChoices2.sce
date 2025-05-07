@@ -12,11 +12,11 @@ elseif VAR_saving=="high"
 
 end
 
-if proj_c == 'true' & Scenario =='AMS_run3' & time_step == 3
+if proj_c == 'true' & Scenario =='AMSrun3' & time_step == 3
 
     if auto_c == "1"
 
-        Proj_Vol.C.val(12) =64713
+        Proj_Vol.C.val(12) = 64713
     
     elseif auto_c == "2"
     
@@ -53,7 +53,7 @@ if proj_c == 'true' & Scenario =='AMS_run3' & time_step == 3
     end
 end 
 
-if proj_c == 'true' & Scenario =='AMS_run3' & time_step == 3
+if proj_c == 'true' & Scenario =='AMSrun3' & time_step == 3
 
     if const_c == "1"
 
@@ -129,7 +129,7 @@ end
 //////////////////////////////////////////////// PROJECTIONS SELON LES SCENARIOS /////////////////////////////////////////////////////////////////////////////////////
 
 // On ne force jamais les ratio M sur Y industriels dans l AME
-if Scenario == 'AME_run3'
+if Scenario == 'AME_run3' | Scenario == 'AME_run2'
     Proj_Vol.M_Y.ind_of_proj = list(list(Indice_EnerSect,1));
 end
 
@@ -174,7 +174,7 @@ end
 //////////////////////////////////////////////// IMPORTS EXPORTS DE L'INDUSTRIE : NARRATIF DE REINDUSTRIALISATION  /////////////////////////////////////////////////////////////////////////////////////
 
 
-if reindustrialisation_imports_bool =='True' & (Scenario == "AMS_run3" | Scenario == "AMScst_run3") <> ""
+if reindustrialisation_imports_bool =='True' & (Scenario == "AMSrun3" | Scenario == "AMScst_run3" | Scenario == "AMS_run2") <> ""
     imports_tendanciels = evstr('reindustrialisation_imports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
     
@@ -183,7 +183,7 @@ if reindustrialisation_imports_bool =='True' & (Scenario == "AMS_run3" | Scenari
     end
 end
 
-if reindustrialisation_exports_bool =='True' & (Scenario == "AMS_run3" | Scenario == "AMScst_run3") <> ""
+if reindustrialisation_exports_bool =='True' & (Scenario == "AMSrun3" | Scenario == "AMScst_run3" | Scenario == "AMS_run2") <> ""
     exports_tendanciels = evstr('reindustrialisation_exports');
     time_since_BY_tmp = Proj_Macro.current_year(time_step) - Proj_Macro.reference_year(1);
 
