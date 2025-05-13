@@ -1,6 +1,6 @@
 clear
 
-Scenario = 'AMSrun3';
+Scenario = 'AMScstrun3';
 
 skip_calibration = 'True';
 

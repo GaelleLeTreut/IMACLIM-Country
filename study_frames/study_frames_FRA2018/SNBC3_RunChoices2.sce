@@ -8,7 +8,7 @@ elseif  VAR_saving=="ref"
 
 elseif VAR_saving=="high"
 
-	Deriv_Exogenous.Household_saving_rate = evstr(0.166);
+	Deriv_Exogenous.Household_saving_rate = evstr(0.174);
 
 end
 

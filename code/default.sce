@@ -23,14 +23,14 @@ Output_prints = '%F';
 
 
 // Pour pouvoir desactiver les projections qui sont toujours mises a %T dans projection_scenario.csv
-proj_alpha = 'true';
-proj_imports = 'true';
-proj_exports = 'true';
-proj_kappa = 'true';
-proj_c = 'true';
-proj_invest = 'true';
-proj_pY = 'true';
-proj_spemarg_rates_IC = 'true';
+// proj_alpha = 'true';
+// proj_imports = 'true';
+// proj_exports = 'true';
+// proj_kappa = 'true';
+// proj_c = 'true';
+// proj_invest = 'true';
+// proj_pY = 'true';
+// proj_spemarg_rates_IC = 'true';
 
 
 // Valeurs par défaut (developpements faits par Jean)
@@ -58,18 +58,18 @@ study = 'SNBC3_RunChoices2';
 AGG_type = 'AGG_23TME';
 Invest_matrix = '%T';
 proj_alpha = 'true';
-proj_imports = 'true';
-proj_exports = 'true';
+proj_imports = 'false';
+proj_exports = 'false';
 proj_c = 'true';
-proj_kappa = 'false';
+proj_kappa = 'true';
 proj_invest = 'false';
 proj_pY = 'true';
 proj_spemarg_rates_IC = 'true';
-reindustrialisation_imports_bool = 'True';
-reindustrialisation_exports_bool = 'True';
+reindustrialisation_imports_bool = 'false';
+reindustrialisation_exports_bool = 'false';
 auto_c = "99";
 const_c = "99";
-VAR_saving = "null";
+VAR_saving = "high";
 
 
 
