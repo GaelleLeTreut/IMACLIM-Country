@@ -568,6 +568,6 @@ if Output_files
     diary(0);
 end
 
-exec("Update_metadata_excel.sce");
+// exec("Update_metadata_excel.sce");
 
 printf('\n------------ Done ! :) ------------\n');

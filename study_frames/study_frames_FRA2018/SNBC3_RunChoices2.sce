@@ -1,3 +1,28 @@
+if time_step == 1
+
+    invest_struct = invest_struct_file_1(:,:);
+
+elseif time_step ==2
+
+    invest_struct = invest_struct_file_2(:,:);
+
+end
+
+if  exports_drive=='true' 
+
+	parameters.delta_X_parameter(1:20) = delta_X_file(1:20,time_step)';
+    parameters.delta_X_parameter(22:23) = delta_X_file(22:23,time_step)';
+
+end
+
+if  imports_drive=='true' 
+
+	parameters.delta_M_parameter(1:20) = delta_M_file(1:20,time_step)';
+    parameters.delta_M_parameter(22:23) = delta_M_file(22:23,time_step)';
+
+end
+
+
 if  VAR_saving=="low"
 	
 	Deriv_Exogenous.Household_saving_rate = evstr(0.11);

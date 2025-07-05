@@ -73,14 +73,30 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Net Debt"+Index_InstitAgents,    money_disp_adj.*Out.NetFinancialDebt'];..
 ["HH saving - % ",	 (sum(Out.Household_savings)/sum(Out.H_disposable_income))];..
 ["---Real terms at "+money_disp_unit+money+" "+ref_name+"---",    ""];..
-["Real GDP",    money_disp_adj.*Out.GDP/GDP_pFish];..
-["Real C",    money_disp_adj.*sum(Out.C_value)/C_pFish];..
-["Real G",    money_disp_adj.*sum(Out.G_value)/G_pFish];..
-["Real I",    money_disp_adj.*sum(Out.I_value)/I_pFish];..
-["Real X",    money_disp_adj.*sum(Out.X_value)/X_pFish];..
-["Real M",    money_disp_adj.*sum(Out.M_value)/M_pFish];..
-["Real_Trade_Balance",    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
-["Real Y",    money_disp_adj.*sum(Out.Y_value)/Y_pFish];..
+["Real GDP Fish",    money_disp_adj.*Out.GDP/GDP_pFish];..
+["Real C Fish",    money_disp_adj.*sum(Out.C_value)/C_pFish];..
+["Real G Fish",    money_disp_adj.*sum(Out.G_value)/G_pFish];..
+["Real I Fish",    money_disp_adj.*sum(Out.I_value)/I_pFish];..
+["Real X Fish",    money_disp_adj.*sum(Out.X_value)/X_pFish];..
+["Real M Fish",    money_disp_adj.*sum(Out.M_value)/M_pFish];..
+["Real_Trade_Balance Fish",    money_disp_adj.*(sum(Out.X_value)/X_pFish-sum(Out.M_value)/M_pFish)];..
+["Real Y Fish",    money_disp_adj.*sum(Out.Y_value)/Y_pFish];..
+["Real GDP Lasp",    money_disp_adj.*Out.GDP/GDP_pLasp];..
+["Real C  Lasp",    money_disp_adj.*sum(Out.C_value)/C_pLasp];..
+["Real G Lasp",    money_disp_adj.*sum(Out.G_value)/G_pLasp];..
+["Real I Lasp",    money_disp_adj.*sum(Out.I_value)/I_pLasp];..
+["Real X Lasp ",    money_disp_adj.*sum(Out.X_value)/X_pLasp];..
+["Real M Lasp",    money_disp_adj.*sum(Out.M_value)/M_pLasp];..
+["Real_Trade_Balance Lasp",    money_disp_adj.*(sum(Out.X_value)/X_pLasp-sum(Out.M_value)/M_pLasp)];..
+["Real Y Paas",    money_disp_adj.*sum(Out.Y_value)/Y_pPaas];..
+["Real GDP Paas",    money_disp_adj.*Out.GDP/GDP_pPaas];..
+["Real C  Paas",    money_disp_adj.*sum(Out.C_value)/C_pPaas];..
+["Real G Paas",    money_disp_adj.*sum(Out.G_value)/G_pPaas];..
+["Real I Paas",    money_disp_adj.*sum(Out.I_value)/I_pPaas];..
+["Real X Paas ",    money_disp_adj.*sum(Out.X_value)/X_pPaas];..
+["Real M Paas",    money_disp_adj.*sum(Out.M_value)/M_pPaas];..
+["Real_Trade_Balance Paas",    money_disp_adj.*(sum(Out.X_value)/X_pPaas-sum(Out.M_value)/M_pPaas)];..
+["Real Y Paas",    money_disp_adj.*sum(Out.Y_value)/Y_pPaas];..
 ["Real Y_"+Index_Sectors,    money_disp_adj.*(Out.Y_value')./evstr("Y_"+Index_Sectors+"_pFish")	];..
 ["Real Net-of-tax wages",    Out.omega/Out.CPI];..
 ["Real Net-of-tax effective wages",    (Out.omega/((1+Out.Mu)^Out.time_since_BY))/Out.CPI];..

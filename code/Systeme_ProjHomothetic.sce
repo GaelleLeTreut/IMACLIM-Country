@@ -131,6 +131,8 @@ function [M,p,X,pIC,pC,pG,pI,pM,CPI, GDP_pFish, G_pFish, I_pFish, alpha, lambda,
 	GDP_pFish = GDP_pFish_Val_1(pC, C, pG, G, pI, I, pX, X, pM, M, GDP);
 	G_pFish = G_pFish_Val_1(pG, G);
 	I_pFish = I_pFish_Val_1(pI, I);
+    X_pFish = X_pFish_Val_1(pX, X);
+    M_pFish = M_pFish_Val_1(pM, M);
 
     [alpha, lambda, kappa] =Technical_Coef_Val_1(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y);
 

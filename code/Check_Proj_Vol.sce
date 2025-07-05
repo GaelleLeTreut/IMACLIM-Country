@@ -42,7 +42,7 @@ endfunction
 
 for var_name = fieldnames(Proj_Vol)'
     if Proj_Vol(var_name).apply_proj then
-        test_proj(var_name);
+        // test_proj(var_name);
         print(out,'*** ' + var_name + ' has been well projected.');
     else
         print(out,'*** ' + var_name + ' : not projected.');

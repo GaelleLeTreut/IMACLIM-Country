@@ -12,6 +12,14 @@ function I_pFish = I_pFish_Val_1(pI, I)
 	I_pFish = PInd_Fish( BY.pI, sum(BY.I,"c"), pI, sum(I,"c"), :, :);
 endfunction
 
+function X_pFish = X_pFish_Val_1(pX, X)
+	X_pFish = PInd_Fish( BY.pX, sum(BY.X,"c"), pX, sum(X,"c"), :, :);
+endfunction
+
+function M_pFish = M_pFish_Val_1(pM, M)
+	M_pFish = PInd_Fish( BY.pM, sum(BY.M,"c"), pM, sum(M,"c"), :, :);
+endfunction
+
 
 function G_pFish = G_pFish_Val_1(pG, G)
 	G_pFish = PInd_Fish( BY.pG, BY.G, pG, G, :, :);

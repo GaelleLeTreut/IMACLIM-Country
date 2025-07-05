@@ -35,6 +35,9 @@ function default_dashboard = new_default_dashboard()
     'pY_gas_reduced_v1' , 'False', ..
     'eq_G_ConsumpBudget' , '', ..
 	'skip_calibration','True',..
+	'VAR_saving','',..
+	'exports_drive','',..
+	'imports_drive','',..
     'Macro_nb', 'SNBC3_run2', ..
     'Proj_scenario', 'SNBC3test_run2', ..
     'Nb_Iter', '3', ..

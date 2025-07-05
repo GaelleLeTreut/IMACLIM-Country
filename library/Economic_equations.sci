@@ -543,9 +543,12 @@ function y = H_demand_Const_2(Consumption_budget, C, ConstrainedShare_C, pC, CPI
 
 	// Remaining budget goes to composite
     Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+
 	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 	
     y = matrix(y1 .* signRuben, -1 , 1) ;
+
+    
 endfunction
 
 function C = H_demand_Val_2(Consumption_budget, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget)
@@ -2028,9 +2031,25 @@ endfunction
 
 function G_Consumption_budget = G_ConsumpBudget_Val_5(GDP)
 
+        if time_step == 1
+            if Scenario == "AMErun3dgt"
+                G_Consumption_budget = 0.2632 * GDP;
+                // ShareI_GDP = 0.2577;
+            elseif Scenario == "AMSrun3mix"
+                G_Consumption_budget = 0.2555 * GDP;
+                // ShareI_GDP = 0.2695;
+            end
+        elseif time_step == 2
+            if Scenario == "AMErun3dgt"
+                G_Consumption_budget = 0.2734 * GDP;
+                // ShareI_GDP = 0.2643;
+            elseif Scenario == "AMSrun3mix"
+                G_Consumption_budget = 0.2667 * GDP;
+                // ShareI_GDP = 0.2757;
+            end
+        end
+
     /// Public consumption budget - Proportion of GDP
-    G_Consumption_budget = 0.2704 * GDP;
-    
 endfunction
 
 
@@ -3240,10 +3259,21 @@ function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
             end
 
 			if is_projected('I') then
-				I = apply_proj_val(I, 'I');
+				I = apply_proj_val(I, 'I') ;
+
+                I(6,:) =  I(6,:) * scal_I ; 
+                I(7,:) =  I(7,:) * scal_I ; 
+                I(12,:) =  I(12,:) * scal_I ; 
+                I(13,:) =  I(13,:) * scal_I ; 
+                I(14,:) =  I(14,:) * scal_I ; 
+                I(16,:) =  I(16,:) * scal_I ; 
+                I(21,:) =  I(21,:) * scal_I ; 
+                I(22,:) =  I(22,:) * scal_I ; 
+                I(23,:) =  I(23,:) * scal_I ; 
+
 			end	
 
-		else
+        else
 
 			I = Betta * sum( kappa .* Y' );
 		end
@@ -3264,6 +3294,65 @@ function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
 				I = apply_proj_val(I, 'I');
 			end	
 	end
+
+endfunction
+
+function I = Invest_demand_Val_5(GDP, pI);
+
+        if time_step == 1
+            if Scenario == "AMErun3dgt"
+                ShareI_GDP = 0.1952;
+                // ShareI_GDP = 0.2577;
+            elseif Scenario == "AMSrun3mix"
+                ShareI_GDP = 0.2041;
+                // ShareI_GDP = 0.2695;
+            end
+        elseif time_step == 2
+            if Scenario == "AMErun3dgt"
+                ShareI_GDP = 0.2002;
+                // ShareI_GDP = 0.2643;
+            elseif Scenario == "AMSrun3mix"
+                ShareI_GDP = 0.2088;
+                // ShareI_GDP = 0.2757;
+            end
+        end
+		//Ventilated by BY Shares
+		// I = "beta" Io 
+		I = ((ShareI_GDP*GDP)./( sum(pI*ones(1,nb_size_I).*BY.I))).*BY.I;		
+
+//        for i = 1:23
+//            I(i,:) = sum(I(i,:)) .* invest_struct(i,:)
+//        end
+
+ 		if is_projected('I') then
+			I = apply_proj_val(I, 'I');
+		end	
+
+endfunction
+
+function I = Invest_demand_Val_6(GDP, pI, GDP_pFish,I_pFish);
+
+        if time_step == 1
+            if Scenario == "AMErun3dgt"
+                ShareI_GDP = 0.1744;
+            elseif Scenario == "AMSrun3mix"
+                ShareI_GDP = 0.1840;
+            end
+        elseif time_step == 2
+            if Scenario == "AMErun3dgt"
+                ShareI_GDP = 0.1773;
+            elseif Scenario == "AMSrun3mix"
+                ShareI_GDP = 0.1885;
+            end
+        end
+		//Ventilated by BY Shares
+		// I = "beta" Io 
+		I = (ShareI_GDP*GDP/GDP_pFish)./(sum(pI*ones(1,nb_size_I).*BY.I)/I_pFish).*BY.I;
+        
+        for i = 1:23
+            I(i,:) = I(i,:) .* invest_struct(i,:)
+        end
+   
 
 endfunction
 
@@ -3549,9 +3638,49 @@ function y = Trade_Balance_Const_4( pM, pX, X, M, GDP);
     y = (sum(pX(5).*X(5)) - sum(pM(5).*M(5)))/GDP - (sum(ini.pX(5).*ini.X(5)) - sum(ini.pM(5).*ini.M(5)))/ini.GDP
   
 endfunction
-  
-  
 
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_5( pM, pX, X, M, GDP);
+
+    if time_step == 1
+        if Scenario == "AMErun3dgt"
+            y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.0744);
+            // y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.01186);
+        elseif Scenario == "AMSrun3mix"
+            y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.0803);
+            // y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.01280);
+        end
+    elseif time_step == 2
+        if Scenario == "AMErun3dgt"
+            y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.0811);
+            // y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.01293);
+        elseif Scenario == "AMSrun3mix"
+            y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.0847);
+            // y = (sum(pX.*X) - sum(pM.*M))/GDP - (-0.0135);
+        end
+    end
+  
+endfunction
+
+/// Trade balance constant to GDP growth (NonEnerSect)
+function y = Trade_Balance_Const_6( pM, pX, X, M, GDP, X_pFish, M_pFish, GDP_pFish);
+
+    if time_step == 1
+        if Scenario == "AMErun3dgt"
+            y = (sum(pX.*X)/X_pFish - sum(pM.*M)/M_pFish)/(GDP/GDP_pFish) - (-0.0033);
+        elseif Scenario == "AMSrun3mix"
+            y = (sum(pX.*X)/X_pFish - sum(pM.*M)/M_pFish)/(GDP/GDP_pFish) - (-0.0057);
+        end
+    elseif time_step == 2
+        if Scenario == "AMErun3dgt"
+            y = (sum(pX.*X)/X_pFish - sum(pM.*M)/M_pFish)/(GDP/GDP_pFish) - (-0.0053);
+        elseif Scenario == "AMSrun3mix"
+            y = (sum(pX.*X)/X_pFish - sum(pM.*M)/M_pFish)/(GDP/GDP_pFish) - (-0.0103);
+        end
+    end
+  
+endfunction
+  
 // Market closure (adjustment of supply or demand in quantities)
 
 //  Product markets closure 1 : the adjustment variables are Y (domestic production) or M (imports)
