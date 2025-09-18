@@ -53,6 +53,7 @@ function default_dashboard = new_default_dashboard()
     'proj_exports','false',..
     'proj_c','false',..
     'proj_kappa','false',..
+	'proj_lambda','false',..
     'proj_invest','false',..
     'proj_pY', 'true' ,..
     'proj_spemarg_rates_IC','false',..
