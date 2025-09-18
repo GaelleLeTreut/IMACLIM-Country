@@ -48,7 +48,7 @@ eq_G_ConsumpBudget = '';
 
 //////////////// CONFIG DASHBOARD SELON SCENARIOS ////////////////
 Macro_nb = 'SNBC3_run3dgt2';
-Proj_scenario = 'SNBC3_run3total_ic5';
+Proj_scenario = 'SNBC3_run3total';
 Nb_Iter = 3;
 emissions_bioenergy = 'false';
 pY_gas_reduced_v2 = 'True';
@@ -62,6 +62,7 @@ proj_imports = 'false';
 proj_exports = 'false';
 proj_c = 'false';
 proj_kappa = 'true';
+proj_lambda = 'true';
 proj_invest = 'true';
 proj_pY = 'false';
 proj_spemarg_rates_IC = 'true';

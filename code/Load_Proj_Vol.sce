@@ -98,6 +98,7 @@ proj_files = [
     'Labour_' + Scenario, ..
     'Invest_' + Scenario, .. // For France
     'Kappas_' + Scenario, ..
+    'Lambdas_' + Scenario, ..
     'Production_prices', ..
     'Intermediate_prices', ..
     'Spemargin_rates'
@@ -106,7 +107,8 @@ proj_files = [
 to_transpose = [
     'Capital_Cons_' + Scenario, ..
     'Labour_' + Scenario, ..
-    'Kappas_' + Scenario
+    'Kappas_' + Scenario, ..
+    'Lambdas_' + Scenario
 ];
 
 	// load Y, may be needed for proj intens
