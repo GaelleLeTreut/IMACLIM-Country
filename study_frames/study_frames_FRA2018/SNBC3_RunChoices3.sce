@@ -24,6 +24,10 @@ if proj_kappa == 'false' | Proj_scenario == 'SNBC3test_run31' | Proj_scenario ==
     Proj_Vol.kappa.apply_proj = %F;
 end
 
+if proj_lambda == 'false' 
+    Proj_Vol.lambda.apply_proj = %F;
+end
+
 if proj_imports == 'false'
     Proj_Vol.M_Y.apply_proj = %F;
 end
