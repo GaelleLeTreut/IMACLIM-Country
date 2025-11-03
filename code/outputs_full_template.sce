@@ -545,6 +545,16 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["MPI",	(Out.MPI )];
 ["REER", (Out.CPI / Out.MPI)];
 ["Real I without constraint",    money_disp_adj.*(sum(Out.I_value) - sum(Out.I_value(:,5)) - Out.I_value(12,17) - Out.I_value(12,23) - Out.I_value(21,17) - Out.I_value(21,22) - Out.I_value(21,23))  / I_pFish];..
+["Induced saving rate",  1- (sum(Out.pC.*Out.C) / Out.H_disposable_income)];..
+["pY_w"+Index_EnerSect,  Out.pY(Indice_EnerSect) ./ Out.w'(Indice_EnerSect)];..
+["pY_w"+Index_NonEnerSect,  Out.pY(Indice_NonEnerSect) ./ Out.w'(Indice_NonEnerSect)];..
+["sum_kappa_Y", sum(Out.Betta .* ((Out.kappa.* Out.Y') .*. ones(nb_Commodities,1))) ];..
+["sum_I",  sum(Out.I)];..
+["scal_I", Out.scal_I];..
+["scal_markup", Out.scal_markup];..
+["GDP_pLasp",    GDP_pLasp];..
+["X_pLasp",    X_pLasp];..  
+["M_pLasp",    M_pLasp];
 ];
 
 
@@ -779,3 +789,6 @@ else
  end
  end
 end
+
+
+save("ma_structure.sci", "Out");
