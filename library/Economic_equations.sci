@@ -556,6 +556,7 @@ endfunction
 function y = H_demand_Const_2bis(Consumption_budget, C, ConstrainedShare_C, pC, CPI, sigma_pC, sigma_ConsoBudget) ;
     // TOCLEAN
     signRuben = sign(pC);
+    
     pC = abs ( pC);
 	Consumption_budget = abs(Consumption_budget);
 
@@ -571,10 +572,10 @@ function y = H_demand_Const_2bis(Consumption_budget, C, ConstrainedShare_C, pC, 
     y1(1:nb_Sectors-1, :) = C(1:nb_Sectors-1, :) - (1+delta_C_parameter(1:nb_Sectors-1)').^time_since_BY.*.(ones(1,nb_Households)).* .. 
 (ConstrainedShare_C(1:nb_Sectors-1, :) .* BY.C(1:nb_Sectors-1, :) + (1 - ConstrainedShare_C(1:nb_Sectors-1, :)) .* BY.C(1:nb_Sectors-1, :) .* ( (pC(1:nb_Sectors-1, :)/CPI) ./ (BY.pC(1:nb_Sectors-1, :)/BY.CPI) ).^ sigma_pC(1:nb_Sectors-1, :) .* (( ((Consumption_budget.*.ones(nb_Sectors-1, 1))./CPI) ./ ((BY.Consumption_budget.*.ones(nb_Sectors-1, 1))./BY.CPI) ) .^ sigma_ConsoBudget(1:nb_Sectors-1, :) ) );
 
-	// Remaining budget goes to composite
-    Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
+	// // Remaining budget goes to composite
+    // Composite_budget =  Consumption_budget - sum(pC(1:nb_Sectors-1, :) .* C(1:nb_Sectors-1, :),"r");
 
-	y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
+	// y1 (nb_Sectors,:) = pC(nb_Sectors,:) .* C(nb_Sectors,:) - Composite_budget ;
 
     	/// Replace C by the one that are informed if so
     if is_projected('C') then
@@ -2877,7 +2878,26 @@ function [y] =  Markup_Const_2(markup_rate, tau_markup_rate) ;
 endfunction
 
 function markup_rate =  Markup_Val_3(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y) ;
+    
     markup_rate =  BY.markup_rate;
+    
+    if pY_gas_reduced_v1 == 'True' then
+        // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
+        // markup_rate(Indice_GasS) = BY.markup_rate(Indice_GasS) / 10;
+    end
+
+    if is_projected('pY') then
+        markup_rate_tmp = ones(1,nb_Sectors) - (sum(pIC .* alpha,"r") + sum(pL .* lambda,"r") + sum(pK .* kappa, "r") - ClimPolCompensbySect./((abs(Y)<%eps)+(abs(Y)>%eps).*Y)' + Production_Tax_rate .* pY') ./ pY';
+
+        for ind = Proj_Vol('pY').ind_of_proj
+            markup_rate(ind(1)) = markup_rate_tmp(ind(1));
+        end
+    end
+endfunction
+
+function markup_rate =  Markup_Val_4(pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y, scal_markup) ;
+    
+    markup_rate =  BY.markup_rate .* scal_markup;
     
     if pY_gas_reduced_v1 == 'True' then
         // Baisser le taux de Profit_margin du gaz pour avoir un taux proche de celui du pétrole
@@ -3280,8 +3300,6 @@ function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
 		if Invest_matrix then
 			I = Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1));
 
-            I(:,:) =  I(:,:) * scal_I ; 
-
             // PRISE EN COMPTE ACTIFS ECHOUES
             // Le producteur prend en compte le coût de remboursement des emprunts utilisés pour investir dans des actifs échoués.
             // Les kappas prennent en compte ces coûts, mais ils ne correspondent pas à de l'investissement.
@@ -3296,17 +3314,9 @@ function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
 			if is_projected('I') then
 				I = apply_proj_val(I, 'I') ;
 
-                I(6,:) =  I(6,:) * scal_I ; 
-                I(7,:) =  I(7,:) * scal_I ; 
-                I(12,:) =  I(12,:) * scal_I ; 
-                I(13,:) =  I(13,:) * scal_I ; 
-                I(14,:) =  I(14,:) * scal_I ; 
-                I(16,:) =  I(16,:) * scal_I ; 
-                I(21,:) =  I(21,:) * scal_I ; 
-                I(22,:) =  I(22,:) * scal_I ; 
-                I(23,:) =  I(23,:) * scal_I ; 
-
 			end	
+
+            I(:,:) =  I(:,:) * scal_I ; 
 
         else
 
@@ -3388,6 +3398,36 @@ function I = Invest_demand_Val_6(GDP, pI, GDP_pFish,I_pFish);
             I(i,:) = I(i,:) .* invest_struct(i,:)
         end
    
+
+endfunction
+
+function [y] = Invest_balance_Const_1(I, Betta, kappa, Y);
+
+    y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+
+endfunction
+
+function [y] = Invest_balance_Const_2(I, Betta, kappa, Y);
+
+    if time_step == 1
+        if Scenario == "AMErun3dgt"
+             y = 1.01*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    elseif time_step == 2
+        if Scenario == "AMErun3dgt"
+             y = 1.02*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y = 1.03*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    elseif time_step == 3
+        if Scenario == "AMErun3dgt"
+             y = 0.99*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    end
 
 endfunction
 
@@ -3656,7 +3696,6 @@ endfunction
 function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
   y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(ini.pX.*ini.X) - sum(ini.pM.*ini.M))/ini.GDP
-
 
 endfunction
 
