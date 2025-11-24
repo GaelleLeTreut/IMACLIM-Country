@@ -93,5 +93,88 @@ if 0 & ticpe_bioenergy == 'True' then
 end
 
 
+//////////////////////////////////////////////// Coeff constraint  ///////////////////////////////////////////////////////////////////////////////
 
+if coeff_constraint=="ref"
 
+	Deriv_Exogenous.coeff_constraint = 1.127633389;
+
+elseif coeff_constraint=="1_10"
+
+	Deriv_Exogenous.coeff_constraint = 1.10;
+
+elseif coeff_constraint=="1_08"
+
+	Deriv_Exogenous.coeff_constraint = 1.08;
+
+elseif coeff_constraint=="1_06"
+
+	Deriv_Exogenous.coeff_constraint = 1.06;
+
+elseif coeff_constraint=="1_04"
+
+	Deriv_Exogenous.coeff_constraint = 1.04;
+
+end
+
+//////////////////////////////////////////////////// Import-export price elasticity  //////////////////////////////////////////////////////////////////////
+
+if VAR_sigma_M=="high2"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,0,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,0,0,0,2.85,0,2.85,2.85];
+elseif VAR_sigma_M=="high1"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,0,2.375,2.375,2.375,2.375,2.375,2.375,2.375,2.375,2.375,2.375,2.375,0,0,0,2.375,0,2.375,2.375];
+elseif VAR_sigma_M=="ref"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,0,0,0,1.9,0,1.9,1.9];
+elseif VAR_sigma_M=="low1"
+	Deriv_Exogenous.sigma_M = [0,0,0,0,0,1.425,1.425,1.425,1.425,1.425,1.425,1.425,1.425,1.425,1.425,1.425,0,0,0,1.425,0,1.425,1.425];
+elseif VAR_sigma_M=="low2"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0,0,0,0.95,0,0.95,0.95];
+elseif VAR_sigma_M=="old"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,0,0,0,1.2,0,1.2,1.2];
+elseif VAR_sigma_M=="gtap"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,2.95,4.2,2.9,2.9,3.3,2.95,2.8,4.05,4.4,2.0,3.75,0,0,0,2.5,0,1.9,1.9];
+elseif VAR_sigma_M=="threeme"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0,0,0,0.48,0,0.69,0.69];
+end
+
+if VAR_sigma_X=="high2"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.63,0.63,0.63,0.63,0.63,0.63,0.63,0.63,0.63,0.63,0.63,0,0,0,0.63,0,0.63,0.63];
+elseif VAR_sigma_X=="high1"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.525,0.525,0.525,0.525,0.525,0.525,0.525,0.525,0.525,0.525,0.525,0,0,0,0.525,0,0.525,0.525];;
+elseif VAR_sigma_X=="ref"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0,0,0,0.42,0,0.42,0.42];
+elseif VAR_sigma_X=="low1"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.315,0.315,0.315,0.315,0.315,0.315,0.315,0.315,0.315,0.315,0.315,0,0,0,0.315,0,0.315,0.315];;
+elseif VAR_sigma_X=="low2"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0,0,0,0.21,0,0.21,0.21];;
+elseif VAR_sigma_X=="minx"
+     Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0,0,0,0.22,0,0.22,0.0];
+elseif VAR_sigma_X=="old"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0,0,0,0.42,0,0.42,0];
+elseif VAR_sigma_M=="threeme"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0,0,0,0.8,0,0.8,0.8];
+end
+
+if VAR_sigma_omegaU=="-0.1"
+	parameters.sigma_omegaU = -0.1;
+elseif VAR_sigma_omegaU=="-0.6"
+	parameters.sigma_omegaU = -0.6;
+elseif VAR_sigma_omegaU=="-1.2"
+	parameters.sigma_omegaU = -1.2;
+elseif VAR_sigma_omegaU=="-1.8"
+	parameters.sigma_omegaU = -1.8;
+elseif VAR_sigma_omegaU=="-2.4"
+	parameters.sigma_omegaU = -2.4;
+elseif VAR_sigma_omegaU=="-3.0"
+	parameters.sigma_omegaU = -3.0;
+elseif VAR_sigma_omegaU=="-3.6"
+	parameters.sigma_omegaU = -3.6;
+end
+
+if Coef_real_wage=="1"
+	Coef_real_wage_dashboard = 1;
+elseif Coef_real_wage=="0.5"
+    Coef_real_wage_dashboard = 0.5;
+elseif Coef_real_wage=="0"
+    Coef_real_wage_dashboard = 0;
+end

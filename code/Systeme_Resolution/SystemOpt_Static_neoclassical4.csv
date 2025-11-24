@@ -1,4 +1,4 @@
-Var_Resol;Index_Imaclim_VarResol_neoclassical2;;
+Var_Resol;Index_Imaclim_VarResol_neoclassical;;
 ;;;
 // Membre gauche de l'équation (vide -> 0) ;Membre droite de l'équation;Arguments;
 ;;;
@@ -15,7 +15,7 @@ Other_social_transfers;OtherSoc_Transf_Val_1;Other_SocioBenef, Population;
 p;Mean_price_Val_1;pY, pM, Y, M;
 pM;pM_price_Val_2;Carbon_Tax_rate_M, Emission_Coef_M;// check const_1
 ;Production_price_Const_1;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y;
-markup_rate;Markup_Val_4;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y, scal_markup;
+markup_rate;Markup_Val_3;pY, alpha, pIC, pL, lambda, pK, kappa, markup_rate, Production_Tax_rate, ClimPolCompensbySect, Y;
 SpeMarg_rates_IC;SpeMarg_rates_IC_Val_2;pIC, p, Transp_margins_rates, Trade_margins_rates;
 pIC;pIC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_IC, Energy_Tax_rate_IC, OtherIndirTax_rate, Carbon_Tax_rate_IC, Emission_Coef_IC, p;
 pC;pC_price_Val_1;Transp_margins_rates, Trade_margins_rates, SpeMarg_rates_C, Energy_Tax_rate_FC, OtherIndirTax_rate, Carbon_Tax_rate_C, Emission_Coef_C, p, VA_Tax_rate;
@@ -110,7 +110,7 @@ G;G_demand_Val_2;pG, G_Consumption_budget, BudgetShare_GConsump;// check const_1
 ////// Firms choices;;;
 Phi;TechnicProgress_Val_1;;
 Theta;DecreasingReturn_Val_1;;
-alpha, lambda, kappa;Technical_Coef_Val_5;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y;
+alpha, lambda, kappa;Technical_Coef_Val_7;Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, scal_I;
 ////// International trade;;;
 M;Imports_Val_1;pM, pY, Y, sigma_M, delta_M_parameter;// check const_1, const_3 & const_4
 X;Exports_Val_1;pM, pX, sigma_X, delta_X_parameter, GDP, Y;// const 3 : homothetic projection et const_2 static projection
@@ -132,7 +132,6 @@ w;Wage_Variation_Val_1;NetWage_variation;
 ////// Capital Market and investment;;;
 Capital_consumption;Capital_Consump_Val_1;Y, kappa;
 I;Invest_demand_Val_4;Betta, kappa, Y, GDP, pI, scal_I;// 1-standard  3-Real total invest const + carbon tax revenu (option dashboard)
-;Invest_balance_Const_3;I, Betta, kappa, Y;
 ;Capital_Market_Const_1;Capital_endowment, kappa, Y, pRental;
 Capital_endowment;Capital_Dynamic_Val_1;;
 ;;;

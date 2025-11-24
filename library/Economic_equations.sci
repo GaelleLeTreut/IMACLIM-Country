@@ -92,8 +92,8 @@ endfunction
 function H_disposable_income = H_Income_Val_1(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
 
     // Income by sources, redistribution and tax payments
-    H_Labour_Income     = NetCompWages_byAgent (Indice_Households) ;
-    H_Non_Labour_Income = GOS_byAgent (Indice_Households) ;
+    H_Labour_Income     = NetCompWages_byAgent(Indice_Households) ;
+    H_Non_Labour_Income = GOS_byAgent(Indice_Households) ;
     H_Social_Transfers  = Pensions + Unemployment_transfers + Other_social_transfers;
     H_Other_Income      = Other_Transfers(Indice_Households) + ClimPolicyCompens(Indice_Households);
     H_Property_income   = Property_income(Indice_Households) ;
@@ -143,8 +143,8 @@ endfunction
 function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent, Pensions, Unemployment_transfers, Other_social_transfers, Other_Transfers, ClimPolicyCompens, Property_income, Income_Tax, Other_Direct_Tax)
 
     // Income by sources, redistribution and tax payments
-    H_Labour_Income     = NetCompWages_byAgent (Indice_Households) ;
-    H_Non_Labour_Income = GOS_byAgent (Indice_Households) ;
+    H_Labour_Income     = NetCompWages_byAgent(Indice_Households) ;
+    H_Non_Labour_Income = GOS_byAgent(Indice_Households) ;
     H_Social_Transfers  = Pensions + Unemployment_transfers + Other_social_transfers;
     H_Other_Income      = Other_Transfers(Indice_Households) + ClimPolicyCompens(Indice_Households);
     H_Property_income   = Property_income(Indice_Households) ;
@@ -167,9 +167,6 @@ function H_disposable_income = H_Income_Val_3(NetCompWages_byAgent, GOS_byAgent,
     H_disposable_income = T_MPR + Bonus_vehicules + (H_Labour_Income + H_Non_Labour_Income + H_Social_Transfers + H_Other_Income + H_Property_income - H_Tax_Payments) ;
 
 endfunction
-
-
-
 
 
 /// Pensions by household class
@@ -2809,6 +2806,234 @@ function [alpha, lambda, kappa] = Technical_Coef_Val_5(Theta, Phi, aIC, sigma, p
 
 endfunction
 
+function [alpha, lambda, kappa] = Technical_Coef_Val_6(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, scal_markup)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+    if ~Capital_Dynamics
+			
+		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+		
+		
+		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
+		if AdjustKappaOnly|AdjustKappaWithSubst
+			
+			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
+				 
+			if AdjustKappaOnly
+			
+					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
+					
+			elseif AdjustKappaWithSubst
+				
+					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
+			end 
+	
+		end 
+		
+	elseif Capital_Dynamics
+	// Unique price of capital
+	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+
+	end
+
+    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa') * scal_markup;
+    end
+
+    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    //TOCLEAN
+    if pY_gas_reduced_v1 == 'True' then
+        diviseur = 100;
+        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        // diviseur = 20;
+        // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+
+    elseif pY_gas_reduced_v2 == 'True' then
+        lambda(Indice_GasS) = 0.001;
+        kappa(Indice_GasS) = 0.1;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ 10;
+    end
+
+endfunction
+
+function [alpha, lambda, kappa] = Technical_Coef_Val_7(Theta, Phi, aIC, sigma, pIC, aL, pL, aK, pK, pRental, phi_IC, phi_K, phi_L, ConstrainedShare_IC, ConstrainedShare_Labour, ConstrainedShare_Capital, Y, scal_I)
+    test_pL = pL == 0;
+    pIC = abs(pIC);
+    pL = abs(pL);
+    pL(test_pL) = 1;
+	if ~Capital_Dynamics
+		pK = abs(pK);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* (pK.^(1 - sigma)) ;
+	
+	elseif Capital_Dynamics
+		pRental = abs(pRental);
+		FPI = sum((aIC .^ (sigma.*.ones(nb_Sectors,1))) .* (pIC.^(1 - sigma.*.ones(nb_Sectors,1))),"r") + ..
+			(aL .^ sigma) .* ((pL ./ ((1+phi_L).^time_since_BY)) .^(1 - sigma)) + ..
+			(aK .^ sigma) .* ((pRental).^(1 - sigma)) ;
+	end
+
+    test_FPI = FPI == 0;
+    FPI(test_pL|test_FPI) = 1;
+    
+    alpha = (ones(nb_Sectors, 1).*.(Theta ./ Phi)) .* (ones(nb_Sectors,nb_Sectors)./(1+phi_IC).^time_since_BY).* ..
+    (ConstrainedShare_IC .* BY.alpha + ((aIC ./ pIC) .^ (sigma.*.ones(nb_Sectors,1))) .* ..
+    (ones(nb_Sectors, 1).*.(FPI.^(sigma./(1 - sigma))))) ;
+
+    lambda = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_L).^time_since_BY) .* ..
+    ( ConstrainedShare_Labour .* BY.lambda + ((aL ./ (pL ./ ((1+phi_L).^time_since_BY)) ) .^ sigma) .* ..
+    (FPI .^(sigma./(1 - sigma)))) ;
+
+    if ~Capital_Dynamics
+			
+		kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ pK) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+		
+		
+		/// Adjustement of kappa for non energy sectors according to the evolution of the energy intensity 
+		if AdjustKappaOnly|AdjustKappaWithSubst
+			
+			AdjustKappa = divide(sum(Proj_Vol.IC.val(Indice_EnerSect,Indice_NonEnerSect),"r")./Y_obj.val(Indice_NonEnerSect)',sum(BY.IC(Indice_EnerSect,Indice_NonEnerSect),"r")./BY.Y(Indice_NonEnerSect)',1);
+			sigmaKE = -ones(Indice_NonEnerSect).*0.15;
+				 
+			if AdjustKappaOnly
+			
+					kappa(Indice_NonEnerSect)= BY.kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE; 
+					
+			elseif AdjustKappaWithSubst
+				
+					kappa(Indice_NonEnerSect)= kappa(Indice_NonEnerSect).*AdjustKappa.^sigmaKE;
+			end 
+	
+		end 
+		
+	elseif Capital_Dynamics
+	// Unique price of capital
+	    kappa = (Theta ./ Phi) .*(ones(1,nb_Sectors)./(1+phi_K).^time_since_BY) .* ..
+				( ConstrainedShare_Capital .* BY.kappa + ((aK ./ (pRental)) .^ sigma) .* ..
+				(FPI .^(sigma./(1 - sigma)))) ;
+
+	end
+
+    // Proj structure for parameters
+	Proj_param = struct();
+
+	//// Projection Volume
+    if is_projected('Labour') then
+        Proj_param.lambda.val = Proj_Vol.Labour.val ./ Y';
+        Proj_param.lambda.ind_of_proj = Proj_Vol.Labour.ind_of_proj;
+        lambda = apply_proj_val(lambda, 'lambda', Proj_param);
+    end
+	
+    if is_projected('Capital_consumption') then
+        Proj_param.kappa.val = Proj_Vol.Capital_consumption.val ./ Y';
+        Proj_param.kappa.ind_of_proj = Proj_Vol.Capital_consumption.ind_of_proj;
+        kappa = apply_proj_val(kappa, 'kappa', Proj_param)
+    end
+	
+    if is_projected('IC') then
+        Proj_param.alpha.val = Proj_Vol.IC.val ./ (ones(nb_Sectors,1) * Y');
+        Proj_param.alpha.ind_of_proj = Proj_Vol.IC.ind_of_proj;
+        alpha = apply_proj_val(alpha, 'alpha', Proj_param);
+    end
+		
+	//// Projection Intensities
+	if is_projected('alpha') then
+        alpha = apply_proj_val(alpha, 'alpha');
+    end
+
+    if is_projected('lambda') then
+        lambda = apply_proj_val(lambda, 'lambda');
+    end
+
+    if is_projected('kappa') then
+        kappa = apply_proj_val(kappa, 'kappa');
+    end
+
+    kappa(23) = kappa(23)*scal_I
+
+    // RUSTINE POUR BAISSER LE PRIX DE PRODUCTION DU GAZ
+    //TOCLEAN
+    if pY_gas_reduced_v1 == 'True' then
+        diviseur = 100;
+        lambda(Indice_GasS) = lambda(Indice_GasS) / diviseur;
+        // diviseur = 20;
+        // // lambda(Indice_GasS) = lambda(Indice_GasS) / 100; // Possible de mettre dans RunChoices vu que le lambda ne varie pas ?
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ diviseur;
+
+    elseif pY_gas_reduced_v2 == 'True' then
+        lambda(Indice_GasS) = 0.001;
+        kappa(Indice_GasS) = 0.1;
+        alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) = alpha(nb_EnerSect+1:nb_Sectors,Indice_GasS) ./ 10;
+    end
+
+endfunction
+
 //Labour productivity semi-endogenous (power sector)
 function [phi_L]=Phi_L_const_1(phi_L_a, phi_L_b, Mu_b, time_period,Indice)
 //    A = phi_L_a;
@@ -3316,7 +3541,7 @@ function I = Invest_demand_Val_4(Betta, kappa, Y, GDP, pI, scal_I);
 
 			end	
 
-            I(:,:) =  I(:,:) * scal_I ; 
+            I(23,:) =  I(23,:) * scal_I ; 
 
         else
 
@@ -3411,21 +3636,45 @@ function [y] = Invest_balance_Const_2(I, Betta, kappa, Y);
 
     if time_step == 1
         if Scenario == "AMErun3dgt"
-             y = 1.01*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         elseif Scenario == "AMSrun3mix"
-             y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y =  coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         end
     elseif time_step == 2
+        if Scenario == "AMErun3dgt"
+             y = coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y =  coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    elseif time_step == 3
+        if Scenario == "AMErun3dgt"
+             y = coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y = coeff_constraint*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    end
+
+endfunction
+
+function [y] = Invest_balance_Const_3(I, Betta, kappa, Y);
+
+    if time_step == 1
+        if Scenario == "AMErun3dgt"
+             y = 1.02*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y =  0.98*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    elseif time_step == 2
+        if Scenario == "AMErun3dgt"
+             y = 1.04*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        elseif Scenario == "AMSrun3mix"
+             y =  1.05*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+        end
+    elseif time_step == 3
         if Scenario == "AMErun3dgt"
              y = 1.02*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         elseif Scenario == "AMSrun3mix"
              y = 1.03*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
-        end
-    elseif time_step == 3
-        if Scenario == "AMErun3dgt"
-             y = 0.99*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
-        elseif Scenario == "AMSrun3mix"
-             y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         end
     end
 

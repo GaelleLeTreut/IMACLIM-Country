@@ -67,6 +67,11 @@ function default_dashboard = new_default_dashboard()
 	'VAR_sigma_KE','', ..
 	'Scenario','',..
 	'auto_c','',..
-	'const_c','')
+	'const_c','', ..
+	'coeff_constraint','', ..
+	'VAR_sigma_X','', ..
+	'VAR_sigma_M','', ..
+	'VAR_sigma_omegaU','-0.1', ..
+	'Coef_real_wage','1')
  
 endfunction
