@@ -57,6 +57,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Nominal X",    money_disp_adj.*sum(Out.X_value)];..
 ["Nominal M",    money_disp_adj.*sum(Out.M_value)];..
 ["Nominal Trade Balance",    money_disp_adj.*(sum(Out.X_value)-sum(Out.M_value))];..
+["Nominal Trade Balance ratio",    (money_disp_adj.*sum(Out.X_value)-money_disp_adj.*sum(Out.M_value)) / money_disp_adj.*sum(Out.GDP) ];..
 ["Nominal M/Y ratio_"+Index_Sectors,    divide(Out.M,    Out.Y,    %nan)];..
 ["Nominal Net-of-tax wages",    Out.omega];..
 ["Net-of-tax effective wages",    Out.omega/((1+Out.Mu)^Out.time_since_BY)];..
@@ -109,6 +110,13 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["pI pFish/"+ref_name,    I_pFish];..
 ["pX pFish/"+ref_name,    X_pFish];..
 ["pY pFish/"+ref_name,    Y_pFish];..
+["Price Laspeyres Index/"+ref_name,    ""];..
+["pC pLasp/"+ref_name,    C_pLasp];..
+["pG pLasp/"+ref_name,    G_pLasp];..
+["pI pLasp/"+ref_name,    I_pLasp];..
+["pX pLasp/"+ref_name,    X_pLasp];..
+["pM pLasp/"+ref_name,    M_pLasp];..
+["pY pLasp/"+ref_name,    Y_pLasp];..
 ["pY Energy pLasp/"+ref_name,    Y_En_pLasp];..
 [string("pY "+Index_EnerSect +" pLasp/"+ref_name),    evstr("Y_"+Index_EnerSect+"_pLasp")];..
 ["pY Non-Energy pLasp/"+ref_name,    Y_NonEn_pLasp];..
@@ -124,6 +132,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["Energy intensity",    alpha_Ener_qLasp];..
 ["---Quantities ---",    ""];..
 ["Unemployment % points/"+ref_name,    (Out.u_tot - ref.u_tot)*100];..
+["Unemployment rate",  Out.u_tot ];..
 ["Labour "+Labour_unit,    Out.Labour_tot];..
 ["Labour "+Labour_unit+" ratio/"+ref_name,    evol_ref.Labour_tot];..
 ["Labour "+Index_Sectors+" "+Labour_unit,    Out.Labour'];..
@@ -546,6 +555,8 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["REER", (Out.CPI / Out.MPI)];
 ["Real I without constraint",    money_disp_adj.*(sum(Out.I_value) - sum(Out.I_value(:,5)) - Out.I_value(12,17) - Out.I_value(12,23) - Out.I_value(21,17) - Out.I_value(21,22) - Out.I_value(21,23))  / I_pFish];..
 ["Induced saving rate",  1- (sum(Out.pC.*Out.C) / Out.H_disposable_income)];..
+["sum(Out.pC.*Out.C)",  sum(Out.pC.*Out.C) ];..
+["H_disposable_income",  Out.H_disposable_income ];..
 ["pY_w"+Index_EnerSect,  Out.pY(Indice_EnerSect) ./ Out.w'(Indice_EnerSect)];..
 ["pY_w"+Index_NonEnerSect,  Out.pY(Indice_NonEnerSect) ./ Out.w'(Indice_NonEnerSect)];..
 ["sum_kappa_Y", sum(Out.Betta .* ((Out.kappa.* Out.Y') .*. ones(nb_Commodities,1))) ];..
@@ -554,7 +565,21 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["scal_markup", Out.scal_markup];..
 ["GDP_pLasp",    GDP_pLasp];..
 ["X_pLasp",    X_pLasp];..  
-["M_pLasp",    M_pLasp];
+["M_pLasp",    M_pLasp];..
+["coeff_constraint",    coeff_constraint];..
+["VAR_sigma_X",    VAR_sigma_X];..
+["VAR_sigma_M",    VAR_sigma_M];..
+["H_Labour_Income",    Out.NetCompWages_byAgent(Indice_Households)];..
+["H_Non_Labour_Income",    Out.GOS_byAgent(Indice_Households)];..
+["H_Social_Transfers",    Out.Pensions(Indice_Households) + Out.Unemployment_transfers(Indice_Households) + Out.Other_social_transfers(Indice_Households)];..
+["H_Social_Transfers_pensions",    Out.Pensions(Indice_Households)];..
+["H_Social_Transfers_unemploy",     Out.Unemployment_transfers(Indice_Households)];..
+["H_Social_Transfers_other",     Out.Other_social_transfers(Indice_Households)];..
+["H_Other_Income",    Out.Other_Transfers(Indice_Households) + Out.ClimPolicyCompens(Indice_Households)];..
+["H_Property_income",    Out.Property_income(Indice_Households)];..
+["H_Tax_Payments",    Out.Income_Tax(Indice_Households) + Out.Other_Direct_Tax(Indice_Households)];
+["sigma_wage_curve",     VAR_sigma_omegaU];
+["Coef_real_wage",     Coef_real_wage];
 ];
 
 

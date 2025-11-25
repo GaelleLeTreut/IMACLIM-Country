@@ -57,7 +57,7 @@ Scenario;AMSrun3mix
 auto_c;
 const_c;
 coeff_constraint;
-VAR_sigma_X;threeme
-VAR_sigma_M;threeme
+VAR_sigma_X;high
+VAR_sigma_M;low
 VAR_sigma_omegaU;-0.1
 Coef_real_wage;1

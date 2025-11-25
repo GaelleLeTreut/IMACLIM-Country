@@ -9,7 +9,7 @@ AdjRecycle;0.0243239;0;1;variable to ajust other social transfer if the closure 
 //;;;;;
 //Labor market parameters;;;;;
 sigma_omegaU;-0.1;;;;
-Coef_real_wage;0;;;;
+Coef_real_wage;1;;;;
 u_param;0.1059428;0;1;;
 //;;;;;
 //Capital;;;;;

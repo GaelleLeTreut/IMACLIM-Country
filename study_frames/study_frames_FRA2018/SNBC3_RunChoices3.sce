@@ -133,6 +133,10 @@ elseif VAR_sigma_M=="gtap"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,2.95,4.2,2.9,2.9,3.3,2.95,2.8,4.05,4.4,2.0,3.75,0,0,0,2.5,0,1.9,1.9];
 elseif VAR_sigma_M=="threeme"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0,0,0,0.48,0,0.69,0.69];
+elseif VAR_sigma_M=="low"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0,0,0,0.24,0,0.345,0.345];
+elseif VAR_sigma_M=="high"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0,0,0,0.72,0,1.035,1.035];
 end
 
 if VAR_sigma_X=="high2"
@@ -149,8 +153,12 @@ elseif VAR_sigma_X=="minx"
      Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0,0,0,0.22,0,0.22,0.0];
 elseif VAR_sigma_X=="old"
     Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0,0,0,0.42,0,0.42,0];
-elseif VAR_sigma_M=="threeme"
-    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0,0,0,0.8,0,0.8,0.8];
+elseif VAR_sigma_X=="threeme"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0,0,0,0.8,0,0.8,0.8];
+elseif VAR_sigma_X=="low"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0,0,0,0.4,0,0.4,0.4];
+elseif VAR_sigma_X=="high"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,0,0,0,1.2,0,1.2,1.2];
 end
 
 if VAR_sigma_omegaU=="-0.1"
@@ -170,9 +178,9 @@ elseif VAR_sigma_omegaU=="-3.6"
 end
 
 if Coef_real_wage=="1"
-	Coef_real_wage_dashboard = 1;
+	parameters.Coef_real_wage = 1;
 elseif Coef_real_wage=="0.5"
-    Coef_real_wage_dashboard = 0.5;
+    parameters.Coef_real_wage = 0.5;
 elseif Coef_real_wage=="0"
-    Coef_real_wage_dashboard = 0;
+    parameters.Coef_real_wage = 0;
 end
