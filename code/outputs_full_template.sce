@@ -569,6 +569,7 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["coeff_constraint",    coeff_constraint];..
 ["VAR_sigma_X",    VAR_sigma_X];..
 ["VAR_sigma_M",    VAR_sigma_M];..
+["VAR_sigma_omegaU",    VAR_sigma_omegaU];..
 ["H_Labour_Income",    Out.NetCompWages_byAgent(Indice_Households)];..
 ["H_Non_Labour_Income",    Out.GOS_byAgent(Indice_Households)];..
 ["H_Social_Transfers",    Out.Pensions(Indice_Households) + Out.Unemployment_transfers(Indice_Households) + Out.Other_social_transfers(Indice_Households)];..
@@ -580,6 +581,25 @@ OutputTable("FullTemplate_"+ref_name)=[["Variables",    "values_"+Name_time];..
 ["H_Tax_Payments",    Out.Income_Tax(Indice_Households) + Out.Other_Direct_Tax(Indice_Households)];
 ["sigma_wage_curve",     VAR_sigma_omegaU];
 ["Coef_real_wage",     Coef_real_wage];
+["Labour_income",     sum(Out.Labour_income)];
+["Capital_income",     sum(Out.Capital_income)];
+["Profit_margin",     sum(Out.Profit_margin)];
+["Trade_margins",     sum(Out.Trade_margins)];
+["Transp_margins",     sum(Out.Transp_margins)];
+["SpeMarg_IC",     sum(sum(Out.SpeMarg_IC, "r"))];
+["SpeMarg_C",     sum(sum(Out.SpeMarg_C, "r"))];
+["SpeMarg_X",     sum(Out.SpeMarg_X)];
+["SpeMarg_I",     sum(Out.SpeMarg_I)];
+["SpeMarg_G",     sum(Out.SpeMarg_G)];
+["Production_Tax",     sum(Out.Production_Tax)];
+["minusClimPolCompensbySect",     - sum(Out.ClimPolCompensbySect)];
+["Labour_Tax",     sum(Out.Labour_Tax)];
+["OtherIndirTax",     sum(Out.OtherIndirTax)];
+["VA_Tax",     sum(Out.VA_Tax)];
+["Energy_Tax_IC",     sum(Out.Energy_Tax_IC)];
+["Carbon_Tax_IC",     sum(Out.Carbon_Tax_IC)];
+["Energy_Tax_FC",     sum(Out.Energy_Tax_FC)];
+["Carbon_Tax_C",      sum(Out.Carbon_Tax_C)];
 ];
 
 

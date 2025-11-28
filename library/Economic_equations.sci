@@ -3697,6 +3697,20 @@ function y = Trade_Balance_Const_2( pM, pX, X, M, GDP);
 
   y = (sum(pX.*X) - sum(pM.*M))/GDP - (sum(ini.pX.*ini.X) - sum(ini.pM.*ini.M))/ini.GDP
 
+  if Scenario == "AMErun3dgtnote" & time_step == 1 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.009869486)
+  elseif Scenario == "AMErun3dgtnote" & time_step == 2 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.009855833)
+  elseif Scenario == "AMErun3dgtnote" & time_step == 3 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.008391407)
+  elseif Scenario == "AMSrun3mixnote" & time_step == 1 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.013258956)
+  elseif Scenario == "AMSrun3mixnote" & time_step == 2 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.012308551)
+  elseif Scenario == "AMSrun3mixnote" & time_step == 3 & (SystemOpt_Resol == "SystemOpt_Static_johansen" | SystemOpt_Resol == "SystemOpt_Static_neoclassical")
+    y = (sum(pX.*X) - sum(pM.*M))/(GDP) - (-0.012656859)
+  end
+
 endfunction
 
 /// Trade balance constant to GDP growth (NonEnerSect)

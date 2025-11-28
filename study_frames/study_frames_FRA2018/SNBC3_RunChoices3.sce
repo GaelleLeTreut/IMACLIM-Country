@@ -134,9 +134,11 @@ elseif VAR_sigma_M=="gtap"
 elseif VAR_sigma_M=="threeme"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0,0,0,0.48,0,0.69,0.69];
 elseif VAR_sigma_M=="low"
-    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0,0,0,0.24,0,0.345,0.345];
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0,0,0,0.43,0,0.62,0.62];
 elseif VAR_sigma_M=="high"
-    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0,0,0,0.72,0,1.035,1.035];
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.53,0.53,0.53,0.53,0.53,0.53,0.53,0.53,0.53,0.53,0.53,0,0,0,0.53,0,0.76,0.76];
+elseif VAR_sigma_M=="max"
+    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0,0,0,0.72,0,0.72,0.72];
 elseif VAR_sigma_M=="note"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0,0,0,0.8,0,0.8,0.8];
 end
@@ -158,9 +160,11 @@ elseif VAR_sigma_X=="old"
 elseif VAR_sigma_X=="threeme"
     Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0,0,0,0.8,0,0.8,0.8];
 elseif VAR_sigma_X=="low"
-    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0,0,0,0.4,0,0.4,0.4];
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0,0,0,0.72,0,0.72,0.72];
 elseif VAR_sigma_X=="high"
-    Deriv_Exogenous.sigma_X = [0,0,0,0,0,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,0,0,0,1.2,0,1.2,1.2];
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0,0,0,0.88,0,0.88,0.88];
+elseif VAR_sigma_X=="max"
+    Deriv_Exogenous.sigma_X = [0,0,0,0,0,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,0,0,0,1.1,0,1.1,1.1];
 end
 
 if VAR_sigma_omegaU=="-0.1"
@@ -177,6 +181,12 @@ elseif VAR_sigma_omegaU=="-3.0"
 	parameters.sigma_omegaU = -3.0;
 elseif VAR_sigma_omegaU=="-3.6"
 	parameters.sigma_omegaU = -3.6;
+elseif VAR_sigma_omegaU=="-0.05"
+	parameters.sigma_omegaU = -0.05;
+elseif VAR_sigma_omegaU=="-0.5"
+	parameters.sigma_omegaU = -0.5;
+elseif VAR_sigma_omegaU=="-1.0"
+	parameters.sigma_omegaU = -1.0;
 end
 
 if Coef_real_wage=="1"
