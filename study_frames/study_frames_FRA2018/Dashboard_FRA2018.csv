@@ -27,12 +27,12 @@ skip_calibration;True
 VAR_saving;99
 exports_drive;true
 imports_drive;
-Macro_nb;SNBC3_run3dgt3
+Macro_nb;SNBC3_run3dgt
 Proj_scenario;SNBC3_run3totalamsmixc2bis
-Nb_Iter;3
+Nb_Iter;2
 emissions_bioenergy;True
 pY_gas_reduced_v2;false
-SystemOpt_Resol;SystemOpt_Static_neoclassical
+SystemOpt_Resol;SystemOpt_Static_neokeynesien
 Time_step_non_etudie;999
 study;SNBC3_RunChoices3
 AGG_type;AGG_23TME
@@ -53,7 +53,7 @@ Bonus_vehicule_dashboard;False
 VAR_sigma_CES;
 VAR_ConstrainedShare_Capital;
 VAR_sigma_KE;
-Scenario;AMSrun3mixnote
+Scenario;AMS2026mesures
 auto_c;
 const_c;
 coeff_constraint;
