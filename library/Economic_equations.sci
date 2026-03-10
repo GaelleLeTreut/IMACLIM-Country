@@ -3411,25 +3411,25 @@ function [y] = Invest_balance_Const_2(I, Betta, kappa, Y);
 
     if time_step == 1
         if Scenario == "AME2026"
-             y = 0.83*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 0.99*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         elseif Scenario == "AMS2026mesures"
-             y = 0.79*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 0.96*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         else
              y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         end
     elseif time_step == 2
         if Scenario == "AME2026"
-             y = 0.83*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 1.02*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         elseif Scenario == "AMS2026mesures"
-             y = 0.82*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 1.09*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         else
              y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         end
     elseif time_step == 3
         if Scenario == "AME2026"
-             y = 0.99*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 1.00*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         elseif Scenario == "AMS2026mesures"
-             y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
+             y = 0.98*sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         else
              y = sum(I) - sum(Betta .* ((kappa.* Y') .*. ones(nb_Commodities,1)));
         end
