@@ -33,7 +33,7 @@ if proj_lambda == 'false'
 end
 
 if proj_imports == 'false'
-    Proj_Vol.M.apply_proj = %F;
+    Proj_Vol.M_Y.apply_proj = %F;
 end
 
 if proj_exports == 'false'
@@ -52,6 +52,70 @@ if proj_spemarg_rates_IC == 'false'
     Proj_Vol.SpeMarg_rates_IC.apply_proj = %F;
 end
 
+if step == 'invest'
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %F;
+    Proj_Vol.G.apply_proj = %F;
+    Proj_Vol.kappa.apply_proj = %F;
+    Proj_Vol.lambda.apply_proj = %F;
+    Proj_Vol.alpha.apply_proj = %F;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesien"
+elseif step == 'menages'
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %F;
+    Proj_Vol.kappa.apply_proj = %F;
+    Proj_Vol.lambda.apply_proj = %F;
+    Proj_Vol.alpha.apply_proj = %F;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+elseif step == 'apu'
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %T;
+    Proj_Vol.kappa.apply_proj = %F;
+    Proj_Vol.lambda.apply_proj = %F;
+    Proj_Vol.alpha.apply_proj = %F;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+elseif step == 'kappa'
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %T;
+    Proj_Vol.kappa.apply_proj = %T;
+    Proj_Vol.lambda.apply_proj = %F;
+    Proj_Vol.alpha.apply_proj = %F;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+elseif step == 'lambda'  
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %T;
+    Proj_Vol.kappa.apply_proj = %T;
+    Proj_Vol.lambda.apply_proj = %T;
+    Proj_Vol.alpha.apply_proj = %F;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+elseif step == 'alpha' 
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %T;
+    Proj_Vol.kappa.apply_proj = %T;
+    Proj_Vol.lambda.apply_proj = %T;
+    Proj_Vol.alpha.apply_proj = %T;
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+elseif step == 'exports_drive' 
+    Proj_Vol.I.apply_proj = %T;
+    Proj_Vol.C.apply_proj = %T;
+    Proj_Vol.G.apply_proj = %T;
+    Proj_Vol.kappa.apply_proj = %T;
+    Proj_Vol.lambda.apply_proj = %T;
+    Proj_Vol.alpha.apply_proj = %T;
+	parameters.delta_X_parameter(1:20) = delta_X_file(1:20,time_step)';
+    parameters.delta_X_parameter(22:23) = delta_X_file(22:23,time_step)';
+    SystemOpt_Resol = "SystemOpt_Static_neokeynesienbis"
+    if SystemOpt_Resol == "SystemOpt_Static_neoclassical2"
+        SystemOpt_Resol = "SystemOpt_Static_neoclassical2"
+    end
+end 
+
+
 //////////////////////////////////////////////// EXPORTATIONS  ///////////////////////////////////////////////////////////////////////////////
 
 if  exports_drive=='true' 
@@ -63,10 +127,9 @@ end
 
 if  imports_drive=='true' 
 
-	parameters.delta_M_parameter(1:2) = delta_M_file(1:2,time_step)';
-    parameters.delta_M_parameter(4:4) = delta_M_file(4:4,time_step)';
-    //parameters.delta_M_parameter(6:20) = delta_M_file(6:20,time_step)';
-    //parameters.delta_M_parameter(22:23) = delta_M_file(22:23,time_step)';
+	parameters.delta_M_parameter(1:1) = delta_M_file(1:1,time_step)';
+    parameters.delta_M_parameter(3:3) = delta_M_file(3:3,time_step)';
+    // parameters.delta_M_parameter(22:23) = delta_M_file(22:23,time_step)';
 
 end
 
@@ -139,8 +202,6 @@ elseif VAR_sigma_M=="gtap"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,2.95,4.2,2.9,2.9,3.3,2.95,2.8,4.05,4.4,2.0,3.75,0,0,0,2.5,0,1.9,1.9];
 elseif VAR_sigma_M=="threeme"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0,0,0,0.48,0,0.69,0.69];
-elseif VAR_sigma_M=="Compotest"
-    Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0,0,0,0.48,0,0.69,0];
 elseif VAR_sigma_M=="low"
     Deriv_Exogenous.sigma_M = [0,0,0,0,0,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0.43,0,0,0,0.43,0,0.62,0.62];
 elseif VAR_sigma_M=="high"
